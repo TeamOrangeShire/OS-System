@@ -5,7 +5,16 @@
     --light: #EFFDF5;
     --dark: #22252a;
 }
-
+@font-face {
+    font-family: 'os_font';
+    src: url('../font/os_font.ttf') format('truetype');
+  }
+*{
+    font-family: 'os_font', sans-serif; 
+}
+h1{
+    font-family: 'os_font', sans-serif;
+}
 .back-to-top {
     position: fixed;
     display: none;
