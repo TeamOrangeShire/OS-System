@@ -17,3 +17,7 @@ Route::get('/', function () { return view('homepage.index');})->name('home');
 Route::get('/aboutus', function () {return view('homepage.about');})->name('about');
 Route::get('/contactus', function () { return view('homepage.contact');})->name('contact');
 Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
+
+
+//admin
+Route::get('/admin', function () { return view('admin.index');})->name('index');
