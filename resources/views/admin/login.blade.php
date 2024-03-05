@@ -21,7 +21,7 @@
 	<link rel="icon" href="assets/images/os_logo.png" type="image/x-icon">
 
 	<!-- vendor css -->
-	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 	
 	
 
@@ -36,7 +36,7 @@
 			<div class="row align-items-center ">
 				<div class="col-md-12">
 					<div class="card-body">
-						<img src="assets/images/os_logo.png" alt="" class="img-fluid mb-4" style="width: 60%;">
+						<img src="{{asset('assets/images/os_logo.png')}}" alt="" class="img-fluid mb-4" style="width: 60%;">
 						<h4 class="mb-3 f-w-400">Sign in</h4>
 						<hr>
 						<div class="form-group mb-3">
