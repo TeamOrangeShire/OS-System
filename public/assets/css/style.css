@@ -20681,7 +20681,7 @@ pre[class*=language-]:before {
     height: calc(100% - 56px);
     margin-top: 56px;
     top: 0;
-    background: var(--gray-dark);
+    background: var(--gray);
     color: #d0dcda;
 }
 
@@ -20920,7 +20920,7 @@ pre[class*=language-]:before {
 }
 
 .pcoded-navbar .pcoded-submenu {
-    background: #000000;
+    background: var(--gray-dark);
     padding: 15px 0;
 }
 
