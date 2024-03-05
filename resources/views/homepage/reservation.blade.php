@@ -91,7 +91,7 @@
                     <p>Explore our reservation calendar to plan your next productive session at Orange Shire. Click to see availability and secure your preferred time slot.</p>
                 </div>
                 <div id="calendars"></div>   
-                <a class="btn btn-primary py-3 px-5 mt-3" href="">Book Reservation</a>
+                <a class="btn btn-primary py-3 px-5 mt-3" href=""><i class="fa-solid fa-calendar-days"></i> Book Reservation</a>
             </div>
         </div>
         <!-- Testimonial End -->
