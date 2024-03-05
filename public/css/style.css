@@ -5,9 +5,7 @@
     --light: #EFFDF5;
     --dark: #22252a;
 }
-.c_primary{
-    color: var(--primary);
-}
+
 .back-to-top {
     position: fixed;
     display: none;
