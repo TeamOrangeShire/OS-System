@@ -17557,7 +17557,7 @@ a.text-dark:hover, a.text-dark:focus {
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
     transition: box-shadow 0.2s ease-in-out;
-    border-top: 3px solid #8CDDCD;
+    border-top: 3px solid #ff5c40;
 }
 
 .card.borderless {
