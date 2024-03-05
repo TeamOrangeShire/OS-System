@@ -80,7 +80,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>Admin Account</h5>
+                    <h5>Customer Account</h5>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
@@ -89,6 +89,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Number</th>
                             
                                 </tr>
                             </thead>
@@ -96,17 +98,21 @@
                                 <tr>
                                     <td>1</td>
                                     <td>Albert</td>
+                                    <td>@gmail.com</td>
+                                    <td>09999999999</td>
                                     
                                 </tr>
                                 <tr>
                                     <td>2</td>
                                     <td>Jiffy</td>
-                                   
+                                    <td>@gmail.com</td>
+                                    <td>09999999999</td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
                                     <td>Super mario</td>
-                                    
+                                    <td>@gmail.com</td>
+                                    <td>09999999999</td>
                                 </tr>
                             </tbody>
                         </table>
