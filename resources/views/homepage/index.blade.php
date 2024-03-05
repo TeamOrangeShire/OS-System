@@ -38,6 +38,12 @@
                             <img class="img-fluid" src="img/os_2.jpg" alt="">
                         </div>
                         <div class="owl-carousel-item">
+                            <img class="img-fluid" src="img/os_8.jpg" alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src="img/os_9.jpg" alt="">
+                        </div>
+                        <div class="owl-carousel-item">
                           <img class="img-fluid" src="img/os_3.jpg" alt="">
                       </div>
                       <div class="owl-carousel-item">
