@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
-});
-Route::get('/Rheyan', function () {
-    return view('rheyan');
-});
+    return view('homepage.index');
+})->name('home');
+
+Route::get('/contactus', function () {
+    return view('homepage.contact');
+})->name('contact');
