@@ -24,13 +24,13 @@
                     <label>Navigation</label>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                    <a href="{{route('index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
-                    <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Accounts</span></a>
+                    <a  class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Accounts</span></a>
                     <ul class="pcoded-submenu">
-                        <li><a href="layout-vertical.html" >Customers</a></li>
-                        <li><a href="layout-horizontal.html">Admin</a></li>
+                        <li><a href="{{route('customer_acc')}}" >Customers</a></li>
+                        <li><a href="{{route('admin_acc')}}">Admin</a></li>
                     </ul>
                 </li>
                 
