@@ -28,9 +28,4 @@ Route::get('/admin/customer_account', function () { return view('admin.customer_
 
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
 Route::get('/admin/confirmed_reservation', function () { return view('admin.confirmed_r');})->name('confirmed_r');
-
-
-Route::get('/admin/active_subscription', function () { return view('admin.active_s');})->name('active_s');
-Route::get('/admin/expired_subscription', function () { return view('admin.expired_s');})->name('expired_s');
-Route::get('/admin/records_subscription', function () { return view('admin.records_s');})->name('records_s');
 Route::get('/admin/blank', function () { return view('admin.blank');})->name('blank');
