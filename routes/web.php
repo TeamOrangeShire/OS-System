@@ -20,4 +20,5 @@ Route::get('/reservation', function () { return view('homepage.reservation');})-
 
 
 //admin
+Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');
