@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <script src="https://kit.fontawesome.com/33f625dcbc.js" crossorigin="anonymous"></script>
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -208,7 +209,7 @@
                         <p class="mb-4">Orange Shire is more than a coworking and costudying space; it's a vibrant community hub in the heart of Bacolod City, dedicated to fostering innovation, connection, and professional growth. Our mission is to provide a dynamic environment where individuals and businesses thrive, creating a shared space for success and collaboration.</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Quite Space</p>
+                        <p><i class="fa fa-check text-primary me-3"></i>Quiet Space</p>
                         <a class="btn btn-primary py-3 px-5 mt-3" href="">Contact Us</a>
                     </div>
                 </div>
@@ -223,20 +224,20 @@
                 <div class="row g-0 gx-5 align-items-end">
                     <div class="col-lg-6">
                         <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
-                            <h1 class="mb-3">Property Listing</h1>
-                            <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum.</p>
+                            <h1 class="mb-3">Our Services</h1>
+                            <p>Explore Orange Shire's suite of specialized services designed to enhance your coworking and costudying experience.</p>
                         </div>
                     </div>
                     <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
                         <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
                             <li class="nav-item me-2">
-                                <a class="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">Featured</a>
+                                <a class="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">All Services</a>
                             </li>
                             <li class="nav-item me-2">
-                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">For Sell</a>
+                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">Favorites</a>
                             </li>
                             <li class="nav-item me-0">
-                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">For Rent</a>
+                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">Promos</a>
                             </li>
                         </ul>
                     </div>
@@ -247,32 +248,32 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-1.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Appartment</div>
+                                        <a href=""><img class="img-fluid" src="img/os_hotdesk.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Favorites</div>
+                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Coworking area</div>
                                     </div>
                                     <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
+                                        <!--<h5 class="text-primary mb-3">$12,345</h5> -->
+                                        <a class="d-block h5 mb-2" href="">Hot Desk</a>
+                                        <p>Description</p>
                                     </div>
                                     <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-clock-rotate-left" style="color: #ff5c40;"></i> Hourly</small>
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-hourglass-start" style="color: #ff5c40;"></i> 3 Hours</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-list-check" style="color: #ff5c40;"></i> Others</small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-2.jpg" alt=""></a>
+                                        <a href=""><img class="img-fluid" src="img/os_fixeddesk.jpg" alt=""></a>
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Villa</div>
                                     </div>
                                     <div class="p-4 pb-0">
                                         <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                        <a class="d-block h5 mb-2" href="">Fixed Desk</a>
                                         <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                                     </div>
                                     <div class="d-flex border-top">
@@ -291,7 +292,7 @@
                                     </div>
                                     <div class="p-4 pb-0">
                                         <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                        <a class="d-block h5 mb-2" href="">Private Rooms</a>
                                         <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                                     </div>
                                     <div class="d-flex border-top">
@@ -310,7 +311,7 @@
                                     </div>
                                     <div class="p-4 pb-0">
                                         <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                        <a class="d-block h5 mb-2" href="">Hybrid Pros</a>
                                         <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                                     </div>
                                     <div class="d-flex border-top">
@@ -329,7 +330,7 @@
                                     </div>
                                     <div class="p-4 pb-0">
                                         <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                        <a class="d-block h5 mb-2" href="">Printer Services</a>
                                         <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                                     </div>
                                     <div class="d-flex border-top">
@@ -348,7 +349,7 @@
                                     </div>
                                     <div class="p-4 pb-0">
                                         <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                        <a class="d-block h5 mb-2" href="">Others</a>
                                         <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                                     </div>
                                     <div class="d-flex border-top">
