@@ -5,11 +5,7 @@
         <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
         <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
     </head>
-    <style>
-        *{
-            font-family: 'Heebo', sans-serif;
-        }
-    </style>
+
 <body>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
@@ -91,7 +87,9 @@
                     <p>Explore our reservation calendar to plan your next productive session at Orange Shire. Click to see availability and secure your preferred time slot.</p>
                 </div>
                 <div id="calendars"></div>   
+              <div class="container" style="width: 100%; display:flex; justify-content:center">
                 <a class="btn btn-primary py-3 px-5 mt-3" href=""><i class="fa-solid fa-calendar-days"></i> Book Reservation</a>
+              </div>
             </div>
         </div>
         <!-- Testimonial End -->
@@ -140,7 +138,7 @@ $(document).ready(function() {
       }
     ]   
     });
-})
+});
     </script>
 </body>
 
