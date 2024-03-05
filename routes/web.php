@@ -23,4 +23,5 @@ Route::get('/reservation', function () { return view('homepage.reservation');})-
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');
 Route::get('/admin/admin_account', function () { return view('admin.admin_acc');})->name('admin_acc');
+Route::get('/admin/customer_account', function () { return view('admin.customer_acc');})->name('customer_acc');
 Route::get('/admin/blank', function () { return view('admin.blank');})->name('blank');

@@ -51,7 +51,7 @@
             <div class="card">
                
                 <div class="card-body">
-                    <h5>Add New Admin</h5>
+                    <h5>Add New Customer</h5>
                     <hr>
                     <div class="row">
                         <div class="col-md-9">
