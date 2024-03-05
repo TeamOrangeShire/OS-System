@@ -50,7 +50,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>Pending Reservations </h5>
+                    <h5> Cancelled Reservations </h5>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
@@ -63,9 +63,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Room No.</th>
-                                    <th>Action</th>
-
-
+                                    <th>Reason</th>
 
                                 </tr>
                             </thead>
@@ -77,6 +75,8 @@
                                     <td>02/04/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>1</td>
+                                    <td>Change of mind</td>
+
 
 
                                 </tr>
@@ -87,6 +87,8 @@
                                     <td>02/07/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>3</td>
+                                    <td>Change of mind</td>
+
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -95,6 +97,8 @@
                                     <td>02/05/2024</td>
                                     <td>7PM TO 10PM</td>
                                     <td>2</td>
+                                    <td>Change of mind</td>
+
                                 </tr>
                             </tbody>
                         </table>

@@ -50,7 +50,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>Pending Reservations </h5>
+                    <h5> Confirmed Reservations </h5>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
@@ -66,7 +66,6 @@
                                     <th>Action</th>
 
 
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,7 +76,6 @@
                                     <td>02/04/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>1</td>
-
 
                                 </tr>
                                 <tr>
