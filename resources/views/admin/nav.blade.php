@@ -51,9 +51,9 @@
                     <a href="#!" class="nav-link "><span class="pcoded-micon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="7" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></span><span class="pcoded-mtext">Subsciption</span></a>
                     <ul class="pcoded-submenu">
-                        <li><a href="bc_alert.html">Active</a></li>
-                        <li><a href="bc_button.html">Expired</a></li>
-                        <li><a href="bc_card.html">Records</a></li>
+                        <li><a href="{{route('active_s')}}">Active</a></li>
+                        <li><a href="{{route('expired_s')}}">Expired</a></li>
+                        <li><a href="{{route('records_s')}}">Records</a></li>
                         
                     </ul>
                 </li>
