@@ -43,7 +43,7 @@
 
 
         <!-- Navbar Start -->
-        @include('homepage/Components/nav')
+        @include('homepage/Components/nav', ['active' => 'reservation'])
         <!-- Navbar End -->
 
 
