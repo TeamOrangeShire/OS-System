@@ -20750,7 +20750,7 @@ pre[class*=language-]:before {
 }
 
 .pcoded-navbar .main-menu-header {
-    background: var(--gray-dark);
+    background: var(--gray);
     position: relative;
     padding: 20px;
     text-align: left;
