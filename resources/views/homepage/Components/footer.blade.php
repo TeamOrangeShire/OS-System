@@ -4,13 +4,11 @@
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-white mb-4">Get In Touch</h5>
                 <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>21st Lacson Street, Bacolod City</p>
-                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>0966 065 8143</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>TheOrangeShire@gmail.com</p>
                 <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="https://www.facebook.com/people/Orange-Shire-Coworking/61554372145450/"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -34,7 +32,7 @@
                         <img class="img-fluid rounded bg-light p-1" src="img/os_3.jpg" alt="">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="img/os_4.jpg" alt="">
+                        <img class="img-fluid rounded bg-light p-1" src="img/os_8.jpg" alt="">
                     </div>
                     <div class="col-4">
                         <img class="img-fluid rounded bg-light p-1" src="img/os_5.jpg" alt="">
@@ -58,13 +56,13 @@
         <div class="copyright">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#">Orange Shire</a>, All Right Reserved. 
+                    &copy; <a class="border-bottom" href="{{ route('home') }}">Orange Shire</a>, All Right Reserved. 
                     
                     
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <div class="footer-menu">
-                        <a href="">Home</a>
+                        <a href="{{ route('home') }}">Home</a>
                         <a href="">Cookies</a>
                         <a href="">Help</a>
                         <a href="">FQAs</a>
