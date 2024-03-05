@@ -12,11 +12,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('homepage.index');
-})->name('home');
-
-Route::get('/contactus', function () {
-    return view('homepage.contact');
-})->name('contact');
+//HomePage
+Route::get('/', function () { return view('homepage.index');})->name('home');
+Route::get('/aboutus', function () {return view('homepage.about');})->name('about');
+Route::get('/contactus', function () { return view('homepage.contact');})->name('contact');
+Route::get('/contactus', function () { return view('homepage.reservation');})->name('reservation');

@@ -11,8 +11,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto">
-                <a href="{{ route('contact') }}" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="{{ route('home') }}" class="nav-item nav-link {{ $active === 'home'? 'active' : '' }}">Home</a>
+                <a href="{{ route('about') }}" class="nav-item nav-link {{ $active === 'about'? 'active' : '' }}">About</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
                     <div class="dropdown-menu rounded-0 m-0">   
@@ -24,8 +24,8 @@
                         <a href="property-agent.html" class="dropdown-item">Others</a>
                     </div>
                 </div>
-                <a href="{{ route('contact') }}" class="nav-item nav-link">Reservation</a>
-                <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
+                <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a>
+                <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
             </div>
             <a href="" class="btn btn-primary px-3 d-none d-lg-flex">Sign Up / Sign In</a>
         </div>
