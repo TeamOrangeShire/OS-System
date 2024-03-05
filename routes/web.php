@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () { return view('homepage.index');})->name('home');
 Route::get('/aboutus', function () {return view('homepage.about');})->name('about');
 Route::get('/contactus', function () { return view('homepage.contact');})->name('contact');
-Route::get('/contactus', function () { return view('homepage.reservation');})->name('reservation');
+Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
