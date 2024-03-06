@@ -63,7 +63,6 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Room No.</th>
-                                    <th>Action</th>
 
 
                                 </tr>
