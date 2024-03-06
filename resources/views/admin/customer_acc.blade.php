@@ -67,7 +67,7 @@
                                    
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Phone Number</label>
+                                    <label for="exampleInputEmail1">Number</label>
                                     <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Number">
                                    
                                 </div>
@@ -90,7 +90,16 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
+                    
                     <h5>Customer Account</h5>
+                    <div class="input-group m-t-15">
+                        <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary">
+                                <i class="feather icon-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
