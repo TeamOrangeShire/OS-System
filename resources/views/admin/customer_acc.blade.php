@@ -97,10 +97,10 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>ID</th>
                                     <th>Username</th>
                                     <th>Email</th>
-                                    <th>Number</th>
+                                    <th>Phone Number</th>
                             
                                 </tr>
                             </thead>
