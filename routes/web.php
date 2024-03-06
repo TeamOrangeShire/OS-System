@@ -31,7 +31,7 @@ Route::get('/admin/confirmed_reservation', function () { return view('admin.conf
 Route::get('/admin/cancelled_reservation', function () { return view('admin.cancelled_r');})->name('cancelled_r');
 Route::get('/admin/completed_reservation', function () { return view('admin.completed_r');})->name('completed_r');
 Route::get('/admin/records_reservation', function () { return view('admin.records_r');})->name('records_r');
-    
+Route::get('/admin/admin_profile', function () { return view('admin.admin_profile');})->name('admin_profile');
 Route::get('/admin/pending_subscription', function () { return view('admin.pending_s');})->name('pending_s');
 Route::get('/admin/active_subscription', function () { return view('admin.active_s');})->name('active_s');
 Route::get('/admin/expired_subscription', function () { return view('admin.expired_s');})->name('expired_s');
