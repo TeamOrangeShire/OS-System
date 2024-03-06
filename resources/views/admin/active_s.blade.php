@@ -50,7 +50,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Subscription List</h5>
+                    <h5>Active Subscriptions</h5>
                     
                 </div>
                 <div class="card-body table-border-style">
