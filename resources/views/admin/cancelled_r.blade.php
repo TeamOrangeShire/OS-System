@@ -47,7 +47,7 @@
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
       
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h5> Cancelled Reservations </h5>
