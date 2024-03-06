@@ -5,8 +5,8 @@
         <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
         <a href="#!" class="b-brand">
             <!-- ========   change your logo hear   ============ -->
-            <img src="{{ asset('assets/images/os_logo.png') }}" style="width: 25%;" alt="" class="logo"> <label for="logo">  Orange Shire</label>
-            <img src="{{ asset('assets/images/logo-icon.png') }}" alt="" class="logo-thumb">
+            <img src="{{ asset('assets/images/os_logo.png') }}" style="width: 15%;" alt="" class="logo"> <label for="logo">  Orange Shire</label>
+            <img src="{{ asset('assets/images/logo-icon.png') }}" alt="" style="width: 15%;" class="logo-thumb">
         </a>
         <a href="#!" class="mob-toggler">
             <i class="feather icon-more-vertical"></i>
@@ -25,8 +25,8 @@
                         <div class="noti-head">
                             <h6 class="d-inline-block m-b-0">Notifications</h6>
                             <div class="float-right">
-                                <a href="#!" class="m-r-10">mark as read</a>
-                                <a href="#!">clear all</a>
+                                <a href="#!" class="m-r-10" style="text-decoration: none ;">mark as read</a>
+                                <a href="#!" style="text-decoration: none ;">clear all</a>
                             </div>
                         </div>
                         <ul class="noti-body">
@@ -58,7 +58,7 @@
                           
                         </ul>
                         <div class="noti-footer">
-                            <a href="#!">show all</a>
+                            <a href="#!" style="text-decoration: none ;">show all</a>
                         </div>
                     </div>
                 </div>

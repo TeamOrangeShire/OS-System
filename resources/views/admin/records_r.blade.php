@@ -46,91 +46,61 @@
 <div class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
-      <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-               
-                <div class="card-body">
-                    <h5>Add New Customer</h5>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <form>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Username</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Number</label>
-                                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Number">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Repeat Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repeat Password">
-                                </div>
-                               
-                                <button type="submit" class="btn  btn-primary">Create</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
+      
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Customer Account</h5>
+                    <h5>Reservations Records</h5>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Username</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
                                     <th>Email</th>
-                                    <th>Number</th>
-                            
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Room No.</th>
+                                  
+
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>Albert</td>
-                                    <td>@gmail.com</td>
-                                    <td>09999999999</td>
-                                    
+                                    <td>Mark</td>
+                                    <td>mark@gmail.com</td>
+                                    <td>02/04/2024</td>
+                                    <td>3PM TO 6PM</td>
+                                    <td>1</td>
+
+
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>Jiffy</td>
-                                    <td>@gmail.com</td>
-                                    <td>09999999999</td>
+                                    <td>JANE</td>
+                                    <td>JANE@gmail.com</td>
+                                    <td>02/07/2024</td>
+                                    <td>3PM TO 6PM</td>
+                                    <td>3</td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>Super mario</td>
-                                    <td>@gmail.com</td>
-                                    <td>09999999999</td>
+                                    <td>SARAH</td>
+                                    <td>SARAH@gmail.com</td>
+                                    <td>02/05/2024</td>
+                                    <td>7PM TO 10PM</td>
+                                    <td>2</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>    
-    </div>
+        </div>
        
         <!-- [ Main Content ] end -->
     </div>

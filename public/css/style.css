@@ -447,3 +447,6 @@ h1{
     padding-right: 0;
     border-right: none;
 }
+a {
+    text-decoration: none !important;
+}

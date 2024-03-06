@@ -93,7 +93,7 @@
 
 
         <!-- Category Start -->
-        <!--<div class="container-xxl py-5">
+        <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">Services</h1>
@@ -170,7 +170,7 @@
              
                 </div>
             </div>
-        </div> -->
+        </div> 
         <!-- Category End -->
 
 
@@ -262,7 +262,7 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/os_8.jpg" alt=""></a>
+                                        <a href=""><img class="img-fluid" src="img/private_room.png" alt=""></a>
                                         <!-- <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div> -->
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Meeting Rooms</div>
                                     </div>
@@ -280,7 +280,7 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/os_hybridpros.png" alt=""></a>
+                                        <a href=""><img class="img-fluid" src="img/os_8.jpg" alt=""></a>
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Favorites</div>
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Consumable</div>
                                     </div>
@@ -615,14 +615,11 @@
                     <h1 class="mb-3">The Shire's Purpose</h1>
                     <p>Orange Shire is established to make a home for different types of learners, be it on the academe or in profession. Assembled by a group of people that values teamwork and collaboration, it is a place for costudying and coworking for all. <br>Come and experience the Shire life.</p>
                 </div>
-                <div class="mb" style="display: flex; justify-content: center;">
-                    <h1 style="color:#ff5c40; margin-bottom:20px; font-size:2rem">The People Behind</h1>
-                </div>
                 <div class="row g-4" style="display: flex; justify-content: center;">
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/sire_Albert.jfif" alt="">
+                                <img class="img-fluid" src="img/os_c1.jfif" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
@@ -630,15 +627,15 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Albert Dominic Pimentel</h5>
-                                <small>CEO and Founder</small>
+                                <h5 class="fw-bold mb-0">Students</h5>
+                                <small>Short Description</small>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/Sire_Red.jfif" alt="">
+                                <img class="img-fluid" src="img/os_c2.jfif" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
@@ -646,15 +643,15 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Jose Leo G. Redoblo, Ph.D</h5>
-                                <small>Co-founder</small>
+                                <h5 class="fw-bold mb-0">Freelancers</h5>
+                                <small>Short Description</small>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/sire_Sava.jfif" alt="">
+                                <img class="img-fluid" src="img/os_c3.jfif" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
@@ -662,8 +659,24 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Sava Trifunovic</h5>
-                                <small>Co-founder</small>
+                                <h5 class="fw-bold mb-0">Board & BAR exam Reviewers</h5>
+                                <small>Short Description</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="team-item rounded overflow-hidden">
+                            <div class="position-relative">
+                                <img class="img-fluid" src="img/os_c4.jfif" alt="">
+                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center p-4 mt-3">
+                                <h5 class="fw-bold mb-0">Hybrid Professionals</h5>
+                                <small>Short Description</small>
                             </div>
                         </div>
                     </div>
