@@ -68,7 +68,7 @@
             <div class="col-md-12 col-xl-4">
                 <div class="card flat-card">
                     <div class="card-header">
-                        <h5>Projects</h5>
+                        <h5>Customers</h5>
                     <div class="row-table">
                         <div class="col-sm- card-body br">
                             <div class="row">
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="col-sm-8 text-md-center">
                                     <h5>100</h5>
-                                    <span>Total Customer</span>
+                                    <span>Total</span>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="col-sm-8 text-md-center">
                                     <h5>100</h5>
-                                    <span>New Customers</span>
+                                    <span>New</span>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="col-sm-8 text-md-center">
                                     <h5>2000 +</h5>
-                                    <span>Daily Customers</span>
+                                    <span>Daily</span>
                                 </div>
                             </div>
                         </div>
@@ -112,31 +112,23 @@
                                 </div>
                                 <div class="col-sm-8 text-md-center">
                                     <h5>120</h5>
-                                    <span>Mails</span>
+                                    <span>Repeat</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
                 <!-- widget primary card start -->
-                <div class="card flat-card widget-primary-card">
-                    <div class="row-table">
-                        <div class="col-sm-3 card-body">
-                            <i class="feather icon-star-on"></i>
-                        </div>
-                        <div class="col-sm-9">
-                            <h4>4000 +</h4>
-                            <h6>Ratings Received</h6>
-                        </div>
-                    </div>
-                </div>
+                
                 <!-- widget primary card end -->
             </div>
             <!-- table card-1 end -->
             <!-- table card-2 start -->
-            <div class="col-md-12 col-xl-4">
-                <div class="card flat-card">
+        <div class="col-md-12 col-xl-4">
+            <div class="card flat-card">
+                <div class="card-header">
+                        <h5>Reservation</h5>
                     <div class="row-table">
                         <div class="col-sm-6 card-body br">
                             <div class="row">
@@ -145,7 +137,7 @@
                                 </div>
                                 <div class="col-sm-8 text-md-center">
                                     <h5>1000</h5>
-                                    <span>Shares</span>
+                                    <span>Pending</span>
                                 </div>
                             </div>
                         </div>
@@ -156,7 +148,7 @@
                                 </div>
                                 <div class="col-sm-8 text-md-center">
                                     <h5>600</h5>
-                                    <span>Network</span>
+                                    <span>Active</span>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +161,7 @@
                                 </div>
                                 <div class="col-sm-8 text-md-center">
                                     <h5>3550</h5>
-                                    <span>Returns</span>
+                                    <span>Completed</span>
                                 </div>
                             </div>
                         </div>
@@ -180,49 +172,69 @@
                                 </div>
                                 <div class="col-sm-8 text-md-center">
                                     <h5>100%</h5>
-                                    <span>Order</span>
+                                    <span>Cancelled</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- widget-success-card start -->
-                <div class="card flat-card widget-purple-card">
-                    <div class="row-table">
-                        <div class="col-sm-3 card-body">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div class="col-sm-9">
-                            <h4>17</h4>
-                            <h6>Achievements</h6>
-                        </div>
-                    </div>
-                </div>
-                <!-- widget-success-card end -->
             </div>
+                <!-- widget-success-card start -->
+                
+                <!-- widget-success-card end -->
+        </div>
             <!-- table card-2 end -->
             <!-- Widget primary-success card start -->
             <div class="col-md-12 col-xl-4">
-                <div class="card support-bar overflow-hidden">
-                    <div class="card-body pb-0">
-                        <h2 class="m-0">350</h2>
-                        <span class="text-c-blue">Support Requests</span>
-                        <p class="mb-3 mt-3">Total number of support requests that come in.</p>
-                    </div>
-                    <div id="support-chart"></div>
-                    <div class="card-footer bg-primary text-white">
-                        <div class="row text-center">
-                            <div class="col">
-                                <h4 class="m-0 text-white">10</h4>
-                                <span>Open</span>
+                <div class="card flat-card">
+                    <div class="card-header">
+                            <h5>Subscription</h5>
+                        <div class="row-table">
+                            <div class="col-sm-6 card-body br">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <i class="icon feather icon-share-2 text-c-blue mb-1 d-block"></i>
+                                    </div>
+                                    <div class="col-sm-8 text-md-center">
+                                        <h5>1000</h5>
+                                        <span>Pending</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col">
-                                <h4 class="m-0 text-white">5</h4>
-                                <span>Running</span>
+                            <div class="col-sm-6 card-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <i class="icon feather icon-wifi text-c-blue mb-1 d-block"></i>
+                                    </div>
+                                    <div class="col-sm-8 text-md-center">
+                                        <h5>600</h5>
+                                        <span>Active</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col">
-                                <h4 class="m-0 text-white">3</h4>
-                                <span>Solved</span>
+                        </div>
+                        <div class="row-table">
+                            <div class="col-sm-6 card-body br">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <i class="icon feather icon-rotate-ccw text-c-blue mb-1 d-block"></i>
+                                    </div>
+                                    <div class="col-sm-8 text-md-center">
+                                        <h5>3550</h5>
+                                        <span>Completed</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 card-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <i class="icon feather icon-shopping-cart text-c-blue mb-1 d-blockz"></i>
+                                    </div>
+                                    <div class="col-sm-8 text-md-center">
+                                        <h5>100%</h5>
+                                        <span>Expired</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
