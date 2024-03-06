@@ -307,7 +307,7 @@
             <div class="col-xl-6 col-md-12">
                 <div class="card latest-update-card">
                     <div class="card-header">
-                        <h5>Latest Updates</h5>
+                        <h5>Notification Status Updates</h5>
                         <div class="card-header-right">
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -331,9 +331,9 @@
                                 </div>
                                 <div class="col">
                                     <a href="#!">
-                                        <h6>+ 1652 Followers</h6>
+                                        <h6>+ 5 New Reservations</h6>
                                     </a>
-                                    <p class="text-muted m-b-0">You’re getting more and more followers, keep it up!</p>
+                                    <p class="text-muted m-b-0">You’re getting more and more customers, keep it up!</p>
                                 </div>
                             </div>
                             <div class="row p-b-30">
@@ -343,7 +343,7 @@
                                 </div>
                                 <div class="col">
                                     <a href="#!">
-                                        <h6>+ 5 New Products were added!</h6>
+                                        <h6>+ 10 New Subscriptions</h6>
                                     </a>
                                     <p class="text-muted m-b-0">Congratulations!</p>
                                 </div>
@@ -355,21 +355,33 @@
                                 </div>
                                 <div class="col">
                                     <a href="#!">
-                                        <h6>+1 Friend Requests</h6>
+                                        <h6>+8 New Customers</h6>
                                     </a>
                                     <p class="text-muted m-b-10">This is great, keep it up!</p>
                                     <div class="table-responsive">
                                         <table class="table table-hover">
                                             <tr>
-                                                <td class="b-none">
-                                                    <a href="#!" class="align-middle">
-                                                        <img src="assets/images/user/avatar-2.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
-                                                        <div class="d-inline-block">
-                                                            <h6>Jeny William</h6>
-                                                            <p class="text-muted m-b-0">Graphic Designer</p>
-                                                        </div>
-                                                    </a>
-                                                </td>
+                                                
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row p-b-0">
+                                <div class="col-auto text-right update-meta">
+                                    <p class="text-muted m-b-0 d-inline-flex">2 day ago</p>
+                                    <i class="feather icon-facebook bg-facebook update-icon"></i>
+                                </div>
+                                <div class="col">
+                                    <a href="#!">
+                                        <h6>+ 12 Renewed Subscriptions</h6>
+                                    </a>
+                                    <p class="text-muted m-b-10">Business is great, keep it up!</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <tr>
+                                                
                                             </tr>
                                         </table>
                                     </div>
@@ -384,7 +396,7 @@
             </div>
             <!-- prject ,team member start -->
             <!-- seo start -->
-            <div class="col-xl-4 col-md-12">
+            {{-- <div class="col-xl-4 col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row align-items-center">
@@ -398,8 +410,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-4 col-md-6">
+            </div> --}}
+            {{-- <div class="col-xl-4 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="row align-items-center">
@@ -413,8 +425,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-4 col-md-6">
+            </div> --}}
+            {{-- <div class="col-xl-4 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="row align-items-center">
@@ -428,7 +440,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- seo end -->
 
             <!-- Latest Customers start -->
