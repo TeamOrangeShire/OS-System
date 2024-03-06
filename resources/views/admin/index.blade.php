@@ -239,8 +239,8 @@
                             <div class="col-sm-6 card-body">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <i> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="24" height="24">
-                                            <path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64zm96 320h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H96c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zM144 64h96c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z" fill="#9540ff"/>
+                                        <i> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24">
+                                            <path d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zM329 305c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-95 95-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L329 305z" fill="#9540ff"/>
                                           </svg>
                                           
                                            </i>
@@ -256,31 +256,30 @@
                             <div class="col-sm-6 card-body br">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <i> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff5c40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award">
-                                            <circle cx="12" cy="8" r="7"></circle>
-                                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                                        <i> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
+                                            <path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z" fill="#9540ff"/>
                                           </svg>
+                                          
+                                          
                                            </i>
                                     </div>
                                     <div class="col-sm-8 text-md-center">
                                         <h5>3550</h5>
-                                        <span>Completed</span>
+                                        <span>Expired</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 card-body">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <i> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff5c40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                                            <line x1="12" y1="16" x2="12" y2="16"></line>
+                                        <i> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
+                                            <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" fill="#9540ff"/>
                                           </svg>
                                            </i>
                                     </div>
                                     <div class="col-sm-8 text-md-center">
                                         <h5>100%</h5>
-                                        <span>Expired</span>
+                                        <span>Cancelled</span>
                                     </div>
                                 </div>
                             </div>
