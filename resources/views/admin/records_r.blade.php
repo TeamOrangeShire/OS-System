@@ -50,7 +50,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5> Confirmed Reservations </h5>
+                    <h5>Reservations Records</h5>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
@@ -63,7 +63,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Room No.</th>
-                                    <th>Action</th>
+                                  
 
 
                                 </tr>
@@ -76,6 +76,7 @@
                                     <td>02/04/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>1</td>
+
 
                                 </tr>
                                 <tr>

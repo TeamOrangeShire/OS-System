@@ -54,11 +54,21 @@
                     <h5>Add New Customer</h5>
                     <hr>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <form>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Username</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Number</label>
+                                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Number">
                                    
                                 </div>
                                 <div class="form-group">

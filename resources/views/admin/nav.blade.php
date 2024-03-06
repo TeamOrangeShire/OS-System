@@ -41,7 +41,7 @@
                         <li><a href="{{route('pending_r')}}">Pending</a></li>
                         <li><a href="{{route('confirmed_r')}}">Confirmed</a></li>
                         <li><a href="{{route('cancelled_r')}}">Cancelled</a></li>
-                        <li><a href="bc_card.html">Records</a></li>
+                        <li><a href="{{route('records_r')}}">Records</a></li>
                         
                     </ul>
                 </li>
