@@ -62,7 +62,7 @@
                             <h4 class="text-right">Profile Settings</h4>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-6"><label class="labels">FullName</label><input type="text" class="form-control" placeholder="Full Name" value=""></div>
+                            <div class="col-md-6"><label class="labels">Full Name</label><input type="text" class="form-control" placeholder="Full Name" value=""></div>
                             <div class="col-md-6"><label class="labels">Profile Image</label><input type="file" class="form-control" value="" placeholder="surname"></div>
                         </div>
                         <div class="row mt-2">
