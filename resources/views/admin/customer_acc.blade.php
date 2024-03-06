@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Phone Number</label>
-                                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Number">
+                                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number">
                                    
                                 </div>
                                 <div class="form-group">
@@ -109,7 +109,7 @@
                                     <th>#</th>
                                     <th>Username</th>
                                     <th>Email</th>
-                                    <th>Number</th>
+                                    <th>Phone Number</th>
                             
                                 </tr>
                             </thead>
