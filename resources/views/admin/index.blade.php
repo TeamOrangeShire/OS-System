@@ -67,15 +67,17 @@
             <!-- table card-1 start -->
             <div class="col-md-12 col-xl-4">
                 <div class="card flat-card">
+                    <div class="card-header">
+                        <h5>Projects</h5>
                     <div class="row-table">
-                        <div class="col-sm-6 card-body br">
+                        <div class="col-sm- card-body br">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <i class="icon feather icon-eye text-c-green mb-1 d-block"></i>
                                 </div>
                                 <div class="col-sm-8 text-md-center">
-                                    <h5>10k</h5>
-                                    <span>Visitors</span>
+                                    <h5>100</h5>
+                                    <span>Total Customer</span>
                                 </div>
                             </div>
                         </div>
@@ -85,8 +87,8 @@
                                     <i class="icon feather icon-music text-c-red mb-1 d-block"></i>
                                 </div>
                                 <div class="col-sm-8 text-md-center">
-                                    <h5>100%</h5>
-                                    <span>Volume</span>
+                                    <h5>100</h5>
+                                    <span>New Customers</span>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +101,7 @@
                                 </div>
                                 <div class="col-sm-8 text-md-center">
                                     <h5>2000 +</h5>
-                                    <span>Files</span>
+                                    <span>Daily Customers</span>
                                 </div>
                             </div>
                         </div>
@@ -115,6 +117,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 <!-- widget primary card start -->
                 <div class="card flat-card widget-primary-card">
