@@ -66,6 +66,10 @@
                     </ul>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{route('promos')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-percent"></i></span><span class="pcoded-mtext">Promos</span></a>
+                </li>
+
             </ul>
         </div>
     </div>
