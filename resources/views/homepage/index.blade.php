@@ -93,7 +93,7 @@
 
 
         <!-- Category Start -->
-        <br><br><br><br><br>
+        <br><br><br><br>
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
@@ -108,7 +108,6 @@
                                     <img class="img-fluid" src="img/os_a1.png" alt="Icon">
                                 </div>
                                 <h6>Free Coffee</h6>
-                                <span>Short Description</span>
                             </div>
                         </a>
                     </div>
@@ -120,7 +119,6 @@
                                     <img class="img-fluid" src="img/os_a2.png" alt="Icon">
                                 </div>
                                 <h6>Unli Fast Internet</h6>
-                                <span>Short Description</span>
                             </div>
                         </a>
                     </div>
@@ -131,7 +129,6 @@
                                     <img class="img-fluid" src="img/os_a3.png" alt="Icon">
                                 </div>
                                 <h6>Quiet Space</h6>
-                                <span>Short Description</span>
                             </div>
                         </a>
                     </div>
@@ -142,7 +139,6 @@
                                     <img class="img-fluid" src="img/os_a4.png" alt="Icon">
                                 </div>
                                 <h6>Generator-ready</h6>
-                                <span>Short Description</span>
                             </div>
                         </a>
                     </div>
@@ -154,6 +150,7 @@
 
 
         <!-- About Start -->
+        <br><br>
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-5 align-items-center">
@@ -177,7 +174,7 @@
 
 
         <!-- Property List Start -->
-        <div id="servicesTab" class="container-xxl py-5">
+        <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-0 gx-5 align-items-end">
                     <div class="col-lg-6">
@@ -476,9 +473,6 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/os_c1.jfif" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
@@ -492,9 +486,6 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/os_c2.jfif" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
@@ -508,9 +499,6 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/os_c3.jfif" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
@@ -524,9 +512,6 @@
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/os_c4.jfif" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
