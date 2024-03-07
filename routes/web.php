@@ -20,6 +20,9 @@ Route::get('/reservation', function () { return view('homepage.reservation');})-
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
 Route::get('/services-hotdesk', function () { return view('homepage.services.hotdesk');})->name('hotdesk');
 
+
+
+
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');
@@ -33,7 +36,7 @@ Route::get('/admin/confirmed_reservation', function () { return view('admin.conf
 Route::get('/admin/cancelled_reservation', function () { return view('admin.cancelled_r');})->name('cancelled_r');
 Route::get('/admin/completed_reservation', function () { return view('admin.completed_r');})->name('completed_r');
 Route::get('/admin/records_reservation', function () { return view('admin.records_r');})->name('records_r');
-
+Route::get('/admin/admin_lockscreen', function () { return view('admin.admin_lockscreen');})->name('admin_lockscreen');
 Route::get('/admin/admin_profile', function () { return view('admin.admin_profile');})->name('admin_profile');
 Route::get('/admin/log_history', function () { return view('admin.log_history');})->name('log_history');
 Route::get('/admin/promos', function () { return view('admin.promos');})->name('promos');
