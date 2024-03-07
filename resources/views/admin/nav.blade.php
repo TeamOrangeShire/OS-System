@@ -26,6 +26,9 @@
                 <li class="nav-item">
                     <a href="{{route('index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-list"></i></span><span class="pcoded-mtext">Log Records</span></a>
+                </li>
                 <li class="nav-item pcoded-hasmenu">
                     <a  class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Accounts</span></a>
                     <ul class="pcoded-submenu">
