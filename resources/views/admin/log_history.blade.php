@@ -151,14 +151,14 @@
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Large Modal</h5>
+                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Time In</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                     </div>
                                                     <div class="modal-body">
 
                                                         <form class="form-inline">
                                                             <div class="form-group mx-sm-3 mb-2">
-                                                                <label for="inputPassword2" class="sr-only">Time In</label>
+                                                             
                                                                 <input type="time" class="form-control" id="" placeholder="Time In">
                                                             </div>
                                                             <button type="submit" class="btn  btn-icon btn-success"><i class="feather icon-check-circle"></i></button>
@@ -167,7 +167,7 @@
                                                         <div class="col-md-12">
                                                             <div class="card">
                                                                 <div class="card-header">
-                                                                    <h5>Subscription Records</h5>
+                                                                    <h5>Log history</h5>
                                                                     
                                                                 </div>
                                                                 <div class="card-body table-border-style">
@@ -225,14 +225,14 @@
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Large Modal</h5>
+                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Time in</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                     </div>
                                                     <div class="modal-body">
 
                                                         <form class="form-inline">
                                                             <div class="form-group mx-sm-3 mb-2">
-                                                                <label for="inputPassword2" class="sr-only">Time In</label>
+                                                               
                                                                 <input type="time" class="form-control" id="" placeholder="Time In">
                                                             </div>
                                                             <button type="submit" class="btn  btn-icon btn-success"><i class="feather icon-check-circle"></i></button>
@@ -241,7 +241,7 @@
                                                         <div class="col-md-12">
                                                             <div class="card">
                                                                 <div class="card-header">
-                                                                    <h5>Subscription Records</h5>
+                                                                    <h5>Log History</h5>
                                                                     
                                                                 </div>
                                                                 <div class="card-body table-border-style">
@@ -298,14 +298,14 @@
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Large Modal</h5>
+                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Time In</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                     </div>
                                                     <div class="modal-body">
 
                                                         <form class="form-inline">
                                                             <div class="form-group mx-sm-3 mb-2">
-                                                                <label for="inputPassword2" class="sr-only">Time In</label>
+                                                               
                                                                 <input type="time" class="form-control" id="" placeholder="Time In">
                                                             </div>
                                                             <button type="submit" class="btn  btn-icon btn-success"><i class="feather icon-check-circle"></i></button>
@@ -314,7 +314,7 @@
                                                         <div class="col-md-12">
                                                             <div class="card">
                                                                 <div class="card-header">
-                                                                    <h5>Subscription Records</h5>
+                                                                    <h5>Log History</h5>
                                                                     
                                                                 </div>
                                                                 <div class="card-body table-border-style">
