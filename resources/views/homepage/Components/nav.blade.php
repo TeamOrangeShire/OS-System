@@ -14,9 +14,9 @@
                 <a href="{{ route('home') }}" class="nav-item nav-link {{ $active === 'home'? 'active' : '' }}">Home</a>
                 <a href="{{ route('about') }}" class="nav-item nav-link {{ $active === 'about'? 'active' : '' }}">About</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+                    <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
                     <div class="dropdown-menu rounded-0 m-0">   
-                        <a href="property-list.html" class="dropdown-item">Hot Desk</a>
+                        <a href="{{ route('hotdesk') }}" class="dropdown-item">Hot Desk</a>
                         <a href="property-type.html" class="dropdown-item">Hybrid Pros</a>
                         <a href="property-agent.html" class="dropdown-item">Fixed Desk</a>
                         <a href="property-agent.html" class="dropdown-item">Private Rooms</a>

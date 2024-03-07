@@ -177,7 +177,7 @@
 
 
         <!-- Property List Start -->
-        <div class="container-xxl py-5">
+        <div id="servicesTab" class="container-xxl py-5">
             <div class="container">
                 <div class="row g-0 gx-5 align-items-end">
                     <div class="col-lg-6">
