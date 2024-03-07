@@ -46,56 +46,108 @@
 <div class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
-      
-        <div class="col-md-12">
+      <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+               
+                <div class="card-body">
+                    <h5>Add New Plan</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Plan Name</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Hours</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Price</label>
+                                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Promo</label>
+                                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                </div>
+
+                               
+                                <button type="submit" class="btn  btn-primary">Add Plan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>Subscription Plans</h5>
                     
+                    <h5>Subscription Plans</h5>
+                    <div class="input-group m-t-15">
+                        <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary">
+                                <i class="feather icon-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Plan</th>
-                                    <th>hours</th>
+                                    <th>Plan Name</th>
+                                    <th>Hours</th>
                                     <th>Price</th>
-                                    <th>Promos</th>
+                                    <th>Promo</th>
+                                    <th colspan="2">Action</th>
+
+                            
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>1</td>
+                                    <td>Plan 1</td>
+                                    <td>30 hrs</td>
+                                    <td>1000</td>
+                                    <td></td>
+                                    <td> <button class="sub_add" role="button">Update</button>  
+                                        <button class="sub_del" role="button">Delete</button> </td>
+                                </tr>
+                                <tr>
                                     <td>2</td>
-                                    <td>30hrs</td>
-                                    <td>Mark</td>
-                                    
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
+                                    <td>Plan 2</td>
+                                    <td>50 hrs</td>
+                                    <td>1500</td>
+                                    <td></td>
+                                    <td> <button class="sub_add" role="button">Update</button>  
+                                        <button class="sub_del" role="button">Delete</button> </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>70hrs</td>
-                                    <td>Mark2</td>
-                                    
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>50hrs</td>
-                                    <td>Mark3</td>
-                                   
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
+                                    <td>Plan 3</td>
+                                    <td>70 hrs</td>
+                                    <td>1800</td>
+                                    <td></td>
+                                    <td> <button class="sub_add" role="button">Update</button>  
+                                        <button class="sub_del" role="button">Delete</button> </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>    
+    </div>
        
         <!-- [ Main Content ] end -->
     </div>
