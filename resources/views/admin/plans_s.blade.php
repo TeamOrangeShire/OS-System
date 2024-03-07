@@ -89,7 +89,8 @@
                                                     <option>3</option>
                                                     <option>4</option>
                                                     <option>5</option>
-                                                </select>                                </div>
+                                                </select>                        
+                                            </div>
             
                                            
                                             <button type="submit" class="btn  btn-primary">Add Plan</button>
