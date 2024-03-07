@@ -15,7 +15,7 @@
 }
 
 body {
-	background: #f6f5f7;
+	background: #fff3d9;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -93,7 +93,7 @@ form {
 input {
 	background-color: #eee;
 	border: none;
-	padding: 12px 15px;
+	padding: 6px 15px;
 	margin: 8px 0;
 	width: 100%;
 }
@@ -107,7 +107,7 @@ input {
 	overflow: hidden;
 	width: 768px;
 	max-width: 100%;
-	min-height: 480px;
+	min-height: 500px;
 }
 
 .form-container {
@@ -170,8 +170,7 @@ input {
 
 .overlay {
 	background: #FF416C;
-	background: -webkit-linear-gradient(to right, #ff5c40, #fff3d9);
-	background: linear-gradient(to right, #ff5c40, #fff3d9);
+	background: linear-gradient(to right, #ff5c40, #fff3d9, #ff5c40);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -259,11 +258,14 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
+
+.two-columns{
+    width: calc(50% - 10px);
+}
     </style>
 </head>
 
 <body>
-    <h2>Weekly Coding Challenge #1: Sign in/up Form</h2>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
 		<form action="#">
@@ -274,9 +276,23 @@ footer a {
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
+			<input type="text" placeholder="First Name" />
+            <input type="text" class="two-columns" placeholder="Middle Name" />
+            <input type="text" class="two-columns" placeholder="Last Name" />
+            <input type="text" id="combinedInput" name="combinedInput" list="options" placeholder="Extension Name">
+            <datalist id="options">
+                <option value="Jr.">
+                <option value="Sr.">
+                <option value="I">
+                <option value="II">
+                <option value="III">
+                <option value="IV">
+                <option value="V">
+            </datalist>
+            <input type="number" maxlength="11" placeholder="Phone Number">
 			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
+			<input type="password" class="two-columns" placeholder="Password" />
+            <input type="password" class="two-columns" placeholder="Confirm Password" />
 			<button>Sign Up</button>
 		</form>
 	</div>
@@ -311,14 +327,6 @@ footer a {
 	</div>
 </div>
 
-<footer>
-	<p>
-		Created with <i class="fa fa-heart"></i> by
-		<a target="_blank" href="https://florin-pop.com">Florin Pop</a>
-		- Read how I created this and how you can join the challenge
-		<a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
-	</p>
-</footer>
 <script>
     const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
