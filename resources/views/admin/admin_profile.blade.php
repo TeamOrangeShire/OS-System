@@ -47,55 +47,39 @@
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
       
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Expired Subscriptions</h5>
-                    
-                </div>
-                <div class="card-body table-border-style">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Subscription</th>
-                                    <th>Name</th>
-                                    <th>Hours left</th>
-                                    <th>Start</th>
-                                    <th>End</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>2</td>
-                                    <td>30hrs</td>
-                                    <td>Mark</td>
-                                    <td>29:00</td>
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>70hrs</td>
-                                    <td>Mark2</td>
-                                    <td>29:00</td>
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>50hrs</td>
-                                    <td>Mark3</td>
-                                    <td>29:00</td>
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
-                            </tbody>
-                        </table>
+        <div class="container rounded bg-white mt-5 mb-5">
+            <div class="row">
+                <div class="col-md-6 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                        <span class="font-weight-bold">Username</span>
+                        <span class="text-black-50">Fullname</span>
+                        <span> </span>
                     </div>
                 </div>
+                <div class="col-md-5 ">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Profile Settings</h4>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Full Name</label><input type="text" class="form-control" placeholder="Full Name" value=""></div>
+                            <div class="col-md-6"><label class="labels">Profile Image</label><input type="file" class="form-control" value="" placeholder="surname"></div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Username</label><input type="text" class="form-control" placeholder="Username" value=""></div>
+                            <div class="col-md-6"><label class="labels">Password</label><input type="password" class="form-control" value="" placeholder="Password"></div>
+                        </div>
+                        
+                     
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-primary profile-button" type="button">Save Profile</button>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
+        </div>
+        </div>
         </div>
        
         <!-- [ Main Content ] end -->

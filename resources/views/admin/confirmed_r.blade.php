@@ -47,7 +47,7 @@
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
       
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h5> Confirmed Reservations </h5>
@@ -63,7 +63,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Room No.</th>
-                                    <th>Action</th>
+                                    <th colspan="2"> Action Buttons</th>
 
 
                                 </tr>
@@ -76,6 +76,8 @@
                                     <td>02/04/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>1</td>
+                                    <td> <button class="confirm_btn" role="button">Edit</button>  
+                                        <button class="decline_btn" role="button">Cancel</button> </td>
 
                                 </tr>
                                 <tr>
@@ -85,6 +87,8 @@
                                     <td>02/07/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>3</td>
+                                    <td> <button class="confirm_btn" role="button">Edit</button>  
+                                        <button class="decline_btn" role="button">Cancel</button> </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -93,6 +97,8 @@
                                     <td>02/05/2024</td>
                                     <td>7PM TO 10PM</td>
                                     <td>2</td>
+                                    <td> <button class="confirm_btn" role="button">Edit</button>  
+                                        <button class="decline_btn" role="button">Cancel</button> </td>
                                 </tr>
                             </tbody>
                         </table>

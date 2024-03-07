@@ -50,46 +50,48 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Expired Subscriptions</h5>
-                    
+                    <h5> Completed Reservations </h5>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Subscription</th>
+                                    <th>ID</th>
                                     <th>Name</th>
-                                    <th>Hours left</th>
-                                    <th>Start</th>
-                                    <th>End</th>
+                                    <th>Email</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Room No.</th>
+
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>2</td>
-                                    <td>30hrs</td>
+                                    <td>1</td>
                                     <td>Mark</td>
-                                    <td>29:00</td>
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
+                                    <td>mark@gmail.com</td>
+                                    <td>02/04/2024</td>
+                                    <td>3PM TO 6PM</td>
+                                    <td>1</td>
+
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>JANE</td>
+                                    <td>JANE@gmail.com</td>
+                                    <td>02/07/2024</td>
+                                    <td>3PM TO 6PM</td>
+                                    <td>3</td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>70hrs</td>
-                                    <td>Mark2</td>
-                                    <td>29:00</td>
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>50hrs</td>
-                                    <td>Mark3</td>
-                                    <td>29:00</td>
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
+                                    <td>SARAH</td>
+                                    <td>SARAH@gmail.com</td>
+                                    <td>02/05/2024</td>
+                                    <td>7PM TO 10PM</td>
+                                    <td>2</td>
                                 </tr>
                             </tbody>
                         </table>
