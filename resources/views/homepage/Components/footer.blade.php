@@ -16,8 +16,8 @@
                 <a class="btn btn-link text-white-50" href="{{ route('about') }}">About Us</a>
                 <a class="btn btn-link text-white-50" href="{{ route('contact') }}">Contact Us</a>
                 <a class="btn btn-link text-white-50" href="">Our Services</a>
-                <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
-                <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
+                <a class="btn btn-link text-white-50" href="{{ route('reservation') }}">Reservation</a>
+                
             </div>
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-white mb-4">Photo Gallery</h5>
