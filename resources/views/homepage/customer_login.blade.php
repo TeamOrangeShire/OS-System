@@ -99,6 +99,7 @@ input {
 }
 
 .container {
+	display: flex;
 	background-color: #fff;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
@@ -263,9 +264,12 @@ footer a {
     text-decoration: none;
 }
 
-.two-columns{
-    width: calc(50% - 10px);
+@media(max-width:600px){
+	.container{
+		flex-direction: column;
+	}
 }
+
     </style>
 </head>
 
@@ -299,9 +303,6 @@ footer a {
 					</datalist>
 				</div>
 			</div>
-			
-       
-            
       
             <input type="number" maxlength="11" placeholder="Phone Number">
 			<input type="email" placeholder="Email" />
