@@ -16,12 +16,12 @@
                 <div class="nav-item dropdown">
                     <a href="" class="nav-link dropdown-toggle  {{ $active === 'services'? 'active' : '' }}" data-bs-toggle="dropdown">Services</a>
                     <div class="dropdown-menu rounded-0 m-0">   
-                        <a href="{{ route('hotdesk') }}" class="dropdown-item">Hot Desk</a>
-                        <a href="property-type.html" class="dropdown-item">Hybrid Pros</a>
-                        <a href="property-agent.html" class="dropdown-item">Fixed Desk</a>
-                        <a href="property-agent.html" class="dropdown-item">Private Rooms</a>
-                        <a href="property-agent.html" class="dropdown-item">Printer Services</a>
-                        <a href="property-agent.html" class="dropdown-item">Others</a>
+                        <a href="{{ route('services') }}#hotdesk" class="dropdown-item">Hot Desk</a>
+                        <a href="{{ route('services') }}#hybrid_pros" class="dropdown-item">Hybrid Pros</a>
+                        <a href="{{ route('services') }}#fixed_desk" class="dropdown-item">Fixed Desk</a>
+                        <a href="{{ route('services') }}#private_rooms" class="dropdown-item">Private Rooms</a>
+                        <a href="{{ route('services') }}#printer_service" class="dropdown-item">Printer Services</a>
+                        <a href="{{ route('services') }}#others" class="dropdown-item">Others</a>
                     </div>
                 </div>
                 <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a>
