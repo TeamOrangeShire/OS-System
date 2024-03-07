@@ -64,6 +64,8 @@
                                     
                                     <th>Start</th>
                                     <th>End</th>
+                                    <th colspan="2"> Action Buttons</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,6 +76,8 @@
                                     
                                     <td>2024/03/04</td>
                                     <td>2024/04/04</td>
+                                    <td> <button class="confirm_btn" role="button">Confirm</button>  
+                                        <button class="decline_btn" role="button">Decline</button> </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -82,6 +86,8 @@
                                     
                                     <td>2024/03/04</td>
                                     <td>2024/04/04</td>
+                                    <td> <button class="confirm_btn" role="button">Confirm</button>  
+                                        <button class="decline_btn" role="button">Decline</button> </td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
@@ -90,6 +96,8 @@
                                    
                                     <td>2024/03/04</td>
                                     <td>2024/04/04</td>
+                                    <td> <button class="confirm_btn" role="button">Confirm</button>  
+                                        <button class="decline_btn" role="button">Decline</button> </td>
                                 </tr>
                             </tbody>
                         </table>
