@@ -99,7 +99,40 @@
                                     <td>Valentines Day Special</td>
                                     <td>20%</td>
                                     <td> 
-                                        <button type="button" class="btn  btn-icon btn-success"><i class="feather icon-edit"></i></button>
+                                        <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Promo Details</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    </div>
+                    
+                                                    <div class="modal-body">
+                                                  
+                                                        <div class="col-md-12">
+                                                            <form>
+                                                                <div class="form-group">
+                                                                    <label for="plan_name">Promo Name</label>
+                                                                    <input type="text" class="form-control" id="plan_name" aria-describedby="emailHelp" placeholder="Plan Name">
+                                                                   
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="plan_hours">Percentage</label>
+                                                                    <input type="number" class="form-control" id="plan_hours" aria-describedby="emailHelp" placeholder="Plan Hours">
+                                                                   
+                                                                </div>
+
+                                                                <button type="submit" class="btn  btn-primary" >Add Plan</button>
+                                                            </form>
+                                                        </div>
+                                                   </div>
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-edit"></i></button>
+
                                         <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button>
                                     </td>
 
