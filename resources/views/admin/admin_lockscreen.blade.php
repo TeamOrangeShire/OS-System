@@ -30,11 +30,9 @@
       max-width: 400px;
       margin: 0 auto;
       margin-top: 100px;
-      background-color: #ffffff;
-      border: 1px solid #dee2e6;
-      border-radius: 5px;
+    
       padding: 20px;
-      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    
     }
 
     .lock-screen-logo {
@@ -64,7 +62,7 @@
       <img src="{{asset('assets/images/user/avatar-2.jpg')}}" alt="Logo">
     </div>
     <form class="lock-screen-form">
-     
+    
       <div class="form-group">
         <input type="password" class="form-control" id="password" placeholder="Password">
       </div>
