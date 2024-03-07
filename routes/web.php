@@ -48,3 +48,4 @@ Route::get('/admin/expired_subscription', function () { return view('admin.expir
 Route::get('/admin/cancelled_subscription', function () { return view('admin.cancelled_s');})->name('cancelled_s');
 Route::get('/admin/records_subscription', function () { return view('admin.records_s');})->name('records_s');
 Route::get('/admin/blank', function () { return view('admin.blank');})->name('blank');
+Route::get('/admin/time', function () { return view('admin.time');})->name('time');
