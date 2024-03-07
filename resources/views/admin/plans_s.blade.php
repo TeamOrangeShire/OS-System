@@ -101,16 +101,9 @@
                         </div>
                     </div>
                     <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#exampleModalCenter">Add Plan</button>
-<br>
+
                     {{-- modal end --}}
-                   <div class="input-group m-t-15">
-                        <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary">
-                                <i class="feather icon-search"></i>
-                            </button>
-                        </div>
-                    </div>
+                 
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
