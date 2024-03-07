@@ -46,8 +46,36 @@
 <div class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
-      
-        <div class="col-md-12">
+        <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+               
+                <div class="card-body">
+                    <h5>Add New Promo</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form>
+                                <div class="form-group">
+                                    <label for="promos_name">Promo Name</label>
+                                    <input type="text" class="form-control" id="promos_name" aria-describedby="emailHelp" placeholder="Promo Name">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="percent_age">Percentage</label>
+                                    <input type="number" class="form-control" id="percent_age" aria-describedby="emailHelp" placeholder="Promo Percentage">
+                                   
+                                </div>
+
+                               
+                                <button type="submit" class="btn  btn-primary">Add Promo</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <h5>Promos</h5>
@@ -60,7 +88,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Promo Name</th>
-                                    <th>Percentage</th>        
+                                    <th>Percentage</th>      
+                                    <th>Edit</th>        
+  
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,19 +98,29 @@
                                     <td>2</td>
                                     <td>Valentines Day Special</td>
                                     <td>20%</td>
+                                    <td> 
+                                        <button type="button" class="btn  btn-icon btn-success"><i class="feather icon-edit"></i></button>
+                                        <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td>3</td>
                                     <td>Valentines Day Special</td>
                                     <td>20%</td>
-
+                                    <td> 
+                                        <button type="button" class="btn  btn-icon btn-success"><i class="feather icon-edit"></i></button>
+                                        <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
                                     <td>Valentines Day Special</td>
                                     <td>20%</td>
-
+                                    <td> 
+                                        <button type="button" class="btn  btn-icon btn-success"><i class="feather icon-edit"></i></button>
+                                        <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -88,7 +128,7 @@
                 </div>
             </div>
         </div>
-       
+    </div>
         <!-- [ Main Content ] end -->
     </div>
 </div>
