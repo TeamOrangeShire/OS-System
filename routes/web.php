@@ -35,6 +35,7 @@ Route::get('/admin/records_reservation', function () { return view('admin.record
 
 Route::get('/admin/admin_profile', function () { return view('admin.admin_profile');})->name('admin_profile');
 Route::get('/admin/log_history', function () { return view('admin.log_history');})->name('log_history');
+Route::get('/admin/promos', function () { return view('admin.promos');})->name('promos');
 
 Route::get('/admin/plans_subscription', function () { return view('admin.plans_s');})->name('plans_s');
 Route::get('/admin/pending_subscription', function () { return view('admin.pending_s');})->name('pending_s');
