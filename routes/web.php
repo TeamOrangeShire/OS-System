@@ -18,7 +18,7 @@ Route::get('/aboutus', function () {return view('homepage.about');})->name('abou
 Route::get('/contactus', function () { return view('homepage.contact');})->name('contact');
 Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
-Route::get('/services/hotdesk', function () { return view('homepage.Services.hotdesk');})->name('hotdesk');
+Route::get('/services-hotdesk', function () { return view('homepage.services.hotdesk');})->name('hotdesk');
 
 
 
@@ -48,3 +48,4 @@ Route::get('/admin/expired_subscription', function () { return view('admin.expir
 Route::get('/admin/cancelled_subscription', function () { return view('admin.cancelled_s');})->name('cancelled_s');
 Route::get('/admin/records_subscription', function () { return view('admin.records_s');})->name('records_s');
 Route::get('/admin/blank', function () { return view('admin.blank');})->name('blank');
+Route::get('/admin/time', function () { return view('admin.time');})->name('time');
