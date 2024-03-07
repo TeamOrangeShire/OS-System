@@ -26,6 +26,9 @@
                 <li class="nav-item">
                     <a href="{{route('index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('log_history')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-list"></i></span><span class="pcoded-mtext">Log History</span></a>
+                </li>
                 <li class="nav-item pcoded-hasmenu">
                     <a  class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Accounts</span></a>
                     <ul class="pcoded-submenu">
@@ -38,6 +41,7 @@
                     <a href="#!" class="nav-link "><span class="pcoded-micon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></span><span class="pcoded-mtext">Reservation</span></a>
                     <ul class="pcoded-submenu">
+                        <li><a href="{{route('rooms_r')}}">Rooms</a></li>
                         <li><a href="{{route('pending_r')}}">Pending</a></li>
                         <li><a href="{{route('confirmed_r')}}">Active</a></li>
                         <li><a href="{{route('completed_r')}}">Completed</a></li>
@@ -52,6 +56,7 @@
                     <a href="#!" class="nav-link "><span class="pcoded-micon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="7" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></span><span class="pcoded-mtext">Subsciption</span></a>
                     <ul class="pcoded-submenu">
+                        <li><a href="{{route('plans_s')}}">Plans</a></li>
                         <li><a href="{{route('pending_s')}}">Pending</a></li>
                         <li><a href="{{route('active_s')}}">Active</a></li>
                         <li><a href="{{route('expired_s')}}">Expired</a></li>

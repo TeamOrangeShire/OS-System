@@ -46,65 +46,113 @@
 <div class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
-      
-        <div class="col-md-12">
+      <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+               
+                <div class="card-body">
+                    <h5>Add New Plan</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form>
+                                <div class="form-group">
+                                    <label for="plan_name">Plan Name</label>
+                                    <input type="text" class="form-control" id="plan_name" aria-describedby="emailHelp" placeholder="Plan Name">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="plan_hours">Hours</label>
+                                    <input type="number" class="form-control" id="plan_hours" aria-describedby="emailHelp" placeholder="Plan Hours">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="plan_price">Price</label>
+                                    <input type="number" class="form-control" id="plan_price" aria-describedby="emailHelp" placeholder="Plan Price">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="plan_promo">Promo</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>                                </div>
+
+                               
+                                <button type="submit" class="btn  btn-primary">Add Plan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>Pending Subscriptions</h5>
                     
+                    <h5>Subscription Plans</h5>
+                    <div class="input-group m-t-15">
+                        <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary">
+                                <i class="feather icon-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Subscription</th>
-                                    <th>Name</th>
-                                    
-                                    <th>Start</th>
-                                    <th>End</th>
-                                    <th colspan="2"> Action Buttons</th>
+                                    <th>ID</th>
+                                    <th>Plan Name</th>
+                                    <th>Hours</th>
+                                    <th>Price</th>
+                                    <th>Promo</th>
+                                    <th colspan="2">Action</th>
 
+                            
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>1</td>
+                                    <td>Plan 1</td>
+                                    <td>30 hrs</td>
+                                    <td>1000</td>
+                                    <td></td>
+                                    <td> <button class="sub_add" role="button">Update</button>  
+                                        <button class="sub_del" role="button">Delete</button> </td>
+                                </tr>
+                                <tr>
                                     <td>2</td>
-                                    <td>30hrs</td>
-                                    <td>Mark</td>
-                                    
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                    <td> <button class="confirm_btn" role="button">Confirm</button>  
-                                        <button class="decline_btn" role="button">Decline</button> </td>
+                                    <td>Plan 2</td>
+                                    <td>50 hrs</td>
+                                    <td>1500</td>
+                                    <td></td>
+                                    <td> <button class="sub_add" role="button">Update</button>  
+                                        <button class="sub_del" role="button">Delete</button> </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>70hrs</td>
-                                    <td>Mark2</td>
-                                    
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                    <td> <button class="confirm_btn" role="button">Confirm</button>  
-                                        <button class="decline_btn" role="button">Decline</button> </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>50hrs</td>
-                                    <td>Mark3</td>
-                                   
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                    <td> <button class="confirm_btn" role="button">Confirm</button>  
-                                        <button class="decline_btn" role="button">Decline</button> </td>
+                                    <td>Plan 3</td>
+                                    <td>70 hrs</td>
+                                    <td>1800</td>
+                                    <td></td>
+                                    <td> <button class="sub_add" role="button">Update</button>  
+                                        <button class="sub_del" role="button">Delete</button> </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>    
+    </div>
        
         <!-- [ Main Content ] end -->
     </div>

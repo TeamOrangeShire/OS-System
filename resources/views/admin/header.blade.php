@@ -1,11 +1,11 @@
-<header class="navbar pcoded-header navbar-expand-lg navbar-light header-dark">
+<header class="navbar pcoded-header navbar-expand-lg navbar-light header-dark" style="background-color: #333333;">
 		
 			
     <div class="m-header">
         <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
         <a href="#!" class="b-brand">
             <!-- ========   change your logo hear   ============ -->
-            <img src="{{ asset('assets/images/os_logo.png') }}" style="width: 15%;" alt="" class="logo"> <label for="logo">  Orange Shire</label>
+            <img src="{{ asset('assets/images/os_logo.png') }}" style="width: 20%;" alt="" class="logo"> <label for="logo">  Orange Shire</label>
             <img src="{{ asset('assets/images/logo-icon.png') }}" alt="" style="width: 15%;" class="logo-thumb">
         </a>
         <a href="#!" class="mob-toggler">
