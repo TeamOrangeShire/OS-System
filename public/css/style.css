@@ -5,15 +5,17 @@
     --light: #EFFDF5;
     --dark: #22252a;
 }
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
 @font-face {
     font-family: 'os_font';
     src: url('../font/os_font.ttf') format('truetype');
   }
 *{
-    font-family: 'os_font', sans-serif; 
+    font-family: 'Montserrat', sans-serif;
 }
 h1{
-    font-family: 'os_font', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 .back-to-top {
     position: fixed;
