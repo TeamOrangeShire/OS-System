@@ -20,14 +20,14 @@
          @include('homepage/Components/nav', ['active'=>'home'])
         <!-- Navbar End -->
 
-
+         @include('homepage/Components/cookies')
         <!-- Header Start -->
         <div class="container-fluid header bg-white p-0 mt-4">
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                 <div class="col-md-6 p-5 mt-lg-5">
                     <h1 class="display-5 animated fadeIn mb-4">A <span class="text-primary">Coworking</span> and <span class="text-primary">Costudying Space</span> in the heart of Bacolod City</h1>
                     <p class="animated fadeIn mb-4 pb-2">Join us at our vibrant coworking and costudying space, where productivity thrives amidst a supportive community, right in the heart of Bacolod City.</p>
-                    <a href="" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Browse Services</a>
+                    <a href="{{ route('services') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Browse Services</a>
                 </div>
                 <div class="col-md-6 animated fadeIn ">
                     <div class="owl-carousel header-carousel">
@@ -165,7 +165,7 @@
                         <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Quiet Space</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Contact Us</a>
+                        <a class="btn btn-primary py-3 px-5 mt-3" href="{{ route('contact') }}">Contact Us</a>
                     </div>
                 </div>
             </div>
@@ -307,7 +307,7 @@
                             </div>
                             <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
                                 <br>
-                                <a class="btn btn-primary py-3 px-5" href="">Browse More Services</a>
+                                <a class="btn btn-primary py-3 px-5" href="{{ route('services') }}">Browse More Services</a>
                             </div>
                         </div>
                     </div>
@@ -449,8 +449,8 @@
                                     <h1 class="mb-3">Contact Us and Reserve Now!</h1>
                                     <p>Call us for more information about the promo you would like to avail and more.</p>
                                 </div>
-                                <a href="" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
-                                <a href="" class="btn btn-dark py-3 px-4"><i class="fa fa-calendar-alt me-2"></i>Reserve Now</a>
+                                <a href="{{ route('contact') }}" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
+                                <a href="{{ route('reservation') }}" class="btn btn-dark py-3 px-4"><i class="fa fa-calendar-alt me-2"></i>Reserve Now</a>
                             </div>
                         </div>
                     </div>
@@ -477,7 +477,8 @@
                             </div>
                             <div class="text-center p-4 mt-3">
                                 <h5 class="fw-bold mb-0">Students and Teachers</h5>
-                                <small>Short Description</small>
+                                <small>
+                                    Orange Shire offers students and teachers a dynamic environment where learning and teaching intersect seamlessly. With versatile spaces for focused study, collaborative projects, and engaging workshops, Orange Shire fosters a vibrant educational community tailored to both learners and educators.</small>
                             </div>
                         </div>
                     </div>
@@ -490,7 +491,8 @@
                             </div>
                             <div class="text-center p-4 mt-3">
                                 <h5 class="fw-bold mb-0">Freelancers</h5>
-                                <small>Short Description</small>
+                                <small>
+                                    Freelancers at Orange Shire thrive in a flexible and supportive workspace designed to fuel productivity and creativity. From hot desks for spontaneous collaborations to private rooms for focused work, Orange Shire offers the ideal environment for freelancers to pursue their passions and projects.</small>
                             </div>
                         </div>
                     </div>
@@ -503,7 +505,7 @@
                             </div>
                             <div class="text-center p-4 mt-3">
                                 <h5 class="fw-bold mb-0">Board & BAR exam Reviewers</h5>
-                                <small>Short Description</small>
+                                <small>Orange Shire provides a conducive space for board and bar exam reviewers to excel in their studies. With quiet areas for focused preparation and communal spaces for group discussions and knowledge sharing, Orange Shire offers a tailored environment to help reviewers achieve their goals with confidence.</small>
                             </div>
                         </div>
                     </div>
@@ -516,7 +518,8 @@
                             </div>
                             <div class="text-center p-4 mt-3">
                                 <h5 class="fw-bold mb-0">Hybrid Professionals</h5>
-                                <small>Short Description</small>
+                                <small>
+                                    Orange Shire caters to the needs of hybrid professionals, offering a dynamic setting that seamlessly blends work and learning. With adaptable workspaces and access to networking opportunities, Orange Shire empowers hybrid professionals to excel in both their professional endeavors and ongoing educational pursuits.</small>
                             </div>
                         </div>
                     </div>
