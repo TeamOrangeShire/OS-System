@@ -57,24 +57,29 @@
                         <div class="col-md-6">
                             <form>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Plan Name</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                                    <label for="plan_name">Plan Name</label>
+                                    <input type="text" class="form-control" id="plan_name" aria-describedby="emailHelp" placeholder="Plan Name">
                                    
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Hours</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                                    <label for="plan_hours">Hours</label>
+                                    <input type="number" class="form-control" id="plan_hours" aria-describedby="emailHelp" placeholder="Plan Hours">
                                    
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Price</label>
-                                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number">
+                                    <label for="plan_price">Price</label>
+                                    <input type="number" class="form-control" id="plan_price" aria-describedby="emailHelp" placeholder="Plan Price">
                                    
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Promo</label>
-                                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                </div>
+                                    <label for="plan_promo">Promo</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>                                </div>
 
                                
                                 <button type="submit" class="btn  btn-primary">Add Plan</button>
