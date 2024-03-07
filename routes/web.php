@@ -18,7 +18,7 @@ Route::get('/aboutus', function () {return view('homepage.about');})->name('abou
 Route::get('/contactus', function () { return view('homepage.contact');})->name('contact');
 Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
-Route::get('/services/hotdesk', function () { return view('homepage.Services.hotdesk');})->name('hotdesk');
+Route::get('/services-hotdesk', function () { return view('homepage.services.hotdesk');})->name('hotdesk');
 
 
 
