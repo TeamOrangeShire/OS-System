@@ -35,7 +35,7 @@
                     </nav>
                 </div>
                 <div class="col-md-6 animated fadeIn">
-                    <img class="img-fluid" src="img/os_7.jpg" alt="">
+                    <img class="img-fluid" src="img/os_2.jpg" alt="">
                 </div>
             </div>
         </div>
@@ -84,16 +84,12 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                         <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                            <img class="img-fluid w-100" src="img/os_3.jpg">
+                            <img class="img-fluid w-100" src="img/os_5.jpg">
                         </div>
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <h1 class="mb-4">Hotdesk</h1>
-                        <p class="mb-4">Orange Shire is more than a coworking and costudying space; it's a vibrant community hub in the heart of Bacolod City, dedicated to fostering innovation, connection, and professional growth. Our mission is to provide a dynamic environment where individuals and businesses thrive, creating a shared space for success and collaboration.</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Quite Space</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Contact Us</a>
+                        <p class="mb-4">Experience the synergy of innovation and collaboration with our premium hot desks tailored for dynamic professionals and learners like you. Our vibrant workspace fosters an environment where creativity thrives and ideas come to life. Equipped with state-of-the-art amenities, our hot desks provide the flexibility you need to work efficiently, while encouraging spontaneous interactions and knowledge exchange. <br><br>Join a community of like-minded individuals, each contributing their unique expertise to a melting pot of ideas. Elevate your collaborative endeavors in a space designed to inspire and empower. Discover the perfect blend of productivity and camaraderie at our hot desks, where success is not just a goal; it's a shared journey.</p>
                     </div>
                 </div>
             </div>
@@ -104,16 +100,13 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                         <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                            <img class="img-fluid w-100" src="img/os_3.jpg">
+                            <img class="img-fluid w-100" src="img/os_8.jpg">
                         </div>
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <h1 class="mb-4">Hybrid Pros</h1>
-                        <p class="mb-4">Orange Shire is more than a coworking and costudying space; it's a vibrant community hub in the heart of Bacolod City, dedicated to fostering innovation, connection, and professional growth. Our mission is to provide a dynamic environment where individuals and businesses thrive, creating a shared space for success and collaboration.</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Quite Space</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Contact Us</a>
+                        <p class="mb-4">Step into the future of work at our cutting-edge coworking space, tailor-made for dynamic hybrid professionals. A warm welcome awaits those embracing the versatility of both remote and in-person collaboration. Within our state-of-the-art facilities, discover the perfect harmony between focused productivity and collaborative synergy. Seamlessly transition between dedicated private workspaces and vibrant communal areas, fostering a dynamic environment conducive to modern work styles. Fueling your productivity is our commitment to providing lightning-fast internet connectivity, ensuring that your ideas flow seamlessly from conception to execution. Join our innovative community where adaptability meets collaboration, and success is amplified by the unparalleled speed of our cutting-edge connectivity infrastructure.</p>
+                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Purchase Plan</a>
                     </div>
                 </div>
             </div>
@@ -130,12 +123,8 @@
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <h1 class="mb-4">Fixed Desk</h1>
-                        <p class="mb-4">Orange Shire is more than a coworking and costudying space; it's a vibrant community hub in the heart of Bacolod City, dedicated to fostering innovation, connection, and professional growth. Our mission is to provide a dynamic environment where individuals and businesses thrive, creating a shared space for success and collaboration.</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Quite Space</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Contact Us</a>
-                    </div>
+                        <p class="mb-4">Unlock a personalized and consistent workspace experience with our fixed desks, designed to be exclusively yours every time you step into our coworking haven. Once you've seized the opportunity to be part of our premium offering, these dedicated workstations become your go-to space, ensuring familiarity and comfort during every visit. Immerse yourself in a productive environment tailored to your needs, with fixed desks that adapt to your rhythm.
+                            <br><br>Moreover, our commitment to providing a seamless work experience extends to our lightning-fast internet connection. Enjoy swift and reliable connectivity at your dedicated fixed desk, ensuring uninterrupted productivity and smooth collaboration. Embrace the future of work with a workspace that is uniquely yours and technologically advanced, where your success is enhanced by the consistency of your surroundings and the speed of our internet services.</p>
                 </div>
             </div>
         </div>
@@ -145,16 +134,14 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                         <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                            <img class="img-fluid w-100" src="img/os_3.jpg">
+                            <img class="img-fluid w-100" src="img/MR_3.jpg">
                         </div>
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <h1 class="mb-4">Private Rooms</h1>
-                        <p class="mb-4">Orange Shire is more than a coworking and costudying space; it's a vibrant community hub in the heart of Bacolod City, dedicated to fostering innovation, connection, and professional growth. Our mission is to provide a dynamic environment where individuals and businesses thrive, creating a shared space for success and collaboration.</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Quite Space</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Contact Us</a>
+                        <p class="mb-4">Elevate your meeting experience with our exclusive private meeting rooms, ideal for professionals and companies seeking a sophisticated and tailored space. Choose from a range of options, each uniquely designed to accommodate your specific needs. Whether it's Room 1 for an intimate discussion, Room 2 for a collaborative session, or Room 3 for a larger presentation, our private meeting rooms offer versatility and professionalism. <br><br>Experience the epitome of comfort, equipped with modern amenities and seamless technology, ensuring your meetings are not only productive but also conducted in a refined and conducive atmosphere. Elevate your business gatherings with our private meeting rooms, where every choice reflects your commitment to excellence.</p>
+                        
+                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Book Reservation</a>
                     </div>
                 </div>
             </div>
@@ -169,8 +156,8 @@
                         </div>
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="mb-4">Printer Service</h1>
-                        <p class="mb-4">Orange Shire is more than a coworking and costudying space; it's a vibrant community hub in the heart of Bacolod City, dedicated to fostering innovation, connection, and professional growth. Our mission is to provide a dynamic environment where individuals and businesses thrive, creating a shared space for success and collaboration.</p>
+                        <h1 class="mb-4">Printer Services</h1>
+                        <p class="mb-4">Experience convenience at its best with our on-site printing services tailored for professionals on the go. For clients with urgent printing needs, our coworking space offers swift and efficient solutions. Whether it's important documents or last-minute presentations, our state-of-the-art printing services ensure a seamless experience, providing you with the timely support you require. Elevate your work efficiency with hassle-free printing right within our coworking community.</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Quite Space</p>
