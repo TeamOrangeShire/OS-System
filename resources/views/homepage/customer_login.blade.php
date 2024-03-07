@@ -222,7 +222,11 @@ input {
 .social-container {
 	margin: 20px 0;
 }
-
+.form-columns{
+	width: 100%;
+	display: flex;
+	gap: 6px;
+}
 .social-container a {
 	border: 1px solid #DDDDDD;
 	border-radius: 50%;
@@ -268,7 +272,7 @@ footer a {
 <body>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
-		<form action="#">
+		<form action="#" >
 			<h1>Create Account</h1>
 			<div class="social-container">
 				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -276,23 +280,41 @@ footer a {
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your email for registration</span>
-			<input type="text" placeholder="First Name" />
-            <input type="text" class="two-columns" placeholder="Middle Name" />
-            <input type="text" class="two-columns" placeholder="Last Name" />
-            <input type="text" id="combinedInput" name="combinedInput" list="options" placeholder="Extension Name">
-            <datalist id="options">
-                <option value="Jr.">
-                <option value="Sr.">
-                <option value="I">
-                <option value="II">
-                <option value="III">
-                <option value="IV">
-                <option value="V">
-            </datalist>
+			<div class="form-columns">
+				<div class="left">
+					<input type="text" placeholder="First Name" />
+					<input type="text"  placeholder="Last Name" />
+				</div> 
+				<div class="right">
+					<input type="text"  placeholder="Middle Name" />
+					<input type="text" id="combinedInput" name="combinedInput" list="options" placeholder="Ext.">
+					<datalist id="options">
+						<option value="Jr.">
+						<option value="Sr.">
+						<option value="I">
+						<option value="II">
+						<option value="III">
+						<option value="IV">
+						<option value="V">
+					</datalist>
+				</div>
+			</div>
+			
+       
+            
+      
             <input type="number" maxlength="11" placeholder="Phone Number">
 			<input type="email" placeholder="Email" />
-			<input type="password" class="two-columns" placeholder="Password" />
-            <input type="password" class="two-columns" placeholder="Confirm Password" />
+			<div class="form-columns">
+               <div class="left">
+				<input type="password"  placeholder="Password" />
+			   </div>
+			   <div class="right">
+				<input type="password"  placeholder="Confirm Password" />
+			   </div>
+			</div>
+			
+          
 			<button>Sign Up</button>
 		</form>
 	</div>
