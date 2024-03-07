@@ -27,7 +27,7 @@
                 <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a>
                 <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
             </div>
-            <a href="" class="btn btn-primary px-3 d-none d-lg-flex">Sign Up / Sign In</a>
+            <a href="{{route('customer_login')}}" class="btn btn-primary px-3 d-none d-lg-flex">Log in/Sign up</a>
         </div>
     </nav>
 </div>
