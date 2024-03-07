@@ -79,25 +79,22 @@
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
-                                 <label for="exampleFormControlSelect1">ext.</label>
+                                 <label for="exampleFormControlSelect1">Ext.</label>
                                         <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                            <option>Sr.</option>
+                                            <option>Jr.</option>
                                         </select>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="validationTooltip04">Email</label>
                                 <input type="text" class="form-control" id="validationTooltip04" placeholder="Email" required>
                                 <div class="invalid-tooltip">
                                     Please provide a valid city.
                                 </div>
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="validationTooltip05">Number</label>
                                 <input type="Number" class="form-control" id="validationTooltip05" placeholder="Number" required>
                                 <div class="invalid-tooltip">
@@ -106,7 +103,7 @@
                             </div>
                         
                         </div>
-                        <button class="btn  btn-primary" type="submit">Submit form</button>
+                        <button class="btn  btn-primary" type="submit">Insert Log</button>
                     </form>
                 </div>
             </div>
@@ -115,7 +112,7 @@
     </div>
 </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     
@@ -135,9 +132,10 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Username</th>
+                                    <th>Fullname</th>
                                     <th>Email</th>
                                     <th>Phone Number</th>
+                                    <th>Action</th>
                             
                                 </tr>
                             </thead>
@@ -147,6 +145,73 @@
                                     <td>Albert</td>
                                     <td>@gmail.com</td>
                                     <td>09999999999</td>
+                                    <td>
+                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="feather icon-info"></i></button>
+                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Large Modal</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <form class="form-inline">
+                                                            <div class="form-group mx-sm-3 mb-2">
+                                                                <label for="inputPassword2" class="sr-only">Time In</label>
+                                                                <input type="time" class="form-control" id="" placeholder="Time In">
+                                                            </div>
+                                                            <button type="submit" class="btn  btn-icon btn-success"><i class="feather icon-check-circle"></i></button>
+                                                        </form>
+                                                        <br>
+                                                        <div class="col-md-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h5>Subscription Records</h5>
+                                                                    
+                                                                </div>
+                                                                <div class="card-body table-border-style">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-hover">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>#</th>
+                                                                                    <th>Date</th>
+                                                                                    <th>Start</th>
+                                                                                    <th>End</th>
+                                                                                    
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>2</td>
+                                                                                    <td>2024/03/07</td>
+                                                                                    <td>11:42 am</td>
+                                                                                    <td>12:42 pm</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>3</td>
+                                                                                    <td>2024/03/07</td>
+                                                                                    <td>11:42 am</td>
+                                                                                    <td>12:42 pm</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>4</td>
+                                                                                    <td>2024/03/07</td>
+                                                                                    <td>11:42 am</td>
+                                                                                    <td>12:42 pm</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                     
                                 </tr>
                                 <tr>
@@ -154,12 +219,146 @@
                                     <td>Jiffy</td>
                                     <td>@gmail.com</td>
                                     <td>09999999999</td>
+                                    <td>
+                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="feather icon-info"></i></button>
+                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Large Modal</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <form class="form-inline">
+                                                            <div class="form-group mx-sm-3 mb-2">
+                                                                <label for="inputPassword2" class="sr-only">Time In</label>
+                                                                <input type="time" class="form-control" id="" placeholder="Time In">
+                                                            </div>
+                                                            <button type="submit" class="btn  btn-icon btn-success"><i class="feather icon-check-circle"></i></button>
+                                                        </form>
+                                                        <br>
+                                                        <div class="col-md-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h5>Subscription Records</h5>
+                                                                    
+                                                                </div>
+                                                                <div class="card-body table-border-style">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-hover">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>#</th>
+                                                                                    <th>Date</th>
+                                                                                    <th>Start</th>
+                                                                                    <th>End</th>
+                                                                                    
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>2</td>
+                                                                                    <td>2024/03/07</td>
+                                                                                    <td>11:42 am</td>
+                                                                                    <td>12:42 pm</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>3</td>
+                                                                                    <td>2024/03/07</td>
+                                                                                    <td>11:42 am</td>
+                                                                                    <td>12:42 pm</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>4</td>
+                                                                                    <td>2024/03/07</td>
+                                                                                    <td>11:42 am</td>
+                                                                                    <td>12:42 pm</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
                                     <td>Super mario</td>
                                     <td>@gmail.com</td>
                                     <td>09999999999</td>
+                                    <td>
+                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="feather icon-info"></i></button>
+                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Large Modal</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <form class="form-inline">
+                                                            <div class="form-group mx-sm-3 mb-2">
+                                                                <label for="inputPassword2" class="sr-only">Time In</label>
+                                                                <input type="time" class="form-control" id="" placeholder="Time In">
+                                                            </div>
+                                                            <button type="submit" class="btn  btn-icon btn-success"><i class="feather icon-check-circle"></i></button>
+                                                        </form>
+                                                        <br>
+                                                        <div class="col-md-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h5>Subscription Records</h5>
+                                                                    
+                                                                </div>
+                                                                <div class="card-body table-border-style">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-hover">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>#</th>
+                                                                                    <th>Date</th>
+                                                                                    <th>Start</th>
+                                                                                    <th>End</th>
+                                                                                    
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>2</td>
+                                                                                    <td>2024/03/07</td>
+                                                                                    <td>11:42 am</td>
+                                                                                    <td>12:42 pm</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>3</td>
+                                                                                    <td>2024/03/07</td>
+                                                                                    <td>11:42 am</td>
+                                                                                    <td>12:42 pm</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>4</td>
+                                                                                    <td>2024/03/07</td>
+                                                                                    <td>11:42 am</td>
+                                                                                    <td>12:42 pm</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
