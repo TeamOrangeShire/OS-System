@@ -47,14 +47,14 @@
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-2">
             <div class="card">
                
                 <div class="card-body">
                     <h5>Add New Room</h5>
                     <hr>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <form>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Room Number</label>
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     
