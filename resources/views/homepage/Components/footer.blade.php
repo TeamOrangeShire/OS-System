@@ -7,7 +7,7 @@
                 <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>0966 065 8143</p>
                 <p class="mb-2"><i class="fa fa-envelope me-3"></i>TheOrangeShire@gmail.com</p>
                 <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/orangeshire?igsh=MzRlODBiNWFlZA=="><i class="fab fa-instagram"></i></a>
                     <a class="btn btn-outline-light btn-social" href="https://www.facebook.com/people/Orange-Shire-Coworking/61554372145450/"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
@@ -15,9 +15,9 @@
                 <h5 class="text-white mb-4">Quick Links</h5>
                 <a class="btn btn-link text-white-50" href="{{ route('about') }}">About Us</a>
                 <a class="btn btn-link text-white-50" href="{{ route('contact') }}">Contact Us</a>
-                <a class="btn btn-link text-white-50" href="">Our Services</a>
-                <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
-                <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
+                <a class="btn btn-link text-white-50" href="{{ route('home') }}#servicesTab">Our Services</a>
+                <a class="btn btn-link text-white-50" href="{{ route('reservation') }}">Reservation</a>
+                
             </div>
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-white mb-4">Photo Gallery</h5>

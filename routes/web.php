@@ -18,6 +18,7 @@ Route::get('/aboutus', function () {return view('homepage.about');})->name('abou
 Route::get('/contactus', function () { return view('homepage.contact');})->name('contact');
 Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
+Route::get('/services/hotdesk', function () { return view('homepage.hotdesk');})->name('hotdesk');
 
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
@@ -35,6 +36,7 @@ Route::get('/admin/records_reservation', function () { return view('admin.record
 
 Route::get('/admin/admin_profile', function () { return view('admin.admin_profile');})->name('admin_profile');
 Route::get('/admin/log_history', function () { return view('admin.log_history');})->name('log_history');
+Route::get('/admin/promos', function () { return view('admin.promos');})->name('promos');
 
 Route::get('/admin/plans_subscription', function () { return view('admin.plans_s');})->name('plans_s');
 Route::get('/admin/pending_subscription', function () { return view('admin.pending_s');})->name('pending_s');

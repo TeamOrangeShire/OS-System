@@ -47,46 +47,50 @@
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
       <div class="row">
-        <div class="col-sm-2">
+        
+        <div class="col-md-12">
             <div class="card">
-               
-                <div class="card-body">
-                    <h5>Add New Room</h5>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Room Number</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
-                                   
+                <div class="card-header" style="position: relative;">
+                    <h5>Rooms</h5>
+                    {{-- modal start --}}
+                    <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Add New Room</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Room Name</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Room Capacity</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                   
-                                </div>
-                               
-
-                               
-                                <button type="submit" class="btn  btn-primary">Add Room</button>
-                            </form>
+                                <div class="modal-body">
+                              
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form>
+                                                            <div class="form-group">
+                                                                <label for="exampleInputEmail1">Room Number</label>
+                                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Room Number">
+                                                               
+                                                            </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <label for="exampleInputEmail1">Room Capacity</label>
+                                                                <input type="Number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Room Capacity">
+                                                               
+                                                            </div>
+                                                           
+                            
+                                                           
+                                                            <button type="submit" class="btn  btn-primary">Add Room</button>
+                                                        </form>
+                                                   
+                                        </div>
+                                    </div>
+                               </div>
+                              
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">
-                    
-                    <h5>Rooms</h5>
-                    
+                    <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#exampleModalCenter">Add Room</button>
+                {{-- modal end --}}
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
@@ -141,61 +145,67 @@
 
 
     <div class="row">
-        <div class="col-sm-6">
+       
+        <div class="col-md-12">
             <div class="card">
-               
-                <div class="card-body">
-                    <h5>Add Room Rates</h5>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <form>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Room Number</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
-                                   
+                <div class="card-header" style="position: relative;">
+                    <h5>Rooms Rate</h5>
+                    {{-- modal start --}}
+                    <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Room Rate</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Hourly</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">4 hours</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Full Day</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Weekly</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Monthly</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                   
-                                </div>
-                               
-
-                               
-                                <button type="submit" class="btn  btn-primary">Update Rates</button>
-                            </form>
+                                <div class="modal-body">
+                              
+                                    <div class="col-md-6">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Room Number</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                                               
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Hourly</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                                               
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">4 hours</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                                               
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Full Day</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                                               
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Weekly</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                                               
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Monthly</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                                               
+                                            </div>
+                                           
+            
+                                           
+                                            <button type="submit" class="btn  btn-primary">Update Rates</button>
+                                        </form>
+                                    </div>
+                                              
+                               </div>
+                              
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    
-                    <h5>Rooms</h5>
-                    
+                    <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#exampleModalCenter">Add Room Pricing</button>
+                {{-- modal end --}}
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
