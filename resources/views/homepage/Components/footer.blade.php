@@ -4,7 +4,7 @@
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-white mb-4">Get In Touch</h5>
                 <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>21st Lacson Street, Bacolod City</p>
-                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>0966 065 8143</p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+63966 065 8143</p>
                 <p class="mb-2"><i class="fa fa-envelope me-3"></i>TheOrangeShire@gmail.com</p>
                 <div class="d-flex pt-2">
                     <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/orangeshire?igsh=MzRlODBiNWFlZA=="><i class="fab fa-instagram"></i></a>
@@ -15,7 +15,7 @@
                 <h5 class="text-white mb-4">Quick Links</h5>
                 <a class="btn btn-link text-white-50" href="{{ route('about') }}">About Us</a>
                 <a class="btn btn-link text-white-50" href="{{ route('contact') }}">Contact Us</a>
-                <a class="btn btn-link text-white-50" href="{{ route('home') }}#servicesTab">Our Services</a>
+                <a class="btn btn-link text-white-50" href="{{ route('services') }}">Our Services</a>
                 <a class="btn btn-link text-white-50" href="{{ route('reservation') }}">Reservation</a>
                 
             </div>
@@ -42,9 +42,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <h5 class="text-white mb-4">Newsletter</h5>
-                <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+           <div class="col-lg-3 col-md-6">
+                <h5 class="text-white mb-4">Stay Updated</h5>
+                <p>Sign up to recieve future updates about new promos and services at Orange Shire</p>
                 <div class="position-relative mx-auto" style="max-width: 400px;">
                     <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                     <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
