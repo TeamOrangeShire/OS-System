@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Login;	
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,8 @@ Route::get('/admin/cancelled_subscription', function () { return view('admin.can
 Route::get('/admin/records_subscription', function () { return view('admin.records_s');})->name('records_s');
 Route::get('/admin/blank', function () { return view('admin.blank');})->name('blank');
 Route::get('/admin/time', function () { return view('admin.time');})->name('time');
+Route::get('/admin/logout', function () { return view('admin.logout');})->name('logout');
+
+// Admin Controller 
+Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
+Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');

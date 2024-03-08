@@ -1,6 +1,9 @@
 <header class="navbar pcoded-header navbar-expand-lg navbar-light header-dark" style="background-color: #333333;">
 		
-			
+	@php
+$admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
+$fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
+@endphp		
     <div class="m-header">
         <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
         <a href="#!" class="b-brand">
@@ -71,8 +74,8 @@
                     <div class="dropdown-menu dropdown-menu-right profile-notification">
                         <div class="pro-head">
                             <img src="assets/images/user/avatar-2.jpg" class="img-radius" alt="User-Profile-Image">
-                            <span>Albert Pimentel</span>
-                            <a href="auth-signin.html" class="dud-logout" title="Logout">
+                            <span>{{$fullname}}</span>
+                            <a href="{{route('login')}}" class="dud-logout" title="Logout">
                                 <i class="feather icon-log-out"></i>
                             </a>
                         </div>
