@@ -1,3 +1,8 @@
+@if (session()->has('Admin_id'))
+@php
+$admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
+$fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
+@endphp
 <nav class="pcoded-navbar  ">
     <div class="navbar-wrapper  ">
         <div class="navbar-content scroll-div " >
@@ -6,7 +11,7 @@
                 <div class="main-menu-header">
                     <img class="img-radius" src="{{ asset('assets/images/user/avatar-2.jpg') }}"  alt="User-Profile-Image">
                     <div class="user-details">
-                        <span> Albert Pimentel </span>
+                        <span> {{$fullname}} </span>
                         <div id="more-details"> Admin <i class="fa fa-chevron-down m-l-5"></i></div>
                     </div>
                 </div>
@@ -14,7 +19,7 @@
                     <ul class="list-unstyled">
                         <li class="list-group-item"><a href="{{asset('admin/admin_profile')}}"><i class="feather icon-user m-r-5"></i>View Profile</a></li>
                         <li class="list-group-item"><a href="#!"><i class="feather icon-settings m-r-5"></i>Settings</a></li>
-                        <li class="list-group-item"><a href="auth-normal-sign-in.html"><i class="feather icon-log-out m-r-5"></i>Logout</a></li>
+                        <li class="list-group-item"><a href="{{asset('admin/login')}}"><i class="feather icon-log-out m-r-5"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -74,3 +79,8 @@
         </div>
     </div>
 </nav>
+@else 
+@php
+    return redirect('login');
+@endphp
+@endif
