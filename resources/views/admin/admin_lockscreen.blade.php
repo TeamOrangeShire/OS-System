@@ -47,7 +47,7 @@
       max-width: 60%;
       height: auto;
       border-radius: inherit; /* Inherit the border radius from parent */
-      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5); /* Add box shadow */
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7); /* Add box shadow */
     }
 
     .lock-screen-form {
