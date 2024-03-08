@@ -4,12 +4,13 @@
    <head>
       <meta charset="utf-8">
       <title>Orange Shire - Sign up </title>
+      <link rel="icon" href="img/os_logo.png">
       <link rel="stylesheet" href="css/login.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
    </head>
    <body>
       <div class="container">
-         <header>Signup Form</header>
+         <header>Sign Up for<br> Orange Shire</header>
          <div class="progress-bar">
             <div class="step">
                <p>
@@ -22,7 +23,7 @@
             </div>
             <div class="step">
                <p>
-                  Contact
+               Addtional  
                </p>
                <div class="bullet">
                   <span>2</span>
@@ -31,7 +32,7 @@
             </div>
             <div class="step">
                <p>
-                  Birth
+                  Contact
                </p>
                <div class="bullet">
                   <span>3</span>
@@ -52,7 +53,7 @@
             <form action="#">
                <div class="page slide-page">
                   <div class="title">
-                     Basic Info:
+                     Name Info:
                   </div>
                   <div class="field">
                      <div class="label">
@@ -67,11 +68,41 @@
                      <input type="text">
                   </div>
                   <div class="field">
-                     <button class="firstNext next">Next</button>
+                     <button type="button" class="firstNext next">Next</button>
                   </div>
                </div>
                <div class="page">
-                  <div class="title">
+               <div class="title">
+                  Additional Name Info:
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        Middle Name
+                     </div>
+                     <input type="text">
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        Extension
+                     </div>
+                     <select>
+                        <option selected>None</option>
+                        <option>Jr.</option>
+                        <option>Sr.</option>
+                        <option>I</option>
+                        <option>II</option>
+                        <option>III</option>
+                        <option>IV</option>
+                        <option>V</option>
+                     </select>
+                  </div>
+                  <div class="field btns">
+                     <button class="prev-1 prev">Previous</button>
+                     <button class="next-1 next">Next</button>
+                  </div>
+               </div>
+               <div class="page">
+               <div class="title">
                      Contact Info:
                   </div>
                   <div class="field">
@@ -85,31 +116,6 @@
                         Phone Number
                      </div>
                      <input type="Number">
-                  </div>
-                  <div class="field btns">
-                     <button class="prev-1 prev">Previous</button>
-                     <button class="next-1 next">Next</button>
-                  </div>
-               </div>
-               <div class="page">
-                  <div class="title">
-                     Date of Birth:
-                  </div>
-                  <div class="field">
-                     <div class="label">
-                        Date
-                     </div>
-                     <input type="text">
-                  </div>
-                  <div class="field">
-                     <div class="label">
-                        Gender
-                     </div>
-                     <select>
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
-                     </select>
                   </div>
                   <div class="field btns">
                      <button class="prev-2 prev">Previous</button>
@@ -137,7 +143,9 @@
                      <button class="submit">Submit</button>
                   </div>
                </div>
+               
             </form>
+            <div class="sign-txt">Already a member? <a style="color: #ff5c40" href="{{ route('customer_login') }}">Login Now</a></div>
          </div>
       </div>
       <script src="js/login.js"></script>

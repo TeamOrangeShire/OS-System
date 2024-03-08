@@ -14,7 +14,7 @@
                 <a href="{{ route('home') }}" class="nav-item nav-link {{ $active === 'home'? 'active' : '' }}">Home</a>
                 <a href="{{ route('about') }}" class="nav-item nav-link {{ $active === 'about'? 'active' : '' }}">About</a>
                 <div class="nav-item dropdown">
-                    <a href="" class="nav-link dropdown-toggle  {{ $active === 'services'? 'active' : '' }}" data-bs-toggle="dropdown">Services</a>
+                    <a href="{{ route('services') }}" class="nav-link dropdown-toggle  {{ $active === 'services'? 'active' : '' }}" data-bs-toggle="dropdown">Services</a>
                     <div class="dropdown-menu rounded-0 m-0">   
                         <a href="{{ route('services') }}#hotdesk" class="dropdown-item">Hot Desk</a>
                         <a href="{{ route('services') }}#hybrid_pros" class="dropdown-item">Hybrid Pros</a>

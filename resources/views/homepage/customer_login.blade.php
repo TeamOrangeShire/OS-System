@@ -4,13 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Form validation in HTML & CSS | CodingNepal</title>
+  <title>Orange Shire - Customer Login</title>
   <link rel="stylesheet" href="css/login2.css">
+  <link rel="icon" href="img/os_logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 <body>
   <div class="wrapper">
-    <header>Login Form</header>
+    <header>Welcome Back to Orange Shire</header>
     <form action="#">
       <div class="field email">
         <div class="input-area">
