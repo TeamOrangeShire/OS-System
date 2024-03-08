@@ -3,8 +3,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
+
 body{
   width: 100%;
   height: 100vh;
@@ -16,7 +17,7 @@ body{
 }
 ::selection{
   color: #fff;
-  background: #5372F0;
+  background: #ff5c40;
 }
 .wrapper{
   width: 380px;
@@ -63,7 +64,7 @@ form input{
   padding: 0 45px;
   font-size: 18px;
   background: none;
-  caret-color: #5372F0;
+  caret-color: #ff5c40;
   border-radius: 5px;
   border: 1px solid #bfbfbf;
   border-bottom-width: 2px;
@@ -71,7 +72,7 @@ form input{
 }
 form .field input:focus,
 form .field.valid input{
-  border-color: #5372F0;
+  border-color: #ff5c40;
 }
 form .field.shake input,
 form .field.error input{
@@ -95,7 +96,7 @@ form .field.error input{
 }
 form input:focus ~ .icon,
 form .field.valid .icon{
-  color: #5372F0;
+  color: #ff5c40;
 }
 form .field.shake input:focus ~ .icon,
 form .field.error input:focus ~ .icon{
@@ -122,7 +123,7 @@ form .pass-txt{
   margin-top: -10px;
 }
 .wrapper a{
-  color: #5372F0;
+  color: #ff5c40;
   text-decoration: none;
 }
 .wrapper a:hover{
@@ -134,11 +135,11 @@ form input[type="submit"]{
   color: #fff;
   padding: 0;
   border: none;
-  background: #5372F0;
+  background: #ff5c40;
   cursor: pointer;
   border-bottom: 2px solid rgba(0,0,0,0.1);
   transition: all 0.3s ease;
 }
 form input[type="submit"]:hover{
-  background: #2c52ed;
+  background: #ff7c40;
 }
