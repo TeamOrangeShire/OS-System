@@ -50,19 +50,7 @@
   align-items: center;
   width: 100%;
 }
-.button {
-  width: calc(100% / 2 - 10px);
-  padding: 8px 0;
-  border: none;
-  border-radius: 4px;
-  background-color: #4070f4;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.button:hover {
-  background-color: #031bf1;
-}
+
 
 </style>
 <div class="wrapper">
@@ -77,34 +65,27 @@
       </p>
     </div>
     <div class="buttons">
-      <button class="btn btn-primary" id="acceptBtn">Accept</button>
-      <button class="btn btn-primary">Decline</button>
+      <button class="btn btn-primary" onclick="AcceptCookie()" id="acceptBtn">Accept</button>
+      <button class="btn btn-primary" onclick="DeclineCookie()" id="declineBtn">Decline</button>
     </div>
   </div>
 
   <script>
     // ---- ---- Const ---- ---- //
-const cookiesBox = document.querySelector('.wrapper'),
-  buttons = document.querySelectorAll('.button');
-
+const cookiesBox = document.querySelector('.wrapper');
 // ---- ---- Show ---- ---- //
 const executeCodes = () => {
-  if (document.cookie.includes('AlexGolovanov')) return;
   cookiesBox.classList.add('show');
-
+}
   // ---- ---- Button ---- ---- //
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      cookiesBox.classList.remove('show');
-
-      // ---- ---- Time ---- ---- //
-      if (button.id == 'acceptBtn') {
-        document.cookie =
-          'cookieBy= AlexGolovanov; max-age=' + 60 * 60 * 24 * 30;
-      }
-    });
-  });
-};
+ function AcceptCookie(){
+    const cookiesBox = document.querySelector('.wrapper');
+    cookiesBox.style.display = 'none';
+ }
+ function DeclineCookie(){
+    const cookiesBox = document.querySelector('.wrapper');
+    cookiesBox.style.display = 'none';
+}
 
 window.addEventListener('load', executeCodes);
 
