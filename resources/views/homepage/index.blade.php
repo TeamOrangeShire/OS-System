@@ -161,10 +161,8 @@
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <h1 class="mb-4">Where Passion Meets Purpose: The Orange Shire Experience</h1>
-                        <p class="mb-4">Orange Shire is more than a coworking and costudying space; it's a vibrant community hub in the heart of Bacolod City, dedicated to fostering innovation, connection, and professional growth. Our mission is to provide a dynamic environment where individuals and businesses thrive, creating a shared space for success and collaboration.</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Quiet Space</p>
+                        <p class="mb-4">Welcome to Orange Shire, a dynamic co-working and co-studying space situated in the heart of Bacolod City. Our vibrant hub is tailored to meet the diverse needs of students, teachers, board and bar exam reviewers, as well as hybrid professionals and freelancers. Nestled in this thriving city, Orange Shire provides a conducive environment for collaborative learning and innovation. Equipped with state-of-the-art facilities and flexible workspaces, our goal is to create a space where individuals from various backgrounds can come together to share ideas, knowledge, and expertise. Whether you're gearing up for exams, working on projects, or seeking a hub to enhance your professional skills, Orange Shire is the perfect blend of innovation and education. Join us on this exciting journey of collaboration, creativity, and continuous learning at Orange Shire.</p>
+
                         <a class="btn btn-primary py-3 px-5 mt-3" href="{{ route('contact') }}">Contact Us</a>
                     </div>
                 </div>
