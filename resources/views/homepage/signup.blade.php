@@ -115,7 +115,7 @@
                      <div class="label">
                         Phone Number
                      </div>
-                     <input type="Number" placeholder="+639000990091">
+                     <input type="Number" placeholder="+344343">
                   </div>
                   <div class="field btns">
                      <button class="prev-2 prev">Previous</button>
