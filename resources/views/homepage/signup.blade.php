@@ -59,13 +59,13 @@
                      <div class="label">
                         First Name
                      </div>
-                     <input type="text">
+                     <input type="text" placeholder="ex. John">
                   </div>
                   <div class="field">
                      <div class="label">
                         Last Name
                      </div>
-                     <input type="text">
+                     <input type="text" placeholder="ex. Doe">
                   </div>
                   <div class="field">
                      <button type="button" class="firstNext next">Next</button>
@@ -79,7 +79,7 @@
                      <div class="label">
                         Middle Name
                      </div>
-                     <input type="text">
+                     <input type="text" placeholder="ex. Doe">
                   </div>
                   <div class="field">
                      <div class="label">
@@ -109,13 +109,13 @@
                      <div class="label">
                         Email Address
                      </div>
-                     <input type="text">
+                     <input type="text" placeholder="yourname@gmail.com">
                   </div>
                   <div class="field">
                      <div class="label">
                         Phone Number
                      </div>
-                     <input type="Number">
+                     <input type="Number" placeholder="+639000990091">
                   </div>
                   <div class="field btns">
                      <button class="prev-2 prev">Previous</button>
@@ -130,13 +130,13 @@
                      <div class="label">
                         Username
                      </div>
-                     <input type="text">
+                     <input type="text" placeholder="john1">
                   </div>
                   <div class="field">
                      <div class="label">
                         Password
                      </div>
-                     <input type="password">
+                     <input type="password" placeholder="#123AaBbCc">
                   </div>
                   <div class="field btns">
                      <button class="prev-3 prev">Previous</button>

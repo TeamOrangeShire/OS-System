@@ -7,6 +7,7 @@
   <title>Orange Shire - Customer Login</title>
   <link rel="stylesheet" href="css/login2.css">
   <link rel="icon" href="img/os_logo.png">
+  <script src="https://kit.fontawesome.com/33f625dcbc.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 <body>
@@ -15,11 +16,11 @@
     <form action="#">
       <div class="field email">
         <div class="input-area">
-          <input type="text" placeholder="Email Address">
-          <i class="icon fas fa-envelope"></i>
+          <input type="text" placeholder="Username/Email">
+          <i class="icon fa-solid fa-circle-user"></i>
           <i class="error error-icon fas fa-exclamation-circle"></i>
         </div>
-        <div class="error error-txt">Email can't be blank</div>
+        <div class="error error-txt">Username/Email can't be blank</div>
       </div>
       <div class="field password">
         <div class="input-area">
