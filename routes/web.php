@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;	
 use App\Http\Controllers\CreateAcc;
-
+use App\Http\Controllers\Mailing;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,6 +54,8 @@ Route::get('/admin/blank', function () { return view('admin.blank');})->name('bl
 Route::get('/admin/time', function () { return view('admin.time');})->name('time');
 Route::get('/admin/logout', function () { return view('admin.logout');})->name('logout');
 
+//Client Back End
+Route::post('/customermail',[Mailing::class,'TestMail'] )->name('testMail');
 // Admin Controller 
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
 Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');
