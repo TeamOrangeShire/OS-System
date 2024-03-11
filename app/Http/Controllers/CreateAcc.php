@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
+use App\Models\CustomerAcc;
+use Illuminate\Support\Facades\Hash;
 
 class CreateAcc extends Controller
 {
