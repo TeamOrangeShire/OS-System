@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;	
+use App\Http\Controllers\CreateAcc;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +57,6 @@ Route::get('/admin/logout', function () { return view('admin.logout');})->name('
 // Admin Controller 
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
 Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');
+Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdmin');
+
+

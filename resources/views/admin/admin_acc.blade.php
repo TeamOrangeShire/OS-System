@@ -55,22 +55,22 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-9">
-                            <form>
+                            <form method="POST" action="{{route('CreateAdmin')}}">@csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Username</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" name="AdminName" aria-describedby="emailHelp" placeholder="Username">
                                    
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    <input type="password" class="form-control" id="confirm_password1" name="AdminPass" placeholder="Password" required oninput="confirm_password()">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Repeat Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repeat Password">
+                                    <input type="password" class="form-control" id="confirm_password2" name="AdminPass2" placeholder="Repeat Password" required oninput="confirm_password()">
                                 </div>
                                
-                                <button type="submit" class="btn  btn-primary">Create</button>
+                                <button type="submit" class="btn  btn-primary" id="submit_pass">Create</button>
                             </form>
                         </div>
                     </div>
@@ -93,21 +93,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Albert</td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jiffy</td>
-                                   
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Super mario</td>
-                                    
-                                </tr>
+                                @php
+                                $admin_info = App\Models\AdminAcc::all();
+                            @endphp
+                             @foreach ($admin_info as $info)
+                             <tr>
+                                <td>{{$info->admin_id}}</td>
+                                <td>{{$info->admin_username}}</td>
+                            </tr>
+                             @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -168,6 +162,26 @@
     <!-- Warning Section Ends -->
 
     <!-- Required Js -->
+    <script>
+        function confirm_password(){
+            const password1 = document.getElementById('confirm_password1');
+            const password2 = document.getElementById('confirm_password2');
+            const submit = document.getElementById('submit_pass');
+
+            if(password1.value === password2.value){
+                submit.disabled= false;
+                password1.style.border='2px solid #66CDAA';
+                password2.style.border='2px solid #66CDAA';
+                // console.log('match');
+            }else{
+                submit.disabled= true;
+                password1.style.border='2px solid #ff0000';
+                password2.style.border='2px solid #ff0000';
+                // console.log('not match');
+            }
+        }
+
+    </script>
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 
