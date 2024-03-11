@@ -76,8 +76,8 @@
                                     <td>02/04/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>1</td>
-                                    <td> <button class="confirm_btn" role="button">Confirm</button>  
-                                    <button class="decline_btn" role="button">Decline</button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-x"></i></button>   </td>
                                     
 
 
@@ -89,8 +89,9 @@
                                     <td>02/07/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>3</td>
-                                    <td> <button class="confirm_btn" role="button">Confirm</button>  
-                                    <button class="decline_btn" role="button">Decline</button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-x"></i></button>   </td>
+                                    
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -99,8 +100,9 @@
                                     <td>02/05/2024</td>
                                     <td>7PM TO 10PM</td>
                                     <td>2</td>
-                                    <td> <button class="confirm_btn" role="button">Confirm</button>  
-                                        <button class="decline_btn" role="button">Decline</button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-x"></i></button>   </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>

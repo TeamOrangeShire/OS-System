@@ -104,7 +104,7 @@
                                     <th>Room Number</th>
                                     <th>Room Name</th>
                                     <th>Room Capacity</th>      
-                                    <th colspan="2">Action</th>
+                                    <th>Action</th>
 
                             
                                 </tr>
@@ -115,7 +115,6 @@
                                     <td>Room 1</td>
                                     <td>Meeting Room 1</td>
                                     <td>8 to 10 pax</td>
-                                    <td></td>
                                     <td>                     {{-- modal start --}}
                                         <div id="exampleModalCenter2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -154,28 +153,26 @@
                                             </div>
                                         </div>
                                         
-                                        <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter2"><i class="feather icon-edit"></i></button>
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2"><i class="feather icon-edit"></i></button>
                                     {{-- modal end --}}
 
-                                        <button class="btn  btn-icon btn-danger" role="button"><i class="feather mr-2 icon-slash"></i></button> </td>
+                                    <button class="btn  btn btn-danger" type="button"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                                 <tr>
                                     <td>546546</td>
                                     <td>Room 2</td>
                                     <td>Meeting Room 2</td>
                                     <td>4 to 6 pax</td>
-                                    <td></td>
-                                    <td> <button class="btn  btn-icon btn-success" role="button"><i class="feather icon-edit"></i></button>  
-                                        <button class="btn  btn-icon btn-danger" role="button"><i class="feather mr-2 icon-slash"></i></button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
+                                        <button class="btn  btn btn-danger" type="button"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                                 <tr>
                                     <td>124564324</td>
                                     <td>Room 3</td>
                                     <td>Meeting Room 3</td>
                                     <td>4 to 6 pax</td>
-                                    <td></td>
-                                    <td> <button class="btn  btn-icon btn-success" role="button"><i class="feather icon-edit"></i></button>  
-                                        <button class="btn  btn-icon btn-danger" role="button"><i class="feather mr-2 icon-slash"></i></button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
+                                        <button class="btn  btn btn-danger" type="button"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -266,7 +263,7 @@
                                     <th>Full Day</th>      
                                     <th>Weekly</th>      
                                     <th>Monthly</th>      
-                                    <th colspan="2">Action</th>
+                                    <th> Action </th>
 
                             
                                 </tr>
@@ -336,9 +333,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter4"><i class="feather icon-edit"></i></button>
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter4"><i class="feather icon-edit"></i></button>
                                     {{-- modal end --}} 
-                                        <button class="btn  btn-icon btn-danger" role="button"><i class="feather mr-2 icon-slash"></i></button> </td>
+                                        <button class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                                 <tr>
                                     <td>12324</td>
@@ -348,8 +345,8 @@
                                     <td>2500</td>
                                     <td>n/a</td>
                                     <td>n/a</td>
-                                    <td> <button class="btn  btn-icon btn-success" role="button"><i class="feather icon-edit"></i></button>  
-                                        <button class="btn  btn-icon btn-danger" role="button"><i class="feather mr-2 icon-slash"></i></button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
+                                        <button class="btn  btn btn-danger" type="button"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                                 <tr>
                                     <td>12324</td>
@@ -359,8 +356,8 @@
                                     <td>2500</td>
                                     <td>n/a</td>
                                     <td>n/a</td>
-                                    <td> <button class="btn  btn-icon btn-success" role="button"><i class="feather icon-edit"></i></button>  
-                                        <button class="btn  btn-icon btn-danger" role="button"><i class="feather mr-2 icon-slash"></i></button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
+                                        <button class="btn  btn btn-danger" type="button"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                             </tbody>
                         </table>

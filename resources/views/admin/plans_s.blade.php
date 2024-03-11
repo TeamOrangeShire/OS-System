@@ -128,8 +128,8 @@
                                     <td>30 hrs</td>
                                     <td>1000</td>
                                     <td></td>
-                                    <td> <button class="sub_add" role="button">Update</button>  
-                                        <button class="sub_del" role="button">Delete</button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
@@ -137,8 +137,8 @@
                                     <td>50 hrs</td>
                                     <td>1500</td>
                                     <td></td>
-                                    <td> <button class="sub_add" role="button">Update</button>  
-                                        <button class="sub_del" role="button">Delete</button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -146,8 +146,8 @@
                                     <td>70 hrs</td>
                                     <td>1800</td>
                                     <td></td>
-                                    <td> <button class="sub_add" role="button">Update</button>  
-                                        <button class="sub_del" role="button">Delete</button> </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                             </tbody>
                         </table>
