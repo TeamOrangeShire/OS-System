@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;	
 use App\Http\Controllers\CreateAcc;
-
+use App\Http\Controllers\Mailing;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +22,9 @@ Route::get('/reservation', function () { return view('homepage.reservation');})-
 Route::get('/signup', function () { return view('homepage.signup');})->name('signup');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
 Route::get('/services', function () { return view('homepage.services');})->name('services');
+
+//Client Back End
+Route::post('/customermail',[Mailing::class,'TestMail'] )->name('testMail');
 
 
 
@@ -53,6 +56,7 @@ Route::get('/admin/records_subscription', function () { return view('admin.recor
 Route::get('/admin/blank', function () { return view('admin.blank');})->name('blank');
 Route::get('/admin/time', function () { return view('admin.time');})->name('time');
 Route::get('/admin/logout', function () { return view('admin.logout');})->name('logout');
+
 
 // Admin Controller 
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');

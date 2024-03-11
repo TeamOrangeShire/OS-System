@@ -153,6 +153,7 @@
             <div class="sign-txt">Already a member? <a style="color: #ff5c40;" href="{{ route('customer_login') }}">Login Now</a></div>
          </div>
       </div>
+
       <script src="js/login.js"></script>
    </body>
 </html>
