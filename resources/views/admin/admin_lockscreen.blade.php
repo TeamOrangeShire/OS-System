@@ -1,8 +1,11 @@
+@if (session()->has('Admin_id'))
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{{asset('assets/images/os_logo.png')}}" type="image/x-icon">
+
   <title>Lock Screen</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -44,7 +47,7 @@
       max-width: 60%;
       height: auto;
       border-radius: inherit; /* Inherit the border radius from parent */
-      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5); /* Add box shadow */
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7); /* Add box shadow */
     }
 
     .lock-screen-form {
@@ -101,15 +104,21 @@
     </div>
     <br>
     <br>
+    @php
+      $admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
+      $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
+    @endphp
     <div class="lock-screen-logo">
       <img src="{{asset('assets/images/user/avatar-2.jpg')}}" alt="Logo">
     </div>
-    <form class="lock-screen-form">
-        <label for="">Albert Pimentel</label>
+    <form class="lock-screen-form" method="POST" action="{{route('Admin_lockscreen')}}">
+      @csrf
+
+        <label for="">{{$fullname}} </label>
       <div class="form-group">
-        <input type="password" class="form-control" id="password" placeholder="Password">
+        <input type="password" class="form-control" id="password" name="lock_password" placeholder="Password">
       </div>
-      <a href="{{route('index')}}" class="btn btn-primary">Unlock</a>
+      <button type="submit" class="btn btn-primary">Unlock</button>
     </form>
   </div>
 
@@ -148,3 +157,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+@else
+    @php
+        echo "<script>window.location.href = 'login';</script>";
+    @endphp
+
+@endif

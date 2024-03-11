@@ -201,12 +201,12 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/os_hotdesk.jpg" alt=""></a>
+                                        <a href="{{ route('services') }}#hotdesk"><img class="img-fluid" src="img/os_hotdesk.jpg" alt=""></a>
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Favorites</div>
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Coworking area</div>
                                     </div>
                                     <div class="p-4 pb-0">
-                                        <a class="d-block h5 mb-2" href="">Hot Desk</a>
+                                        <a class="d-block h5 mb-2" href="{{ route('services') }}#hotdesk">Hot Desk</a>
                                         <p>Description</p>
                                     </div>
                                     <div class="d-flex border-top">
@@ -219,12 +219,12 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/os_fixeddesk.jpg" alt=""></a>
+                                        <a href="{{ route('services') }}#fixed_desk"><img class="img-fluid" src="img/os_fixeddesk.jpg" alt=""></a>
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Featured</div>
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Coworking Area</div>
                                     </div>
                                     <div class="p-4 pb-0">
-                                        <a class="d-block h5 mb-2" href="">Fixed Desk</a>
+                                        <a class="d-block h5 mb-2" href="{{ route('services') }}#fixed_desk">Fixed Desk</a>
                                         <p>Description</p>
                                     </div>
                                     <div class="d-flex border-top">
@@ -236,12 +236,12 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/os_2.jpg" alt=""></a>
+                                        <a href="{{ route('services') }}#private_rooms"><img class="img-fluid" src="img/os_2.jpg" alt=""></a>
                                         <!-- <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div> -->
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Meeting Rooms</div>
                                     </div>
                                     <div class="p-4 pb-0">
-                                        <a class="d-block h5 mb-2" href="">Private Rooms</a>
+                                        <a class="d-block h5 mb-2" href="{{ route('services') }}#private_rooms">Private Rooms</a>
                                         <p>Description</p>
                                     </div>
                                     <div class="d-flex border-top">
@@ -254,12 +254,12 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/os_8.jpg" alt=""></a>
+                                        <a href="{{ route('services') }}#hybrid_pros"><img class="img-fluid" src="img/os_8.jpg" alt=""></a>
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Favorites</div>
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Consumable</div>
                                     </div>
                                     <div class="p-4 pb-0">
-                                        <a class="d-block h5 mb-2" href="">Hybrid Pros</a>
+                                        <a class="d-block h5 mb-2" href="{{ route('services') }}#hybrid_pros">Hybrid Pros</a>
                                         <p>Description</p>
                                     </div>
                                     <div class="d-flex border-top">
@@ -272,12 +272,12 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/os_2.jpg" alt=""></a>
+                                        <a href="{{ route('services') }}#printer_service"><img class="img-fluid" src="img/os_2.jpg" alt=""></a>
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Featured</div>
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Short Description</div>
                                     </div>
                                     <div class="p-4 pb-0">
-                                        <a class="d-block h5 mb-2" href="">Printer Services</a>
+                                        <a class="d-block h5 mb-2" href="{{ route('services') }}#printer_service">Printer Services</a>
                                         <p>Description</p>
                                     </div>
                                     <div class="d-flex border-top">
@@ -290,12 +290,12 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/os_2.jpg" alt=""></a>
+                                        <a href="{{ route('services') }}#others"><img class="img-fluid" src="img/os_2.jpg" alt=""></a>
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3"></div>
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Shop</div>
                                     </div>
                                     <div class="p-4 pb-0">
-                                        <a class="d-block h5 mb-2" href="">Others</a>
+                                        <a class="d-block h5 mb-2" href="{{ route('services') }}#others">Others</a>
                                         <p>Description</p>
                                     </div>
                                     <div class="d-flex border-top">

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Login;	
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ Route::get('/', function () { return view('homepage.index');})->name('home');
 Route::get('/aboutus', function () {return view('homepage.about');})->name('about');
 Route::get('/contactus', function () { return view('homepage.contact');})->name('contact');
 Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
+Route::get('/signup', function () { return view('homepage.signup');})->name('signup');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
 Route::get('/services', function () { return view('homepage.services');})->name('services');
 
@@ -49,3 +51,8 @@ Route::get('/admin/cancelled_subscription', function () { return view('admin.can
 Route::get('/admin/records_subscription', function () { return view('admin.records_s');})->name('records_s');
 Route::get('/admin/blank', function () { return view('admin.blank');})->name('blank');
 Route::get('/admin/time', function () { return view('admin.time');})->name('time');
+Route::get('/admin/logout', function () { return view('admin.logout');})->name('logout');
+
+// Admin Controller 
+Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
+Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');

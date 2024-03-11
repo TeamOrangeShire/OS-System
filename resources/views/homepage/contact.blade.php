@@ -113,7 +113,7 @@
                                         <div class="icon me-3" style="width: 45px; height: 45px;">
                                             <i class="fa fa-phone-alt text-primary"></i>
                                         </div>
-                                        <span>+012 345 6789</span>
+                                        <span>+63966 065 8143</span>
                                     </div>
                                 </div>
                             </div>
