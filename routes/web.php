@@ -23,6 +23,9 @@ Route::get('/signup', function () { return view('homepage.signup');})->name('sig
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
 Route::get('/services', function () { return view('homepage.services');})->name('services');
 
+//Client Back End
+Route::post('/customermail',[Mailing::class,'TestMail'] )->name('testMail');
+
 
 
 
@@ -54,8 +57,7 @@ Route::get('/admin/blank', function () { return view('admin.blank');})->name('bl
 Route::get('/admin/time', function () { return view('admin.time');})->name('time');
 Route::get('/admin/logout', function () { return view('admin.logout');})->name('logout');
 
-//Client Back End
-Route::post('/customermail',[Mailing::class,'TestMail'] )->name('testMail');
+
 // Admin Controller 
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
 Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');
