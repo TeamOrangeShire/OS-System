@@ -7,6 +7,8 @@
       <link rel="icon" href="img/os_logo.png">
       <link rel="stylesheet" href="css/login.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+      <link rel="stylesheet" href="libraries/modals/hystmodal.min.css">
+      <script src="libraries/modals/hystmodal.min.js"></script>
    </head>
    <body>
       <div class="container">
@@ -145,7 +147,7 @@
                   </div>
                   <div class="field btns">
                      <button class="prev-3 prev">Previous</button>
-                     <button class="submit" type="submit">Submit</button>
+                     <button class="submit" type="button" data-hystmodal="#myModal">Submit</button>
                   </div>
                </div>
                
@@ -153,7 +155,21 @@
             <div class="sign-txt">Already a member? <a style="color: #ff5c40;" href="{{ route('customer_login') }}">Login Now</a></div>
          </div>
       </div>
-
+      <div class="hystmodal" id="myModal" aria-hidden="true">
+         <div class="hystmodal__wrap">
+             <div class="hystmodal__window" role="dialog" aria-modal="true">
+                 <button data-hystclose class="hystmodal__close"></button>
+            <!--Modal Content-->
+             </div>
+         </div>
+     </div>
+     
+     <script>
+      const myModal = new HystModal({
+    linkAttributeName: "data-hystmodal",
+});
+     </script>
       <script src="js/login.js"></script>
+
    </body>
 </html>

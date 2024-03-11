@@ -83,8 +83,16 @@
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label for="exampleInputEmail1">Ext.</label>
-                                                                    <input type="text" class="form-control" id="exampleInputEmail1" name="Ext" aria-describedby="emailHelp" placeholder="Ext.">
-                                                                </div>
+                                                                    <select class="form-control" id="exampleFormControlSelect1">
+                                                                        <option value="Jr.">Jr.</option>
+                                                                        <option value="Sr.">Sr.</option>
+                                                                        <option value="II">II</option>
+                                                                        <option value="III">III</option>
+                                                                        <option value="IV">IV</option>
+                                                                        <option value="V">V</option>
+                                                                        <option value="Jra.">Jra.</option>
+                                                                        <option value="Esq.">Esq.</option>
+                                                                    </select>                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Username</label>
