@@ -210,7 +210,7 @@
                                         <p>Description</p>
                                     </div>
                                     <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-clock-rotate-left" style="color: #ff5c40;"></i> Hourly</small>
+                                        <small class="flex-fill text-center border-end py-2" title="Php 50.00"><i class="fa-solid fa-clock-rotate-left" style="color: #ff5c40;"></i> Hourly</small>
                                         <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-hourglass-start" style="color: #ff5c40;"></i> 3 Hours</small>
                                         <small class="flex-fill text-center py-2"><i class="fa-solid fa-list-check" style="color: #ff5c40;"></i> Others</small>
                                     </div>
