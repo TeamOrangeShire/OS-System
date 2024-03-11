@@ -64,6 +64,7 @@
                                     <th>Hours left</th>
                                     <th>Start</th>
                                     <th>End</th>
+                                    <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,6 +75,7 @@
                                     <td>29:00</td>
                                     <td>2024/03/04</td>
                                     <td>2024/04/04</td>
+                                    <td><button style="width: 50%;" class="decline_btn" role="button">Cancel</button> </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -82,6 +84,8 @@
                                     <td>29:00</td>
                                     <td>2024/03/04</td>
                                     <td>2024/04/04</td>
+                                    <td><button style="width: 50%;" class="decline_btn" role="button">Cancel</button> </td>
+
                                 </tr>
                                 <tr>
                                     <td>4</td>
@@ -90,6 +94,8 @@
                                     <td>29:00</td>
                                     <td>2024/03/04</td>
                                     <td>2024/04/04</td>
+                                    <td><button style="width: 50%;" class="decline_btn" role="button">Cancel</button> </td>
+
                                 </tr>
                             </tbody>
                         </table>
