@@ -22,6 +22,7 @@ Route::get('/reservation', function () { return view('homepage.reservation');})-
 Route::get('/signup', function () { return view('homepage.signup');})->name('signup');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
 Route::get('/services', function () { return view('homepage.services');})->name('services');
+Route::get('/book', function () { return view('homepage.book');})->name('book');
 
 //Client Back End
 Route::post('/customermail',[Mailing::class,'TestMail'] )->name('testMail');
