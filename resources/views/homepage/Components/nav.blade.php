@@ -28,7 +28,47 @@
                 <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
             </div>
             <!--<a href="{{route('customer_login')}}" class="btn btn-primary px-3 d-mb-4 d-lg-flex">Log in/Sign up</a>-->
-            <button class="user_account d-none d-lg-flex"></button>
+            <div class="profile-menu">
+                <button class="user_account d-none d-lg-flex"></button>
+                <div class="profile-menu-content">
+                    <a href="#"><i class="fa-regular fa-user" style="color: #ff5c40; padding-right:20px;"></i> Profile</a>
+                    <a href="#"><i class="fa-regular fa-bell" style="color: #ff5c40; padding-right:20px;"></i></i>Subscription</a>
+                    <a href="{{route('reservation')}}"><i class="fa-regular fa-calendar" style="color: #ff5c40; padding-right:20px;"></i>Reservation</a>
+                    <a href="{{route('services')}}"><i class="fa-solid fa-laptop-file" style="color: #ff5c40; padding-right:20px;"></i>Services</a>
+                    <a href="#"><i class="fa-solid fa-sliders" style="color: #ff5c40; padding-right:20px;"></i>Settings</a>
+                    <a href="#"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ff5c40; padding-right:20px;"></i>Logout</a>
+                </div>
+                <style>
+                    /* Add any additional styles here */
+            
+                    .profile-menu {
+                        position: relative;
+                        display: inline-block;
+                        cursor: pointer;
+                    }
+            
+                    .profile-menu-content {
+                        display: none;
+                        position: absolute;
+                        background-color: #fff;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        border-radius: 4px;
+                        min-width: 160px;
+                        z-index: 1;
+                    }
+            
+                    .profile-menu-content a {
+                        display: block;
+                        padding: 10px;
+                        text-decoration: none;
+                        color: #333;
+                    }
+            
+                    .profile-menu:hover .profile-menu-content {
+                        display: block;
+                    }
+                </style>
+            </div>
         </div>
     </nav>
 </div>  
