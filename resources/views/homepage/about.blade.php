@@ -92,7 +92,7 @@
                         <p class="mb-4">Orange Shire is more than a coworking and costudying space; it's a vibrant community hub in the heart of Bacolod City, dedicated to fostering innovation, connection, and professional growth. Our mission is to provide a dynamic environment where individuals and businesses thrive, creating a shared space for success and collaboration.</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Quite Space</p>
+                        <p><i class="fa fa-check text-primary me-3"></i>Quiet Space</p>
                         <a class="btn btn-primary py-3 px-5 mt-3" href="">Contact Us</a>
                     </div>
                 </div>

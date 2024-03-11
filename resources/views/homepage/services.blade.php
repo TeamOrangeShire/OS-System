@@ -157,11 +157,8 @@
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <h1 class="mb-4">Printer Services</h1>
-                        <p class="mb-4">Experience convenience at its best with our on-site printing services tailored for professionals on the go. For clients with urgent printing needs, our coworking space offers swift and efficient solutions. Whether it's important documents or last-minute presentations, our state-of-the-art printing services ensure a seamless experience, providing you with the timely support you require. Elevate your work efficiency with hassle-free printing right within our coworking community.</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Unli Coffee</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Fast Internet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Quite Space</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Contact Us</a>
+                        <p class="mb-4">Immerse yourself in a hassle-free printing experience at our coworking space, crafted to meet the urgent needs of students and professionals navigating dynamic schedules. Our efficient printing solutions guarantee swift turnarounds for last-minute assignments and on-the-go professional printing requirements. Skip the complications with straightforward walk-in service, providing a stress-free solution within the collaborative environment of our coworking space. Elevate your productivity without compromising quality – discover reliable, prompt printing services that seamlessly integrate with your dynamic workstyle at our coworking space.</p>
+                       
                     </div>
                 </div>
             </div>
