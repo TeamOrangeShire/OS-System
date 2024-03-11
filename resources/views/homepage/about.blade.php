@@ -115,7 +115,7 @@
                                     <h1 class="mb-3">Secure Your Productivity Haven: Reserve Your Private Workspace Today!</h1>
                                     <p>Unlock Privacy and Productivity: Book Your Exclusive Space at Orange Shire Now!</p>
                                 </div>
-                                <a href="" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-calendar me-2"></i>See Calendar</a>
+                                <a href="{{ route('reservation') }}#calendar" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-calendar me-2"></i>See Calendar</a>
                                 <a href="" class="btn btn-dark py-3 px-4"><i class="fa fa-calendar-alt me-2"></i>Book Reservation</a>
                             </div>
                         </div>

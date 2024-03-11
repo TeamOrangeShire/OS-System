@@ -83,7 +83,7 @@
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">See Our Reservation Calendar</h1>
+                    <h1 class="mb-3" id="calendar">See Our Reservation Calendar</h1>
                     <p>Explore our reservation calendar to plan your next productive session at Orange Shire. Click to see availability and secure your preferred time slot.</p>
                 </div>
                 <div id="calendars"></div>   
