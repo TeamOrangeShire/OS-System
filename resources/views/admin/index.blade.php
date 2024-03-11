@@ -489,7 +489,7 @@
                                     <img src="assets/images/user/avatar-4.jpg" alt="user image" class="img-radius profile-img cust-img m-b-15">
                                 </div>
                                 <div class="col">
-                                    <h6 class="m-b-15">Allina D’croze <span class="float-right f-13 text-muted"> a week ago</span></h6>
+                                    <h6 class="m-b-15">Allina D’croze <spsan class="float-right f-13 text-muted"> a week ago</span></h6>
                                     <a href="#!"><i class="feather icon-star-on f-18 text-c-yellow"></i></a>
                                     <a href="#!"><i class="feather icon-star f-18 text-muted"></i></a>
                                     <a href="#!"><i class="feather icon-star f-18 text-muted"></i></a>
