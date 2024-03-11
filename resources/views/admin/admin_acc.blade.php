@@ -134,6 +134,10 @@
                              @foreach ($admin_info as $info)
                              <tr>
                                 <td>{{$info->admin_id}}</td>
+                                <td>{{$info->admin_firstname}}</td>
+                                <td>{{$info->admin_middlename}}</td>
+                                <td>{{$info->admin_lastname}}</td>
+                                <td>{{$info->admin_ext}}</td>
                                 <td>{{$info->admin_username}}</td>
                             </tr>
                              @endforeach
