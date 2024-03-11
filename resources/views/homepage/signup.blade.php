@@ -23,7 +23,7 @@
             </div>
             <div class="step">
                <p>
-               Addtional  
+               Additional  
                </p>
                <div class="bullet">
                   <span>2</span>
@@ -50,22 +50,27 @@
             </div>
          </div>
          <div class="form-outer">
-            <form action="#">
+            <form action="#" method="POST">
                <div class="page slide-page">
                   <div class="title">
                      Name Info:
                   </div>
                   <div class="field">
-                     <div class="label">
+                     <div class="label" id="fname_label">
                         First Name
                      </div>
-                     <input type="text" placeholder="ex. John">
+                 
+                     <input type="text" placeholder="ex. John" name="fname" required id="fname">    
+
                   </div>
+              
                   <div class="field">
-                     <div class="label">
+                     <div class="label" id="lname_label">
                         Last Name
                      </div>
-                     <input type="text" placeholder="ex. Doe">
+                  
+                     <input type="text" placeholder="ex. Doe" name="lname" required id="lname">
+                     
                   </div>
                   <div class="field">
                      <button type="button" class="firstNext next">Next</button>
@@ -76,16 +81,16 @@
                   Additional Name Info:
                   </div>
                   <div class="field">
-                     <div class="label">
+                     <div class="label" id="mname_label">
                         Middle Name
                      </div>
-                     <input type="text" placeholder="ex. Doe">
+                     <input type="text" placeholder="ex. Doe" name="mname" id="mname" required>
                   </div>
                   <div class="field">
-                     <div class="label">
+                     <div class="label" >
                         Extension
                      </div>
-                     <select>
+                     <select name="ext">
                         <option selected>None</option>
                         <option>Jr.</option>
                         <option>Sr.</option>
@@ -106,16 +111,16 @@
                      Contact Info:
                   </div>
                   <div class="field">
-                     <div class="label">
+                     <div class="label" id="email_label">
                         Email Address
                      </div>
-                     <input type="text" placeholder="yourname@gmail.com">
+                     <input type="email" name="email" id="email" placeholder="yourname@gmail.com" required>
                   </div>
                   <div class="field">
-                     <div class="label">
+                     <div class="label" id="contact_label">
                         Phone Number
                      </div>
-                     <input type="Number" placeholder="+344343">
+                     <input type="Number" id="contact" name="contact" maxlength="11" placeholder="+639000111223" required>
                   </div>
                   <div class="field btns">
                      <button class="prev-2 prev">Previous</button>
@@ -130,22 +135,22 @@
                      <div class="label">
                         Username
                      </div>
-                     <input type="text" placeholder="john1">
+                     <input type="text" name="username" placeholder="john1" required>
                   </div>
                   <div class="field">
                      <div class="label">
                         Password
                      </div>
-                     <input type="password" placeholder="#123AaBbCc">
+                     <input type="password" name="password" placeholder="#123AaBbCc" required>
                   </div>
                   <div class="field btns">
                      <button class="prev-3 prev">Previous</button>
-                     <button class="submit">Submit</button>
+                     <button class="submit" type="submit">Submit</button>
                   </div>
                </div>
                
             </form>
-            <div class="sign-txt">Already a member? <a style="color: #ff5c40" href="{{ route('customer_login') }}">Login Now</a></div>
+            <div class="sign-txt">Already a member? <a style="color: #ff5c40;" href="{{ route('customer_login') }}">Login Now</a></div>
          </div>
       </div>
       <script src="js/login.js"></script>
