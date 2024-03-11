@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
+use Illuminate\Support\Facades\Hash;
 
 class CreateAcc extends Controller
 {
@@ -17,7 +18,7 @@ class CreateAcc extends Controller
         $post->admin_lastname = '';
         $post->admin_ext = '';
         $post->admin_username = $CreateAdmin->AdminName;
-        $post->admin_password = $CreateAdmin->AdminPass;
+        $post->admin_password = Hash::make($CreateAdmin->AdminPass);
         $post->admin_profile_pic = '';
 
 
