@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
-use App\Models\CustomerAcc;
 
 class CreateAcc extends Controller
 {
@@ -13,12 +12,12 @@ class CreateAcc extends Controller
 
         
         $post = new AdminAcc;
-        $post->admin_firstname = '';
-        $post->admin_middlename = '';
-        $post->admin_lastname = '';
-        $post->admin_ext = '';
+        $post->admin_firstname = $CreateAdmin->FirstName;
+        $post->admin_middlename = $CreateAdmin->MiddleName;
+        $post->admin_lastname = $CreateAdmin->LastName;
+        $post->admin_ext = $CreateAdmin->Ext;
         $post->admin_username = $CreateAdmin->AdminName;
-        $post->admin_password = $CreateAdmin->AdminPass;
+        $post->admin_password = Hash::make($CreateAdmin->AdminPass);
         $post->admin_profile_pic = '';
 
         $post->save();
