@@ -117,6 +117,8 @@
                 <div class="card-header">
                     
                     <h5>Log History</h5>
+                    <button class="btn  btn-primary">Print Records</button>
+
                     <div class="input-group m-t-15">
                         <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
                         <div class="input-group-append">
