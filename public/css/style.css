@@ -13,10 +13,12 @@
   }
 *{
     font-family: 'Montserrat', sans-serif;
+    
 }
 h1{
     font-family: 'Montserrat', sans-serif;
 }
+
 .back-to-top {
     position: fixed;
     display: none;
@@ -25,7 +27,7 @@ h1{
     z-index: 99;
 }
 .user_account{
-    background: url('../img/sire_Albert.jfif');
+    background: url('../img/user.jpg');
     background-size: contain;
     background-position: center;
     width: 60px;
@@ -89,9 +91,9 @@ h1{
 /*** Navbar ***/
 .nav-bar {
     position: relative;
-    margin-top: 45px;
     padding: 0 3rem;
     transition: .5s;
+
     z-index: 9999;
 }
 
