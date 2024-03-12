@@ -1,3 +1,4 @@
+@if (session()->has('Admin_id'))
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,8 +50,9 @@
       @php
           $admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
           $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
+         
       @endphp
-      <form action="">
+      <form action="" method="POST">@csrf
         <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
                 <div class="col-md-6 border-right">
@@ -93,12 +95,13 @@
                         </div>
                         <div class="row mt-2">
                     
-                            <div class="col-md-6"><label class="labels">Old Password</label><input type="password" name="password2" class="form-control" value="" placeholder="Password"></div>
+                            <div class="col-md-6"><label class="labels">Old Password</label><input type="password" name="password2" class="form-control" value="" placeholder="Password" id="oldpass"></div>
                         </div>
-                        
-                     
+                        <div class="col-md-6">
+                        </div>
+            
                         <div class="mt-5 text-center">
-                            <button class="btn btn-primary profile-button" type="button">Save Profile</button>
+                            <button class="btn btn-primary profile-button" type="button" id="edit">Save Profile</button>
                         </div>
                     </div>
                 </div>
@@ -159,6 +162,7 @@
     <!-- Warning Section Ends -->
 
     <!-- Required Js -->
+       
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 
@@ -173,3 +177,9 @@
 </body>
 
 </html>
+@else
+    @php
+        echo "<script>window.location.href = 'login';</script>";
+    @endphp
+
+@endif
