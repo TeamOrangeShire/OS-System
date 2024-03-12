@@ -113,7 +113,7 @@
                                     <td>{{$info->promo_id}}</td>
                                     <td>{{$info->promo_name}}</td>
                                     <td>{{$info->promo_percentage}}</td>
-                                    <td><button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-edit"></i></button>
+                                    <td><button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
 
                                         <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button></td>
                                 </tr>
@@ -136,14 +136,14 @@
                                 <div class="col-md-12">
                                     <form action="{{route('EditPromo')}}" method="POST">@csrf
                                         <div class="form-group">
-                                            <input type="hidden" name="promo_id" id="" value="{{$info->promo_id}}">
+                                            <input type="hidden" name="promo_id" id="promo_id" >
                                             <label for="plan_name">Promo Name</label>
-                                            <input type="text" class="form-control" id="plan_name" aria-describedby="emailHelp" name="promo_name" placeholder="Promo Name" value="{{$info->promo_name}}">
+                                            <input type="text" class="form-control" id="promo_name" aria-describedby="emailHelp" name="promo_name" placeholder="Promo Name" >
                                            
                                         </div>
                                         <div class="form-group">
                                             <label for="plan_hours">Percentage</label>
-                                            <input type="number" class="form-control" id="plan_hours" aria-describedby="emailHelp" name="promo_percentage" placeholder="Promo Percentage" value="{{$info->promo_percentage}}">
+                                            <input type="number" class="form-control" id="promo_percentage" aria-describedby="emailHelp" name="promo_percentage" placeholder="Promo Percentage" >
                                            
                                         </div>
 
@@ -211,6 +211,18 @@
     <!-- Warning Section Ends -->
 
     <!-- Required Js -->
+    <script>
+        function updatemodal(id,name,percentage){
+            const promo_id =document.getElementById('promo_id');
+            const promo_name =document.getElementById('promo_name');
+            const promo_percentage =document.getElementById('promo_percentage');
+
+            promo_id.value=id;
+            promo_name.value=name;
+            promo_percentage.value=percentage;
+
+        }
+    </script>
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 
