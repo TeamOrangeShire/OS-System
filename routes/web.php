@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;	
 use App\Http\Controllers\CreateAcc;
+use App\Http\Controllers\EditAcc;
 use App\Http\Controllers\Mailing;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +24,7 @@ Route::get('/reservation', function () { return view('homepage.reservation');})-
 Route::get('/signup', function () { return view('homepage.signup');})->name('signup');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
 Route::get('/services', function () { return view('homepage.services');})->name('services');
+Route::get('/book', function () { return view('homepage.book');})->name('book');
 
 //Client Back End
 Route::post('/customermail',[Mailing::class,'TestMail'] )->name('testMail');
@@ -62,5 +65,8 @@ Route::get('/admin/logout', function () { return view('admin.logout');})->name('
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
 Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');
 Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdmin');
+Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
+Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
+
 
 

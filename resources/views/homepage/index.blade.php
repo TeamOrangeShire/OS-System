@@ -555,7 +555,7 @@
                                     <p>Call us for more information about the promo you would like to avail and more.</p>
                                 </div>
                                 <a href="{{ route('contact') }}" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
-                                <a href="{{ route('reservation') }}" class="btn btn-dark py-3 px-4"><i class="fa fa-calendar-alt me-2"></i>Reserve Now</a>
+                                <a href="{{ route('reservation') }}#calendars" class="btn btn-dark py-3 px-4"><i class="fa fa-calendar-alt me-2"></i>Reserve Now</a>
                             </div>
                         </div>
                     </div>
