@@ -49,7 +49,13 @@
         <!-- [ Main Content start ] start -->
       @php
           $admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
-          $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
+          $ext = $admin_name->admin_ext;
+          if ($ext === 'none') {
+            $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
+          }else {
+            $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname.' '.$admin_name->admin_ext;
+          }
+         
          
       @endphp
       <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -69,7 +75,6 @@
                                         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                         </div>
                         <div class="modal-footer">
-                           
                             <button type="submit" class="btn  btn-primary">Save changes</button>
                         </div>
                     </form>
@@ -106,7 +111,7 @@
                             <div class="col-md-6"> <label for="exampleInputEmail1">Ext.</label>
                                 <select class="form-control" id="exampleFormControlSelect1" name="ext">
                                     <option value="{{$admin_name->admin_ext}}">{{$admin_name->admin_ext}}</option>
-                                    <option value="N/A">N/A</option>
+                                    <option value="none">N/A</option>
                                     <option value="Jr.">Jr.</option>
                                     <option value="Sr.">Sr.</option>
                                     <option value="II">II</option>
