@@ -71,6 +71,8 @@ Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/EditPromo', [EditData::class, 'EditPromo'])->name('EditPromo');
+Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
+Route::post('/EditPlan', [EditData::class, 'EditPlan'])->name('EditPlan');
 
 
 
