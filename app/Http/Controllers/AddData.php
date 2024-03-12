@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Promos;
+use App\Models\ServiceHP;
+use App\Models\Subscriptions;
 use Illuminate\Http\Request;
 
 class AddData extends Controller
@@ -16,5 +18,15 @@ class AddData extends Controller
         $data->save();
         return redirect()->back();
 
+    }
+    public function AddPlan(Request $request){
+        
+        $data = new ServiceHP;
+        $data->service_name = $request->service_name;
+        $data->service_hours = $request->service_hours;
+        $data->service_price = $request->service_price;
+        $data->promo_id = $request->service_id;
+        $data->save();
+        return redirect()->back();
     }
 }

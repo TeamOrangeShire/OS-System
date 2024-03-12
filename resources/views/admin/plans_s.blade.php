@@ -65,30 +65,32 @@
                                 <div class="modal-body">
                               
                                     <div class="col-md-12">
-                                        <form>
+                                        <form action="{{route('AddPlan')}}" method="POST" >@csrf
                                             <div class="form-group">
                                                 <label for="plan_name">Plan Name</label>
-                                                <input type="text" class="form-control" id="plan_name" aria-describedby="emailHelp" placeholder="Plan Name">
+                                                <input type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Name" name="service_name">
                                                
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_hours">Hours</label>
-                                                <input type="number" class="form-control" id="plan_hours" aria-describedby="emailHelp" placeholder="Plan Hours">
+                                                <input type="number" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Hours" name="service_hours">
                                                
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_price">Price</label>
-                                                <input type="number" class="form-control" id="plan_price" aria-describedby="emailHelp" placeholder="Plan Price">
+                                                <input type="number" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Price" name="service_price">
                                                
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_promo">Promo</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
+                                                <select class="form-control"  name="service_id">
+                                                    
+                                                    @php
+                                                    $promo = App\Models\Promos::all();
+                                                @endphp
+                                                @foreach ($promo as $info)
+                                                    <option value="{{$info->promo_id}}">{{$info->promo_name}} {{$info->promo_percentage}}%</option>
+                                                    @endforeach
                                                 </select>                        
                                             </div>
             
@@ -122,33 +124,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $Service = App\Models\ServiceHP::all();
+                                
+                            @endphp
+                            @foreach ($Service as $view)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Plan 1</td>
-                                    <td>30 hrs</td>
-                                    <td>1000</td>
-                                    <td></td>
-                                    <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter5"><i class="feather icon-edit"></i></button>  
+                                    <td>{{$view->service_id}}</td>
+                                    <td>{{$view->service_name}}</td>
+                                    <td>{{$view->service_hours}}</td>
+                                    <td>{{$view->service_price}}</td>
+                                    @php
+                                        $promo_id =$view->promo_id;
+                                        $selec_promo = App\Models\Promos::where('promo_id',$promo_id)->first();
+                                      $promo_name = $selec_promo->promo_name;
+                                    @endphp
+                                    <td>{{$promo_name}}</td>
+                                    <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter5" onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#disableplan"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Plan 2</td>
-                                    <td>50 hrs</td>
-                                    <td>1500</td>
-                                    <td></td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-slash"></i></button> </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Plan 3</td>
-                                    <td>70 hrs</td>
-                                    <td>1800</td>
-                                    <td></td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-slash"></i></button> </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -173,30 +168,32 @@
             <div class="modal-body">
           
                 <div class="col-md-12">
-                    <form>
+                    <form method="POST" action="{{route('EditPlan')}}">@csrf
                         <div class="form-group">
+                            <input type="hidden" name="plan_id" id="plan_id">
                             <label for="plan_name">Plan Name</label>
-                            <input type="text" class="form-control" id="plan_name" aria-describedby="emailHelp" placeholder="Plan Name">
+                            <input type="text" class="form-control" id="plan_name" name="plan_name" aria-describedby="emailHelp" placeholder="Plan Name">
                            
                         </div>
                         <div class="form-group">
                             <label for="plan_hours">Hours</label>
-                            <input type="number" class="form-control" id="plan_hours" aria-describedby="emailHelp" placeholder="Plan Hours">
+                            <input type="number" class="form-control" id="plan_hours" name="plan_hours" aria-describedby="emailHelp" placeholder="Plan Hours">
                            
                         </div>
                         <div class="form-group">
                             <label for="plan_price">Price</label>
-                            <input type="number" class="form-control" id="plan_price" aria-describedby="emailHelp" placeholder="Plan Price">
+                            <input type="number" class="form-control" id="plan_price" name="plan_price" aria-describedby="emailHelp" placeholder="Plan Price">
                            
                         </div>
                         <div class="form-group">
                             <label for="plan_promo">Promo</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                            <select class="form-control" id="promolist" name="promolist">
+                                @php
+                                $promos = App\Models\Promos::all();
+                            @endphp
+                             @foreach ($promos as $detail)
+                                <option value="{{$detail->promo_id}}">{{$detail->promo_name}} {{$detail->promo_percentage}}%</option>
+                                @endforeach
                             </select>                        
                         </div>
 
@@ -289,6 +286,22 @@
     <!-- Warning Section Ends -->
 
     <!-- Required Js -->
+    <script>
+        function updatemodal(id,name,hour,price,promo_id){
+            const plan_id =document.getElementById('plan_id');
+            const plan_name =document.getElementById('plan_name');
+            const plan_hours =document.getElementById('plan_hours');
+            const plan_price =document.getElementById('plan_price');
+            const prom =document.getElementById('promolist');
+
+            plan_id.value=id;
+            plan_name.value=name;
+            plan_hours.value=hour;
+            plan_price.value=price;
+            prom.value=promo_id;
+          
+        }
+    </script>
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 
