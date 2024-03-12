@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('homepage/Components/header', ['current_page'=>'Services - Orange Shire'])
+    @include('homepage/Components/header', ['current_page'=>'Solutions - Orange Shire'])
 </head>
 
 <body style="background-color: #ffffff !important">
@@ -17,7 +17,7 @@
 
 
         <!-- Navbar Start -->
-        @include('homepage/Components/nav', ['active'=>'services'])
+        @include('homepage/Components/nav', ['active'=>'solutions'])
         <!-- Navbar End -->
 
 

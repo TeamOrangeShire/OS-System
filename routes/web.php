@@ -23,7 +23,7 @@ Route::get('/contactus', function () { return view('homepage.contact');})->name(
 Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
 Route::get('/signup', function () { return view('homepage.signup');})->name('signup');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
-Route::get('/services', function () { return view('homepage.services');})->name('services');
+Route::get('/solutions', function () { return view('homepage.solutions');})->name('solutions');
 Route::get('/book', function () { return view('homepage.book');})->name('book');
 
 //Client Back End
