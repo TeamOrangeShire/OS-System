@@ -52,7 +52,7 @@
           $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
          
       @endphp
-      <form action="" method="POST">@csrf
+      <form action="{{route('EditAdmin')}}" method="POST">@csrf
         <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
                 <div class="col-md-6 border-right">
@@ -69,6 +69,7 @@
                             <h4 class="text-right">Profile Settings</h4>
                         </div>
                         <div class="row mt-2">
+                            <input type="hidden" name="admin_id" value="{{$admin_name->admin_id}}" id="">
                             <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" name="firstname" placeholder="Full Name" value="{{$admin_name->admin_firstname}}"></div>
                             <div class="col-md-6"><label class="labels">Middle Name</label><input type="text" class="form-control" name="middlename" placeholder="Full Name" value="{{$admin_name->admin_middlename}}"></div>
                             
@@ -78,6 +79,7 @@
                             <div class="col-md-6"> <label for="exampleInputEmail1">Ext.</label>
                                 <select class="form-control" id="exampleFormControlSelect1" name="ext">
                                     <option value="{{$admin_name->admin_ext}}">{{$admin_name->admin_ext}}</option>
+                                    <option value="N/A">N/A</option>
                                     <option value="Jr.">Jr.</option>
                                     <option value="Sr.">Sr.</option>
                                     <option value="II">II</option>
@@ -91,17 +93,17 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-6"><label class="labels">Username</label><input type="text" class="form-control" name="username" placeholder="Username" value="{{$admin_name->admin_username}}"></div>
-                            <div class="col-md-6"><label class="labels">New Password</label><input type="password" class="form-control" name="password" value="" placeholder="Password"></div>
+                            <div class="col-md-6"><label class="labels">New Password</label><input type="password" class="form-control" name="new_password" value="" placeholder="Password"></div>
                         </div>
                         <div class="row mt-2">
                     
-                            <div class="col-md-6"><label class="labels">Old Password</label><input type="password" name="password2" class="form-control" value="" placeholder="Password" id="oldpass"></div>
+                            <div class="col-md-6"><label class="labels">Old Password</label><input type="password" name="old_password" class="form-control" value="" placeholder="Password" id="oldpass"></div>
                         </div>
                         <div class="col-md-6">
                         </div>
             
                         <div class="mt-5 text-center">
-                            <button class="btn btn-primary profile-button" type="button" id="edit">Save Profile</button>
+                            <button class="btn btn-primary profile-button" type="submit" id="edit">Save Profile</button>
                         </div>
                     </div>
                 </div>

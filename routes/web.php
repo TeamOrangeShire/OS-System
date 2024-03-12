@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;	
 use App\Http\Controllers\CreateAcc;
+use App\Http\Controllers\EditAcc;
 use App\Http\Controllers\Mailing;
 /*
 |--------------------------------------------------------------------------
@@ -63,5 +64,6 @@ Route::get('/admin/logout', function () { return view('admin.logout');})->name('
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
 Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');
 Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdmin');
+Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 
 
