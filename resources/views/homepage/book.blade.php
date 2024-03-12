@@ -133,25 +133,16 @@
                         </div>
                     </div>
                     <div class="col-md-5 animated fadeIn ">
-                        <div class="owl-carousel header-carousel" style="left: 5rem">
+                        <div class="owl-carousel header-carousel" style="left: 5rem; padding-top: 1rem;">
                             <div class="owl-carousel-item">
-                                <img class="img-fluid" src="img/os_1.jpg" alt="">
+                                <img class="img-fluid" src="img/mr1.jpg" alt="">
                             </div>
                             <div class="owl-carousel-item">
-                                <img class="img-fluid" src="img/os_2.jpg" alt="">
+                                <img class="img-fluid" src="img/mr2.jpg" alt="">
                             </div>
                             <div class="owl-carousel-item">
-                                <img class="img-fluid" src="img/os_8.jpg" alt="">
+                                <img class="img-fluid" src="img/mr3_2.jpg" alt="">
                             </div>
-                            <div class="owl-carousel-item">
-                                <img class="img-fluid" src="img/os_9.jpg" alt="">
-                            </div>
-                            <div class="owl-carousel-item">
-                              <img class="img-fluid" src="img/os_3.jpg" alt="">
-                            </div>
-                            <div class="owl-carousel-item">
-                            <img class="img-fluid" src="img/os_5.jpg" alt="">
-                        </div>
                         </div>
                     </div>
                 </div>
