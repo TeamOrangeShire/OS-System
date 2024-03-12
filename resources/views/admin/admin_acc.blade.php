@@ -83,7 +83,7 @@
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label for="exampleInputEmail1">Ext.</label>
-                                                                    <select class="form-control" id="exampleFormControlSelect1">
+                                                                    <select class="form-control" id="exampleFormControlSelect1" name="Ext">
                                                                         <option value="Jr.">Jr.</option>
                                                                         <option value="Sr.">Sr.</option>
                                                                         <option value="II">II</option>
