@@ -61,10 +61,8 @@
                                     <th>#</th>
                                     <th>Subscription</th>
                                     <th>Name</th>
-                                    
-                                    <th>Start</th>
-                                    <th>End</th>
-                                    <th colspan="2"> Action Buttons</th>
+        
+                                    <th colspan="2"> Confirm/Decline</th>
 
                                 </tr>
                             </thead>
@@ -74,30 +72,26 @@
                                     <td>30hrs</td>
                                     <td>Mark</td>
                                     
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x"></i></button>   </td>
+        
+                                    <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"><i class="feather icon-check-circle"></i></button>  
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal"><i class="feather icon-x-circle"></i></button>   </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
                                     <td>70hrs</td>
                                     <td>Mark2</td>
                                     
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x"></i></button>   </td>
+   
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-x-circle"></i></button>   </td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
                                     <td>50hrs</td>
                                     <td>Mark3</td>
                                    
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x"></i></button>   </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-x-circle"></i></button>   </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -109,6 +103,60 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+
+{{-- confirm modal start --}}
+<div id="confirmmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Confirm Subscription?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <p>Subscription Name: <span id="subscriptionName"></span></p>
+                    <p>Plan: <span id="subscriptionPlan"></span></p>
+                    <p>Customer Full Name: <span id="customerFullName"></span></p>
+                    <div style="text-align: center;">
+                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- confirm modal end --}}
+
+{{-- modal start decline --}}
+
+<div id="declinemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Are you Sure you want to disable this plan?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+          
+                <div class="col-md-12">
+                    <div style="text-align: center;">
+                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                    </div>
+                    
+                </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+{{-- modal end --}}
+
+
 <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->

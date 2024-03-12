@@ -5,6 +5,8 @@ use App\Http\Controllers\Login;
 use App\Http\Controllers\CreateAcc;
 use App\Http\Controllers\EditAcc;
 use App\Http\Controllers\Mailing;
+use App\Http\Controllers\AddData;
+use App\Http\Controllers\EditData;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,7 @@ Route::get('/contactus', function () { return view('homepage.contact');})->name(
 Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
 Route::get('/signup', function () { return view('homepage.signup');})->name('signup');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
-Route::get('/services', function () { return view('homepage.services');})->name('services');
+Route::get('/solutions', function () { return view('homepage.solutions');})->name('solutions');
 Route::get('/book', function () { return view('homepage.book');})->name('book');
 
 //Client Back End
@@ -67,6 +69,8 @@ Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin
 Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdmin');
 Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
+Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
+Route::post('/EditPromo', [EditData::class, 'EditPromo'])->name('EditPromo');
 
 
 

@@ -46,79 +46,20 @@
 <section class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                <div class="card-header">
-                        <h5>Insert Log</h5>
-                    </div>
-                    <div class="card-body">
-                <div class="card-body">
-                    
-                    <form class="needs-validation" novalidate>
-                        <div class="form-row">
-                            <div class="col-md-3 mb-3">
-                                <label for="validationTooltip01">First name</label>
-                                <input type="text" class="form-control" id="validationTooltip01" placeholder="First name" value="" required>
-                                <div class="valid-tooltip">
-                                    Looks good!
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationTooltip02">Middle name</label>
-                                <input type="text" class="form-control" id="validationTooltip02" placeholder="Middle name" value="" required>
-                                <div class="valid-tooltip">
-                                    Looks good!
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationTooltip03">Last name</label>
-                                <input type="text" class="form-control" id="validationTooltip03" placeholder="Last name" value="" required>
-                                <div class="valid-tooltip">
-                                    Looks good!
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                 <label for="exampleFormControlSelect1">Ext.</label>
-                                        <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>Sr.</option>
-                                            <option>Jr.</option>
-                                        </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-6 mb-3">
-                                <label for="validationTooltip04">Email</label>
-                                <input type="text" class="form-control" id="validationTooltip04" placeholder="Email" required>
-                                <div class="invalid-tooltip">
-                                    Please provide a valid city.
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="validationTooltip05">Number</label>
-                                <input type="Number" class="form-control" id="validationTooltip05" placeholder="Number" required>
-                                <div class="invalid-tooltip">
-                                    Please provide a valid state.
-                                </div>
-                            </div>
-                        
-                        </div>
-                        <button class="btn  btn-primary" type="submit">Insert Log</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-       
-    </div>
-</div>
+        
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" >
                     
                     <h5>Log History</h5>
-                    <button class="btn  btn-primary">Print Records</button>
+                    <button class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#insertmodal" type="submit">Insert Log</button>
 
+                    <button class="btn btn-secondary">
+                        <i class="feather icon-printer" style="font-size: 24px;"></i>
+                    </button>
+                    
+                    
                     <div class="input-group m-t-15">
                         <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
                         <div class="input-group-append">
@@ -373,6 +314,74 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+{{-- insert modal start --}}
+<div id="insertmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" >
+                <h5 class="modal-title" id="exampleModalCenterTitle">Insert Log</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form class="needs-validation" novalidate>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-6">
+                            <label for="validationTooltip01">First name</label>
+                            <input type="text" class="form-control" id="validationTooltip01" placeholder="First name" value="" required>
+                            <div class="valid-tooltip">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-6">
+                            <label for="validationTooltip02">Middle name</label>
+                            <input type="text" class="form-control" id="validationTooltip02" placeholder="Middle name" value="" required>
+                            <div class="valid-tooltip">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-6">
+                            <label for="validationTooltip03">Last name</label>
+                            <input type="text" class="form-control" id="validationTooltip03" placeholder="Last name" value="" required>
+                            <div class="valid-tooltip">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-6">
+                            <label for="exampleFormControlSelect1">Ext.</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>Sr.</option>
+                                        <option>Jr.</option>
+                                    </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationTooltip04">Email</label>
+                            <input type="text" class="form-control" id="validationTooltip04" placeholder="Email" required>
+                            <div class="invalid-tooltip">
+                                Please provide a valid city.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationTooltip05">Number</label>
+                            <input type="Number" class="form-control" id="validationTooltip05" placeholder="Number" required>
+                            <div class="invalid-tooltip">
+                                Please provide a valid state.
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <button class="btn  btn-primary" type="submit">Insert Log</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- insert modal end --}}
+
+
 <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->

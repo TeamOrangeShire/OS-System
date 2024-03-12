@@ -53,7 +53,7 @@
                 <div class="card-header" style="position: relative;">
                     
                     <h5>Subscription Plans</h5>
-                    {{-- modal start --}}
+                    {{-- modal start add plan--}}
                     <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -64,7 +64,7 @@
 
                                 <div class="modal-body">
                               
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <form>
                                             <div class="form-group">
                                                 <label for="plan_name">Plan Name</label>
@@ -128,8 +128,8 @@
                                     <td>30 hrs</td>
                                     <td>1000</td>
                                     <td></td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-slash"></i></button> </td>
+                                    <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter5"><i class="feather icon-edit"></i></button>  
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#disableplan"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
@@ -160,6 +160,86 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+{{-- modal start edit--}}
+<div id="exampleModalCenter5" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Plan Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+          
+                <div class="col-md-12">
+                    <form>
+                        <div class="form-group">
+                            <label for="plan_name">Plan Name</label>
+                            <input type="text" class="form-control" id="plan_name" aria-describedby="emailHelp" placeholder="Plan Name">
+                           
+                        </div>
+                        <div class="form-group">
+                            <label for="plan_hours">Hours</label>
+                            <input type="number" class="form-control" id="plan_hours" aria-describedby="emailHelp" placeholder="Plan Hours">
+                           
+                        </div>
+                        <div class="form-group">
+                            <label for="plan_price">Price</label>
+                            <input type="number" class="form-control" id="plan_price" aria-describedby="emailHelp" placeholder="Plan Price">
+                           
+                        </div>
+                        <div class="form-group">
+                            <label for="plan_promo">Promo</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>                        
+                        </div>
+
+                       
+                        <button type="submit" class="btn  btn-primary">Add Plan</button>
+                    </form>
+                </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+{{-- modal end --}}
+
+{{-- modal start disable --}}
+
+<div id="disableplan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Are you Sure you want to disable this plan?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+          
+                <div class="col-md-12">
+                    <div style="text-align: center;">
+                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                    </div>
+                    
+                </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+{{-- modal end --}}
+
+
+
+
 <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->
