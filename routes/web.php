@@ -5,6 +5,8 @@ use App\Http\Controllers\Login;
 use App\Http\Controllers\CreateAcc;
 use App\Http\Controllers\EditAcc;
 use App\Http\Controllers\Mailing;
+use App\Http\Controllers\AddData;
+use App\Http\Controllers\EditData;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +69,8 @@ Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin
 Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdmin');
 Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
+Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
+Route::post('/EditPromo', [EditData::class, 'EditPromo'])->name('EditPromo');
 
 
 

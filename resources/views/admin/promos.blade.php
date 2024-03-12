@@ -66,16 +66,15 @@
                                   
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <form>
+                                            <form action="{{route('AddPromo')}}" method="POST">@csrf
                                                 <div class="form-group">
                                                     <label for="promos_name">Promo Name</label>
-                                                    <input type="text" class="form-control" id="promos_name" aria-describedby="emailHelp" placeholder="Promo Name">
+                                                    <input type="text" class="form-control" id="promos_name" name="promo_name" placeholder="Promo Name">
                                                    
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="percent_age">Percentage</label>
-                                                    <input type="number" class="form-control" id="percent_age" aria-describedby="emailHelp" placeholder="Promo Percentage">
-                                                   
+                                                    <input type="number" class="form-control" id="percent_age" name="promo_percentage" placeholder="Promo Percentage">
                                                 </div>
                 
                                                
@@ -106,71 +105,57 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $promo = App\Models\Promos::all();
+                            @endphp
+                             @foreach ($promo as $info)
                                 <tr>
-                                    <td>2</td>
-                                    <td>Valentines Day Special</td>
-                                    <td>20%</td>
-                                    <td> 
-                                        <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Promo Details</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    </div>
-                    
-                                                    <div class="modal-body">
-                                                  
-                                                        <div class="col-md-12">
-                                                            <form>
-                                                                <div class="form-group">
-                                                                    <label for="plan_name">Promo Name</label>
-                                                                    <input type="text" class="form-control" id="plan_name" aria-describedby="emailHelp" placeholder="Plan Name">
-                                                                   
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="plan_hours">Percentage</label>
-                                                                    <input type="number" class="form-control" id="plan_hours" aria-describedby="emailHelp" placeholder="Plan Hours">
-                                                                   
-                                                                </div>
+                                    <td>{{$info->promo_id}}</td>
+                                    <td>{{$info->promo_name}}</td>
+                                    <td>{{$info->promo_percentage}}</td>
+                                    <td><button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-edit"></i></button>
 
-                                                                <button type="submit" class="btn  btn-primary" >Add Plan</button>
-                                                            </form>
-                                                        </div>
-                                                   </div>
-                                                  
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-edit"></i></button>
-
-                                        <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button>
-                                    </td>
-
+                                        <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button></td>
                                 </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Valentines Day Special</td>
-                                    <td>20%</td>
-                                    <td> 
-                                        <button type="button" class="btn  btn-icon btn-success"><i class="feather icon-edit"></i></button>
-                                        <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Valentines Day Special</td>
-                                    <td>20%</td>
-                                    <td> 
-                                        <button type="button" class="btn  btn-icon btn-success"><i class="feather icon-edit"></i></button>
-                                        <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
+                {{-- modal --}}
+                <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Promo Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+
+                            <div class="modal-body">
+                          
+                                <div class="col-md-12">
+                                    <form action="{{route('EditPromo')}}" method="POST">@csrf
+                                        <div class="form-group">
+                                            <input type="hidden" name="promo_id" id="" value="{{$info->promo_id}}">
+                                            <label for="plan_name">Promo Name</label>
+                                            <input type="text" class="form-control" id="plan_name" aria-describedby="emailHelp" name="promo_name" placeholder="Promo Name" value="{{$info->promo_name}}">
+                                           
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="plan_hours">Percentage</label>
+                                            <input type="number" class="form-control" id="plan_hours" aria-describedby="emailHelp" name="promo_percentage" placeholder="Promo Percentage" value="{{$info->promo_percentage}}">
+                                           
+                                        </div>
+
+                                        <button type="submit" class="btn  btn-primary" >Add Plan</button>
+                                    </form>
+                                </div>
+                           </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                {{-- modal end --}}
             </div>
         </div>
     </div>
