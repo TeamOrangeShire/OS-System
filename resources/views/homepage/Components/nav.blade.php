@@ -13,7 +13,8 @@
             <div class="navbar-nav ms-auto">
                 <a href="{{ route('home') }}" class="nav-item nav-link {{ $active === 'home'? 'active' : '' }}">Home</a>
                 <a href="{{ route('about') }}" class="nav-item nav-link {{ $active === 'about'? 'active' : '' }}">About</a>
-                <div class="nav-item dropdown">
+                <a href="{{ route('services') }}" class="nav-item nav-link {{ $active === 'services'? 'active' : '' }}">Services</a>
+                {{-- <div class="nav-item dropdown">
                     <a href="{{ route('services') }}" class="nav-link dropdown-toggle  {{ $active === 'services'? 'active' : '' }}" data-bs-toggle="dropdown">Services</a>
                     <div class="dropdown-menu rounded-0 m-0">   
                         <a href="{{ route('services') }}#hotdesk" class="dropdown-item">Hot Desk</a>
@@ -23,7 +24,7 @@
                         <a href="{{ route('services') }}#printer_service" class="dropdown-item">Printer Services</a>
                         <a href="{{ route('services') }}#others" class="dropdown-item">Others</a>
                     </div>
-                </div>
+                </div> --}}
                 <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a>
                 <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
             </div>
