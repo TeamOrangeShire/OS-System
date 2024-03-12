@@ -38,7 +38,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                             </li>
                             <li class="notification">
                                 <div class="media">
-                                    <img class="img-radius" src="{{asset('assets/images/user/avatar-1.jpg')}}" alt="Generic placeholder image">
+                                    <img class="img-radius" src="{{ asset('User/Admin/'.$admin_name->admin_profile_pic)}}" alt="Generic placeholder image">
                                     <div class="media-body">
                                         <p><strong>John Doe</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>5 min</span></p>
                                         <p>New ticket Added</p>
@@ -73,7 +73,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-notification">
                         <div class="pro-head">
-                            <img src="assets/images/user/avatar-2.jpg" class="img-radius" alt="User-Profile-Image">
+                            <img src="{{ asset('User/Admin/'.$admin_name->admin_profile_pic)}}" class="img-radius" alt="User-Profile-Image">
                             <span>{{$fullname}}</span>
                             <a href="{{route('login')}}" class="dud-logout" title="Logout">
                                 <i class="feather icon-log-out"></i>

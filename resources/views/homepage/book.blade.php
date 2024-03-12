@@ -101,16 +101,28 @@
                                             <label for="subject">Room Number_autofill</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="subject" placeholder="Subject">
                                             <label for="subject">Date</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                            <label for="subject">Duration_dropdown</label>
+                                            <select id="duration" class="form-control"  name="duration">
+                                                <option value="" disabled selected>Select Duration</option>
+                                                <option value="4 hours">1 Hour</option>
+                                                <option value="4 hours">4 Hours</option>
+                                                <option value="full day">Full Day</option>
+                                                <option value="weekly">Weekly</option>
+                                                <option value="monthly">Monthly</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" id="subject" placeholder="Subject" readonly>
+                                            <label for="subject">Price_autosum</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -118,6 +130,28 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                    <div class="col-md-5 animated fadeIn ">
+                        <div class="owl-carousel header-carousel" style="left: 5rem">
+                            <div class="owl-carousel-item">
+                                <img class="img-fluid" src="img/os_1.jpg" alt="">
+                            </div>
+                            <div class="owl-carousel-item">
+                                <img class="img-fluid" src="img/os_2.jpg" alt="">
+                            </div>
+                            <div class="owl-carousel-item">
+                                <img class="img-fluid" src="img/os_8.jpg" alt="">
+                            </div>
+                            <div class="owl-carousel-item">
+                                <img class="img-fluid" src="img/os_9.jpg" alt="">
+                            </div>
+                            <div class="owl-carousel-item">
+                              <img class="img-fluid" src="img/os_3.jpg" alt="">
+                            </div>
+                            <div class="owl-carousel-item">
+                            <img class="img-fluid" src="img/os_5.jpg" alt="">
+                        </div>
                         </div>
                     </div>
                 </div>
