@@ -52,11 +52,38 @@
           $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
          
       @endphp
+      <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Profile Picture<Picture></Picture></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <form action="{{route('AdminProfile')}}"  method="post" enctype="multipart/form-data">@csrf
+                        <div class="custom-file">
+                            <input type="hidden" name="admin_id" value="{{$admin_name->admin_id}}">
+                           
+                            <input type="file" class="custom-file-input" id="inputGroupFile02" name="profile_picture">
+                                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        </div>
+                        <div class="modal-footer">
+                           
+                            <button type="submit" class="btn  btn-primary">Save changes</button>
+                        </div>
+                    </form>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
       <form action="{{route('EditAdmin')}}" method="POST">@csrf
         <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
                 <div class="col-md-6 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{asset('User/Admin/'.$admin_name->admin_profile_pic)}}"  data-toggle="modal" data-target="#exampleModalCenter">
                         <span class="font-weight-bold">{{$admin_name->admin_username}}</span>
                         <span class="text-black-50">{{$fullname}}</span>
                         <span> </span>

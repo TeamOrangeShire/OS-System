@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\AdminAcc;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+
+
 class EditAcc extends Controller
 {
   public function EditAdmin(Request $EditAdmin){
@@ -81,4 +83,35 @@ class EditAcc extends Controller
    
 
   }
+
+  public function AdminProfile(Request $request) {
+  
+    $admin_id = $request->admin_id;
+  
+    
+    $request->validate([
+        'profile_picture' => 'required|image|max:10240', 
+    ]);
+  
+   
+    $file = $request->file('profile_picture'); 
+  
+   
+    $fileName = $admin_id . '.' . $file->getClientOriginalExtension();
+  
+   
+    $file->move(public_path('User/Admin'), $fileName); 
+  
+  
+    $update =  AdminAcc::where('admin_id', $admin_id)->first();
+    if ($update) {
+        $update->admin_profile_pic = $fileName;
+        $update->save();
+        return redirect()->back();
+    } else {
+        return redirect()->route('admin_account');
+    }
+}
+  
+
 }
