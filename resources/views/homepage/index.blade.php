@@ -29,8 +29,8 @@
                     <p class="animated fadeIn mb-4 pb-2">Join us at our vibrant coworking and costudying space, where productivity thrives amidst a supportive community, right in the heart of Bacolod City.</p>
                     <a href="{{ route('solutions') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Browse Services</a>
                 </div>
-                <div class="col-md-6 animated fadeIn ">
-                    <div class="owl-carousel header-carousel">
+                <div class="col-md-5 animated fadeIn ">
+                    <div class="owl-carousel header-carousel" style="top: 2rem; left: 5rem;">
                         <div class="owl-carousel-item">
                             <img class="img-fluid" src="img/os_1.jpg" alt="">
                         </div>
