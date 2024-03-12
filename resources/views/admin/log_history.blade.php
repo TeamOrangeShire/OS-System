@@ -55,7 +55,7 @@
                     <h5>Log History</h5>
                     <button class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#insertmodal" type="submit">Insert Log</button>
 
-                    <button class="btn btn-secondary">
+                    <button class="btn btn-primary">
                         <i class="feather icon-printer" style="font-size: 24px;"></i>
                     </button>
                     

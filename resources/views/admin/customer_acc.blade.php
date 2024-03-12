@@ -47,52 +47,15 @@
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
       <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-               
-                <div class="card-body">
-                    <h5>Add New Customer</h5>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <form>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Username</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Phone Number</label>
-                                    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number">
-                                   
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Repeat Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repeat Password">
-                                </div>
-                               
-                                <button type="submit" class="btn  btn-primary">Create</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
+        
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     
                     <h5>Customer Account</h5>
-                    <div class="input-group m-t-15">
+                    <button class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#addcustomermodal" type="submit">Add New Customer</button>
+                    <br>
+                    <div class="input-group m-t-15"> 
                         <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
                         <div class="input-group-append">
                             <button class="btn btn-primary">
@@ -144,6 +107,57 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+{{-- add customer modal start --}}
+<div id="addcustomermodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" >
+                <h5 class="modal-title" id="exampleModalCenterTitle">Insert Log</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Username</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                               
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                               
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Phone Number</label>
+                                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number">
+                               
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Repeat Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repeat Password">
+                            </div>
+                           
+                            <button type="submit" class="btn  btn-primary">Create</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{-- add customer modal end --}}
 <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->
