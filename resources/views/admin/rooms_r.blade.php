@@ -240,7 +240,12 @@
                                 <td>
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter4" onclick="updatemodal2(`{{$room_rate->rate_id}}`,`{{$room_rate->rate_name}}`,`{{$room_rate->rate_price}}`)"><i class="feather icon-edit"></i></button>
                                 {{-- modal end --}} 
+                                <form action="{{route('DisableRate')}}" method="post">
+                                    @csrf
+                                    <input type="text" name="rate_id" id="" value="{{$room_rate->rate_id}}">
                                     <button class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> </td>
+                                </form>
+                                   
                             </tr>
                             @endforeach
                         </tbody>
