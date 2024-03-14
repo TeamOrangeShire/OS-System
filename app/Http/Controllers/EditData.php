@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Promos;
+use App\Models\Rooms;
 use App\Models\ServiceHP;
 use Illuminate\Http\Request;
 
@@ -50,12 +51,12 @@ class EditData extends Controller
             $edit_room = $request->edit_room;
             $edit_room_c = $request->edit_room_c;
            
-            $update =  ServiceHP::where('room_id',$room_id)->first();
+            $update =  Rooms::where('room_id',$room_id)->first();
             
             $update->update([
                
-                'service_id'=> $edit_room,
-                'service_name'=> $edit_room_c,
+                'room_number'=> $edit_room,
+                'room_capacity'=> $edit_room_c,
               
        
             ]);

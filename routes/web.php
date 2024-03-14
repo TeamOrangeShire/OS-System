@@ -64,16 +64,20 @@ Route::get('/admin/logout', function () { return view('admin.logout');})->name('
 
 
 // Admin Controller 
+// Admin
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
 Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');
 Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdmin');
-Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
+Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
+// AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
-Route::post('/EditPromo', [EditData::class, 'EditPromo'])->name('EditPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
-Route::post('/EditPlan', [EditData::class, 'EditPlan'])->name('EditPlan');
 Route::post('/AddRoom', [AddData::class, 'AddRoom'])->name('AddRoom');
+// EditData
+Route::post('/EditPromo', [EditData::class, 'EditPromo'])->name('EditPromo');
+Route::post('/EditPlan', [EditData::class, 'EditPlan'])->name('EditPlan');
+Route::post('/EditRoom', [EditData::class, 'EditRoom'])->name('EditRoom');
 
 
 
