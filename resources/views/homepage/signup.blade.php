@@ -169,7 +169,7 @@
          data: formData,
          success: function(response) {
           console.log('acc_created');
-         window.location.href = "{{ route('new_account') }}";
+         window.location.href = "{{ route('new_account') }}?id="+response.id;
          
          },
          error: function (xhr) {
