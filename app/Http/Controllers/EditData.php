@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Promos;
+use App\Models\RoomPricing;
+use App\Models\RoomRate;
 use App\Models\Rooms;
 use App\Models\ServiceHP;
 use Illuminate\Http\Request;
@@ -57,6 +59,44 @@ class EditData extends Controller
                
                 'room_number'=> $edit_room,
                 'room_capacity'=> $edit_room_c,
+              
+       
+            ]);
+            return redirect()->back();
+
+        }
+        public function EditRate(Request $request){
+
+            $rate_id = $request->rate_id;
+            $edit_rate_name = $request->edit_rate_name;
+            $edit_rate_price = $request->edit_rate_price;
+           
+            $update =  RoomRate::where('rate_id',$rate_id)->first();
+            
+            $update->update([
+               
+                'rate_name'=> $edit_rate_name,
+                'rate_price'=> $edit_rate_price,
+              
+       
+            ]);
+            return redirect()->back();
+
+        }
+        public function EditRoomRate(Request $request){
+
+            $roompriceid = $request->roompriceid;
+            $rom_numb2 = $request->rom_numb2;
+            $room_rate_list1 = $request->room_rate_list1;
+            $promolist1 = $request->promolist1;
+           
+            $update =  RoomPricing::where('rprice_id',$roompriceid)->first();
+            
+            $update->update([
+               
+                'room_id'=> $rom_numb2,
+                'room_rates'=> $room_rate_list1,
+                'promo_id'=> $promolist1,
               
        
             ]);

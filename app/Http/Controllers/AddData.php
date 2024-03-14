@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Promos;
+use App\Models\RoomPricing;
 use App\Models\RoomRate;
 use App\Models\Rooms;
 use App\Models\ServiceHP;
@@ -36,6 +37,7 @@ class AddData extends Controller
         $data = new Rooms;
         $data->room_number = $request->room_number;
         $data->room_capacity = $request->room_capacity;
+
         $data->save();
         return redirect()->back();
 
@@ -46,6 +48,16 @@ class AddData extends Controller
         $data->rate_name = $request->rate_name;
         $data->rate_price = $request->rate_price;
         $data->rate_disable = 0;
+        $data->save();
+        return redirect()->back();
+
+    }
+    public function AddRoomRate(Request $request){
+        
+        $data = new RoomPricing;
+        $data->room_id = $request->add_room_rate_pricing_id;
+        $data->room_rates = $request->add_rate_pricing_id;
+        $data->promo_id = 6;
         $data->save();
         return redirect()->back();
 
