@@ -111,19 +111,35 @@
                             <tbody>
                                 @php
                                 $rooms = App\Models\Rooms::take(4)->get();
-                                $c = 1;
+        
                                 @endphp
                                 @foreach ($rooms as $list)
                                 <tr>
                                     
                                     <td>{{$list->room_number}}</td>
                                     <td>{{$list->room_capacity}}</td>
-                                    <td>                  
-                                    {{-- open modal start --}}
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2" onclick="updatemodal(`{{$list->room_id}}`,`{{$list->room_number}}`,`{{$list->room_capacity}}`)"><i class="feather icon-edit"></i></button>
-                                    {{-- modal end --}}
-
-                                    <button class="btn  btn btn-danger" type="button"><i class="feather icon-slash"></i></button> </td>
+                                    <td>
+                                        @php
+                                            $RoomDisable = $list->rooms_disable; 
+                                        @endphp
+                                        @if ($RoomDisable == 0) 
+                                            <form action="{{route('DisableRoom')}}" method="POST" style="display:flex; gap:3px;">
+                                            @csrf
+                                            <input hidden type="text" name="ro_id" id="" value="{{$list->room_id}}">
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2" onclick="updatemodal(`{{$list->room_id}}`,`{{$list->room_number}}`,`{{$list->room_capacity}}`)"><i class="feather icon-edit"></i></button>
+                                           <button  type="submit" class="btn btn btn-danger"><i class="feather icon-slash"></i></button> 
+                                            </form>
+                                            @else
+                                            <Form action="{{route('EnableRoom')}}" method="POST" style="display:flex; gap:3px;">
+                                                @csrf
+                                                <input hidden type="text" name="ro_id" value="{{$list->room_id}}">
+                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2" onclick="updatemodal(`{{$list->room_id}}`,`{{$list->room_number}}`,`{{$list->room_capacity}}`)"><i class="feather icon-edit"></i></button>
+                                                <button type="submit" class="btn btn btn-info" role="button"><i class="feather icon-check-circle"></i></button> 
+                                            </Form>
+                                        @endif
+                                        
+                                    
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -210,22 +226,20 @@
                         </div>
                     </div>
                 </div>
-                    {{--add new rate modal end --}}
 
+                    {{--add new rate modal end --}}
                 <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#addrate">Add Room Pricing</button>
            </div>
+           
             <div class="card-body table-border-style">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                               
-                            
+
                                 <th>Rate</th>
                                 <th>Pricing</th>
                                 <th >Action</th>
-
-                        
                             </tr>
                         </thead>
                         <tbody>
@@ -236,10 +250,9 @@
                             <tr>
                                 <td>{{$room_rate->rate_name}}</td>
                                 <td>{{$room_rate->rate_price}}</td>
-                                
-                                <td>
-                                   
-                                {{-- modal end --}} 
+                               
+                {{-- disable button start --}}
+                                <td>   
                                 @php
                                     $disable = $room_rate->rate_disable;
                                 @endphp
@@ -249,13 +262,14 @@
                                    @csrf
                                    <input type="hidden" name="rate_id" id="" value="{{$room_rate->rate_id}}">
                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter4" onclick="updatemodal2(`{{$room_rate->rate_id}}`,`{{$room_rate->rate_name}}`,`{{$room_rate->rate_price}}`)"><i class="feather icon-edit"></i></button>
-                                   <button type="submit" class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> </td>
+                                   <button type="submit" class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> 
                                </form>
+
                                @else
                                <form action="{{route('EnableRate')}}" method="post" style="display:flex; gap:3px;">@csrf
                                 <input type="hidden" name="rate_id" id="" value="{{$room_rate->rate_id}}">
                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter4" onclick="updatemodal2(`{{$room_rate->rate_id}}`,`{{$room_rate->rate_name}}`,`{{$room_rate->rate_price}}`)"><i class="feather icon-edit"></i></button>
-                               <button type="submit" class="btn  btn btn-info" role="button"><i class="feather icon-check-circle"></i></button> </td>
+                               <button type="submit" class="btn  btn btn-info" role="button"><i class="feather icon-check-circle"></i></button> 
                                 </form>
                                @endif 
                                 {{-- <form action="{{route('DisableRate')}}" method="post">
@@ -263,9 +277,11 @@
                                     <input type="hidden" name="rate_id" id="" value="{{$room_rate->rate_id}}">
                                     <button class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> </td>
                                 </form> --}}
-                                   
+                                </td>
                             </tr>
                             @endforeach
+                {{-- disable button end --}}
+
                         </tbody>
                     </table>
                 </div>

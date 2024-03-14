@@ -136,4 +136,37 @@ class EditData extends Controller
 
         }
 
+        public function DisableRoom(Request $request){
+
+            $room_id = $request->ro_id;
+           
+            $update =  Rooms::where('room_id',$room_id)->first();
+            
+            $update->update([
+               
+                
+                'rooms_disable'=> 1,
+              
+       
+            ]);
+            return redirect()->back();
+
+        }
+        public function EnableRoom(Request $request){
+
+            $room_id = $request->ro_id;
+           
+            $update =  Rooms::where('room_id',$room_id)->first();
+            
+            $update->update([
+               
+                
+                'rooms_disable'=> 0,
+              
+       
+            ]);
+            return redirect()->back();
+
+        }
+
 }
