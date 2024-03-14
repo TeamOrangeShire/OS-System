@@ -138,19 +138,28 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Are you Sure you want to disable this plan?</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Decline this Subscription?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
           
                 <div class="col-md-12">
-                    <div style="text-align: center;">
-                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
-                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                   
+                    <div class="form-group" style="text-align: center;">   
+                        <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
+                        <select class="form-control" id="reasonlist" name="reasonlist">
+                            <option value="Unpaid">Unpaid</option>
+                            <option value="Customer Didn't Show">Customer Didn't Show Up</option>
+                            <option value="Customer Cancelled">Customer Cancelled</option>
+                        </select>                        
                     </div>
-                    
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                    <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
                 </div>
+                
+            </div>
            </div>
           
         </div>
