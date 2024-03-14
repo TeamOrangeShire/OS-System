@@ -74,10 +74,14 @@ Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
 Route::post('/AddRoom', [AddData::class, 'AddRoom'])->name('AddRoom');
+Route::post('/AddRate', [AddData::class, 'AddRate'])->name('AddRate');
+Route::post('/AddRoomRate', [AddData::class, 'AddRoomRate'])->name('AddRoomRate');
 // EditData
 Route::post('/EditPromo', [EditData::class, 'EditPromo'])->name('EditPromo');
 Route::post('/EditPlan', [EditData::class, 'EditPlan'])->name('EditPlan');
 Route::post('/EditRoom', [EditData::class, 'EditRoom'])->name('EditRoom');
+Route::post('/EditRate', [EditData::class, 'EditRate'])->name('EditRate');
+Route::post('/EditRoomRate', [EditData::class, 'EditRoomRate'])->name('EditRoomRate');
 
 
 

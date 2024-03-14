@@ -51,9 +51,9 @@
       
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header"  style="position: relative;">
                     <h5>Subscription Records</h5>
-                    <button class="btn  btn-primary">Print Records</button>
+                    <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                     <div class="input-group m-t-15">
                         <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
                         <div class="input-group-append">

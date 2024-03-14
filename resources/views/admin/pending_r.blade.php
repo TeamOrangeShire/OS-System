@@ -77,8 +77,8 @@
                                     <td>02/04/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>1</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x"></i></button>   </td>
+                                    <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"><i class="feather icon-check-circle"></i></button>  
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal"><i class="feather icon-x-circle"></i></button>   </td>
                                     
 
 
@@ -90,8 +90,8 @@
                                     <td>02/07/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>3</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x"></i></button>   </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-x-circle"></i></button>   </td>
                                     
                                 </tr>
                                 <tr>
@@ -101,8 +101,8 @@
                                     <td>02/05/2024</td>
                                     <td>7PM TO 10PM</td>
                                     <td>2</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x"></i></button>   </td>
+                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>  
+                                        <button type="button" class="btn btn-danger"><i class="feather icon-x-circle"></i></button>   </td>
                                     
                                 </tr>
                             </tbody>
@@ -115,6 +115,70 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+{{-- confirm modal start --}}
+<div id="confirmmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Confirm Reservation?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <p>Name: <span id="subscriptionName"></span></p>
+                    <p>Email: <span id="subscriptionPlan"></span></p>
+                    <p>Date: <span id="customerFullName"></span></p>
+                    <p>Time: <span id="customerFullName"></span></p>
+                    <p>Room: <span id="customerFullName"></span></p>
+
+                    <div style="text-align: center;">
+                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- confirm modal end --}}
+
+{{-- modal start decline --}}
+
+<div id="declinemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Decline Reservation?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+          
+                <div class="col-md-12">
+                   
+                    <div class="form-group" style="text-align: center;">   
+                        <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
+                        <select class="form-control" id="reasonlist" name="reasonlist">
+                            <option value="Unpaid">Unpaid</option>
+                            <option value="Customer Didn't Show">Customer Didn't Show Up</option>
+                            <option value="Customer Cancelled">Customer Cancelled</option>
+                        </select>                        
+                    </div>
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                    <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                </div>
+                
+            </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+{{-- modal end --}}
+
 <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->
