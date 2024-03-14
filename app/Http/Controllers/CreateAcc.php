@@ -28,13 +28,25 @@ class CreateAcc extends Controller
     } 
 
     public function CreateCustomerAcc(request $req){
-        $fname = $req->mname;
+        $fname = $req->fname;
         $lname = $req->lname;
         $mname = $req->mname;
         $email = $req->email;
         $password = $req->password;
+        
+        $account = new CustomerAcc();
+        $account->customer_firstname = $fname;
+        $account->customer_middlename = $mname;
+        $account->customer_lastname = $lname;
+        $account->customer_ext = 'none';
+        $account->customer_email = $email;
+        $account->customer_phone_num = 'none';
+        $account->customer_username = $email;
+        $account->customer_password = $password;
+        $account->customer_profile_pic = 'none';
+        $account->save();
 
-
+        return response()->json(['success'=>'success']);
     }
 
     
