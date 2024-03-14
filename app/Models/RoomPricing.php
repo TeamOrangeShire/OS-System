@@ -15,5 +15,6 @@ class RoomPricing extends Model
       'room_rates',
       'room_price',
       'promo_id',
+      'room_pricing_disable',
     ];
 }

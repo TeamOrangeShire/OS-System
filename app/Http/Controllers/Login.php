@@ -31,14 +31,14 @@ class Login extends Controller
         $session_id = Session::get('Admin_id');
         
         $Admin_info = AdminAcc::where('admin_id',$session_id)->first();
-        if($Admin_info->admin_password === $lock_password){
-        
-            
-            return redirect()->route('index');
+    if( Hash::check($lock_password,$Admin_info->admin_password)){
     
-    
-        } else{
-            return redirect()->back();
-        }
+        Session::put('Admin_id',$Admin_info->admin_id);
+        return redirect()->route('index');
+
+
+    } else{
+        return redirect()->back();
+    }
         }
 }

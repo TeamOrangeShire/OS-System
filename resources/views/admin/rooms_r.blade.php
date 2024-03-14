@@ -1,3 +1,5 @@
+@if (session()->has('Admin_id'))
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +55,7 @@
                 <div class="card-header" style="position: relative;">
                     <h5>Rooms</h5>
 
-                    {{-- modal start --}}
+                    {{--add room modal start --}}
                     <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -65,16 +67,16 @@
                               
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <form>
+                                                        <form method="POST" action="{{route('AddRoom')}}">@csrf
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Room Number</label>
-                                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Room Number">
+                                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="room_number" placeholder="Room Number">
                                                                
                                                             </div>
                                                             
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Room Capacity</label>
-                                                                <input type="Number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Room Capacity">
+                                                                <input type="Number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="room_capacity" placeholder="Room Capacity">
                                                                
                                                             </div>
                                                            
@@ -90,9 +92,10 @@
                             </div>
                         </div>
                     </div>
-                    
+                    {{--add room modal end --}}
+                    {{-- open add room modal --}}
                     <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#exampleModalCenter">Add Room</button>
-                {{-- modal end --}}
+                    {{-- open add room modal --}}
 
                 </div>
                 <div class="card-body table-border-style">
@@ -102,7 +105,6 @@
                                 <tr>
                                     <th>Room ID</th>
                                     <th>Room Number</th>
-                                    <th>Room Name</th>
                                     <th>Room Capacity</th>      
                                     <th>Action</th>
 
@@ -110,70 +112,22 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $rooms = App\Models\Rooms::all();
+                                @endphp
+                                @foreach ($rooms as $list)
                                 <tr>
-                                    <td>12324</td>
-                                    <td>Room 1</td>
-                                    <td>Meeting Room 1</td>
-                                    <td>8 to 10 pax</td>
-                                    <td>                     {{-- modal start --}}
-                                        <div id="exampleModalCenter2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Room Details</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                  
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <form>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Room Number</label>
-                                                                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Room Number">
-                                                                                   
-                                                                                </div>
-                                                                                
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Room Capacity</label>
-                                                                                    <input type="Number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Room Capacity">
-                                                                                   
-                                                                                </div>
-                                                                               
-                                                
-                                                                               
-                                                                                <button type="submit" class="btn  btn-primary">Add Room</button>
-                                                                            </form>
-                                                                       
-                                                            </div>
-                                                        </div>
-                                                   </div>
-                                                  
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2"><i class="feather icon-edit"></i></button>
+                                    <td>{{$list->room_id}}</td>
+                                    <td>{{$list->room_number}}</td>
+                                    <td>{{$list->room_capacity}}</td>
+                                    <td>                  
+                                    {{-- open modal start --}}
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2" onclick="updatemodal(`{{$list->room_id}}`,`{{$list->room_number}}`,`{{$list->room_capacity}}`)"><i class="feather icon-edit"></i></button>
                                     {{-- modal end --}}
 
                                     <button class="btn  btn btn-danger" type="button"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
-                                <tr>
-                                    <td>546546</td>
-                                    <td>Room 2</td>
-                                    <td>Meeting Room 2</td>
-                                    <td>4 to 6 pax</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
-                                        <button class="btn  btn btn-danger" type="button"><i class="feather icon-slash"></i></button> </td>
-                                </tr>
-                                <tr>
-                                    <td>124564324</td>
-                                    <td>Room 3</td>
-                                    <td>Meeting Room 3</td>
-                                    <td>4 to 6 pax</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-edit"></i></button>  
-                                        <button class="btn  btn btn-danger" type="button"><i class="feather icon-slash"></i></button> </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -181,9 +135,45 @@
             </div>
         </div>    
     </div>
-
-
-
+    {{-- edit room start --}}
+    <div id="exampleModalCenter2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit Room Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+              
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Room Number</label>
+                                                <input type="text" name="room_id" id="room_id">
+                                                <input type="text" class="form-control" id="room_number" aria-describedby="emailHelp" name="edit_room" placeholder="Room Number">
+                                               
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Room Capacity</label>
+                                                <input type="Number" class="form-control" id="room_capacity" aria-describedby="emailHelp" name="edit_room_c" placeholder="Room Capacity">
+                                               
+                                            </div>
+                                           
+            
+                                           
+                                            <button type="submit" class="btn  btn-primary">Edit Room</button>
+                                        </form>
+                                   
+                        </div>
+                    </div>
+               </div>
+              
+            </div>
+        </div>
+    </div>
+{{-- edit room end --}}
     <div class="row">
        
         <div class="col-md-12">
@@ -370,54 +360,19 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
-<!-- [ Main Content ] end -->
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
 
+<script>
+    function updatemodal(id,room,capacity){
+        const room_id =document.getElementById('room_id');
+        const room_number =document.getElementById('room_number');
+        const room_number =document.getElementById('room_capacity');
+
+        room_id.value=id;
+        room_number.value=room;
+        room_number.value=capacity;
+
+    }
+</script>
     <!-- Required Js -->
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
@@ -433,3 +388,10 @@
 </body>
 
 </html>
+
+@else
+    @php
+        echo "<script>window.location.href = 'login';</script>";
+    @endphp
+
+@endif

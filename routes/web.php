@@ -73,6 +73,7 @@ Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/EditPromo', [EditData::class, 'EditPromo'])->name('EditPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
 Route::post('/EditPlan', [EditData::class, 'EditPlan'])->name('EditPlan');
+Route::post('/AddRoom', [AddData::class, 'AddRoom'])->name('AddRoom');
 
 
 

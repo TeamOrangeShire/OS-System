@@ -35,7 +35,7 @@ class EditData extends Controller
         
         $update->update([
            
-            'service_id'=> $plan_id,
+            
             'service_name'=> $plan_name,
             'service_hours'=> $plan_hours,
             'service-price'=> $plan_price,
@@ -43,7 +43,24 @@ class EditData extends Controller
    
         ]);
         return redirect()->back();
+        }
+        public function EditRoom(Request $request){
 
+            $room_id = $request->room_id;
+            $edit_room = $request->edit_room;
+            $edit_room_c = $request->edit_room_c;
+           
+            $update =  ServiceHP::where('room_id',$room_id)->first();
+            
+            $update->update([
+               
+                'service_id'=> $edit_room,
+                'service_name'=> $edit_room_c,
+              
+       
+            ]);
+            return redirect()->back();
 
-    }
+        }
+
 }
