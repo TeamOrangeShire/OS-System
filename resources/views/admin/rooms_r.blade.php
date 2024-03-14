@@ -50,7 +50,7 @@
         <!-- [ Main Content start ] start -->
       <div class="row">
         
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header" style="position: relative;">
                     <h5>Rooms</h5>
@@ -78,13 +78,9 @@
                                                                 <label for="exampleInputEmail1">Room Capacity</label>
                                                                 <input type="Number" class="form-control"  aria-describedby="emailHelp" name="room_capacity" placeholder="Room Capacity">
                                                                
-                                                            </div>
-                                                           
-                            
-                                                           
+                                                            </div> 
                                                             <button type="submit" class="btn  btn-primary">Add Room</button>
                                                         </form>
-                                                   
                                         </div>
                                     </div>
                                </div>
@@ -93,6 +89,7 @@
                         </div>
                     </div>
                     {{--add room modal end --}}
+
                     {{-- open add room modal --}}
                     <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#exampleModalCenter">Add Room</button>
                     {{-- open add room modal --}}
@@ -135,8 +132,9 @@
                 </div>
             </div>
         </div>    
-    </div>
-    {{-- edit room start --}}
+   
+
+    {{-- edit room modal start --}}
     <div id="exampleModalCenter2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -161,10 +159,9 @@
                                                 <input type="Number" class="form-control" id="room_capacity" aria-describedby="emailHelp" name="edit_room_c" placeholder="Room Capacity">
                                                
                                             </div>
+                                        
                                            
-            
-                                           
-                                            <button type="submit" class="btn  btn-primary">Edit Room</button>
+                                            <button type="submit" class="btn  btn-primary">Update</button>
                                         </form>
                                    
                         </div>
@@ -174,19 +171,133 @@
             </div>
         </div>
     </div>
-   
-{{-- edit room end --}}
+{{-- edit room modal end --}}
+
+
+{{-- rate table start --}}
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header" style="position: relative;">
+                <h5>Add Rooms Rate</h5>
+
+                 {{-- add new rate modal start --}}
+                 <div id="addrate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" >Add Room Rate</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-12">
+                                    <form method="post" action="{{route('AddRate')}}">@csrf
+                                        <div class="form-group">
+                                            <label for="plan_promo">Rate</label>
+                                            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Room Rate" name="rate_name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="plan_promo">Pricing</label>
+                                            <input type="Number" class="form-control" aria-describedby="emailHelp" placeholder="Room Pricing" name="rate_price">
+                                        </div>
+                                       
+                                        <button type="submit" class="btn  btn-primary">Add Rates</button>
+                                    </form>
+                                </div>
+                                          
+                           </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                    {{--add new rate modal end --}}
+
+                <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#addrate">Add Room Pricing</button>
+           </div>
+            <div class="card-body table-border-style">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               
+                            
+                                <th>Rate</th>
+                                <th>Pricing</th>
+                                <th>Action</th>
+
+                        
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $RoomRate = App\Models\RoomRate::all();
+                            @endphp
+                            @foreach ($RoomRate as $room_rate)
+                            <tr>
+                                <td>{{$room_rate->rate_name}}</td>
+                                <td>{{$room_rate->rate_price}}</td>
+                                
+                                <td>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter4" onclick="updatemodal2(`{{$room_rate->rate_id}}`,`{{$room_rate->rate_name}}`,`{{$room_rate->rate_price}}`)"><i class="feather icon-edit"></i></button>
+                                {{-- modal end --}} 
+                                    <button class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+ {{--edit rate modal start --}}
+ <div id="exampleModalCenter4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Room Rates</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+          
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="plan_promo">Rate</label>
+                                            <input type="Number" class="form-control" aria-describedby="emailHelp" placeholder="Room Rate">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="plan_promo">Pricing</label>
+                                            <input type="Number" class="form-control" aria-describedby="emailHelp" placeholder="Room Pricing">
+                                        </div>
+        
+                                       
+                                        <button type="submit" class="btn  btn-primary">Update Rates</button>
+                                    </form>
+                    </div>
+                </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+   {{-- edit pricing modal end--}}
+
+{{-- rate table end --}}
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" style="position: relative;">
                     <h5>Rooms Rate</h5>
+
                      {{-- modal start --}}
-                     <div id="exampleModalCenter1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                     <div id="addpricing" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle1">Room Rate</h5>
+                                    <h5 class="modal-title" id="exampleModalCenterTitle1">Room Pricing</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                                 <div class="modal-body">
@@ -205,7 +316,8 @@
                                                 </select>                        
                                             </div>
                                             <div class="form-group">
-                                                <label for="plan_promo">Rate</label>
+                                                <label for="plan_promo">Rate
+                                                </label>
                                                 <select class="form-control"  name="add_room_pricing_id">
                                                     
                                                     <option value="">1hr</option>
@@ -213,8 +325,9 @@
                                                     
                                                 </select>                        
                                             </div>
+
                                            
-                                            <button type="submit" class="btn  btn-primary">Add Rates</button>
+                                            <button type="submit" class="btn  btn-primary">Add Pricing</button>
                                         </form>
                                     </div>
                                               
@@ -224,7 +337,8 @@
                         </div>
                     </div>
                         {{-- modal end --}}
-                    <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#exampleModalCenter1">Add Room Pricing</button>
+
+                    <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#addpricing">Add Room Pricing</button>
             
                </div>
                 <div class="card-body table-border-style">
@@ -249,7 +363,7 @@
                                     <td>12324</td>
                                     
                                     <td>
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter4"><i class="feather icon-edit"></i></button>
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editpricing"><i class="feather icon-edit"></i></button>
                                     {{-- modal end --}} 
                                         <button class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> </td>
                                 </tr>
@@ -261,11 +375,11 @@
         </div>    
     </div>
      {{-- modal start --}}
-     <div id="exampleModalCenter4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+     <div id="editpricing" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit Room Rates</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit Room Pricing</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
@@ -274,39 +388,31 @@
                                     <div class="col-md-12">
                                         <form>
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Room Number</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
-                                               
+                                                <label for="plan_promo">Room Number</label>
+                                                <select class="form-control"  name="add_room_pricing_id">
+                                                    
+                                                    @php
+                                                    $room_num = App\Models\Rooms::all();
+                                                @endphp
+                                                @foreach ($room_num as $room_list)
+                                                    <option value="{{$room_list->room_id}}">{{$room_list->room_number}}</option>
+                                                    @endforeach
+                                                </select>                        
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Hourly</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
-                                               
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">4 hours</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                               
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Full Day</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                               
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Weekly</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                               
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Monthly</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                                               
+                                                <label for="plan_promo">Rate
+                                                </label>
+                                                <select class="form-control"  name="add_room_pricing_id">
+                                                    
+                                                    <option value="">1hr</option>
+                                                    <option value="">4hr</option>
+                                                    
+                                                </select>                        
                                             </div>
                                            
             
                                            
-                                            <button type="submit" class="btn  btn-primary">Update Rates</button>
+                                            <button type="submit" class="btn  btn-primary">Update</button>
                                         </form>
                         </div>
                     </div>

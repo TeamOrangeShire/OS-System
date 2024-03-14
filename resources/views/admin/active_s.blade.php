@@ -76,7 +76,9 @@
                                     <td>29:00</td>
                                     <td>2024/03/04</td>
                                     <td>2024/04/04</td>
-                                    <td><button style="width: 50%;" class="decline_btn" role="button">Cancel</button> </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelmodal">Cancel </i></button>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -85,7 +87,9 @@
                                     <td>29:00</td>
                                     <td>2024/03/04</td>
                                     <td>2024/04/04</td>
-                                    <td><button style="width: 50%;" class="decline_btn" role="button">Cancel</button> </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelmodal">Cancel </i></button>
+                                    </td>
 
                                 </tr>
                                 <tr>
@@ -95,7 +99,9 @@
                                     <td>29:00</td>
                                     <td>2024/03/04</td>
                                     <td>2024/04/04</td>
-                                    <td><button style="width: 50%;" class="decline_btn" role="button">Cancel</button> </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelmodal">Cancel </i></button>
+                                    </td>
 
                                 </tr>
                             </tbody>
@@ -108,6 +114,35 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+{{-- modal start Cancel --}}
+
+<div id="cancelmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Cancel this Subscription?</h5> 
+                
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+          
+                <div class="col-md-12">
+                    <div style="text-align: center;">
+                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                    </div>
+                    
+                </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+{{-- modal end Cancel--}}
+
 <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->
