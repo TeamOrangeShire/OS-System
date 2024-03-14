@@ -242,7 +242,7 @@
                                 {{-- modal end --}} 
                                 <form action="{{route('DisableRate')}}" method="post">
                                     @csrf
-                                    <input type="text" name="rate_id" id="" value="{{$room_rate->rate_id}}">
+                                    <input type="hidden" name="rate_id" id="" value="{{$room_rate->rate_id}}">
                                     <button class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> </td>
                                 </form>
                                    
