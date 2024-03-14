@@ -110,7 +110,7 @@
                             </thead>
                             <tbody>
                                 @php
-                                $rooms = App\Models\Rooms::all();
+                                $rooms = App\Models\Rooms::take(4)->get();
                                 $c = 1;
                                 @endphp
                                 @foreach ($rooms as $list)
