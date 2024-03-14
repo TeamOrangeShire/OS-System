@@ -103,5 +103,37 @@ class EditData extends Controller
             return redirect()->back();
 
         }
+        public function DisableRate(Request $request){
+
+            $rate_id = $request->rate_id;
+           
+            $update =  RoomRate::where('rate_id',$rate_id)->first();
+            
+            $update->update([
+               
+                
+                'rate_disable'=> 1,
+              
+       
+            ]);
+            return redirect()->back();
+
+        }
+        public function EnableRate(Request $request){
+
+            $rate_id = $request->rate_id;
+           
+            $update =  RoomRate::where('rate_id',$rate_id)->first();
+            
+            $update->update([
+               
+                
+                'rate_disable'=> 0,
+              
+       
+            ]);
+            return redirect()->back();
+
+        }
 
 }
