@@ -27,10 +27,10 @@ Route::get('/signup', function () { return view('homepage.signup');})->name('sig
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
 Route::get('/solutions', function () { return view('homepage.solutions');})->name('solutions');
 Route::get('/book', function () { return view('homepage.book');})->name('book');
-
+Route::get('/customer-new-account',function(){ return view('homepage.finish_account');} )->name('new_account');
 //Client Back End
-Route::post('/customermail',[Mailing::class,'TestMail'] )->name('testMail');
-
+Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
+Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');
 
 
 

@@ -17,6 +17,7 @@ class Mailing extends Controller
         $password = $req->password;
         $code = VerificationCodeGenerator();
         Mail::to($email)->send(new CustomerVerification($code));
+      
         return response()->json([
           'status'=>'success',
           'fname'=>$fname,
@@ -24,6 +25,7 @@ class Mailing extends Controller
           'lname'=>$lname,
           'email'=>$email,
           'password'=>$password,
+          'code'=>$code,
         ]);
     }
 
