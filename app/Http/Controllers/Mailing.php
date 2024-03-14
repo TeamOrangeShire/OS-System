@@ -10,7 +10,7 @@ class Mailing extends Controller
 {
 
     public function CreateAccGoogleVerification(Request $req){
-        $fname = $req->mname;
+        $fname = $req->fname;
         $lname = $req->lname;
         $mname = $req->mname;
         $email = $req->email;

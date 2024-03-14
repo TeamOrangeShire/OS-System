@@ -46,8 +46,16 @@ class CreateAcc extends Controller
         $account->customer_profile_pic = 'none';
         $account->save();
 
-        return response()->json(['success'=>'success']);
+        $id = $account->customer_id;
+
+        return response()->json(['id'=>$id]);
     }
 
+    public function SuccessCreateAccount(Request $request){
+
+        $id = $request->id;
+        return view('homepage.finish_account', ['id'=>$id]);
+
+    }
     
 }
