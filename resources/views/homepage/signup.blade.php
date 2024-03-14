@@ -10,165 +10,40 @@
       <link rel="stylesheet" href="libraries/modals/hystmodal.min.css">
       <script src="libraries/modals/hystmodal.min.js"></script>
    </head>
+  
    <body>
-      <div class="container">
-         <header>Sign Up for<br> Orange Shire</header>
-         <div class="progress-bar">
-            <div class="step">
-               <p>
-                  Name
-               </p>
-               <div class="bullet">
-                  <span>1</span>
-               </div>
-               <div class="check fas fa-check"></div>
-            </div>
-            <div class="step">
-               <p>
-               Additional  
-               </p>
-               <div class="bullet">
-                  <span>2</span>
-               </div>
-               <div class="check fas fa-check"></div>
-            </div>
-            <div class="step">
-               <p>
-                  Contact
-               </p>
-               <div class="bullet">
-                  <span>3</span>
-               </div>
-               <div class="check fas fa-check"></div>
-            </div>
-            <div class="step">
-               <p>
-                  Submit
-               </p>
-               <div class="bullet">
-                  <span>4</span>
-               </div>
-               <div class="check fas fa-check"></div>
-            </div>
-         </div>
-         <div class="form-outer">
-            <form action="#" method="POST">
-               <div class="page slide-page">
-                  <div class="title">
-                     Name Info:
-                  </div>
-                  <div class="field">
-                     <div class="label" id="fname_label">
-                        First Name
-                     </div>
-                 
-                     <input type="text" placeholder="ex. John" name="fname" required id="fname">    
+    <div class="form-container">
+        <p class="title">Create account</p>
 
-                  </div>
-              
-                  <div class="field">
-                     <div class="label" id="lname_label">
-                        Last Name
-                     </div>
-                  
-                     <input type="text" placeholder="ex. Doe" name="lname" required id="lname">
-                     
-                  </div>
-                  <div class="field">
-                     <button type="button" class="firstNext next">Next</button>
-                  </div>
-               </div>
-               <div class="page">
-               <div class="title">
-                  Additional Name Info:
-                  </div>
-                  <div class="field">
-                     <div class="label" id="mname_label">
-                        Middle Name
-                     </div>
-                     <input type="text" placeholder="ex. Doe" name="mname" id="mname" required>
-                  </div>
-                  <div class="field">
-                     <div class="label" >
-                        Extension
-                     </div>
-                     <select name="ext">
-                        <option selected>None</option>
-                        <option>Jr.</option>
-                        <option>Sr.</option>
-                        <option>I</option>
-                        <option>II</option>
-                        <option>III</option>
-                        <option>IV</option>
-                        <option>V</option>
-                     </select>
-                  </div>
-                  <div class="field btns">
-                     <button class="prev-1 prev">Previous</button>
-                     <button class="next-1 next">Next</button>
-                  </div>
-               </div>
-               <div class="page">
-               <div class="title">
-                     Contact Info:
-                  </div>
-                  <div class="field">
-                     <div class="label" id="email_label">
-                        Email Address
-                     </div>
-                     <input type="email" name="email" id="email" placeholder="yourname@gmail.com" required>
-                  </div>
-                  <div class="field">
-                     <div class="label" id="contact_label">
-                        Phone Number
-                     </div>
-                     <input type="Number" id="contact" name="contact" maxlength="11" placeholder="+639000111223" required>
-                  </div>
-                  <div class="field btns">
-                     <button class="prev-2 prev">Previous</button>
-                     <button class="next-2 next">Next</button>
-                  </div>
-               </div>
-               <div class="page">
-                  <div class="title">
-                     Login Details:
-                  </div>
-                  <div class="field">
-                     <div class="label">
-                        Username
-                     </div>
-                     <input type="text" name="username" placeholder="john1" required>
-                  </div>
-                  <div class="field">
-                     <div class="label">
-                        Password
-                     </div>
-                     <input type="password" name="password" placeholder="#123AaBbCc" required>
-                  </div>
-                  <div class="field btns">
-                     <button class="prev-3 prev">Previous</button>
-                     <button class="submit" type="button" data-hystmodal="#myModal">Submit</button>
-                  </div>
-               </div>
-               
-            </form>
-            <div class="sign-txt">Already a member? <a style="color: #ff5c40;" href="{{ route('customer_login') }}">Login Now</a></div>
-         </div>
+        <form class="form">
+          <input type="text" name="fname" class="input" placeholder="First Name">
+          <input type="text" name="mname" class="input" placeholder="Middle Name">
+          <input type="text" name="lname" class="input" placeholder="Last Name">
+          <input type="email" name="email" class="input" placeholder="Email">
+          <input type="password" name="password" class="input" placeholder="Password">
+          <button type="submit" class="form-btn">Create account</button>
+        </form>
+        <p class="sign-up-label">
+          Already have an account?<a href="{{ route('customer_login') }}" class="sign-up-link">Log in</a>
+        </p>
+        <div class="buttons-container">
+         
+          <div class="google-login-button">
+            <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.1" x="0px" y="0px" class="google-icon" viewBox="0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12
+      c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24
+      c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
+              <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657
+      C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path>
+              <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36
+      c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path>
+              <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571
+      c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+            </svg>
+            <span>Sign up with Google</span>
+          </div>
+        </div>
       </div>
-      <div class="hystmodal" id="myModal" aria-hidden="true">
-         <div class="hystmodal__wrap">
-             <div class="hystmodal__window" role="dialog" aria-modal="true">
-                 <button data-hystclose class="hystmodal__close"></button>
-            <!--Modal Content-->
-             </div>
-         </div>
-     </div>
-     
-     <script>
-      const myModal = new HystModal({
-    linkAttributeName: "data-hystmodal",
-});
-     </script>
       <script src="js/login.js"></script>
 
    </body>
