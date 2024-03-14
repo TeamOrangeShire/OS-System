@@ -55,6 +55,7 @@
                 <div class="card-header" style="position: relative;">
                     
                     <h5>Subscription Plans</h5>
+                    
                     {{-- modal start add plan--}}
                     <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
