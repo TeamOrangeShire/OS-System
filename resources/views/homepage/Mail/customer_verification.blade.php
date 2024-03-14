@@ -7,6 +7,6 @@
     <title>Mail</title>
 </head>
 <body>
-    <h1>This is a mail</h1>
+    <h1 s>Welcome New User</h1>
 </body>
 </html>
