@@ -281,5 +281,53 @@ class EditData extends Controller
             return redirect()->back();
 
         }
+        public function DisablePromo(Request $request){
+
+            $promo_id = $request->promoid;
+           
+            $update =  Promos::where('promo_id',$promo_id)->first();
+            $update->update([
+                'promos_disable'=> 1,
+            ]);
+            $update2 =  RoomPricing::where('promo_id',$promo_id)->get();
+            foreach($update2 as $dprp){
+              $dprp->update([
+
+                'promo_id'=> 6,
+
+              ]);
+               
+            }
+            $update3 =  ServiceHP::where('promo_id',$promo_id)->get();
+            foreach($update3 as $dshp){
+              $dshp->update([
+
+                'promo_id'=> 6,
+
+              ]);
+               
+            }
+
+            return redirect()->back();
+
+        }
+
+        public function EnablePromo(Request $request){
+
+            $promo_id = $request->promoid;
+           
+            $update =  Promos::where('promo_id',$promo_id)->first();
+            
+            $update->update([
+               
+                
+                'promos_disable'=> 0,
+              
+       
+            ]);
+            
+            return redirect()->back();
+
+        }
 
 }

@@ -87,6 +87,8 @@ Route::post('/DisableRoom', [EditData::class, 'DisableRoom'])->name('DisableRoom
 Route::post('/EnableRoom', [EditData::class, 'EnableRoom'])->name('EnableRoom');
 Route::post('/DisableRoomRate', [EditData::class, 'DisableRoomRate'])->name('DisableRoomRate');
 Route::post('/EnableRoomRate', [EditData::class, 'EnableRoomRate'])->name('EnableRoomRate');
+Route::post('/DisablePromo', [EditData::class, 'DisablePromo'])->name('DisablePromo');
+Route::post('/EnablePromo', [EditData::class, 'EnablePromo'])->name('EnablePromo');
 
 
 
