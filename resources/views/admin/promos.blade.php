@@ -120,7 +120,7 @@
                                     $DisablePromo = $info->promos_disable; 
                                 @endphp
 
-                                @if ($DisablePromo == 0)
+                                {{-- @if ($DisablePromo == 0)
 
                                 <form action="{{route('DisablePromo')}}" method="post" style="display:flex; gap:3px;" > @csrf
                                     <input type="hidden" name="promoid" id="" value="{{$info->promo_id}}">
@@ -136,13 +136,37 @@
                                     <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
                                     <button type="submit" class="btn  btn-icon btn-info"><i class="feather icon-check-circle"></i></button>
                                 </form>
-                                @endif
+                                @endif --}}
+
+                                {{-- button to open modal --}}
+                                <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
+                                <button type="submit" class="btn  btn-icon btn-danger" data-toggle="modal" data-target="#promodisable"><i class="feather icon-slash"></i></button>
 
 
-                                
-
-
-                                    </td></tr>
+                                {{-- disable promos modal --}}
+                                     <div id="promodisable" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                         <div class="modal-dialog modal-dialog-centered" role="document">
+                                             <div class="modal-content">
+                                                 <div class="modal-header">
+                                                     <h5 class="modal-title" id="exampleModalCenterTitle">Are you sure you want to disable this Promo?</h5>
+                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                 </div>
+                     
+                                                 <div class="modal-body">
+                                             
+                                            
+                                                         <button type="button" class="btn  btn btn-success"> Yes </button>
+                                                         <button type="submit" class="btn  btn btn-danger"> No </button>
+                          
+                     
+                                                </div>
+                                               
+                                         </div>
+                                     </div>
+                                 </div>
+                             {{-- disable promos modal end --}}
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
