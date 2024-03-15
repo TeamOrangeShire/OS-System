@@ -281,5 +281,40 @@ class EditData extends Controller
             return redirect()->back();
 
         }
+        public function DisablePromo(Request $request){
+
+            $promo_id = $request->promoid;
+           
+            $update =  Promos::where('promo_id',$promo_id)->first();
+            
+            $update->update([
+               
+                
+                'promos_disable'=> 1,
+              
+       
+            ]);
+
+            return redirect()->back();
+
+        }
+
+        public function EnablePromo(Request $request){
+
+            $promo_id = $request->promoid;
+           
+            $update =  Promos::where('promo_id',$promo_id)->first();
+            
+            $update->update([
+               
+                
+                'promos_disable'=> 0,
+              
+       
+            ]);
+            
+            return redirect()->back();
+
+        }
 
 }
