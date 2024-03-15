@@ -50,7 +50,7 @@
       @php
           $admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
           $ext = $admin_name->admin_ext;
-          if ($ext === 'none') {
+          if ($ext === 'N/A') {
             $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
           }else {
             $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname.' '.$admin_name->admin_ext;
@@ -111,7 +111,7 @@
                             <div class="col-md-6"> <label for="exampleInputEmail1">Ext.</label>
                                 <select class="form-control" id="exampleFormControlSelect1" name="ext">
                                     <option value="{{$admin_name->admin_ext}}">{{$admin_name->admin_ext}}</option>
-                                    <option value="none">N/A</option>
+                                    <option value="N/A">N/A</option>
                                     <option value="Jr.">Jr.</option>
                                     <option value="Sr.">Sr.</option>
                                     <option value="II">II</option>
