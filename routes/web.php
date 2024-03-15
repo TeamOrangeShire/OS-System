@@ -7,7 +7,7 @@ use App\Http\Controllers\EditAcc;
 use App\Http\Controllers\Mailing;
 use App\Http\Controllers\AddData;
 use App\Http\Controllers\EditData;
-
+use App\Http\Controllers\GetDataViews;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,14 +19,13 @@ use App\Http\Controllers\EditData;
 |
 */
 //HomePage
-Route::get('/', function () { return view('homepage.index');})->name('home');
-Route::get('/aboutus', function () {return view('homepage.about');})->name('about');
-Route::get('/contactus', function () { return view('homepage.contact');})->name('contact');
-Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
+Route::get('/', [GetDataViews::class, 'GetHomeCookies'])->name('home');
+Route::get('/contactus', [GetDataViews::class, 'GetContactCookies'])->name('contact');
+Route::get('/reservation', [GetDataViews::class, 'GetReservationCookies'])->name('reservation');
 Route::get('/signup', function () { return view('homepage.signup');})->name('signup');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
-Route::get('/solutions', function () { return view('homepage.solutions');})->name('solutions');
-Route::get('/book', function () { return view('homepage.book');})->name('book');
+Route::get('/solutions', [GetDataViews::class, 'GetSolutionsCookies'])->name('solutions');
+Route::get('/reservation/book', [GetDataViews::class, 'GetBookCookies'])->name('book');
 Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )->name('new_account');
 //Client Back End
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
