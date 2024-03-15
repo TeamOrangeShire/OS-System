@@ -8,6 +8,7 @@ use App\Models\AdminAcc;
 use App\Models\CustomerAcc;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cookie;
 class Login extends Controller
 {
   public function Admin_login(Request $request){
@@ -51,7 +52,9 @@ class Login extends Controller
         $customer  =  CustomerAcc::where('customer_username', $username)->first();
         if($customer){
             if(Hash::check($password, $customer->customer_password)){
-                return response()->json(['status'=>'success']);
+                $cookie = Cookie::make('customer_id', $customer->customer_id, 60 * 24 * 31);
+                return response()->json(['status'=>'success'])->withCookie($cookie);
+                
             }else{
                 return response()->json(['status'=>'fail']);
             }

@@ -18,7 +18,7 @@
 
 
         <!-- Navbar Start -->
-        @include('homepage/Components/nav', ['active' => 'reservation'])
+        @include('homepage/Components/nav', ['active' => 'reservation' , 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
 
 

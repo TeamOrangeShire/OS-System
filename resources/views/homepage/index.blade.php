@@ -17,10 +17,10 @@
 
 
         <!-- Navbar Start -->
-         @include('homepage/Components/nav', ['active'=>'home'])
+         @include('homepage/Components/nav', ['active'=>'home', 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
 
-         @include('homepage/Components/cookies')
+   
         <!-- Header Start -->
         <div class="container-fluid header bg-white p-0 mt-2">
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row  ">
@@ -30,7 +30,7 @@
                     <a href="{{ route('solutions') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Browse Services</a>
                 </div>
                 <div class="col-md-5 animated fadeIn ">
-                    <div class="owl-carousel header-carousel" style="top: 2rem; left: 5rem;">
+                    <div class="owl-carousel header-carousel" style="top: 2rem;">
                         <div class="owl-carousel-item">
                             <img class="img-fluid" src="img/os_1.jpg" alt="">
                         </div>

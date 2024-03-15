@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('homepage/Components/header', ['current_page'=>'Contact Us - Orange Shire'])
+    @include('homepage/Components/header', ['current_page'=>'Book Reservation - Orange Shire'])
 </head>
 <body>
     <div class="container-xxl bg-white p-0">
@@ -16,7 +16,7 @@
 
 
         <!-- Navbar Start -->
-        @include('homepage/Components/nav', ['active'=>'reservation'])
+        @include('homepage/Components/nav', ['active'=>'reservation' , 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
 
 
@@ -133,15 +133,15 @@
                         </div>
                     </div>
                     <div class="col-md-5 animated fadeIn ">
-                        <div class="owl-carousel header-carousel" style="left: 5rem; padding-top: 1rem;">
+                        <div class="owl-carousel header-carousel" style=" padding-top: 1rem;">
                             <div class="owl-carousel-item">
-                                <img class="img-fluid" src="img/mr1.jpg" alt="">
+                                <img class="img-fluid" src="{{ asset('img/mr1.jpg') }}" alt="">
                             </div>
                             <div class="owl-carousel-item">
-                                <img class="img-fluid" src="img/mr2.jpg" alt="">
+                                <img class="img-fluid" src="{{ asset('img/mr1.jpg') }}" alt="">
                             </div>
                             <div class="owl-carousel-item">
-                                <img class="img-fluid" src="img/mr3_2.jpg" alt="">
+                                <img class="img-fluid" src="{{ asset('img/mr3_2.jpg') }}" alt="">
                             </div>
                         </div>
                     </div>
@@ -163,13 +163,13 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="{{ asset('lib/wow/wow.min.js') }}"></script>
+    <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 </body>
 
 </html>
