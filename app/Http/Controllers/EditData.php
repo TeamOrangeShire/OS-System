@@ -116,6 +116,13 @@ class EditData extends Controller
               
        
             ]);
+            $update2 =  RoomPricing::where('room_rates',$rate_id)->get();
+            
+            foreach($update2 as $drp){
+                $drp->update([
+                    'room_pricing_disable'=> 1,
+                ]);
+            }
             return redirect()->back();
 
         }
@@ -132,9 +139,29 @@ class EditData extends Controller
               
        
             ]);
-            return redirect()->back();
+            $update2 =  RoomPricing::where('room_rates',$rate_id)->get();
+            if($update2->count() > 0){
+                
+                foreach($update2 as $rr_id){
+            
+            $room_id = $rr_id->room_id;
+            $update3 =  Rooms::where('room_id',$room_id)->first();
+            $room_status = $update3->rooms_disable;
+            $roomid = $update3->room_id;
 
-        }
+            if( $room_status == 0){
+                
+                $update4 =  RoomPricing::where('room_id',$roomid)->get();
+                foreach($update4 as $erp){
+                    $erp->update([
+                        'room_pricing_disable'=> 0,
+                    ]);
+                }
+            }
+            }
+            return redirect()->back();
+        }}
+        
 
         public function DisableRoom(Request $request){
 
@@ -149,6 +176,18 @@ class EditData extends Controller
               
        
             ]);
+            $update2 =  RoomPricing::where('room_id',$room_id)->get();
+            
+            foreach($update2 as $drp){
+                $drp->update([
+               
+                
+                    'room_pricing_disable'=> 1,
+                  
+           
+                ]);
+            }
+
             return redirect()->back();
 
         }
@@ -165,6 +204,80 @@ class EditData extends Controller
               
        
             ]);
+            $update2 =  RoomPricing::where('room_id',$room_id)->get();
+            if($update2->count() > 0){
+
+                foreach($update2 as $rrp_id){
+            
+            $rate_id = $rrp_id->room_rates;
+            $update3 =  RoomRate::where('rate_id',$rate_id)->first();
+            $rate_status = $update3->rate_disable;
+            $rateid = $update3->rate_id;
+
+            if( $rate_status == 0){
+
+                $update4 =  RoomPricing::where('room_rates',$rateid)->get();
+                foreach($update4 as $erp){
+                    $erp->update([
+                        
+                        'room_pricing_disable'=> 0,
+                      
+               
+                    ]);
+                }
+
+            }
+
+            }
+        }
+             
+            return redirect()->back();
+
+        }
+        public function DisableRoomRate(Request $request){
+
+            $rp_id = $request->rp_id;
+           
+            $update =  RoomPricing::where('rprice_id',$rp_id)->first();
+            
+            $update->update([
+               
+                
+                'room_pricing_disable'=> 1,
+              
+       
+            ]);
+            
+            return redirect()->back();
+
+        }
+        public function EnableRoomRate(Request $request){
+
+            $rp_id = $request->rp_id;
+            $room_id = $request->room_id;
+            $room_rates = $request->room_rates;
+            $rooms =  Rooms::where('room_id',$room_id)->first();
+            $room_status = $rooms->rooms_disable;
+            if($room_status == 0){
+
+            $rates =  RoomRate::where('rate_id',$room_rates)->first();
+            $rate_status = $rates->rate_disable;
+            if($rate_status == 0){
+
+                $update =  RoomPricing::where('rprice_id',$rp_id)->first();
+            
+                $update->update([
+                   
+                    
+                    'room_pricing_disable'=> 0,
+                  
+           
+                ]);
+
+            }
+            }
+
+           
             return redirect()->back();
 
         }

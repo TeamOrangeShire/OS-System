@@ -267,16 +267,13 @@
 
                                @else
                                <form action="{{route('EnableRate')}}" method="post" style="display:flex; gap:3px;">@csrf
+                                
                                 <input type="hidden" name="rate_id" id="" value="{{$room_rate->rate_id}}">
                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter4" onclick="updatemodal2(`{{$room_rate->rate_id}}`,`{{$room_rate->rate_name}}`,`{{$room_rate->rate_price}}`)"><i class="feather icon-edit"></i></button>
                                <button type="submit" class="btn  btn btn-info" role="button"><i class="feather icon-check-circle"></i></button> 
                                 </form>
                                @endif 
-                                {{-- <form action="{{route('DisableRate')}}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="rate_id" id="" value="{{$room_rate->rate_id}}">
-                                    <button class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> </td>
-                                </form> --}}
+                               
                                 </td>
                             </tr>
                             @endforeach
@@ -345,10 +342,10 @@
                                         <form method="POST" action="{{route('AddRoomRate')}}">@csrf
                                             <div class="form-group">
                                                 <label for="plan_promo">Room Number</label>
-                                                <select class="form-control"  name="add_room_rate_pricing_id">
+                                                <select class="form-control"  name="add_room_rate_pricing_id" required>
                                                     
                                                     @php
-                                                    $room_num = App\Models\Rooms::all();
+                                                    $room_num = App\Models\Rooms::where('rooms_disable',0)->get();
                                                 @endphp
                                                 @foreach ($room_num as $room_list)
                                                     <option value="{{$room_list->room_id}}">{{$room_list->room_number}}</option>
@@ -358,10 +355,10 @@
                                             <div class="form-group">
                                                 <label for="plan_promo">Rate
                                                 </label>
-                                                <select class="form-control"  name="add_rate_pricing_id">
+                                                <select class="form-control"  name="add_rate_pricing_id" required>
                                                     
                                                     @php
-                                                    $roomrate = App\Models\RoomRate::all();
+                                                    $roomrate = App\Models\RoomRate::where('rate_disable',0)->get();
                                                 @endphp
                                                 @foreach ($roomrate as $rate_list)
                                                     <option value="{{$rate_list->rate_id}}">{{$rate_list->rate_name}} / Price {{$rate_list->rate_price}}</option>
@@ -423,10 +420,32 @@
                                     <td>{{$rate_name}}</td>
                                     <td>{{$rate_price}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editpricing"  onclick="updatemodal3('{{$roompricing->rprice_id}}','{{$roompricing->room_id}}','{{$roompricing->room_rates}}','{{$roompricing->promo_id}}')">
-                                        <i class="feather icon-edit"></i>
-                                        </button> {{-- modal end --}} 
-                                        <button class="btn  btn btn-danger" role="button"><i class="feather icon-slash"></i></button> </td>
+                                        @php
+                                           $rp_disable = $roompricing->room_pricing_disable;
+                                        @endphp
+                                        @if ($rp_disable == 0)
+                                        <form action="{{route('DisableRoomRate')}}" method="post" style="display:flex; gap:3px;">@csrf 
+                                            
+                                            <input type="hidden" name="rp_id" id="" value="{{$roompricing->rprice_id}}">
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editpricing"  onclick="updatemodal3('{{$roompricing->rprice_id}}','{{$roompricing->room_id}}','{{$roompricing->room_rates}}','{{$roompricing->promo_id}}')">
+                                                <i class="feather icon-edit"></i>
+                                                </button> {{-- modal end --}} 
+                                                <button class="btn  btn btn-danger" role="button" type="submit"><i class="feather icon-slash"></i></button> 
+                                        </form>
+                                        @else
+                                        <form action="{{route('EnableRoomRate')}}" method="post" style="display:flex; gap:3px;">@csrf 
+                                            <input type="hidden" name="room_id" id="" value="{{$roompricing->room_id}}">
+                                            <input type="hidden" name="room_rates" id="" value="{{$roompricing->room_rates}}">
+                                            <input type="hidden" name="rp_id" id="" value="{{$roompricing->rprice_id}}">
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editpricing"  onclick="updatemodal3('{{$roompricing->rprice_id}}','{{$roompricing->room_id}}','{{$roompricing->room_rates}}','{{$roompricing->promo_id}}')">
+                                                <i class="feather icon-edit"></i>
+                                                </button> {{-- modal end --}} 
+                                                <button class="btn  btn btn-info" role="button" type="submit"><i class="feather icon-check-circle"></i></button> 
+                                        </form>
+                                        @endif
+                                       
+
+                                    </td> 
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -450,12 +469,12 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <form method="POST" action="{{route('EditRoomRate')}}">@csrf
-                                            <input type="text" name="roompriceid" id="roompriceid">
+                                            <input type="hidden" name="roompriceid" id="roompriceid">
                                             <div class="form-group">
                                                 <label for="plan_promo">Room Number</label>
-                                                <select class="form-control" name="rom_numb2" id="rom_numb2">
+                                                <select class="form-control" name="rom_numb2" id="rom_numb2" required>
                                                     @php
-                                                        $room_num = App\Models\Rooms::all();
+                                                        $room_num = App\Models\Rooms::where('rooms_disable',0)->get();
                                                     @endphp
                                                     @foreach ($room_num as $room_list)
                                                         <option value="{{$room_list->room_id}}">{{$room_list->room_number}}</option>
@@ -475,7 +494,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_promo">Promo</label>
-                                                <select class="form-control" id="promolist1" name="promolist1">
+                                                <select class="form-control" id="promolist1" name="promolist1" required>
                                                     @php
                                                         $promos = App\Models\Promos::all();
                                                     @endphp
