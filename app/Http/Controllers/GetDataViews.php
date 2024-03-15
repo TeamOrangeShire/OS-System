@@ -65,4 +65,26 @@ class GetDataViews extends Controller
             return view('homepage.book', ['customer_id'=> 'none']);
         }
     }
+
+    public function CustomerProfile(Request $req){
+        $userId = $req->cookie('customer_id');
+
+        return view('homepage.Dashboard.profile', ['user_id'=>$userId]);
+    }
+
+    public function CustomerSubscription(Request $req){
+        $userId = $req->cookie('customer_id');
+
+        return view('homepage.Dashboard.subscription', ['user_id'=>$userId]);
+    }
+    public function CustomerReservation(Request $req){
+        $userId = $req->cookie('customer_id');
+
+        return view('homepage.Dashboard.reservation', ['user_id'=>$userId]);
+    }
+    public function CustomerSettings(Request $req){
+        $userId = $req->cookie('customer_id');
+
+        return view('homepage.Dashboard.settings', ['user_id'=>$userId]);
+    }
 }
