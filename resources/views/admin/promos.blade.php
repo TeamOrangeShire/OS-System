@@ -107,7 +107,7 @@
                             </thead>
                             <tbody>
                                 @php
-                                $promo = App\Models\Promos::all();
+                                $promo = App\Models\Promos::where('promo_id','!=',6)->get();
                             @endphp
                              @foreach ($promo as $info)
                                 <tr>
