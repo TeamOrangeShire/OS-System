@@ -31,7 +31,7 @@ Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )-
 //Client Back End
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
 Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');
-
+Route::post('/customer-login',[Login::class,'LoginCustomer'] )->name('custom_log');
 
 
 //admin
@@ -88,6 +88,8 @@ Route::post('/DisableRoom', [EditData::class, 'DisableRoom'])->name('DisableRoom
 Route::post('/EnableRoom', [EditData::class, 'EnableRoom'])->name('EnableRoom');
 Route::post('/DisableRoomRate', [EditData::class, 'DisableRoomRate'])->name('DisableRoomRate');
 Route::post('/EnableRoomRate', [EditData::class, 'EnableRoomRate'])->name('EnableRoomRate');
+Route::post('/DisablePromo', [EditData::class, 'DisablePromo'])->name('DisablePromo');
+Route::post('/EnablePromo', [EditData::class, 'EnablePromo'])->name('EnablePromo');
 
 
 

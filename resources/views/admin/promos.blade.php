@@ -54,7 +54,6 @@
             <div class="card">
                 <div class="card-header">
                     <h5>Promos</h5>
-                    <h5>Add New Promo</h5>
                     {{-- modal start --}}
                     <div id="exampleModalCenter2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -116,7 +115,7 @@
                                     <td>{{$info->promo_name}}</td>
                                     <td>{{$info->promo_percentage}}</td>
                                     <td>
-                                        
+                                        <form action=""></form>
                                         <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
 
                                         <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-slash"></i></button></td>

@@ -1,4 +1,5 @@
 function restrictToText(event) {
+ 
   var input = event.target;
 
   // Get the value of the input field
@@ -11,6 +12,21 @@ function restrictToText(event) {
   input.value = sanitizedValue;
 }
 
+function valueChecker(){
+  const fname = document.getElementById('fname').value;
+  const mname = document.getElementById('mnamne').vale;
+  const lname = document.getElementById('lname').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const btn = document.getElementById('create-acc-button');
+
+  if(fname === '' || mname=== '' || lname=== '' || email=== '' || password === ''){
+    btn.disable = true;
+  }else{
+    btn.disable = false;
+  }
+}
 function restrictToNumbers(event, nextInputId, prevInputId) {
   var input = event.target;
   var inputValue = input.value;

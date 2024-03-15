@@ -10,21 +10,25 @@ class Mailing extends Controller
 {
 
     public function CreateAccGoogleVerification(Request $req){
-        $fname = $req->fname;
-        $lname = $req->lname;
-        $mname = $req->mname;
-        $email = $req->email;
-        $password = $req->password;
+
+      $data = $req->validate([
+         'fname'=>'required',
+         'mname'=>'required',
+         'lname'=>'required',
+         'email'=>'required',
+         'password'=>'required',
+      ]);
+     
         $code = VerificationCodeGenerator();
-        Mail::to($email)->send(new CustomerVerification($code));
+        Mail::to($data['email'])->send(new CustomerVerification($code));
       
         return response()->json([
           'status'=>'success',
-          'fname'=>$fname,
-          'mname'=>$mname,
-          'lname'=>$lname,
-          'email'=>$email,
-          'password'=>$password,
+          'fname'=>$data['fname'],
+          'mname'=>$data['mname'],
+          'lname'=>$data['lname'],
+          'email'=>$data['email'],
+          'password'=>$data['password'],
           'code'=>$code,
         ]);
     }
