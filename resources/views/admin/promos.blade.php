@@ -115,11 +115,34 @@
                                     <td>{{$info->promo_name}}</td>
                                     <td>{{$info->promo_percentage}}</td>
                                     <td>
-                                        <form action=""></form>
-                                        <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
+                                       
+                                @php
+                                    $DisablePromo = $info->promos_disable; 
+                                @endphp
 
-                                        <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-slash"></i></button></td>
-                                </tr>
+                                @if ($DisablePromo == 0)
+
+                                <form action="{{route('DisablePromo')}}" method="post" style="display:flex; gap:3px;" > @csrf
+                                    <input type="hidden" name="promoid" id="" value="{{$info->promo_id}}">
+
+                                    <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
+                                    <button type="submit" class="btn  btn-icon btn-danger"><i class="feather icon-slash"></i></button>
+                                </form>
+                                        
+                                @else 
+                                <form action="{{route('EnablePromo')}}" method="post" style="display:flex; gap:3px;" > @csrf
+                                    <input type="hidden" name="promoid" id="" value="{{$info->promo_id}}">
+
+                                    <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
+                                    <button type="submit" class="btn  btn-icon btn-info"><i class="feather icon-check-circle"></i></button>
+                                </form>
+                                @endif
+
+
+                                
+
+
+                                    </td></tr>
                                 @endforeach
                             </tbody>
                         </table>
