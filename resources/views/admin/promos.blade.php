@@ -130,7 +130,8 @@
                                     <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
                                     <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#promodisable2"><i class="feather icon-check-circle"></i></button>
                                 @endif
-                                {{-- disable promos modal --}}
+
+                                {{-- disable promos modal1 --}}
                                 <div id="promodisable" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
@@ -153,6 +154,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- disable promos modal2 --}}
                                 <div id="promodisable2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
@@ -176,6 +178,7 @@
                                     </div>
                                 </div>
                              {{-- disable promos modal end --}}
+                             
                                     </td>
                                 </tr>
                                 @endforeach
