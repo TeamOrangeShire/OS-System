@@ -485,7 +485,7 @@
                                                 <label for="plan_promo">Rate</label>
                                                 <select class="form-control" name="room_rate_list1" id="room_rate_list1">
                                                     @php
-                                                        $room_rate = App\Models\RoomRate::all();
+                                                        $room_rate = App\Models\RoomRate::where('rate_disable',0)->get();
                                                     @endphp
                                                     @foreach ($room_rate as $room_rate_list)
                                                         <option value="{{$room_rate_list->rate_id}}">{{$room_rate_list->rate_name}} / Price {{$room_rate_list->rate_price}}</option>
@@ -496,7 +496,7 @@
                                                 <label for="plan_promo">Promo</label>
                                                 <select class="form-control" id="promolist1" name="promolist1" required>
                                                     @php
-                                                        $promos = App\Models\Promos::all();
+                                                        $promos = App\Models\Promos::where('promos_disable',0)->get();
                                                     @endphp
                                                     @foreach ($promos as $detail)
                                                         <option value="{{$detail->promo_id}}">{{$detail->promo_name}} {{$detail->promo_percentage}}%</option>

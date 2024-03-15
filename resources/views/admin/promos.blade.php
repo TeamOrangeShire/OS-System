@@ -116,7 +116,7 @@
                                     <td>{{$info->promo_name}}</td>
                                     <td>{{$info->promo_percentage}}</td>
                                     <td>
-                                        <form action=""></form>
+                                        
                                         <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
 
                                         <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-slash"></i></button></td>
