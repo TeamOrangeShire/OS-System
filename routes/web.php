@@ -27,12 +27,17 @@ Route::get('/customerlogin', function () { return view('homepage.customer_login'
 Route::get('/solutions', [GetDataViews::class, 'GetSolutionsCookies'])->name('solutions');
 Route::get('/reservation/book', [GetDataViews::class, 'GetBookCookies'])->name('book');
 Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )->name('new_account');
+
 //Client Back End
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
 Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');
 Route::post('/customer-login',[Login::class,'LoginCustomer'] )->name('custom_log');
 
-
+//Customer Dashboard
+Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');
+Route::get('/customer/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');
+Route::get('/customer/reservation',[GetDataViews::class, 'CustomerReservation'] )->name('customerReservation');
+Route::get('/customer/settings',[GetDataViews::class, 'CustomerSettings'] )->name('customerSettings');
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');
