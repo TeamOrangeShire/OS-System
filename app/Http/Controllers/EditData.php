@@ -140,7 +140,7 @@ class EditData extends Controller
        
             ]);
             $update2 =  RoomPricing::where('room_rates',$rate_id)->get();
-            if($update2->count() > 0){
+            
                 
                 foreach($update2 as $rr_id){
             
@@ -151,7 +151,7 @@ class EditData extends Controller
 
             if( $room_status == 0){
                 
-                $update4 =  RoomPricing::where('room_id',$roomid)->get();
+                $update4 =  RoomPricing::where('room_id',$roomid)->where('room_rates',$rate_id)->get();
                 foreach($update4 as $erp){
                     $erp->update([
                         'room_pricing_disable'=> 0,
@@ -160,7 +160,7 @@ class EditData extends Controller
             }
             }
             return redirect()->back();
-        }}
+        }
         
 
         public function DisableRoom(Request $request){
@@ -205,10 +205,9 @@ class EditData extends Controller
        
             ]);
             $update2 =  RoomPricing::where('room_id',$room_id)->get();
-            if($update2->count() > 0){
 
                 foreach($update2 as $rrp_id){
-            
+
             $rate_id = $rrp_id->room_rates;
             $update3 =  RoomRate::where('rate_id',$rate_id)->first();
             $rate_status = $update3->rate_disable;
@@ -216,7 +215,7 @@ class EditData extends Controller
 
             if( $rate_status == 0){
 
-                $update4 =  RoomPricing::where('room_rates',$rateid)->get();
+                $update4 =  RoomPricing::where('room_rates',$rateid)->where('room_id',$room_id)->get();
                 foreach($update4 as $erp){
                     $erp->update([
                         
@@ -229,7 +228,7 @@ class EditData extends Controller
             }
 
             }
-        }
+        
              
             return redirect()->back();
 
