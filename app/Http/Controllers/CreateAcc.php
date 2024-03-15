@@ -42,7 +42,7 @@ class CreateAcc extends Controller
         $account->customer_email = $email;
         $account->customer_phone_num = 'none';
         $account->customer_username = $email;
-        $account->customer_password = $password;
+        $account->customer_password = Hash::make($password);
         $account->customer_profile_pic = 'none';
         $account->save();
 

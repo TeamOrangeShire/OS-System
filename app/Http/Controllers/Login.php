@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
+use App\Models\CustomerAcc;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 class Login extends Controller
@@ -41,4 +42,23 @@ class Login extends Controller
         return redirect()->back();
     }
         }
+
+    public function LoginCustomer(Request $req){
+        
+        $username = $req->username;
+        $password = $req->password;
+
+        $customer  =  CustomerAcc::where('customer_username', $username)->first();
+        if($customer){
+            if(Hash::check($password, $customer->customer_password)){
+                return response()->json(['status'=>'success']);
+            }else{
+                return response()->json(['status'=>'fail']);
+            }
+        }else{
+            return response()->json(['status'=>'not found']);
+        }
+
+      
+    }
 }
