@@ -10,6 +10,11 @@
       <link rel="stylesheet" href="libraries/modals/hystmodal.min.css">
       <script src="libraries/modals/hystmodal.min.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="js/google.js" defer type="module"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+
    </head>
   
    <body>
@@ -33,15 +38,15 @@
           <input type="text" name="mname" oninput="restrictToText(event)" class="input" placeholder="Middle Name">
           <input type="text" name="lname" oninput="restrictToText(event)" class="input" placeholder="Last Name">
           <input type="email" name="email" class="input" placeholder="Email">
-          <input type="password" name="password" class="input" placeholder="Password">
-          <button type="button" onclick="SendCode()" class="form-btn">Create account</button>
+          <input type="password" name="password"   class="input" placeholder="Password">
+          <button type="submit" onclick="SendCode()" id="create-acc-button" class="form-btn">Create account</button>
         </form>
         <p class="sign-up-label">
           Already have an account?<a href="{{ route('customer_login') }}" class="sign-up-link">Log in</a>
         </p>
         <div class="buttons-container">
-         
-          <div class="google-login-button">
+{{--          
+          <button id="google-btn" class="google-login-button">
             <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.1" x="0px" y="0px" class="google-icon" viewBox="0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
               <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12
       c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24
@@ -54,7 +59,8 @@
       c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
             </svg>
             <span>Sign up with Google</span>
-          </div>
+          </button>
+           --}}
         </div>
       </div>
 
@@ -85,14 +91,17 @@
         <p id="error" style="display: none">Invalid Code</p>
       
             <div class="action-btns">
-              <button class="verify" type="button" onclick="verifys()">Verify</button>
+
               <button class="clear" type="button" onclick="clears()">Clear</button>
+              <button class="verify" type="button" onclick="verifys()">Verify</button>
             </div>
       
       </form>
    <script>
      function SendCode() {
+      event.preventDefault();
       document.getElementById('loadingDiv').style.display = 'flex';
+ 
      var formData = $('form#account_info').serialize();
  
      $.ajax({
@@ -112,6 +121,9 @@
           document.getElementById('ver-code').value = response.code;
          },
          error: function (xhr) {
+          document.getElementById('loadingDiv').style.display = 'none';
+          alertify.set('notifier','position', 'top-center');
+          alertify.warning('Invalid Data! Please Complete all input fields and use valid Email');
              console.log(xhr.responseText);
          }
      });

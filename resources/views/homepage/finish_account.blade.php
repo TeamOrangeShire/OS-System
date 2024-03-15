@@ -40,16 +40,17 @@
                 <p>{{ $fullname }}</p>
                 <p>{{ $newAcc->customer_email }}</p>
                 
-                <button onclick="goto()">
+                <button onclick="nextPage()">
                     <span>Go to login</span>
                   </button>
             </div>
-          <script>
-            function goto(){
-                window.location.href = {{ route('customer-login') }};
-            }
-          </script>
+      
         </div>
     </div> 
+    <script>
+        function nextPage(){
+            window.location.href = "{{ route('customer_login') }}";
+        }
+      </script>
 </body>
 </html>

@@ -31,7 +31,7 @@ Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )-
 //Client Back End
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
 Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');
-
+Route::post('/customer-login',[Login::class,'LoginCustomer'] )->name('custom_log');
 
 
 //admin
