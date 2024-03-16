@@ -38,7 +38,7 @@
                     <img class="img-fluid" src="img/os_2.jpg" alt="">
                 </div>
             </div>
-        </div>
+        </div> <br><br>
         <!-- Header End -->
 
 
@@ -75,7 +75,73 @@
                 </div>
             </div>
         </div>-->
-        <!-- Search End -->
+        <!-- Search End --> 
+
+        <!-- Category Start -->
+        <br><br><br>
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 700px;">
+                    <h1 class="mb-3">Solutions Just For You</h1>
+                    <p>Experience the collaborative advantage with Orange Shires' tailored solutions and services, designed to empower coworking space users in achieving their business goals effortlessly.</p>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="img/os_s1.png" alt="Icon">
+                                </div>
+                                <h6>Hot Desk</h6>
+                            </div>
+                        </a>
+                    </div>
+                 
+                    <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="img/os_s2.png" alt="Icon">
+                                </div>
+                                <h6>Hybrid Pros</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="img/os_s3.png" alt="Icon">
+                                </div>
+                                <h6>Fixed Desk</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="img/os_s4.png" alt="Icon">
+                                </div>
+                                <h6>Private Rooms</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="img/os_s5.png" alt="Icon">
+                                </div>
+                                <h6>Others</h6>
+                            </div>
+                        </a>
+                    </div>
+             
+                </div>
+            </div>
+        </div> 
+        <!-- Category End -->
 
 
         <!-- About Start -->

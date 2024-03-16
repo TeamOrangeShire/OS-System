@@ -328,5 +328,39 @@ class EditData extends Controller
             return redirect()->back();
 
         }
+        public function EnablePlan(Request $request){
+
+            $service_id = $request->planid;
+           
+            $update =  Promos::where('service_id',$service_id)->first();
+            
+            $update->update([
+               
+                
+                'service_disable'=> 0,
+              
+       
+            ]);
+            
+            return redirect()->back();
+
+        }
+        public function DisablePlan(Request $request){
+
+            $service_id = $request->planid;
+           
+            $update =  Promos::where('service_id',$service_id)->first();
+            
+            $update->update([
+               
+                
+                'service_disable'=> 1,
+              
+       
+            ]);
+            
+            return redirect()->back();
+
+        }
 
 }
