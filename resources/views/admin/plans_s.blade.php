@@ -89,7 +89,7 @@
                                                 <select class="form-control"  name="service_id">
                                                     
                                                     @php
-                                                    $promo = App\Models\Promos::all();
+                                                    $promo = App\Models\Promos::where('promos_disable','!=',1)->get();
                                                 @endphp
                                                 @foreach ($promo as $info)
                                                     <option value="{{$info->promo_id}}">{{$info->promo_name}} {{$info->promo_percentage}}%</option>
@@ -140,12 +140,27 @@
                                     @php
                                         $promo_id =$view->promo_id;
                                         $selec_promo = App\Models\Promos::where('promo_id',$promo_id)->first();
-                                      $promo_name = $selec_promo->promo_name;
+                                      $promo_name = $selec_promo->promo_name.' '.$selec_promo->promo_percentage;
+                                      
                                     @endphp
-                                    <td>{{$promo_name}}</td>
-                                    <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter5" onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#disableplan"><i class="feather icon-slash"></i></button> </td>
+                                    <td>{{$promo_name}}%</td>
+                                    <td>
+                                        @php
+                                            $s_status = $view->service_disable;
+                                        @endphp
+                                        @if ($s_status == 0)
+                                        <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#disableplan" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-slash"></i></button> 
+                                        @else
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#disableplan2" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-check-circle"></i></button> 
+                                        @endif
+                                          
+                                    
+                                    
+                                    </td>
                                 </tr>
+                               
                                 @endforeach
                             </tbody>
                         </table>
@@ -154,10 +169,7 @@
             </div>
         </div>    
     </div>
-       
-        <!-- [ Main Content ] end -->
-    </div>
-</div>
+
 
 {{-- modal start edit--}}
 <div id="exampleModalCenter5" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -192,7 +204,7 @@
                             <label for="plan_promo">Promo</label>
                             <select class="form-control" id="promolist" name="promolist">
                                 @php
-                                $promos = App\Models\Promos::all();
+                                $promos = App\Models\Promos::where('promos_disable','!=',1)->get();
                             @endphp
                              @foreach ($promos as $detail)
                                 <option value="{{$detail->promo_id}}">{{$detail->promo_name}} {{$detail->promo_percentage}}%</option>
@@ -211,82 +223,57 @@
 </div>
 {{-- modal end --}}
 
-{{-- modal start disable --}}
 
+      {{-- disable Modal start --}}
 <div id="disableplan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Are you Sure you want to disable this plan?</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Promo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-
+            <form action="{{route('DisablePlan')}}" method="post"> @csrf
             <div class="modal-body">
-          
-                <div class="col-md-12">
-                    <div style="text-align: center;">
-                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
-                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
-                    </div>
-                    
-                </div>
-           </div>
-          
+                <h6>Are You Sure You Want to Disable This Plan?</h6>
+                
+                <input type="hidden" value="" name="planid" id="disable_service">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" class="btn  btn-primary">Yes</button>
+            </div>
+        </form>
         </div>
     </div>
 </div>
-{{-- modal end --}}
 
-
-
-
-<!-- [ Main Content ] end -->
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
+<div id="disableplan2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Promo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <p>Sorry for the inconvenience!</p>
+            <form action="{{route('EnablePlan')}}" method="post"> @csrf
+            <div class="modal-body">
+                <h6>Are You Sure You Want to Enable This Plan?</h6>
+                
+                <input type="hidden" value="" id="enable_service" name="planid">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" class="btn  btn-primary">Yes</button>
+            </div>
+        </form>
         </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
+    </div>
+</div>
+{{-- disable modal end --}} 
+        <!-- [ Main Content ] end -->
+    </div>
+</div>
 
     <!-- Required Js -->
     <script>
@@ -304,7 +291,13 @@
             prom.value=promo_id;
           
         }
+        function updatemodal2(id){
+            document.getElementById('disable_service').value=id;
+            document.getElementById('enable_service').value=id;
+        }
+     
     </script>
+     
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 
