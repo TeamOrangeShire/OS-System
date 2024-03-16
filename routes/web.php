@@ -8,6 +8,7 @@ use App\Http\Controllers\Mailing;
 use App\Http\Controllers\AddData;
 use App\Http\Controllers\EditData;
 use App\Http\Controllers\GetDataViews;
+use App\Http\Controllers\Reservation;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,7 @@ Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )-
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
 Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');
 Route::post('/customer-login',[Login::class,'LoginCustomer'] )->name('custom_log');
+Route::post('/reserve-date',[Reservation::class,'SelectDate'] )->name('submitDateBook');
 
 //Customer Dashboard
 Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');

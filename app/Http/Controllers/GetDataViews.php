@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Rooms;
 use Illuminate\Http\Request;
 
 class GetDataViews extends Controller
@@ -33,13 +34,20 @@ class GetDataViews extends Controller
 
     public function GetReservationCookies(Request $req){
         $userId = $req->cookie('customer_id');
+        $room = Rooms::orderBy('room_number')->get();
 
+        $room_array=[];
+
+        foreach($room as $array){
+            array_push($room_array, $array->room_id);
+        }
         if ($userId) {
             return view('homepage.reservation', [
                 'customer_id'=>$userId,
+                'room_array'=> 'none'
             ]);
         } else {
-            return view('homepage.reservation', ['customer_id'=> 'none']);
+            return view('homepage.reservation', ['customer_id'=> 'none', 'room_array'=> $room_array]);
         }
     }
     
