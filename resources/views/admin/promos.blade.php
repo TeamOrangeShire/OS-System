@@ -1,3 +1,5 @@
+@if (session()->has('Admin_id'))
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +54,6 @@
             <div class="card">
                 <div class="card-header">
                     <h5>Promos</h5>
-                    <h5>Add New Promo</h5>
                     {{-- modal start --}}
                     <div id="exampleModalCenter2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -106,16 +107,79 @@
                             </thead>
                             <tbody>
                                 @php
-                                $promo = App\Models\Promos::all();
+                                $promo = App\Models\Promos::where('promo_id','!=',6)->get();
                             @endphp
                              @foreach ($promo as $info)
                                 <tr>
                                     <td>{{$info->promo_id}}</td>
                                     <td>{{$info->promo_name}}</td>
                                     <td>{{$info->promo_percentage}}</td>
-                                    <td><button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
+                                    <td>
+                                       
+                                @php
+                                    $DisablePromo = $info->promos_disable; 
+                                @endphp
 
-                                        <button type="button" class="btn  btn-icon btn-danger"><i class="feather icon-trash"></i></button></td>
+                                @if ($DisablePromo == 0)
+                                    <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
+                                    <button type="button" class="btn  btn-icon btn-danger" data-toggle="modal" data-target="#promodisable"><i class="feather icon-slash"></i></button>
+                                     @else 
+                                
+                                 
+
+                                    <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
+                                    <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#promodisable2"><i class="feather icon-check-circle"></i></button>
+                                @endif
+
+                                {{-- disable promos modal1 --}}
+                                <div id="promodisable" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Promo</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <form action="{{route('DisablePromo')}}" method="post"> @csrf
+                                            <div class="modal-body">
+                                                <h6>Are You Sure You Want to Disable This Promo?</h6>
+                                                
+                                                    <input type="hidden" name="promoid" id="" value="{{$info->promo_id}}">
+                
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
+                                                <button type="submit" class="btn  btn-primary">Yes</button>
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- disable promos modal2 --}}
+                                <div id="promodisable2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Promo</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <form action="{{route('EnablePromo')}}" method="post"> @csrf
+                                            <div class="modal-body">
+                                                <h6>Are You Sure You Want to Enable This Promo?</h6>
+                                                
+                                                    <input type="hidden" name="promoid" id="" value="{{$info->promo_id}}">
+                
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
+                                                <button type="submit" class="btn  btn-primary">Yes</button>
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                             {{-- disable promos modal end --}}
+                             
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -162,53 +226,7 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
-<!-- [ Main Content ] end -->
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
+
 
     <!-- Required Js -->
     <script>
@@ -237,3 +255,9 @@
 </body>
 
 </html>
+@else
+    @php
+        echo "<script>window.location.href = 'login';</script>";
+    @endphp
+
+@endif

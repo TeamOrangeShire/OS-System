@@ -17,7 +17,7 @@
 
 
         <!-- Navbar Start -->
-        @include('homepage/Components/nav', ['active'=>'solutions'])
+        @include('homepage/Components/nav', ['active'=>'solutions', 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
 
 

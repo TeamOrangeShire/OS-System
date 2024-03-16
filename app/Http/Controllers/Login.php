@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
+use App\Models\CustomerAcc;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cookie;
 class Login extends Controller
 {
   public function Admin_login(Request $request){
@@ -31,14 +33,35 @@ class Login extends Controller
         $session_id = Session::get('Admin_id');
         
         $Admin_info = AdminAcc::where('admin_id',$session_id)->first();
-        if($Admin_info->admin_password === $lock_password){
+    if( Hash::check($lock_password,$Admin_info->admin_password)){
+    
+        Session::put('Admin_id',$Admin_info->admin_id);
+        return redirect()->route('index');
+
+
+    } else{
+        return redirect()->back();
+    }
+        }
+
+    public function LoginCustomer(Request $req){
         
-            
-            return redirect()->route('index');
-    
-    
-        } else{
-            return redirect()->back();
+        $username = $req->username;
+        $password = $req->password;
+
+        $customer  =  CustomerAcc::where('customer_username', $username)->first();
+        if($customer){
+            if(Hash::check($password, $customer->customer_password)){
+                $cookie = Cookie::make('customer_id', $customer->customer_id, 60 * 24 * 31);
+                return response()->json(['status'=>'success'])->withCookie($cookie);
+                
+            }else{
+                return response()->json(['status'=>'fail']);
+            }
+        }else{
+            return response()->json(['status'=>'not found']);
         }
-        }
+
+      
+    }
 }

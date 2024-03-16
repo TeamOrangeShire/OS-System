@@ -1,3 +1,5 @@
+@if (session()->has('Admin_id'))
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,3 +117,10 @@
 </body>
 
 </html>
+
+@else
+    @php
+        echo "<script>window.location.href = 'login';</script>";
+    @endphp
+
+@endif

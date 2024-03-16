@@ -13,5 +13,6 @@ class Promos extends Model
     protected $fillable = [
         'promo_name',
         'promo_percentage',
+        'promos_disable',
     ];
 }

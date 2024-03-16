@@ -13,7 +13,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-white mb-4">Quick Links</h5>
-                <a class="btn btn-link text-white-50" href="{{ route('about') }}">About Us</a>
+                <a class="btn btn-link text-white-50" href="{{ route('book') }}">Book</a>
                 <a class="btn btn-link text-white-50" href="{{ route('contact') }}">Contact Us</a>
                 <a class="btn btn-link text-white-50" href="{{ route('solutions') }}">Our Services</a>
                 <a class="btn btn-link text-white-50" href="{{ route('reservation') }}">Reservation</a>
@@ -23,22 +23,22 @@
                 <h5 class="text-white mb-4">Photo Gallery</h5>
                 <div class="row g-2 pt-2">
                     <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="img/os_1.jpg" alt="">
+                        <img class="img-fluid rounded bg-light p-1" src="{{ asset('img/os_1.jpg') }}" alt="">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="img/os_2.jpg" alt="">
+                        <img class="img-fluid rounded bg-light p-1" src="{{ asset('img/os_2.jpg') }}" alt="">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="img/os_3.jpg" alt="">
+                        <img class="img-fluid rounded bg-light p-1" src="{{ asset('img/os_3.jpg') }}" alt="">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="img/os_8.jpg" alt="">
+                        <img class="img-fluid rounded bg-light p-1" src="{{ asset('img/os_8.jpg') }}" alt="">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="img/os_5.jpg" alt="">
+                        <img class="img-fluid rounded bg-light p-1" src="{{ asset('img/os_5.jpg') }}" alt="">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="img/os_6.jpg" alt="">
+                        <img class="img-fluid rounded bg-light p-1" src="{{ asset('img/os_6.jpg') }}" alt="">
                     </div>
                 </div>
             </div>

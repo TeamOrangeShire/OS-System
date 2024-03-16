@@ -1,126 +1,59 @@
+function restrictToText(event) {
+ 
+  var input = event.target;
 
-const slidePage = document.querySelector(".slide-page");
-const nextBtnFirst = document.querySelector(".firstNext");
-const prevBtnSec = document.querySelector(".prev-1");
-const nextBtnSec = document.querySelector(".next-1");
-const prevBtnThird = document.querySelector(".prev-2");
-const nextBtnThird = document.querySelector(".next-2");
-const prevBtnFourth = document.querySelector(".prev-3");
-const submitBtn = document.querySelector(".submit");
-const progressText = document.querySelectorAll(".step p");
-const progressCheck = document.querySelectorAll(".step .check");
-const bullet = document.querySelectorAll(".step .bullet");
+  // Get the value of the input field
+  var inputValue = input.value;
 
-const fname = document.getElementById('fname');
-const lname = document.getElementById('lname');
-const fname_label = document.getElementById('fname_label');
-const lname_label = document.getElementById('lname_label');
+  // Replace any non-letter and non-space characters with an empty string
+  var sanitizedValue = inputValue.replace(/[^a-zA-Z\s]/g, '');
 
-const mname = document.getElementById('mname');
-const mname_label = document.getElementById('mname_label');
+  // Update the input field with the sanitized value
+  input.value = sanitizedValue;
+}
 
-const email = document.getElementById('email');
-const contact = document.getElementById('contact');
-const email_label = document.getElementById('email_label');
-const contact_label = document.getElementById('contact_label');
+function valueChecker(){
+  const fname = document.getElementById('fname').value;
+  const mname = document.getElementById('mnamne').vale;
+  const lname = document.getElementById('lname').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
-let current = 1;
+  const btn = document.getElementById('create-acc-button');
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-nextBtnFirst.addEventListener("click", function(event){
-  event.preventDefault();
- if(fname.value === '' || lname.value === ''){
-  lname.style.border = '1px solid #ff0000';
-  fname.style.border = '1px solid #ff0000';
-  lname_label.style.color = '#ff0000';
-  fname_label.style.color = '#ff0000';
-  lname_label.textContent = "Last Name: Don't leave this field blank!";
-  fname_label.textContent = "First Name: Don't leave this field blank!";
- }else{
-  slidePage.style.marginLeft = "-25%";
-  bullet[current - 1].classList.add("active");
-  progressCheck[current - 1].classList.add("active");
-  progressText[current - 1].classList.add("active");
-  current += 1;
- }
-});
-nextBtnSec.addEventListener("click", function(event){
-  event.preventDefault();
-  if(mname.value === ''){
-     mname.style.border = '1px solid #ff0000';
-     mname_label.style.color = '#ff0000';
-     mname_label.textContent = "Middle Name: Don't leave this field blank!";
+  if(fname === '' || mname=== '' || lname=== '' || email=== '' || password === ''){
+    btn.disable = true;
   }else{
-    slidePage.style.marginLeft = "-50%";
-    bullet[current - 1].classList.add("active");
-    progressCheck[current - 1].classList.add("active");
-    progressText[current - 1].classList.add("active");
-    current += 1;
+    btn.disable = false;
   }
-});
-contact.addEventListener('input', function() {
-  if (contact.value.length > 11) {
-    contact.value = contact.value.slice(0, 11);
-  }
-});
-nextBtnThird.addEventListener("click", function(event){
-  event.preventDefault();
-  const emailinput = email.value.trim();
-  if(email.value === '' || contact.value === ''){
-    email.style.border = '1px solid #ff0000';
-    contact.style.border = '1px solid #ff0000';
-    email_label.style.color = '#ff0000';
-    contact_label.style.color = '#ff0000';
-    email_label.textContent = "Email Address: Don't leave this field blank!";
-    contact_label.textContent = "Phone Number: Don't leave this field blank!";
-    
-  }
-  else if(!emailRegex.test(emailinput) && contact.value.length < 11){
-    contact_label.textContent = "Phone Number: Not a valid number!";
-    contact_label.style.color = '#ff0000';
-    contact.style.border = '1px solid #ff0000';
-    email.style.border = '1px solid #ff0000';
-    email_label.style.color = '#ff0000';
-    email_label.textContent = "Email Address: Not a valid email!";
-  }else if(contact.value.length < 11){
-    contact_label.textContent = "Phone Number: Not a valid number!";
-    contact_label.style.color = '#ff0000';
-    contact.style.border = '1px solid #ff0000';
-  }else if(!emailRegex.test(emailinput)){
-    email.style.border = '1px solid #ff0000';
-    email_label.style.color = '#ff0000';
-    email_label.textContent = "Email Address: Not a valid email!";
-  }else{
-  slidePage.style.marginLeft = "-75%";
-  bullet[current - 1].classList.add("active");
-  progressCheck[current - 1].classList.add("active");
-  progressText[current - 1].classList.add("active");
-  current += 1;
-  }
-});
+}
+function restrictToNumbers(event, nextInputId, prevInputId) {
+  var input = event.target;
+  var inputValue = input.value;
 
-prevBtnSec.addEventListener("click", function(event){
-  event.preventDefault();
-  slidePage.style.marginLeft = "0%";
-  bullet[current - 2].classList.remove("active");
-  progressCheck[current - 2].classList.remove("active");
-  progressText[current - 2].classList.remove("active");
-  current -= 1;
-});
-prevBtnThird.addEventListener("click", function(event){
-  event.preventDefault();
-  slidePage.style.marginLeft = "-25%";
-  bullet[current - 2].classList.remove("active");
-  progressCheck[current - 2].classList.remove("active");
-  progressText[current - 2].classList.remove("active");
-  current -= 1;
-});
-prevBtnFourth.addEventListener("click", function(event){
-  event.preventDefault();
-  slidePage.style.marginLeft = "-50%";
-  bullet[current - 2].classList.remove("active");
-  progressCheck[current - 2].classList.remove("active");
-  progressText[current - 2].classList.remove("active");
-  current -= 1;
-});
+  // Check if input is empty and move to previous input on backspace
+  if (event.inputType === 'deleteContentBackward' && prevInputId) {
+      document.getElementById(prevInputId).focus();
+      return;
+  }
+
+  // Check if input is not empty and move to next input
+  if (inputValue && nextInputId) {
+      document.getElementById(nextInputId).focus();
+  }
+
+  // Replace any non-digit characters with an empty string
+  var sanitizedValue = inputValue.replace(/\D/g, '');
+
+  // Update the input field with the sanitized value
+  input.value = sanitizedValue;
+}
+
+function clears(){
+document.getElementById('input-1').value= '';
+document.getElementById('input-2').value= '';
+document.getElementById('input-3').value= '';
+document.getElementById('input-4').value= '';
+document.getElementById('input-5').value= '';
+document.getElementById('input-6').value= '';
+}

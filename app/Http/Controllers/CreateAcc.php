@@ -28,24 +28,34 @@ class CreateAcc extends Controller
     } 
 
     public function CreateCustomerAcc(request $req){
-        $fname = $req->mname;
+        $fname = $req->fname;
         $lname = $req->lname;
         $mname = $req->mname;
-        $ext = $req->ext;
         $email = $req->email;
-        $contact = $req->contact;
-        $username =$req->username;
         $password = $req->password;
+        
+        $account = new CustomerAcc();
+        $account->customer_firstname = $fname;
+        $account->customer_middlename = $mname;
+        $account->customer_lastname = $lname;
+        $account->customer_ext = 'none';
+        $account->customer_email = $email;
+        $account->customer_phone_num = 'none';
+        $account->customer_username = $email;
+        $account->customer_password = Hash::make($password);
+        $account->customer_profile_pic = 'none';
+        $account->save();
 
-        $acc = new CustomerAcc();
-        $acc->customer_firstname = $fname;
-        $acc->customer_middlename = $mname;
-        $acc->customer_lastname = $lname;
-        $acc->customer_ext = $ext;
-        $acc->customer_email = $email;
-        $acc->customer_phone_num = $contact;
-        $acc->customer_username = $username;
-        $acc->customer_password = $password;
-        $acc->customer_profile_pic = 'none';
+        $id = $account->customer_id;
+
+        return response()->json(['id'=>$id]);
     }
+
+    public function SuccessCreateAccount(Request $request){
+
+        $id = $request->id;
+        return view('homepage.finish_account', ['id'=>$id]);
+
+    }
+    
 }

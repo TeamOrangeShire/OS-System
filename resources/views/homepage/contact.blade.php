@@ -16,7 +16,7 @@
 
 
         <!-- Navbar Start -->
-        @include('homepage/Components/nav', ['active'=>'contact'])
+        @include('homepage/Components/nav', ['active'=>'contact' , 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
 
 

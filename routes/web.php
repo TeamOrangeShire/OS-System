@@ -7,7 +7,7 @@ use App\Http\Controllers\EditAcc;
 use App\Http\Controllers\Mailing;
 use App\Http\Controllers\AddData;
 use App\Http\Controllers\EditData;
-
+use App\Http\Controllers\GetDataViews;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,21 +19,25 @@ use App\Http\Controllers\EditData;
 |
 */
 //HomePage
-Route::get('/', function () { return view('homepage.index');})->name('home');
-Route::get('/aboutus', function () {return view('homepage.about');})->name('about');
-Route::get('/contactus', function () { return view('homepage.contact');})->name('contact');
-Route::get('/reservation', function () { return view('homepage.reservation');})->name('reservation');
+Route::get('/', [GetDataViews::class, 'GetHomeCookies'])->name('home');
+Route::get('/contactus', [GetDataViews::class, 'GetContactCookies'])->name('contact');
+Route::get('/reservation', [GetDataViews::class, 'GetReservationCookies'])->name('reservation');
 Route::get('/signup', function () { return view('homepage.signup');})->name('signup');
 Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
-Route::get('/solutions', function () { return view('homepage.solutions');})->name('solutions');
-Route::get('/book', function () { return view('homepage.book');})->name('book');
+Route::get('/solutions', [GetDataViews::class, 'GetSolutionsCookies'])->name('solutions');
+Route::get('/reservation/book', [GetDataViews::class, 'GetBookCookies'])->name('book');
+Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )->name('new_account');
 
 //Client Back End
-Route::post('/customermail',[Mailing::class,'TestMail'] )->name('testMail');
+Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
+Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');
+Route::post('/customer-login',[Login::class,'LoginCustomer'] )->name('custom_log');
 
-
-
-
+//Customer Dashboard
+Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');
+Route::get('/customer/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');
+Route::get('/customer/reservation',[GetDataViews::class, 'CustomerReservation'] )->name('customerReservation');
+Route::get('/customer/settings',[GetDataViews::class, 'CustomerSettings'] )->name('customerSettings');
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');
@@ -64,15 +68,34 @@ Route::get('/admin/logout', function () { return view('admin.logout');})->name('
 
 
 // Admin Controller 
+// Admin
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
 Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');
 Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdmin');
-Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
+Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
+// AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
-Route::post('/EditPromo', [EditData::class, 'EditPromo'])->name('EditPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
+Route::post('/AddRoom', [AddData::class, 'AddRoom'])->name('AddRoom');
+Route::post('/AddRate', [AddData::class, 'AddRate'])->name('AddRate');
+Route::post('/AddRoomRate', [AddData::class, 'AddRoomRate'])->name('AddRoomRate');
+// EditData
+Route::post('/EditPromo', [EditData::class, 'EditPromo'])->name('EditPromo');
 Route::post('/EditPlan', [EditData::class, 'EditPlan'])->name('EditPlan');
+Route::post('/EditRoom', [EditData::class, 'EditRoom'])->name('EditRoom');
+Route::post('/EditRate', [EditData::class, 'EditRate'])->name('EditRate');
+Route::post('/EditRoomRate', [EditData::class, 'EditRoomRate'])->name('EditRoomRate');
+Route::post('/DisableRate', [EditData::class, 'DisableRate'])->name('DisableRate');
+Route::post('/EnableRate', [EditData::class, 'EnableRate'])->name('EnableRate');
+Route::post('/DisableRoom', [EditData::class, 'DisableRoom'])->name('DisableRoom');
+Route::post('/EnableRoom', [EditData::class, 'EnableRoom'])->name('EnableRoom');
+Route::post('/DisableRoomRate', [EditData::class, 'DisableRoomRate'])->name('DisableRoomRate');
+Route::post('/EnableRoomRate', [EditData::class, 'EnableRoomRate'])->name('EnableRoomRate');
+Route::post('/DisablePromo', [EditData::class, 'DisablePromo'])->name('DisablePromo');
+Route::post('/EnablePromo', [EditData::class, 'EnablePromo'])->name('EnablePromo');
+Route::post('/DisablePlan', [EditData::class, 'DisablePlan'])->name('DisablePlan');
+Route::post('/EnablePlan', [EditData::class, 'EnablePlan'])->name('EnablePlan');
 
 
 

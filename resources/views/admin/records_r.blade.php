@@ -1,3 +1,5 @@
+@if (session()->has('Admin_id'))
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,8 +53,8 @@
             <div class="card">
                 <div class="card-header">
                     <h5>Reservations Records</h5>
-                            <button class="btn  btn-primary">Print Records</button>
-                        <div class="input-group m-t-15">
+                            <button style=" position: absolute;top: 10px;right: 10px; " class="btn  btn-primary">Print Records</button> 
+                        <div class="input-group m-t-15" style="margin-top: 25px;"> 
                         <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
                         <div class="input-group-append">
                             <button class="btn btn-primary">
@@ -177,3 +179,9 @@
 </body>
 
 </html>
+@else
+    @php
+        echo "<script>window.location.href = 'login';</script>";
+    @endphp
+
+@endif

@@ -1,3 +1,5 @@
+@if (session()->has('Admin_id'))
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +42,6 @@
   @include('admin.header')
 	<!-- [ Header ] end -->
 	
-	
 
 <!-- [ Main Content ] start -->
 <div class="pcoded-main-container">
@@ -52,7 +53,7 @@
             <div class="card">
                 <div class="card-header">
                     
-                    <h5>Customer Account</h5>
+                    <h5>Customer Account</h5> 
                     <button class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#addcustomermodal" type="submit">Add New Customer</button>
                     <br>
                     <div class="input-group m-t-15"> 
@@ -221,3 +222,9 @@
 </body>
 
 </html>
+@else
+    @php
+        echo "<script>window.location.href = 'login';</script>";
+    @endphp
+
+@endif

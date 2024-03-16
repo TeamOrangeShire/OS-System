@@ -15,5 +15,6 @@ class ServiceHP extends Model
      'service_hours',
      'service_price',
      'promo_id',
+     'service_disable',
     ];
 }

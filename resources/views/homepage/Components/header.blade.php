@@ -6,7 +6,7 @@
     <meta content="" name="description">
     <script src="https://kit.fontawesome.com/33f625dcbc.js" crossorigin="anonymous"></script>
     <!-- Favicon -->
-    <link href="img/os_logo.png" rel="icon">
+    <link href="{{ asset('img/os_logo.png') }}" rel="icon">
     
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

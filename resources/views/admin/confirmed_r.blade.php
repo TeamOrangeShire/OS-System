@@ -1,3 +1,5 @@
+@if (session()->has('Admin_id'))
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,8 +78,9 @@
                                     <td>02/04/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>1</td>
-                                    <td><button style="width: 50%;" class="decline_btn" role="button">Cancel</button></td>
-
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelmodal">Cancel </i></button>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
@@ -86,8 +89,9 @@
                                     <td>02/07/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>3</td>
-                                    <td>   
-                                        <button style="width: 50%;" class="decline_btn" role="button">Cancel</button> </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelmodal">Cancel </i></button>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -96,8 +100,9 @@
                                     <td>02/05/2024</td>
                                     <td>7PM TO 10PM</td>
                                     <td>2</td>
-                                    <td><button style="width: 50%;" class="decline_btn" role="button">Cancel</button> </td>
-                                </tr>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelmodal">Cancel </i></button>
+                                    </td>                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -108,6 +113,43 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+{{-- modal start Cancel --}}
+
+<div id="cancelmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Cancel Reservation?</h5> 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+          
+                <div class="col-md-12">
+                   
+                        <div class="form-group" style="text-align: center;">   
+                            <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
+                            <select class="form-control" id="reasonlist" name="reasonlist">
+                                <option value="Customer Requested">Customer Requested</option>
+                                <option value="Customer Requested">Customer Requested</option>
+                                <option value="Customer Requested">Customer Requested</option>
+                            </select>                        
+                        </div>
+                    <div style="text-align: center;">
+                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                    </div>
+                    
+                </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+
+{{-- modal end Cancel--}}
+
 <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->
@@ -171,3 +213,9 @@
 </body>
 
 </html>
+@else
+    @php
+        echo "<script>window.location.href = 'login';</script>";
+    @endphp
+
+@endif

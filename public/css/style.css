@@ -463,4 +463,11 @@ a {
     text-decoration: none !important;
 }
 
+@media(max-width: 600px){
+    .custom_login{
+        width: 100%;
+        margin-bottom: 3px;
+        margin-top: 5px;;
+    }
+}
 

@@ -1,3 +1,5 @@
+@if (session()->has('Admin_id'))
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -84,6 +86,7 @@
                                                                 <div class="col-md-6">
                                                                     <label for="exampleInputEmail1">Ext.</label>
                                                                     <select class="form-control" id="exampleFormControlSelect1" name="Ext">
+                                                                        <option value="N/A">N/A</option>
                                                                         <option value="Jr.">Jr.</option>
                                                                         <option value="Sr.">Sr.</option>
                                                                         <option value="II">II</option>
@@ -160,53 +163,7 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
-<!-- [ Main Content ] end -->
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
+
 
     <!-- Required Js -->
     <script>
@@ -243,3 +200,9 @@
 </body>
 
 </html>
+@else
+    @php
+        echo "<script>window.location.href = 'login';</script>";
+    @endphp
+
+@endif
