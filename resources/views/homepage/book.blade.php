@@ -3,6 +3,8 @@
 
 <head>
     @include('homepage/Components/header', ['current_page'=>'Book Reservation - Orange Shire'])
+    <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="container-xxl bg-white p-0">
@@ -62,11 +64,23 @@
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">Book a Reservation</h1>
+                    <p>Select room and select prefer date in the calendar to book reservation and proceed filling up the form below it</p>
                 </div>
-                <div class="row g-4">
-                    
-                    
-                    <div class="col-md-6">
+                <div class="row g-4 mb-4">
+                    @php
+                        $room = App\Models\Rooms::orderBy('room_number')->get();
+                    @endphp
+                    <select class="form-control" name="" onchange="selectRoom(this)" id="">
+                        <option value="none" disabled selected>Select Room to show calendar</option>
+                       @foreach ($room as $r)
+                       <option value="{{ $r->room_id }}">Room {{ $r->room_number }}</option>
+                       @endforeach
+                    </select>
+                      <div class="container h-80" >
+                       @foreach ($room as $cal)
+                       <div class="wow fadeInUp" style="height: 90vh; display:none" data-wow-delay="0.1s" id="calendars{{ $cal->room_id }}"></div>
+                       @endforeach
+                      </div>
                         <div class="wow fadeInUp" data-wow-delay="0.5s">
                             <p class="mb-4">Fill out the form to complete the reservation process.</p>
                             <form>
@@ -74,13 +88,13 @@
                                     <div class="col-md-6">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                            <label for="name">Your Name_autofill/editable</label>
+                                            <label for="name">Full Name (Autofill if Logged in)</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
                                             <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                            <label for="email">Your Email_autofill/editable</label>
+                                            <label for="email">Email (Autofill if Logged in)</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -98,7 +112,7 @@
                                     <div class="col-md-6">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                            <label for="subject">Room Number_autofill</label>
+                                            <label for="subject">Room</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -130,27 +144,32 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                  
                     </div>
-                    <div class="col-md-5 animated fadeIn ">
-                        <div class="owl-carousel header-carousel" style=" padding-top: 1rem;">
-                            <div class="owl-carousel-item">
-                                <img class="img-fluid" src="{{ asset('img/mr1.jpg') }}" alt="">
-                            </div>
-                            <div class="owl-carousel-item">
-                                <img class="img-fluid" src="{{ asset('img/mr1.jpg') }}" alt="">
-                            </div>
-                            <div class="owl-carousel-item">
-                                <img class="img-fluid" src="{{ asset('img/mr3_2.jpg') }}" alt="">
-                            </div>
-                        </div>
-                    </div>
+            
                 </div>
+
+                
             </div>
         </div>
         <!-- Contact End -->
+<script>
+    
+    function selectRoom(inputs){
+            HideAllCalendars();
+               const cal_name = 'calendars' + inputs.value;
+               document.getElementById(cal_name).style.display = '';
+               
+            }
 
-
+            function HideAllCalendars(){
+                const roomArray = @json($room_array);
+                roomArray.forEach(function(room){
+                const cal_name = 'calendars' + room;
+                document.getElementById(cal_name).style.display = 'none';
+            });
+            }
+</script>
         <!-- Footer Start -->
         @include('homepage/Components/footer')
         <!-- Footer End -->
@@ -167,9 +186,57 @@
     <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
     <script src="{{ asset('lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <!-- Template Javascript -->
+    <script src="{{ asset('calendar/js/evo-calendar.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+
+            const rooms = @json($room_array);
+            rooms.forEach(function(room) {
+
+                const cal_name = '#calendars'+room;
+                $(cal_name).evoCalendar({   
+            theme:"Orange Coral",
+            calendarEvents: [
+          {
+            id: 'bHay68s', // Event's ID (required)
+            name: "New Year", // Event name (required)
+            date: "January/1/2020", // Event date (required)
+            type: "holiday", // Event type (required)
+            everyYear: true // Same event every year (optional)
+          },
+          {
+            name: "Vacation Leave",
+            badge: "02/13 - 02/15", // Event badge (optional)
+            date: ["February/13/2020", "February/15/2020"], // Date range
+            description: "Vacation leave for 3 days.", // Event description (optional)
+            type: "event",
+            color: "#63d867" // Event custom color (optional)
+          }
+        ]   
+        });
+
+        $(cal_name).on('selectDate', function(event, newDate, oldDate) {
+        // Get the current date
+        var currentDate = new Date();
+        // Convert newDate to a JavaScript Date object
+        var selectedDate = new Date(newDate);
+
+        // Check if the selected date is before or equal to the current date
+        if (selectedDate <= currentDate) {
+            // Log the clicked date
+            console.log("Date clicked:", selectedDate);
+        } else {
+            // Display a message indicating that the date is in the future
+            console.log("You clicked on a future date:", selectedDate);
+        }
+    });
+    });
+
+    });
+        </script>
 </body>
 
 </html>

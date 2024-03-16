@@ -44,7 +44,7 @@ class GetDataViews extends Controller
         if ($userId) {
             return view('homepage.reservation', [
                 'customer_id'=>$userId,
-                'room_array'=> 'none'
+                'room_array'=>  $room_array
             ]);
         } else {
             return view('homepage.reservation', ['customer_id'=> 'none', 'room_array'=> $room_array]);
@@ -64,13 +64,20 @@ class GetDataViews extends Controller
     }
     public function GetBookCookies(Request $req){
         $userId = $req->cookie('customer_id');
+        $room = Rooms::orderBy('room_number')->get();
 
+        $room_array=[];
+
+        foreach($room as $array){
+            array_push($room_array, $array->room_id);
+        }
         if ($userId) {
             return view('homepage.book', [
                 'customer_id'=>$userId,
+                'room_array'=> $room_array
             ]);
         } else {
-            return view('homepage.book', ['customer_id'=> 'none']);
+            return view('homepage.book', ['customer_id'=> 'none', 'room_array'=>$room_array]);
         }
     }
 
