@@ -56,7 +56,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">User Profile</a>
+            <a class="navbar-brand" href="#pablo">{{ $label }}</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -71,13 +71,14 @@
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="now-ui-icons users_single-02"></i>
                   <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
+                    <span class="d-lg-none d-md-block">Profile</span>
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#"><i class="fa-solid fa-house"></i>Back to homepage</a>
-                  <a class="dropdown-item" href="#"><i class="fa-regular fa-address-book"></i>Contact Us</a>
-                  <a class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                  <a class="dropdown-item" href="{{ route('customerProfile') }}"><i class="fa-solid fa-user"></i>My Profile</a>
+                  <a class="dropdown-item" href="{{ route('home') }}"><i class="fa-solid fa-house"></i>Back to homepage</a>
+                  <a class="dropdown-item" href="{{ route('contact') }}"><i class="fa-regular fa-address-book"></i>Contact Us</a>
+                  <a class="dropdown-item" href=""><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
                 </div>
               </li>
           

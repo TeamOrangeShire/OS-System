@@ -13,7 +13,7 @@
 <body class="user-profile">
   <div class="wrapper ">
     <div class="sidebar" data-color="orange">
-      @include('homepage.Dashboard.Components.nav', ['name'=>$titleName, 'active'=>'subscription'])
+      @include('homepage.Dashboard.Components.nav', ['name'=>$titleName, 'active'=>'subscription', 'label'=>'My Subscriptions'])
       <div class="panel-header panel-header-sm">
       </div>
     
