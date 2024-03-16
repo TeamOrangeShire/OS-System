@@ -18,7 +18,10 @@
 h1{
     font-family: 'Montserrat', sans-serif;
 }
-
+.active-btn{
+    background-color: #010100;
+    color: white;
+}
 .back-to-top {
     position: fixed;
     display: none;
