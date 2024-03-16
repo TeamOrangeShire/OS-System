@@ -113,7 +113,7 @@
                                 <tr>
                                     <td>{{$info->promo_id}}</td>
                                     <td>{{$info->promo_name}}</td>
-                                    <td>{{$info->promo_percentage}}</td>
+                                    <td>{{$info->promo_percentage}}%</td>
                                     <td>
                                        
                                 @php
@@ -122,63 +122,15 @@
 
                                 @if ($DisablePromo == 0)
                                     <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
-                                    <button type="button" class="btn  btn-icon btn-danger" data-toggle="modal" data-target="#promodisable"><i class="feather icon-slash"></i></button>
+                                    <button type="button" class="btn  btn-icon btn-danger" data-toggle="modal" data-target="#promodisable" onclick="updatemodal2(`{{$info->promo_id}}`)"><i class="feather icon-slash"></i></button>
                                      @else 
                                 
                                  
 
                                     <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
-                                    <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#promodisable2"><i class="feather icon-check-circle"></i></button>
+                                    <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#promodisable2" onclick="updatemodal2(`{{$info->promo_id}}`)"><i class="feather icon-check-circle"></i></button>
                                 @endif
 
-                                {{-- disable promos modal1 --}}
-                                <div id="promodisable" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalCenterTitle">Promo</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            </div>
-                                            <form action="{{route('DisablePromo')}}" method="post"> @csrf
-                                            <div class="modal-body">
-                                                <h6>Are You Sure You Want to Disable This Promo?</h6>
-                                                
-                                                    <input type="hidden" name="promoid" id="" value="{{$info->promo_id}}">
-                
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
-                                                <button type="submit" class="btn  btn-primary">Yes</button>
-                                            </div>
-                                        </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- disable promos modal2 --}}
-                                <div id="promodisable2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalCenterTitle">Promo</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            </div>
-                                            <form action="{{route('EnablePromo')}}" method="post"> @csrf
-                                            <div class="modal-body">
-                                                <h6>Are You Sure You Want to Enable This Promo?</h6>
-                                                
-                                                    <input type="hidden" name="promoid" id="" value="{{$info->promo_id}}">
-                
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
-                                                <button type="submit" class="btn  btn-primary">Yes</button>
-                                            </div>
-                                        </form>
-                                        </div>
-                                    </div>
-                                </div>
-                             {{-- disable promos modal end --}}
-                             
                                     </td>
                                 </tr>
                                 @endforeach
@@ -220,12 +172,60 @@
                     </div>
                 </div>
                 {{-- modal end --}}
+                {{-- disable promos modal1 --}}
+                <div id="promodisable" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Promo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <form action="{{route('DisablePromo')}}" method="post"> @csrf
+                            <div class="modal-body">
+                                <h6>Are You Sure You Want to Disable This Promo?</h6>
+                                
+                                    <input type="hidden" name="promoid" id="disable_promo" value="{{$info->promo_id}}">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
+                                <button type="submit" class="btn  btn-primary">Yes</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                {{-- disable promos modal2 --}}
+                <div id="promodisable2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Promo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <form action="{{route('EnablePromo')}}" method="post"> @csrf
+                            <div class="modal-body">
+                                <h6>Are You Sure You Want to Enable This Promo?</h6>
+                                
+                                    <input type="hidden" name="promoid" id="enable_promo" value="{{$info->promo_id}}">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
+                                <button type="submit" class="btn  btn-primary">Yes</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+             {{-- disable promos modal end --}}
             </div>
         </div>
     </div>
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
 
 
     <!-- Required Js -->
@@ -239,6 +239,10 @@
             promo_name.value=name;
             promo_percentage.value=percentage;
 
+        }
+        function updatemodal2(id){
+           document.getElementById('disable_promo').value=id;
+           document.getElementById('enable_promo').value=id;
         }
     </script>
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>

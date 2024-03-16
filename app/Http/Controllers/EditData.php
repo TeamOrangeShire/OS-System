@@ -41,7 +41,7 @@ class EditData extends Controller
             
             'service_name'=> $plan_name,
             'service_hours'=> $plan_hours,
-            'service-price'=> $plan_price,
+            'service_price'=> $plan_price,
             'promo_id'=> $promolist,
    
         ]);
@@ -123,7 +123,7 @@ class EditData extends Controller
                     'room_pricing_disable'=> 1,
                 ]);
             }
-            return redirect()->back();
+            return redirect()->back()->with('disabled','h');
 
         }
         public function EnableRate(Request $request){
@@ -159,7 +159,7 @@ class EditData extends Controller
                 }
             }
             }
-            return redirect()->back();
+            return redirect()->back()->with('enabled','h');
         }
         
 
@@ -188,7 +188,7 @@ class EditData extends Controller
                 ]);
             }
 
-            return redirect()->back();
+            return redirect()->back()->with('disabled','h');
 
         }
         public function EnableRoom(Request $request){
@@ -230,7 +230,7 @@ class EditData extends Controller
             }
         
              
-            return redirect()->back();
+            return redirect()->back()->with('enabled','h');
 
         }
         public function DisableRoomRate(Request $request){
@@ -247,7 +247,7 @@ class EditData extends Controller
        
             ]);
             
-            return redirect()->back();
+            return redirect()->back()->with('disabled','h');
 
         }
         public function EnableRoomRate(Request $request){
@@ -277,7 +277,7 @@ class EditData extends Controller
             }
 
            
-            return redirect()->back();
+            return redirect()->back()->with('enabled','h');
 
         }
         public function DisablePromo(Request $request){
@@ -332,7 +332,7 @@ class EditData extends Controller
 
             $service_id = $request->planid;
            
-            $update =  Promos::where('service_id',$service_id)->first();
+            $update =  ServiceHP::where('service_id',$service_id)->first();
             
             $update->update([
                
@@ -349,7 +349,7 @@ class EditData extends Controller
 
             $service_id = $request->planid;
            
-            $update =  Promos::where('service_id',$service_id)->first();
+            $update =  ServiceHP::where('service_id',$service_id)->first();
             
             $update->update([
                
