@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
+@php
+     if($customer_id === 'none'){
+        $fulname ='';
+        $email = '';
+     }else{
+        $user = App\Models\CustomerAcc::where('customer_id', $customer_id)->first();
+        $fullname = $user->customer_firstname . ' '. $user->customer_middlename[0]. '. '. $user->customer_lastname;
+        $email = $user->customer_email;
+     }
+  
+@endphp
 <head>
     @include('homepage/Components/header', ['current_page'=>'Book Reservation - Orange Shire'])
     <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
@@ -70,82 +80,85 @@
                     @php
                         $room = App\Models\Rooms::orderBy('room_number')->get();
                     @endphp
-                    <select class="form-control" name="" onchange="selectRoom(this)" id="">
-                        <option value="none" disabled selected>Select Room to show calendar</option>
-                       @foreach ($room as $r)
-                       <option value="{{ $r->room_id }}">Room {{ $r->room_number }}</option>
-                       @endforeach
-                    </select>
-                      <div class="container h-80" >
-                       @foreach ($room as $cal)
-                       <div class="wow fadeInUp" style="height: 90vh; display:none" data-wow-delay="0.1s" id="calendars{{ $cal->room_id }}"></div>
-                       @endforeach
-                      </div>
-                        <div class="wow fadeInUp" data-wow-delay="0.5s">
-                            <p class="mb-4">Fill out the form to complete the reservation process.</p>
-                            <form>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                            <label for="name">Full Name (Autofill if Logged in)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                            <label for="email">Email (Autofill if Logged in)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                            <label for="subject">Company Name</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                            <label for="subject">Contact Number</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                            <label for="subject">Room</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                            <label for="subject">Date</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <select id="duration" class="form-control"  name="duration">
-                                                <option value="" disabled selected>Select Duration</option>
-                                                <option value="4 hours">1 Hour</option>
-                                                <option value="4 hours">4 Hours</option>
-                                                <option value="full day">Full Day</option>
-                                                <option value="weekly">Weekly</option>
-                                                <option value="monthly">Monthly</option>
-                                              </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="number" class="form-control" id="subject" placeholder="Subject" readonly>
-                                            <label for="subject">Price_autosum</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
+               <div class="col-md-6">
+                <select class="form-control" name="" onchange="selectRoom(this)" id="">
+                    <option value="none" disabled selected>Select Room to show calendar</option>
+                   @foreach ($room as $r)
+                   <option value="{{ $r->room_id }}">Room {{ $r->room_number }}</option>
+                   @endforeach
+                </select>
+                  <div class="container h-80" >
+                   @foreach ($room as $cal)
+                   <div class="wow fadeInUp" style="height: 90vh; display:none" data-wow-delay="0.1s" id="calendars{{ $cal->room_id }}"></div>
+                   @endforeach
+                  </div>
+               </div>
+                      <div class="wow fadeInUp col-md-6" data-wow-delay="0.5s">
+                        <p class="mb-4">Fill out the form to complete the reservation process.</p>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" placeholder="Your Name" value="{{ $fullname }}">
+                                        <label for="name">Full Name (Autofill if Logged in)</label>
                                     </div>
                                 </div>
-                            </form>
-                  
-                    </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" placeholder="Your Email" value="{{ $email }}">
+                                        <label for="email">Email (Autofill if Logged in)</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                        <label for="subject">Company Name(Optional)</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                        <label for="subject">Contact Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="room" placeholder="room">
+                                        <label for="subject">Room</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="hidden" id="dateHidden">
+                                        <input type="text" class="form-control" id="date" disabled placeholder="date">
+                                        <label for="subject">Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <select id="duration" class="form-control"  name="duration">
+                                            <option value="" disabled selected>Select Duration</option>
+                                            <option value="4 hours">1 Hour</option>
+                                            <option value="4 hours">4 Hours</option>
+                                            <option value="full day">Full Day</option>
+                                            <option value="weekly">Weekly</option>
+                                            <option value="monthly">Monthly</option>
+                                          </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="subject" placeholder="Subject" readonly>
+                                        <label for="subject">Price_autosum</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+              
+                </div>
             
                 </div>
 
@@ -159,6 +172,8 @@
             HideAllCalendars();
                const cal_name = 'calendars' + inputs.value;
                document.getElementById(cal_name).style.display = '';
+               document.value = '';
+               document.getElementById('room').value =  inputs.options[inputs.selectedIndex].text;
                
             }
 
@@ -219,18 +234,15 @@
         });
 
         $(cal_name).on('selectDate', function(event, newDate, oldDate) {
-        // Get the current date
         var currentDate = new Date();
-        // Convert newDate to a JavaScript Date object
         var selectedDate = new Date(newDate);
-
-        // Check if the selected date is before or equal to the current date
         if (selectedDate <= currentDate) {
-            // Log the clicked date
-            console.log("Date clicked:", selectedDate);
+         
+            document.getElementById('date').value = 'Not a valid date!';
+            document.getElementById('dateHidden').value = 'Not a valid date!';
         } else {
-            // Display a message indicating that the date is in the future
-            console.log("You clicked on a future date:", selectedDate);
+           document.getElementById('date').value = newDate;
+           document.getElementById('dateHidden').value = newDate;
         }
     });
     });
