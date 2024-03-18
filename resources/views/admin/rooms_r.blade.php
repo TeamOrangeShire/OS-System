@@ -665,6 +665,8 @@
     </div>
 </div>
 {{-- disable promos modal end --}}
+
+{{-- enable notif start --}}
 @if (session('enabled'))
 <style>
  .main-container {
