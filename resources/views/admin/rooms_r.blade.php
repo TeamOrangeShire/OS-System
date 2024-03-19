@@ -21,9 +21,12 @@
     <!-- Favicon icon -->
 	<link rel="icon" href="{{asset('assets/images/os_logo.png')}}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
+   
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
     
     
 
@@ -427,6 +430,7 @@
                     <h5>Rooms Rate</h5>
 
                      {{-- modal start --}}
+                     
                      <div id="addpricing" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -436,7 +440,12 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12">
-                                        <form method="POST" action="{{route('AddRoomRate')}}">@csrf
+                                        <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                                        <form method="POST" action="" id="addnewroomrate">@csrf
+                                            	<div class="alert alert-danger" role="alert" id="dataexist" style="display:none;">
+                                                       Room Rate Already Exits!
+                                                    </div>
+                                                    
                                             <div class="form-group">
                                                 <label for="plan_promo">Room Number</label>
                                                 <select class="form-control"  name="add_room_rate_pricing_id" required>
@@ -465,7 +474,7 @@
                                             </div>
 
                                            
-                                            <button type="submit" class="btn  btn-primary">Add Pricing</button>
+                                            <button type="submit" class="btn  btn-primary" onclick="onclickadd()">Add Pricing </button>
                                         </form>
                                     </div>
                                               
@@ -666,153 +675,18 @@
 </div>
 {{-- disable promos modal end --}}
 
+{{-- loading start --}}
+
+
+{{-- loading end --}}
+
 {{-- enable notif start --}}
 @if (session('enabled'))
-<style>
- .main-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for the desired transparency */
-    z-index: 999; /* Ensure it overlays other content */
-}
 
-.popup-content {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-}
 
-h3,
-.check-container {
-    opacity: 0;
-    animation: fadeIn 0.75s ease-out forwards;
-}
-
-h3 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 115%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translate(-50%, -50%);
-    z-index: 1000; /* Ensure it overlays the check container */
-    color: white; /* Change text color as needed */
-}
-
-.check-container {
-    width: 6.25rem;
-    height: 7.5rem;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: space-between;
-}
-.check-container .check-background {
-  width: 100%;
-  height: calc(100% - 1.25rem);
-  background: linear-gradient(to bottom right, #5de593, #41d67c);
-  box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
-  transform: scale(0.84);
-  border-radius: 50%;
-  animation: animateContainer 0.75s ease-out forwards 0.75s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-}
-.check-container .check-background svg {
-  width: 65%;
-  transform: translateY(0.25rem);
-  stroke-dasharray: 80;
-  stroke-dashoffset: 80;
-  animation: animateCheck 0.35s forwards 1.25s ease-out;
-}
-.check-container .check-shadow {
-  bottom: calc(-15% - 5px);
-  left: 0;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, #49da83, transparent);
-  animation: animateShadow 0.75s ease-out forwards 0.75s;
-}
-
-@keyframes animateContainer {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-    box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
-  }
-  25% {
-    opacity: 1;
-    transform: scale(0.9);
-    box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
-  }
-  43.75% {
-    transform: scale(1.15);
-    box-shadow: 0px 0px 0px 43.334px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
-  }
-  62.5% {
-    transform: scale(1);
-    box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 21.667px rgba(255, 255, 255, 0.25) inset;
-  }
-  81.25% {
-    box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset;
-  }
-  100% {
-    opacity: 1;
-    box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset;
-  }
-}
-@keyframes animateCheck {
-  from {
-    stroke-dashoffset: 80;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-@keyframes animateShadow {
-  0% {
-    opacity: 0;
-    width: 100%;
-    height: 15%;
-  }
-  25% {
-    opacity: 0.25;
-  }
-  43.75% {
-    width: 40%;
-    height: 7%;
-    opacity: 0.35;
-  }
-  100% {
-    width: 85%;
-    height: 15%;
-    opacity: 0.25;
-  }
-}
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-</style>
 <div class="main-container" id="check">
     <div class="popup-content">
-        <h3>Enabled</h3>
+        <h3 >Enabled</h3>
         <div class="check-container">
             <div class="check-background">
                 <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -838,103 +712,16 @@ h3 {
 
 {{-- start disable notif --}}
 @if (session('disabled'))
-<style>
-.wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for the desired transparency */
-  z-index: 999; /* Ensure it overlays other content */
-  opacity: 0;
-  animation: fadeIn 0.75s ease-out forwards; /* Added fadeIn animation */
-}
 
-.popup-content {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-}
-
-h3 {
-  opacity: 0;
-  animation: fadeIn 0.75s ease-out forwards; /* Added fadeIn animation */
-  color: white; /* Change text color as needed */
-  margin-top: 20px; /* Adjust as needed */
-}
-
-.checkmark {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  display: block;
-  stroke-width: 2;
-  stroke: #fff;
-  stroke-miterlimit: 10;
-  box-shadow: inset 0px 0px 0px #7ac142;
-  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both, fadeIn 0.75s ease-out forwards; /* Added fadeIn animation */
-}
-
-.checkmark_circle {
-  stroke-dasharray: 166;
-  stroke-dashoffset: 166;
-  stroke-width: 2;
-  stroke-miterlimit: 10;
-  stroke: #ec1f1f;
-  fill: none;
-  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-}
-
-.checkmark_check {
-  transform-origin: 50% 50%;
-  stroke-dasharray: 48;
-  stroke-dashoffset: 48;
-  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-}
-
-@keyframes stroke {
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes scale {
-  0%, 100% {
-    transform: none;
-  }
-  50% {
-    transform: scale3d(1.1, 1.1, 1);
-  }
-}
-
-@keyframes fill {
-  100% {
-    box-shadow: inset 0px 0px 0px 100px #ec1f1f;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-</style>
-    
-<div class="wrapper" id="ex">
-    <div class="popup-content">
-      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-        <circle class="checkmark_circle" cx="26" cy="26" r="25" fill="none"/>
-        <path class="checkmark_check" fill="none" d="M14.1 14.1l23.8 23.8 m0,-23.8 l-23.8,23.8"/>
-      </svg>
-      <h3>Disabled</h3>
+<div class="trans">
+    <div class="wrapper" id="ex">
+      <div class="popup-content1">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark_circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark_check" fill="none" d="M14.1 14.1l23.8 23.8 m0,-23.8 l-23.8,23.8"/>
+        </svg>
+        <h3 class="h3">Disabled</h3>
+      </div>
     </div>
   </div>
   <script>
@@ -1005,6 +792,34 @@ h3 {
         }
 </script>
     
+<script>
+    function onclickadd(){
+
+    document.getElementById('roller').style.display='flex';
+    event.preventDefault();
+     var formData = $('form#addnewroomrate').serialize();
+ 
+     $.ajax({
+         type: 'POST',
+         url: "{{route('AddRoomRate')}}",
+         data: formData,
+         success: function(response) {
+           if(response.status === 'exist'){
+            document.getElementById('roller').style.display='none';
+           document.getElementById('dataexist').style.display='';
+           }else if(response.status === 'success'){
+            location.reload();
+           
+           }
+         }, 
+         error: function (xhr) {
+
+             console.log(xhr.responseText);
+         }
+     });
+    }
+    
+</script>
      
     <!-- Required Js -->
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>

@@ -82,7 +82,13 @@
                                 </i>
                                 </div>
                                 <div class="col-sm-8 text-md-center">
-                                    <h5>100</h5>
+                                    <h5>@php
+                                        $CustomerAcc = App\Models\CustomerAcc::all();
+                                        $count = $CustomerAcc->count();
+
+                                    @endphp
+                                    {{$count}}
+                                    </h5>
                                     <span>Total</span>
                                 </div>
                             </div>
