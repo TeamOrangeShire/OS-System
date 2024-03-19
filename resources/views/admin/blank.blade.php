@@ -23,8 +23,9 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    
-    
+    {{-- new add --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
 
 </head>
 <body class="">

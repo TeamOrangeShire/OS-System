@@ -255,26 +255,33 @@ class EditData extends Controller
             $rp_id = $request->rp_id;
             $room_id = $request->room_id;
             $room_rates = $request->room_rates;
-            $rooms =  Rooms::where('room_id',$room_id)->first();
-            $room_status = $rooms->rooms_disable;
-            if($room_status == 0){
-
-            $rates =  RoomRate::where('rate_id',$room_rates)->first();
-            $rate_status = $rates->rate_disable;
-            if($rate_status == 0){
-
-                $update =  RoomPricing::where('rprice_id',$rp_id)->first();
-            
-                $update->update([
-                   
-                    
-                    'room_pricing_disable'=> 0,
-                  
-           
-                ]);
-
+            $check =  RoomPricing::where('rprice_id',$rp_id)->where('room_id',$room_id)->where('room_rates',$room_rates)->first();
+            if($check){
+                return redirect()->back();
+            }else{
+                $rooms =  Rooms::where('room_id',$room_id)->first();
+                $room_status = $rooms->rooms_disable;
+                if($room_status == 0){
+    
+                $rates =  RoomRate::where('rate_id',$room_rates)->first();
+                $rate_status = $rates->rate_disable;
+                if($rate_status == 0){
+    
+                    $update =  RoomPricing::where('rprice_id',$rp_id)->first();
+                
+                    $update->update([
+                       
+                        
+                        'room_pricing_disable'=> 0,
+                      
+               
+                    ]);
+    
+                }
+                }
             }
-            }
+
+          
 
            
             return redirect()->back()->with('enabled','h');

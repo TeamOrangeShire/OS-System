@@ -54,12 +54,23 @@ class AddData extends Controller
     }
     public function AddRoomRate(Request $request){
         
-        $data = new RoomPricing;
+        $room_id = $request->add_room_rate_pricing_id;
+        $room_rates = $request->add_rate_pricing_id;
+        $check =  RoomPricing::where('room_id',$room_id)->where('room_rates',$room_rates)->first();
+        if($check){  
+
+            return response()->json(['status'=>'exist']);
+
+           }else{
+            $data = new RoomPricing;
         $data->room_id = $request->add_room_rate_pricing_id;
         $data->room_rates = $request->add_rate_pricing_id;
         $data->promo_id = 6;
         $data->save();
-        return redirect()->back();
+        
+        return response()->json(['status'=>'success']);
+           }
+        
 
     }
 }
