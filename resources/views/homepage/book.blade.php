@@ -15,8 +15,19 @@
     @include('homepage/Components/header', ['current_page'=>'Book Reservation - Orange Shire'])
     <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
     <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+    <div class="reservationLoading" id="reservationLoading">
+        <div class="container-loading">
+            <div class="loader-container">
+              <div class="loader"></div>
+              <div class="loading-text">Submitting Reservation Request...</div>
+            </div>
+          </div>
+          
+        
+      </div>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -26,7 +37,8 @@
         </div>
         <!-- Spinner End -->
 
-
+     
+  
         <!-- Navbar Start -->
         @include('homepage/Components/nav', ['active'=>'reservation' , 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
@@ -78,7 +90,7 @@
                 </div>
                 <div class="row g-4 mb-4">
                     @php
-                        $room = App\Models\Rooms::orderBy('room_number')->get();
+                        $room = App\Models\Rooms::orderBy('room_number')->where('rooms_disable', '!=', 1)->get();
                     @endphp
                <div class="col-md-6">
                 <select class="form-control" name="" onchange="selectRoom(this)" id="">
@@ -89,7 +101,7 @@
                 </select>
                   <div class="container h-80" >
                    @foreach ($room as $cal)
-                   <div class="wow fadeInUp" style="height: 90vh; display:none" data-wow-delay="0.1s" id="calendars{{ $cal->room_id }}"></div>
+                   <div class="wow fadeInUp mt-4" style="height: 90vh; display:none" data-wow-delay="0.1s" id="calendars{{ $cal->room_id }}"></div>
                    @endforeach
                   </div>
                </div>
@@ -99,13 +111,14 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name" value="{{ $fullname }}">
+                                        <input type="hidden" name="customer_id" value="{{ $customer_id }}">
+                                        <input type="text" disabled class="form-control" id="name" placeholder="Your Name" value="{{ $fullname }}">
                                         <label for="name">Full Name (Autofill if Logged in)</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Your Email" value="{{ $email }}">
+                                        <input type="email" disabled class="form-control" id="email" placeholder="Your Email" value="{{ $email }}">
                                         <label for="email">Email (Autofill if Logged in)</label>
                                     </div>
                                 </div>
@@ -117,43 +130,46 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                        <input type="number" class="form-control" oninput="CheckingContact(this)" id="contact" placeholder="Subject">
                                         <label for="subject">Contact Number</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="room" placeholder="room">
+                                        <input type="text" class="form-control" disabled id="room" placeholder="room">
                                         <label for="subject">Room</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="hidden" id="dateHidden">
                                         <input type="text" class="form-control" id="date" disabled placeholder="date">
                                         <label for="subject">Date</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-floating">
+                                     
                                         <select id="duration" class="form-control"  name="duration">
                                             <option value="" disabled selected>Select Duration</option>
-                                            <option value="4 hours">1 Hour</option>
-                                            <option value="4 hours">4 Hours</option>
-                                            <option value="full day">Full Day</option>
-                                            <option value="weekly">Weekly</option>
-                                            <option value="monthly">Monthly</option>
+                                             
                                           </select>
+                                          <label for="duration">Duration</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="subject" placeholder="Subject" readonly>
-                                        <label for="subject">Price_autosum</label>
+                                     
+                                        <select id="duration" class="form-control"  name="duration">
+                                            <option value="" disabled selected>Select Duration</option>
+                                             
+                                          </select>
+                                          <label for="duration">Time</label>
                                     </div>
                                 </div>
+                              
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
+                                    <button class="btn btn-primary w-100 py-3" id="submitReservation" disabled type="submit">Fill the Form</button>
                                 </div>
                             </div>
                         </form>
@@ -172,9 +188,8 @@
             HideAllCalendars();
                const cal_name = 'calendars' + inputs.value;
                document.getElementById(cal_name).style.display = '';
-               document.value = '';
                document.getElementById('room').value =  inputs.options[inputs.selectedIndex].text;
-               
+               SelectRate(inputs.value);
             }
 
             function HideAllCalendars(){
@@ -184,6 +199,45 @@
                 document.getElementById(cal_name).style.display = 'none';
             });
             }
+
+            function SelectRate(data){
+                const url = "{{ route('getRoomRates') }}?room_id="+ data;
+                const duration = document.getElementById('duration');
+                axios.get(url)
+               .then(function (response) {
+               const rate_id = response.data.rate_id;
+               const rate_name = response.data.rate_name;
+               const rate_price = response.data.rate_price;
+               let html = '';
+               for(let i = 0; i<rate_id.length; i++){
+                html += "<option value='"+rate_id[i]+ "'" + ">" + rate_name[i] + "/₱" + rate_price[i] + "</option>";
+               }
+               duration.innerHTML = html;
+            
+          })
+           .catch(function (error) {
+      
+            console.error('Error:', error);
+            })
+          .then(function () {
+         
+          });
+            }
+           
+            function CheckingContact(input){
+            
+    if (input.value.length > 11) {
+        input.value = input.value.slice(0, 11); // Limit input to 12 characters
+    }
+                if(document.getElementById('contact').value === '' || document.getElementById('contact').value.length < 11 || document.getElementById('submitReservation').textContent === 'Invalid Date! Choose Future dates'){
+                    document.getElementById('submitReservation').disabled = true;
+                    document.getElementById('submitReservation').textContent ='Invalid Date! Choose Future dates';
+                }else{
+                    document.getElementById('submitReservation').disabled = false;
+                }
+           }
+
+            
 </script>
         <!-- Footer Start -->
         @include('homepage/Components/footer')
@@ -206,48 +260,65 @@
     <script src="{{ asset('calendar/js/evo-calendar.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script>
-        $(document).ready(function() {
-
-            const rooms = @json($room_array);
-            rooms.forEach(function(room) {
-
-                const cal_name = '#calendars'+room;
-                $(cal_name).evoCalendar({   
-            theme:"Orange Coral",
+      $(document).ready(function() {
+    const rooms = @json($room_array);
+    rooms.forEach(function(room) {
+        const cal_name = '#calendars'+room;
+        $(cal_name).evoCalendar({
+            theme: "Orange Coral",
+            sidebarDisplayDefault: false,
+            eventListToggler:false,
+            eventDisplayDefault:false,
             calendarEvents: [
-          {
-            id: 'bHay68s', // Event's ID (required)
-            name: "New Year", // Event name (required)
-            date: "January/1/2020", // Event date (required)
-            type: "holiday", // Event type (required)
-            everyYear: true // Same event every year (optional)
-          },
-          {
-            name: "Vacation Leave",
-            badge: "02/13 - 02/15", // Event badge (optional)
-            date: ["February/13/2020", "February/15/2020"], // Date range
-            description: "Vacation leave for 3 days.", // Event description (optional)
-            type: "event",
-            color: "#63d867" // Event custom color (optional)
-          }
-        ]   
+                {
+                    id: 'bHay68s', // Event's ID (required)
+                    name: "New Year", // Event name (required)
+                    date: "January/1/2020", // Event date (required)
+                    type: "holiday", // Event type (required)
+                    everyYear: true // Same event every year (optional)
+                },
+                {
+                    name: "Vacation Leave",
+                    badge: "02/13 - 02/15", // Event badge (optional)
+                    date: ["February/13/2020", "February/15/2020"], // Date range
+                    description: "Vacation leave for 3 days.", // Event description (optional)
+                    type: "event",
+                    color: "#63d867" // Event custom color (optional)
+                }
+            ]
         });
 
-        $(cal_name).on('selectDate', function(event, newDate, oldDate) {
-        var currentDate = new Date();
-        var selectedDate = new Date(newDate);
-        if (selectedDate <= currentDate) {
-         
-            document.getElementById('date').value = 'Not a valid date!';
-            document.getElementById('dateHidden').value = 'Not a valid date!';
-        } else {
-           document.getElementById('date').value = newDate;
-           document.getElementById('dateHidden').value = newDate;
-        }
-    });
-    });
+        // Close event page when the calendar loads
+        $(cal_name).on('initComplete', function() {
+            $(cal_name).find('.calendarClose').click();
+        });
 
+        // Update date input fields when a date is selected
+        $(cal_name).on('selectDate', function(event, newDate, oldDate) {
+            var currentDate = new Date();
+            var selectedDate = new Date(newDate);
+            if (selectedDate <= currentDate) {
+                document.getElementById('date').value = 'Not a valid date!';
+                document.getElementById('dateHidden').value = 'Not a valid date!';
+                document.getElementById('submitReservation').disabled = true;
+                document.getElementById('submitReservation').textContent = 'Invalid Date! Choose Future dates';
+            } else {
+                document.getElementById('date').value = newDate;
+                document.getElementById('dateHidden').value = newDate;
+              
+             
+                if(document.getElementById('contact').value === '' || document.getElementById('contact').value.length < 11){
+                    document.getElementById('submitReservation').disabled = true;
+                    document.getElementById('submitReservation').textContent = 'Please Make Sure Contact Number is valid';
+                }else{
+                    document.getElementById('submitReservation').textContent = 'Submit Reservation';
+                    document.getElementById('submitReservation').disabled = false;
+                }
+            }
+        });
     });
+});
+
         </script>
 </body>
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\RoomPricing;
+use App\Models\RoomRate;
 use App\Models\Rooms;
 use Illuminate\Http\Request;
 
@@ -34,7 +36,7 @@ class GetDataViews extends Controller
 
     public function GetReservationCookies(Request $req){
         $userId = $req->cookie('customer_id');
-        $room = Rooms::orderBy('room_number')->get();
+        $room = Rooms::orderBy('room_number')->where('rooms_disable', '!=', 1)->get();
 
         $room_array=[];
 
@@ -64,7 +66,7 @@ class GetDataViews extends Controller
     }
     public function GetBookCookies(Request $req){
         $userId = $req->cookie('customer_id');
-        $room = Rooms::orderBy('room_number')->get();
+        $room = Rooms::orderBy('room_number')->where('rooms_disable', '!=', 1)->get();
 
         $room_array=[];
 
@@ -101,5 +103,24 @@ class GetDataViews extends Controller
         $userId = $req->cookie('customer_id');
 
         return view('homepage.Dashboard.settings', ['user_id'=>$userId]);
+    }
+
+    public function GetRoomRate(Request $req){
+
+        $room_id = $req->input('room_id');
+
+        $rates = RoomPricing::where('room_id', $room_id)->get();
+        $rate_id= [];
+        $rate_name = [];
+        $rate_price = [];
+
+
+        foreach($rates as $r){
+            array_push($rate_id, $r->room_rates);
+            $rateQuery = RoomRate::where('rate_id', $r->room_rates)->first();
+            array_push($rate_name, $rateQuery->rate_name);
+            array_push($rate_price, $rateQuery->rate_price);
+        }
+        return response()->json(['rate_id'=>$rate_id, 'rate_name'=>$rate_name, 'rate_price'=>$rate_price]);
     }
 }

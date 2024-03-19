@@ -28,6 +28,7 @@ Route::get('/customerlogin', function () { return view('homepage.customer_login'
 Route::get('/solutions', [GetDataViews::class, 'GetSolutionsCookies'])->name('solutions');
 Route::get('/reservation/book', [GetDataViews::class, 'GetBookCookies'])->name('book');
 Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )->name('new_account');
+Route::get('/room_rates',[GetDataViews::class, 'GetRoomRate'] )->name('getRoomRates');
 
 //Client Back End
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
