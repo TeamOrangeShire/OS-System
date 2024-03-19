@@ -314,7 +314,7 @@ class EditData extends Controller
                
             }
 
-            return redirect()->back();
+            return redirect()->back()->with('disabled','h');
 
         }
 
@@ -332,7 +332,7 @@ class EditData extends Controller
        
             ]);
             
-            return redirect()->back();
+            return redirect()->back()->with('enabled','h');
 
         }
         public function EnablePlan(Request $request){

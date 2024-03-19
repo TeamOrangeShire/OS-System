@@ -121,7 +121,7 @@
             <div class="modal-body">
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <form>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Username</label>

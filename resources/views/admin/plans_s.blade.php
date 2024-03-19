@@ -275,6 +275,7 @@
 </div>
 {{-- disable modal end --}} 
 
+
 {{-- Enable notif end --}}
 @if (session('enabled'))
 <div class="main-container" id="check">

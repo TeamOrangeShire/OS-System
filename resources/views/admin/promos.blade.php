@@ -24,6 +24,8 @@
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
     
 
 </head>
@@ -222,10 +224,63 @@
             </div>
         </div>
     </div>
+
+            {{-- Enable notif end --}}
+        @if (session('enabled'))
+        <div class="main-container" id="check">
+            <div class="popup-content">
+                <h3>Enabled</h3>
+                <div class="check-container">
+                    <div class="check-background">
+                        <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="check-shadow"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            setTimeout(() =>  {
+            document.getElementById('check').style.display='none';   
+            }, 3000);
+            document.getElementById('check').addEventListener('click',function(){
+                document.getElementById('check').style.display='none';   
+            });
+        </script>
+        @endif
+        {{-- end enable notif --}}
+
+
+
+{{-- start disable notif --}}
+@if (session('disabled')) 
+<div class="trans">
+    <div class="wrapper" id="ex">
+      <div class="popup-content1">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark_circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark_check" fill="none" d="M14.1 14.1l23.8 23.8 m0,-23.8 l-23.8,23.8"/>
+        </svg>
+        <h3 class="h3">Disabled</h3>
+      </div>
+    </div>
+  <script>
+    setTimeout(() =>  {
+     document.getElementById('ex').style.display='none';   
+    }, 3000);
+    document.getElementById('ex').addEventListener('click',function(){
+        document.getElementById('ex').style.display='none';   
+    });
+</script>
+      
+    @endif
+    {{-- end disable notif --}}
+
         <!-- [ Main Content ] end -->
     </div>
 </div>
-
 
 
     <!-- Required Js -->
