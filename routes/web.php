@@ -29,12 +29,14 @@ Route::get('/solutions', [GetDataViews::class, 'GetSolutionsCookies'])->name('so
 Route::get('/reservation/book', [GetDataViews::class, 'GetBookCookies'])->name('book');
 Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )->name('new_account');
 Route::get('/room_rates',[GetDataViews::class, 'GetRoomRate'] )->name('getRoomRates');
+Route::get('/checkTime',[GetDataViews::class, 'CheckTime'] )->name('checkTime');
 
 //Client Back End
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
 Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');
 Route::post('/customer-login',[Login::class,'LoginCustomer'] )->name('custom_log');
 Route::post('/reserve-date',[Reservation::class,'SelectDate'] )->name('submitDateBook');
+Route::post('/saveReservation',[Reservation::class,'SaveReservation'] )->name('saveReservation');
 
 //Customer Dashboard
 Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');

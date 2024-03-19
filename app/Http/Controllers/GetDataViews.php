@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\RoomPricing;
 use App\Models\RoomRate;
+use App\Models\Reservations;
 use App\Models\Rooms;
 use Illuminate\Http\Request;
 
@@ -122,5 +123,27 @@ class GetDataViews extends Controller
             array_push($rate_price, $rateQuery->rate_price);
         }
         return response()->json(['rate_id'=>$rate_id, 'rate_name'=>$rate_name, 'rate_price'=>$rate_price]);
+    }
+
+    public function CheckTime(Request $req){
+        $rate_id = $req->input('rate_id');
+        $date = $req->input('date');
+
+        $checkDate= Reservations::where('res_date', $date)->latest()->first();
+        $checkRate = RoomRate::where('rate_id', $rate_id)->first();
+        if($checkRate->rate_name === 'Hourly'){
+           $freq = 1;
+        }else if($checkRate->rate_name === '4 Hours'){
+            $freq = 4;
+        }else{
+            $freq = 0;
+        }
+
+        if($checkDate){
+            return response()->json(['time'=>$checkDate->res_end, 'rate'=>$freq]);
+        }else{
+            return response()->json(['time'=>'none', 'rate'=>$freq]);
+        }
+
     }
 }

@@ -15,6 +15,7 @@
     @include('homepage/Components/header', ['current_page'=>'Book Reservation - Orange Shire'])
     <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
     <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
@@ -107,7 +108,8 @@
                </div>
                       <div class="wow fadeInUp col-md-6" data-wow-delay="0.5s">
                         <p class="mb-4">Fill out the form to complete the reservation process.</p>
-                        <form>
+                        <form method="post" id="reservation">
+                            @csrf
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
@@ -124,13 +126,13 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                        <input type="text" class="form-control" id="subject" name="company_name" placeholder="Subject">
                                         <label for="subject">Company Name(Optional)</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" oninput="CheckingContact(this)" id="contact" placeholder="Subject">
+                                        <input type="number" class="form-control" oninput="CheckingContact(this)" id="contact" name="contact" placeholder="Subject">
                                         <label for="subject">Contact Number</label>
                                     </div>
                                 </div>
@@ -142,7 +144,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="hidden" id="dateHidden">
+                                        <input type="hidden" id="dateHidden" name="date">
                                         <input type="text" class="form-control" id="date" disabled placeholder="date">
                                         <label for="subject">Date</label>
                                     </div>
@@ -150,18 +152,18 @@
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                      
-                                        <select id="duration" class="form-control"  name="duration">
-                                            <option value="" disabled selected>Select Duration</option>
+                                        <select id="duration" class="form-control" onchange="CheckTime(this)"  name="duration">
+                                            <option value="" disabled selected>No Data Yet</option>
                                              
                                           </select>
                                           <label for="duration">Duration</label>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" style="display: none" id="divTime">
                                     <div class="form-floating">
                                      
-                                        <select id="duration" class="form-control"  name="duration">
-                                            <option value="" disabled selected>Select Duration</option>
+                                        <select id="time" class="form-control" name="time"  name="duration">
+                                            <option value=""  disabled selected>Select Time</option>
                                              
                                           </select>
                                           <label for="duration">Time</label>
@@ -169,7 +171,7 @@
                                 </div>
                               
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" id="submitReservation" disabled type="submit">Fill the Form</button>
+                                    <button class="btn btn-primary w-100 py-3" id="submitReservation" onclick="SaveReservation()" disabled type="submit">Fill the Form</button>
                                 </div>
                             </div>
                         </form>
@@ -209,6 +211,7 @@
                const rate_name = response.data.rate_name;
                const rate_price = response.data.rate_price;
                let html = '';
+               html += '<option disabled selected>Choose Duration/Price</option>';
                for(let i = 0; i<rate_id.length; i++){
                 html += "<option value='"+rate_id[i]+ "'" + ">" + rate_name[i] + "/₱" + rate_price[i] + "</option>";
                }
@@ -237,7 +240,111 @@
                 }
            }
 
+
+           function CheckTime(select){
+            const rate_id = select.value;
+            const date = document.getElementById('dateHidden').value;
+            const url = "{{ route('checkTime') }}?date="+ date + "&rate_id=" + rate_id; 
+            document.getElementById('time').innerHTML = '';
+            axios.get(url)
+               .then(function (response) {
+                
+                const fetchTime = response.data.time;
+                if(fetchTime === 'none'){
+                    var FinalTime = 9;
+                }else{
+                    var FinalTime = fetchTime;
+                }
+               console.log(FinalTime);
+               if(response.data.rate === 4){
+                document.getElementById('divTime').style.display = '';
+                TimeFormater(4, FinalTime);
+                 }else if(response.data.rate === 1){
+                    TimeFormater(1,FinalTime);
+                document.getElementById('divTime').style.display = '';
+               }else{
+                 document.getElementById('divTime').style.display = 'none';
+               }
+             })
+           .catch(function (error) {
+      
+            console.error('Error:', error);
+            })
+          .then(function () {
+         
+          });
+           }
             
+            function TimeFormater(interval, FetchTimeDB){
+                let TimeInterval = FetchTimeDB;
+                let html = '';
+          
+                while(TimeInterval < 24){
+                  const start = TimeInterval;
+                  const end = TimeInterval + interval;
+                  
+                  if(start - 12 <0){
+                    var suffixStart = 'AM';
+                  }else{
+                    var suffixStart = 'PM'
+                  }
+
+                  if(end - 12 <0){
+                    var suffixEnd = 'AM';
+                  }else{
+                    var suffixEnd = 'PM'
+                  }
+
+                  if(start - 12 <= 0){
+                    var startFormat = start;
+                  }else{
+                    var startFormat = start - 12;
+                  }
+
+                  if(end - 12 <= 0){
+                    var endFormat = end;
+                  }else{
+                    var endFormat = end - 12;
+                  }
+
+                  
+                  if(end < 24){
+                    html += "<option value='" + start+"-" +end+ "'>" +startFormat+ ":00" + suffixStart + " - "+ endFormat+":00" + suffixEnd +"</option>"; 
+                  }
+                
+                  TimeInterval +=interval;
+             
+                }
+                document.getElementById('time').innerHTML =  html;
+             
+            }
+
+            function SaveReservation() {
+                document.getElementById('reservationLoading').style.display = 'flex';
+                event.preventDefault();
+     var formData = $('form#reservation').serialize();
+ 
+     $.ajax({
+         type: 'POST',
+         url: "{{ route('saveReservation') }}",
+         data: formData,
+         success: function(response) {
+        if(response.status === 'success'){
+            document.getElementById('reservationLoading').style.display = 'none';
+        }
+         
+         },
+         error: function (xhr) {
+             console.log(xhr.responseText);
+         }
+     });
+ }
+
+
+ function DigitCounter(digit){
+    const convert = digit.toString().length;
+//converter
+ }
 </script>
         <!-- Footer Start -->
         @include('homepage/Components/footer')

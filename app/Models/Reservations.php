@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Reservation extends Model
+class Reservations extends Model
 {
     use HasFactory;
     protected $table = 'reservation';
@@ -14,6 +14,7 @@ class Reservation extends Model
        'customer_id',
        'rprice_id',
        'res_date',
+       'res_company',
        'res_start',
        'res_end',
        'res_notes',
