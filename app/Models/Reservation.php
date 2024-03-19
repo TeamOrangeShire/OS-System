@@ -12,7 +12,6 @@ class Reservation extends Model
     protected $primaryKey = 'res_id';
     protected $fillable = [
        'customer_id',
-       'room_id',
        'rprice_id',
        'res_date',
        'res_start',

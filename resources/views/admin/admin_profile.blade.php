@@ -128,7 +128,8 @@
                             <div class="col-md-6"><label class="labels">New Password</label><input type="password" class="form-control" name="new_password" value="" placeholder="Password"></div>
                         </div>
                         <div class="row mt-2">
-                    
+                            <div class="col-md-6"><input type="hidden" name="" class="form-control" ></div>
+                        
                             <div class="col-md-6"><label class="labels">Old Password</label><input type="password" name="old_password" class="form-control" value="" placeholder="Password" id="oldpass"></div>
                         </div>
                         <div class="col-md-6">
