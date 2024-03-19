@@ -70,41 +70,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>mark@gmail.com</td>
-                                    <td>02/04/2024</td>
-                                    <td>3PM TO 6PM</td>
-                                    <td>1</td>
-                                    <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"><i class="feather icon-check-circle"></i></button>  
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal"><i class="feather icon-x-circle"></i></button>   </td>
-                                    
+                                @php
+                                $Reservation = App\Models\Reservation::all();
+                            @endphp
+                            @foreach ($Reservation as $res)
+                                
+                            <tr>
+                                <td>1</td>
+                                <td>Mark</td>
+                                <td>mark@gmail.com</td>
+                                <td>02/04/2024</td>
+                                <td>3PM TO 6PM</td>
+                                <td>1</td>
+                                <td> 
+                                    {{-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="updatemodal(`{{$info->promo_id}}`"><i class="feather icon-check-circle"></i></button>   --}}
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal"><i class="feather icon-x-circle"></i></button>   </td>
+                              </tr>
 
-
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>JANE</td>
-                                    <td>JANE@gmail.com</td>
-                                    <td>02/07/2024</td>
-                                    <td>3PM TO 6PM</td>
-                                    <td>3</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x-circle"></i></button>   </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>SARAH</td>
-                                    <td>SARAH@gmail.com</td>
-                                    <td>02/05/2024</td>
-                                    <td>7PM TO 10PM</td>
-                                    <td>2</td>
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x-circle"></i></button>   </td>
-                                    
-                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -16,6 +16,7 @@ class Login extends Controller
     $Admin_pass = $request->input('password');
 
     $Admin_info = AdminAcc::where('admin_username',$Admin_name)->first();
+    if($Admin_info){
     if( Hash::check($Admin_pass,$Admin_info->admin_password)){
     
         Session::put('Admin_id',$Admin_info->admin_id);
@@ -23,6 +24,9 @@ class Login extends Controller
 
 
     } else{
+        return redirect()->back();
+    }
+    }else{
         return redirect()->back();
     }
     }
@@ -33,6 +37,7 @@ class Login extends Controller
         $session_id = Session::get('Admin_id');
         
         $Admin_info = AdminAcc::where('admin_id',$session_id)->first();
+        if($Admin_info){
     if( Hash::check($lock_password,$Admin_info->admin_password)){
     
         Session::put('Admin_id',$Admin_info->admin_id);
@@ -40,6 +45,9 @@ class Login extends Controller
 
 
     } else{
+        return redirect()->back();
+    } 
+    }else{
         return redirect()->back();
     }
         }
