@@ -37,6 +37,7 @@ Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )-
 Route::post('/customer-login',[Login::class,'LoginCustomer'] )->name('custom_log');
 Route::post('/reserve-date',[Reservation::class,'SelectDate'] )->name('submitDateBook');
 Route::post('/saveReservation',[Reservation::class,'SaveReservation'] )->name('saveReservation');
+Route::post('/customer-change-pass',[EditAcc::class,'EditCustomerPassword'] )->name('editPassword');
 
 //Customer Dashboard
 Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');

@@ -113,5 +113,28 @@ class EditAcc extends Controller
     }
 }
   
+    public function EditCustomerPassword(Request $Req){
+        $password = $Req->password;
+        $newpassword = $Req->newpassword;
+        $renewpassword = $Req->renewpassword;
 
+        if($newpassword === $renewpassword){
+            $customer_id = $Req->customer_id;
+
+            $passquery = CustomerAcc::where('customer_id', $customer_id)->first();
+
+            if(Hash::check($passquery->customer_password, $password)){
+                $passquery->update([
+                    'customer_password' => $newpassword,
+
+                ]);
+                return response()->json(['status'=>'success']);
+
+            }else{
+                return response()->json(['status'=>'current password not match']);
+            }
+        }else{
+            return response()->json(['status'=>'new password not match']);
+        }
+    }
 }
