@@ -103,8 +103,11 @@
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
+
                   <!-- Profile Edit Form -->
-                  <form>
+                  <form method="POST" action="{{route('editProfile')}}">
+                    @csrf 
+                      <input type="hidden" name="customer_id" value="{{$user_id}}">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
@@ -119,7 +122,7 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="{{$customer->customer_firstname}}">
+                        <input name="firstName" type="text" class="form-control" id="fullName" value="{{$customer->customer_firstname}}">
                       </div>
                     </div>
 
@@ -133,35 +136,35 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Middle Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="{{$customer->customer_middlename}}">
+                        <input name="midName" type="text" class="form-control" id="company" value="{{$customer->customer_middlename}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="{{$customer->customer_lastname}}">
+                        <input name="lastName" type="text" class="form-control" id="Job" value="{{$customer->customer_lastname}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Extension Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="{{$customer->customer_ext}}">
+                        <input name="extName" type="text" class="form-control" id="Country" value="{{$customer->customer_ext}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">E-mail</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="{{$customer->customer_email}}">
+                        <input name="emailAddress" type="text" class="form-control" id="Address" value="{{$customer->customer_email}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="{{$customer->customer_phone_num}}">
+                        <input name="phoneNumber" type="text" class="form-control" id="Phone" value="{{$customer->customer_phone_num}}">
                       </div>
                     </div>
 
@@ -300,6 +303,9 @@
     </section>
 
   </main><!-- End #main -->
+
+
+  <!--script start for change password-->
   <script>
     function ChangePassword(){
     event.preventDefault();
@@ -328,6 +334,7 @@
      });
   }
   </script>
+  <!-- script end for change password -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

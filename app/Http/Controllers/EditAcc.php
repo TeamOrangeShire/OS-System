@@ -114,6 +114,7 @@ class EditAcc extends Controller
     }
 }
   
+//edit customer password
     public function EditCustomerPassword(Request $Req){
         $password = $Req->password;
         $newpassword = $Req->newpassword;
@@ -137,5 +138,29 @@ class EditAcc extends Controller
         }else{
             return response()->json(['status'=>'new password not match']);
         }
+    }
+
+    //edit customer profile
+    public function EditCustomerProfile(Request $customerProfile){
+        $customerFirstName = $customerProfile->firstName;
+        $customerMidName = $customerProfile->midName;
+        $customerLastName = $customerProfile->lastName;
+        $customerExtName = $customerProfile->extName;
+        $customerEmail = $customerProfile->emailAddress;
+        $customerPhoneNumber = $customerProfile->phoneNumber;
+        $customer_id = $customerProfile->customer_id;
+
+        $editProfilequery = CustomerAcc::where('customer_id', $customer_id)->first();
+            $editProfilequery->update([
+                'customer_firstname' => $customerFirstName,
+                'customer_middlename' => $customerMidName,
+                'customer_lastname' => $customerLastName,
+                'customer_ext' => $customerExtName,
+                'customer_email' => $customerEmail,
+                'customer_phone_num' => $customerPhoneNumber,
+            ]);
+        return redirect()->back();
+        
+        
     }
 }
