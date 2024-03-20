@@ -76,7 +76,14 @@ class EditData extends Controller
             $edit_rate_name = $request->edit_rate_name;
             $edit_rate_price = $request->edit_rate_price;
            
+            $checkdata = RoomRate::where('rate_name',$edit_rate_name)->where('rate_price', $edit_rate_price)->first();
+            if($checkdata){
+                return response()->json(['status'=> 'exist']);
+
+            } else{
+
             $update =  RoomRate::where('rate_id',$rate_id)->first();
+            
             
             $update->update([
                
@@ -85,7 +92,8 @@ class EditData extends Controller
               
        
             ]);
-            return redirect()->back();
+            return response()->json(['status'=> 'success']);
+        }
 
         }
         public function EditRoomRate(Request $request){
@@ -94,6 +102,8 @@ class EditData extends Controller
             $rom_numb2 = $request->rom_numb2;
             $room_rate_list1 = $request->room_rate_list1;
             $promolist1 = $request->promolist1;
+
+
             $check =  RoomPricing::where('room_id',$rom_numb2)->where('room_rates',$room_rate_list1)->first();
             if($check){
                 return response()->json(['status'=>'exist']);
