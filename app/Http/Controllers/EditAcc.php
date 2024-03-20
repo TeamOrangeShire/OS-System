@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
+use App\Models\CustomerAcc;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 
@@ -123,7 +124,7 @@ class EditAcc extends Controller
 
             $passquery = CustomerAcc::where('customer_id', $customer_id)->first();
 
-            if(Hash::check($passquery->customer_password, $password)){
+            if(Hash::check($password, $passquery->customer_password)){
                 $passquery->update([
                     'customer_password' => $newpassword,
 

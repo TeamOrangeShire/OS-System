@@ -3,6 +3,7 @@
 
 <head>
  @include('homepage.Dashboard.Components.header')
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -255,7 +256,7 @@
                       @csrf 
                       <input type="hidden" name="customer_id" value="{{$user_id}}">
 
-                      <div class="text-center" style="display: none" id="errorMessage">
+                      <div class="text-center" style="display: none;" id="errorMessage">
                         
                       </div>
 
@@ -281,36 +282,12 @@
                     </div>
 
                     <div class="text-center">
-                      <button type="button" class="btn btn-primary" onclick="ChangePass()">Change Password</button>
+                      <button type="button" class="btn btn-primary" onclick="ChangePassword()">Change Password</button>
                     </div>
 
                   </form><!-- End Change Password Form -->
 
-                  <script>
-                    function ChangePass() {
-                    event.preventDefault();
-                     var formData = $('form#changePass').serialize();
-                  
-                     $.ajax({
-                         type: 'POST',
-                         url: "{{route('editPassword')}}",
-                         data: formData,
-                         success: function(response) {
-                          if(response.status === 'sucess'){
-                            document.getElementById('errorMessage').innerHTML="<p style= 'color:green'>Successfully Changed Password!</p>";
-                          }else if(response.status === 'current password not match'){
-                            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>Incorrect Password!</p>";
-                          }else(response.status ==='new password not match')|{
-                            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>New Password does not match!</p>";
-                          }
-                         }, 
-                         error: function (xhr) {
-                  
-                             console.log(xhr.responseText);
-                         }
-                     });
-                  }
-                  </script>
+           
                 </div>
 
               </div><!-- End Bordered Tabs -->
@@ -323,7 +300,34 @@
     </section>
 
   </main><!-- End #main -->
-
+  <script>
+    function ChangePassword(){
+    event.preventDefault();
+     var formData = $('form#changePass').serialize();
+  
+     $.ajax({
+         type: 'POST',
+         url: "{{route('editPassword')}}",
+         data: formData,
+         success: function(response) {
+          if(response.status === 'success'){
+            document.getElementById('errorMessage').style.display = '';
+            document.getElementById('errorMessage').innerHTML="<p style= 'color:green'>Successfully Changed Password!</p>";
+          }else if(response.status === 'current password not match'){
+            document.getElementById('errorMessage').style.display = '';
+            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>Incorrect Password!</p>";
+          }else{
+            document.getElementById('errorMessage').style.display = '';
+            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>New Password does not match!</p>";
+          }
+         }, 
+         error: function (xhr) {
+  
+             console.log(xhr.responseText);
+         }
+     });
+  }
+  </script>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
