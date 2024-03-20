@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
- @include('homepage.Dashboard.Components.header')
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ @include('homepage.Dashboard.Components.header', ['title'=>'My Profile - Orange Shire'])
+
 </head>
 
 <body>
@@ -335,7 +335,7 @@
   @include('homepage.Dashboard.Components.scripts')
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+
 
   
 </body>
