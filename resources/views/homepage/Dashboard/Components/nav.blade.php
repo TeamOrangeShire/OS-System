@@ -3,28 +3,18 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
+        <span class="d-none d-lg-block">Orange Shire</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
-
+  
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
+     
 
-        <li class="nav-item dropdown">
+        {{-- <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
@@ -51,9 +41,9 @@
 
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li> --}}
 
-            <li class="notification-item">
+            {{-- <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
                 <h4>Atque rerum nesciunt</h4>
@@ -97,9 +87,9 @@
 
           </ul><!-- End Notification Dropdown Items -->
 
-        </li><!-- End Notification Nav -->
+        </li><!-- End Notification Nav --> --}}
 
-        <li class="nav-item dropdown">
+        {{-- <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
@@ -163,12 +153,12 @@
 
           </ul><!-- End Messages Dropdown Items -->
 
-        </li><!-- End Messages Nav -->
+        </li><!-- End Messages Nav --> --}}
 
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img src="{{ asset('img/sire_Albert.jfif') }}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -230,7 +220,7 @@
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-
+{{-- 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.html">
           <i class="bi bi-grid"></i>
@@ -406,58 +396,38 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Icons Nav -->
+      </li><!-- End Icons Nav --> --}}
 
-      <li class="nav-heading">Pages</li>
+      <li class="nav-heading">Account Details</li>
 
       <li class="nav-item">
-        <a class="nav-link " href="users-profile.html">
+        <a class="nav-link " href="{{ route('customerProfile') }}">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
+        <a class="nav-link " href="{{ route('customerSubscription') }}">
+          <i class="bx bxs-bell"></i>
+          <span>My Subscriptions</span>
         </a>
-      </li><!-- End F.A.Q Page Nav -->
+      </li>
+
+      
+      <li class="nav-item">
+        <a class="nav-link " href="{{ route('customerReservation') }}">
+          <i class="bx bxs-calendar-edit"></i>
+          <span>My Reservation</span>
+        </a>
+      </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
+        <a class="nav-link " href="{{ route('customerSettings') }}">
+          <i class="bi bi-gear"></i>
+          <span>Settings</span>
         </a>
-      </li><!-- End Contact Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-card-list"></i>
-          <span>Register</span>
-        </a>
-      </li><!-- End Register Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Login</span>
-        </a>
-      </li><!-- End Login Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
-          <i class="bi bi-dash-circle"></i>
-          <span>Error 404</span>
-        </a>
-      </li><!-- End Error 404 Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
+      </li>
 
     </ul>
 
