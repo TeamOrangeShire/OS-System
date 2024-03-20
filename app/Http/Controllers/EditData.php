@@ -52,17 +52,22 @@ class EditData extends Controller
             $room_id = $request->room_id;
             $edit_room = $request->edit_room;
             $edit_room_c = $request->edit_room_c;
-           
-            $update =  Rooms::where('room_id',$room_id)->first();
+            $check =  Rooms::where('room_number',$edit_room)->first();
+            if($check){
+                return response()->json(['status'=>'exist']);
+            }else{
+                $update =  Rooms::where('room_id',$room_id)->first();
             
-            $update->update([
-               
-                'room_number'=> $edit_room,
-                'room_capacity'=> $edit_room_c,
-              
-       
-            ]);
-            return redirect()->back();
+                $update->update([
+                   
+                    'room_number'=> $edit_room,
+                    'room_capacity'=> $edit_room_c,
+                  
+           
+                ]);
+                return response()->json(['status'=>'success']);
+            }
+        
 
         }
         public function EditRate(Request $request){
@@ -89,18 +94,24 @@ class EditData extends Controller
             $rom_numb2 = $request->rom_numb2;
             $room_rate_list1 = $request->room_rate_list1;
             $promolist1 = $request->promolist1;
-           
-            $update =  RoomPricing::where('rprice_id',$roompriceid)->first();
+            $check =  RoomPricing::where('room_id',$rom_numb2)->where('room_rates',$room_rate_list1)->first();
+            if($check){
+                return response()->json(['status'=>'exist']);
+
+            }else{
+                $update =  RoomPricing::where('rprice_id',$roompriceid)->first();
             
-            $update->update([
-               
-                'room_id'=> $rom_numb2,
-                'room_rates'=> $room_rate_list1,
-                'promo_id'=> $promolist1,
-              
-       
-            ]);
-            return redirect()->back();
+                $update->update([
+                   
+                    'room_id'=> $rom_numb2,
+                    'room_rates'=> $room_rate_list1,
+                    'promo_id'=> $promolist1,
+                  
+           
+                ]);
+                return response()->json(['status'=>'success']);
+            }
+           
 
         }
         public function DisableRate(Request $request){
@@ -255,10 +266,6 @@ class EditData extends Controller
             $rp_id = $request->rp_id;
             $room_id = $request->room_id;
             $room_rates = $request->room_rates;
-            $check =  RoomPricing::where('rprice_id',$rp_id)->where('room_id',$room_id)->where('room_rates',$room_rates)->first();
-            if($check){
-                return redirect()->back();
-            }else{
                 $rooms =  Rooms::where('room_id',$room_id)->first();
                 $room_status = $rooms->rooms_disable;
                 if($room_status == 0){
@@ -276,15 +283,11 @@ class EditData extends Controller
                       
                
                     ]);
+                    return redirect()->back()->with('enabled','h');
     
                 }
                 }
-            }
-
-          
-
-           
-            return redirect()->back()->with('enabled','h');
+            return redirect()->back();
 
         }
         public function DisablePromo(Request $request){

@@ -32,6 +32,8 @@
 
 </head>
 <body class="">
+    <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                                       
 	<!-- [ Pre-loader ] start -->
 	<div class="loader-bg">
 		<div class="loader-track">
@@ -71,7 +73,10 @@
                               
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <form method="POST" action="{{route('AddRoom')}}">@csrf
+                                                        <form method="POST" action="" id="dataroomaddform">@csrf
+                                                            <div class="alert alert-danger" role="alert" id="dataroomadd" style="display:none;">
+                                                                Room Already Exits!
+                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Room Number</label>
                                                                 <input type="text" class="form-control"  aria-describedby="emailHelp" name="room_number" placeholder="Room Number">
@@ -83,7 +88,7 @@
                                                                 <input type="Number" class="form-control"  aria-describedby="emailHelp" name="room_capacity" placeholder="Room Capacity">
                                                                
                                                             </div> 
-                                                            <button type="submit" class="btn  btn-primary">Add Room</button>
+                                                            <button type="submit" class="btn  btn-primary" onclick="dataroomaddform()">Add Room</button>
                                                         </form>
                                         </div>
                                     </div>
@@ -166,7 +171,10 @@
               
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <form method="POST" action="{{route('EditRoom')}}">@csrf
+                                        <form method="POST" action="" id="dataroomeditform">@csrf
+                                            <div class="alert alert-danger" role="alert" id="dataroomedit" style="display:none;">
+                                                Room Already Exits!
+                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Room Number</label>
                                                 <input type="hidden" name="room_id" id="room_id">
@@ -181,7 +189,7 @@
                                             </div>
                                         
                                            
-                                            <button type="submit" class="btn  btn-primary">Update</button>
+                                            <button type="submit" class="btn  btn-primary" onclick="dataroomedit()">Update</button>
                                         </form>
                                    
                         </div>
@@ -440,8 +448,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12">
-                                        <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                                        <form method="POST" action="" id="addnewroomrate">@csrf
+                                         <form method="POST" action="" id="addnewroomrate">@csrf
                                             	<div class="alert alert-danger" role="alert" id="dataexist" style="display:none;">
                                                        Room Rate Already Exits!
                                                     </div>
@@ -578,7 +585,10 @@
               
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <form method="POST" action="{{route('EditRoomRate')}}">@csrf
+                                        <form method="POST" action="" id="editroomrateform">@csrf
+                                            <div class="alert alert-danger" role="alert" id="dataedit" style="display:none;">
+                                                Room Rate Already Exits!
+                                             </div>
                                             <input type="hidden" name="roompriceid" id="roompriceid">
                                             <div class="form-group">
                                                 <label for="plan_promo">Room Number</label>
@@ -613,7 +623,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <button type="submit" class="btn btn-primary" onclick="editroomrateform()">Update</button>
                                         </form>
                         </div>
                     </div>
@@ -818,6 +828,83 @@
          }
      });
     }
+    function editroomrateform(){
+
+document.getElementById('roller').style.display='flex';
+event.preventDefault();
+ var formData = $('form#editroomrateform').serialize();
+
+ $.ajax({
+     type: 'POST',
+     url: "{{route('EditRoomRate')}}",
+     data: formData,
+     success: function(response) {
+       if(response.status === 'exist'){
+        document.getElementById('roller').style.display='none';
+       document.getElementById('dataedit').style.display='';
+       }else if(response.status === 'success'){
+        location.reload();
+       
+       }
+     }, 
+     error: function (xhr) {
+
+         console.log(xhr.responseText);
+     }
+ });
+}
+
+function dataroomaddform(){
+
+document.getElementById('roller').style.display='flex';
+event.preventDefault();
+ var formData = $('form#dataroomaddform').serialize();
+
+ $.ajax({
+     type: 'POST',
+     url: "{{route('AddRoom')}}",
+     data: formData,
+     success: function(response) {
+       if(response.status === 'exist'){
+        document.getElementById('roller').style.display='none';
+       document.getElementById('dataroomadd').style.display='';
+       }else if(response.status === 'success'){
+        location.reload();
+       
+       }
+     }, 
+     error: function (xhr) {
+
+         console.log(xhr.responseText);
+     }
+ });
+}
+
+function dataroomedit(){
+
+document.getElementById('roller').style.display='flex';
+event.preventDefault();
+ var formData = $('form#dataroomeditform').serialize();
+
+ $.ajax({
+     type: 'POST',
+     url: "{{route('EditRoom')}}",
+     data: formData,
+     success: function(response) {
+       if(response.status === 'exist'){
+        document.getElementById('roller').style.display='none';
+       document.getElementById('dataroomedit').style.display='';
+       }else if(response.status === 'success'){
+        location.reload();
+       
+       }
+     }, 
+     error: function (xhr) {
+
+         console.log(xhr.responseText);
+     }
+ });
+}
     
 </script>
      

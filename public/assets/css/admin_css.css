@@ -239,7 +239,7 @@ h3 {
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for the desired transparency */
-    z-index: 999; /* Ensure it overlays other content */
+    z-index: 1999; /* Ensure it overlays other content */
 
 }
 .lds-roller div {

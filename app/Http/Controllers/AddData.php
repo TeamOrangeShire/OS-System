@@ -34,12 +34,18 @@ class AddData extends Controller
     }
     public function AddRoom(Request $request){
         
-        $data = new Rooms;
-        $data->room_number = $request->room_number;
-        $data->room_capacity = $request->room_capacity;
-
-        $data->save();
-        return redirect()->back();
+        $room_number = $request->room_number;
+        $check = Rooms::where('room_number',$room_number)->first();
+        if($check){
+            return response()->json(['status'=>'exist']);
+        }else{
+            $data = new Rooms;
+            $data->room_number = $request->room_number;
+            $data->room_capacity = $request->room_capacity;
+            $data->save();
+            return response()->json(['status'=>'success']);
+        }
+      
 
     }
     public function AddRate(Request $request){
