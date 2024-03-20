@@ -17,35 +17,50 @@ class EditData extends Controller
         $promo_id = $request->promo_id;
         $promo_name = $request->promo_name;
         $promo_percentage = $request->promo_percentage;
+
+        $checkdata = Promos::where('promo_name',$promo_name)->first();
+        if($checkdata){
+            return response()->json(['status'=> 'exist']);
+
+        } else { 
+
         $update =  Promos::where('promo_id',$promo_id)->first();
         $update->update([
            
             'promo_name'=> $promo_name,
             'promo_percentage'=> $promo_percentage,
-           
-           
-    
+
         ]);
-        return redirect()->back();
+        return response()->json(['status'=> 'success']);
+    }
     }
     public function EditPlan(Request $request){
+
         $plan_id = $request->plan_id;
         $plan_name = $request->plan_name;
         $plan_hours = $request->plan_hours;
         $plan_price = $request->plan_price;
         $promolist = $request->promolist;
+
+        $checkdata = ServiceHP::where('service_name',$plan_name)->where('service_hours', $plan_hours)->where('service_price', $plan_price)->where('promo_id', $promolist)->first();
+            if($checkdata){
+                return response()->json(['status'=> 'exist']);
+
+            } else {
+
         $update =  ServiceHP::where('service_id',$plan_id)->first();
         
         $update->update([
-           
-            
+
             'service_name'=> $plan_name,
             'service_hours'=> $plan_hours,
             'service_price'=> $plan_price,
             'promo_id'=> $promolist,
    
         ]);
-        return redirect()->back();
+        return response()->json(['status'=> 'success']);
+    }
+
         }
         public function EditRoom(Request $request){
 
@@ -104,7 +119,7 @@ class EditData extends Controller
             $promolist1 = $request->promolist1;
 
 
-            $check =  RoomPricing::where('room_id',$rom_numb2)->where('room_rates',$room_rate_list1)->first();
+            $check =  RoomPricing::where('room_id',$rom_numb2)->where('room_rates',$room_rate_list1)->where('promo_id',$promolist1)->first();
             if($check){
                 return response()->json(['status'=>'exist']);
 

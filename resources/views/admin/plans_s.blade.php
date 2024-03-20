@@ -31,6 +31,8 @@
 
 </head>
 <body class="">
+    <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
 	<!-- [ Pre-loader ] start -->
 	<div class="loader-bg">
 		<div class="loader-track">
@@ -71,7 +73,10 @@
                                 <div class="modal-body">
                               
                                     <div class="col-md-12">
-                                        <form action="{{route('AddPlan')}}" method="POST" >@csrf
+                                        <form action="" id="planexistform" method="POST" >@csrf
+                                            <div class="alert alert-danger" role="alert" id="planexist" style="display:none;">
+                                                Plan Already Exits!
+                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_name">Plan Name</label>
                                                 <input type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Name" name="service_name">
@@ -101,7 +106,7 @@
                                             </div>
             
                                            
-                                            <button type="submit" class="btn  btn-primary">Add Plan</button>
+                                            <button type="submit" onclick="planexist()" class="btn  btn-primary">Add Plan</button>
                                         </form>
                                     </div>
                                </div>
@@ -186,7 +191,10 @@
             <div class="modal-body">
           
                 <div class="col-md-12">
-                    <form method="POST" action="{{route('EditPlan')}}">@csrf
+                    <form method="POST" id="editplanexistform" action="">@csrf
+                        <div class="alert alert-danger" role="alert" id="editplanexist" style="display:none;">
+                            Plan Already Exits!
+                         </div>
                         <div class="form-group">
                             <input type="hidden" name="plan_id" id="plan_id">
                             <label for="plan_name">Plan Name</label>
@@ -216,7 +224,7 @@
                         </div>
 
                        
-                        <button type="submit" class="btn  btn-primary">Add Plan</button>
+                        <button type="submit" onclick="editplanexist()" class="btn  btn-primary">Add Plan</button>
                     </form>
                 </div>
            </div>
@@ -352,6 +360,58 @@
             document.getElementById('disable_service').value=id;
             document.getElementById('enable_service').value=id;
         }
+
+        function planexist(){
+
+            document.getElementById('roller').style.display='flex';
+            event.preventDefault();
+            var formData = $('form#planexistform').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: "{{route('AddPlan')}}",
+                data: formData,
+                success: function(response) {
+                if(response.status === 'exist'){
+                    document.getElementById('roller').style.display='none';
+                document.getElementById('planexist').style.display='';
+                }else if(response.status === 'success'){
+                    location.reload();
+                
+                }
+                }, 
+                error: function (xhr) {
+
+                    console.log(xhr.responseText);
+                }
+            });
+            }
+
+        function editplanexist(){
+
+            document.getElementById('roller').style.display='flex';
+            event.preventDefault();
+            var formData = $('form#editplanexistform').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: "{{route('EditPlan')}}",
+                data: formData,
+                success: function(response) {
+                if(response.status === 'exist'){
+                    document.getElementById('roller').style.display='none';
+                document.getElementById('editplanexist').style.display='';
+                }else if(response.status === 'success'){
+                    location.reload();
+                
+                }
+                }, 
+                error: function (xhr) {
+
+                    console.log(xhr.responseText);
+                }
+            });
+            }
      
     </script>
      

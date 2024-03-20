@@ -14,15 +14,33 @@ use Illuminate\Http\Request;
 class AddData extends Controller
 {
     public function AddPromo(Request $request){
+        
+        $promo_name = $request->promo_name;
+
+        $checkdata = Promos::where('promo_name',$promo_name)->first();
+
+        if($checkdata){ 
+            return response()->json(['status'=> 'exist']);
+        } else { 
 
         $data = new Promos;
         $data->promo_name = $request->promo_name;
         $data->promo_percentage = $request->promo_percentage;
         $data->save();
-        return redirect()->back();
+        return response()->json(['status'=> 'success']);
+    }
 
     }
+
     public function AddPlan(Request $request){
+        $service_name = $request->service_name;
+        $service_hours = $request->service_hours;
+        $service_price = $request->service_price;
+
+        $checkdata = ServiceHP::where('service_name',$service_name)->where('service_hours', $service_hours)->where('service_price', $service_price)->first();
+        if($checkdata){ 
+            return response()->json(['status'=> 'exist']);
+        } else { 
         
         $data = new ServiceHP;
         $data->service_name = $request->service_name;
@@ -30,7 +48,9 @@ class AddData extends Controller
         $data->service_price = $request->service_price;
         $data->promo_id = $request->service_id;
         $data->save();
-        return redirect()->back();
+        return response()->json(['status'=> 'success']);
+        
+        }
     }
     public function AddRoom(Request $request){
         
