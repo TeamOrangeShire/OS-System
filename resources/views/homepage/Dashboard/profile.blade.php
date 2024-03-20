@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
- @include('homepage.Dashboard.Components.header')
+ @include('homepage.Dashboard.Components.header', ['title'=>'My Profile - Orange Shire'])
+
 </head>
 
 <body>
@@ -63,50 +64,50 @@
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-             
+             @php
+                 $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+             @endphp
                   <h5 class="card-title">Profile Details</h5>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                    <div class="col-lg-3 col-md-4 label ">First Name</div>
+                    <div class="col-lg-9 col-md-8">{{$customer->customer_firstname}}</div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                    <div class="col-lg-3 col-md-4 label">Middle Name</div>
+                    <div class="col-lg-9 col-md-8">{{$customer->customer_middlename}}</div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
+                    <div class="col-lg-3 col-md-4 label">Last Name</div>
+                    <div class="col-lg-9 col-md-8">{{$customer->customer_lastname}}</div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
+                    <div class="col-lg-3 col-md-4 label">Extension Name</div>
+                    <div class="col-lg-9 col-md-8">{{$customer->customer_ext}}</div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                    <div class="col-lg-3 col-md-4 label">E-mail</div>
+                    <div class="col-lg-9 col-md-8">{{$customer->customer_email}}</div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                    <div class="col-lg-3 col-md-4 label">Phone Number</div>
+                    <div class="col-lg-9 col-md-8">{{$customer->customer_phone_num}}</div>
                   </div>
 
                 </div>
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
+
                   <!-- Profile Edit Form -->
-                  <form>
+                  <form method="POST" action="{{route('editProfile')}}">
+                    @csrf 
+                      <input type="hidden" name="customer_id" value="{{$user_id}}">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
@@ -119,55 +120,55 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                        <input name="firstName" type="text" class="form-control" id="fullName" value="{{$customer->customer_firstname}}">
                       </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <!--<div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
                       <div class="col-md-8 col-lg-9">
                         <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
+                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Middle Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
+                        <input name="midName" type="text" class="form-control" id="company" value="{{$customer->customer_middlename}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
+                        <input name="lastName" type="text" class="form-control" id="Job" value="{{$customer->customer_lastname}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Extension Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
+                        <input name="extName" type="text" class="form-control" id="Country" value="{{$customer->customer_ext}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">E-mail</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
+                        <input name="emailAddress" type="text" class="form-control" id="Address" value="{{$customer->customer_email}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
+                        <input name="phoneNumber" type="text" class="form-control" id="Phone" value="{{$customer->customer_phone_num}}">
                       </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <!--<div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
@@ -200,12 +201,13 @@
                       <div class="col-md-8 col-lg-9">
                         <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
-                  </form><!-- End Profile Edit Form -->
+                  </form> 
+                  <!-- End Profile Edit Form -->
 
                 </div>
 
@@ -253,7 +255,13 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form>
+                  <form method="POST" id="changePass">
+                      @csrf 
+                      <input type="hidden" name="customer_id" value="{{$user_id}}">
+
+                      <div class="text-center" style="display: none;" id="errorMessage">
+                        
+                      </div>
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
@@ -277,10 +285,12 @@
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="button" class="btn btn-primary" onclick="ChangePassword()">Change Password</button>
                     </div>
+
                   </form><!-- End Change Password Form -->
 
+           
                 </div>
 
               </div><!-- End Bordered Tabs -->
@@ -295,14 +305,47 @@
   </main><!-- End #main -->
 
 
+  <!--script start for change password-->
+  <script>
+    function ChangePassword(){
+    event.preventDefault();
+     var formData = $('form#changePass').serialize();
+  
+     $.ajax({
+         type: 'POST',
+         url: "{{route('editPassword')}}",
+         data: formData,
+         success: function(response) {
+          if(response.status === 'success'){
+            document.getElementById('errorMessage').style.display = '';
+            document.getElementById('errorMessage').innerHTML="<p style= 'color:green'>Successfully Changed Password!</p>";
+          }else if(response.status === 'current password not match'){
+            document.getElementById('errorMessage').style.display = '';
+            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>Incorrect Password!</p>";
+          }else{
+            document.getElementById('errorMessage').style.display = '';
+            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>New Password does not match!</p>";
+          }
+         }, 
+         error: function (xhr) {
+  
+             console.log(xhr.responseText);
+         }
+     });
+  }
+  </script>
+  <!-- script end for change password -->
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   @include('homepage.Dashboard.Components.scripts')
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
 
+
+  
 </body>
+
 
 </html>

@@ -249,18 +249,14 @@
             axios.get(url)
                .then(function (response) {
                 
-                const fetchTime = response.data.time;
-                if(fetchTime === 'none'){
-                    var FinalTime = 9;
-                }else{
-                    var FinalTime = fetchTime;
-                }
-               console.log(FinalTime);
+                const startTime = response.data.timeStart;
+                const endTime = response.data.timeEnd;
+              
                if(response.data.rate === 4){
                 document.getElementById('divTime').style.display = '';
-                TimeFormater(4, FinalTime);
+                TimeFormater(4, startTime, endTime);
                  }else if(response.data.rate === 1){
-                    TimeFormater(1,FinalTime);
+                    TimeFormater(1,startTime, endTime);
                 document.getElementById('divTime').style.display = '';
                }else{
                  document.getElementById('divTime').style.display = 'none';
@@ -276,9 +272,13 @@
            }
             
             function TimeFormater(interval, FetchTimeDB){
-                let TimeInterval = FetchTimeDB;
+                let TimeInterval;
                 let html = '';
-          
+                if(FetchTimeDB === 'none'){
+                    TimeInterval = 9;
+                }else{
+                    TimeInterval = FetchTimeDB;
+                }
                 while(TimeInterval < 24){
                   const start = TimeInterval;
                   const end = TimeInterval + interval;

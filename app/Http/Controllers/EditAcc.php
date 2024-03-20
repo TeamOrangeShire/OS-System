@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
+use App\Models\CustomerAcc;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 
@@ -113,5 +114,53 @@ class EditAcc extends Controller
     }
 }
   
+//edit customer password
+    public function EditCustomerPassword(Request $Req){
+        $password = $Req->password;
+        $newpassword = $Req->newpassword;
+        $renewpassword = $Req->renewpassword;
 
+        if($newpassword === $renewpassword){
+            $customer_id = $Req->customer_id;
+
+            $passquery = CustomerAcc::where('customer_id', $customer_id)->first();
+
+            if(Hash::check($password, $passquery->customer_password)){
+                $passquery->update([
+                    'customer_password' => $newpassword,
+
+                ]);
+                return response()->json(['status'=>'success']);
+
+            }else{
+                return response()->json(['status'=>'current password not match']);
+            }
+        }else{
+            return response()->json(['status'=>'new password not match']);
+        }
+    }
+
+    //edit customer profile
+    public function EditCustomerProfile(Request $customerProfile){
+        $customerFirstName = $customerProfile->firstName;
+        $customerMidName = $customerProfile->midName;
+        $customerLastName = $customerProfile->lastName;
+        $customerExtName = $customerProfile->extName;
+        $customerEmail = $customerProfile->emailAddress;
+        $customerPhoneNumber = $customerProfile->phoneNumber;
+        $customer_id = $customerProfile->customer_id;
+
+        $editProfilequery = CustomerAcc::where('customer_id', $customer_id)->first();
+            $editProfilequery->update([
+                'customer_firstname' => $customerFirstName,
+                'customer_middlename' => $customerMidName,
+                'customer_lastname' => $customerLastName,
+                'customer_ext' => $customerExtName,
+                'customer_email' => $customerEmail,
+                'customer_phone_num' => $customerPhoneNumber,
+            ]);
+        return redirect()->back();
+        
+        
+    }
 }
