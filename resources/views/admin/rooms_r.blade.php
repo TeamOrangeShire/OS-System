@@ -266,7 +266,10 @@
                             </div>
                             <div class="modal-body">
                                 <div class="col-md-12">
-                                    <form method="post" action="{{route('AddRate')}}">@csrf
+                                    <form method="post" id="rateform" action="">@csrf
+                                        <div class="alert alert-danger" role="alert" id="rateexist" style="display:none;">
+                                             Rate Already Exits!
+                                         </div>
                                         <div class="form-group">
                                             <label for="plan_promo">Rate</label>
                                             <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Room Rate" name="rate_name">
@@ -276,7 +279,7 @@
                                             <input type="Number" class="form-control" aria-describedby="emailHelp" placeholder="Room Pricing" name="rate_price">
                                         </div>
                                        
-                                        <button type="submit" class="btn  btn-primary">Add Rates</button>
+                                        <button type="submit" onclick="rateexist()" class="btn  btn-primary">Add Rates</button>
                                     </form>
                                 </div>
                                           
@@ -285,8 +288,8 @@
                         </div>
                     </div>
                 </div>
+                {{--add new rate modal end --}}
 
-                    {{--add new rate modal end --}}
                 <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#addrate">Add Room Pricing</button>
            </div>
            
@@ -357,7 +360,10 @@
           
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form method="POST" action="{{route('EditRate')}}">@csrf
+                                    <form method="POST" id="editrateexistform" action="">@csrf
+                                        <div class="alert alert-danger" role="alert" id="editrateexist" style="display:none;">
+                                            Rate Already Exits!
+                                         </div>
                                         <div class="form-group">
                                             <label for="plan_promo">Rate</label>
                                             <input type="hidden" name="rate_id" id="rate_id">
@@ -369,7 +375,7 @@
                                         </div>
         
                                        
-                                        <button type="submit" class="btn  btn-primary">Update Rates</button>
+                                        <button type="submit" onclick="editrateexist()" class="btn  btn-primary">Update Rates</button>
                                     </form>
                     </div>
                 </div>
@@ -894,6 +900,58 @@ event.preventDefault();
        if(response.status === 'exist'){
         document.getElementById('roller').style.display='none';
        document.getElementById('dataroomedit').style.display='';
+       }else if(response.status === 'success'){
+        location.reload();
+       
+       }
+     }, 
+     error: function (xhr) {
+
+         console.log(xhr.responseText);
+     }
+ });
+}
+
+function rateexist(){
+
+document.getElementById('roller').style.display='flex';
+event.preventDefault();
+ var formData = $('form#rateform').serialize();
+
+ $.ajax({
+     type: 'POST',
+     url: "{{route('AddRate')}}",
+     data: formData,
+     success: function(response) {
+       if(response.status === 'exist'){
+        document.getElementById('roller').style.display='none';
+       document.getElementById('rateexist').style.display='';
+       }else if(response.status === 'success'){
+        location.reload();
+       
+       }
+     }, 
+     error: function (xhr) {
+
+         console.log(xhr.responseText);
+     }
+ });
+}
+
+function editrateexist(){
+
+document.getElementById('roller').style.display='flex';
+event.preventDefault();
+ var formData = $('form#editrateexistform').serialize();
+
+ $.ajax({
+     type: 'POST',
+     url: "{{route('EditRate')}}",
+     data: formData,
+     success: function(response) {
+       if(response.status === 'exist'){
+        document.getElementById('roller').style.display='none';
+       document.getElementById('editrateexist').style.display='';
        }else if(response.status === 'success'){
         location.reload();
        
