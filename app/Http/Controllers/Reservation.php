@@ -23,8 +23,8 @@ class Reservation extends Controller
       $r_dur_price = $req->duration;
       $date = $req->date;
       $time = $req->time;
-      $start = $time[0];
-      $end = $time[2];
+      $start = $time[0].$time[1];
+      $end = $time[3].$time[4];
      
       $res = new Reservations();
       $res->customer_id = $customer;

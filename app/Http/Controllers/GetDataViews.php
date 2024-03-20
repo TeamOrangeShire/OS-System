@@ -129,6 +129,8 @@ class GetDataViews extends Controller
         $rate_id = $req->input('rate_id');
         $date = $req->input('date');
 
+        $checkStart= Reservations::where('res_date', $date)->first();
+        $checkEnd= Reservations::where('res_date', $date)->latest()->first();
         $checkDate= Reservations::where('res_date', $date)->latest()->first();
         $checkRate = RoomRate::where('rate_id', $rate_id)->first();
         if($checkRate->rate_name === 'Hourly'){
@@ -140,9 +142,9 @@ class GetDataViews extends Controller
         }
 
         if($checkDate){
-            return response()->json(['time'=>$checkDate->res_end, 'rate'=>$freq]);
+            return response()->json(['timeStart'=>$checkStart->res_start, 'timeEnd'=>$checkEnd->res_end, 'rate'=>$freq]);
         }else{
-            return response()->json(['time'=>'none', 'rate'=>$freq]);
+            return response()->json(['timeStart'=>'none', 'timeEnd'=>'none', 'rate'=>$freq]);
         }
 
     }
