@@ -34,23 +34,37 @@ class AddData extends Controller
     }
     public function AddRoom(Request $request){
         
-        $data = new Rooms;
-        $data->room_number = $request->room_number;
-        $data->room_capacity = $request->room_capacity;
-
-        $data->save();
-        return redirect()->back();
+        $room_number = $request->room_number;
+        $check = Rooms::where('room_number',$room_number)->first();
+        if($check){
+            return response()->json(['status'=>'exist']);
+        }else{
+            $data = new Rooms;
+            $data->room_number = $request->room_number;
+            $data->room_capacity = $request->room_capacity;
+            $data->save();
+            return response()->json(['status'=>'success']);
+        }
+      
 
     }
     public function AddRate(Request $request){
-        
-        $data = new RoomRate;
-        $data->rate_name = $request->rate_name;
-        $data->rate_price = $request->rate_price;
-        $data->rate_disable = 0;
-        $data->save();
-        return redirect()->back();
+        $rate_name = $request->rate_name;
+        $rate_price = $request->rate_price;
 
+
+        $checkdata = RoomRate::where('rate_name',$rate_name)->where('rate_price', $rate_price)->first();
+        if($checkdata){ 
+            return response()->json(['status'=> 'exist']);
+        } 
+        else{
+            $data = new RoomRate;
+            $data->rate_name = $request->rate_name;
+            $data->rate_price = $request->rate_price;
+            $data->rate_disable = 0;
+            $data->save();
+            return response()->json(['status'=> 'success']);
+        }
     }
     public function AddRoomRate(Request $request){
         
