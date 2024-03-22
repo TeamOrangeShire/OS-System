@@ -7,7 +7,11 @@
 </head>
 
 <body>
-
+  @php
+  $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+  $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
+  $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
+@endphp
   <!-- ======= Header ======= -->
   @include('homepage.Dashboard.Components.nav')
   <main id="main" class="main">
@@ -64,31 +68,15 @@
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-             @php
-                 $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
-             @endphp
+         
                   <h5 class="card-title">Profile Details</h5>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">First Name</div>
-                    <div class="col-lg-9 col-md-8">{{$customer->customer_firstname}}</div>
+                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                    <div class="col-lg-9 col-md-8">{{$fullname}}</div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Middle Name</div>
-                    <div class="col-lg-9 col-md-8">{{$customer->customer_middlename}}</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Last Name</div>
-                    <div class="col-lg-9 col-md-8">{{$customer->customer_lastname}}</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Extension Name</div>
-                    <div class="col-lg-9 col-md-8">{{$customer->customer_ext}}</div>
-                  </div>
-
+                
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">E-mail</div>
                     <div class="col-lg-9 col-md-8">{{$customer->customer_email}}</div>
@@ -148,9 +136,19 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Extension Name</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="extName" type="text" class="form-control" id="Country" value="{{$customer->customer_ext}}">
+                
+                      <label class="col-md-3 col-form-label">Select</label>
+                      <div class="col-md-9">
+                        <select class="form-select" name="extName" aria-label="Default select example">
+                          <option value="none" {{ $customer->customer_ext === 'none' ? 'selected' : '' }}>None</option>
+                          <option value="Jr." {{ $customer->customer_ext === 'Jr.' ? 'selected' : '' }}>Junior(Jr.)</option>
+                          <option value="Sr." {{ $customer->customer_ext === 'Sr.' ? 'selected' : '' }}>Senior(Sr.)</option>
+                          <option value="I" {{ $customer->customer_ext === 'I' ? 'selected' : '' }}>I</option>
+                          <option value="II" {{ $customer->customer_ext === 'II' ? 'selected' : '' }}>II</option>
+                          <option value="III" {{ $customer->customer_ext === 'III' ? 'selected' : '' }}>III</option>
+                          <option value="IV" {{ $customer->customer_ext === 'IV' ? 'selected' : '' }}>IV</option>
+                          <option value="V" {{ $customer->customer_ext === 'V' ? 'selected' : '' }}>V</option>
+                        </select>
                       </div>
                     </div>
 
