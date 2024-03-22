@@ -111,9 +111,9 @@
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
+                        <img src="{{ asset('img/sire_Albert.jfif') }}" alt="Profile">
                         <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                          <button data-bs-toggle="modal" data-bs-target="#uploadProfilePic" type="button" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
                           <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                         </div>
                       </div>
@@ -303,7 +303,27 @@
     </section>
 
   </main><!-- End #main -->
-
+  <div class="modal fade" id="uploadProfilePic" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Change Profile Pic</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body modal-profile">
+          <img src="{{ asset('img/sire_Albert.jfif') }}" alt="Profile" class="rounded-circle profilePicture">
+          <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="file" id="formFile">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!--script start for change password-->
   <script>
