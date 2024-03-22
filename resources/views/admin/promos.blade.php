@@ -30,6 +30,8 @@
 
 </head>
 <body class="">
+    <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
 	<!-- [ Pre-loader ] start -->
 	<div class="loader-bg">
 		<div class="loader-track">
@@ -69,10 +71,13 @@
                                   
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <form action="{{route('AddPromo')}}" method="POST">@csrf
+                                            <form action="" id="promoexistform" method="POST">@csrf
+                                                <div class="alert alert-danger" role="alert" id="promoexist" style="display:none;">
+                                                    Promo Already Exits!
+                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="promos_name">Promo Name</label>
-                                                    <input type="text" class="form-control" id="promos_name" name="promo_name" placeholder="Promo Name">
+                                                    <label for="promo_name">Promo Name</label>
+                                                    <input type="text" class="form-control" id="promo_name" name="promo_name" placeholder="Promo Name">
                                                    
                                                 </div>
                                                 <div class="form-group">
@@ -81,7 +86,7 @@
                                                 </div>
                 
                                                
-                                                <button type="submit" class="btn  btn-primary">Add Promo</button>
+                                                <button type="submit" onclick="promoexist()" class="btn  btn-primary">Add Promo</button>
                                             </form>
                                         </div>
                                     </div>
@@ -152,11 +157,14 @@
                             <div class="modal-body">
                           
                                 <div class="col-md-12">
-                                    <form action="{{route('EditPromo')}}" method="POST">@csrf
+                                    <form action="" id="editpromoexistform" method="POST">@csrf
+                                        <div class="alert alert-danger" role="alert" id="editpromoexist" style="display:none;">
+                                            Promo Already Exits!
+                                         </div>
                                         <div class="form-group">
                                             <input type="hidden" name="promo_id" id="promo_id" >
                                             <label for="plan_name">Promo Name</label>
-                                            <input type="text" class="form-control" id="promo_name" aria-describedby="emailHelp" name="promo_name" placeholder="Promo Name" >
+                                            <input type="text" class="form-control" id="promo_name2" aria-describedby="emailHelp" name="promo_name" placeholder="Promo Name" >
                                            
                                         </div>
                                         <div class="form-group">
@@ -165,7 +173,7 @@
                                            
                                         </div>
 
-                                        <button type="submit" class="btn  btn-primary" >Add Plan</button>
+                                        <button type="submit" onclick="editpromoexist()" class="btn  btn-primary" >Add Plan</button>
                                     </form>
                                 </div>
                            </div>
@@ -287,7 +295,7 @@
     <script>
         function updatemodal(id,name,percentage){
             const promo_id =document.getElementById('promo_id');
-            const promo_name =document.getElementById('promo_name');
+            const promo_name =document.getElementById('promo_name2');
             const promo_percentage =document.getElementById('promo_percentage');
 
             promo_id.value=id;
@@ -298,6 +306,59 @@
         function updatemodal2(id){
            document.getElementById('disable_promo').value=id;
            document.getElementById('enable_promo').value=id;
+        }
+
+    function promoexist(){
+
+        document.getElementById('roller').style.display='flex';
+        event.preventDefault();
+        var formData = $('form#promoexistform').serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: "{{route('AddPromo')}}",
+            data: formData,
+            success: function(response) {
+            if(response.status === 'exist'){
+                document.getElementById('roller').style.display='none';
+            document.getElementById('promoexist').style.display='';
+            }else if(response.status === 'success'){
+                location.reload();
+            
+            }
+            }, 
+            error: function (xhr) {
+
+                console.log(xhr.responseText);
+            }
+        });
+        }
+
+
+    function editpromoexist(){
+
+        document.getElementById('roller').style.display='flex';
+        event.preventDefault();
+        var formData = $('form#editpromoexistform').serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: "{{route('EditPromo')}}",
+            data: formData,
+            success: function(response) {
+            if(response.status === 'exist'){
+                document.getElementById('roller').style.display='none';
+            document.getElementById('editpromoexist').style.display='';
+            }else if(response.status === 'success'){
+                location.reload();
+            
+            }
+            }, 
+            error: function (xhr) {
+
+                console.log(xhr.responseText);
+            }
+        });
         }
     </script>
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>

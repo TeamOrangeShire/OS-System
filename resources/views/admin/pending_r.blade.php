@@ -71,7 +71,7 @@
                             </thead>
                             <tbody>
                                 @php
-                                $Reservation = App\Models\Reservation::all();
+                                $Reservation = App\Models\Reservations::all();
                             @endphp
                             @foreach ($Reservation as $res)
                                 

@@ -79,13 +79,13 @@
                                                              </div>
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Room Number</label>
-                                                                <input type="text" class="form-control"  aria-describedby="emailHelp" name="room_number" placeholder="Room Number">
+                                                                <input type="text" class="form-control" aria-describedby="emailHelp" name="room_number" placeholder="Room Number" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                                                
                                                             </div>
                                                             
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Room Capacity</label>
-                                                                <input type="Number" class="form-control"  aria-describedby="emailHelp" name="room_capacity" placeholder="Room Capacity">
+                                                                <input type="Number" class="form-control"  aria-describedby="emailHelp" name="room_capacity" placeholder="Room Capacity" required>
                                                                
                                                             </div> 
                                                             <button type="submit" class="btn  btn-primary" onclick="dataroomaddform()">Add Room</button>
@@ -178,7 +178,7 @@
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Room Number</label>
                                                 <input type="hidden" name="room_id" id="room_id">
-                                                <input type="text" class="form-control" id="room_number" aria-describedby="emailHelp" name="edit_room" placeholder="Room Number">
+                                                <input type="text" class="form-control" id="room_number" aria-describedby="emailHelp" name="edit_room" placeholder="Room Number" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                                
                                             </div>
                                             
@@ -276,7 +276,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="plan_promo">Pricing</label>
-                                            <input type="Number" class="form-control" aria-describedby="emailHelp" placeholder="Room Pricing" name="rate_price">
+                                            <input type="Number" class="form-control" aria-describedby="emailHelp" placeholder="Room Pricing" name="rate_price" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         </div>
                                        
                                         <button type="submit" onclick="rateexist()" class="btn  btn-primary">Add Rates</button>
@@ -371,7 +371,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="plan_promo">Pricing</label>
-                                            <input type="Number" class="form-control" id="edit_rate_price" name="edit_rate_price" aria-describedby="emailHelp" placeholder="Room Pricing">
+                                            <input type="Number" class="form-control" id="edit_rate_price" name="edit_rate_price" aria-describedby="emailHelp" placeholder="Room Pricing" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         </div>
         
                                        
@@ -965,6 +965,7 @@ event.preventDefault();
 }
     
 </script>
+
      
     <!-- Required Js -->
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
