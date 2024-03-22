@@ -114,7 +114,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header" >
-                <h5 class="modal-title" id="exampleModalCenterTitle">Insert Log</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Add New Customer</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
 
@@ -125,26 +125,29 @@
                         <form>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Username</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username" required>
                                
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" required>
                                
                             </div>
+
+                            <!-- Cleaned Mobile Number -->
+
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Phone Number</label>
-                                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number">
-                               
+                                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number" required>
                             </div>
+
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Repeat Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repeat Password">
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repeat Password" required>
                             </div>
                            
                             <button type="submit" class="btn  btn-primary">Create</button>
@@ -158,6 +161,40 @@
     </div>
 </div>
 
+
+<script>
+    function validatePhoneNumber(event) {
+      const phoneNumberInput = event.target;
+      let phoneNumber = phoneNumberInput.value;
+  
+      phoneNumber = phoneNumber.replace(/\D/g, '');
+  
+      if (phoneNumber.length > 10) {
+        phoneNumber = phoneNumber.slice(0, 10);
+      }
+  
+      if (phoneNumber.length > 0 && phoneNumber.charAt(0) !== '9') {
+      phoneNumberInput.setCustomValidity("Please Enter Valid Phone Number.");
+    } else if (phoneNumber.length !== 10) {
+      phoneNumberInput.setCustomValidity("Phone number must be exactly 10 digits.");
+    } else {
+      phoneNumberInput.setCustomValidity("");
+    }
+  
+      phoneNumberInput.value = phoneNumber;
+    }
+  
+    document.addEventListener("DOMContentLoaded", function () {
+       const phoneInputs = document.querySelectorAll('input[placeholder="Phone Number"]');
+       if (phoneInputs.length > 0) {
+          phoneInputs.forEach(function(phoneInput) {
+            phoneInput.addEventListener('input', validatePhoneNumber);
+            validatePhoneNumber({ target: phoneInput });
+          });
+       }
+    });
+  </script>
+  
 {{-- add customer modal end --}}
 <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
