@@ -48,116 +48,198 @@
 <div class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
-      
-        <div class="col-md-12">
+
+        <div class="col-sm-12">
+            <h5 class="mb-3">Subscription Records</h5>
             <div class="card">
-                <div class="card-header"  style="position: relative;">
-                    <h5>Subscription Records</h5>
-                    <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
-                    <div class="input-group m-t-15">
-                        <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary">
-                                <i class="feather icon-search"></i>
-                            </button>
+                <div class="card-body">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Records</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Completed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Canceled</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                           
+                            <div class="col-md-12">
+                                <div class="">
+                                    <div class="card-header"  style="position: relative;">
+                                        <h5>Subscription Records</h5>
+                                        <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
+                                        <div class="input-group m-t-15">
+                                            <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary">
+                                                    <i class="feather icon-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subscription ID</th>
+                                                        <th>Start Time</th>
+                                                        <th>End Time</th>
+                                                        <th>Hours left</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        @php
+                                        
+                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->where('sub_status', '!=', 1)->get();
+                                                    
+                                                @endphp
+                                                @foreach ($CancelledSubs as $cancelled)
+                    
+                                                    <tr>
+                                                        <td> {{$cancelled->service_id}} </td>
+                                                        <td> {{$cancelled->sub_start}} </td>
+                                                        <td> {{$cancelled->sub_end}}   </td>
+                                                        <td> {{$cancelled->sub_time}}  </td>
+
+                                                    </tr>
+                                                    @endforeach
+                                                    </tr>
+                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                </div>
-                <div class="card-body table-border-style">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Subscription</th>
-                                    <th>Name</th>
-                                    
-                                    <th>Start</th>
-                                    <th>End</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>2</td>
-                                    <td>30hrs</td>
-                                    <td>Mark</td>
-                                    
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>70hrs</td>
-                                    <td>Mark2</td>
-                                    
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>50hrs</td>
-                                    <td>Mark3</td>
-                                   
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            
+                            <div class="col-md-12">
+                                <div class="">
+                                    <div class="card-header"  style="position: relative;">
+                                        <h5>Subscription Records</h5>
+                                        <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
+                                        <div class="input-group m-t-15">
+                                            <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary">
+                                                    <i class="feather icon-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subscription ID</th>
+                                                        <th>Start Time</th>
+                                                        <th>End Time</th>
+                                                        <th>Hours left</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        @php
+                                        
+                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', 2)->get();
+                                                    
+                                                @endphp
+                                                @foreach ($CancelledSubs as $cancelled)
+                    
+                                                    <tr>
+                                                        <td> {{$cancelled->service_id}} </td>
+                                                        <td> {{$cancelled->sub_start}} </td>
+                                                        <td> {{$cancelled->sub_end}}   </td>
+                                                        <td> {{$cancelled->sub_time}}  </td>
+                                        
+                    
+                    
+                                                    </tr>
+                                                    @endforeach
+                                                    </tr>
+                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                            <div class="col-md-12">
+                                <div class="">
+                                    <div class="card-header"  style="position: relative;">
+                                        <h5>Subscription Records</h5>
+                                        <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
+                                        <div class="input-group m-t-15">
+                                            <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary">
+                                                    <i class="feather icon-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subscription ID</th>
+                                                        <th>Start Time</th>
+                                                        <th>End Time</th>
+                                                        <th>Hours left</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        @php
+                                        
+                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->get();
+                                                    
+                                                @endphp
+                                                @foreach ($CancelledSubs as $cancelled)
+                    
+                                                    <tr>
+                                                        <td> {{$cancelled->service_id}} </td>
+                                                        <td> {{$cancelled->sub_start}} </td>
+                                                        <td> {{$cancelled->sub_end}}   </td>
+                                                        <td> {{$cancelled->sub_time}}  </td>
+                                        
+                    
+                    
+                                                    </tr>
+                                                    @endforeach
+                                                    </tr>
+                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+      
+        
        
         <!-- [ Main Content ] end -->
     </div>
 </div>
 <!-- [ Main Content ] end -->
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
+   
 
     <!-- Required Js -->
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
