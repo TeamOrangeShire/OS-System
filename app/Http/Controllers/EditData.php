@@ -67,7 +67,7 @@ class EditData extends Controller
             $room_id = $request->room_id;
             $edit_room = $request->edit_room;
             $edit_room_c = $request->edit_room_c;
-            $check =  Rooms::where('room_number',$edit_room)->first();
+            $check =  Rooms::where('room_number',$edit_room)->where('room_capacity',$edit_room_c)->first();
             if($check){
                 return response()->json(['status'=>'exist']);
             }else{
