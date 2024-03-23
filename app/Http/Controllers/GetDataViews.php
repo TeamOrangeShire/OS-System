@@ -152,12 +152,19 @@ class GetDataViews extends Controller
 
     public function GetTimeForDate(Request $req){
         $date = $req->date;
+        $timeList = [];
 
         $checkDate = Reservations::where('res_date', $date)->get();
-        if($checkDate){
+        if($checkDate->isNotEmpty()){
+            foreach($checkDate as $time){
+                $concatTime = $time->res_start . "-" . $time->res_end;
+                $interval = $time->res_end - $time->res_start;
 
+                array_push($timeList, [$concatTime, $interval]);
+            }
+            return response()->json(['status'=>'exist', 'time'=> $timeList]);
         }else{
-            
+            return response()->json(['status'=>'clear', 'time'=> 'none']);
         }
     }
 }
