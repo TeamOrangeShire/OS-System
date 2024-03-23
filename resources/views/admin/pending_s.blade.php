@@ -60,7 +60,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                   
                                     <th>Subscription</th>
                                     <th>Name</th>
         
@@ -69,32 +69,36 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2</td>
-                                    <td>30hrs</td>
-                                    <td>Mark</td>
-                                    
-        
-                                    <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"><i class="feather icon-check-circle"></i></button>  
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal"><i class="feather icon-x-circle"></i></button>   </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>70hrs</td>
-                                    <td>Mark2</td>
-                                    
-   
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x-circle"></i></button>   </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>50hrs</td>
-                                    <td>Mark3</td>
-                                   
-                                    <td> <button type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>  
-                                        <button type="button" class="btn btn-danger"><i class="feather icon-x-circle"></i></button>   </td>
-                                </tr>
+                                @php
+                                $Subscriptions = App\Models\Subscriptions::where('sub_start',NULL )->where('sub_status',0 )->get();
+                            @endphp
+                            @foreach ($Subscriptions as $sub )
+                            <tr>
+                                <td>
+                                    @php
+                                        $service_id = $sub->service_id;
+                                    $ServiceHP = App\Models\ServiceHP::where('service_id',$service_id)->first();
+                                    @endphp
+                                    {{$ServiceHP->service_name}} / {{$ServiceHP->service_hours}}hrs
+                                </td>
+                                <td>
+                                @php
+                                    $cus_id = $sub->customer_id;
+                                    $Customer = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
+                                    $cus_fullname = $Customer->customer_firstname .' '.$Customer->customer_middlename.' '.$Customer->customer_lastname;
+                                @endphp
+                                    {{$cus_fullname}}
+                                </td>
+                               
+                                
+    
+                                <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmplan('{{$sub->sub_id}}','{{$ServiceHP->service_name}}','{{$ServiceHP->service_hours}}','{{$cus_fullname}}')"><i class="feather icon-check-circle"></i></button>  
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="declineplan('{{$sub->sub_id}}','{{$ServiceHP->service_name}}','{{$ServiceHP->service_hours}}','{{$cus_fullname}}')"><i class="feather icon-x-circle"></i></button>   </td>
+                            </tr>
+                            @endforeach
+                               
+                               
+                              
                             </tbody>
                         </table>
                     </div>
@@ -111,21 +115,25 @@
 <div id="confirmmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
+            <form action="{{route('ConfirmSubscription')}}" method="POST">@csrf
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">Confirm Subscription?</h5>
+               
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
-                    <p>Subscription Name: <span id="subscriptionName"></span></p>
-                    <p>Plan: <span id="subscriptionPlan"></span></p>
-                    <p>Customer Full Name: <span id="customerFullName"></span></p>
+                    <input type="hidden" name="sub_id" id="sub_id">
+                    <p>Subscription Details: <input type="text" id="subscriptionName" style="border: none;"></p>
+                   
+                    <p>Customer Full Name: <input type="text" id="customerFullName" style="border: none;"></p>
                     <div style="text-align: center;">
-                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
-                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                        <button type="submit" class="btn btn-primary" >Yes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                 </div>
             </div>
+        </form>
         </div>
     </div>
 </div>
@@ -137,16 +145,18 @@
 <div id="declinemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <form action="{{route('CancelPendingSubscription')}}" method="POST">@csrf
+                <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">Decline this Subscription?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
-          
                 <div class="col-md-12">
-                   
-                    <div class="form-group" style="text-align: center;">   
+                    <input type="hidden" name="sub_id" id="sub_id2">
+                    <p>Subscription Details: <input type="text" id="subscriptionName2" style="border: none;"></p>
+                    <p>Customer Full Name: <input type="text" id="customerFullName2" style="border: none;"></p>
+                    <div class="form-group">   
                         <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
                         <select class="form-control" id="reasonlist" name="reasonlist">
                             <option value="Unpaid">Unpaid</option>
@@ -155,67 +165,35 @@
                         </select>                        
                     </div>
                 <div style="text-align: center;">
-                    <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                 </div>
-                
             </div>
            </div>
-          
+        </form>
         </div>
     </div>
 </div>
 {{-- modal end --}}
 
+    <script>
+         function confirmplan(id,servicename,hours,fullname){
+    
+        document.getElementById('sub_id').value=id;
+        document.getElementById('subscriptionName').value=servicename+' / '+hours+'hrs';
+        document.getElementById('customerFullName').value=fullname;
 
-<!-- [ Main Content ] end -->
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
+    }
+    </script>
+    <script>
+        function declineplan(id,servicename,hours,fullname){
+   
+       document.getElementById('sub_id2').value=id;
+       document.getElementById('subscriptionName2').value=servicename+' / '+hours+'hrs';
+       document.getElementById('customerFullName2').value=fullname;
 
+   }
+   </script>
     <!-- Required Js -->
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
