@@ -148,4 +148,16 @@ class GetDataViews extends Controller
         }
 
     }
+
+
+    public function GetTimeForDate(Request $req){
+        $date = $req->date;
+
+        $checkDate = Reservations::where('res_date', $date)->get();
+        if($checkDate){
+
+        }else{
+            
+        }
+    }
 }

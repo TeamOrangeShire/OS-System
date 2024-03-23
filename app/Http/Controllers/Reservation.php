@@ -22,7 +22,7 @@ class Reservation extends Controller
       $contact = $req->contact;
       $r_dur_price = $req->duration;
       $date = $req->date;
-      $time = $req->time;
+      $time = $req->hiddenTime;
       $start = $time[0].$time[1];
       $end = $time[3].$time[4];
      

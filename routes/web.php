@@ -32,6 +32,7 @@ Route::get('/reservation/book', [GetDataViews::class, 'GetBookCookies'])->name('
 Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )->name('new_account');
 Route::get('/room_rates',[GetDataViews::class, 'GetRoomRate'] )->name('getRoomRates');
 Route::get('/checkTime',[GetDataViews::class, 'CheckTime'] )->name('checkTime');
+Route::get('/get-time-for-date',[GetDataViews::class,'GetTimeForDate'] )->name('getTimeDate');
 
 //Client Back End
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');

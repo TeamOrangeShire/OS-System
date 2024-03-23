@@ -80,3 +80,67 @@
 })(jQuery);
 
 
+function TimeButtonCheck(button){
+    
+    const unselectButtons = document.querySelectorAll('.comic-button-active');
+
+    unselectButtons.forEach(function(button) {
+      button.classList.remove('comic-button-active');
+      button.classList.add('comic-button');
+    });
+    
+    button.classList.remove('comic-button');
+    button.classList.add('comic-button-active');
+
+    const start = button.value.substring(0, 4); 
+    const end = button.value.substring(5, 9); 
+
+    document.getElementById('hiddenTime').value = TimeToInt(start, end);
+    document.getElementById('vis_time').value = Format_Time(start, end);
+}
+
+function Format_Time(start, end){
+
+    const startTime = ProcessTime(start);
+    const endTime = ProcessTime(end);
+
+    const time = startTime + "-" + endTime;
+    return time;
+
+}
+
+function ProcessTime(time){
+    if(time[0] === "0"){
+        var startTime = time[1] + ":00" + time.substring(2,4);
+    }else{
+        var startTime = time.substring(0,2) + ":00" + time.substring(2,4);
+    }
+
+    return startTime;
+}
+
+function TimeToInt(start, end){
+    const StartTime = GetIntTime(start);
+    const EndTime = GetIntTime(end);
+
+    return StartTime + "-" + EndTime;
+}
+function GetIntTime(time){
+    if(time[0]=== "0"){
+        var initialTime = time[1];
+    }else{
+        var initialTime = time.substring(0, 2);
+    }
+
+    if(time.substring(2, 4) === 'PM' && time.substring(0,2) != "12"){
+        return parseInt(initialTime) + 12;
+    }else if(time.substring(2, 4) === 'AM' && time.substring(0,2) === "12" ){
+        return "00";
+    }else{
+      if(initialTime.length === 2){
+          return initialTime;
+      }else{
+          return "0" + initialTime;
+      }
+    }
+}
