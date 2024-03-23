@@ -1,0 +1,9 @@
+.profilePicture{
+    width: 50%;
+  }
+.modal-profile{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
