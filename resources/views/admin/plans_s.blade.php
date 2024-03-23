@@ -79,22 +79,22 @@
                                              </div>
                                             <div class="form-group">
                                                 <label for="plan_name">Plan Name</label>
-                                                <input type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Name" name="service_name">
+                                                <input type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Name" name="service_name" required>
                                                
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_hours">Hours</label>
-                                                <input type="number" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Hours" name="service_hours">
+                                                <input type="number" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Hours" name="service_hours" required>
                                                
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_price">Price</label>
-                                                <input type="number" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Price" name="service_price">
+                                                <input type="number" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Price" name="service_price" required>
                                                
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_promo">Promo</label>
-                                                <select class="form-control"  name="service_id">
+                                                <select class="form-control"  name="service_id" required>
                                                     
                                                     @php
                                                     $promo = App\Models\Promos::where('promos_disable','!=',1)->get();
