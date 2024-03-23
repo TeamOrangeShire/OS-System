@@ -50,7 +50,7 @@
         <!-- [ Main Content start ] start -->
 
         <div class="col-sm-12">
-            <h5 class="mb-3">Basic Pills</h5>
+            <h5 class="mb-3">Subscription Records</h5>
             <div class="card">
                 <div class="card-body">
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -58,10 +58,10 @@
                             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Records</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Canceled</a>
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Completed</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+                            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Canceled</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
@@ -96,7 +96,61 @@
                                                     <tr>
                                                         @php
                                         
-                                                    $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->get();
+                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->where('sub_status', '!=', 1)->get();
+                                                    
+                                                @endphp
+                                                @foreach ($CancelledSubs as $cancelled)
+                    
+                                                    <tr>
+                                                        <td> {{$cancelled->service_id}} </td>
+                                                        <td> {{$cancelled->sub_start}} </td>
+                                                        <td> {{$cancelled->sub_end}}   </td>
+                                                        <td> {{$cancelled->sub_time}}  </td>
+
+                                                    </tr>
+                                                    @endforeach
+                                                    </tr>
+                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            
+                            <div class="col-md-12">
+                                <div class="">
+                                    <div class="card-header"  style="position: relative;">
+                                        <h5>Subscription Records</h5>
+                                        <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
+                                        <div class="input-group m-t-15">
+                                            <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary">
+                                                    <i class="feather icon-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subscription ID</th>
+                                                        <th>Start Time</th>
+                                                        <th>End Time</th>
+                                                        <th>Hours left</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        @php
+                                        
+                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', 2)->get();
                                                     
                                                 @endphp
                                                 @foreach ($CancelledSubs as $cancelled)
@@ -119,18 +173,60 @@
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            
-                            {{-- table cancel --}}
-
                         </div>
                         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                            <p class="mb-0">Est quis nulla laborum officia ad nisi ex nostrud culpa Lorem excepteur aliquip dolor aliqua irure ex. Nulla ut duis ipsum nisi elit fugiat commodo sunt reprehenderit laborum veniam eu
-                                veniam. Eiusmod
-                                minim exercitation fugiat irure ex labore incididunt do fugiat commodo aliquip sit id deserunt reprehenderit aliquip nostrud. Amet ex cupidatat excepteur aute veniam incididunt mollit cupidatat esse
-                                irure officia elit do ipsum ullamco Lorem.consequat non.</p>
+                            <div class="col-md-12">
+                                <div class="">
+                                    <div class="card-header"  style="position: relative;">
+                                        <h5>Subscription Records</h5>
+                                        <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
+                                        <div class="input-group m-t-15">
+                                            <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary">
+                                                    <i class="feather icon-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subscription ID</th>
+                                                        <th>Start Time</th>
+                                                        <th>End Time</th>
+                                                        <th>Hours left</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        @php
+                                        
+                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->get();
+                                                    
+                                                @endphp
+                                                @foreach ($CancelledSubs as $cancelled)
+                    
+                                                    <tr>
+                                                        <td> {{$cancelled->service_id}} </td>
+                                                        <td> {{$cancelled->sub_start}} </td>
+                                                        <td> {{$cancelled->sub_end}}   </td>
+                                                        <td> {{$cancelled->sub_time}}  </td>
+                                        
+                    
+                    
+                                                    </tr>
+                                                    @endforeach
+                                                    </tr>
+                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
