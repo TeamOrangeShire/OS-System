@@ -18,5 +18,6 @@ class Subscriptions extends Model
         'sub_time',
         'sub_status',
         'sub_cancel_reason',
+        'updated_at',
     ];
 }

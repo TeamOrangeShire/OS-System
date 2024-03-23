@@ -68,39 +68,33 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Subscription</th>
-                                    <th>Name</th>
-                                    
-                                    <th>Start</th>
-                                    <th>End</th>
+                                    <th>Subscription ID</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Hours left</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>2</td>
-                                    <td>30hrs</td>
-                                    <td>Mark</td>
-                                    
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
+                                    @php
+                    
+                                $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->get();
+                                
+                            @endphp
+                            @foreach ($CancelledSubs as $cancelled)
+
                                 <tr>
-                                    <td>3</td>
-                                    <td>70hrs</td>
-                                    <td>Mark2</td>
-                                    
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
+                                    <td> {{$cancelled->service_id}} </td>
+                                    <td> {{$cancelled->sub_start}} </td>
+                                    <td> {{$cancelled->sub_end}}   </td>
+                                    <td> {{$cancelled->sub_time}}  </td>
+                    
+
+
                                 </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>50hrs</td>
-                                    <td>Mark3</td>
-                                   
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
+                                @endforeach
                                 </tr>
+
                             </tbody>
                         </table>
                     </div>

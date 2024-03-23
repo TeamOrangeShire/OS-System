@@ -60,39 +60,35 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Subscription</th>
-                                    <th>Name</th>
+                                    <th>Subscription ID</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
                                     <th>Hours left</th>
-                                    <th>Start</th>
-                                    <th>End</th>
+                                    <th>Reason for Cancellation</th>
+                                    <th>Date Cancelled</th>
+
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                    
+                                $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->get();
+                                
+                            @endphp
+                            @foreach ($CancelledSubs as $cancelled)
+
                                 <tr>
-                                    <td>2</td>
-                                    <td>30hrs</td>
-                                    <td>Mark</td>
-                                    <td>29:00</td>
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
+                                    <td> {{$cancelled->service_id}} </td>
+                                    <td> {{$cancelled->sub_start}} </td>
+                                    <td> {{$cancelled->sub_end}}   </td>
+                                    <td> {{$cancelled->sub_time}}  </td>
+                                    <td> {{$cancelled->sub_cancel_reason}}</td>
+                                    <td> {{$cancelled->updated_at}}</td>
+
+
                                 </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>70hrs</td>
-                                    <td>Mark2</td>
-                                    <td>29:00</td>
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>50hrs</td>
-                                    <td>Mark3</td>
-                                    <td>29:00</td>
-                                    <td>2024/03/04</td>
-                                    <td>2024/04/04</td>
-                                </tr>
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
