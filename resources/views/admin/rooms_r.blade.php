@@ -85,8 +85,15 @@
                                                             
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Room Capacity</label>
-                                                                <input type="Number" class="form-control"  aria-describedby="emailHelp" name="room_capacity" placeholder="Room Capacity" required>
-                                                               
+                                                                {{-- <input type="Number" class="form-control"  aria-describedby="emailHelp" name="room_capacity" placeholder="Room Capacity" required> --}}
+                                                                <select class="form-control" id="" name="room_capacity" placeholder="Room Capacity" required>
+                                                                    <option value="Solo (1 Person)">Solo (1 Person)</option>
+                                                                    <option value="Small Group (2-4 People)">Small Group (2-4 People)</option>
+                                                                    <option value="Medium Group (5-8 People)">Medium Group (5-8 People)</option>
+                                                                    <option value="Large Group (9-12 People)">Large Group (9-12 People)</option>
+                                                                    <option value="Extra Large Group (13+ People)">Extra Large Group (13+ People)</option>
+                                                                  </select>
+
                                                             </div> 
                                                             <button type="submit" class="btn  btn-primary" onclick="dataroomaddform()">Add Room</button>
                                                         </form>
@@ -184,8 +191,14 @@
                                             
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Room Capacity</label>
-                                                <input type="Number" class="form-control" id="room_capacity" aria-describedby="emailHelp" name="edit_room_c" placeholder="Room Capacity">
-                                               
+                                                {{-- <input type="Number" class="form-control" id="room_capacity" aria-describedby="emailHelp" name="edit_room_c" placeholder="Room Capacity"> --}}
+                                                <select class="form-control" id="room_capacity" name="edit_room_c" placeholder="Room Capacity" required>
+                                                    <option value="Solo (1 Person)">Solo (1 Person)</option>
+                                                    <option value="Small Group (2-4 People)">Small Group (2-4 People)</option>
+                                                    <option value="Medium Group (5-8 People)">Medium Group (5-8 People)</option>
+                                                    <option value="Large Group (9-12 People)">Large Group (9-12 People)</option>
+                                                    <option value="Extra Large Group (13+ People)">Extra Large Group (13+ People)</option>
+                                                  </select>
                                             </div>
                                         
                                            
@@ -271,11 +284,30 @@
                                              Rate Already Exits!
                                          </div>
                                         <div class="form-group">
-                                            <label for="plan_promo">Rate</label>
-                                            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Room Rate" name="rate_name">
+                                            <label for="plan_promo">Membership Durations</label>
+                                            {{-- <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Room Rate" name="rate_name"> --}}
+                                            <select id="membership-duration" placeholder="Room Rate" name="rate_name" class="form-control">
+                                                <option value="Hourly">Hourly</option>
+                                                <option value="2-hour">2-Hour</option>
+                                                <option value="3-hour">3-Hour</option>
+                                                <option value="4-hour">4-Hour</option>
+                                                <option value="5-hour">5-Hour</option>
+                                                <option value="6-hour">6-Hour</option>
+                                                <option value="7-hour">7-Hour</option>
+                                                <option value="8-hour">8-Hour</option>
+                                                <option value="9-hour">9-Hour</option>
+                                                <option value="10-hour">10-Hour</option>
+                                                <option value="11-hour">11-Hour</option>
+                                                <option value="12-hour">12-Hour</option>
+                                                <option value="Full-day">Full Day</option>
+                                                <option value="Weekly">Weekly</option>
+                                                <option value="Bi-weekly">Bi-Weekly</option>
+                                                <option value="Monthly">Monthly</option>
+                                              </select>
+                                        
                                         </div>
                                         <div class="form-group">
-                                            <label for="plan_promo">Pricing</label>
+                                            <label for="plan_promo">Rate</label>
                                             <input type="Number" class="form-control" aria-describedby="emailHelp" placeholder="Room Pricing" name="rate_price" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         </div>
                                        
@@ -299,8 +331,8 @@
                         <thead>
                             <tr>
 
+                                <th>Membership Durations</th>
                                 <th>Rate</th>
-                                <th>Pricing</th>
                                 <th >Action</th>
                             </tr>
                         </thead>
@@ -365,12 +397,30 @@
                                             Rate Already Exits!
                                          </div>
                                         <div class="form-group">
-                                            <label for="plan_promo">Rate</label>
+                                            <label for="plan_promo">Membership Duration</label>
                                             <input type="hidden" name="rate_id" id="rate_id">
-                                            <input type="text" class="form-control" id="edit_rate_name" name="edit_rate_name" aria-describedby="emailHelp" placeholder="Room Rate">
+                                            {{-- <input type="text" class="form-control" id="edit_rate_name" name="edit_rate_name" aria-describedby="emailHelp" placeholder="Room Rate"> --}}
+                                            <select id="edit_rate_name" placeholder="Room Rate" name="edit_rate_name" class="form-control">
+                                                <option value="Hourly">Hourly</option>
+                                                <option value="2-hour">2-Hour</option>
+                                                <option value="3-hour">3-Hour</option>
+                                                <option value="4-hour">4-Hour</option>
+                                                <option value="5-hour">5-Hour</option>
+                                                <option value="6-hour">6-Hour</option>
+                                                <option value="7-hour">7-Hour</option>
+                                                <option value="8-hour">8-Hour</option>
+                                                <option value="9-hour">9-Hour</option>
+                                                <option value="10-hour">10-Hour</option>
+                                                <option value="11-hour">11-Hour</option>
+                                                <option value="12-hour">12-Hour</option>
+                                                <option value="Full-day">Full Day</option>
+                                                <option value="Weekly">Weekly</option>
+                                                <option value="Bi-weekly">Bi-Weekly</option>
+                                                <option value="Bi-weekly">Monthly</option>
+                                              </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="plan_promo">Pricing</label>
+                                            <label for="plan_promo">Rate</label>
                                             <input type="Number" class="form-control" id="edit_rate_price" name="edit_rate_price" aria-describedby="emailHelp" placeholder="Room Pricing" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         </div>
         
@@ -507,8 +557,8 @@
                             <thead>
                                 <tr>
                                     <th>Room Number</th>
+                                    <th>Membership Duration</th>
                                     <th>Rate</th>
-                                    <th>Pricing</th>
                                     <th>Promo</th>
                                     <th>Action</th>
                                 </tr>

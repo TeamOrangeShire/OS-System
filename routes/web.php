@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SubscriptionsData;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;	
 use App\Http\Controllers\CreateAcc;
@@ -106,6 +107,8 @@ Route::post('/DisablePromo', [EditData::class, 'DisablePromo'])->name('DisablePr
 Route::post('/EnablePromo', [EditData::class, 'EnablePromo'])->name('EnablePromo');
 Route::post('/DisablePlan', [EditData::class, 'DisablePlan'])->name('DisablePlan');
 Route::post('/EnablePlan', [EditData::class, 'EnablePlan'])->name('EnablePlan');
-
+//Subscription
+Route::post('/ConfirmSubscription', [SubscriptionsData::class, 'ConfirmSubscription'])->name('ConfirmSubscription');
+Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');
 
 

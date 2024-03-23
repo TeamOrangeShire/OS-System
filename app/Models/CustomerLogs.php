@@ -11,15 +11,10 @@ class CustomerLogs extends Model
     protected $table = 'customer_logs';
     protected $primaryKey = 'log_id';
     protected $fillable = [
+      'customer_id',
       'log_date',
       'log_start_time',
       'log_end_time',
-      'log_firstname',
-      'log_middlename',
-      'log_lastname',
-      'log_ext',
-      'log_email',
-      'log_phone_num',
       'log_status',
     ];
 }
