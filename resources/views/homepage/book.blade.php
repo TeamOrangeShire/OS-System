@@ -20,14 +20,7 @@
 </head>
 <body>
     <div class="reservationLoading" id="reservationLoading">
-        <div class="container-loading">
-            <div class="loader-container">
-              <div class="loader"></div>
-              <div class="loading-text">Submitting Reservation Request...</div>
-            </div>
-          </div>
-          
-        
+        <div class="loader"></div>
       </div>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
@@ -146,7 +139,7 @@
                                     <div class="form-floating">
                                         <input type="hidden" id="dateHidden" name="date">
                                         <input type="text" class="form-control" id="date" disabled placeholder="date">
-                                        <label for="subject">Date</label>
+                                        <label for="subject">Select Date in the Calendar</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -159,14 +152,11 @@
                                           <label for="duration">Duration</label>
                                     </div>
                                 </div>
-                                <div class="col-md-12" style="display: none" id="divTime">
+                                <div class="col-12" style="display: none" id="divTime">
                                     <div class="form-floating">
-                                     
-                                        <select id="time" class="form-control" name="time"  name="duration">
-                                            <option value=""  disabled selected>Select Time</option>
-                                             
-                                          </select>
-                                          <label for="duration">Time</label>
+                                        <input type="hidden" name="hiddenTime" id="hiddenTime">
+                                        <input type="text" disabled class="form-control" id="vis_time" value="No Selected Time" name="vis_time" placeholder="Subject">
+                                        <label for="vis_time">Time</label>
                                     </div>
                                 </div>
                               
@@ -176,6 +166,66 @@
                             </div>
                         </form>
               
+                        <div class="time-div wow fadeInRight" id="div-time-1" style="display : none ;">
+                           <div class="time-layer">
+                            <button value="09AM-10AM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn" >9:00AM - 10:00AM</button>
+                            <button value="10AM-11AM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">10:00AM - 11:00AM</button>
+                            <button value="11AM-12PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">11:00AM - 12:00PM</button>
+                            <button value="12PM-01PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">12:00PM - 1:00PM</button>
+                           </div>
+                           <div class="time-layer">
+                            <button value="01PM-02PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">1:00PM - 2:00PM</button>
+                            <button value="02PM-03PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">2:00PM - 3:00PM</button>
+                            <button value="03PM-04PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">3:00PM - 4:00PM</button>
+                            <button value="04PM-05PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">4:00PM - 5:00PM</button>
+                           </div>
+                           <div class="time-layer">
+                            <button value="05PM-06PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">5:00PM - 6:00PM</button>
+                            <button value="06PM-07PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">6:00PM - 7:00PM</button>
+                            <button value="07PM-08PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">7:00PM - 8:00PM</button>
+                            <button value="08PM-09PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">8:00PM - 9:00PM</button>
+                           </div>
+                           <div class="time-layer">
+                            <button value="09PM-10PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">9:00PM - 10:00PM</button>
+                            <button value="10PM-11PM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">10:00PM - 11:00PM</button>
+                            <button value="11PM-12AM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">11:00PM - 12:00AM</button>
+                            <button value="12AM-01AM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">12:00AM - 1:00AM</button>
+                           </div>
+                           <div class="time-layer">
+                            <button value="01AM-02AM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">1:00AM - 2:00AM</button>
+                            <button value="02AM-03AM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">2:00AM - 3:00AM</button>
+                            <button value="03AM-04AM-1" onclick="TimeButtonCheck(this)" class="comic-button t-btn">3:00AM - 4:00AM</0button>    
+                           </div>
+                        </div>
+
+                        <div class="time-div wow fadeInRight" id="div-time-4" style="display: none" >
+                            <div class="time-layer">
+                             <button value="09AM-01PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn" >9:00AM - 1:00PM</button>
+                             <button value="10AM-02PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">10:00AM - 2:00PM</button>
+                             <button  value="11AM-03PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">11:00AM - 3:00PM</button>
+                             <button  value="12PM-04PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">12:00PM - 4:00PM</button>
+                            </div>
+                            <div class="time-layer">
+                             <button  value="01PM-05PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">1:00PM - 5:00PM</button>
+                             <button  value="02PM-06PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">2:00PM - 6:00PM</button>
+                             <button  value="03PM-07PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">3:00PM - 7:00PM</button>
+                             <button  value="04PM-08PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">4:00PM - 8:00PM</button>
+                            </div>
+                            <div class="time-layer">
+                             <button  value="05PM-09PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">5:00PM - 9:00PM</button>
+                             <button  value="06PM-10PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">6:00PM - 10:00PM</button>
+                             <button  value="07PM-11PM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">7:00PM - 11:00PM</button>
+                             <button  value="08PM-12AM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">8:00PM - 12:00AM</button>
+                            </div>
+                            <div class="time-layer">
+                                <button  value="09PM-01AM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">9:00PM - 1:00AM</button>
+                                <button value="10PM-02AM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">10:00PM - 2:00AM</button>
+                                <button  value="11PM-03AM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">11:00PM - 3:00AM</button>
+                                <button  value="12PM-04AM-4" onclick="TimeButtonCheck(this)" class="comic-button t-btn">12:00AM - 4:00AM</button>
+                            </div>
+                           
+                        
+                         </div>
                 </div>
             
                 </div>
@@ -235,9 +285,12 @@
                 if(document.getElementById('contact').value === '' || document.getElementById('contact').value.length < 11 || document.getElementById('submitReservation').textContent === 'Invalid Date! Choose Future dates'){
                     document.getElementById('submitReservation').disabled = true;
                     document.getElementById('submitReservation').textContent ='Invalid Date! Choose Future dates';
+                }else if(input.value.length === 11  ){
+                    document.getElementById('submitReservation').disabled = true;
                 }else{
                     document.getElementById('submitReservation').disabled = false;
                 }
+
            }
 
 
@@ -245,7 +298,6 @@
             const rate_id = select.value;
             const date = document.getElementById('dateHidden').value;
             const url = "{{ route('checkTime') }}?date="+ date + "&rate_id=" + rate_id; 
-            document.getElementById('time').innerHTML = '';
             axios.get(url)
                .then(function (response) {
                 
@@ -253,13 +305,17 @@
                 const endTime = response.data.timeEnd;
               
                if(response.data.rate === 4){
+                document.getElementById('div-time-4').style.display = '';
                 document.getElementById('divTime').style.display = '';
-                TimeFormater(4, startTime, endTime);
+                document.getElementById('div-time-1').style.display = 'none';
                  }else if(response.data.rate === 1){
-                    TimeFormater(1,startTime, endTime);
+                document.getElementById('div-time-1').style.display = '';
                 document.getElementById('divTime').style.display = '';
+                document.getElementById('div-time-4').style.display = 'none';
                }else{
+                 document.getElementById('div-time-1').style.display = 'none';
                  document.getElementById('divTime').style.display = 'none';
+                 document.getElementById('div-time-4').style.display = 'none';
                }
              })
            .catch(function (error) {
@@ -271,53 +327,7 @@
           });
            }
             
-            function TimeFormater(interval, FetchTimeDB){
-                let TimeInterval;
-                let html = '';
-                if(FetchTimeDB === 'none'){
-                    TimeInterval = 9;
-                }else{
-                    TimeInterval = FetchTimeDB;
-                }
-                while(TimeInterval < 24){
-                  const start = TimeInterval;
-                  const end = TimeInterval + interval;
-                  
-                  if(start - 12 <0){
-                    var suffixStart = 'AM';
-                  }else{
-                    var suffixStart = 'PM'
-                  }
-
-                  if(end - 12 <0){
-                    var suffixEnd = 'AM';
-                  }else{
-                    var suffixEnd = 'PM'
-                  }
-
-                  if(start - 12 <= 0){
-                    var startFormat = start;
-                  }else{
-                    var startFormat = start - 12;
-                  }
-
-                  if(end - 12 <= 0){
-                    var endFormat = end;
-                  }else{
-                    var endFormat = end - 12;
-                  }
-
-                  
-                  if(end < 24){
-                    html += "<option value='" + start+"-" +end+ "'>" +startFormat+ ":00" + suffixStart + " - "+ endFormat+":00" + suffixEnd +"</option>"; 
-                  }
-                
-                  TimeInterval +=interval;
-             
-                }
-                document.getElementById('time').innerHTML =  html;
-             
-            }
+        
 
             function SaveReservation() {
                 document.getElementById('reservationLoading').style.display = 'flex';
@@ -341,10 +351,6 @@
  }
 
 
- function DigitCounter(digit){
-    const convert = digit.toString().length;
-//converter
- }
 </script>
         <!-- Footer Start -->
         @include('homepage/Components/footer')
@@ -413,7 +419,7 @@
                 document.getElementById('date').value = newDate;
                 document.getElementById('dateHidden').value = newDate;
               
-             
+                CheckTimeRestrictions(newDate);
                 if(document.getElementById('contact').value === '' || document.getElementById('contact').value.length < 11){
                     document.getElementById('submitReservation').disabled = true;
                     document.getElementById('submitReservation').textContent = 'Please Make Sure Contact Number is valid';
@@ -425,6 +431,21 @@
         });
     });
 });
+
+function CheckTimeRestrictions(date){
+    const url = "{{ route('getTimeDate') }}?date=" + date;
+            axios.get(url)
+               .then(function (response) {
+                
+             })
+           .catch(function (error) {
+      
+            console.error('Error:', error);
+            })
+          .then(function () {
+         
+          });
+}
 
         </script>
 </body>

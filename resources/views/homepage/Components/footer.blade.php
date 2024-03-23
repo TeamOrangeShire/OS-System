@@ -13,7 +13,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-white mb-4">Quick Links</h5>
-                <a class="btn btn-link text-white-50" href="{{ route('book') }}">Book</a>
+                <a class="btn btn-link text-white-50" href="{{ route('home') }}">Home</a>
                 <a class="btn btn-link text-white-50" href="{{ route('contact') }}">Contact Us</a>
                 <a class="btn btn-link text-white-50" href="{{ route('solutions') }}">Our Services</a>
                 <a class="btn btn-link text-white-50" href="{{ route('reservation') }}">Reservation</a>
