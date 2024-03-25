@@ -112,3 +112,4 @@ Route::post('/ConfirmSubscription', [SubscriptionsData::class, 'ConfirmSubscript
 Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');
 
 
+Route::get('/admin/rooms_newreservation', function () { return view('admin.rooms_new');})->name('rooms_new');
