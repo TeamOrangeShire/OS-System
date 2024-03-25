@@ -441,20 +441,30 @@ function CheckTimeRestrictions(date){
                            button.disabled = false;
                  });
               if(response.data.status === "exist"){
-                  let Time = []; 
+                  let Time = [];
+                  let Interval = []; 
                   
                   for(let i = 0; i < response.data.time.length; i++){
                     Time.push(FilterTime(response.data.time[i]));
+                    Interval.push(TrimTime(response.data.time[i]));
+                   console.log(response.data.time[i]);
                   }
-                  const btns = document.querySelectorAll('.t-btn');
-
-                btns.forEach(function(button) {
-                for(let t = 0; t<Time.length; t++){
-                    if(button.textContent === Time[t]){
+              
+                  for(let interv = 0; interv < Interval.length; interv++){
+                    const btns = document.querySelectorAll('.t-btn');
+                    const timeFind_1 = TimeFinder(Interval[interv], 1);
+                    const timeFind_4 = TimeFinder(Interval[interv], 4);
+                    btns.forEach(function(button) {
+                  
+                    if(button.textContent === Time[interv]){
                         button.disabled = true;
                     }
-                }
+                
                 });
+                  
+                }
+              
+             
               }else{
                 const btns = document.querySelectorAll('.t-btn');
                 btns.forEach(function(button) {
@@ -472,35 +482,6 @@ function CheckTimeRestrictions(date){
           });
 }
 
-function FilterTime(time){
-   const start = addSuffix(time.substring(0,2));
-   const end = addSuffix(time.substring(3,5));
-
-   return start + ' - ' + end;
-}
-
-function addSuffix(time){
-    if(time[0]=== "0"){
-        var initial = time[1];
-    } else {
-        var initial = time;
-    }
-
-    if(parseInt(initial) < 12 && initial != "0"){
-        var format = initial + ":00AM";
-    } else if(initial === "0"){
-        var format = "12:00AM";
-    } else if(parseInt(initial) < 12){
-        var format = initial + ":00AM"; 
-    } else if(parseInt(initial) === 12){
-        var format = "12:00PM";
-    } else {
-        const adjust = parseInt(initial) - 12;
-        var format = adjust + ":00PM";
-    }
-
-    return format;
-}
 
 
         </script>
