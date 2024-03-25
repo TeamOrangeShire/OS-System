@@ -158,9 +158,7 @@ class GetDataViews extends Controller
         if($checkDate->isNotEmpty()){
             foreach($checkDate as $time){
                 $concatTime = $time->res_start . "-" . $time->res_end;
-                $interval = $time->res_end - $time->res_start;
-
-                array_push($timeList, [$concatTime, $interval]);
+                array_push($timeList, $concatTime);
             }
             return response()->json(['status'=>'exist', 'time'=> $timeList]);
         }else{

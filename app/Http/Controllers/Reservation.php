@@ -34,7 +34,7 @@ class Reservation extends Controller
       $res->res_start = $start;
       $res->res_end = $end;
       $res->res_notes = '';
-      $res->res_status = '';
+      $res->res_status = '0';
       $res->res_disable = 0;
       $res->save();
 
@@ -45,5 +45,16 @@ class Reservation extends Controller
 
       return response()->json(['status'=>'success']);
 
+    }
+    public function ConfirmReservation(Request $req){
+
+      $res_id = $req->r_id;
+      $update =  Reservations::where('res_id',$res_id)->first();
+      $update->update([
+         
+          'res_status'=> 1,
+          
+      ]);
+      return redirect()->back();
     }
 }

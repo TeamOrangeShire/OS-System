@@ -144,3 +144,77 @@ function GetIntTime(time){
       }
     }
 }
+
+
+function FilterTime(time){
+    const start = addSuffix(time.substring(0,2));
+    const end = addSuffix(time.substring(3,5));
+ 
+    return start + ' - ' + end;
+ }
+ 
+ function TrimTime(time){
+     const start = time.substring(0,2);
+     const end = time.substring(3,5);
+ 
+     return [start, end];
+ }
+ 
+ function addSuffix(time){
+     if(time[0]=== "0"){
+         var initial = time[1];
+     } else {
+         var initial = time;
+     }
+ 
+     if(parseInt(initial) < 12 && initial != "0"){
+         var format = initial + ":00AM";
+     } else if(initial === "0"){
+         var format = "12:00AM";
+     } else if(parseInt(initial) < 12){
+         var format = initial + ":00AM"; 
+     } else if(parseInt(initial) === 12){
+         var format = "12:00PM";
+     } else {
+         const adjust = parseInt(initial) - 12;
+         var format = adjust + ":00PM";
+     }
+ 
+     return format;
+ }
+
+ function TimeFinder1(time){
+    let start = parseInt(time[0]); 
+    const end = parseInt(time[1]);
+    const timeList = [];
+     
+    while (start < end) {
+        const semiEnd = start + 1;
+        if (semiEnd <= end) {
+            const timeString = start + "-" + semiEnd;
+            timeList.push(timeString);
+            start = parseInt(start) + 1; 
+        } else {
+            break; 
+        }
+    }
+
+    return timeList;
+}
+
+function TimeFinder4(time) {
+    const combi = ["09-13", "10-14", "11-15", "12-16", "13-17", "14-18", "15-19", "16-20", "17-21", "18-22", "19-23", "20-24", "21-01", "22-02", "23-03", "24-04"];
+    const start = parseInt(time[0]);
+    const end = parseInt(time[1]);
+    const timeList = [];
+
+    for (const slot of combi) {
+        const [slotStart, slotEnd] = slot.split('-').map(Number);
+        if (slotStart <= end && slotEnd >= start) {
+            timeList.push(slot);
+        }
+    }
+
+    return timeList;
+}
+
