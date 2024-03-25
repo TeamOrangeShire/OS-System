@@ -46,4 +46,15 @@ class Reservation extends Controller
       return response()->json(['status'=>'success']);
 
     }
+    public function ConfirmReservation(Request $req){
+
+      $res_id = $req->r_id;
+      $update =  Reservations::where('res_id',$res_id)->first();
+      $update->update([
+         
+          'res_status'=> 1,
+          
+      ]);
+      return redirect()->back();
+    }
 }
