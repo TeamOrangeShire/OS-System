@@ -144,3 +144,49 @@ function GetIntTime(time){
       }
     }
 }
+
+
+function FilterTime(time){
+    const start = addSuffix(time.substring(0,2));
+    const end = addSuffix(time.substring(3,5));
+ 
+    return start + ' - ' + end;
+ }
+ 
+ function TrimTime(time){
+     const start = time.substring(0,2);
+     const end = time.substring(3,5);
+ 
+     return [start, end];
+ }
+ 
+ function addSuffix(time){
+     if(time[0]=== "0"){
+         var initial = time[1];
+     } else {
+         var initial = time;
+     }
+ 
+     if(parseInt(initial) < 12 && initial != "0"){
+         var format = initial + ":00AM";
+     } else if(initial === "0"){
+         var format = "12:00AM";
+     } else if(parseInt(initial) < 12){
+         var format = initial + ":00AM"; 
+     } else if(parseInt(initial) === 12){
+         var format = "12:00PM";
+     } else {
+         const adjust = parseInt(initial) - 12;
+         var format = adjust + ":00PM";
+     }
+ 
+     return format;
+ }
+
+ function TimeFinder(time, interval){
+    const start = time[0];
+    const end = time[1];
+     
+    
+
+ }
