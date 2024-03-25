@@ -65,9 +65,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th colspan="2"> Action Buttons</th>
-
-
-
+                                    
                                 </tr>
                             </thead>
                             <tbody>
