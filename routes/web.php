@@ -110,5 +110,3 @@ Route::post('/EnablePlan', [EditData::class, 'EnablePlan'])->name('EnablePlan');
 //Subscription
 Route::post('/ConfirmSubscription', [SubscriptionsData::class, 'ConfirmSubscription'])->name('ConfirmSubscription');
 Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');
-
-
