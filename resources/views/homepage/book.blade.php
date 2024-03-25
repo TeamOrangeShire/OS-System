@@ -452,14 +452,19 @@ function CheckTimeRestrictions(date){
               
                   for(let interv = 0; interv < Interval.length; interv++){
                     const btns = document.querySelectorAll('.t-btn');
-                    const timeFind_1 = TimeFinder(Interval[interv], 1);
-                    const timeFind_4 = TimeFinder(Interval[interv], 4);
+                    const timeFind_1 = TimeFinder1(Interval[interv]);
+                    const timeFind_4 = TimeFinder4(Interval[interv]);
                     btns.forEach(function(button) {
-                  
-                    if(button.textContent === Time[interv]){
+                     timeFind_1.forEach(function(ti){
+                        if(button.textContent === FilterTime(ti)){
                         button.disabled = true;
                     }
-                
+                     });
+                     timeFind_4.forEach(function(ti){
+                        if(button.textContent === FilterTime(ti)){
+                        button.disabled = true;
+                    }
+                     });
                 });
                   
                 }
