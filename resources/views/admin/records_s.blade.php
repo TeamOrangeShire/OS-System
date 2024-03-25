@@ -96,13 +96,13 @@
                                                     <tr>
                                                         @php
                                         
-                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->where('sub_status', '!=', 1)->get();
+                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', '!=', 1)->where('sub_status', '!=', 0)->get();
                                                     
                                                 @endphp
                                                 @foreach ($CancelledSubs as $cancelled)
                     
                                                     <tr>
-                                                        <td> {{$cancelled->service_id}} </td>
+                                                        <td> {{$cancelled->sub_id}} </td>
                                                         <td> {{$cancelled->sub_start}} </td>
                                                         <td> {{$cancelled->sub_end}}   </td>
                                                         <td> {{$cancelled->sub_time}}  </td>
@@ -124,7 +124,7 @@
                             <div class="col-md-12">
                                 <div class="">
                                     <div class="card-header"  style="position: relative;">
-                                        <h5>Subscription Records</h5>
+                                        <h5>Completed Subscription</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
                                             <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
@@ -156,7 +156,7 @@
                                                 @foreach ($CancelledSubs as $cancelled)
                     
                                                     <tr>
-                                                        <td> {{$cancelled->service_id}} </td>
+                                                        <td> {{$cancelled->sub_id}} </td>
                                                         <td> {{$cancelled->sub_start}} </td>
                                                         <td> {{$cancelled->sub_end}}   </td>
                                                         <td> {{$cancelled->sub_time}}  </td>
@@ -178,7 +178,7 @@
                             <div class="col-md-12">
                                 <div class="">
                                     <div class="card-header"  style="position: relative;">
-                                        <h5>Subscription Records</h5>
+                                        <h5>Cancelled Subscription</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
                                             <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
@@ -210,7 +210,7 @@
                                                 @foreach ($CancelledSubs as $cancelled)
                     
                                                     <tr>
-                                                        <td> {{$cancelled->service_id}} </td>
+                                                        <td> {{$cancelled->sub_id}} </td>
                                                         <td> {{$cancelled->sub_start}} </td>
                                                         <td> {{$cancelled->sub_end}}   </td>
                                                         <td> {{$cancelled->sub_time}}  </td>
