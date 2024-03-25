@@ -57,7 +57,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                               
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Date</th>
@@ -76,11 +76,15 @@
                             @foreach ($Reservation as $res)
                                 
                             <tr>
-                                <td>1</td>
-                                <td>Mark</td>
+                               
+                                <td>@php
+                                    $cus_id = $res->customer_id;
+                                    $cus_info = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
+                                @endphp
+                                {{$cus_info->customer_firstname}}</td>
                                 <td>mark@gmail.com</td>
                                 <td>02/04/2024</td>
-                                <td>3PM TO 6PM</td>
+                                <td>10PM TO 14PM</td>
                                 <td>1</td>
                                 <td> 
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="updatemodal(`{{$res->res_id}}`"><i class="feather icon-check-circle"></i></button>  
@@ -165,6 +169,8 @@
 <!-- [ Main Content ] end -->
 
     <!-- Required Js -->
+    <script src="{{asset('js/main.js')}}"></script>
+
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 
