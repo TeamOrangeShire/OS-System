@@ -449,7 +449,7 @@ function CheckTimeRestrictions(date){
                     Interval.push(TrimTime(response.data.time[i]));
                    console.log(response.data.time[i]);
                   }
-                 
+              
                   for(let interv = 0; interv < Interval.length; interv++){
                     const btns = document.querySelectorAll('.t-btn');
                     const timeFind_1 = TimeFinder(Interval[interv], 1);
