@@ -187,6 +187,7 @@ function FilterTime(time){
     const start = time[0];
     const end = time[1];
      
-    
-
+    while(start < end){
+        start += interval;
+    }
  }
