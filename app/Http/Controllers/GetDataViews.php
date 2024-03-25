@@ -109,20 +109,27 @@ class GetDataViews extends Controller
     public function GetRoomRate(Request $req){
 
         $room_id = $req->input('room_id');
+        $date = $req->input('date');
 
         $rates = RoomPricing::where('room_id', $room_id)->get();
         $rate_id= [];
         $rate_name = [];
         $rate_price = [];
 
+        $reserve = Reservations::where('res_date', $date)->get();
 
+        if($reserve->isNotEmpty()){
+            $res_status = 1;
+        }else{
+            $res_status = 0;
+        }
         foreach($rates as $r){
             array_push($rate_id, $r->room_rates);
             $rateQuery = RoomRate::where('rate_id', $r->room_rates)->first();
             array_push($rate_name, $rateQuery->rate_name);
             array_push($rate_price, $rateQuery->rate_price);
         }
-        return response()->json(['rate_id'=>$rate_id, 'rate_name'=>$rate_name, 'rate_price'=>$rate_price]);
+        return response()->json(['rate_id'=>$rate_id, 'rate_name'=>$rate_name, 'rate_price'=>$rate_price, 'res_status'=>$res_status]);
     }
 
     public function CheckTime(Request $req){
