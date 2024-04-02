@@ -61,7 +61,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Email</th>
+                                    <th>Number</th>
                                     <th>Room</th>
                                     <th>Date</th>
                                     <th>Time</th>
