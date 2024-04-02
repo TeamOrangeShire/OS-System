@@ -56,7 +56,7 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover" style="text-align: center;">
                             <thead>
                                 <tr>
                                     <th>Name</th>
