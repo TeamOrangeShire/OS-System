@@ -11,9 +11,10 @@
   $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
   $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
   $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
+  $profile = $customer->customer_profile_pic;
 @endphp
   <!-- ======= Header ======= -->
-  @include('homepage.Dashboard.Components.nav')
+  @include('homepage.Dashboard.Components.nav', ['user_id'=>$user_id])
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -33,8 +34,8 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="{{ asset('img/sire_Albert.jfif') }}" alt="Profile" class="rounded-circle">
-              <h2>Kevin Anderson</h2>
+              <img src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle">
+              <h2>{{ $fullname }}</h2>
              
             </div>
           </div>
@@ -99,7 +100,7 @@
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="{{ asset('img/sire_Albert.jfif') }}" alt="Profile">
+                        <img src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile">
                         <div class="pt-2">
                           <button data-bs-toggle="modal" data-bs-target="#uploadProfilePic" type="button" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
                           <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -309,10 +310,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body modal-profile">
-          <img src="{{ asset('img/sire_Albert.jfif') }}" alt="Profile" class="rounded-circle profilePicture">
+          <img id="profilePicHolder" src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle profilePicture">
           <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
           <div class="col-sm-10">
-            <input class="form-control" type="file" id="formFile">
+            <input class="form-control" type="file" id="profilePicSelect">
           </div>
         </div>
         <div class="modal-footer">
@@ -351,6 +352,19 @@
          }
      });
   }
+  document.getElementById('profilePicSelect').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const image = document.getElementById('profilePicHolder');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            image.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    } 
+});
+
   </script>
   <!-- script end for change password -->
 

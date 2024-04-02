@@ -18,10 +18,11 @@ class Reservation extends Controller
 
     public function SaveReservation(Request $req){
       $customer = $req->customer_id;
-      $company = $req->company_name;
+      $company = empty($req->company_name) ? 'NA' : $req->company_name;
       $contact = $req->contact;
       $r_dur_price = $req->duration;
       $date = $req->date;
+      $notes = empty($req->notes) ? 'NA' : $req->notes;
       $time = $req->hiddenTime;
       $start = $time[0].$time[1];
       $end = $time[3].$time[4];
@@ -33,7 +34,7 @@ class Reservation extends Controller
       $res->res_company = $company;
       $res->res_start = $start;
       $res->res_end = $end;
-      $res->res_notes = '';
+      $res->res_notes = $notes;
       $res->res_status = '0';
       $res->res_disable = 0;
       $res->save();

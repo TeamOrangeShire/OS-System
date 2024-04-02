@@ -156,16 +156,21 @@
         </li><!-- End Messages Nav --> --}}
 
         <li class="nav-item dropdown pe-3">
-
+           @php
+               $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+               $profile_pic = $customer->customer_profile_pic;
+               $fullname = $customer->customer_firstname . " ". $customer->customer_middlename[0]. ". " .$customer->customer_lastname;
+               $semi_full = FirstNameFormat($customer->customer_firstname). ". ". $customer->customer_lastname;
+           @endphp
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{ asset('img/sire_Albert.jfif') }}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <img src="{{ $profile_pic === 'none' ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile_pic) }}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ $semi_full }}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6>{{ $fullname }}</h6>
+              {{-- <span>Web Designer</span> --}}
             </li>
             <li>
               <hr class="dropdown-divider">

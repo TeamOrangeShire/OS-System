@@ -159,7 +159,13 @@
                                         <labelfor="vis_time">Time</label>
                                     </div>
                                 </div>
-                              
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control"  name="notes" placeholder="notes"></textarea>
+                                        <label for="notes">Notes(Optional)</label>
+                                    </div>
+                                </div>
+                                
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" id="submitReservation" onclick="SaveReservation()" disabled type="submit">Fill the Form</button>
                                 </div>
