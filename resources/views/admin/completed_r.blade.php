@@ -59,11 +59,11 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Room No.</th>
+                                    <th>Action</th>
+
 
 
                                 </tr>
@@ -71,28 +71,12 @@
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>Mark</td>
-                                    <td>mark@gmail.com</td>
                                     <td>02/04/2024</td>
                                     <td>3PM TO 6PM</td>
                                     <td>1</td>
-
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>JANE</td>
-                                    <td>JANE@gmail.com</td>
-                                    <td>02/07/2024</td>
-                                    <td>3PM TO 6PM</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>SARAH</td>
-                                    <td>SARAH@gmail.com</td>
-                                    <td>02/05/2024</td>
-                                    <td>7PM TO 10PM</td>
-                                    <td>2</td>
+                                    <td>                                        
+                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"> <i class="feather icon-info"> </i></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -104,6 +88,59 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+{{-- modal start info --}}
+<div id="infomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Reservation Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
+                        <p class="" name="cname"> try </p> 
+                        <label for="email"><strong>Email:</strong></label> <br>
+                        <p class="" name="cemail"> try </p> 
+                        <label for="phone"><strong>Phone Number:</strong></label> <br>
+                        <p class="" name="cnum"> try </p> 
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="customer_name"> <strong>Reservation Details: </strong> </label> <br>
+                        <p class="" name="cname"> try </p> 
+                        <label for="email"><strong>Reservation Time::</strong></label> <br>
+                        <p class="" name="cemail"> try </p> 
+                        <label for="phone"><strong>Notes:</strong></label> <br>
+                        <p class="" name="cnum"> try </p> 
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-body">
+          
+                <div class="col-md-12">
+
+                   
+                    
+                </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+{{-- modal end info--}}
+
 <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->
