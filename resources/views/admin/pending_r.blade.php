@@ -4,13 +4,7 @@
 
 <head>
 	<title> Admin Dashboard</title>
-    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 11]>
-    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    	<![endif]-->
-    <!-- Meta -->
+ 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -65,7 +59,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th colspan="2"> Action Buttons</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,7 +95,7 @@
                                
                                 <td> 
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmres(`{{$res->res_id}}`,'{{$full_name}}','{{$timeplace}}','{{$room_name}}','{{$res->res_date}}')"><i class="feather icon-check-circle"></i></button>  
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal"><i class="feather icon-x-circle"></i></button>   </td>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="decline(`{{$res->res_id}}`)"><i class="feather icon-x-circle"></i></button>   </td>
                               </tr>
 
                             @endforeach
@@ -137,7 +131,7 @@
 
                     <div style="text-align: center;">
                         <button type="submit" class="btn btn-primary" >Yes</button>
-                        <button type="button" class="btn btn-secondary">No</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                 </div>
             </div>
@@ -159,11 +153,12 @@
             </div>
 
             <div class="modal-body">
-          
+          <form action="{{route('DeclineReservation')}}" method="post">
+            @csrf
                 <div class="col-md-12">
-                   
                     <div class="form-group" style="text-align: center;">   
                         <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
+                        <input type="text" id="res_id" name="res_id">
                         <select class="form-control" id="reasonlist" name="reasonlist">
                             <option value="Unpaid">Unpaid</option>
                             <option value="Customer Didn't Show">Customer Didn't Show Up</option>
@@ -171,11 +166,12 @@
                         </select>                        
                     </div>
                 <div style="text-align: center;">
-                    <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                    <button type="submit" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cancel()">No</button>
                 </div>
                 
             </div>
+        </form>
            </div>
           
         </div>
@@ -192,6 +188,9 @@
             document.getElementById('Rroom').value=room;
             document.getElementById('Rdate').value=date;
           
+        }
+        function decline(id){
+            document.getElementById('res_id').value=id;
         }
     </script>
     <!-- Required Js -->

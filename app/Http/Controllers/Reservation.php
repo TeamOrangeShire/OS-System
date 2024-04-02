@@ -35,7 +35,7 @@ class Reservation extends Controller
       $res->res_end = $end;
       $res->res_notes = '';
       $res->res_status = '0';
-      $res->res_disable = 0;
+      $res->res_reason = '';
       $res->save();
 
       $cust = CustomerAcc::where('customer_id', $customer)->first();
@@ -53,6 +53,20 @@ class Reservation extends Controller
       $update->update([
          
           'res_status'=> 1,
+          
+      ]);
+      return redirect()->back();
+    }
+    public function DeclineReservation(Request $req){
+
+      $res_id = $req->res_id;
+      $reason = $req->reasonlist;
+      $update =  Reservations::where('res_id',$res_id)->first();
+      $update->update([
+         
+          'res_status'=> 3,
+          'res_reason'=>$reason,
+
           
       ]);
       return redirect()->back();

@@ -112,5 +112,6 @@ Route::post('/ConfirmSubscription', [SubscriptionsData::class, 'ConfirmSubscript
 Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');
 //reservation
 Route::post('/ConfirmReservation', [Reservation::class, 'ConfirmReservation'])->name('ConfirmReservation');
+Route::post('/DeclineReservation', [Reservation::class, 'DeclineReservation'])->name('DeclineReservation');
 
 
