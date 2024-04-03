@@ -48,7 +48,7 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover" style="text-align: center;">
                             <thead>
                                 <tr>
                                
@@ -96,7 +96,7 @@
                                 <td> 
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmres(`{{$res->res_id}}`,'{{$full_name}}','{{$timeplace}}','{{$room_name}}','{{$res->res_date}}')"><i class="feather icon-check-circle"></i></button>  
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="decline(`{{$res->res_id}}`)"><i class="feather icon-x-circle"></i></button>   </td>
-                              </tr>
+                                     </tr>
 
                             @endforeach
                             </tbody>
@@ -109,6 +109,59 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+{{-- modal start info --}}
+<div id="infomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Reservation Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
+                        <p class="" name="cname"> try </p> 
+                        <label for="email"><strong>Email:</strong></label> <br>
+                        <p class="" name="cemail"> try </p> 
+                        <label for="phone"><strong>Phone Number:</strong></label> <br>
+                        <p class="" name="cnum"> try </p> 
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="customer_name"> <strong>Reservation Details: </strong> </label> <br>
+                        <p class="" name="cname"> try </p> 
+                        <label for="email"><strong>Reservation Time::</strong></label> <br>
+                        <p class="" name="cemail"> try </p> 
+                        <label for="phone"><strong>Notes:</strong></label> <br>
+                        <p class="" name="cnum"> try </p> 
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-body">
+          
+                <div class="col-md-12">
+
+                   
+                    
+                </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+{{-- modal end info--}}
+
 
 {{-- confirm modal start --}}
 <div id="confirmmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -158,7 +211,7 @@
                 <div class="col-md-12">
                     <div class="form-group" style="text-align: center;">   
                         <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
-                        <input type="text" id="res_id" name="res_id">
+                        <input type="hidden" id="res_id" name="res_id">
                         <select class="form-control" id="reasonlist" name="reasonlist">
                             <option value="Unpaid">Unpaid</option>
                             <option value="Customer Didn't Show">Customer Didn't Show Up</option>

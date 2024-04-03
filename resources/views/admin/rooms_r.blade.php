@@ -73,7 +73,7 @@
 
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table">
+                                            <table class="table" style="text-align: center;">
                                                 <thead>
                                                     <tr>
                                                         
@@ -140,7 +140,7 @@
        
         <div class="card-body table-border-style">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table" style="text-align: center;">
                     <thead>
                         <tr>
 
@@ -208,7 +208,7 @@
                                        </div>
                                         <div class="card-body table-border-style">
                                             <div class="table-responsive">
-                                                <table class="table">
+                                                <table class="table" style="text-align: center;">
                                                     <thead>
                                                         <tr>
                                                             <th>Room Number</th>
