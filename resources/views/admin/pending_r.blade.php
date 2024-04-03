@@ -96,8 +96,7 @@
                                 <td> 
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmres(`{{$res->res_id}}`,'{{$full_name}}','{{$timeplace}}','{{$room_name}}','{{$res->res_date}}')"><i class="feather icon-check-circle"></i></button>  
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="decline(`{{$res->res_id}}`)"><i class="feather icon-x-circle"></i></button>   </td>
-                                    <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"> <i class="feather icon-info"> </i></button>
-                                </tr>
+                                     </tr>
 
                             @endforeach
                             </tbody>
@@ -212,7 +211,7 @@
                 <div class="col-md-12">
                     <div class="form-group" style="text-align: center;">   
                         <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
-                        <input type="text" id="res_id" name="res_id">
+                        <input type="hidden" id="res_id" name="res_id">
                         <select class="form-control" id="reasonlist" name="reasonlist">
                             <option value="Unpaid">Unpaid</option>
                             <option value="Customer Didn't Show">Customer Didn't Show Up</option>

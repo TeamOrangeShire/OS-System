@@ -59,15 +59,11 @@
                                     <th>Time</th>
                                     <th>Status</th>
                                     <th>Action</th>
- 
-
-
-
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
-                                $Reservation = App\Models\Reservations::where('res_status',3)->get();
+                                $Reservation = App\Models\Reservations::where('res_cancel',1)->get();
                             @endphp
                             @foreach ($Reservation as $res)
                                 
@@ -75,6 +71,7 @@
                     
                                 @php   
                                     $reason = $res->res_reason;
+                                    $status = $res->res_status;
                                     $time = $res->res_start.'-'.$res->res_end;
                                     $cus_id = $res->customer_id;
                                     $cus_info = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
@@ -95,7 +92,14 @@
                                 </td>
                                 <td>{{$res->res_date}}</td>
                                 <td>{{$timeplace}}</td>
-                                <td > 
+                               
+                                    
+                                    @if ($status == 1)
+                                    <td>Confirmed</td>
+                                   @elseif ($status == 0)
+                                    <td>Pending</td>
+                               @endif
+                                <td> 
                                     <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick="view(`{{$full_name}}`,`{{$email}}`,`{{$number}}`,`{{$res->res_date}}`,`{{$timeplace}}`,`{{$reason}}`)"> <i class="feather icon-info"> </i></button>
                                    
                                 </td> 
