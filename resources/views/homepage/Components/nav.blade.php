@@ -34,9 +34,9 @@
                 <button class="user_account d-none d-lg-flex"></button>
                 <div class="profile-menu-content">
                     <a href="{{ route('customerProfile') }}"><i class="fa-regular fa-user" style="color: #ff5c40; padding-right:20px;"></i> Profile</a>
-                    <a href="#"><i class="fa-regular fa-bell" style="color: #ff5c40; padding-right:20px;"></i></i>Subscription</a>
-                    <a href="{{route('reservation')}}"><i class="fa-regular fa-calendar" style="color: #ff5c40; padding-right:20px;"></i>Reservation</a>
-                    <a href="#"><i class="fa-solid fa-sliders" style="color: #ff5c40; padding-right:20px;"></i>Settings</a>
+                    <a href="{{ route('customerSubscription') }}"><i class="fa-regular fa-bell" style="color: #ff5c40; padding-right:20px;"></i></i>Subscription</a>
+                    <a href="{{route('customerReservation')}}"><i class="fa-regular fa-calendar" style="color: #ff5c40; padding-right:20px;"></i>Reservation</a>
+                    <a href="{{ route('customerSettings') }}"><i class="fa-solid fa-sliders" style="color: #ff5c40; padding-right:20px;"></i>Settings</a>
                     <a href="#"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ff5c40; padding-right:20px;"></i>Logout</a>
                 </div>
                 <style>
