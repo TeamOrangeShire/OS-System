@@ -58,42 +58,57 @@
                         <table class="table table-hover" style="text-align: center;">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+
+                           
                                     <th>Name</th>
-                                    <th>Email</th>
+                                    <th>Room No.</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Room No.</th>
+                                    <th>Action</th>
+
+
 
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>mark@gmail.com</td>
-                                    <td>02/04/2024</td>
-                                    <td>3PM TO 6PM</td>
-                                    <td>1</td>
+<<<<<<< HEAD
+                                @php
+                                $Reservation = App\Models\Reservations::where('res_status',2)->get();
+                            @endphp
+                            @foreach ($Reservation as $res)
+                                
+                            <tr>
+                    
+                                @php   
+                                    $note = $res->res_notes;
+                                    $time = $res->res_start.'-'.$res->res_end;
+                                    $cus_id = $res->customer_id;
+                                    $cus_info = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
+                                    $full_name = $cus_info->customer_firstname.' '.$cus_info->customer_lastname;
+                                    $email = $cus_info->customer_email;
+                                    $number = $cus_info->customer_phone_num;
+                                    
+                                    $rprice_id = $res->rprice_id;
+                                    $rprice_info = App\Models\RoomPricing::where('rprice_id',$rprice_id)->first();
+                                    $room_id = $rprice_info->room_id;
+                                    $room_info = App\Models\Rooms::where('room_id',$room_id)->first();
+                                    $room_name = $room_info->room_number;
+                                    $timeplace = FilterTime($time);
+                                @endphp
+                                <td>{{$full_name}}</td>
+                                <td>
+                                {{$room_name}}
+                                 </td>
+                                <td>{{$res->res_date}}</td>
+                                <td>{{$timeplace}}</td>
+                                <td > 
+                                    <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick="view(`{{$full_name}}`,`{{$email}}`,`{{$number}}`,`{{$res->res_date}}`,`{{$timeplace}}`,`{{$note}}`)"> <i class="feather icon-info"> </i></button>
+                                   
+                                </td> 
+                                </tr>
 
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>JANE</td>
-                                    <td>JANE@gmail.com</td>
-                                    <td>02/07/2024</td>
-                                    <td>3PM TO 6PM</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>SARAH</td>
-                                    <td>SARAH@gmail.com</td>
-                                    <td>02/05/2024</td>
-                                    <td>7PM TO 10PM</td>
-                                    <td>2</td>
-                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
