@@ -7,6 +7,7 @@
 </head>
 
 <body>
+
   @php
   $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
   $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
@@ -100,7 +101,7 @@
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile">
+                        <img  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile">
                         <div class="pt-2">
                           <button data-bs-toggle="modal" data-bs-target="#uploadProfilePic" type="button" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
                           <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -309,17 +310,21 @@
           <h5 class="modal-title">Change Profile Pic</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+       <form method="POST" id="updateProfilePic" enctype="multipart/form-data">
+        @csrf
         <div class="modal-body modal-profile">
-          <img id="profilePicHolder" src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle profilePicture">
+          <img id="profilePicHolder" accept="image/*"  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle profilePicture">
           <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
           <div class="col-sm-10">
-            <input class="form-control" type="file" id="profilePicSelect">
+            <input type="hidden" name="user_id" value="{{ $user_id }}">
+            <input class="form-control" name="profilePic" type="file" id="profilePicSelect">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary"  onclick="UpdateProfilePic()">Save changes</button>
         </div>
+       </form>
       </div>
     </div>
   </div>
@@ -352,6 +357,53 @@
          }
      });
   }
+
+  function UpdateProfilePic(){
+    document.getElementById('loadingDiv').style.display = "flex";
+    event.preventDefault();
+    var formData = new FormData($('#updateProfilePic')[0]);
+  
+     $.ajax({
+         type: 'POST',
+         url: "{{ route('customerUpdatePic') }}",
+         data: formData,
+         contentType: false, 
+         processData: false,
+         success: function(response) {
+          document.getElementById('loadingDiv').style.display = "none";
+          document.getElementById('snackbar').style.display = "";
+            if(response.status === "success"){
+              document.getElementById('snackbarContent').textContent = "Successfully Updated Profile Picture";
+              fadeAnimate('success');
+            }else if(response.status === "exceed"){
+              document.getElementById('snackbarContent').textContent = "Error: Image Exceed to 10mb";
+              fadeAnimate('error');
+            }else{
+              document.getElementById('snackbarContent').textContent = "Error: Invalid Image Type(Accepted: jpeg, png, jpg)";
+              fadeAnimate('error');
+            }
+         }, 
+         error: function (xhr) {
+  
+             console.log(xhr.responseText);
+         }
+     });
+  }
+
+  function fadeAnimate(res) {
+    setTimeout(() => {
+        const snackbar = document.getElementById('snackbar');
+        snackbar.style.animation = "fadeOutSnackBar .5s";
+        setTimeout(() => {
+            snackbar.style.display = "none";
+         
+        }, 500);
+        if(res === 'success'){
+              location.reload();
+        }
+    }, 3000);
+}
+
   document.getElementById('profilePicSelect').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const image = document.getElementById('profilePicHolder');

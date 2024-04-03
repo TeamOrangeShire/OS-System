@@ -1,3 +1,6 @@
+<div class="snackbar" id="snackbar" style="display: none">
+  <span class="snackbarContent" id="snackbarContent"></span>
+</div>
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -437,3 +440,7 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+  
+  <div id="loadingDiv" style="display: none;" class="loadingDiv">
+    <div id="loading" class="loader"></div>
+  </div>
