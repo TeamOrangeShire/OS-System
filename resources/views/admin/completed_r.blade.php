@@ -72,7 +72,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-<<<<<<< HEAD
                                 @php
                                 $Reservation = App\Models\Reservations::where('res_status',2)->get();
                             @endphp
