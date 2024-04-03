@@ -59,10 +59,10 @@
                         <table class="table table-hover" style="text-align: center;">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Room No.</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Room No.</th>
+                                   
                                     <th> Action </th>
 
 
@@ -70,19 +70,45 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>02/04/2024</td>
-                                    <td>3PM TO 6PM</td>
-                                    <td>1</td>
-                                    <td > 
-                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"> <i class="feather icon-info"> </i></button>
-                                        <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#cancelmodal"> <i class="feather icon-x-circle"></i> </button>
-
-                                    </td>
-                                    
-                                </tr>
+                                @php
+                                $Reservation = App\Models\Reservations::where('res_status',1)->get();
+                            @endphp
+                            @foreach ($Reservation as $res)
                                 
+                            <tr>
+                    
+                                @php   
+                                    $note = $res->res_notes;
+                                    $time = $res->res_start.'-'.$res->res_end;
+                                    $cus_id = $res->customer_id;
+                                    $cus_info = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
+                                    $full_name = $cus_info->customer_firstname.' '.$cus_info->customer_lastname;
+                                    $email = $cus_info->customer_email;
+                                    $number = $cus_info->customer_phone_num;
+                                    
+                                    $rprice_id = $res->rprice_id;
+                                    $rprice_info = App\Models\RoomPricing::where('rprice_id',$rprice_id)->first();
+                                    $room_id = $rprice_info->room_id;
+                                    $room_info = App\Models\Rooms::where('room_id',$room_id)->first();
+                                    $room_name = $room_info->room_number;
+                                    $timeplace = FilterTime($time);
+                                @endphp
+                                
+                                <td>
+                                {{$room_name}}
+                                 </td>
+                                <td>{{$res->res_date}}</td>
+                                <td>{{$timeplace}}</td>
+                                <td > 
+                                    <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick="view(`{{$full_name}}`,`{{$email}}`,`{{$number}}`,`{{$res->res_date}}`,`{{$timeplace}}`,`{{$note}}`)"> <i class="feather icon-info"> </i></button>
+                                    <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#cancelmodal"  onclick="cancel(`{{$res->res_id}}`)"><i class="feather icon-x-circle"></i> </button>
+
+                                </td> 
+
+                              </tr>
+
+                            @endforeach
+                               
                             </tbody>
                         </table>
                     </div>
@@ -105,23 +131,25 @@
             </div>
 
             <div class="modal-body">
-          
-                <div class="col-md-12">
-                   
+                <form action="{{route('DeclineReservation')}}" method="POST"> 
+                    @csrf
+                    <div class="col-md-12">
                         <div class="form-group" style="text-align: center;">   
                             <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
+                            <input type="hidden" id="res_id" name="res_id">
                             <select class="form-control" id="reasonlist" name="reasonlist">
-                                <option value="Customer Requested">Customer Requested</option>
-                                <option value="Customer Requested">Customer Requested</option>
-                                <option value="Customer Requested">Customer Requested</option>
+                                <option value="Unpaid">Unpaid</option>
+                                <option value="Customer Didn't Show">Customer Didn't Show Up</option>
+                                <option value="Customer Cancelled">Customer Cancelled</option>
                             </select>                        
                         </div>
                     <div style="text-align: center;">
-                        <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
-                        <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cancel()">No</button>
                     </div>
                     
                 </div>
+            </form>
            </div>
           
         </div>
@@ -144,12 +172,13 @@
                 <div class="col-sm-6">
                     <div style="margin-left: 40px;">
                         <br>
+                      
                         <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
-                        <p class="" name="cname"> try </p> 
+                        <p class="" name="cname" id="cus_name">  </p> 
                         <label for="email"><strong>Email:</strong></label> <br>
-                        <p class="" name="cemail"> try </p> 
+                        <p class="" name="cemail" id="cus_email">  </p> 
                         <label for="phone"><strong>Phone Number:</strong></label> <br>
-                        <p class="" name="cnum"> try </p> 
+                        <p class="" name="cnum" id="cus_num">  </p> 
                     </div>
 
                 </div>
@@ -157,79 +186,38 @@
                 <div class="col-sm-6">
                     <div style="margin-left: 40px;">
                         <br>
-                        <label for="customer_name"> <strong>Reservation Details: </strong> </label> <br>
-                        <p class="" name="cname"> try </p> 
+                        <label for="customer_name"> <strong>Reservation Date: </strong> </label> <br>
+                        <p class="" name="cname" id="cus_date">  </p> 
                         <label for="email"><strong>Reservation Time::</strong></label> <br>
-                        <p class="" name="cemail"> try </p> 
+                        <p class="" name="cemail" id="cus_time">  </p> 
                         <label for="phone"><strong>Notes:</strong></label> <br>
-                        <p class="" name="cnum"> try </p> 
+                        <p class="" name="cnum" id="cus_note">  </p> 
                     </div>
                 </div>
 
             </div>
 
-            <div class="modal-body">
-          
-                <div class="col-md-12">
-
-                   
-                    
-                </div>
-           </div>
-          
+        
         </div>
     </div>
 </div>
 {{-- modal end info--}}
 
 <!-- [ Main Content ] end -->
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
-
+    <script>
+         function view(name,email,number,date,time,note){
+            document.getElementById('cus_name').textContent=name;
+            document.getElementById('cus_email').textContent=email;
+            document.getElementById('cus_num').textContent=number;
+            document.getElementById('cus_date').textContent=date;
+            document.getElementById('cus_time').textContent=time;
+            document.getElementById('cus_note').textContent=note;
+        }
+        function cancel(id){
+            document.getElementById('res_id').value=id;
+        }
+    </script>
+    <script src="{{asset('js/main.js')}}"></script>
     <!-- Required Js -->
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>

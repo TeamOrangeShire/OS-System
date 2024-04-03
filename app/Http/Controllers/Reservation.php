@@ -37,6 +37,7 @@ class Reservation extends Controller
       $res->res_notes = $notes;
       $res->res_status = '0';
       $res->res_reason = '';
+      
       $res->save();
 
       $cust = CustomerAcc::where('customer_id', $customer)->first();
