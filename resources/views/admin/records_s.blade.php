@@ -73,7 +73,7 @@
                                         <h5>Subscription Records</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
-                                            <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction()" id="Project" placeholder="Search">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary">
                                                     <i class="feather icon-search"></i>
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table table-hover">
+                                            <table class="table table-hover" id="myTable"  style="text-align: center">
                                                 <thead>
                                                     <tr>
                                                         <th>Subscription ID</th>
@@ -127,7 +127,7 @@
                                         <h5>Completed Subscription</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
-                                            <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction()" id="Project" placeholder="Search">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary">
                                                     <i class="feather icon-search"></i>
@@ -137,13 +137,13 @@
                                     </div>
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table table-hover">
+                                            <table class="table table-hover" id="myTable"  style="text-align: center">
                                                 <thead>
                                                     <tr>
-                                                        <th>Subscription ID</th>
-                                                        <th>Start Time</th>
-                                                        <th>End Time</th>
-                                                        <th>Hours left</th>
+                                                        <th>Subscription</th>
+                                                        <th>Name</th>
+                                                        <th>Expiry Date</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -157,9 +157,12 @@
                     
                                                     <tr>
                                                         <td> {{$cancelled->sub_id}} </td>
-                                                        <td> {{$cancelled->sub_start}} </td>
+                                                        <td> john </td>
                                                         <td> {{$cancelled->sub_end}}   </td>
-                                                        <td> {{$cancelled->sub_time}}  </td>
+                                                        <td> 
+                                                            <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick=""> <i class="feather icon-info"> </i></button>
+
+                                                        </td>
                                         
                     
                     
@@ -181,7 +184,7 @@
                                         <h5>Cancelled Subscription</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
-                                            <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
+                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction()" id="Project" placeholder="Search">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary">
                                                     <i class="feather icon-search"></i>
@@ -191,32 +194,35 @@
                                     </div>
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table table-hover">
+                                            <table class="table table-hover" id="myTable" style="text-align: center">
                                                 <thead>
                                                     <tr>
-                                                        <th>Subscription ID</th>
-                                                        <th>Start Time</th>
-                                                        <th>End Time</th>
+                                                        <th>Subscription</th>
+                                                        <th>Name</th>
                                                         <th>Hours left</th>
+                                                        <th>Reason for Cancellation</th>
+                                                        <th>Cancellation Date</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         @php
                                         
-                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->get();
+                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', 2)->get();
                                                     
                                                 @endphp
                                                 @foreach ($CancelledSubs as $cancelled)
                     
                                                     <tr>
-                                                        <td> {{$cancelled->sub_id}} </td>
-                                                        <td> {{$cancelled->sub_start}} </td>
-                                                        <td> {{$cancelled->sub_end}}   </td>
+                                                        <td> {{$cancelled->service_id}} </td>
+                                                        <td> john  </td>
                                                         <td> {{$cancelled->sub_time}}  </td>
-                                        
-                    
-                    
+                                                        <td> {{$cancelled->sub_cancel_reason}}</td>
+                                                        <td> {{$cancelled->updated_at}}</td>
+                                                        <td>
+                                                            <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick=""> <i class="feather icon-info"> </i></button>
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                     </tr>
@@ -238,6 +244,81 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+
+{{-- modal start info --}}
+<div id="infomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Reservation Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                      
+                        <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
+                        <p class="" name="cname" id="cus_name">  </p> 
+                        <label for="email"><strong>Email:</strong></label> <br>
+                        <p class="" name="cemail" id="cus_email">  </p> 
+                        <label for="phone"><strong>Phone Number:</strong></label> <br>
+                        <p class="" name="cnum" id="cus_num">  </p> 
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="customer_name"> <strong>Reservation Date: </strong> </label> <br>
+                        <p class="" name="cname" id="cus_date">  </p> 
+                        <label for="email"><strong>Reservation Time::</strong></label> <br>
+                        <p class="" name="cemail" id="cus_time">  </p> 
+                        <label for="phone"><strong>Notes:</strong></label> <br>
+                        <p class="" name="cnum" id="cus_note">  </p> 
+                    </div>
+                </div>
+
+            </div>
+
+        
+        </div>
+    </div>
+</div>
+{{-- modal end info--}}
+
+{{-- search function --}}
+<script>
+function myFunction() {
+    var input, filter, table, tr, td, a, i, txtValue;
+    input = document.getElementById("Project");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            a = td.getElementsByTagName("a")[0];
+            if (a) {
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+}
+
+    </script>
+    {{-- search function --}}
+
+
 <!-- [ Main Content ] end -->
    
 

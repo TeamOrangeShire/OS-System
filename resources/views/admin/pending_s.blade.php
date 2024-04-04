@@ -57,7 +57,7 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover"  style="text-align: center">
                             <thead>
                                 <tr>
                                    
@@ -94,8 +94,8 @@
                                
                                 
     
-                                <td> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmplan('{{$sub->sub_id}}','{{$ServiceHP->service_name}}','{{$ServiceHP->service_hours}}','{{$cus_fullname}}','{{$cus_email}}','{{$cus_number}}')"><i class="feather icon-check-circle"></i></button>  
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="declineplan('{{$sub->sub_id}}','{{$ServiceHP->service_name}}','{{$ServiceHP->service_hours}}','{{$cus_fullname}}','{{$cus_email}}','{{$cus_number}}')"><i class="feather icon-x-circle"></i></button>   </td>
+                                <td> <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmplan('{{$sub->sub_id}}','{{$ServiceHP->service_name}}','{{$ServiceHP->service_hours}}','{{$cus_fullname}}','{{$cus_email}}','{{$cus_number}}')"><i class="feather icon-check-circle"></i></button>  
+                                    <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="declineplan('{{$sub->sub_id}}','{{$ServiceHP->service_name}}','{{$ServiceHP->service_hours}}','{{$cus_fullname}}','{{$cus_email}}','{{$cus_number}}')"><i class="feather icon-x-circle"></i></button>   </td>
                             </tr>
                             @endforeach
                                
