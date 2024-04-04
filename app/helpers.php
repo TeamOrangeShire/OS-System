@@ -47,4 +47,25 @@ function FilterTime($time){
      }
   return $finalInitials;
  }
+
+
+ function HoursToMinutes($time){
+    return $time * 60;
+ }
+
+ function MinutesToHours($time){
+     $hours = intval($time / 60);
+     $minutes = $time % 60;
+
+     $formatTime = TimeConv($hours) . ":" . TimeConv($minutes);
+
+     return $formatTime;
+ }
+ function TimeConv($time){
+     if(strlen($time) === 2){
+     return $time;
+     }else{
+          return '0'.$time;
+     }
+ }
 ?>
