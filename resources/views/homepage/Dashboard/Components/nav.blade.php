@@ -17,7 +17,7 @@
 
      
 
-        {{-- <li class="nav-item dropdown">
+        <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
@@ -44,9 +44,9 @@
 
             <li>
               <hr class="dropdown-divider">
-            </li> --}}
+            </li>
 
-            {{-- <li class="notification-item">
+            <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
                 <h4>Atque rerum nesciunt</h4>
@@ -90,7 +90,7 @@
 
           </ul><!-- End Notification Dropdown Items -->
 
-        </li><!-- End Notification Nav --> --}}
+        </li><!-- End Notification Nav -->
 
         {{-- <li class="nav-item dropdown">
 
@@ -173,7 +173,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>{{ $fullname }}</h6>
-              {{-- <span>Web Designer</span> --}}
+              <span>Account Balance: ₱1000</span>
             </li>
             <li>
               <hr class="dropdown-divider">

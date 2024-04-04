@@ -122,12 +122,32 @@
               </div>
               <!--recent activity end-->
 
+              
+
             </div>
           </div>
         </div>
       </div>
     </section>
- 
+ @php
+     $service = App\Models\ServiceHp::all();
+ @endphp
+   <div class="row gap-3 justify-content-center">
+
+    @foreach ($service as $serv)
+    <div class="card text-center col-md-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ $serv->service_name }}</h5>
+        <p class="card-text">Hybrid Pros(Consumable within 30 calendar days)</p>
+        <p class="card-text">{{ $serv->service_hours }}Hours - ₱{{ $serv->service_price }}</p>
+        <a href="#" class="btn btn-success">Subscribe</a>
+      </div>
+    </div>
+    @endforeach
+   
+    
+   </div>
+
 
 
   </main><!-- End #main -->
