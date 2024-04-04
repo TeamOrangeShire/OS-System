@@ -55,17 +55,13 @@
                     <h5>Reservations Records</h5>
                             <button style=" position: absolute;top: 10px;right: 10px; " class="btn  btn-primary">Print Records</button> 
                         <div class="input-group m-t-15" style="margin-top: 25px;"> 
-                        <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary">
-                                <i class="feather icon-search"></i>
-                            </button>
-                        </div>
+                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction('Project')" id="Project" placeholder="Search">
+
                     </div>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover" style="text-align: center;">
+                        <table class="table table-hover" id="myTable"  style="text-align: center">
                             <thead>
                                 <tr>
                                    
@@ -173,6 +169,33 @@
     </div>
 </div>
 <!-- [ Main Content ] end -->
+
+{{-- search function --}}
+<!-- search function -->
+<script>
+    function myFunction(inputId) {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById(inputId);
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break; // Break out of the inner loop if a match is found
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+    </script>    
+     {{-- search function --}}
  
     <script>
           function view(name,email,number,date,time,note){
