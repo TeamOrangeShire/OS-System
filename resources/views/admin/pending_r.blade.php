@@ -4,13 +4,7 @@
 
 <head>
 	<title> Admin Dashboard</title>
-    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 11]>
-    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    	<![endif]-->
-    <!-- Meta -->
+ 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -54,7 +48,7 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover" style="text-align: center;">
                             <thead>
                                 <tr>
                                
@@ -65,7 +59,7 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th colspan="2"> Action Buttons</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,8 +95,8 @@
                                
                                 <td> 
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmres(`{{$res->res_id}}`,'{{$full_name}}','{{$timeplace}}','{{$room_name}}','{{$res->res_date}}')"><i class="feather icon-check-circle"></i></button>  
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal"><i class="feather icon-x-circle"></i></button>   </td>
-                              </tr>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="decline(`{{$res->res_id}}`)"><i class="feather icon-x-circle"></i></button>   </td>
+                                     </tr>
 
                             @endforeach
                             </tbody>
@@ -115,6 +109,59 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+{{-- modal start info --}}
+<div id="infomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Reservation Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
+                        <p class="" name="cname"> try </p> 
+                        <label for="email"><strong>Email:</strong></label> <br>
+                        <p class="" name="cemail"> try </p> 
+                        <label for="phone"><strong>Phone Number:</strong></label> <br>
+                        <p class="" name="cnum"> try </p> 
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="customer_name"> <strong>Reservation Details: </strong> </label> <br>
+                        <p class="" name="cname"> try </p> 
+                        <label for="email"><strong>Reservation Time::</strong></label> <br>
+                        <p class="" name="cemail"> try </p> 
+                        <label for="phone"><strong>Notes:</strong></label> <br>
+                        <p class="" name="cnum"> try </p> 
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-body">
+          
+                <div class="col-md-12">
+
+                   
+                    
+                </div>
+           </div>
+          
+        </div>
+    </div>
+</div>
+{{-- modal end info--}}
+
 
 {{-- confirm modal start --}}
 <div id="confirmmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -137,7 +184,7 @@
 
                     <div style="text-align: center;">
                         <button type="submit" class="btn btn-primary" >Yes</button>
-                        <button type="button" class="btn btn-secondary">No</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                 </div>
             </div>
@@ -159,11 +206,12 @@
             </div>
 
             <div class="modal-body">
-          
+          <form action="{{route('DeclineReservation')}}" method="post">
+            @csrf
                 <div class="col-md-12">
-                   
                     <div class="form-group" style="text-align: center;">   
                         <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
+                        <input type="hidden" id="res_id" name="res_id">
                         <select class="form-control" id="reasonlist" name="reasonlist">
                             <option value="Unpaid">Unpaid</option>
                             <option value="Customer Didn't Show">Customer Didn't Show Up</option>
@@ -171,11 +219,12 @@
                         </select>                        
                     </div>
                 <div style="text-align: center;">
-                    <button type="button" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancel()">No</button>
+                    <button type="submit" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cancel()">No</button>
                 </div>
                 
             </div>
+        </form>
            </div>
           
         </div>
@@ -192,6 +241,9 @@
             document.getElementById('Rroom').value=room;
             document.getElementById('Rdate').value=date;
           
+        }
+        function decline(id){
+            document.getElementById('res_id').value=id;
         }
     </script>
     <!-- Required Js -->

@@ -32,4 +32,19 @@ function FilterTime($time){
  
      return $format;
  }
+
+ function FirstNameFormat($string){
+     $count = str_word_count($string);
+     $initials = "";
+     if($count === 1){
+       $finalInitials = $initials . $string[0];
+     }else{
+          $firstName = explode(" ", $string);
+          for($i = 0; $i < $count; $i++){
+            $initials = $initials . $firstName[$i][0];
+          }
+       $finalInitials = $initials;
+     }
+  return $finalInitials;
+ }
 ?>

@@ -42,6 +42,7 @@ Route::post('/reserve-date',[Reservation::class,'SelectDate'] )->name('submitDat
 Route::post('/saveReservation',[Reservation::class,'SaveReservation'] )->name('saveReservation');
 Route::post('/customer-change-pass',[EditAcc::class,'EditCustomerPassword'] )->name('editPassword');
 Route::post('/customer-profile-update',[EditAcc::class,'EditCustomerProfile'] )->name('editProfile');
+Route::post('/customer-profile-update-picture',[EditAcc::class,'UpdateCustomerProfilePic'] )->name('customerUpdatePic');
 
 //Customer Dashboard
 Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');
@@ -112,5 +113,6 @@ Route::post('/ConfirmSubscription', [SubscriptionsData::class, 'ConfirmSubscript
 Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');
 //reservation
 Route::post('/ConfirmReservation', [Reservation::class, 'ConfirmReservation'])->name('ConfirmReservation');
+Route::post('/DeclineReservation', [Reservation::class, 'DeclineReservation'])->name('DeclineReservation');
 
 

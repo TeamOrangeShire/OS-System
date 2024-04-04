@@ -19,6 +19,7 @@ class Reservations extends Model
        'res_end',
        'res_notes',
        'res_status',
-       'res_disable',
+       'res_cancel',
+       'res_reason',
     ];
 }

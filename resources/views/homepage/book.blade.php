@@ -87,7 +87,7 @@
                         $room = App\Models\Rooms::orderBy('room_number')->where('rooms_disable', '!=', 1)->get();
                     @endphp
                <div class="col-md-6">
-                <select class="form-control" name="" onchange="selectRoom(this)" id="">
+                <select class="form-control" name="" onchange="selectRoom(this)" id="selectRoom">
                     <option value="none" disabled selected>Select Room to show calendar</option>
                    @foreach ($room as $r)
                    <option value="{{ $r->room_id }}">Room {{ $r->room_number }}</option>
@@ -156,10 +156,16 @@
                                     <div class="form-floating">
                                         <input type="hidden" name="hiddenTime" id="hiddenTime">
                                         <input type="text" disabled class="form-control" id="vis_time" value="No Selected Time" name="vis_time" placeholder="Subject">
-                                        <label for="vis_time">Time</label>
+                                        <labelfor="vis_time">Time</label>
                                     </div>
                                 </div>
-                              
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control"  name="notes" placeholder="notes"></textarea>
+                                        <label for="notes">Notes(Optional)</label>
+                                    </div>
+                                </div>
+                                
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" id="submitReservation" onclick="SaveReservation()" disabled type="submit">Fill the Form</button>
                                 </div>
@@ -237,11 +243,13 @@
 <script>
     
     function selectRoom(inputs){
+        const dur = document.getElementById('duration');
+        dur.innerHTML = '';
+        dur.innerHTML = '<option selected disabled>Please Select a date first</option>';
             HideAllCalendars();
                const cal_name = 'calendars' + inputs.value;
                document.getElementById(cal_name).style.display = '';
                document.getElementById('room').value =  inputs.options[inputs.selectedIndex].text;
-               SelectRate(inputs.value);
             }
 
             function HideAllCalendars(){
@@ -252,30 +260,7 @@
             });
             }
 
-            function SelectRate(data){
-                const url = "{{ route('getRoomRates') }}?room_id="+ data;
-                const duration = document.getElementById('duration');
-                axios.get(url)
-               .then(function (response) {
-               const rate_id = response.data.rate_id;
-               const rate_name = response.data.rate_name;
-               const rate_price = response.data.rate_price;
-               let html = '';
-               html += '<option disabled selected>Choose Duration/Price</option>';
-               for(let i = 0; i<rate_id.length; i++){
-                html += "<option value='"+rate_id[i]+ "'" + ">" + rate_name[i] + "/₱" + rate_price[i] + "</option>";
-               }
-               duration.innerHTML = html;
-            
-          })
-           .catch(function (error) {
-      
-            console.error('Error:', error);
-            })
-          .then(function () {
-         
-          });
-            }
+          
            
             function CheckingContact(input){
             
@@ -284,9 +269,9 @@
     }
                 if(document.getElementById('contact').value === '' || document.getElementById('contact').value.length < 11 || document.getElementById('submitReservation').textContent === 'Invalid Date! Choose Future dates'){
                     document.getElementById('submitReservation').disabled = true;
-                    document.getElementById('submitReservation').textContent ='Invalid Date! Choose Future dates';
                 }else if(input.value.length === 11  ){
-                    document.getElementById('submitReservation').disabled = true;
+                    document.getElementById('submitReservation').textContent ='Submit Reservation';
+                    document.getElementById('submitReservation').disabled = false;
                 }else{
                     document.getElementById('submitReservation').disabled = false;
                 }
@@ -420,6 +405,7 @@
                 document.getElementById('dateHidden').value = newDate;
               
                 CheckTimeRestrictions(newDate);
+                SelectRate(document.getElementById('selectRoom').value, newDate);
                 if(document.getElementById('contact').value === '' || document.getElementById('contact').value.length < 11){
                     document.getElementById('submitReservation').disabled = true;
                     document.getElementById('submitReservation').textContent = 'Please Make Sure Contact Number is valid';
@@ -447,7 +433,6 @@ function CheckTimeRestrictions(date){
                   for(let i = 0; i < response.data.time.length; i++){
                     Time.push(FilterTime(response.data.time[i]));
                     Interval.push(TrimTime(response.data.time[i]));
-                   console.log(response.data.time[i]);
                   }
               
                   for(let interv = 0; interv < Interval.length; interv++){
@@ -487,7 +472,47 @@ function CheckTimeRestrictions(date){
           });
 }
 
-
+             function SelectRate(data, date){
+               const url = "{{ route('getRoomRates') }}?room_id="+ data + "&date=" + date;
+               const duration = document.getElementById('duration');
+               duration.innerHTML = '';
+                axios.get(url)
+               .then(function (response) {
+               const rate_id = response.data.rate_id;
+               const rate_name = response.data.rate_name;
+               const rate_price = response.data.rate_price;
+               const res_status = response.data.res_status;
+               console.log(response.data);
+               let html = '';
+               if(res_status === 1){
+                html += '<option disabled selected>Choose Duration/Price</option>';
+               for(let i = 0; i<rate_id.length; i++){
+                if(rate_name[i] === "Hourly" || rate_name[i] === "4 Hours"){
+                    html += "<option value='"+rate_id[i]+ "'" + ">" + rate_name[i] + "/₱" + rate_price[i] + "</option>";
+                }else{
+                 html += "<option disabled style='text-decoration: line-through;' value='"+rate_id[i]+ "'" + ">" + rate_name[i] + "/₱" + rate_price[i] + "-Not Available in this date</option>";
+                }
+                
+               }
+               duration.innerHTML = html;
+               }else{
+                html += '<option disabled selected>Choose Duration/Price</option>';
+               for(let i = 0; i<rate_id.length; i++){
+                html += "<option value='"+rate_id[i]+ "'" + ">" + rate_name[i] + "/₱" + rate_price[i] + "</option>";
+               }
+               duration.innerHTML = html;
+               }
+            
+            
+          })
+           .catch(function (error) {
+      
+            console.error('Error:', error);
+            })
+          .then(function () {
+         
+          });
+            }
 
         </script>
 </body>
