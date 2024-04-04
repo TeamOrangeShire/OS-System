@@ -40,7 +40,7 @@ class SubscriptionsData extends Controller
         $update->update([
            
       
-            'sub_status'=> 3,
+            'sub_cancel'=> 3,
             'sub_cancel_reason'=>$reasonlist,
    
         ]);

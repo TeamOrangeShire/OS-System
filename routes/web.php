@@ -49,6 +49,11 @@ Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name(
 Route::get('/customer/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');
 Route::get('/customer/reservation',[GetDataViews::class, 'CustomerReservation'] )->name('customerReservation');
 Route::get('/customer/settings',[GetDataViews::class, 'CustomerSettings'] )->name('customerSettings');
+
+
+
+
+
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');
