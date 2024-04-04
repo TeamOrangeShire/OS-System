@@ -1,8 +1,8 @@
 <div class="container-fluid nav-bar bg-transparent">
     <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
         <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center text-center c_primary">
-            <div class="icon  me-2">
-                <img class="img-fluid" src="{{ asset('img/os_logo.png') }}" alt="Icon" style="width: 40px; height: 40px;">
+            <div class="  me-2">
+                <img class="img-fluid" src="{{ asset('img/os_logo.png') }}" alt="Icon" style="width: 43px; height: 40px;">
             </div>
             <h1 class="m-0 text-primary">Orange Shire</h1>
         </a>

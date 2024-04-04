@@ -25,12 +25,12 @@
         <div class="container-fluid header bg-white p-0 mt-4">
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                 <div class="col-md-6 p-5 mt-lg-5">
-                    <h1 class="display-5 animated fadeIn mb-4">Services</h1> 
+                    <h1 class="display-5 animated fadeIn mb-4">Solutions</h1> 
                         <nav aria-label="breadcrumb animated fadeIn">
                         <ol class="breadcrumb text-uppercase">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                            <li class="breadcrumb-item text-body active" aria-current="page">Services</li>
+                            <li class="breadcrumb-item text-body active" aria-current="page">Solutions</li>
                         </ol>
                     </nav>
                 </div>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="row g-3 justify-content-center">
                     <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" >
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="img/os_s1.png" alt="Icon">
@@ -98,7 +98,7 @@
                     </div>
                  
                     <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" >
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="img/os_s2.png" alt="Icon">
@@ -108,7 +108,7 @@
                         </a>
                     </div>
                     <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" >
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="img/os_s3.png" alt="Icon">
@@ -118,17 +118,17 @@
                         </a>
                     </div>
                     <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" >
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="img/os_s4.png" alt="Icon">
                                 </div>
-                                <h6>Private Rooms</h6>
+                                <h6>Private Meeting Rooms</h6>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" >
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="img/os_s5.png" alt="Icon">
@@ -142,7 +142,7 @@
             </div>
         </div> 
         <!-- Category End -->
-
+        
 
         <!-- About Start -->
         <div class="container-xxl py-5" id="hotdesk">
@@ -204,7 +204,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="mb-4">Private Rooms</h1>
+                        <h1 class="mb-4">Private Meeting Rooms</h1>
                         <p class="mb-4">Elevate your meeting experience with our exclusive private meeting rooms, ideal for professionals and companies seeking a sophisticated and tailored space. Choose from a range of options, each uniquely designed to accommodate your specific needs. Whether it's Room 1 for an intimate discussion, Room 2 for a collaborative session, or Room 3 for a larger presentation, our private meeting rooms offer versatility and professionalism. <br><br>Experience the epitome of comfort, equipped with modern amenities and seamless technology, ensuring your meetings are not only productive but also conducted in a refined and conducive atmosphere. Elevate your business gatherings with our private meeting rooms, where every choice reflects your commitment to excellence.</p>
                         
                         <a class="btn btn-primary py-3 px-5 mt-3" href="">Book Reservation</a>
@@ -213,7 +213,7 @@
             </div>
         </div>
 
-        <div class="container-xxl py-5" id="printer_service">
+        {{-- <div class="container-xxl py-5" id="printer_service">
             <div class="container">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
@@ -228,7 +228,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="container-xxl py-5" id="others">
             <div class="container">

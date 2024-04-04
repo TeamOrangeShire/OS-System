@@ -48,17 +48,17 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover" style="text-align: center;">
+                        <table class="table table-hover"  style="text-align: center">
                             <thead>
                                 <tr>
                                
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Number</th>
+                                    <th>Phone Number</th>
                                     <th>Room No.</th>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th colspan="2"> Action Buttons</th>
+                                    <th colspan="2"> Action</th>
 
                                 </tr>
                             </thead>
@@ -94,8 +94,8 @@
                                 <td>{{$timeplace}}</td>
                                
                                 <td> 
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmres(`{{$res->res_id}}`,'{{$full_name}}','{{$timeplace}}','{{$room_name}}','{{$res->res_date}}')"><i class="feather icon-check-circle"></i></button>  
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="decline(`{{$res->res_id}}`)"><i class="feather icon-x-circle"></i></button>   </td>
+                                    <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmres(`{{$res->res_id}}`,'{{$full_name}}','{{$timeplace}}','{{$room_name}}','{{$res->res_date}}')"><i class="feather icon-check-circle"></i></button>  
+                                    <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="decline(`{{$res->res_id}}`)"><i class="feather icon-x-circle"></i></button>   </td>
                                      </tr>
 
                             @endforeach
