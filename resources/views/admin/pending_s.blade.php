@@ -70,7 +70,7 @@
                             </thead>
                             <tbody>
                                 @php
-                                $Subscriptions = App\Models\Subscriptions::where('sub_start',NULL )->where('sub_status',0 )->get();
+                                $Subscriptions = App\Models\Subscriptions::where('sub_start',NULL )->where('sub_status',0 )->where('sub_cancel','!=',1 )->get();
                             @endphp
                             @foreach ($Subscriptions as $sub )
                             <tr>
@@ -108,6 +108,7 @@
             </div>
         </div>
        
+        
         <!-- [ Main Content ] end -->
     </div>
 </div>

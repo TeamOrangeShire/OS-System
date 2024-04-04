@@ -62,7 +62,7 @@
                                 <tr>
                                     <th>Subscription</th>
                                     <th>Name</th>
-                                    <th>Hours left</th>
+                                   
                                     <th>Reason for Cancellation</th>
                                     <th>Cancellation Date</th>
                                     <th>Action</th>
@@ -70,24 +70,34 @@
                             </thead>
                             <tbody>
                                 @php
-                    
-                                $CancelledSubs = App\Models\Subscriptions::where('sub_status', 3)->get();
-                                
+                                $Subscriptions = App\Models\Subscriptions::where('sub_cancel',1 )->get();
                             @endphp
-                            @foreach ($CancelledSubs as $cancelled)
-
-                                <tr>
-                                    <td> {{$cancelled->service_id}} </td>
-                                    <td> john  </td>
-                                    <td> {{$cancelled->sub_time}}  </td>
-                                    <td> {{$cancelled->sub_cancel_reason}}</td>
-                                    <td> {{$cancelled->updated_at}}</td>
-                                    <td>
-                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick=""> <i class="feather icon-info"> </i></button>
-                                    </td>
-                                </tr>
-                                @endforeach
-
+                            @foreach ($Subscriptions as $sub )
+                            <tr>
+                                <td>
+                                    @php
+                                        $service_id = $sub->service_id;
+                                    $ServiceHP = App\Models\ServiceHP::where('service_id',$service_id)->first();
+                                    @endphp
+                                    {{$ServiceHP->service_name}} / {{$ServiceHP->service_hours}}hrs
+                                </td>
+                                <td>
+                                @php
+                                    $cus_id = $sub->customer_id;
+                                    $Customer = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
+                                    $cus_fullname = $Customer->customer_firstname .' '.$Customer->customer_middlename.' '.$Customer->customer_lastname;
+                                    $cus_email = $Customer->customer_email;
+                                    $cus_number = $Customer->customer_phone_num;
+                               @endphp
+                                    {{$cus_fullname}}
+                                </td>
+                               <td>{{$sub->sub_cancel_reason}}</td>
+                                <td>{{$sub->updated_at}}</td>
+                                <td>
+                                    <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick="view('{{$sub->sub_id}}','{{$ServiceHP->service_name}}','{{$ServiceHP->service_hours}}','{{$cus_fullname}}','{{$cus_email}}','{{$cus_number}}')"> <i class="feather icon-info"> </i></button>
+                                      </td>
+                            </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -103,17 +113,19 @@
 <div id="infomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
+           
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Reservation Details</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Subscription Info</h5>
+               
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-
+            <div class="modal-body">
             <div class="row">
-
+            
                 <div class="col-sm-6">
                     <div style="margin-left: 40px;">
                         <br>
-                      
+                        <input type="hidden" name="sub_id" id="sub_id">
                         <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
                         <p class="" name="cname" id="cus_name">  </p> 
                         <label for="email"><strong>Email:</strong></label> <br>
@@ -127,70 +139,37 @@
                 <div class="col-sm-6">
                     <div style="margin-left: 40px;">
                         <br>
-                        <label for="customer_name"> <strong>Reservation Date: </strong> </label> <br>
-                        <p class="" name="cname" id="cus_date">  </p> 
-                        <label for="email"><strong>Reservation Time::</strong></label> <br>
-                        <p class="" name="cemail" id="cus_time">  </p> 
-                        <label for="phone"><strong>Notes:</strong></label> <br>
-                        <p class="" name="cnum" id="cus_note">  </p> 
+                        <label for="customer_name"> <strong>Subcription: </strong> </label> <br>
+                        <p class="" name="cname" id="servicename">  </p> 
+                        <label for="email"><strong>Hours: </strong></label> <br>
+                        <p class="" name="cemail" id="hours">  </p> 
+                        
                     </div>
                 </div>
 
             </div>
+          
 
-        
+            </div>
+       
         </div>
     </div>
 </div>
 {{-- modal end info--}}
 <!-- [ Main Content ] end -->
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
+ 
+    <script>
+           function view(id,servicename,hours,fullname,email,number){
+            
+            document.getElementById('sub_id').value=id;
+            document.getElementById('servicename').textContent=servicename;
+            document.getElementById('hours').textContent=hours;
+            document.getElementById('cus_name').textContent=fullname;
+            document.getElementById('cus_email').textContent=email;
+            document.getElementById('cus_num').textContent=number;
 
+    }
+    </script>
     <!-- Required Js -->
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
