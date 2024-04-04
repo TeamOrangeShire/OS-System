@@ -96,16 +96,16 @@
         <br><br><br><br>
         <div class="container-xxl py-5">
             <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
                     <h1 class="mb-3">Amenities</h1>
-                    <p>Discover a welcoming coworking space that prioritizes your comfort, offering well-equipped workspaces, collaborative meeting areas, and modern amenities to elevate your work experience.</p>
+                    <p>Discover a welcoming coworking space that prioritizes your comfort, offering well-equipped workspaces, <br> collaborative meeting areas, and modern amenities to elevate your work experience.</p>
                 </div>
                 <div class="row g-4">
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                         <a class="d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_a1.png" alt="Icon">
+                                    <img class="img-fluid" src="img/os_coffee.png" alt="Icon">
                                 </div>
                                 <h6>Free Brewed Coffee and Tea</h6>
                             </div>
@@ -116,7 +116,7 @@
                         <a class=" d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_a2.png" alt="Icon">
+                                    <img class="img-fluid" src="img/os_wifi.png" alt="Icon">
                                 </div>
                                 <h6>Fast Internet</h6>
                             </div>
@@ -126,7 +126,7 @@
                         <a class=" d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_a3.png" >
+                                    <img class="img-fluid" src="img/os_aircon.png" >
                                 </div>
                                 <h6>Airconditioned Spaces</h6>
                             </div>
@@ -136,7 +136,7 @@
                         <a class=" d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_a4.png" alt="Icon">
+                                    <img class="img-fluid" src="img/os_gen.png" alt="Icon">
                                 </div>
                                 <h6>Generator-ready</h6>
                             </div>
@@ -205,7 +205,7 @@
                     <div class="container-xxl py-5">
                         <div class="container">
                             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
-                                <h1 class="mb-3">Why visit the Shire</h1>
+                                <h1 class="mb-3">Why Visit The Shire</h1>
                                 <p>Orange Shire is established to make a home for different types of learners, be it on the academe or in profession. Assembled by a group of people that values teamwork and collaboration, it is a place for costudying and coworking for all. <br>Come and experience the Shire life.</p>
                             </div>
                             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
