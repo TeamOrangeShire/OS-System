@@ -73,12 +73,8 @@
                                         <h5>Subscription Records</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
-                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction()" id="Project" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary">
-                                                    <i class="feather icon-search"></i>
-                                                </button>
-                                            </div>
+                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction('Project')" id="Project" placeholder="Search">
+
                                         </div>
                                     </div>
                                     <div class="card-body table-border-style">
@@ -127,17 +123,13 @@
                                         <h5>Completed Subscription</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
-                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction()" id="Project" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary">
-                                                    <i class="feather icon-search"></i>
-                                                </button>
-                                            </div>
+                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction('Project1')" id="Project1" placeholder="Search">
+
                                         </div>
                                     </div>
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table table-hover" id="myTable"  style="text-align: center">
+                                            <table class="table table-hover" id="myTable1"  style="text-align: center">
                                                 <thead>
                                                     <tr>
                                                         <th>Subscription</th>
@@ -184,17 +176,13 @@
                                         <h5>Cancelled Subscription</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
-                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction()" id="Project" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary">
-                                                    <i class="feather icon-search"></i>
-                                                </button>
-                                            </div>
+                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction('Project2')" id="Project2" placeholder="Search">
+
                                         </div>
                                     </div>
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table table-hover" id="myTable" style="text-align: center">
+                                            <table class="table table-hover" id="myTable2" style="text-align: center">
                                                 <thead>
                                                     <tr>
                                                         <th>Subscription</th>
@@ -291,44 +279,38 @@
 </div>
 {{-- modal end info--}}
 
-{{-- search function --}}
+<!-- search function -->
 <script>
-function myFunction() {
-    var input, filter, table, tr, td, a, i, txtValue;
-    input = document.getElementById("Project");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            a = td.getElementsByTagName("a")[0];
-            if (a) {
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+    function myFunction(inputId) {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById(inputId);
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break; // Break out of the inner loop if a match is found
+                    } else {
+                        tr[i].style.display = "none";
+                    }
                 }
             }
         }
     }
-}
+    </script>    
+ {{-- search function --}}
 
-    </script>
-    {{-- search function --}}
-
-
-<!-- [ Main Content ] end -->
-   
-
-    <!-- Required Js -->
-    <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
-    <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
+<!-- Required Js -->
+<script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
+<script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 
 <!-- Apex Chart -->
 <script src="{{asset('assets/js/plugins/apexcharts.min.js')}}"></script>
-
 
 <!-- custom-chart js -->
 <script src="{{asset('assets/js/pages/dashboard-main.js')}}"></script>
