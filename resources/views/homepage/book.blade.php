@@ -243,6 +243,9 @@
 <script>
     
     function selectRoom(inputs){
+        const dur = document.getElementById('duration');
+        dur.innerHTML = '';
+        dur.innerHTML = '<option selected disabled>Please Select a date first</option>';
             HideAllCalendars();
                const cal_name = 'calendars' + inputs.value;
                document.getElementById(cal_name).style.display = '';
@@ -266,9 +269,9 @@
     }
                 if(document.getElementById('contact').value === '' || document.getElementById('contact').value.length < 11 || document.getElementById('submitReservation').textContent === 'Invalid Date! Choose Future dates'){
                     document.getElementById('submitReservation').disabled = true;
-                    document.getElementById('submitReservation').textContent ='Invalid Date! Choose Future dates';
                 }else if(input.value.length === 11  ){
-                    document.getElementById('submitReservation').disabled = true;
+                    document.getElementById('submitReservation').textContent ='Submit Reservation';
+                    document.getElementById('submitReservation').disabled = false;
                 }else{
                     document.getElementById('submitReservation').disabled = false;
                 }
