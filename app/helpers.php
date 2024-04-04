@@ -68,4 +68,15 @@ function FilterTime($time){
           return '0'.$time;
      }
  }
+
+ function TransactionId(){
+     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+     $randomString = '';
+ 
+     for ($i = 0; $i < 15; $i++) {
+         $randomString .= $characters[rand(0, strlen($characters) - 1)];
+     }
+ 
+     return $randomString;
+ }
 ?>

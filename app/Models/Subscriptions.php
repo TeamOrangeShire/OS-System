@@ -19,6 +19,6 @@ class Subscriptions extends Model
         'sub_status',
         'sub_cancel',
         'sub_cancel_reason',
-        'updated_at',
+        'transaction_id'
     ];
 }
