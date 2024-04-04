@@ -31,7 +31,10 @@
             <a href="{{route('customer_login')}}" class="btn btn-primary px-3 d-mb-4 d-lg-flex custom_login" >Log in/Sign up</a>
             @else
               <div class="profile-menu">
-                <button class="user_account d-none d-lg-flex"></button>
+                @php
+                    $customer = App\Models\CustomerAcc::where('customer_id', $cookie_val)->first();
+                @endphp
+                <button class="user_account d-none d-lg-flex" style="background-image:url('{{ $customer->customer_profile_pic === 'none' ? asset('User/Customer/placeholder.png') : asset('User/Customer/'.$customer->customer_profile_pic) }}')"></button>
                 <div class="profile-menu-content">
                     <a href="{{ route('customerProfile') }}"><i class="fa-regular fa-user" style="color: #ff5c40; padding-right:20px;"></i> Profile</a>
                     <a href="{{ route('customerSubscription') }}"><i class="fa-regular fa-bell" style="color: #ff5c40; padding-right:20px;"></i></i>Subscription</a>
