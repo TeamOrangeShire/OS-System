@@ -21,7 +21,7 @@
 
 
         <!-- Header Start -->
-        <div class="container-fluid header bg-white p-0 mt-4">
+        {{-- <div class="container-fluid header bg-white p-0 mt-4">
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                 <div class="col-md-6 p-5 mt-lg-5">
                     <h1 class="display-5 animated fadeIn mb-4">Contact Us</h1> 
@@ -37,7 +37,7 @@
                     <img class="img-fluid" src="img/os_6.jpg" alt="">
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Header End -->
 
 
@@ -82,7 +82,12 @@
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">Contact Us</h1>
-                    <p>Reach out to Orange Shire today to discover how our dedicated team can support your coworking and costudying needs. Whether you're seeking space, community, or collaboration, we're here to make your experience exceptional.</p>
+                    <ol class="breadcrumb text-uppercase" style="margin-left: 32%">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-body active" aria-current="page">Contact</li>
+                    </ol>
+                    {{-- <p>Reach out to Orange Shire today to discover how our dedicated team can support your coworking and costudying needs. Whether you're seeking space, community, or collaboration, we're here to make your experience exceptional.</p> --}}
                 </div>
                 <div class="row g-4">
                     <div class="col-12">

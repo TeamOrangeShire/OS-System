@@ -4,8 +4,8 @@
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-white mb-4">Get In Touch</h5>
                 <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>21st Lacson Street, Bacolod City</p>
-                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+63966 065 8143</p>
-                <p class="mb-2"><i class="fa fa-envelope me-3"></i>TheOrangeShire@gmail.com</p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+63966 065 8143</p> 
+                {{-- <p class="mb-2"><i class="fa fa-envelope me-3"></i>TheOrangeShire@gmail.com</p> --}}
                 <div class="d-flex pt-2">
                     <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/orangeshire?igsh=MzRlODBiNWFlZA=="><i class="fab fa-instagram"></i></a>
                     <a class="btn btn-outline-light btn-social" href="https://www.facebook.com/people/Orange-Shire-Coworking/61554372145450/"><i class="fab fa-facebook-f"></i></a>
