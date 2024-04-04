@@ -8,7 +8,9 @@
 </head>
 
 <body>
-
+  @php
+  $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+@endphp
   <!-- ======= Header ======= -->
   @include('homepage.Dashboard.Components.nav')
   <main id="main" class="main">
@@ -140,7 +142,7 @@
         <h5 class="card-title">{{ $serv->service_name }}</h5>
         <p class="card-text">Hybrid Pros(Consumable within 30 calendar days)</p>
         <p class="card-text">{{ $serv->service_hours }}Hours - ₱{{ $serv->service_price }}</p>
-        <a href="#" class="btn btn-success">Subscribe</a>
+      <button type="button" onclick="purchasePlan(`{{ $serv->service_id }}`, `{{ $serv->service_price }}`, `{{ $customer->account_credits }}`)" data-bs-toggle="modal" data-bs-target="#mode_of_payment" class="btn btn-success"><i class="bx bxs-cart-download me-1"></i> Subscribe</button>
       </div>
     </div>
     @endforeach
@@ -154,6 +156,31 @@
 
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div class="modal fade" id="mode_of_payment" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Mode of Payment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+     <section class="radio-section">
+	<div class="radio-list">
+    <form action="">
+      <input type="hidden" id="service_id" name="service_id">
+		<div class="radio-item"><input name="payment" value="walkin" id="radio1" type="radio"><label for="radio1"><i class="bx bx-run me-1"></i>Walk In Payment</label></div>
+		<div class="radio-item"><input name="payment" value="balance" id="radio2" type="radio"><label for="radio2"><i class="bx bx-money me-1"></i>Account Balance - (Balance:  ₱{{ $customer->account_credits === null ? '0' : $customer->account_credits }} )</label></div>
+	</div>
+<span style="display = none" id="errorCredit" class="badge bg-danger text-dark"><i class="bi bi-exclamation-triangle me-1"></i></span>
+</form>
+</section>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success">Confirm Purchase</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 

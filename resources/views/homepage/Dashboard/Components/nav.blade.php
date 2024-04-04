@@ -173,7 +173,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>{{ $fullname }}</h6>
-              <span>Account Balance: ₱1000</span>
+              <span>Account Balance: ₱{{ $customer->account_credits === null ? '0' : $customer->account_credits }}</span>
             </li>
             <li>
               <hr class="dropdown-divider">
