@@ -17,6 +17,7 @@ class Subscriptions extends Model
         'sub_end',
         'sub_time',
         'sub_status',
+        'sub_cancel',
         'sub_cancel_reason',
         'updated_at',
     ];

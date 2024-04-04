@@ -1,7 +1,10 @@
+<div class="snackbar" id="snackbar" style="display: none">
+  <span class="snackbarContent" id="snackbarContent"></span>
+</div>
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="{{ route('home') }}" class="logo d-flex align-items-center">
         <img src="{{ asset('img/os_logo.png') }}" alt="">
         <span class="d-none d-lg-block">Orange Shire</span>
       </a>
@@ -14,7 +17,7 @@
 
      
 
-        {{-- <li class="nav-item dropdown">
+        <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
@@ -41,9 +44,9 @@
 
             <li>
               <hr class="dropdown-divider">
-            </li> --}}
+            </li>
 
-            {{-- <li class="notification-item">
+            <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
                 <h4>Atque rerum nesciunt</h4>
@@ -87,7 +90,7 @@
 
           </ul><!-- End Notification Dropdown Items -->
 
-        </li><!-- End Notification Nav --> --}}
+        </li><!-- End Notification Nav -->
 
         {{-- <li class="nav-item dropdown">
 
@@ -170,14 +173,14 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>{{ $fullname }}</h6>
-              {{-- <span>Web Designer</span> --}}
+              <span>Account Balance: ₱1000</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('customerProfile') }}">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
@@ -187,7 +190,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('customerSettings') }}">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -437,3 +440,7 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+  
+  <div id="loadingDiv" style="display: none;" class="loadingDiv">
+    <div id="loading" class="loader"></div>
+  </div>

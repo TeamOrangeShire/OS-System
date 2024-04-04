@@ -163,4 +163,29 @@ class EditAcc extends Controller
         
         
     }
+
+    public function UpdateCustomerProfilePic(Request $req){
+
+        $file = $req->file('profilePic');
+
+        if ($file->getSize() > 10485760) {
+            return response()->json(['status' => 'exceed']);
+        }else   if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png', 'jpg'])) {
+            return response()->json(['status' => 'invalid_type']);
+        }
+        else{
+            $fileName = "Customer". $req->user_id.".". $file->getClientOriginalExtension();
+            $filePath = public_path('User/Customer/');  
+            $file->move($filePath, $fileName);
+            
+            $customer  = CustomerAcc::where('customer_id', $req->user_id)->first();
+            $customer->update([
+              'customer_profile_pic' => $fileName,
+            ]);
+
+            return response()->json(['status'=>'success']);
+        }
+
+     
+    }
 }

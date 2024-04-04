@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Reservations;
 use App\Models\CustomerAcc;
+use App\Models\RoomPricing;
+use App\Models\RoomRate;
 
 class Reservation extends Controller
 {
@@ -21,11 +23,36 @@ class Reservation extends Controller
       $company = empty($req->company_name) ? 'NA' : $req->company_name;
       $contact = $req->contact;
       $r_dur_price = $req->duration;
+
+      $rprice_id = RoomPricing::where('rprice_id', $r_dur_price)->first();
+      $roomRate = RoomRate::where('rate_id', $rprice_id->room_rates)->first();
+      
+      switch($roomRate->room_name){
+        case "Hourly":
+          $time = $req->hiddenTime;
+          $start = $time[0].$time[1];
+          $end = $time[3].$time[4];
+          break;
+        case "4 Hours":
+          $time = $req->hiddenTime;
+          $start = $time[0].$time[1];
+          $end = $time[3].$time[4];
+          break;
+        case "Full Day":
+          $start =000;
+          $end = 000;
+          break;
+        case "Weekly":
+          $start =000;
+          $end = 000;
+          break;
+        case "Monthly":
+          $start =000;
+          $end = 000;
+          break;
+      }
       $date = $req->date;
       $notes = empty($req->notes) ? 'NA' : $req->notes;
-      $time = $req->hiddenTime;
-      $start = $time[0].$time[1];
-      $end = $time[3].$time[4];
      
       $res = new Reservations();
       $res->customer_id = $customer;

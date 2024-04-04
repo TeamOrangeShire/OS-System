@@ -42,12 +42,18 @@ Route::post('/reserve-date',[Reservation::class,'SelectDate'] )->name('submitDat
 Route::post('/saveReservation',[Reservation::class,'SaveReservation'] )->name('saveReservation');
 Route::post('/customer-change-pass',[EditAcc::class,'EditCustomerPassword'] )->name('editPassword');
 Route::post('/customer-profile-update',[EditAcc::class,'EditCustomerProfile'] )->name('editProfile');
+Route::post('/customer-profile-update-picture',[EditAcc::class,'UpdateCustomerProfilePic'] )->name('customerUpdatePic');
 
 //Customer Dashboard
 Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');
 Route::get('/customer/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');
 Route::get('/customer/reservation',[GetDataViews::class, 'CustomerReservation'] )->name('customerReservation');
 Route::get('/customer/settings',[GetDataViews::class, 'CustomerSettings'] )->name('customerSettings');
+
+
+
+
+
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');

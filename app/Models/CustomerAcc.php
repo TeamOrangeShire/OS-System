@@ -20,5 +20,6 @@ class CustomerAcc extends Model
       'customer_username',
       'customer_password',
       'customer_profile_pic',
+      'account_credits',
     ];
 }

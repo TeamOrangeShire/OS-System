@@ -1,5 +1,7 @@
 .profilePicture{
-    width: 50%;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
   }
 .modal-profile{
     display: flex;
@@ -7,3 +9,4 @@
     flex-direction: column;
     align-items: center;
 }
+
