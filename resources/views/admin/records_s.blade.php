@@ -63,13 +63,12 @@
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
-                       
-                        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                           
                             <div class="col-md-12">
                                 <div class="">
                                     <div class="card-header"  style="position: relative;">
-                                        <h5>Completed Subscription</h5>
+                                        <h5>Subscription Records</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
                                             <input type="text" name="task-insert" class="form-control" onkeyup="myFunction()" id="Project" placeholder="Search">
@@ -83,6 +82,56 @@
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
                                             <table class="table table-hover" id="myTable"  style="text-align: center">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subscription ID</th>
+                                                        <th>Start Time</th>
+                                                        <th>End Time</th>
+                                                        <th>Hours left</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        @php
+                                        
+                                        $CancelledSubs = App\Models\Subscriptions::where('sub_status', '!=', 1)->where('sub_status', '!=', 0)->get();
+                                                    
+                                                @endphp
+                                                @foreach ($CancelledSubs as $cancelled)
+                    
+                                                    <tr>
+                                                        <td> {{$cancelled->sub_id}} </td>
+                                                        <td> {{$cancelled->sub_start}} </td>
+                                                        <td> {{$cancelled->sub_end}}   </td>
+                                                        <td> {{$cancelled->sub_time}}  </td>
+
+                                                    </tr>
+                                                    @endforeach
+                                                    </tr>
+                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            
+                            <div class="col-md-12">
+                                <div class="">
+                                    <div class="card-header"  style="position: relative;">
+                                        <h5>Completed Subscription</h5>
+                                        <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
+                                        <div class="input-group m-t-15">
+                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction('Project1')" id="Project1" placeholder="Search">
+
+                                        </div>
+                                    </div>
+                                    <div class="card-body table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="myTable1"  style="text-align: center">
                                                 <thead>
                                                     <tr>
                                                         <th>Subscription</th>
@@ -129,17 +178,13 @@
                                         <h5>Cancelled Subscription</h5>
                                         <button type="submit" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;">Print Records</button>
                                         <div class="input-group m-t-15">
-                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction()" id="Project" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary">
-                                                    <i class="feather icon-search"></i>
-                                                </button>
-                                            </div>
+                                            <input type="text" name="task-insert" class="form-control" onkeyup="myFunction('Project2')" id="Project2" placeholder="Search">
+
                                         </div>
                                     </div>
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table table-hover" id="myTable" style="text-align: center">
+                                            <table class="table table-hover" id="myTable2" style="text-align: center">
                                                 <thead>
                                                     <tr>
                                                         <th>Subscription</th>
@@ -236,44 +281,38 @@
 </div>
 {{-- modal end info--}}
 
-{{-- search function --}}
+<!-- search function -->
 <script>
-function myFunction() {
-    var input, filter, table, tr, td, a, i, txtValue;
-    input = document.getElementById("Project");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            a = td.getElementsByTagName("a")[0];
-            if (a) {
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+    function myFunction(inputId) {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById(inputId);
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break; // Break out of the inner loop if a match is found
+                    } else {
+                        tr[i].style.display = "none";
+                    }
                 }
             }
         }
     }
-}
+    </script>    
+ {{-- search function --}}
 
-    </script>
-    {{-- search function --}}
-
-
-<!-- [ Main Content ] end -->
-   
-
-    <!-- Required Js -->
-    <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
-    <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
+<!-- Required Js -->
+<script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
+<script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 
 <!-- Apex Chart -->
 <script src="{{asset('assets/js/plugins/apexcharts.min.js')}}"></script>
-
 
 <!-- custom-chart js -->
 <script src="{{asset('assets/js/pages/dashboard-main.js')}}"></script>
