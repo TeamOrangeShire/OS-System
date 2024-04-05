@@ -1,4 +1,6 @@
 <?php
+use Carbon\Carbon;
+
 function VerificationCodeGenerator(){
     return  mt_rand(100000, 999999);
 }
@@ -78,5 +80,18 @@ function FilterTime($time){
      }
  
      return $randomString;
+ }
+
+ function PastTimeCalc($date){
+    $now = Carbon::now()->format('Y-m-d H:i:s');
+
+    $nowTime = Carbon::parse($now);
+    $dateTime = Carbon::parse($date);
+    
+    $diffInHours = $dateTime->diffInHours($nowTime);
+    $diffInMinutes = $dateTime->diffInMinutes($nowTime);
+    $diffInDays= $dateTime->diffInDays($nowTime);
+
+   return [$diffInHours, $diffInMinutes, $diffInDays];
  }
 ?>

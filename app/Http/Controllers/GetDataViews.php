@@ -106,6 +106,18 @@ class GetDataViews extends Controller
         return view('homepage.Dashboard.settings', ['user_id'=>$userId]);
     }
 
+    public function CustomerNotification(Request $req){
+       $userId = $req->cookie('customer_id');
+       
+       return view('homepage.Dashboard.notification', ['user_id'=> $userId]);
+    }
+
+    public function CustomerTransaction(Request $req){
+        $userId = $req->cookie('customer_id');
+       
+        return view('homepage.Dashboard.transaction', ['user_id'=> $userId]);
+    }
+
     public function GetRoomRate(Request $req){
 
         $room_id = $req->input('room_id');

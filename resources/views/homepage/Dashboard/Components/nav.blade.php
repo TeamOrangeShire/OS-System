@@ -32,7 +32,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have {{ $notifCount }} new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              <a href="{{ route('customerNotification') }}"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
             {{-- <li>
               <hr class="dropdown-divider">
@@ -76,13 +76,19 @@
                     $color = 'warning';
                     break;
                 }
+                $timeAgo = PastTimeCalc($notif->created_at);
+                if($timeAgo[1] >= 60){
+                  $timeInMinutes = $timeAgo[1] % 60;
+                }else{
+                  $timeInMinutes = $timeAgo[1];
+                }
             @endphp
             <li class="notification-item">
               <i class="bi bi-{{ $label }} text-{{ $color }}"></i>
               <div>
                 <h4>{!! $notif->notif_header !!}</h4>
                 <p>{!! substr($notif->notif_message, 0, 40). "...." . "(Status: ".$notif->notif_label.")" !!}</p>
-                <p>2 hrs. ago</p>
+                <p>{{ $timeAgo[0] }} hrs. and {{ $timeInMinutes }} mins ago </p>
               </div>
             </li>
 
@@ -230,10 +236,13 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <form method="POST" id="customer_logOut">
+                @csrf
+              <button onclick="logOut('{{ route('customer_logOut') }}', '{{ route('home') }}')" class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
-              </a>
+              </button>
+            </form>
             </li>
 
           </ul><!-- End Profile Dropdown Items -->

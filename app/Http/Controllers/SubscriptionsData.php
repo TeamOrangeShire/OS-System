@@ -65,7 +65,9 @@ class SubscriptionsData extends Controller
         $start = null;
         $end = null;
         $status = 0;
-        $label = 'Pending';     
+        $label = 'Pending';
+        $notif_message =  'Subscription Request Sent! Waiting for Confirmation with a transaction id of <strong>'. $transactionId. "</strong>";     
+        $header = 'Waiting for Confirmation <b>'.$service->service_name.'</b>';
         }else{
          $start = Carbon::now()->toDateString();
          $end = Carbon::now()->addMonth()->toDateString();
@@ -76,19 +78,11 @@ class SubscriptionsData extends Controller
             'account_credits'=> $newBalance,
          ]);
          $label = 'Success';
+         $header = 'Successfully Purchased <b>'.$service->service_name.'</b>';
+         $notif_message =  'You are now currently subscribed in this plan from ' . Carbon::now()->toDateString() . " to ". Carbon::now()->addMonth()->toDateString(). ' with a transaction id of <strong>'. $transactionId. "</strong>";     
         }
       
         
-        
-         $notif = new CustomerNotification();
-         $notif->user_id = $customer_id;
-         $notif->user_type = 'Customer';
-         $notif->notif_header = 'Successfully Purchased <b>'.$service->service_name.'</b>';
-         $notif->notif_message = 'You are now currently subscribed in this plan from ' . Carbon::now()->toDateString() . " to ". Carbon::now()->addMonth()->toDateString(). ' with a transaction id of <strong>'. $transactionId. "</strong>";
-         $notif->notif_status = 0;
-         $notif->notif_label = $label;
-         $notif->save();
-      
         $subs = new Subscriptions();
         $subs->customer_id = $customer_id;
         $subs->service_id = $service_id;
@@ -100,6 +94,18 @@ class SubscriptionsData extends Controller
         $subs->sub_cancel_reason = '';
         $subs->transaction_id = $transactionId;
         $subs->save();
+
+         $notif = new CustomerNotification();
+         $notif->user_id = $customer_id;
+         $notif->user_type = 'Customer';
+         $notif->notif_header = $header;
+         $notif->notif_message = $notif_message;
+         $notif->notif_status = 0;
+         $notif->notif_label = $label;
+         $notif->notif_table = 'Subscription';
+         $notif->notif_table_id = $subs->sub_id;
+         $notif->save();
+      
 
         return response()->json(['status'=>'success']);
     }
