@@ -15,7 +15,6 @@
         </div>
         <!-- Spinner End -->
 
-
         <!-- Navbar Start -->
          @include('homepage/Components/nav', ['active'=>'home', 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
@@ -29,7 +28,7 @@
                     <p class="animated fadeIn mb-4 pb-2">Experience the vibrant atmosphere of our coworking and co-studying space, where productivity thrives amidst a supportive community, right in the heart of Bacolod City.</p>
                     <a href="{{ route('solutions') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Browse Solutions</a>
                 </div>
-                <div class="col-md-5 animated fadeIn ">
+                <div class="col-md-5 animated fadeIn">
                     <div class="owl-carousel header-carousel" style="top: 2rem;">
                         <div class="owl-carousel-item">
                             <img class="img-fluid" src="img/os_1.jpg" alt="">
@@ -90,7 +89,6 @@
             </div>
         </div> -->
         <!-- Search End -->
-
 
         <!-- AMENITIES Start -->
         <br><br><br><br>
