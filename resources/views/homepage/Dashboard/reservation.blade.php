@@ -63,8 +63,8 @@ p{
     <!--schedule alert start-->
     <div class="alert alert-warning alert-dismissible fade show" role="alert" style="width: 100%;">
       <div class="row">
-        <i class="fa-regular fa-calendar-check col-md-2 mt-2" style="color: #ff5c40; font-size:50px"></i>
-        <p class="col-md-5 p-1 mt-2" style="font-size:15px">You have a reservation on April 5, 2024, 1:00 - 4:00 pm, Room 2.</p>
+        <i class="fa-regular fa-calendar-check col-md-1 mt-2" style="color: #ff5c40; font-size:50px"></i>
+        <p class="col-md-5 p-2 mt-3" style="font-size:15px">You have a reservation on April 5, 2024, 1:00 - 4:00 pm, Room 2.</p>
       </div>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
