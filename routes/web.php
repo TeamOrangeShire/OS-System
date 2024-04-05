@@ -49,10 +49,8 @@ Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name(
 Route::get('/customer/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');
 Route::get('/customer/reservation',[GetDataViews::class, 'CustomerReservation'] )->name('customerReservation');
 Route::get('/customer/settings',[GetDataViews::class, 'CustomerSettings'] )->name('customerSettings');
-
-
-
-
+Route::get('/customer/profile/notification',[GetDataViews::class, 'CustomerNotification'] )->name('customerNotification');
+Route::get('/customer/profile/transaction',[GetDataViews::class, 'CustomerTransaction'] )->name('customerTransaction');
 
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
