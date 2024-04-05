@@ -104,8 +104,8 @@
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                         <a class="d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_coffee.png" alt="Icon">
+                                <div class=" mb-3">
+                                    <img class="img-fluid" src="img/freecoff.jpg" alt="Icon" style="width: 100%;">
                                 </div>
                                 <h6>Free Brewed Coffee and Tea</h6>
                             </div>
@@ -115,8 +115,8 @@
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
                         <a class=" d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_wifi.png" alt="Icon">
+                                <div class=" mb-3">
+                                    <img class="img-fluid" src="img/freewifi.jpg" alt="Icon" style="width: 100%;">
                                 </div>
                                 <h6>Fast Internet</h6>
                             </div>
@@ -125,8 +125,8 @@
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
                         <a class=" d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_aircon.png" >
+                                <div class=" mb-3">
+                                    <img class="img-fluid" src="img/aircon.png" style="width: 100%;">
                                 </div>
                                 <h6>Airconditioned Spaces</h6>
                             </div>
@@ -135,8 +135,8 @@
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                         <a class=" d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_gen.png" alt="Icon">
+                                <div class=" mb-3">
+                                    <img class="img-fluid" src="img/gene.png" alt="Icon" style="width: 100%;">
                                 </div>
                                 <h6>Generator-ready</h6>
                             </div>
