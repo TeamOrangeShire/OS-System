@@ -17,11 +17,11 @@ function purchasePlan(id, price, credit, hours, minutes, days, plan){
     detailMinutes.textContent = minutes;
     detailDays.textContent = days;
     planName.textContent = plan;
-
-    if (credit < price){
+    const more = credit - price;
+    if (more < 0){
         balance.disabled = true;
         errorCredit.style.display = '';
-        const more = price - credit;
+     
         errorCredit.innerHTML = "<i class='bi bi-exclamation-triangle me-1'></i>" +'Not Enough Credit to purchase the plan!' + ' You need ₱' + more + ' more';
     }else{
         balance.disabled = false;
@@ -54,6 +54,24 @@ function confirmPurchase(){
         });
     }
 
+}
+
+function logOut(route, home) {
+    event.preventDefault();
+  var formData = $('form#customer_logOut').serialize();
+
+  $.ajax({
+      type: 'POST',
+      url: route,
+      data: formData,
+      success: function(response) {
+        window.location.href = home;
+      }, 
+      error: function (xhr) {
+
+          console.log(xhr.responseText);
+      }
+  });
 }
 
 

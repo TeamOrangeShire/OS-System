@@ -17,5 +17,7 @@ class CustomerNotification extends Model
       'notif_message',
       'notif_status',
       'notif_label',
+      'notif_table',
+      'notif_table_id',
     ];
 }
