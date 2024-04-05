@@ -9,6 +9,7 @@ use App\Models\CustomerAcc;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Http\Response;
 class Login extends Controller
 {
   public function Admin_login(Request $request){
@@ -38,7 +39,7 @@ class Login extends Controller
         
         $Admin_info = AdminAcc::where('admin_id',$session_id)->first();
         if($Admin_info){
-    if( Hash::check($lock_password,$Admin_info->admin_password)){
+        if( Hash::check($lock_password,$Admin_info->admin_password)){
     
         Session::put('Admin_id',$Admin_info->admin_id);
         return redirect()->route('index');
@@ -71,5 +72,13 @@ class Login extends Controller
         }
 
       
+    }
+
+    public function LogOutCustomer(Request $request){
+        $response = new Response(json_encode(['status' => 'success']));
+
+        $response->cookie(cookie()->forget('customer_id'));
+    
+        return $response;
     }
 }
