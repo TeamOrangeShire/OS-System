@@ -16,20 +16,25 @@
       <ul class="d-flex align-items-center">
 
      
+@php
+    $notif = App\Models\CustomerNotification::where('user_id', $user_id)->where('user_type', 'Customer');
+    $notifCount = $notif->where('notif_status', 0)->get()->count();
+    $notifMessage = $notif->get();
 
+@endphp
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
+            <span class="badge bg-primary badge-number">{{ $notifCount }}</span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have 4 new notifications
+              You have {{ $notifCount }} new notifications
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
-            <li>
+            {{-- <li>
               <hr class="dropdown-divider">
             </li>
 
@@ -40,9 +45,9 @@
                 <p>Quae dolorem earum veritatis oditseno</p>
                 <p>30 min. ago</p>
               </div>
-            </li>
+            </li> --}}
 
-            <li>
+            {{-- <li>
               <hr class="dropdown-divider">
             </li>
 
@@ -53,17 +58,30 @@
                 <p>Quae dolorem earum veritatis oditseno</p>
                 <p>1 hr. ago</p>
               </div>
-            </li>
+            </li> --}}
 
             <li>
               <hr class="dropdown-divider">
             </li>
 
+            @foreach ($notifMessage as $notif)
+            @php
+                switch ($notif->notif_label) {
+                  case 'Success':
+                    $label = 'check-circle';
+                    $color = 'success';
+                    break;
+                  case 'Pending':
+                    $label = 'exclamation-circle';
+                    $color = 'warning';
+                    break;
+                }
+            @endphp
             <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
+              <i class="bi bi-{{ $label }} text-{{ $color }}"></i>
               <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
+                <h4>{!! $notif->notif_header !!}</h4>
+                <p>{!! substr($notif->notif_message, 0, 40). "...." . "(Status: ".$notif->notif_label.")" !!}</p>
                 <p>2 hrs. ago</p>
               </div>
             </li>
@@ -71,8 +89,10 @@
             <li>
               <hr class="dropdown-divider">
             </li>
+            @endforeach
+          
 
-            <li class="notification-item">
+            {{-- <li class="notification-item">
               <i class="bi bi-info-circle text-primary"></i>
               <div>
                 <h4>Dicta reprehenderit</h4>
@@ -83,7 +103,7 @@
 
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li> --}}
             <li class="dropdown-footer">
               <a href="#">Show all notifications</a>
             </li>

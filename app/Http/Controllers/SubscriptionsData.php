@@ -65,6 +65,7 @@ class SubscriptionsData extends Controller
         $start = null;
         $end = null;
         $status = 0;
+        $label = 'Pending';     
         }else{
          $start = Carbon::now()->toDateString();
          $end = Carbon::now()->addMonth()->toDateString();
@@ -74,16 +75,19 @@ class SubscriptionsData extends Controller
          $customer->update([
             'account_credits'=> $newBalance,
          ]);
+         $label = 'Success';
+        }
+      
+        
+        
          $notif = new CustomerNotification();
          $notif->user_id = $customer_id;
          $notif->user_type = 'Customer';
          $notif->notif_header = 'Successfully Purchased <b>'.$service->service_name.'</b>';
          $notif->notif_message = 'You are now currently subscribed in this plan from ' . Carbon::now()->toDateString() . " to ". Carbon::now()->addMonth()->toDateString(). ' with a transaction id of <strong>'. $transactionId. "</strong>";
          $notif->notif_status = 0;
+         $notif->notif_label = $label;
          $notif->save();
-        }
-      
-        
       
         $subs = new Subscriptions();
         $subs->customer_id = $customer_id;
