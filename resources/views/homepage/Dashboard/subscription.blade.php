@@ -200,6 +200,8 @@
   </div>
 <script>
    function Subscribe() {
+    const loading = document.getElementById('loadingDiv');
+    loading.style.display = 'flex';
     event.preventDefault();
      var formData = $('form#subscription_details').serialize();
  
