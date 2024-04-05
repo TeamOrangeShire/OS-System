@@ -200,11 +200,11 @@
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-4" style="display: flex; justify-content: center;">
-                    <div class="container-xxl py-5">
+                    <div class="container-xxl py-5" style="margin-bottom: -100px;">
                         <div class="container">
                             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
-                                <h1 class="mb-3">Why Visit The Shire</h1>
-                                <p>Orange Shire is established to make a home for different types of learners, be it on the academe or in profession. Assembled by a group of people that values teamwork and collaboration, it is a place for costudying and coworking for all. <br>Come and experience the Shire life.</p>
+                                <h1 class="mb-3">Why visit the Shire</h1>
+                                {{-- <p>Orange Shire is established to make a home for different types of learners, be it on the academe or in profession. Assembled by a group of people that values teamwork and collaboration, it is a place for costudying and coworking for all. <br>Come and experience the Shire life.</p> --}}
                             </div>
                             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="testimonial-item bg-light rounded p-3">
