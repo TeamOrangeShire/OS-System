@@ -121,7 +121,7 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table"  style="text-align: center">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -157,11 +157,11 @@
                                             $s_status = $view->service_disable;
                                         @endphp
                                         @if ($s_status == 0)
-                                        <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#disableplan" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-slash"></i></button> 
+                                        <button type="button" class="btn btn-icon btn-success"  data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
+                                        <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#disableplan" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-slash"></i></button> 
                                         @else
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
-                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#disableplan2" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-check-circle"></i></button> 
+                                        <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
+                                        <button type="button" class="btn btn-icon btn-info" data-toggle="modal" data-target="#disableplan2" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-check-circle"></i></button> 
                                         @endif
                                           
                                     

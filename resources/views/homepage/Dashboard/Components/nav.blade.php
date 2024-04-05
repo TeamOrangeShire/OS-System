@@ -4,7 +4,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="{{ route('home') }}" class="logo d-flex align-items-center">
         <img src="{{ asset('img/os_logo.png') }}" alt="">
         <span class="d-none d-lg-block">Orange Shire</span>
       </a>
@@ -16,20 +16,25 @@
       <ul class="d-flex align-items-center">
 
      
+@php
+    $notif = App\Models\CustomerNotification::where('user_id', $user_id)->where('user_type', 'Customer');
+    $notifCount = $notif->where('notif_status', 0)->get()->count();
+    $notifMessage = $notif->get();
 
-        {{-- <li class="nav-item dropdown">
+@endphp
+        <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
+            <span class="badge bg-primary badge-number">{{ $notifCount }}</span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have 4 new notifications
+              You have {{ $notifCount }} new notifications
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
-            <li>
+            {{-- <li>
               <hr class="dropdown-divider">
             </li>
 
@@ -40,30 +45,43 @@
                 <p>Quae dolorem earum veritatis oditseno</p>
                 <p>30 min. ago</p>
               </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
             </li> --}}
 
-            {{-- <li class="notification-item">
+            {{-- <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
                 <h4>Atque rerum nesciunt</h4>
                 <p>Quae dolorem earum veritatis oditseno</p>
                 <p>1 hr. ago</p>
               </div>
-            </li>
+            </li> --}}
 
             <li>
               <hr class="dropdown-divider">
             </li>
 
+            @foreach ($notifMessage as $notif)
+            @php
+                switch ($notif->notif_label) {
+                  case 'Success':
+                    $label = 'check-circle';
+                    $color = 'success';
+                    break;
+                  case 'Pending':
+                    $label = 'exclamation-circle';
+                    $color = 'warning';
+                    break;
+                }
+            @endphp
             <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
+              <i class="bi bi-{{ $label }} text-{{ $color }}"></i>
               <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
+                <h4>{!! $notif->notif_header !!}</h4>
+                <p>{!! substr($notif->notif_message, 0, 40). "...." . "(Status: ".$notif->notif_label.")" !!}</p>
                 <p>2 hrs. ago</p>
               </div>
             </li>
@@ -71,8 +89,10 @@
             <li>
               <hr class="dropdown-divider">
             </li>
+            @endforeach
+          
 
-            <li class="notification-item">
+            {{-- <li class="notification-item">
               <i class="bi bi-info-circle text-primary"></i>
               <div>
                 <h4>Dicta reprehenderit</h4>
@@ -83,14 +103,14 @@
 
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li> --}}
             <li class="dropdown-footer">
               <a href="#">Show all notifications</a>
             </li>
 
           </ul><!-- End Notification Dropdown Items -->
 
-        </li><!-- End Notification Nav --> --}}
+        </li><!-- End Notification Nav -->
 
         {{-- <li class="nav-item dropdown">
 
@@ -173,14 +193,14 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>{{ $fullname }}</h6>
-              {{-- <span>Web Designer</span> --}}
+              <span>Account Balance: ₱{{ $customer->account_credits === null ? '0' : $customer->account_credits }}</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('customerProfile') }}">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
@@ -190,7 +210,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('customerSettings') }}">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>

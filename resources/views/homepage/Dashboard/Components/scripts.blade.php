@@ -8,3 +8,4 @@
   <script src="{{ asset('customer_dashboards/vendor/php-email-form/validate.js') }}"></script>
   
   <script src="{{ asset('customer_dashboards/js/main.js') }}"></script>
+  <script src="{{ asset('customer_dashboards/js/mycustom.js') }}"></script>

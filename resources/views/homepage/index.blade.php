@@ -26,8 +26,8 @@
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row  ">
                 <div class="col-md-6 p-5 mt-lg-5">
                     <h1 class="display-5 animated fadeIn mb-4">A <span class="text-primary">Coworking</span> and <span class="text-primary">Costudying Space</span> in the heart of Bacolod City</h1>
-                    <p class="animated fadeIn mb-4 pb-2">Join us at our vibrant coworking and costudying space, where productivity thrives amidst a supportive community, right in the heart of Bacolod City.</p>
-                    <a href="{{ route('solutions') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Browse Services</a>
+                    <p class="animated fadeIn mb-4 pb-2">Experience the vibrant atmosphere of our coworking and co-studying space, where productivity thrives amidst a supportive community, right in the heart of Bacolod City.</p>
+                    <a href="{{ route('solutions') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Browse Solutions</a>
                 </div>
                 <div class="col-md-5 animated fadeIn ">
                     <div class="owl-carousel header-carousel" style="top: 2rem;">
@@ -92,51 +92,51 @@
         <!-- Search End -->
 
 
-        <!-- Category Start -->
+        <!-- AMENITIES Start -->
         <br><br><br><br>
         <div class="container-xxl py-5">
             <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
                     <h1 class="mb-3">Amenities</h1>
-                    <p>Discover a welcoming coworking space that prioritizes your comfort, offering well-equipped workspaces, collaborative meeting areas, and modern amenities to elevate your work experience.</p>
+                    <p>Discover a welcoming coworking space that prioritizes your comfort, offering well-equipped workspaces, <br> collaborative meeting areas, and modern amenities to elevate your work experience.</p>
                 </div>
                 <div class="row g-4">
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_a1.png" alt="Icon">
+                                <div class=" mb-3">
+                                    <img class="img-fluid" src="img/freecoff.jpg" alt="Icon" style="width: 100%;">
                                 </div>
-                                <h6>Free Coffee</h6>
+                                <h6>Free Brewed Coffee and Tea</h6>
                             </div>
                         </a>
                     </div>
                  
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class=" d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_a2.png" alt="Icon">
+                                <div class=" mb-3">
+                                    <img class="img-fluid" src="img/freewifi.jpg" alt="Icon" style="width: 100%;">
                                 </div>
                                 <h6>Fast Internet</h6>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class=" d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_a3.png" alt="Icon">
+                                <div class=" mb-3">
+                                    <img class="img-fluid" src="img/aircon.png" style="width: 100%;">
                                 </div>
-                                <h6>Airconditioned Space</h6>
+                                <h6>Airconditioned Spaces</h6>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class=" d-block bg-light text-center rounded p-3">
                             <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/os_a4.png" alt="Icon">
+                                <div class=" mb-3">
+                                    <img class="img-fluid" src="img/gene.png" alt="Icon" style="width: 100%;">
                                 </div>
                                 <h6>Generator-ready</h6>
                             </div>
@@ -146,11 +146,11 @@
                 </div>
             </div>
         </div> 
-        <!-- Category End -->
+        <!-- AMENITIES End -->
 
 
         <!-- About Start -->
-        <br><br>
+        {{-- <br><br>
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-5 align-items-center">
@@ -167,7 +167,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- About End -->
 
 
@@ -198,15 +198,102 @@
         <!-- Call to Action End -->
 
 
-        <!-- Team Start -->
+        <!-- Shire's Purpose Start -->
         <div class="container-xxl py-5">
             <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">The Shire's Purpose</h1>
-                    <p>Orange Shire is established to make a home for different types of learners, be it on the academe or in profession. Assembled by a group of people that values teamwork and collaboration, it is a place for costudying and coworking for all. <br>Come and experience the Shire life.</p>
-                </div>
                 <div class="row g-4" style="display: flex; justify-content: center;">
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="container-xxl py-5">
+                        <div class="container">
+                            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
+                                <h1 class="mb-3">Why Visit The Shire</h1>
+                                <p>Orange Shire is established to make a home for different types of learners, be it on the academe or in profession. Assembled by a group of people that values teamwork and collaboration, it is a place for costudying and coworking for all. <br>Come and experience the Shire life.</p>
+                            </div>
+                            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="testimonial-item bg-light rounded p-3">
+                                    <div class="bg-white rounded p-4">
+                                        <div class="position-relative">
+                                            <img class="img-fluid" src="img/teacher.png" alt="">
+                                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                                            </div>
+                                        </div>
+                                        <div class="text-center p-4 mt-3">
+                                            <h5 class="fw-bold mb-0">Students and Teachers</h5>
+                                            <small>
+                                                The Shire is a place where you can focus on your studies, review for exams, work on your thesis, study with your groupmates, prepare for classes, check and score test papers and more.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                                <div class="testimonial-item bg-light rounded p-3">
+                                    <div class="bg-white rounded p-4">
+                                       
+                                        <div class="position-relative">
+                                            <img class="img-fluid" src="img/freelance.png" alt="">
+                                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                                            </div>
+                                        </div>
+                                        <div class="text-center p-4 mt-3">
+                                            <h5 class="fw-bold mb-0">Freelancers</h5>
+                                            <small>
+                                                Work days or nights at the Shire, connect to our fast internet, get comfortable for the next few hours in one of our hot desks, get a cup of hot brewed coffee to keep you sharp and be able to focus on work.</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="testimonial-item bg-light rounded p-3">
+                                    <div class="bg-white rounded p-4">
+                                       
+                                        <div class="position-relative">
+                                            <img class="img-fluid" src="img/review.png" alt="">
+                                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                                            </div>
+                                        </div>
+                                        <div class="text-center p-4 mt-3">
+                                            <h5 class="fw-bold mb-0">Board and Bar exam Reviewers</h5>
+                                            <small>The Shire is the best place for you to focus on reviewing for that upcoming board or bar exam. Get from one of our multi-hour consumable plans to set you up for the next few weeks to do your exam reviews at the Shire.</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="testimonial-item bg-light rounded p-3">
+                                    <div class="bg-white rounded p-4">
+                                       
+                                        <div class="position-relative">
+                                            <img class="img-fluid" src="img/remote.png" alt="">
+                                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                                            </div>
+                                        </div>
+                                        <div class="text-center p-4 mt-3">
+                                            <h5 class="fw-bold mb-0">Remote Workers</h5>
+                                            <small>
+                                                Tired of working from home for several weeks at a time and feeling that cabin fever? Step out of the house once in a while and visit the Shire. Set up in one of our hot desks, meet new friends, and maybe go on breaks to take some walks around the neighborhood.</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="testimonial-item bg-light rounded p-3">
+                                    <div class="bg-white rounded p-4">
+                                       
+                                        <div class="position-relative">
+                                            <img class="img-fluid" src="img/startup.png" alt="">
+                                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                                            </div>
+                                        </div>
+                                        <div class="text-center p-4 mt-3">
+                                            <h5 class="fw-bold mb-0">Startup Entrepreneurs</h5>
+                                            <small>
+                                                Starting a new business? Starting up in a coworking space like Orange Shire is a great way to be efficient. For a relatively low cost, you work in an air conditioned space, with fast internet, free coffee and tea and you can even register your business address at the Shire. We can even hook you up with potential business partners.
+                                            </small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                     {{-- <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
                                 <img class="img-fluid" src="img/os_c1.jfif" alt="">
@@ -216,7 +303,7 @@
                             <div class="text-center p-4 mt-3">
                                 <h5 class="fw-bold mb-0">Students and Teachers</h5>
                                 <small>
-                                    Orange Shire offers students and teachers a dynamic environment where learning and teaching intersect seamlessly. With versatile spaces for focused study, collaborative projects, and engaging workshops, Orange Shire fosters a vibrant educational community tailored to both learners and educators.</small>
+                                    The Shire is a place where you can focus on your studies, review for exams, work on your thesis, study with your groupmates, prepare for classes, check and score test papers and more.</small>
                             </div>
                         </div>
                     </div>
@@ -230,7 +317,7 @@
                             <div class="text-center p-4 mt-3">
                                 <h5 class="fw-bold mb-0">Freelancers</h5>
                                 <small>
-                                    Freelancers at Orange Shire thrive in a flexible and supportive workspace designed to fuel productivity and creativity. From hot desks for spontaneous collaborations to private rooms for focused work, Orange Shire offers the ideal environment for freelancers to pursue their passions and projects.</small>
+                                    Work days or nights at the Shire, connect to our fast internet, get comfortable for the next few hours in one of our hot desks, get a cup of hot brewed coffee to keep you sharp and be able to focus on work.</small>
                             </div>
                         </div>
                     </div>
@@ -242,8 +329,8 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Board & BAR exam Reviewers</h5>
-                                <small>Orange Shire provides a conducive space for board and bar exam reviewers to excel in their studies. With quiet areas for focused preparation and communal spaces for group discussions and knowledge sharing, Orange Shire offers a tailored environment to help reviewers achieve their goals with confidence.</small>
+                                <h5 class="fw-bold mb-0">Board and Bar exam Reviewers</h5>
+                                <small>The Shire is the best place for you to focus on reviewing for that upcoming board or bar exam. Get from one of our multi-hour consumable plans to set you up for the next few weeks to do your exam reviews at the Shire.</small>
                             </div>
                         </div>
                     </div>
@@ -255,20 +342,20 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Hybrid Professionals</h5>
+                                <h5 class="fw-bold mb-0">Remote Workers</h5>
                                 <small>
-                                    Orange Shire caters to the needs of hybrid professionals, offering a dynamic setting that seamlessly blends work and learning. With adaptable workspaces and access to networking opportunities, Orange Shire empowers hybrid professionals to excel in both their professional endeavors and ongoing educational pursuits.</small>
+                                    Tired of working from home for several weeks at a time and feeling that cabin fever? Step out of the house once in a while and visit the Shire. Set up in one of our hot desks, meet new friends, and maybe go on breaks to take some walks around the neighborhood.</small>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
-        <!-- Team End -->
+        <!-- Shire's Purpose Start -->
 
 
         <!-- Testimonial Start -->
-        <div class="container-xxl py-5">
+        {{-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">Our Clients Say!</h1>
@@ -313,7 +400,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Testimonial End -->
         
 

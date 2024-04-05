@@ -102,15 +102,15 @@
                                                                
                                                                 @csrf
                                                                 
-                                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2" onclick="updatemodal(`{{$list->room_id}}`,`{{$list->room_number}}`,`{{$list->room_capacity}}`)"><i class="feather icon-edit"></i></button>
-                                                               <button  type="button" class="btn btn btn-danger" data-toggle="modal" data-target="#roomdisable" onclick="disableroom(`{{$list->room_id}}`)"><i class="feather icon-slash"></i></button> 
+                                                                <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter2" onclick="updatemodal(`{{$list->room_id}}`,`{{$list->room_number}}`,`{{$list->room_capacity}}`)"><i class="feather icon-edit"></i></button>
+                                                               <button  type="button" class="btn btn-icon btn btn-danger" data-toggle="modal" data-target="#roomdisable" onclick="disableroom(`{{$list->room_id}}`)"><i class="feather icon-slash"></i></button> 
                                                                
                                                                 @else
                                                                
                                                                     @csrf
                                                                     
-                                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2" onclick="updatemodal(`{{$list->room_id}}`,`{{$list->room_number}}`,`{{$list->room_capacity}}`)"><i class="feather icon-edit"></i></button>
-                                                                    <button type="button" class="btn btn btn-info" role="button" data-toggle="modal" data-target="#roomdisable2" onclick="disableroom(`{{$list->room_id}}`)"><i class="feather icon-check-circle"></i></button> 
+                                                                    <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter2" onclick="updatemodal(`{{$list->room_id}}`,`{{$list->room_number}}`,`{{$list->room_capacity}}`)"><i class="feather icon-edit"></i></button>
+                                                                    <button type="button" class="btn btn-icon btn btn-info" role="button" data-toggle="modal" data-target="#roomdisable2" onclick="disableroom(`{{$list->room_id}}`)"><i class="feather icon-check-circle"></i></button> 
                                                                
                                                             @endif
                                                             
@@ -168,16 +168,16 @@
                             
                                @csrf
                               
-                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter4" onclick="updatemodal2(`{{$room_rate->rate_id}}`,`{{$room_rate->rate_name}}`,`{{$room_rate->rate_price}}`)"><i class="feather icon-edit"></i></button>
-                               <button type="button" class="btn  btn btn-danger" role="button"  data-toggle="modal" data-target="#ratedisable" onclick="ratedisable(`{{$room_rate->rate_id}}`)"><i class="feather icon-slash"></i></button> 
+                               <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter4" onclick="updatemodal2(`{{$room_rate->rate_id}}`,`{{$room_rate->rate_name}}`,`{{$room_rate->rate_price}}`)"><i class="feather icon-edit"></i></button>
+                               <button type="button" class="btn btn-icon btn btn-danger" role="button"  data-toggle="modal" data-target="#ratedisable" onclick="ratedisable(`{{$room_rate->rate_id}}`)"><i class="feather icon-slash"></i></button> 
                            
 
                            @else
                           
                             
                          
-                           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter4" onclick="updatemodal2(`{{$room_rate->rate_id}}`,`{{$room_rate->rate_name}}`,`{{$room_rate->rate_price}}`)"><i class="feather icon-edit"></i></button>
-                           <button type="button" class="btn  btn btn-info" role="button"  data-toggle="modal" data-target="#ratedisable2" onclick="ratedisable(`{{$room_rate->rate_id}}`)"><i class="feather icon-check-circle"></i></button> 
+                           <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter4" onclick="updatemodal2(`{{$room_rate->rate_id}}`,`{{$room_rate->rate_name}}`,`{{$room_rate->rate_price}}`)"><i class="feather icon-edit"></i></button>
+                           <button type="button" class="btn btn-icon btn btn-info" role="button"  data-toggle="modal" data-target="#ratedisable2" onclick="ratedisable(`{{$room_rate->rate_id}}`)"><i class="feather icon-check-circle"></i></button> 
                          
                            @endif 
                            
@@ -257,18 +257,18 @@
                                                                 @endphp
                                                                 @if ($rp_disable == 0)
                                                            
-                                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editpricing"  onclick="updatemodal3('{{$roompricing->rprice_id}}','{{$roompricing->room_id}}','{{$roompricing->room_rates}}','{{$roompricing->promo_id}}')">
+                                                                    <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#editpricing"  onclick="updatemodal3('{{$roompricing->rprice_id}}','{{$roompricing->room_id}}','{{$roompricing->room_rates}}','{{$roompricing->promo_id}}')">
                                                                         <i class="feather icon-edit"></i>
                                                                         </button> {{-- modal end --}} 
-                                                                        <button class="btn  btn btn-danger" role="button" type="button" data-toggle="modal" data-target="#roompricingdisable" onclick="roompricingdisable('{{$roompricing->rprice_id}}')"><i class="feather icon-slash"></i></button> 
+                                                                        <button class="btn btn-icon btn btn-danger" role="button" type="button" data-toggle="modal" data-target="#roompricingdisable" onclick="roompricingdisable('{{$roompricing->rprice_id}}')"><i class="feather icon-slash"></i></button> 
                                                                
                                                                 @else
                                                               
                                                                    
-                                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editpricing"  onclick="updatemodal3('{{$roompricing->rprice_id}}','{{$roompricing->room_id}}','{{$roompricing->room_rates}}','{{$roompricing->promo_id}}')">
+                                                                    <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#editpricing"  onclick="updatemodal3('{{$roompricing->rprice_id}}','{{$roompricing->room_id}}','{{$roompricing->room_rates}}','{{$roompricing->promo_id}}')">
                                                                         <i class="feather icon-edit"></i>
                                                                         </button> {{-- modal end --}} 
-                                                                        <button class="btn  btn btn-info" role="button" type="button" data-toggle="modal" data-target="#roompricingdisable2" onclick="roompricingdisable2('{{$roompricing->rprice_id}}','{{$roompricing->room_id}}','{{$roompricing->room_rates}}')"><i class="feather icon-check-circle"></i></button> 
+                                                                        <button class="btn btn-icon btn btn-info" role="button" type="button" data-toggle="modal" data-target="#roompricingdisable2" onclick="roompricingdisable2('{{$roompricing->rprice_id}}','{{$roompricing->room_id}}','{{$roompricing->room_rates}}')"><i class="feather icon-check-circle"></i></button> 
                                                                
                                                                 @endif
                                                                
