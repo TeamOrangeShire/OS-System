@@ -70,33 +70,33 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                   
                                     <th>Username</th>
                                     <th>Email</th>
-                                    <th>Phone Number</th>
-                            
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                 $Customer = App\Models\CustomerAcc::all();
+                                 
+                                 
+                                @endphp
+                                @foreach ($Customer as $cus)
+                               @php
+                                $cus_fullname = $cus->customer_firstname .' '.$cus->customer_middlename.' '.$cus->customer_lastname;
+                                   
+                               @endphp
                                 <tr>
-                                    <td>1</td>
-                                    <td>Albert</td>
-                                    <td>@gmail.com</td>
-                                    <td>09999999999</td>
-                                    
+                                   <td>{{$cus_fullname}}</td>
+                                    <td>{{$cus->customer_email}}</td>
+                                    <td>
+                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick="view('{{$cus->customer_id}}','{{$cus_fullname}}','{{$cus->customer_email}}','{{$cus->customer_number}}','{{$cus->account_credits}}')"> <i class="feather icon-info"> </i></button>
+                                        <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#declinemodal" ><i class="feather icon-x-circle"></i></button>   </td>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jiffy</td>
-                                    <td>@gmail.com</td>
-                                    <td>09999999999</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Super mario</td>
-                                    <td>@gmail.com</td>
-                                    <td>09999999999</td>
-                                </tr>
+                                @endforeach
+                               
                             </tbody>
                         </table>
                     </div>
@@ -105,6 +105,95 @@
         </div>    
     </div>
        
+    {{-- modal start info --}}
+<div id="infomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+           
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Customer Info</h5>
+               
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+            <div class="row">
+            
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                       <input type="hidden" id="cus_id">
+                        <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
+                        <p class="" name="cname" id="cus_name">  </p> 
+                        <input type="hidden" name="" id="customer_id">
+                        <label for="email"><strong>Email:</strong></label> <br>
+                        <p class="" name="cemail" id="cus_email">  </p> 
+                       
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="phone"><strong>Phone Number:</strong></label> <br>
+                        <p class="" name="cnum" id="cus_num">  </p> 
+                        <label for="email"><strong>Credit Balance: </strong></label> <br>
+                        <p class="" name="cus_credit" id="cus_credit"></p> <span type="button" class="badge badge-primary" data-toggle="modal" data-target="#credit" onclick="addCredit()">Add Credit</span>      
+                    </div>
+                </div>
+
+            </div>
+          
+
+            </div>
+       
+        </div>
+    </div>
+</div>
+{{-- modal end info--}}
+   
+    {{-- modal start info --}}
+    <div id="credit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+               
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Customer Info</h5>
+                   
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                <div class="row">
+                
+                    <div class="col-sm-6">
+                        <div style="margin-left: 40px;">
+                            <br>
+                            <input type="hidden" name="cus_id" id="cus_id1">
+                            <label for="customer_name1"> <strong>Customer Name: </strong> </label> <br>
+                            <p class="" name="cname" id="cus_name1">  </p> 
+                           
+                        </div>
+    
+                    </div>
+    
+                    <div class="col-sm-6">
+                        <div style="margin-left: 40px;">
+                            <br>
+                            <label for="email"><strong>Credit Balance: </strong></label> <br>
+                            <p class="" name="cus_credit" id="cus_credit1"></p> 
+                            <input type="text" name="" id="" class="form-control">    
+                        </div>
+                    </div>
+    
+                </div>
+              
+    
+                </div>
+           
+            </div>
+        </div>
+    </div>
+    {{-- modal end info--}}
         <!-- [ Main Content ] end -->
     </div>
 </div>
@@ -163,6 +252,24 @@
 
 
 <script>
+ function view(id,fullname,email,number,credit){
+            
+            document.getElementById('cus_id').value=id;
+            document.getElementById('cus_name').textContent=fullname;
+            document.getElementById('cus_email').textContent=email;
+            document.getElementById('cus_num').textContent=number;
+            document.getElementById('cus_credit').textContent=credit;
+
+    }
+    function addCredit(){
+        document.getElementById('cus_id1').value=document.getElementById('cus_id').value;
+        document.getElementById('cus_name1').textContent=document.getElementById('cus_name').textContent;
+        document.getElementById('cus_credit1').textContent=document.getElementById('cus_credit').textContent;
+    }
+
+
+
+
     function validatePhoneNumber(event) {
       const phoneNumberInput = event.target;
       let phoneNumber = phoneNumberInput.value;
@@ -193,6 +300,7 @@
           });
        }
     });
+
   </script>
   
 {{-- add customer modal end --}}
