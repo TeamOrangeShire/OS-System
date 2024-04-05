@@ -3,6 +3,16 @@
 
 <head>
     @include('homepage/Components/header', ['current_page'=>'Contact Us - Orange Shire'])
+
+    
+<style>
+  
+.page-header {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.295)), url(../img/pheader1.jpg), no-repeat center center;
+  background-size: co;
+}
+
+</style>
 </head>
 <body style="background-color: #ffffff !important"s>
  
@@ -19,6 +29,22 @@
         @include('homepage/Components/nav', ['active'=>'contact' , 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
 
+            <!-- Header Start -->
+            <div class="container-fluid page-header">
+                <div class="container">
+                    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+                        <h3 class="display-4 text-uppercase" style="color: #ffff;">Contact</h3> 
+                        <div class="d-inline-flex text-black" >
+                            <p class="m-0 text-uppercase" style="font-weight: bold;"><a class="text-white" href="">Home</a></p> 
+                            <i class="fa fa-angle-double-right pt-1 px-3" style="font-weight: bold; color: #01a101;"></i>
+                            <p class="m-0 text-uppercase" style="font-weight: bold; color: black;"> <a class="text-white" href=""> Pages </a></p> 
+                            <i class="fa fa-angle-double-right pt-1 px-3" style="font-weight: bold; color: #01a101;"></i>
+                            <p class="m-0 text-uppercase" style="font-weight: bold; color: #ff5c40;">Contact</p> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Header End -->
 
         <!-- Header Start -->
         {{-- <div class="container-fluid header bg-white p-0 mt-4">
@@ -80,15 +106,7 @@
         <!-- Contact Start -->
         <div class="container-xxl py-5">
             <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Contact Us</h1>
-                    <ol class="breadcrumb text-uppercase" style="margin-left: 32%">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-body active" aria-current="page">Contact</li>
-                    </ol>
-                    {{-- <p>Reach out to Orange Shire today to discover how our dedicated team can support your coworking and costudying needs. Whether you're seeking space, community, or collaboration, we're here to make your experience exceptional.</p> --}}
-                </div>
+
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="row gy-4">

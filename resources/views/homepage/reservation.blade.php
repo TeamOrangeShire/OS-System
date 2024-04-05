@@ -4,6 +4,16 @@
         @include('homepage/Components/header', ['current_page'=>'Reservations - Orange Shire'])
         <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
         <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
+
+        <style>
+  
+            .page-header {
+              background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.295)), url(../img/pheader1.jpg), no-repeat center center;
+              background-size: co;
+            }
+            
+            </style>
+
     </head>
 
 <body style="background-color: #ffffff !important">
@@ -21,9 +31,26 @@
         @include('homepage/Components/nav', ['active' => 'reservation' , 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
 
+        
+            <!-- Header Start -->
+            <div class="container-fluid page-header">
+                <div class="container">
+                    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+                        <h3 class="display-4 text-uppercase" style="color: #ffff;">Reservation</h3> 
+                        <div class="d-inline-flex text-black">
+                            <p class="m-0 text-uppercase" style="font-weight: bold;"><a class="text-white" href="">Home</a></p> 
+                            <i class="fa fa-angle-double-right pt-1 px-3" style="font-weight: bold; color: #01a101;"></i>
+                            <p class="m-0 text-uppercase" style="font-weight: bold; color: black;"> <a class="text-white" href=""> Pages </a></p> 
+                            <i class="fa fa-angle-double-right pt-1 px-3" style="font-weight: bold; color: #01a101;"></i>
+                            <p class="m-0 text-uppercase" style="font-weight: bold; color: #ff5c40;">Reservation</p> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Header End -->
 
         <!-- Header Start -->
-        <div class="container-fluid header bg-white p-0 mt-4">
+        {{-- <div class="container-fluid header bg-white p-0 mt-4">
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                 <div class="col-md-6 p-5 mt-lg-5">
                     <h1 class="display-5 animated fadeIn mb-4">Reservations</h1> 
@@ -39,7 +66,7 @@
                     <img class="img-fluid" src="img/os_2.jpg" alt="">
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Header End -->
 
 

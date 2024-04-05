@@ -15,7 +15,6 @@
         </div>
         <!-- Spinner End -->
 
-
         <!-- Navbar Start -->
          @include('homepage/Components/nav', ['active'=>'home', 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
@@ -29,7 +28,7 @@
                     <p class="animated fadeIn mb-4 pb-2">Experience the vibrant atmosphere of our coworking and co-studying space, where productivity thrives amidst a supportive community, right in the heart of Bacolod City.</p>
                     <a href="{{ route('solutions') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Browse Solutions</a>
                 </div>
-                <div class="col-md-5 animated fadeIn ">
+                <div class="col-md-5 animated fadeIn">
                     <div class="owl-carousel header-carousel" style="top: 2rem;">
                         <div class="owl-carousel-item">
                             <img class="img-fluid" src="img/os_1.jpg" alt="">
@@ -90,7 +89,6 @@
             </div>
         </div> -->
         <!-- Search End -->
-
 
         <!-- AMENITIES Start -->
         <br><br><br><br>
@@ -202,11 +200,11 @@
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-4" style="display: flex; justify-content: center;">
-                    <div class="container-xxl py-5">
+                    <div class="container-xxl py-5" style="margin-bottom: -100px;">
                         <div class="container">
                             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
-                                <h1 class="mb-3">Why Visit The Shire</h1>
-                                <p>Orange Shire is established to make a home for different types of learners, be it on the academe or in profession. Assembled by a group of people that values teamwork and collaboration, it is a place for costudying and coworking for all. <br>Come and experience the Shire life.</p>
+                                <h1 class="mb-3">Why visit the Shire</h1>
+                                {{-- <p>Orange Shire is established to make a home for different types of learners, be it on the academe or in profession. Assembled by a group of people that values teamwork and collaboration, it is a place for costudying and coworking for all. <br>Come and experience the Shire life.</p> --}}
                             </div>
                             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="testimonial-item bg-light rounded p-3">

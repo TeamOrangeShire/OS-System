@@ -36,11 +36,14 @@
                 @endphp
                 <button class="user_account d-none d-lg-flex" style="background-image:url('{{ $customer->customer_profile_pic === 'none' ? asset('User/Customer/placeholder.png') : asset('User/Customer/'.$customer->customer_profile_pic) }}')"></button>
                 <div class="profile-menu-content">
-                    <a href="{{ route('customerProfile') }}"><i class="fa-regular fa-user" style="color: #ff5c40; padding-right:20px;"></i> Profile</a>
-                    <a href="{{ route('customerSubscription') }}"><i class="fa-regular fa-bell" style="color: #ff5c40; padding-right:20px;"></i></i>Subscription</a>
-                    <a href="{{route('customerReservation')}}"><i class="fa-regular fa-calendar" style="color: #ff5c40; padding-right:20px;"></i>Reservation</a>
-                    <a href="{{ route('customerSettings') }}"><i class="fa-solid fa-sliders" style="color: #ff5c40; padding-right:20px;"></i>Settings</a>
-                    <a href="#"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ff5c40; padding-right:20px;"></i>Logout</a>
+                    <a class="aref" href="{{ route('customerProfile') }}"><i class="fa-regular fa-user" style="color: #ff5c40; padding-right:20px;"></i> Profile</a>
+                    <a class="aref" href="{{ route('customerSubscription') }}"><i class="fa-regular fa-bell" style="color: #ff5c40; padding-right:20px;"></i></i>Subscription</a>
+                    <a class="aref" href="{{route('customerReservation')}}"><i class="fa-regular fa-calendar" style="color: #ff5c40; padding-right:20px;"></i>Reservation</a>
+                    <a class="aref" href="{{ route('customerSettings') }}"><i class="fa-solid fa-sliders" style="color: #ff5c40; padding-right:20px;"></i>Settings</a>
+                    <form method="POST" id="customer_logOut">
+                        @csrf
+                        <button type="button" class="aref" onclick="logOut('{{ route('customer_logOut') }}')"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ff5c40; padding-right:20px;"></i>Logout</button>
+                    </form>
                 </div>
                 <style>
                     /* Add any additional styles here */
@@ -61,16 +64,20 @@
                         margin-left:-80px;
                         z-index: 1;
                     }
-                    .profile-menu-content a:hover {
+                    .profile-menu-content .aref:hover {
                         background-color: #999999;
                         color: #ffffff
                     }
             
-                    .profile-menu-content a {
+                    .profile-menu-content .aref {
                         display: block;
                         padding: 10px;
                         text-decoration: none;
                         color: #333;
+                        border: none;
+                        width: 100%;
+                        text-align: left;
+                        background: transparent;
                     }
                      
                     .profile-menu:hover .profile-menu-content {
@@ -80,7 +87,25 @@
             </div>
             @endif
      
-          
+          <script>
+             function logOut(route) {
+       event.preventDefault();
+     var formData = $('form#customer_logOut').serialize();
+ 
+     $.ajax({
+         type: 'POST',
+         url: route,
+         data: formData,
+         success: function(response) {
+           location.reload();
+         }, 
+         error: function (xhr) {
+
+             console.log(xhr.responseText);
+         }
+     });
+ }
+          </script>
         </div>
     </nav>
 </div>  
