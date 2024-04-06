@@ -52,13 +52,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Unity Pugh</td>
-                      <td>9958</td>
-                      <td>Curicó</td>
-                      <td></td>
-                      <td>37%</td>
-                    </tr>
+                    @php
+                    $logs = App\Models\CustomerLogs::where('customer_id', $user_id)->orderBy('created_at', 'desc')->get();
+                @endphp
+                @foreach ($logs as $l)
+                <tr>
+                  <td>{{ $l->log_date }}</td>
+                  <td>{{ $l->log_start_time }}</td>
+                  <td>{{ $l->log_end_time }}</td>
+                  <td>none</td>
+                  <td>none</td>
+                </tr>
+                @endforeach
+               
                   
                   </tbody>
                 </table>
