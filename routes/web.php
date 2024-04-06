@@ -95,7 +95,7 @@ Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdm
 Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
 Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/addCredit',[EditAcc::class,'addCredit'] )->name('addCredit');
-
+Route::post('/acceptLog',[CustomerLog::class,'acceptLog'] )->name('acceptLog');
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');

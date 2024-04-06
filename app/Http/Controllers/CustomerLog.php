@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\CustomerLogs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CustomerLog extends Controller
 {
@@ -14,15 +15,25 @@ class CustomerLog extends Controller
 
     return response()->json(['logs'=>$log]);
   }
+<<<<<<< HEAD
 
 
-  public function GetScannedURLlog(Request $request){
-    $direction = $request->direction;
-    $id = $request->id;
 
-    if($direction === 'login'){
-      $log = new CustomerLogs();
-      $log->customer_id = $id;
-    }
+=======
+  public function acceptLog(Request $request){
+
+    $id = $request->pending_log;
+    $currentTime = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+
+    $log = CustomerLogs::where('log_id',$id)->first();
+    
+    $log->update([
+
+        'log_end_time'=>$currentTime,
+        'log_status'=> 2,
+
+    ]);
+    return response()->json(['status'=> 'success']);
+>>>>>>> 0420aaaed54b5986a66e60daada23b5b081ce72b
   }
 }

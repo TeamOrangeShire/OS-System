@@ -26,10 +26,14 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     @include('admin.assets.admintable')
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+     {{-- new add --}}
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
+
 
 </head>
 <body class="">
+    <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 	<!-- [ Pre-loader ] start -->
 	<div class="loader-bg">
 		<div class="loader-track">
@@ -116,7 +120,7 @@
                                 <div class="row">
                                 <div class="card-header col-md-6">
                                     <h5>Log history</h5>
-                                   <input type="text" name="" id="cus_id">
+                                   <input type="hidden" name="" id="cus_id">
                                 </div>
                                 <div class="card-header col-md-6">
                                     <h5>Customer name:</h5><h5 id="cus_name"></h5>
@@ -130,7 +134,8 @@
                                                     <th>Date</th>
                                                     <th>Start</th>
                                                     <th>End</th>
-                                                    <th>Action</th>
+                                                    <td>Status</td>
+                                                    <th id="action">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="cust_log">
@@ -214,6 +219,10 @@
     </div>
 </div>
 
+<form action="" method="POST" id="acceplog"> 
+    @csrf
+    <input type="hidden" name="pending_log" id="pending_log">
+</form>
 {{-- insert modal end --}}
 
 
@@ -233,14 +242,42 @@
             for(let i = 0;i<response.data.logs.length;i++){
 
                 const fetchData = response.data.logs[i];
-                html += `<tr>
+                if(fetchData.log_status === 1){
+                    
+                    html += `<tr>
                              <td>${fetchData.log_date}</td>
                              <td>${fetchData.log_start_time}</td>
                              <td>${fetchData.log_end_time}</td>
+                             <td>Pending</td>
                              <td>
-                                <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="" onclick="log('{{$cus->customer_id}}','{{$cus_fullname}}')"><i class="feather icon-info"></i></button>
+                                <button type="button" class="btn  btn-icon btn-warning" data-toggle="modal" data-target="" onclick="accept('${fetchData.log_id}','${fullname}')"><i class="feather icon-clock"></i></button>
                             </td>
                         </tr>`;
+                }else if(fetchData.log_status === 2){
+                    
+                    html += `<tr>
+                             <td>${fetchData.log_date}</td>
+                             <td>${fetchData.log_start_time}</td>
+                             <td>${fetchData.log_end_time}</td>
+                            <td>Completed</td>
+                            <td>
+                            <i class="feather icon-check btn btn-icon btn-success"></i>
+                            </td>
+                        </tr>`;
+                }else{
+                   
+                    html += `<tr>
+                             <td>${fetchData.log_date}</td>
+                             <td>${fetchData.log_start_time}</td>
+                             <td>${fetchData.log_end_time}</td>
+                            <td>Active</td>
+                            <td>
+                                <i class="feather icon-zap btn btn-icon btn-primary"></i>
+                            </td>
+                        </tr>`;
+                }
+                
+               
             }
             tablelog.innerHTML=html;
         })
@@ -248,7 +285,32 @@
         console.error(error);
         });
         }
-        
+
+        function accept(id){
+document.getElementById('pending_log').value=id;
+document.getElementById('roller').style.display='flex';
+event.preventDefault();
+ var formData = $('form#acceplog').serialize();
+
+ $.ajax({
+     type: 'POST',
+     url: "{{route('acceptLog')}}",
+     data: formData,
+     success: function(response) {
+       if(response.status === 'exist'){
+        document.getElementById('roller').style.display='none';
+      
+       }else if(response.status === 'success'){
+        location.reload();
+       
+       }
+     }, 
+     error: function (xhr) {
+
+         console.log(xhr.responseText);
+     }
+ });
+}
 
     </script>
 
