@@ -33,17 +33,19 @@ class CreateAcc extends Controller
         $mname = $req->mname;
         $email = $req->email;
         $password = $req->password;
+        $ext = $req->ext;
         
         $account = new CustomerAcc();
         $account->customer_firstname = $fname;
         $account->customer_middlename = $mname;
         $account->customer_lastname = $lname;
-        $account->customer_ext = 'none';
+        $account->customer_ext = $ext;
         $account->customer_email = $email;
         $account->customer_phone_num = 'none';
         $account->customer_username = $email;
         $account->customer_password = Hash::make($password);
         $account->customer_profile_pic = 'none';
+        $account->customer_type = null;
         $account->save();
 
         $id = $account->customer_id;
