@@ -28,7 +28,9 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-     <button type="button" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
+     <button type="button" onclick="startScan()" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
+      <div id="qrScanner" style="display: none;"></div>
+       <div id="result"></div>
     <section class="section">
         <div class="row">
           <div class="col-lg-12">
@@ -54,7 +56,7 @@
                       <td>Unity Pugh</td>
                       <td>9958</td>
                       <td>Curicó</td>
-                      <td>2005/02/11</td>
+                      <td></td>
                       <td>37%</td>
                     </tr>
                   
