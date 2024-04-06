@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @include('homepage.Dashboard.Components.header', ['title'=>'QR Code Scan - Orange Shire'])
+</head>
+<body>
+    
 <form id="scanQR" method="post">
     @csrf 
     <input type="hidden" name="cust_id" value="{{ $user_id }}"> 
@@ -6,7 +13,7 @@
 
 <script>
     
-  function GetQRCodeURL(url){
+  function GetQRCodeURL(){
     var formData = $('form#scanQR').serialize();
 
     $.ajax({
@@ -14,7 +21,9 @@
         url: "{{ route('updateQRLog') }}",
         data: formData,
         success: function(response) {
-         
+         if(response.status === 'success'){
+            window.location.href = "{{ route('logintoshire') }}";
+         }
         }, 
         error: function (xhr) {
 
@@ -22,5 +31,9 @@
         }
     });
   }
-
+  window.onload = function() {
+    GetQRCodeURL();
+};
 </script>
+</body>
+</html>

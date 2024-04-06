@@ -33,12 +33,42 @@ class CustomerLog extends Controller
 
   public function GetScannedURLlog(Request $request){
     $direction = $request->direction;
-    $id = $request->id;
+    $id = $request->cust_id;
+
 
     if($direction === 'login'){
-      $log = new CustomerLogs();
-      $log->customer_id = $id;
-    }
+      $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
+      if(!$checkLogOut){
+        $log = new CustomerLogs();
+        $log->customer_id = $id;
+        $log->log_date = Carbon::now()->format('d/m/Y');
+        $log->log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+        $log->log_end_time = '';
+        $log->log_status = 0;
+        $log->save();
+      }
+   
+    }else if($direction === 'logout_walkin'){
+      $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
+      if($checkLogOut){
+        $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();
+        $updateLog->update([
+          'log_status'=> 1,
+        ]);
+      }
+     
+    }else{
+      $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
+      if($checkLogOut){
+        $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();
+        $updateLog->update([
+          'log_end_time'=> Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'),
+          'log_status'=> 2,
+        ]);
+      }
+
+    
   }
-  
+  return response()->json(['status'=>'success']);
+}
 }
