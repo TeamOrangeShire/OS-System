@@ -15,11 +15,6 @@ class CustomerLog extends Controller
 
     return response()->json(['logs'=>$log]);
   }
-<<<<<<< HEAD
-
-
-
-=======
   public function acceptLog(Request $request){
 
     $id = $request->pending_log;
@@ -34,6 +29,16 @@ class CustomerLog extends Controller
 
     ]);
     return response()->json(['status'=> 'success']);
->>>>>>> 0420aaaed54b5986a66e60daada23b5b081ce72b
   }
+
+  public function GetScannedURLlog(Request $request){
+    $direction = $request->direction;
+    $id = $request->id;
+
+    if($direction === 'login'){
+      $log = new CustomerLogs();
+      $log->customer_id = $id;
+    }
+  }
+  
 }
