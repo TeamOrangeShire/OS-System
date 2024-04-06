@@ -10,6 +10,7 @@ use App\Http\Controllers\AddData;
 use App\Http\Controllers\EditData;
 use App\Http\Controllers\GetDataViews;
 use App\Http\Controllers\Reservation;
+use App\Http\Controllers\CustomerLog;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,7 @@ Route::get('/admin', function () { return view('admin.index');})->name('index');
 
 Route::get('/admin/admin_account', function () { return view('admin.admin_acc');})->name('admin_acc');
 Route::get('/admin/customer_account', function () { return view('admin.customer_acc');})->name('customer_acc');
+Route::get('/admin/getlog', [CustomerLog::class,"getlog"])->name('getlog');
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/reservation_time', function () { return view('admin.res_time');})->name('res_time');
@@ -91,6 +93,8 @@ Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin
 Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdmin');
 Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
 Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
+Route::post('/addCredit',[EditAcc::class,'addCredit'] )->name('addCredit');
+
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');

@@ -188,4 +188,21 @@ class EditAcc extends Controller
 
      
     }
+    public function addCredit(Request $request){
+
+        $customer_id = $request->cus_id;
+        $addcredit = $request->cus_credit;
+
+        $customer_credit = CustomerAcc::where('customer_id', $customer_id)->first();
+
+        $current_credit = $customer_credit->account_credits;
+        $credit = $current_credit + $addcredit;
+
+        $customer_credit->update([
+               
+          'account_credits'=>$credit,
+    
+        ]);
+        return redirect()->back();
+    }
 }
