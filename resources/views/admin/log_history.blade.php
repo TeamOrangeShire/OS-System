@@ -24,7 +24,8 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    
+    @include('admin.assets.admintable')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
 
 </head>
@@ -49,270 +50,101 @@
 <section class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
-        
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header" >
-                    
-                    <h5>Log History</h5>
-                    <button class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#insertmodal" type="submit">Insert Log</button>
+        <section class="section">
+            <div class="row">
+              <div class="col-lg-12">
+      
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Datatables</h5>
+                   
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                      <thead>
+                        <tr>
+                       
+                            <th>Fullname</th>
+                            <th>Email</th>
+                            <th>number</th>
+                            <th>credit</th>
+                            <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @php
+                        $Customer = App\Models\CustomerAcc::all();
+                        
+                        
+                       @endphp
+                          @foreach ($Customer as $cus)
+                          @php
+                           $cus_fullname = $cus->customer_firstname .' '.$cus->customer_middlename.' '.$cus->customer_lastname;
+                              
+                          @endphp
+                        <tr>
+                            <td>{{$cus_fullname}}</td>
+                            <td>{{$cus->customer_email}}</td>
+                            <td>{{$cus->customer_number}}</td>
+                            <td>{{$cus->account_credits}}</td>
+                            <td>
+                                <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="log('{{$cus->customer_id}}','{{$cus_fullname}}')"><i class="feather icon-info"></i></button>
+                            </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  
+      
+                  </div>
+                </div>
+      
+              </div>
+            </div>
+          </section>
 
-                    <button class="btn btn-primary">
-                        <i class="feather icon-printer" style="font-size: 24px;"></i>
-                    </button>
-                    
-                    
-                    <div class="input-group m-t-15">
-                        <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary">
-                                <i class="feather icon-search"></i>
-                            </button>
+
+          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h4" id="myLargeModalLabel">Log History</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="row">
+                                <div class="card-header col-md-6">
+                                    <h5>Log history</h5>
+                                   <input type="text" name="" id="cus_id">
+                                </div>
+                                <div class="card-header col-md-6">
+                                    <h5>Customer name:</h5><h5 id="cus_name"></h5>
+                                </div>
+                            </div>
+                                <div class="card-body table-border-style">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Start</th>
+                                                    <th>End</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cust_log">
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body table-border-style">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Fullname</th>
-                                    <th>Email</th>
-                                    <th>Phone Number</th>
-                                    <th>Action</th>
-                            
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Albert</td>
-                                    <td>@gmail.com</td>
-                                    <td>09999999999</td>
-                                    <td>
-                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="feather icon-info"></i></button>
-                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Time In</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <form class="form-inline">
-                                                            <div class="form-group mx-sm-3 mb-2">
-                                                             
-                                                                <input type="time" class="form-control" id="" placeholder="Time In">
-                                                            </div>
-                                                            <button type="submit" class="btn  btn-icon btn-success"><i class="feather icon-check-circle"></i></button>
-                                                        </form>
-                                                        <br>
-                                                        <div class="col-md-12">
-                                                            <div class="card">
-                                                                <div class="card-header">
-                                                                    <h5>Log history</h5>
-                                                                    
-                                                                </div>
-                                                                <div class="card-body table-border-style">
-                                                                    <div class="table-responsive">
-                                                                        <table class="table table-hover">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>#</th>
-                                                                                    <th>Date</th>
-                                                                                    <th>Start</th>
-                                                                                    <th>End</th>
-                                                                                    
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td>2</td>
-                                                                                    <td>2024/03/07</td>
-                                                                                    <td>11:42 am</td>
-                                                                                    <td>12:42 pm</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>3</td>
-                                                                                    <td>2024/03/07</td>
-                                                                                    <td>11:42 am</td>
-                                                                                    <td>12:42 pm</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>4</td>
-                                                                                    <td>2024/03/07</td>
-                                                                                    <td>11:42 am</td>
-                                                                                    <td>12:42 pm</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jiffy</td>
-                                    <td>@gmail.com</td>
-                                    <td>09999999999</td>
-                                    <td>
-                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="feather icon-info"></i></button>
-                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Time in</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <form class="form-inline">
-                                                            <div class="form-group mx-sm-3 mb-2">
-                                                               
-                                                                <input type="time" class="form-control" id="" placeholder="Time In">
-                                                            </div>
-                                                            <button type="submit" class="btn  btn-icon btn-success"><i class="feather icon-check-circle"></i></button>
-                                                        </form>
-                                                        <br>
-                                                        <div class="col-md-12">
-                                                            <div class="card">
-                                                                <div class="card-header">
-                                                                    <h5>Log History</h5>
-                                                                    
-                                                                </div>
-                                                                <div class="card-body table-border-style">
-                                                                    <div class="table-responsive">
-                                                                        <table class="table table-hover">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>#</th>
-                                                                                    <th>Date</th>
-                                                                                    <th>Start</th>
-                                                                                    <th>End</th>
-                                                                                    
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td>2</td>
-                                                                                    <td>2024/03/07</td>
-                                                                                    <td>11:42 am</td>
-                                                                                    <td>12:42 pm</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>3</td>
-                                                                                    <td>2024/03/07</td>
-                                                                                    <td>11:42 am</td>
-                                                                                    <td>12:42 pm</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>4</td>
-                                                                                    <td>2024/03/07</td>
-                                                                                    <td>11:42 am</td>
-                                                                                    <td>12:42 pm</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Super mario</td>
-                                    <td>@gmail.com</td>
-                                    <td>09999999999</td>
-                                    <td>
-                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="feather icon-info"></i></button>
-                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title h4" id="myLargeModalLabel">Time In</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <form class="form-inline">
-                                                            <div class="form-group mx-sm-3 mb-2">
-                                                               
-                                                                <input type="time" class="form-control" id="" placeholder="Time In">
-                                                            </div>
-                                                            <button type="submit" class="btn  btn-icon btn-success"><i class="feather icon-check-circle"></i></button>
-                                                        </form>
-                                                        <br>
-                                                        <div class="col-md-12">
-                                                            <div class="card">
-                                                                <div class="card-header">
-                                                                    <h5>Log History</h5>
-                                                                    
-                                                                </div>
-                                                                <div class="card-body table-border-style">
-                                                                    <div class="table-responsive">
-                                                                        <table class="table table-hover">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>#</th>
-                                                                                    <th>Date</th>
-                                                                                    <th>Start</th>
-                                                                                    <th>End</th>
-                                                                                    
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td>2</td>
-                                                                                    <td>2024/03/07</td>
-                                                                                    <td>11:42 am</td>
-                                                                                    <td>12:42 pm</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>3</td>
-                                                                                    <td>2024/03/07</td>
-                                                                                    <td>11:42 am</td>
-                                                                                    <td>12:42 pm</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>4</td>
-                                                                                    <td>2024/03/07</td>
-                                                                                    <td>11:42 am</td>
-                                                                                    <td>12:42 pm</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
-        </div>   
-    </div>
+        </div>
        
         <!-- [ Main Content ] end -->
     </div>
@@ -386,54 +218,43 @@
 
 
 <!-- [ Main Content ] end -->
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
+    <script>
+        function log(id,fullname){
+            document.getElementById('cus_id').value=id;
+            document.getElementById('cus_name').textContent=fullname;
 
+            const url="{{route('getlog')}}?id="+id;
+            const tablelog= document.getElementById('cust_log');
+            tablelog.innerHTML='';
+            let html='';
+            axios.get(url)
+        .then(function (response) {
+         
+            for(let i = 0;i<response.data.logs.length;i++){
+
+                const fetchData = response.data.logs[i];
+                html += `<tr>
+                             <td>${fetchData.log_date}</td>
+                             <td>${fetchData.log_start_time}</td>
+                             <td>${fetchData.log_end_time}</td>
+                             <td>
+                                <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="" onclick="log('{{$cus->customer_id}}','{{$cus_fullname}}')"><i class="feather icon-info"></i></button>
+                            </td>
+                        </tr>`;
+            }
+            tablelog.innerHTML=html;
+        })
+       .catch(function (error) {
+        console.error(error);
+        });
+        }
+        
+
+    </script>
+
+    @include('admin.assets.adminscript')
     <!-- Required Js -->
+
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 

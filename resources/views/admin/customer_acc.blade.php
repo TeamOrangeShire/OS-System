@@ -159,19 +159,26 @@
                
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">Customer Info</h5>
-                   
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
+                    <form action="{{route('addCredit')}}" method="POST">
+                        @csrf
+                  
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <input type="hidden" name="cus_id" id="cus_id1">
+                        <label for="customer_name1"> <strong>Customer Name: </strong> </label> <br>
+                        <p class="" name="cname" id="cus_name1">  </p> 
+                       
+                    </div>
                 <div class="row">
                 
                     <div class="col-sm-6">
                         <div style="margin-left: 40px;">
                             <br>
-                            <input type="hidden" name="cus_id" id="cus_id1">
-                            <label for="customer_name1"> <strong>Customer Name: </strong> </label> <br>
-                            <p class="" name="cname" id="cus_name1">  </p> 
-                           
+                            <label for="email"><strong>Credit Balance: </strong></label> <br>
+                            <p class=""  id="cus_credit1"></p> 
                         </div>
     
                     </div>
@@ -180,16 +187,19 @@
                         <div style="margin-left: 40px;">
                             <br>
                             <label for="email"><strong>Credit Balance: </strong></label> <br>
-                            <p class="" name="cus_credit" id="cus_credit1"></p> 
-                            <input type="text" name="" id="" class="form-control">    
+                            <input type="number" name="cus_credit" id="" class="form-control col-sm-8" style="font-size: 90%;">    
                         </div>
                     </div>
     
                 </div>
-              
-    
+                <br>
+                <div style="text-align: center;">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
-           
+                 </form>
+                </div>
+                
             </div>
         </div>
     </div>
