@@ -6,14 +6,10 @@
       <title>Orange Shire - Sign up </title>
       <link rel="icon" href="img/os_logo.png">
       <link rel="stylesheet" href="css/login.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-      <link rel="stylesheet" href="libraries/modals/hystmodal.min.css">
-      <script src="libraries/modals/hystmodal.min.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="js/google.js" defer type="module"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
 
    </head>
   
@@ -37,6 +33,16 @@
           <input type="text" name="fname" oninput="restrictToText(event)" class="input" placeholder="First Name">
           <input type="text" name="mname" oninput="restrictToText(event)" class="input" placeholder="Middle Name">
           <input type="text" name="lname" oninput="restrictToText(event)" class="input" placeholder="Last Name">
+          <select name="ext" class="input">
+              <option selected value="none" >None</option>
+              <option value="Jr." >Junior(Jr.)</option>
+              <option value="Sr." >Senior(Sr.)</option>
+              <option value="I" >I</option>
+              <option value="II" >II</option>
+              <option value="III" >III</option>
+              <option value="IV" >IV</option>
+              <option value="V" >V</option>
+          </select>
           <input type="email" name="email" class="input" placeholder="Email">
           <input type="password" name="password"   class="input" placeholder="Password">
           <button type="submit" onclick="SendCode()" id="create-acc-button" class="form-btn">Create account</button>

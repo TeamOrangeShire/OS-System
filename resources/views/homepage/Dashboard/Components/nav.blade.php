@@ -442,7 +442,14 @@
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link " href="{{ route('logintoshire') }}">
+          <i class="bi bi-lightning-fill"></i>
+          <span>Login to Shire</span>
+        </a>
+      </li>
 
       <li class="nav-item">
         <a class="nav-link " href="{{ route('customerSubscription') }}">

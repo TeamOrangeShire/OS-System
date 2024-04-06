@@ -181,7 +181,6 @@ body{
   width: 2.5em;
   outline: none;
   text-align: center;
-
   font-size: 1.5rem;
   color: #fff;
   border-radius: 12px;
@@ -245,11 +244,16 @@ body{
 }
 
 .clear:hover,:focus {
-  color: #ffffff;
-  background: #af0000;
-  border: 1px solid #ff0000;
+  color: #ffffff !important;
+  background: #ff5c40;
+  border: 1px solid #ff5140;
  
 }
+
+.input:focus::placeholder {
+  color: #fff;
+}
+
 .loadingDiv{
   position: fixed;
   display: none;
