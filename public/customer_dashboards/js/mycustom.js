@@ -83,18 +83,16 @@ function startScan() {
     
     // Start QR code scanning
     html5QrCode.start(
-      { facingMode: "environment" }, // Use rear camera if available
+      { facingMode: "environment" }, 
       {
         fps: 10, // Set frames per second (optional)
         qrbox: 250 // Set size of QR code scanning box (optional)
       },
       qrCodeMessage => {
-        console.log('Decoded QR code:', qrCodeMessage);
-        document.getElementById('result').textContent = 'Decoded QR code: ' + qrCodeMessage;
-        // Stop QR code scanning after successful decode (optional)
+      
+        window.location.href = qrCodeMessage;
         html5QrCode.stop().then(ignore => {
-          console.log('QR code scanning stopped');
-          document.getElementById('qrScanner').style.display = 'none'; // Hide scanner container
+          document.getElementById('qrScanner').style.display = 'none';
         }).catch(err => console.error(err));
       },
       errorMessage => {

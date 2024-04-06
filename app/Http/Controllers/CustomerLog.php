@@ -14,4 +14,15 @@ class CustomerLog extends Controller
 
     return response()->json(['logs'=>$log]);
   }
+
+
+  public function GetScannedURLlog(Request $request){
+    $direction = $request->direction;
+    $id = $request->id;
+
+    if($direction === 'login'){
+      $log = new CustomerLogs();
+      $log->customer_id = $id;
+    }
+  }
 }
