@@ -71,4 +71,12 @@ class CustomerLog extends Controller
   }
   return response()->json(['status'=>'success']);
 }
+
+  public function GetCustomerLoginStatus(Request $req){
+    $customer = $req->cookie('customer_id');
+
+    $logs = CustomerLogs::where('customer_id', $customer)->where('log_date', Carbon::now()->format('d/m/Y'))->first();
+
+    return response()->json(['fetched'=>$logs]);
+  }
 }
