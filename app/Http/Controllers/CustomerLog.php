@@ -32,23 +32,23 @@ class CustomerLog extends Controller
   }
 
   public function GetScannedURLlog(Request $request){
-    $direction = $request->direction;
+    $QRCode = $request->QRCode;
     $id = $request->cust_id;
 
 
-    if($direction === 'login'){
+    if($QRCode === 'XCgEMtt4XMC9DN2'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
       if(!$checkLogOut){
         $log = new CustomerLogs();
         $log->customer_id = $id;
-        $log->log_date = Carbon::now()->format('d/m/Y');
+        $log->log_date =  Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
         $log->log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
         $log->log_end_time = '';
         $log->log_status = 0;
         $log->save();
       }
    
-    }else if($direction === 'logout_walkin'){
+    }else if($QRCode === 'FLPguCIZSg9TTqO'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
       if($checkLogOut){
         $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();
@@ -57,7 +57,7 @@ class CustomerLog extends Controller
         ]);
       }
      
-    }else{
+    }else if($QRCode === 'IuFiIJwM3AupqAK'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
       if($checkLogOut){
         $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();
@@ -75,7 +75,7 @@ class CustomerLog extends Controller
   public function GetCustomerLoginStatus(Request $req){
     $customer = $req->cookie('customer_id');
 
-    $logs = CustomerLogs::where('customer_id', $customer)->where('log_date', Carbon::now()->format('d/m/Y'))->first();
+    $logs = CustomerLogs::where('customer_id', $customer)->where('log_date', Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))->first();
 
     return response()->json(['fetched'=>$logs]);
   }

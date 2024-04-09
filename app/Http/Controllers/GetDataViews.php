@@ -123,14 +123,6 @@ class GetDataViews extends Controller
         return view('homepage.Dashboard.loginshire', ['user_id'=> $userId]);
     }
 
-    
-    public function RedirectScanQR(Request $request){
-        $userId = $request->cookie('customer_id');
-        $direction = $request->direction;
-        return view('homepage.Dashboard.redirect_scan', ['user_id'=>$userId, 'direction'=>$direction]);
-    }
-
-
     public function GetRoomRate(Request $req){
 
         $room_id = $req->input('room_id');

@@ -57,7 +57,6 @@ function confirmPurchase(){
 }
 
 function logOut(route, home) {
-    event.preventDefault();
   var formData = $('form#customer_logOut').serialize();
 
   $.ajax({
@@ -74,11 +73,11 @@ function logOut(route, home) {
   });
 }
 
-function startScan() {
-    // Show QR code scanner container
+function startScan(scannedRoute, refreshURL, userType) {
+
     document.getElementById('qrScanner').style.display = 'block';
-    
-    // Initialize HTML5 QR code scanner
+    const formInput = document.getElementById('scannedQRCode');
+ 
     const html5QrCode = new Html5Qrcode('qrScanner');
     
     // Start QR code scanning
@@ -90,7 +89,8 @@ function startScan() {
       },
       qrCodeMessage => {
       
-        window.location.href = qrCodeMessage;
+        formInput.value = qrCodeMessage;
+        SubmitScannedData(scannedRoute, refreshURL, userType);
         html5QrCode.stop().then(ignore => {
           document.getElementById('qrScanner').style.display = 'none';
         }).catch(err => console.error(err));
@@ -102,13 +102,34 @@ function startScan() {
     );
   }
 
+  function SubmitScannedData(route, refURL, type){
+    const loading = document.getElementById('loadingDiv');
+    loading.style.display = 'flex';
+    var formData = $('form#scannedDataHolder').serialize();
+  
+    $.ajax({
+        type: 'POST',
+        url: route,
+        data: formData,
+        success: function(response) {
+          if(response.status === 'success'){
+            loading.style.display = 'none';
+            LoginStatusFetch(refURL, type);
+          }
+        }, 
+        error: function (xhr) {
+  
+            console.log(xhr.responseText);
+        }
+    });
+  }
 
   function LoginStatusFetch(url, type){
     axios.get(url)
         .then(function (response) {
 
           const data = response.data.fetched;
-
+          
           const login_status = document.getElementById('login_status');
           const login_date = document.getElementById('login_date');
           const login_start = document.getElementById('login_start');
@@ -165,6 +186,7 @@ function startScan() {
         });
         
   }
+
   function timeDifference(startTime, endTime) {
     const start = parseTime(startTime);
     const end = parseTime(endTime);
@@ -189,13 +211,15 @@ function parseTime(time) {
     let totalMinutes = hour * 60 + minute;
 
     if (isPM && hour !== 12) {
-        totalMinutes += 12 * 60; // Add 12 hours for PM time, except for 12 PM
+        totalMinutes += 12 * 60; 
     } else if (!isPM && hour === 12) {
-        totalMinutes -= 12 * 60; // Subtract 12 hours for 12 AM
+        totalMinutes -= 12 * 60; 
     }
 
-    return totalMinutes * 60 * 1000; // Convert to milliseconds
+    return totalMinutes * 60 * 1000; 
 }
+
+
 
 function PaymentCalc(hours, minutes, type){
   const HtoM = hours * 60;
@@ -209,3 +233,4 @@ function PaymentCalc(hours, minutes, type){
 
   return 'test';
 }
+

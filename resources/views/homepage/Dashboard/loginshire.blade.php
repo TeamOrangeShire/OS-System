@@ -28,7 +28,8 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    <button type="button" onclick="startScan()" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
+    <form method="post" id="scannedDataHolder">@csrf <input type="hidden" id="scannedQRCode" name="QRCode"><input type="hidden" name="cust_id" value="{{ $user_id }}"></form>
+    <button type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}', '{{ $customer->customer_type }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
                   <div id="qrScanner" style="display: none;"></div>
        <div class="card">
         <div class="card-body">
@@ -72,20 +73,22 @@
                       <th>Payment</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="historyBody">
                     @php
                     $logs = App\Models\CustomerLogs::where('customer_id', $user_id)->orderBy('created_at', 'desc')->get();
                 @endphp
+                
                 @foreach ($logs as $l)
                 <tr>
-                  <td>{{ $l->log_date }}</td>
-                  <td>{{ $l->log_start_time }}</td>
-                  <td>{{ $l->log_end_time }}</td>
-                  <td>none</td>
-                  <td>none</td>
+                    <td>{{ $l->log_date }}</td>
+                    <td>{{ $l->log_start_time }}</td>
+                    <td>{{ $l->log_end_time }}</td>
+                    <td>{{ DisplayTime($l->log_start_time, $l->log_end_time) }}</td>
+                    <td>none</td>
                 </tr>
+                
                 @endforeach
-               
+                
                   
                   </tbody>
                 </table>

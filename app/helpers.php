@@ -94,4 +94,43 @@ function FilterTime($time){
 
    return [$diffInHours, $diffInMinutes, $diffInDays];
  }
+
+ function DisplayTime($start, $end) {
+    $total = timeDifference($start, $end);
+    $totalTime = $total['hours'] . 'hrs & ' . $total['minutes'] . 'mins';
+    return $totalTime;
+}
+
+ function timeDifference($startTime, $endTime) {
+    $start = parseTime($startTime);
+    $end = parseTime($endTime);
+
+    $diff = $end - $start;
+    if ($diff < 0) {
+        $diff += 24 * 60 * 60 * 1000;
+    }
+
+    $hours = floor($diff / (60 * 60 * 1000));
+    $minutes = floor(($diff % (60 * 60 * 1000)) / (60 * 1000));
+
+    return ['hours' => $hours, 'minutes' => $minutes];
+}
+
+function parseTime($time) {
+    $parts = explode(':', $time);
+    $hour = (int)$parts[0];
+    $minute = (int)$parts[1];
+    $isPM = strpos($time, 'PM') !== false;
+
+    $totalMinutes = $hour * 60 + $minute;
+
+    if ($isPM && $hour !== 12) {
+        $totalMinutes += 12 * 60; 
+    } elseif (!$isPM && $hour === 12) {
+        $totalMinutes -= 12 * 60; 
+    }
+
+    return $totalMinutes * 60 * 1000; 
+}
+
 ?>
