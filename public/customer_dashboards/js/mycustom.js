@@ -222,15 +222,43 @@ function parseTime(time) {
 
 
 function PaymentCalc(hours, minutes, type){
-  const HtoM = hours * 60;
-  const total = HtoM + minutes;
-
+  let payment = 0;
+  const perMinDisc = 0.84;
+  const perMin = 1.34;
   if(type === "Students" || type === "Teachers" || type === "Reviewers"){
-
+     if(hours < 3 ){
+      payment += (hours * 50) + (perMinDisc * minutes);
+     }else if(hours >= 3 && hours < 6){
+      payment += 140;
+      const sobra = hours - 3;
+      payment += (sobra * 50) + (perMinDisc * minutes);
+     }else if(hours >= 6 && hours <24){
+      payment += 240;
+      const sobra = hours - 6;
+      payment += (sobra * 20) + (perMinDisc * minutes); 
+     }else if(hours >= 24){
+      payment += 320;
+      const sobra = hours - 24;
+      payment += (sobra * 20) + (perMinDisc * minutes); 
+     }
   }else{
-
+    if(hours < 3 ){
+      payment += (hours * 80) + (perMin * minutes);
+     }else if(hours >= 3 && hours < 6){
+      payment += 200;
+      const sobra = hours - 3;
+      payment += (sobra * 80) + (perMin * minutes);
+     }else if(hours >= 6 && hours <24){
+      payment += 300;
+      const sobra = hours - 6;
+      payment += (sobra * 30) + (perMin * minutes); 
+     }else if(hours >= 24){
+      payment += 400;
+      const sobra = hours - 24;
+      payment += (sobra * 30) + (perMin * minutes); 
+     }
   }
 
-  return 'test';
+  return payment;
 }
 

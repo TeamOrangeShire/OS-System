@@ -133,4 +133,46 @@ function parseTime($time) {
     return $totalMinutes * 60 * 1000; 
 }
 
+function paymentCalc($hours, $minutes, $type) {
+    $payment = 0;
+    $perMinDisc = 0.84;
+    $perMin = 1.34;
+    if ($type === "Students" || $type === "Teachers" || $type === "Reviewers") {
+      if ($hours < 3) {
+        $payment += ($hours * 50) + ($perMinDisc * $minutes);
+      } else if ($hours >= 3 && $hours < 6) {
+        $payment += 140;
+        $sobra = $hours - 3;
+        $payment += ($sobra * 50) + ($perMinDisc * $minutes);
+      } else if ($hours >= 6 && $hours < 24) {
+        $payment += 240;
+        $sobra = $hours - 6;
+        $payment += ($sobra * 20) + ($perMinDisc * $minutes);
+      } else if ($hours >= 24) {
+        $payment += 320;
+        $sobra = $hours - 24;
+        $payment += ($sobra * 20) + ($perMinDisc * $minutes);
+      }
+    } else {
+      if ($hours < 3) {
+        $payment += ($hours * 80) + ($perMin * $minutes);
+      } else if ($hours >= 3 && $hours < 6) {
+        $payment += 200;
+        $sobra = $hours - 3;
+        $payment += ($sobra * 80) + ($perMin * $minutes);
+      } else if ($hours >= 6 && $hours < 24) {
+        $payment += 300;
+        $sobra = $hours - 6;
+        $payment += ($sobra * 30) + ($perMin * $minutes);
+      } else if ($hours >= 24) {
+        $payment += 400;
+        $sobra = $hours - 24;
+        $payment += ($sobra * 30) + ($perMin * $minutes);
+      }
+    }
+  
+    return $payment;
+  }
+  
+
 ?>
