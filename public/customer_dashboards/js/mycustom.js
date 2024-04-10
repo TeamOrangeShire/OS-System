@@ -139,7 +139,7 @@ function startScan(scannedRoute, refreshURL, userType) {
           const login_mode = document.getElementById('login_mode');
           const login_final = document.getElementById('login_final_status');
           if(data === null){
-            login_status.textContent = 'Not Logged In';
+            login_status.innerHTML = '<i class="bi bi-x-square-fill text-danger"></i> Not Logged In ';
             login_date.textContent = 'N/A';
             login_start.textContent = 'N/A';
             login_end.textContent = 'N/A';
@@ -148,7 +148,7 @@ function startScan(scannedRoute, refreshURL, userType) {
             login_mode.textContent = 'N/A';
             login_final.textContent = 'N/A';
           }else{
-            login_status.textContent = 'Logged In';
+            login_status.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Logged In';
             login_date.textContent = data.log_date;
             login_start.textContent = data.log_start_time;
             switch(data.log_status){
@@ -159,7 +159,7 @@ function startScan(scannedRoute, refreshURL, userType) {
                 var payment = PaymentCalc(diff.hours, diff.minutes, type);
                 login_payment.textContent = payment;
                 login_mode.textContent = 'Cash';
-                login_final.textContent = 'Unpaid/Pending Payment';
+                login_final.innerHTML = '<i class="bi bi-clock-fill text-warning"></i>  Unpaid/Pending Payment';
                 break;
               case 2:
                 var diff = timeDifference(data.log_start_time, data.log_end_time);
@@ -168,7 +168,7 @@ function startScan(scannedRoute, refreshURL, userType) {
                 var payment = PaymentCalc(diff.hours, diff.minutes, type);
                 login_payment.textContent = payment;
                 login_mode.textContent = 'Account Credit';
-                login_final.textContent = 'Paid/Deducted on Credit';
+                login_final.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Paid/Deducted on Credit';
                 break;
               default:
                 login_end.textContent = 'N/A';

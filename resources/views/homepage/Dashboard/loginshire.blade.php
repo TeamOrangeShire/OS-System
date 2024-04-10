@@ -83,7 +83,7 @@
                     <td>{{ $l->log_date }}</td>
                     <td>{{ $l->log_start_time }}</td>
                     <td>{{ $l->log_end_time }}</td>
-                    <td>{{ DisplayTime($l->log_start_time, $l->log_end_time) }}</td>
+                    <td>{{ $l->log_end_time === '' ? '' : DisplayTime($l->log_start_time, $l->log_end_time) }}</td>
                     <td>none</td>
                 </tr>
                 
