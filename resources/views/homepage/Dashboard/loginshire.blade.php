@@ -70,7 +70,7 @@
                       <th>Start Time</th>
                       <th>End Time</th>
                       <th>Total Hours</th>
-                      <th>Payment</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody id="historyBody">
@@ -84,7 +84,7 @@
                     <td>{{ $l->log_start_time }}</td>
                     <td>{{ $l->log_end_time }}</td>
                     <td>{{ $l->log_end_time === '' ? '' : DisplayTime($l->log_start_time, $l->log_end_time) }}</td>
-                    <td>none</td>
+                    <td><button class="rounded-circle"><i class="bi bi-info-circle-fill text-success"></i></button></td>
                 </tr>
                 
                 @endforeach
