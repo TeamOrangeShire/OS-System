@@ -220,45 +220,211 @@ function parseTime(time) {
 }
 
 
-
 function PaymentCalc(hours, minutes, type){
-  let payment = 0;
-  const perMinDisc = 0.84;
-  const perMin = 1.34;
+  var payment = 0;
   if(type === "Students" || type === "Teachers" || type === "Reviewers"){
-     if(hours < 3 ){
-      payment += (hours * 50) + (perMinDisc * minutes);
-     }else if(hours >= 3 && hours < 6){
-      payment += 140;
-      const sobra = hours - 3;
-      payment += (sobra * 50) + (perMinDisc * minutes);
-     }else if(hours >= 6 && hours <24){
-      payment += 240;
-      const sobra = hours - 6;
-      payment += (sobra * 20) + (perMinDisc * minutes); 
-     }else if(hours >= 24){
-      payment += 320;
-      const sobra = hours - 24;
-      payment += (sobra * 20) + (perMinDisc * minutes); 
-     }
+    switch(hours){
+      case 1:
+        payment += 50;
+        break;
+      case 2:
+        payment += 100
+        break;
+      case 3:
+        payment += 140;
+        break;
+      case 4:
+        payment += 185;
+        break;
+      case 5:
+        payment += 220;
+        break;
+      case 6:
+        payment += 240;
+        break;
+      case 7:
+        payment += 280;
+        break;
+      case 8:
+        payment += 320;
+        break;
+      case 0:
+        payment += 0;
+        break;
+      default:
+        payment += 320;
+        break;
+    }
+    if(hours === 0 && minutes <= 15){
+      payment += 0;
+    }
+    if( (hours === 0 || hours === 1) && ( minutes > 15 && minutes <= 45) ){
+      payment += 25;
+    }
+    if((hours === 0 || hours === 1) && (hours < 2 && minutes > 45) ){
+        payment += 50;
+    }
+    if(hours === 2 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 2 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 2 && hours < 3 && minutes > 45){
+      payment += 40;
+    }
+    
+      if(hours === 3 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 3 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 3 && hours < 4 && minutes > 45){
+      payment += 45;
+    }
+    
+     if(hours === 4 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 4 && minutes > 15 && minutes <= 45){
+      payment += 25;
+    }
+     if(hours === 4 && hours < 5 && minutes > 45){
+      payment += 35;
+    }
+    
+      if(hours === 5 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 5 && minutes > 15 && minutes <= 45){
+      payment += 10;
+    }
+     if(hours === 5 && hours < 6 && minutes > 45){
+      payment += 20;
+    }
+    
+     if(hours === 6 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 6 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 6 && hours < 7 && minutes > 45){
+      payment += 40;
+    }
+    
+     if(hours === 7 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 7 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 7 && hours < 8 && minutes > 45){
+      payment += 40;
+    }
   }else{
-    if(hours < 3 ){
-      payment += (hours * 80) + (perMin * minutes);
-     }else if(hours >= 3 && hours < 6){
-      payment += 200;
-      const sobra = hours - 3;
-      payment += (sobra * 80) + (perMin * minutes);
-     }else if(hours >= 6 && hours <24){
-      payment += 300;
-      const sobra = hours - 6;
-      payment += (sobra * 30) + (perMin * minutes); 
-     }else if(hours >= 24){
-      payment += 400;
-      const sobra = hours - 24;
-      payment += (sobra * 30) + (perMin * minutes); 
-     }
+    switch(hours){
+      case 1:
+        payment += 80;
+        break;
+      case 2:
+        payment += 160
+        break;
+      case 3:
+        payment += 200;
+        break;
+      case 4:
+        payment += 260;
+        break;
+      case 5:
+        payment += 280;
+        break;
+      case 6:
+        payment += 300;
+        break;
+      case 7:
+        payment += 350;
+        break;
+      case 8:
+        payment += 400;
+        break;
+      case 0:
+        payment += 0;
+        break;
+      default:
+        payment +=400;
+        break;
+    }
+    if(hours === 0 && minutes <= 15){
+      payment += 0;
+    }
+    if( (hours === 0 || hours === 1) && ( minutes > 15 && minutes <= 45) ){
+      payment += 40;
+    }
+    if((hours === 0 || hours === 1) && (hours < 2 && minutes > 45) ){
+        payment += 80;
+    }
+    if(hours === 2 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 2 && minutes > 15 && minutes <= 45){
+      payment += 30;
+    }
+     if(hours === 2 && hours < 3 && minutes > 45){
+      payment += 40;
+    }
+    
+      if(hours === 3 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 3 && minutes > 15 && minutes <= 45){
+      payment += 30;
+    }
+     if(hours === 3 && hours < 4 && minutes > 45){
+      payment += 60;
+    }
+    
+     if(hours === 4 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 4 && minutes > 15 && minutes <= 45){
+      payment += 10;
+    }
+     if(hours === 4 && hours < 5 && minutes > 45){
+      payment += 20;
+    }
+    
+      if(hours === 5 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 5 && minutes > 15 && minutes <= 45){
+      payment += 10;
+    }
+     if(hours === 5 && hours < 6 && minutes > 45){
+      payment += 20;
+    }
+    
+     if(hours === 6 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 6 && minutes > 15 && minutes <= 45){
+      payment += 30;
+    }
+     if(hours === 6 && hours < 7 && minutes > 45){
+      payment += 50;
+    }
+    
+     if(hours === 7 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 7 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 7 && hours < 8 && minutes > 45){
+      payment += 50;
+    }
   }
 
   return payment;
 }
-

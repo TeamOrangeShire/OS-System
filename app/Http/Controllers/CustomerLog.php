@@ -75,7 +75,7 @@ class CustomerLog extends Controller
   public function GetCustomerLoginStatus(Request $req){
     $customer = $req->cookie('customer_id');
 
-    $logs = CustomerLogs::where('customer_id', $customer)->where('log_date', Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))->first();
+    $logs = CustomerLogs::where('customer_id', $customer)->where('log_date', Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))->where('log_status', 0)->first();
 
     return response()->json(['fetched'=>$logs]);
   }
