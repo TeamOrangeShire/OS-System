@@ -26,10 +26,14 @@
                 </div> --}}
                 <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a>
                 <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
-            </div>
+         
             @if($cookie_val === 'none')
+        </div>
             <a href="{{route('customer_login')}}" class="btn btn-primary px-3 d-mb-4 d-lg-flex custom_login" >Log in/Sign up</a>
+  
             @else
+            <a href="{{ route('customerProfile') }}" class="nav-item nav-link d-lg-none">My Profile</a>
+        </div>
               <div class="profile-menu">
                 @php
                     $customer = App\Models\CustomerAcc::where('customer_id', $cookie_val)->first();

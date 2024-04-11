@@ -21,5 +21,6 @@ class CustomerAcc extends Model
       'customer_password',
       'customer_profile_pic',
       'account_credits',
+      'customer_type',
     ];
 }

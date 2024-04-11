@@ -46,7 +46,7 @@ Route::post('/customer-profile-update',[EditAcc::class,'EditCustomerProfile'] )-
 Route::post('/customer-profile-update-picture',[EditAcc::class,'UpdateCustomerProfilePic'] )->name('customerUpdatePic');
 Route::post('/customer-subscribe-plan',[SubscriptionsData::class,'Subscribe'] )->name('customer_subscribe');
 Route::post('/customer-log-out',[Login::class,'LogOutCustomer'] )->name('customer_logOut');
-
+Route::post('/customer/redirectScan/updatelogs',[CustomerLog::class,'GetScannedURLlog'] )->name('updateQRLog');
 //Customer Dashboard
 Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');
 Route::get('/customer/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');
@@ -55,6 +55,9 @@ Route::get('/customer/settings',[GetDataViews::class, 'CustomerSettings'] )->nam
 Route::get('/customer/profile/notification',[GetDataViews::class, 'CustomerNotification'] )->name('customerNotification');
 Route::get('/customer/profile/transaction',[GetDataViews::class, 'CustomerTransaction'] )->name('customerTransaction');
 Route::get('/customer/logintoshire',[GetDataViews::class, 'CustomerLoginToShire'] )->name('logintoshire');
+Route::get('/customer/scanQrCode/',[GetDataViews::class, 'RedirectScanQR'] )->name('redirectScan');
+Route::get('/customer/getLoginstatus/',[CustomerLog::class, 'GetCustomerLoginStatus'] )->name('getCustomerLoginStatus');
+
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');

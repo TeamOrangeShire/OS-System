@@ -28,48 +28,77 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-     <button type="button" onclick="startScan()" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
-      <div id="qrScanner" style="display: none;"></div>
-       <div id="result"></div>
-    <section class="section">
-        <div class="row">
-          <div class="col-lg-12">
-       
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Log in History</h5>
+    <form method="post" id="scannedDataHolder">@csrf <input type="hidden" id="scannedQRCode" name="QRCode"><input type="hidden" name="cust_id" value="{{ $user_id }}"></form>
+    <button type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}', '{{ $customer->customer_type }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
+                  <div id="qrScanner" style="display: none;"></div>
+       <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Customer Type: {{$customer->customer_type}}</h5>
+
+          <!-- Default Tabs -->
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="status-tab" data-bs-toggle="tab" data-bs-target="#status" type="button" role="tab" aria-controls="status" aria-selected="true">Status</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">History</button>
+            </li>
+          </ul>
+          <div class="tab-content pt-2" id="myTabContent">
+            <div class="tab-pane fade show active" id="status" role="tabpanel" aria-labelledby="status-tab">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"><i class="ri-time-line"></i> Log In Status</h5>
+                  <p class="card-text">Login Status: <span id="login_status"></span></p>
+                  <p class="card-text">Date: <span id="login_date"></span></p>
+                  <p class="card-text">Start Time: <span id="login_start"></span></p>
+                  <p class="card-text">End Time: <span id="login_end"></span></p>
+                  <p class="card-text">Total Hours: <span id="login_total"></span></p>
+                  <p class="card-text">Payment: <span id="login_payment"></span></p>
+                  <p class="card-text">Mode of Payment: <span id="login_mode"></span></p>
+                  <p class="card-text">Status: <span id="login_final_status"></span></p>
+                
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade table-responsive" id="history" role="tabpanel" aria-labelledby="history-tab">
               
                 <table class="table datatable">
                   <thead>
                     <tr>
-                      <th>
-                        Date
-                      </th>
+                      <th>Date</th>
                       <th>Start Time</th>
                       <th>End Time</th>
                       <th>Total Hours</th>
-                      <th>Payment</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>Unity Pugh</td>
-                      <td>9958</td>
-                      <td>Curicó</td>
-                      <td></td>
-                      <td>37%</td>
-                    </tr>
+                  <tbody id="historyBody">
+                    @php
+                    $logs = App\Models\CustomerLogs::where('customer_id', $user_id)->orderBy('created_at', 'desc')->get();
+                @endphp
+                
+                @foreach ($logs as $l)
+                <tr>
+                    <td>{{ $l->log_date }}</td>
+                    <td>{{ $l->log_start_time }}</td>
+                    <td>{{ $l->log_end_time }}</td>
+                    <td>{{ $l->log_end_time === '' ? '' : DisplayTime($l->log_start_time, $l->log_end_time) }}</td>
+                    <td><button class="rounded-circle"><i class="bi bi-info-circle-fill text-success"></i></button></td>
+                </tr>
+                
+                @endforeach
+                
                   
                   </tbody>
                 </table>
-                <!-- End Table with stripped rows -->
-  
-              </div>
             </div>
-  
-          </div>
+          
+          </div><!-- End Default Tabs -->
+
         </div>
-      </section>
+      </div>
+    
   </main><!-- End #main -->
 
 
@@ -81,7 +110,12 @@
 
   <!-- Vendor JS Files -->
   @include('homepage.Dashboard.Components.scripts')
-
+  <script>
+    
+    window.onload = function() {
+      LoginStatusFetch("{{ route('getCustomerLoginStatus') }}", "{{ $customer->customer_type }}");
+    };
+  </script>
   <!-- Template Main JS File -->
 
 

@@ -57,7 +57,6 @@ function confirmPurchase(){
 }
 
 function logOut(route, home) {
-    event.preventDefault();
   var formData = $('form#customer_logOut').serialize();
 
   $.ajax({
@@ -74,27 +73,26 @@ function logOut(route, home) {
   });
 }
 
-function startScan() {
-    // Show QR code scanner container
+function startScan(scannedRoute, refreshURL, userType) {
+
     document.getElementById('qrScanner').style.display = 'block';
-    
-    // Initialize HTML5 QR code scanner
+    const formInput = document.getElementById('scannedQRCode');
+ 
     const html5QrCode = new Html5Qrcode('qrScanner');
     
     // Start QR code scanning
     html5QrCode.start(
-      { facingMode: "environment" }, // Use rear camera if available
+      { facingMode: "environment" }, 
       {
         fps: 10, // Set frames per second (optional)
         qrbox: 250 // Set size of QR code scanning box (optional)
       },
       qrCodeMessage => {
-        console.log('Decoded QR code:', qrCodeMessage);
-        document.getElementById('result').textContent = 'Decoded QR code: ' + qrCodeMessage;
-        // Stop QR code scanning after successful decode (optional)
+      
+        formInput.value = qrCodeMessage;
+        SubmitScannedData(scannedRoute, refreshURL, userType);
         html5QrCode.stop().then(ignore => {
-          console.log('QR code scanning stopped');
-          document.getElementById('qrScanner').style.display = 'none'; // Hide scanner container
+          document.getElementById('qrScanner').style.display = 'none';
         }).catch(err => console.error(err));
       },
       errorMessage => {
@@ -103,4 +101,164 @@ function startScan() {
       }
     );
   }
+
+  function SubmitScannedData(route, refURL, type){
+    const loading = document.getElementById('loadingDiv');
+    loading.style.display = 'flex';
+    var formData = $('form#scannedDataHolder').serialize();
+  
+    $.ajax({
+        type: 'POST',
+        url: route,
+        data: formData,
+        success: function(response) {
+          if(response.status === 'success'){
+            loading.style.display = 'none';
+            LoginStatusFetch(refURL, type);
+          }
+        }, 
+        error: function (xhr) {
+  
+            console.log(xhr.responseText);
+        }
+    });
+  }
+
+  function LoginStatusFetch(url, type){
+    axios.get(url)
+        .then(function (response) {
+
+          const data = response.data.fetched;
+          
+          const login_status = document.getElementById('login_status');
+          const login_date = document.getElementById('login_date');
+          const login_start = document.getElementById('login_start');
+          const login_end = document.getElementById('login_end');
+          const login_total = document.getElementById('login_total');
+          const login_payment = document.getElementById('login_payment');
+          const login_mode = document.getElementById('login_mode');
+          const login_final = document.getElementById('login_final_status');
+          if(data === null){
+            login_status.innerHTML = '<i class="bi bi-x-square-fill text-danger"></i> Not Logged In ';
+            login_date.textContent = 'N/A';
+            login_start.textContent = 'N/A';
+            login_end.textContent = 'N/A';
+            login_total.textContent = 'N/A';
+            login_payment.textContent = 'N/A';
+            login_mode.textContent = 'N/A';
+            login_final.textContent = 'N/A';
+          }else{
+            login_status.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Logged In';
+            login_date.textContent = data.log_date;
+            login_start.textContent = data.log_start_time;
+            switch(data.log_status){
+              case 1:
+                var diff = timeDifference(data.log_start_time, data.log_end_time);
+                login_end.textContent = data.log_end_time;
+                login_total.textContent = `${diff.hours}Hrs & ${diff.minutes}Minutes`;
+                var payment = PaymentCalc(diff.hours, diff.minutes, type);
+                login_payment.textContent = payment;
+                login_mode.textContent = 'Cash';
+                login_final.innerHTML = '<i class="bi bi-clock-fill text-warning"></i>  Unpaid/Pending Payment';
+                break;
+              case 2:
+                var diff = timeDifference(data.log_start_time, data.log_end_time);
+                login_end.textContent = data.log_end_time;
+                login_total.textContent = `${diff.hours}Hrs & ${diff.minutes}Minutes`;
+                var payment = PaymentCalc(diff.hours, diff.minutes, type);
+                login_payment.textContent = payment;
+                login_mode.textContent = 'Account Credit';
+                login_final.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Paid/Deducted on Credit';
+                break;
+              default:
+                login_end.textContent = 'N/A';
+                login_total.textContent = 'N/A';
+                login_payment.textContent = 'N/A';
+                login_mode.textContent = 'N/A';
+                login_final.textContent = 'N/A';
+                break;
+            }
+          
+          }
+        })
+       .catch(function (error) {
+        console.error(error);
+        });
+        
+  }
+
+  function timeDifference(startTime, endTime) {
+    const start = parseTime(startTime);
+    const end = parseTime(endTime);
+
+    let diff = end - start;
+    if (diff < 0) {
+        diff += 24 * 60 * 60 * 1000;
+    }
+
+    const hours = Math.floor(diff / (60 * 60 * 1000));
+    const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
+
+    return { hours, minutes };
+}
+
+function parseTime(time) {
+    const parts = time.split(':');
+    const hour = parseInt(parts[0]);
+    const minute = parseInt(parts[1]);
+    const isPM = time.includes('PM');
+
+    let totalMinutes = hour * 60 + minute;
+
+    if (isPM && hour !== 12) {
+        totalMinutes += 12 * 60; 
+    } else if (!isPM && hour === 12) {
+        totalMinutes -= 12 * 60; 
+    }
+
+    return totalMinutes * 60 * 1000; 
+}
+
+
+
+function PaymentCalc(hours, minutes, type){
+  let payment = 0;
+  const perMinDisc = 0.84;
+  const perMin = 1.34;
+  if(type === "Students" || type === "Teachers" || type === "Reviewers"){
+     if(hours < 3 ){
+      payment += (hours * 50) + (perMinDisc * minutes);
+     }else if(hours >= 3 && hours < 6){
+      payment += 140;
+      const sobra = hours - 3;
+      payment += (sobra * 50) + (perMinDisc * minutes);
+     }else if(hours >= 6 && hours <24){
+      payment += 240;
+      const sobra = hours - 6;
+      payment += (sobra * 20) + (perMinDisc * minutes); 
+     }else if(hours >= 24){
+      payment += 320;
+      const sobra = hours - 24;
+      payment += (sobra * 20) + (perMinDisc * minutes); 
+     }
+  }else{
+    if(hours < 3 ){
+      payment += (hours * 80) + (perMin * minutes);
+     }else if(hours >= 3 && hours < 6){
+      payment += 200;
+      const sobra = hours - 3;
+      payment += (sobra * 80) + (perMin * minutes);
+     }else if(hours >= 6 && hours <24){
+      payment += 300;
+      const sobra = hours - 6;
+      payment += (sobra * 30) + (perMin * minutes); 
+     }else if(hours >= 24){
+      payment += 400;
+      const sobra = hours - 24;
+      payment += (sobra * 30) + (perMin * minutes); 
+     }
+  }
+
+  return payment;
+}
 
