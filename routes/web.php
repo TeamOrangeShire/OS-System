@@ -57,6 +57,7 @@ Route::get('/customer/profile/transaction',[GetDataViews::class, 'CustomerTransa
 Route::get('/customer/logintoshire',[GetDataViews::class, 'CustomerLoginToShire'] )->name('logintoshire');
 Route::get('/customer/scanQrCode/',[GetDataViews::class, 'RedirectScanQR'] )->name('redirectScan');
 Route::get('/customer/getLoginstatus/',[CustomerLog::class, 'GetCustomerLoginStatus'] )->name('getCustomerLoginStatus');
+Route::get('/customer/getLogInfo/',[CustomerLog::class, 'GetLogInfo'] )->name('getLogInfo');
 
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');

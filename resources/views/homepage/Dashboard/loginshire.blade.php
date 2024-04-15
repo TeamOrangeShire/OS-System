@@ -70,7 +70,7 @@
                       <th>Start Time</th>
                       <th>End Time</th>
                       <th>Total Hours</th>
-                      <th>Action</th>
+                      <th>More Info</th>
                     </tr>
                   </thead>
                   <tbody id="historyBody">
@@ -84,7 +84,8 @@
                     <td>{{ $l->log_start_time }}</td>
                     <td>{{ $l->log_end_time }}</td>
                     <td>{{ $l->log_end_time === '' ? '' : DisplayTime($l->log_start_time, $l->log_end_time) }}</td>
-                    <td><button class="rounded-circle"><i class="bi bi-info-circle-fill text-success"></i></button></td>
+                    <td><button data-bs-toggle="modal" data-bs-target="#MoreInfoLog" class="rounded-circle btn btn-primary" onclick="MoreInfoModal('{{ route('getLogInfo') }}?log_id={{ $l->log_id }}', '{{ $customer->customer_type }}')">
+                      <i class="bi bi-info-circle-fill" style="font-size: 1.3rem"></i></button></td>
                 </tr>
                 
                 @endforeach
@@ -101,7 +102,31 @@
     
   </main><!-- End #main -->
 
-
+  <div class="modal fade" id="MoreInfoLog" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Log Info</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="card-text">Login Status: <span id="i_login_status"></span></p>
+          <p class="card-text">Date: <span id="i_login_date"></span></p>
+          <p class="card-text">Start Time: <span id="i_login_start"></span></p>
+          <p class="card-text">End Time: <span id="i_login_end"></span></p>
+          <p class="card-text">Total Hours: <span id="i_login_total"></span></p>
+          <p class="card-text">Payment: <span id="i_login_payment"></span></p>
+          <p class="card-text">Mode of Payment: <span id="i_login_mode"></span></p>
+          <p class="card-text">Status: <span id="i_login_final_status"></span></p>
+          <p class="card-text">Date & Time Paid: <span id="i_paid_status"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <!-- script end for change password -->

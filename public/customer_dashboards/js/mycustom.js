@@ -428,3 +428,44 @@ function PaymentCalc(hours, minutes, type){
 
   return payment;
 }
+
+function MoreInfoModal(url, type){
+  const login_status = document.getElementById('i_login_status');
+  const login_date = document.getElementById('i_login_date');
+  const login_start = document.getElementById('i_login_start');
+  const login_end = document.getElementById('i_login_end');
+  const login_total = document.getElementById('i_login_total');
+  const login_payment = document.getElementById('i_login_payment');
+  const login_mode = document.getElementById('i_login_mode');
+  const login_final = document.getElementById('i_login_final_status');
+  const paid_status = document.getElementById('i_paid_status');
+
+  axios.get(url)
+  .then(function (response) {
+    const data = response.data.info;
+    console.log(data);
+    if(data.log_status === 0){
+      login_status.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Still Logged In';
+      login_end.textContent = 'N/A';
+      login_total.textContent = 'N/A';
+      login_payment.textContent = 'N/A';
+      login_mode.textContent = 'N/A';
+      login_final.textContent = 'N/A';
+      paid_status.textContent = 'N/A';
+    }else{
+      const time = timeDifference(data.log_start_time, data.log_end_time);
+      login_status.innerHTML = '<i class="bi bi-x-square-fill text-danger"></i> Logged Out';
+      login_end.textContent = data.log_end_time;
+      login_total.textContent = time.hours + 'Hrs & ' + time.minutes + 'mins';
+      login_payment.textContent = PaymentCalc(time.hours, time.minutes, type);
+      login_mode.textContent = 'N/A';
+      login_final.textContent = 'N/A';
+      paid_status.textContent = 'N/A';
+    }
+    login_date.textContent = data.log_date;
+    login_start.textContent = data.log_start_time;
+  })
+ .catch(function (error) {
+  console.error(error);
+  });
+}

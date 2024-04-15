@@ -79,4 +79,12 @@ class CustomerLog extends Controller
 
     return response()->json(['fetched'=>$logs]);
   }
+  public function GetLogInfo(Request $req){
+      $id = $req->log_id;
+
+      $log = CustomerLogs::where('log_id', $id)->first();
+
+      return response()->json(['info'=>$log]);
+  }
 }
+
