@@ -68,7 +68,9 @@ class CustomerLog extends Controller
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
       $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
       $time = timeDifference($checkLogOut->log_start_time, $end);
-      $payment = PaymentCalc($time['hours'], $time['minutes'], $customer->customer_type);
+      $hours = $time['hours'];
+      $minutes = $time['minutes'];
+      $payment = PaymentCalc($hours, $minutes, $customer->customer_type);
       $transaction = $payment . "-2";
      
       if($checkLogOut){
