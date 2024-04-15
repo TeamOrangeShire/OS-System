@@ -443,7 +443,6 @@ function MoreInfoModal(url, type){
   axios.get(url)
   .then(function (response) {
     const data = response.data.info;
-    console.log(data);
     if(data.log_status === 0){
       login_status.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Still Logged In';
       login_end.textContent = 'N/A';
@@ -454,13 +453,31 @@ function MoreInfoModal(url, type){
       paid_status.textContent = 'N/A';
     }else{
       const time = timeDifference(data.log_start_time, data.log_end_time);
+      const mode = data.log_transaction.split('-');
+      switch(mode[1]){
+        case '1':
+          login_mode.textContent = 'Cash';
+          if(data.log_status === 1){
+            login_final.textContent = 'Unpaid';
+            paid_status.textContent = 'Not Yet Available';
+          }
+          if(data.log_status === 2){
+            login_final.textContent = 'Paid';
+            paid_status.textContent = formatDateTime(data.updated_at);
+          }
+          break;
+        case '2':
+          login_mode.textContent = 'Account Balance';
+          login_final.textContent = 'Paid';
+          paid_status.textContent = formatDateTime(data.updated_at);
+          break;
+        
+      }
+      
       login_status.innerHTML = '<i class="bi bi-x-square-fill text-danger"></i> Logged Out';
       login_end.textContent = data.log_end_time;
       login_total.textContent = time.hours + 'Hrs & ' + time.minutes + 'mins';
       login_payment.textContent = PaymentCalc(time.hours, time.minutes, type);
-      login_mode.textContent = 'N/A';
-      login_final.textContent = 'N/A';
-      paid_status.textContent = 'N/A';
     }
     login_date.textContent = data.log_date;
     login_start.textContent = data.log_start_time;
@@ -468,4 +485,20 @@ function MoreInfoModal(url, type){
  .catch(function (error) {
   console.error(error);
   });
+}
+
+function formatDateTime(dateTimeString) {
+
+  let dateTime = new Date(dateTimeString);
+
+  let year = dateTime.getFullYear();
+  let month = String(dateTime.getMonth() + 1).padStart(2, '0'); 
+  let day = String(dateTime.getDate()).padStart(2, '0');
+  let hours = String(dateTime.getHours()).padStart(2, '0');
+  let minutes = String(dateTime.getMinutes()).padStart(2, '0');
+  let seconds = String(dateTime.getSeconds()).padStart(2, '0');
+
+  let formattedDateTime = year + '/' + month + '/' + day + ' - ' + hours + ':' + minutes + ':' + seconds;
+
+  return formattedDateTime;
 }
