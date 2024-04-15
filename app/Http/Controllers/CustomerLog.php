@@ -70,12 +70,17 @@ class CustomerLog extends Controller
       $time = timeDifference($checkLogOut->log_start_time, $end);
       $payment = PaymentCalc($time['hours'], $time['minutes'], $customer->customer_type);
       $transaction = $payment . "-2";
+     
       if($checkLogOut){
         $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();
         $updateLog->update([
           'log_end_time'=> Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'),
           'log_status'=> 2,
           'log_transaction'=>$transaction,
+        ]);
+        $finalCredit = $customer->account_credits - $payment;
+        $customer->update([
+          'account_credits'=> $finalCredit,
         ]);
       }
 
