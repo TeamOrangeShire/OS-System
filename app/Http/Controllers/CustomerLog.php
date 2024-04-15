@@ -52,8 +52,7 @@ class CustomerLog extends Controller
     }else if($QRCode === 'FLPguCIZSg9TTqO'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
       $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-      $time = timeDifference($checkLogOut->log_start_time, $end);
-      $payment = PaymentCalc($time['hours'], $time['minutes'], $customer->customer_type);
+      $payment = PaymentCalc($checkLogOut->log_start_time, $end, $customer->customer_type);
       $transaction = $payment . "-1";
       if($checkLogOut){
         $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();

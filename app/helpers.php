@@ -133,7 +133,10 @@ function parseTime($time) {
     return $totalMinutes * 60 * 1000; 
 }
 
-function PaymentCalc($hours, $minutes, $type) {
+function PaymentCalc($start, $end, $type) {
+    $time = timeDifference($start, $end);
+    $hours = $time['hours'];
+    $minutes = $time['minutes'];
   $payment = 0;
   if ($type === "Students" || $type === "Teachers" || $type === "Reviewers") {
       switch ($hours) {
