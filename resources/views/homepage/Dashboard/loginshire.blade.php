@@ -14,6 +14,21 @@
   $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
 @endphp
+<div class="custom-success" style="display: flex" id="custom_success">
+  <div class="success-content">
+     <img src="{{ asset('customer_dashboards/img/success.gif') }}" alt="success">
+     <h3 class="text-success">Log Out Successfully</h3>
+     <p id="succ_date"></p>
+     <p id="succ_time"></p>
+     <p id="succ_total_time"></p>
+     <p><strong>{{ $customer->customer_type }}</strong></p>
+     <p id="succ_payment"></p>
+     <p id="succ_status"></p>   
+     <i>Thank you for visiting  Orange Shire Coworking!</i>   
+     <i>&trade; All Rights Reserved Orange Shire &trade;</i>
+     <button class="btn btn-success mt-2">Okay</button>
+  </div>
+</div>
   <!-- ======= Header ======= -->
   @include('homepage.Dashboard.Components.nav', ['user_id'=>$user_id])
   <main id="main" class="main">
@@ -122,7 +137,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary">Ok</button>
         </div>
       </div>
     </div>
@@ -139,6 +154,40 @@
     
     window.onload = function() {
       LoginStatusFetch("{{ route('getCustomerLoginStatus') }}", "{{ $customer->customer_type }}");
+    };
+    function  DisplaySuccessModal(id){
+      const url = "{{ route('getLogDetails') }}?log_id=" + id;
+      axios.get(url)
+            .then(function (response) {
+
+             const fetchData = response.data;
+            const date = document.getElementById('succ_date');
+            const time = document.getElementById('succ_time');
+            const total = document.getElementById('succ_total_time');
+            const payment = document.getElementById('succ_payment');
+            const status = document.getElementById('succ_status');
+
+            const diff = timeDifference(fetchData.log_start_time, fetchData.log_end_time)
+            const checkStatus = fetchData.log_transaction.split('-');
+            date.innerHTML = '<strong>' + fetchData.log_date + '</strong>';
+            time.innerHTML = '<strong>' + fetchData.log_start_time + '-' + fetchData.log_end_time + '</strong>';
+            total.innerHTML = '<strong>' + diff.hours + 'Hrs & ' + diff.minutes + 'minutes</strong>';
+            payment.innerHTML = '<strong>₱' + PaymentCalc(diff.hours, diff.minutes, '{{ $customer->customer_type }}') + '</strong>';
+            if(checkStatus[1] === '2'){
+              status.innerHTML = '<strong>Account Credit - Paid</strong>';
+            }else{
+              if(fetchData.log_status == 2){
+                status.innerHTML = '<strong>Cash - Paid</strong>';
+              }else{
+                status.innerHTML = '<strong>Cash - Unpaid</strong>';
+              }
+           
+            }
+           
+            })
+           .catch(function (error) {
+            console.error(error);
+            });
     };
   </script>
   <!-- Template Main JS File -->
