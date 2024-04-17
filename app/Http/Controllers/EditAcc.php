@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
 use App\Models\CustomerAcc;
@@ -192,15 +193,58 @@ class EditAcc extends Controller
 
         $customer_id = $request->cus_id;
         $addcredit = $request->cus_credit;
+        $operation = $request->operation;
+
 
         $customer_credit = CustomerAcc::where('customer_id', $customer_id)->first();
-
-        $current_credit = $customer_credit->account_credits;
+        if($operation === 'add'){
+            $current_credit = $customer_credit->account_credits;
         $credit = $current_credit + $addcredit;
 
         $customer_credit->update([
                
           'account_credits'=>$credit,
+    
+        ]);
+
+        $data = new ActivityLog;
+        $data->act_user_id =session('Admin_id');
+        $data->act_user_type = "Admin";
+        $data->act_action = "Admin added " . $addcredit ." credit to user ".$customer_credit->customer_lastname;
+        $data->act_header = "Add Credit";
+        $data->act_location = "customer_acc";
+        $data->save();
+
+        }else{
+            $current_credit = $customer_credit->account_credits;
+        $credit = $current_credit - $addcredit;
+
+        $customer_credit->update([
+               
+          'account_credits'=>$credit,
+    
+        ]);
+        $data = new ActivityLog;
+        $data->act_user_id =session('Admin_id');
+        $data->act_user_type = "Admin";
+        $data->act_action = "Admin deduct " . $addcredit ." credit to user ".$customer_credit->customer_lastname;
+        $data->act_header = "Deduct Credit";
+        $data->act_location = "customer_acc";
+        $data->save();
+
+        }
+        
+        return redirect()->back();
+    }
+    public function changeType(Request $request){
+
+        $customer_id = $request->cus_id;
+        $changeType = $request->customer_type;
+
+        $change = CustomerAcc::where('customer_id', $customer_id)->first();
+        $change->update([
+               
+          'customer_type'=>$changeType,
     
         ]);
         return redirect()->back();
