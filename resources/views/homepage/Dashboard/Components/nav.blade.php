@@ -192,7 +192,7 @@
                $semi_full = FirstNameFormat($customer->customer_firstname). ". ". $customer->customer_lastname;
            @endphp
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{ $profile_pic === 'none' ? asset('User/Customer/placeholder.png') : asset('storage/UserPic/Customer/'. $profile_pic) }}" alt="Profile" class="rounded-circle">
+            <img src="{{ $profile_pic === 'none' ? asset('User/Customer/placeholder.png') : Storage::url('UserPic/Customer/'.$profile) }}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ $semi_full }}</span>
           </a><!-- End Profile Iamge Icon -->
 
