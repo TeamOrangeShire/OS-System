@@ -70,7 +70,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('public_html/User/Customer'),
+        public_path('storage') => storage_path('../public_html/User/Customer'),
     ],
 
 ];
