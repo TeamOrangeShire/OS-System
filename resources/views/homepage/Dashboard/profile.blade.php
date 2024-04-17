@@ -35,7 +35,7 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : Storage::url('UserPic/Customer/'.$profile) }}" alt="Profile" class="rounded-circle">
+              <img src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle">
               <h2>{{ $fullname }}</h2>
              
             </div>
@@ -97,7 +97,7 @@
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : Storage::url('UserPic/Customer/'.$profile) }}" alt="Profile">
+                        <img  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile">
                         <div class="pt-2">
                           <button data-bs-toggle="modal" data-bs-target="#uploadProfilePic" type="button" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
                           <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -268,7 +268,7 @@
        <form method="POST" id="updateProfilePic" enctype="multipart/form-data">
         @csrf
         <div class="modal-body modal-profile">
-          <img id="profilePicHolder" accept="image/*"  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : Storage::url('UserPic/Customer/'.$profile) }}" alt="Profile" class="rounded-circle profilePicture">
+          <img id="profilePicHolder" accept="image/*"  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle profilePicture">
           <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
           <div class="col-sm-10">
             <input type="hidden" name="user_id" value="{{ $user_id }}">
