@@ -70,7 +70,6 @@ Route::get('/admin/customer_account', function () { return view('admin.customer_
 Route::get('/admin/getlog', [CustomerLog::class,"getlog"])->name('getlog');
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
-Route::get('/admin/reservation_time', function () { return view('admin.res_time');})->name('res_time');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
 Route::get('/admin/confirmed_reservation', function () { return view('admin.confirmed_r');})->name('confirmed_r');
 Route::get('/admin/cancelled_reservation', function () { return view('admin.cancelled_r');})->name('cancelled_r');
