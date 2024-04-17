@@ -8,12 +8,10 @@
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
 </head>
-<body style="background-image: url('{{ asset('assets/images/auth/img-auth-big.jpg') }}');
- background-size: fill; 
-
- ">
+<body style="background-image: url('{{ asset('assets/images/auth/img-auth-big.jpg') }}');background-size: fill; ">
+    <img src="{{ asset('img/os_logo.png') }}" style="width:50%" alt="">
     <div id="qrScanner" style="display: none;"></div>
-    <p style="text-align: center">Scan any QR-Code Related to Orange Shire</p>
+    <p style="text-align: center; color: white;">Scan any QR-Code Related to Orange Shire</p>
     <script>
 window.onload = function (){
     DetectScreenSize("{{ route('home') }}");

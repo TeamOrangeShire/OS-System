@@ -3,7 +3,7 @@ function DetectScreenSize(route){
     if (/Mobi|Android/i.test(navigator.userAgent)) {
         StartScan();
     } else {
-       window.location.href = route;
+       //window.location.href = route;
     }
 }
 
