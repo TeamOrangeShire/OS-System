@@ -23,6 +23,10 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    @include('admin.assets.admintable')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
@@ -102,25 +106,30 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>#</th>
                                     <th>Promo Name</th>
-                                    <th>Percentage</th>      
-                                    <th>Edit</th>        
+                                    <th>Percentage</th>   
+                                    <th style="display: none;"></th>   
+                                    <th>ACTION</th>        
   
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
                                 $promo = App\Models\Promos::where('promo_id','!=',6)->get();
+                                $num =1; 
                             @endphp
                              @foreach ($promo as $info)
                                 <tr>
-                                    <td>{{$info->promo_id}}</td>
+                                    <td>{{$num}}</td>
                                     <td>{{$info->promo_name}}</td>
                                     <td>{{$info->promo_percentage}}%</td>
+                                    <td style="display: none;">
+
+                                    </td>
                                     <td>
                                        
                                 @php
@@ -131,15 +140,16 @@
                                     <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
                                     <button type="button" class="btn  btn-icon btn-danger" data-toggle="modal" data-target="#promodisable" onclick="updatemodal2(`{{$info->promo_id}}`)"><i class="feather icon-slash"></i></button>
                                      @else 
-                                
-                                 
-
+                                                               
                                     <button type="button" class="btn  btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter" onclick="updatemodal(`{{$info->promo_id}}`,`{{$info->promo_name}}`,`{{$info->promo_percentage}}`)"><i class="feather icon-edit"></i></button>
                                     <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#promodisable2" onclick="updatemodal2(`{{$info->promo_id}}`)"><i class="feather icon-check-circle"></i></button>
                                 @endif
 
                                     </td>
                                 </tr>
+                                @php
+                                    $num++
+                                @endphp
                                 @endforeach
                             </tbody>
                         </table>
@@ -367,6 +377,7 @@
 <!-- Apex Chart -->
 <script src="{{asset('assets/js/plugins/apexcharts.min.js')}}"></script>
 
+@include('admin.assets.adminscript')
 
 <!-- custom-chart js -->
 <script src="{{asset('assets/js/pages/dashboard-main.js')}}"></script>

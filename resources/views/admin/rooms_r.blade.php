@@ -16,6 +16,10 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    @include('admin.assets.admintable')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     {{-- new add --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
@@ -73,14 +77,15 @@
 
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table" style="text-align: center;">
+                                            <table class="table datatable">
                                                 <thead>
                                                     <tr>
                                                         
                                                         <th>Room Number</th>
                                                         <th>Room Capacity</th>      
                                                         <th>Action</th>
-                    
+                                                        <th style="display: none;"></th>
+                                                        <th style="display: none;"></th>
                                                 
                                                     </tr>
                                                 </thead>
@@ -116,6 +121,8 @@
                                                             
                                                         
                                                         </td>
+                                                        <td style="display: none;"></td>
+                                                        <td style="display: none;"></td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -140,13 +147,15 @@
        
         <div class="card-body table-border-style">
             <div class="table-responsive">
-                <table class="table" style="text-align: center;">
+                <table class="table datatable">
                     <thead>
                         <tr>
 
                             <th>Membership Durations</th>
                             <th>Rate</th>
                             <th >Action</th>
+                            <th style="display: none;"></th>
+                            <th style="display: none;"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -182,6 +191,8 @@
                            @endif 
                            
                             </td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
                         </tr>
                         @endforeach
             {{-- disable button end --}}
@@ -208,7 +219,7 @@
                                        </div>
                                         <div class="card-body table-border-style">
                                             <div class="table-responsive">
-                                                <table class="table" style="text-align: center;">
+                                                <table class="table datatable">
                                                     <thead>
                                                         <tr>
                                                             <th>Room Number</th>
@@ -1052,7 +1063,7 @@ event.preventDefault();
 <!-- Apex Chart -->
 <script src="{{asset('assets/js/plugins/apexcharts.min.js')}}"></script>
 
-
+@include('admin.assets.adminscript')
 <!-- custom-chart js -->
 <script src="{{asset('assets/js/pages/dashboard-main.js')}}"></script>
 <script src="{{asset('assets/js/pcoded.min.js')}}"></script>
