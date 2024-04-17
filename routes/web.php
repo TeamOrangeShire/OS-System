@@ -12,6 +12,7 @@ use App\Http\Controllers\GetDataViews;
 use App\Http\Controllers\Reservation;
 use App\Http\Controllers\CustomerLog;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -130,5 +131,3 @@ Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPend
 //reservation
 Route::post('/ConfirmReservation', [Reservation::class, 'ConfirmReservation'])->name('ConfirmReservation');
 Route::post('/DeclineReservation', [Reservation::class, 'DeclineReservation'])->name('DeclineReservation');
-
-

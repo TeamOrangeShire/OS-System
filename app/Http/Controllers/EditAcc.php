@@ -177,7 +177,6 @@ class EditAcc extends Controller
             $fileName = "Customer". $req->user_id.".". $file->getClientOriginalExtension();
             $filePath = 'UserPic/Customer/' . $fileName;
             Storage::disk('public')->put($filePath, file_get_contents($file));
-
             $customer  = CustomerAcc::where('customer_id', $req->user_id)->first();
             $customer->update([
               'customer_profile_pic' => $fileName,
