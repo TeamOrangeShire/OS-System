@@ -15,7 +15,7 @@
   $profile = $customer->customer_profile_pic;
 @endphp
 <div class="custom-success" style="display: none" id="custom_success">
-  <div class="success-content">
+  <div class="success-content text-center">
      <img src="{{ asset('customer_dashboards/img/success.gif') }}" alt="success">
      <h3 class="text-success">Log Out Successfully</h3>
      <p><strong>{{ $customer->customer_type }}</strong></p>
@@ -168,7 +168,7 @@
 
             const checkStatus = fetchData.log_transaction.split('-');
             date.innerHTML = '<strong>Date: ' + fetchData.log_date + '</strong>';
-            time.innerHTML = '<strong>' + fetchData.log_start_time + '-' + fetchData.log_end_time + '</strong>';
+            time.innerHTML = '<strong>' + fetchData.log_start_time + ' - ' + fetchData.log_end_time + '</strong>';
             total.innerHTML = '<strong>Total Time: ' + diff.hours + 'Hrs & ' + diff.minutes + 'minutes</strong>';
             payment.innerHTML = '<strong>Cost: ₱' + PaymentCalc(diff.hours, diff.minutes, '{{ $customer->customer_type }}') + '</strong>';
             if(checkStatus[1] === '2'){
