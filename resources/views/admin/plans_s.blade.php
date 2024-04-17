@@ -23,6 +23,10 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    @include('admin.assets.admintable')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
@@ -121,7 +125,7 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table"  style="text-align: center">
+                        <table class="table datatable" >
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -300,6 +304,7 @@
     </div>
 </div>
 
+
 <script>
     setTimeout(() =>  {
      document.getElementById('check').style.display='none';   
@@ -414,7 +419,8 @@
             }
      
     </script>
-     
+     @include('admin.assets.adminscript')
+
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 

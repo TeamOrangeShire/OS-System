@@ -23,6 +23,10 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    @include('admin.assets.admintable')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     
     
 
@@ -57,7 +61,7 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover"  style="text-align: center">
+                        <table class="table datatable"  style="text-align: center">
                             <thead>
                                 <tr>
                                     <th>Subscription</th>
@@ -176,6 +180,7 @@
 <!-- Apex Chart -->
 <script src="{{asset('assets/js/plugins/apexcharts.min.js')}}"></script>
 
+@include('admin.assets.adminscript')
 
 <!-- custom-chart js -->
 <script src="{{asset('assets/js/pages/dashboard-main.js')}}"></script>
