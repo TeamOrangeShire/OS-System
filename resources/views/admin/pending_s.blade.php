@@ -23,6 +23,10 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    @include('admin.assets.admintable')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     
     
 
@@ -57,13 +61,14 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table table-hover"  style="text-align: center">
+                        <table class="table datatable" >
                             <thead>
                                 <tr>
                                    
                                     <th>Subscription</th>
                                     <th>Name</th>
-        
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
                                     <th colspan="2"> Confirm/Decline</th>
 
                                 </tr>
@@ -91,7 +96,12 @@
                                @endphp
                                     {{$cus_fullname}}
                                 </td>
-                               
+                                <td>
+                                    {{$cus_email}}
+                                </td>
+                                <td>
+                                    {{$cus_number}}
+                                </td>
                                 
     
                                 <td> <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmplan('{{$sub->sub_id}}','{{$ServiceHP->service_name}}','{{$ServiceHP->service_hours}}','{{$cus_fullname}}','{{$cus_email}}','{{$cus_number}}')"><i class="feather icon-check-circle"></i></button>  
@@ -248,6 +258,7 @@
 <!-- Apex Chart -->
 <script src="{{asset('assets/js/plugins/apexcharts.min.js')}}"></script>
 
+@include('admin.assets.adminscript')
 
 <!-- custom-chart js -->
 <script src="{{asset('assets/js/pages/dashboard-main.js')}}"></script>
