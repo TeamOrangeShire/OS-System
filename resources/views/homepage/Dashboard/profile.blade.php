@@ -268,7 +268,7 @@
        <form method="POST" id="updateProfilePic" enctype="multipart/form-data">
         @csrf
         <div class="modal-body modal-profile">
-          <img id="profilePicHolder" accept="image/*"  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle profilePicture">
+          <img id="profilePicHolder" accept="image/*"  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('storage/UserPic/Customer/'. $profile) }}" alt="Profile" class="rounded-circle profilePicture">
           <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
           <div class="col-sm-10">
             <input type="hidden" name="user_id" value="{{ $user_id }}">
