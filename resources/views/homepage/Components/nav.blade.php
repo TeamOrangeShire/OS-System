@@ -26,7 +26,7 @@
                 </div> --}}
                 <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a>
                 <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
-                <a href="{{ route('scanQr') }}" class="nav-item nav-link d-lg-none ">Scan QR</a>
+                <a href="{{ route('scanQr') }}" class="nav-item nav-link d-lg-none">Scan QR</a>
             @if($cookie_val === 'none')
         </div>
             <a href="{{route('customer_login')}}" class="btn btn-primary px-3 d-mb-4 d-lg-flex custom_login" >Log in/Sign up</a>
