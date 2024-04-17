@@ -22,9 +22,15 @@
 	<link rel="icon" href="{{asset('assets/images/os_logo.png')}}" type="image/x-icon">
 
     <!-- vendor css -->
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+        @include('admin.assets.admintable')
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
+        <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     
+    {{-- new add --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
 
 </head>
 <body class="">
@@ -56,30 +62,24 @@
                     <h5>Customer Account</h5> 
                     <button class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#addcustomermodal" type="submit">Add New Customer</button>
                     <br>
-                    <div class="input-group m-t-15"> 
-                        <input type="text" name="task-insert" class="form-control" id="Project" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary">
-                                <i class="feather icon-search"></i>
-                            </button>
-                        </div>
-                    </div>
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table">
+
+                    <table class="table datatable">
                             <thead>
                                 <tr>
-                                   
+                                    <th>#</th>
                                     <th>Username</th>
                                     <th>Email</th>
+                                    <th>User Type</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
                                  $Customer = App\Models\CustomerAcc::all();
-                                 
+                                 $num= 1;
                                  
                                 @endphp
                                 @foreach ($Customer as $cus)
@@ -88,13 +88,18 @@
                                    
                                @endphp
                                 <tr>
+                                    <td>{{$num}}</td>
                                    <td>{{$cus_fullname}}</td>
                                     <td>{{$cus->customer_email}}</td>
+                                    <td>{{$cus->customer_type}}</td>
                                     <td>
                                         <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick="view('{{$cus->customer_id}}','{{$cus_fullname}}','{{$cus->customer_email}}','{{$cus->customer_phone_num}}','{{$cus->customer_type}}','{{$cus->account_credits}}')"> <i class="feather icon-info"> </i></button>
                                         <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#declinemodal" ><i class="feather icon-x-circle"></i></button>   </td>
                                     </td>
                                 </tr>
+                                @php
+                                    $num++
+                                @endphp
                                 @endforeach
                                
                             </tbody>
@@ -379,6 +384,9 @@
     });
 
   </script>
+
+@include('admin.assets.adminscript')
+
   
 {{-- add customer modal end --}}
 <!-- [ Main Content ] end -->

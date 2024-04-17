@@ -23,6 +23,9 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    @include('admin.assets.admintable')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
     
 
@@ -126,7 +129,7 @@
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table datatable">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -186,6 +189,7 @@
         }
 
     </script>
+    @include('admin.assets.adminscript')
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 

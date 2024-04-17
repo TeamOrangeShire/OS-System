@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     @include('admin.assets.admintable')
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
      {{-- new add --}}
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
