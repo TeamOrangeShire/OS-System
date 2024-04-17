@@ -161,7 +161,7 @@
       axios.get(url)
             .then(function (response) {
            
-            const fetchData = response.data;
+            const fetchData = response.data.log_details;
            
             const date = document.getElementById('succ_date');
             const time = document.getElementById('succ_time');
