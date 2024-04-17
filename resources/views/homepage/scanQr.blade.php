@@ -6,12 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Scan Qr Code</title>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: aliceblue;
+        }
+    </style>
 </head>
 <body style="background-image: url('{{ asset('assets/images/auth/img-auth-big.jpg') }}');
  background-size: fill; 
 
  ">
     <div id="qrScanner" style="display: none;"></div>
+    <p>Scan any QR Code Related to Orange Shire</p>
     <script>
 window.onload = function (){
     DetectScreenSize("{{ route('home') }}");
