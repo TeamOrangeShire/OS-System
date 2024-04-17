@@ -169,11 +169,8 @@
                     }
                 </style>
             </div>
-            @if($cookie_val === 'none')
-            <a href="{{route('customer_login')}}" class="btn btn-primary px-3 d-mb-4 d-lg-flex custom_login" >Log in/Sign up</a>
         </div>
-        @endif
-    
+     
       <script>
          function logOut(route) {
     event.preventDefault();
