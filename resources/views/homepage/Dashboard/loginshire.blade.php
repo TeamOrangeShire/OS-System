@@ -156,12 +156,13 @@
       LoginStatusFetch("{{ route('getCustomerLoginStatus') }}", "{{ $customer->customer_type }}");
     };
     function  DisplaySuccessModal(id){
-      console.log(id);
+ 
       const url = "{{ route('getLogDetails') }}?log_id=" + id;
       axios.get(url)
             .then(function (response) {
-
+           
             const fetchData = response.data;
+            console.log(fetchData);
             const date = document.getElementById('succ_date');
             const time = document.getElementById('succ_time');
             const total = document.getElementById('succ_total_time');
