@@ -73,7 +73,7 @@ function logOut(route, home) {
   });
 }
 
-function startScan(scannedRoute, refreshURL, userType) {
+function startScan(scannedRoute, refreshURL) {
 
     document.getElementById('qrScanner').style.display = 'block';
     const formInput = document.getElementById('scannedQRCode');
@@ -90,7 +90,7 @@ function startScan(scannedRoute, refreshURL, userType) {
       qrCodeMessage => {
       
         formInput.value = qrCodeMessage;
-        SubmitScannedData(scannedRoute, refreshURL, userType);
+        SubmitScannedData(scannedRoute, refreshURL);
         html5QrCode.stop().then(ignore => {
           document.getElementById('qrScanner').style.display = 'none';
         }).catch(err => console.error(err));
@@ -102,7 +102,7 @@ function startScan(scannedRoute, refreshURL, userType) {
     );
   }
 
-  function SubmitScannedData(route, refURL, type){
+  function SubmitScannedData(route, refURL){
     const loading = document.getElementById('loadingDiv');
     loading.style.display = 'flex';
     var formData = $('form#scannedDataHolder').serialize();
@@ -112,9 +112,14 @@ function startScan(scannedRoute, refreshURL, userType) {
         url: route,
         data: formData,
         success: function(response) {
-          if(response.status === 'success'){
+          
+          if(response.status === 'login'){
             loading.style.display = 'none';
-            LoginStatusFetch(refURL, type);
+            LoginStatusFetch(refURL);
+          }else{
+            const successData = document.getElementById('custom_success');
+            successData.style.display = 'flex';
+            DisplaySuccessModal(response.log_data);
           }
         }, 
         error: function (xhr) {
@@ -124,7 +129,7 @@ function startScan(scannedRoute, refreshURL, userType) {
     });
   }
 
-  function LoginStatusFetch(url, type){
+  function LoginStatusFetch(url){
     axios.get(url)
         .then(function (response) {
 
@@ -133,52 +138,16 @@ function startScan(scannedRoute, refreshURL, userType) {
           const login_status = document.getElementById('login_status');
           const login_date = document.getElementById('login_date');
           const login_start = document.getElementById('login_start');
-          const login_end = document.getElementById('login_end');
-          const login_total = document.getElementById('login_total');
-          const login_payment = document.getElementById('login_payment');
-          const login_mode = document.getElementById('login_mode');
-          const login_final = document.getElementById('login_final_status');
+        
           if(data === null){
             login_status.innerHTML = '<i class="bi bi-x-square-fill text-danger"></i> Not Logged In ';
             login_date.textContent = 'N/A';
             login_start.textContent = 'N/A';
-            login_end.textContent = 'N/A';
-            login_total.textContent = 'N/A';
-            login_payment.textContent = 'N/A';
-            login_mode.textContent = 'N/A';
-            login_final.textContent = 'N/A';
+            
           }else{
             login_status.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Logged In';
             login_date.textContent = data.log_date;
             login_start.textContent = data.log_start_time;
-            switch(data.log_status){
-              case 1:
-                var diff = timeDifference(data.log_start_time, data.log_end_time);
-                login_end.textContent = data.log_end_time;
-                login_total.textContent = `${diff.hours}Hrs & ${diff.minutes}Minutes`;
-                var payment = PaymentCalc(diff.hours, diff.minutes, type);
-                login_payment.textContent = payment;
-                login_mode.textContent = 'Cash';
-                login_final.innerHTML = '<i class="bi bi-clock-fill text-warning"></i>  Unpaid/Pending Payment';
-                break;
-              case 2:
-                var diff = timeDifference(data.log_start_time, data.log_end_time);
-                login_end.textContent = data.log_end_time;
-                login_total.textContent = `${diff.hours}Hrs & ${diff.minutes}Minutes`;
-                var payment = PaymentCalc(diff.hours, diff.minutes, type);
-                login_payment.textContent = payment;
-                login_mode.textContent = 'Account Credit';
-                login_final.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Paid/Deducted on Credit';
-                break;
-              default:
-                login_end.textContent = 'N/A';
-                login_total.textContent = 'N/A';
-                login_payment.textContent = 'N/A';
-                login_mode.textContent = 'N/A';
-                login_final.textContent = 'N/A';
-                break;
-            }
-          
           }
         })
        .catch(function (error) {
@@ -220,45 +189,285 @@ function parseTime(time) {
 }
 
 
-
 function PaymentCalc(hours, minutes, type){
-  let payment = 0;
-  const perMinDisc = 0.84;
-  const perMin = 1.34;
+  var payment = 0;
   if(type === "Students" || type === "Teachers" || type === "Reviewers"){
-     if(hours < 3 ){
-      payment += (hours * 50) + (perMinDisc * minutes);
-     }else if(hours >= 3 && hours < 6){
-      payment += 140;
-      const sobra = hours - 3;
-      payment += (sobra * 50) + (perMinDisc * minutes);
-     }else if(hours >= 6 && hours <24){
-      payment += 240;
-      const sobra = hours - 6;
-      payment += (sobra * 20) + (perMinDisc * minutes); 
-     }else if(hours >= 24){
-      payment += 320;
-      const sobra = hours - 24;
-      payment += (sobra * 20) + (perMinDisc * minutes); 
-     }
+    switch(hours){
+      case 1:
+        payment += 50;
+        break;
+      case 2:
+        payment += 100
+        break;
+      case 3:
+        payment += 140;
+        break;
+      case 4:
+        payment += 185;
+        break;
+      case 5:
+        payment += 220;
+        break;
+      case 6:
+        payment += 240;
+        break;
+      case 7:
+        payment += 280;
+        break;
+      case 8:
+        payment += 320;
+        break;
+      case 0:
+        payment += 0;
+        break;
+      default:
+        payment += 320;
+        break;
+    }
+    if(hours === 0 && minutes <= 15){
+      payment += 0;
+    }
+    if( (hours === 0 || hours === 1) && ( minutes > 15 && minutes <= 45) ){
+      payment += 25;
+    }
+    if((hours === 0 || hours === 1) && (hours < 2 && minutes > 45) ){
+        payment += 50;
+    }
+    if(hours === 2 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 2 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 2 && hours < 3 && minutes > 45){
+      payment += 40;
+    }
+    
+      if(hours === 3 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 3 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 3 && hours < 4 && minutes > 45){
+      payment += 45;
+    }
+    
+     if(hours === 4 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 4 && minutes > 15 && minutes <= 45){
+      payment += 25;
+    }
+     if(hours === 4 && hours < 5 && minutes > 45){
+      payment += 35;
+    }
+    
+      if(hours === 5 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 5 && minutes > 15 && minutes <= 45){
+      payment += 10;
+    }
+     if(hours === 5 && hours < 6 && minutes > 45){
+      payment += 20;
+    }
+    
+     if(hours === 6 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 6 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 6 && hours < 7 && minutes > 45){
+      payment += 40;
+    }
+    
+     if(hours === 7 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 7 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 7 && hours < 8 && minutes > 45){
+      payment += 40;
+    }
   }else{
-    if(hours < 3 ){
-      payment += (hours * 80) + (perMin * minutes);
-     }else if(hours >= 3 && hours < 6){
-      payment += 200;
-      const sobra = hours - 3;
-      payment += (sobra * 80) + (perMin * minutes);
-     }else if(hours >= 6 && hours <24){
-      payment += 300;
-      const sobra = hours - 6;
-      payment += (sobra * 30) + (perMin * minutes); 
-     }else if(hours >= 24){
-      payment += 400;
-      const sobra = hours - 24;
-      payment += (sobra * 30) + (perMin * minutes); 
-     }
+    switch(hours){
+      case 1:
+        payment += 80;
+        break;
+      case 2:
+        payment += 160
+        break;
+      case 3:
+        payment += 200;
+        break;
+      case 4:
+        payment += 260;
+        break;
+      case 5:
+        payment += 280;
+        break;
+      case 6:
+        payment += 300;
+        break;
+      case 7:
+        payment += 350;
+        break;
+      case 8:
+        payment += 400;
+        break;
+      case 0:
+        payment += 0;
+        break;
+      default:
+        payment +=400;
+        break;
+    }
+    if(hours === 0 && minutes <= 15){
+      payment += 0;
+    }
+    if( (hours === 0 || hours === 1) && ( minutes > 15 && minutes <= 45) ){
+      payment += 40;
+    }
+    if((hours === 0 || hours === 1) && (hours < 2 && minutes > 45) ){
+        payment += 80;
+    }
+    if(hours === 2 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 2 && minutes > 15 && minutes <= 45){
+      payment += 30;
+    }
+     if(hours === 2 && hours < 3 && minutes > 45){
+      payment += 40;
+    }
+    
+      if(hours === 3 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 3 && minutes > 15 && minutes <= 45){
+      payment += 30;
+    }
+     if(hours === 3 && hours < 4 && minutes > 45){
+      payment += 60;
+    }
+    
+     if(hours === 4 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 4 && minutes > 15 && minutes <= 45){
+      payment += 10;
+    }
+     if(hours === 4 && hours < 5 && minutes > 45){
+      payment += 20;
+    }
+    
+      if(hours === 5 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 5 && minutes > 15 && minutes <= 45){
+      payment += 10;
+    }
+     if(hours === 5 && hours < 6 && minutes > 45){
+      payment += 20;
+    }
+    
+     if(hours === 6 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 6 && minutes > 15 && minutes <= 45){
+      payment += 30;
+    }
+     if(hours === 6 && hours < 7 && minutes > 45){
+      payment += 50;
+    }
+    
+     if(hours === 7 && minutes < 15){
+      payment += 0;
+    }
+    if(hours === 7 && minutes > 15 && minutes <= 45){
+      payment += 20;
+    }
+     if(hours === 7 && hours < 8 && minutes > 45){
+      payment += 50;
+    }
   }
 
   return payment;
 }
 
+function MoreInfoModal(url, type){
+  const login_status = document.getElementById('i_login_status');
+  const login_date = document.getElementById('i_login_date');
+  const login_start = document.getElementById('i_login_start');
+  const login_end = document.getElementById('i_login_end');
+  const login_total = document.getElementById('i_login_total');
+  const login_payment = document.getElementById('i_login_payment');
+  const login_mode = document.getElementById('i_login_mode');
+  const login_final = document.getElementById('i_login_final_status');
+  const paid_status = document.getElementById('i_paid_status');
+
+  axios.get(url)
+  .then(function (response) {
+    const data = response.data.info;
+    if(data.log_status === 0){
+      login_status.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Still Logged In';
+      login_end.textContent = 'N/A';
+      login_total.textContent = 'N/A';
+      login_payment.textContent = 'N/A';
+      login_mode.textContent = 'N/A';
+      login_final.textContent = 'N/A';
+      paid_status.textContent = 'N/A';
+    }else{
+      const time = timeDifference(data.log_start_time, data.log_end_time);
+      const mode = data.log_transaction.split('-');
+      switch(mode[1]){
+        case '1':
+          login_mode.textContent = 'Cash';
+          if(data.log_status === 1){
+            login_final.textContent = 'Unpaid';
+            paid_status.textContent = 'Not Yet Available';
+          }
+          if(data.log_status === 2){
+            login_final.textContent = 'Paid';
+            paid_status.textContent = formatDateTime(data.updated_at);
+          }
+          break;
+        case '2':
+          login_mode.textContent = 'Account Balance';
+          login_final.textContent = 'Paid';
+          paid_status.textContent = formatDateTime(data.updated_at);
+          break;
+        
+      }
+      
+      login_status.innerHTML = '<i class="bi bi-x-square-fill text-danger"></i> Logged Out';
+      login_end.textContent = data.log_end_time;
+      login_total.textContent = time.hours + 'Hrs & ' + time.minutes + 'mins';
+      login_payment.textContent = PaymentCalc(time.hours, time.minutes, type);
+    }
+    login_date.textContent = data.log_date;
+    login_start.textContent = data.log_start_time;
+  })
+ .catch(function (error) {
+  console.error(error);
+  });
+}
+
+function formatDateTime(dateTimeString) {
+
+  let dateTime = new Date(dateTimeString);
+
+  let year = dateTime.getFullYear();
+  let month = String(dateTime.getMonth() + 1).padStart(2, '0'); 
+  let day = String(dateTime.getDate()).padStart(2, '0');
+  let hours = String(dateTime.getHours()).padStart(2, '0');
+  let minutes = String(dateTime.getMinutes()).padStart(2, '0');
+  let seconds = String(dateTime.getSeconds()).padStart(2, '0');
+
+  let formattedDateTime = year + '/' + month + '/' + day + ' - ' + hours + ':' + minutes + ':' + seconds;
+
+  return formattedDateTime;
+}

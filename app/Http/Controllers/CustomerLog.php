@@ -44,7 +44,7 @@ class CustomerLog extends Controller
   public function GetScannedURLlog(Request $request){
     $QRCode = $request->QRCode;
     $id = $request->cust_id;
-
+    $customer = CustomerAcc::where('customer_id', $id)->first();
 
     if($QRCode === 'XCgEMtt4XMC9DN2'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
@@ -56,37 +56,80 @@ class CustomerLog extends Controller
         $log->log_end_time = '';
         $log->log_status = 0;
         $log->save();
+        $status = 'login';
+        $log_id = 'none';
       }
    
     }else if($QRCode === 'FLPguCIZSg9TTqO'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
+      $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+      $time = timeDifference($checkLogOut->log_start_time, $end);
+      $hours = $time['hours'];
+      $minutes = $time['minutes'];
+      $payment = PaymentCalc($hours, $minutes, $customer->customer_type);
+      $transaction = $payment . "-1";
       if($checkLogOut){
         $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();
         $updateLog->update([
+          'log_end_time'=> $end,
           'log_status'=> 1,
+          'log_transaction'=>$transaction,
         ]);
+        $status = 'logout';
+        $log_id = $checkLogOut->log_id;
       }
-     
+   
     }else if($QRCode === 'IuFiIJwM3AupqAK'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
+      $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+      $time = timeDifference($checkLogOut->log_start_time, $end);
+      $hours = $time['hours'];
+      $minutes = $time['minutes'];
+      $payment = PaymentCalc($hours, $minutes, $customer->customer_type);
+      $transaction = $payment . "-2";
+     
       if($checkLogOut){
         $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();
         $updateLog->update([
           'log_end_time'=> Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'),
           'log_status'=> 2,
+          'log_transaction'=>$transaction,
         ]);
+        $finalCredit = $customer->account_credits - $payment;
+        $customer->update([
+          'account_credits'=> $finalCredit,
+        ]);
+        $status = 'logout';
+        $log_id = $checkLogOut->log_id;
       }
-
     
+      
   }
-  return response()->json(['status'=>'success']);
+  return response()->json(['status'=>$status, 'log_data'=>$log_id]);
 }
 
   public function GetCustomerLoginStatus(Request $req){
     $customer = $req->cookie('customer_id');
 
-    $logs = CustomerLogs::where('customer_id', $customer)->where('log_date', Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))->first();
+    $logs = CustomerLogs::where('customer_id', $customer)->where('log_date', Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))->where('log_status', 0)->first();
 
     return response()->json(['fetched'=>$logs]);
   }
+  public function GetLogInfo(Request $req){
+      $id = $req->log_id;
+
+      $log = CustomerLogs::where('log_id', $id)->first();
+
+      return response()->json(['info'=>$log]);
+  }
+  
+public function GetLogDetails(Request $req){
+  $id = $req->log_id;
+
+  $log= CustomerLogs::where('log_id', $id)->first();
+
+  return response()->json(['log_details'=>$log]);
 }
+
+}
+
