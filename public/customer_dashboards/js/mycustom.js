@@ -73,7 +73,7 @@ function logOut(route, home) {
   });
 }
 
-function startScan(scannedRoute, refreshURL, userType) {
+function startScan(scannedRoute, refreshURL) {
 
     document.getElementById('qrScanner').style.display = 'block';
     const formInput = document.getElementById('scannedQRCode');
@@ -90,7 +90,7 @@ function startScan(scannedRoute, refreshURL, userType) {
       qrCodeMessage => {
       
         formInput.value = qrCodeMessage;
-        SubmitScannedData(scannedRoute, refreshURL, userType);
+        SubmitScannedData(scannedRoute, refreshURL);
         html5QrCode.stop().then(ignore => {
           document.getElementById('qrScanner').style.display = 'none';
         }).catch(err => console.error(err));
@@ -102,7 +102,7 @@ function startScan(scannedRoute, refreshURL, userType) {
     );
   }
 
-  function SubmitScannedData(route, refURL, type){
+  function SubmitScannedData(route, refURL){
     const loading = document.getElementById('loadingDiv');
     loading.style.display = 'flex';
     var formData = $('form#scannedDataHolder').serialize();
@@ -115,7 +115,7 @@ function startScan(scannedRoute, refreshURL, userType) {
           
           if(response.status === 'login'){
             loading.style.display = 'none';
-            LoginStatusFetch(refURL, type);
+            LoginStatusFetch(refURL);
           }else{
             const successData = document.getElementById('custom_success');
             successData.style.display = 'flex';
@@ -129,7 +129,7 @@ function startScan(scannedRoute, refreshURL, userType) {
     });
   }
 
-  function LoginStatusFetch(url, type){
+  function LoginStatusFetch(url){
     axios.get(url)
         .then(function (response) {
 
@@ -138,52 +138,16 @@ function startScan(scannedRoute, refreshURL, userType) {
           const login_status = document.getElementById('login_status');
           const login_date = document.getElementById('login_date');
           const login_start = document.getElementById('login_start');
-          const login_end = document.getElementById('login_end');
-          const login_total = document.getElementById('login_total');
-          const login_payment = document.getElementById('login_payment');
-          const login_mode = document.getElementById('login_mode');
-          const login_final = document.getElementById('login_final_status');
+        
           if(data === null){
             login_status.innerHTML = '<i class="bi bi-x-square-fill text-danger"></i> Not Logged In ';
             login_date.textContent = 'N/A';
             login_start.textContent = 'N/A';
-            login_end.textContent = 'N/A';
-            login_total.textContent = 'N/A';
-            login_payment.textContent = 'N/A';
-            login_mode.textContent = 'N/A';
-            login_final.textContent = 'N/A';
+            
           }else{
             login_status.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Logged In';
             login_date.textContent = data.log_date;
             login_start.textContent = data.log_start_time;
-            switch(data.log_status){
-              case 1:
-                var diff = timeDifference(data.log_start_time, data.log_end_time);
-                login_end.textContent = data.log_end_time;
-                login_total.textContent = `${diff.hours}Hrs & ${diff.minutes}Minutes`;
-                var payment = PaymentCalc(diff.hours, diff.minutes, type);
-                login_payment.textContent = payment;
-                login_mode.textContent = 'Cash';
-                login_final.innerHTML = '<i class="bi bi-clock-fill text-warning"></i>  Unpaid/Pending Payment';
-                break;
-              case 2:
-                var diff = timeDifference(data.log_start_time, data.log_end_time);
-                login_end.textContent = data.log_end_time;
-                login_total.textContent = `${diff.hours}Hrs & ${diff.minutes}Minutes`;
-                var payment = PaymentCalc(diff.hours, diff.minutes, type);
-                login_payment.textContent = payment;
-                login_mode.textContent = 'Account Credit';
-                login_final.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Paid/Deducted on Credit';
-                break;
-              default:
-                login_end.textContent = 'N/A';
-                login_total.textContent = 'N/A';
-                login_payment.textContent = 'N/A';
-                login_mode.textContent = 'N/A';
-                login_final.textContent = 'N/A';
-                break;
-            }
-          
           }
         })
        .catch(function (error) {

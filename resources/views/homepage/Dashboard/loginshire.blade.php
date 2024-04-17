@@ -44,7 +44,7 @@
       </nav>
     </div><!-- End Page Title -->
     <form method="post" id="scannedDataHolder">@csrf <input type="hidden" id="scannedQRCode" name="QRCode"><input type="hidden" name="cust_id" value="{{ $user_id }}"></form>
-    <button type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}', '{{ $customer->customer_type }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
+    <button type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
                   <div id="qrScanner" style="display: none;"></div>
        <div class="card">
         <div class="card-body">
@@ -67,12 +67,7 @@
                   <p class="card-text">Login Status: <span id="login_status"></span></p>
                   <p class="card-text">Date: <span id="login_date"></span></p>
                   <p class="card-text">Start Time: <span id="login_start"></span></p>
-                  <p class="card-text">End Time: <span id="login_end"></span></p>
-                  <p class="card-text">Total Hours: <span id="login_total"></span></p>
-                  <p class="card-text">Payment: <span id="login_payment"></span></p>
-                  <p class="card-text">Mode of Payment: <span id="login_mode"></span></p>
-                  <p class="card-text">Status: <span id="login_final_status"></span></p>
-                
+                  <i class="card-text">Other Details will be shown after log out</i>
                 </div>
               </div>
             </div>
@@ -153,7 +148,7 @@
   <script>
     
     window.onload = function() {
-      LoginStatusFetch("{{ route('getCustomerLoginStatus') }}", "{{ $customer->customer_type }}");
+      LoginStatusFetch("{{ route('getCustomerLoginStatus') }}");
     };
     function  DisplaySuccessModal(id){
  
