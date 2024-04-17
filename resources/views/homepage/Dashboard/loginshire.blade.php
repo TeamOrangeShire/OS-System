@@ -162,14 +162,15 @@
             .then(function (response) {
            
             const fetchData = response.data;
-            console.log(fetchData);
+           
             const date = document.getElementById('succ_date');
             const time = document.getElementById('succ_time');
             const total = document.getElementById('succ_total_time');
             const payment = document.getElementById('succ_payment');
             const status = document.getElementById('succ_status');
 
-            const diff = timeDifference(fetchData.log_start_time, fetchData.log_end_time)
+            const diff = timeDifference(fetchData.log_start_time, fetchData.log_end_time);
+            console.log('hrs =' + diff.hours + ' minutes='+diff.minutes);
             const checkStatus = fetchData.log_transaction.split('-');
             date.innerHTML = '<strong>' + fetchData.log_date + '</strong>';
             time.innerHTML = '<strong>' + fetchData.log_start_time + '-' + fetchData.log_end_time + '</strong>';
