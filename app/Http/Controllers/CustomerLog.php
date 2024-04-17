@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\CustomerLogs;
-use App\Models\CustomerAcc;
+use App\Models\ActivityLog;
 use App\Http\Controllers\Controller;
+use App\Models\CustomerAcc;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -19,16 +20,24 @@ class CustomerLog extends Controller
   public function acceptLog(Request $request){
 
     $id = $request->pending_log;
-    $currentTime = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+   
 
     $log = CustomerLogs::where('log_id',$id)->first();
     
     $log->update([
 
-        'log_end_time'=>$currentTime,
         'log_status'=> 2,
 
     ]);
+    $cus_info = CustomerAcc::where('customer_id',$log->customer_id)->first();
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin accept payment of " . $cus_info->customer_lastname;
+    $data->act_header = "Accept log payment";
+    $data->act_location = "customer_log";
+    $data->save();
+
     return response()->json(['status'=> 'success']);
   }
 

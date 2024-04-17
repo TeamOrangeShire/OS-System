@@ -79,6 +79,7 @@ Route::get('/admin/admin_lockscreen', function () { return view('admin.admin_loc
 Route::get('/admin/admin_profile', function () { return view('admin.admin_profile');})->name('admin_profile');
 Route::get('/admin/log_history', function () { return view('admin.log_history');})->name('log_history');
 Route::get('/admin/promos', function () { return view('admin.promos');})->name('promos');
+Route::get('/admin/activitylog', function () { return view('admin.activityLog');})->name('activityLog');
 
 Route::get('/admin/plans_subscription', function () { return view('admin.plans_s');})->name('plans_s');
 Route::get('/admin/pending_subscription', function () { return view('admin.pending_s');})->name('pending_s');
@@ -99,6 +100,7 @@ Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdm
 Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
 Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/addCredit',[EditAcc::class,'addCredit'] )->name('addCredit');
+Route::post('/changeType',[EditAcc::class,'changeType'] )->name('changeType');
 Route::post('/acceptLog',[CustomerLog::class,'acceptLog'] )->name('acceptLog');
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');

@@ -32,7 +32,10 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                     <a href="{{route('index')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('log_history')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-list"></i></span><span class="pcoded-mtext">Log History</span></a>
+                    <a href="{{route('log_history')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-list"></i></span><span class="pcoded-mtext">Customer Log</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('activityLog')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-list"></i></span><span class="pcoded-mtext">Activity Log</span></a>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
                     <a  class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Accounts</span></a>

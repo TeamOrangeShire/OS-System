@@ -88,7 +88,7 @@
                         <tr>
                             <td>{{$cus_fullname}}</td>
                             <td>{{$cus->customer_email}}</td>
-                            <td>{{$cus->customer_number}}</td>
+                            <td>{{$cus->customer_phone_num }}</td>
                             <td>{{$cus->account_credits}}</td>
                             <td>
                                 <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="log('{{$cus->customer_id}}','{{$cus_fullname}}')"><i class="feather icon-info"></i></button>
