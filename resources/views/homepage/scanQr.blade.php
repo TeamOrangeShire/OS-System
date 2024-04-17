@@ -13,7 +13,7 @@
 
  ">
     <div id="qrScanner" style="display: none;"></div>
-
+    <p style="text-align: center">Scan any QR-Code Related to Orange Shire</p>
     <script>
 window.onload = function (){
     DetectScreenSize("{{ route('home') }}");
