@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
 use App\Models\CustomerAcc;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Storage; 
 
 class EditAcc extends Controller
 {
@@ -175,9 +174,9 @@ class EditAcc extends Controller
         }
         else{
             $fileName = "Customer". $req->user_id.".". $file->getClientOriginalExtension();
-            $filePath = public_path('User/Customer/');  
-            $file->move($filePath, $fileName);
-            
+            $filePath = 'UserPic/Customer/' . $fileName;
+            Storage::disk('public')->put($filePath, file_get_contents($file));
+
             $customer  = CustomerAcc::where('customer_id', $req->user_id)->first();
             $customer->update([
               'customer_profile_pic' => $fileName,
