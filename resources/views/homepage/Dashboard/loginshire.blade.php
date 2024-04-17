@@ -18,10 +18,10 @@
   <div class="success-content">
      <img src="{{ asset('customer_dashboards/img/success.gif') }}" alt="success">
      <h3 class="text-success">Log Out Successfully</h3>
+     <p><strong>{{ $customer->customer_type }}</strong></p>
      <p id="succ_date"></p>
      <p id="succ_time"></p>
      <p id="succ_total_time"></p>
-     <p><strong>{{ $customer->customer_type }}</strong></p>
      <p id="succ_payment"></p>
      <p id="succ_status"></p>   
      <i>Thank you for visiting  Orange Shire Coworking!</i>   
@@ -168,17 +168,14 @@
             const total = document.getElementById('succ_total_time');
             const payment = document.getElementById('succ_payment');
             const status = document.getElementById('succ_status');
-            console.log(fetchData);
-             console.log(fetchData.log_start_time);
-             console.log(fetchData.log_end_time);
+        
             const diff = timeDifference(fetchData.log_start_time, fetchData.log_end_time);
-            
-            console.log('hrs =' + diff.hours + ' minutes='+diff.minutes);
+
             const checkStatus = fetchData.log_transaction.split('-');
-            date.innerHTML = '<strong>' + fetchData.log_date + '</strong>';
+            date.innerHTML = '<strong>Date: ' + fetchData.log_date + '</strong>';
             time.innerHTML = '<strong>' + fetchData.log_start_time + '-' + fetchData.log_end_time + '</strong>';
-            total.innerHTML = '<strong>' + diff.hours + 'Hrs & ' + diff.minutes + 'minutes</strong>';
-            payment.innerHTML = '<strong>₱' + PaymentCalc(diff.hours, diff.minutes, '{{ $customer->customer_type }}') + '</strong>';
+            total.innerHTML = '<strong>Total Time: ' + diff.hours + 'Hrs & ' + diff.minutes + 'minutes</strong>';
+            payment.innerHTML = '<strong>Cost: ₱' + PaymentCalc(diff.hours, diff.minutes, '{{ $customer->customer_type }}') + '</strong>';
             if(checkStatus[1] === '2'){
               status.innerHTML = '<strong>Account Credit - Paid</strong>';
             }else{
