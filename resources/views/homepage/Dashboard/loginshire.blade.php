@@ -168,6 +168,7 @@
             const total = document.getElementById('succ_total_time');
             const payment = document.getElementById('succ_payment');
             const status = document.getElementById('succ_status');
+            console.log(fetchData);
              console.log(fetchData.log_start_time);
              console.log(fetchData.log_end_time);
             const diff = timeDifference(fetchData.log_start_time, fetchData.log_end_time);
