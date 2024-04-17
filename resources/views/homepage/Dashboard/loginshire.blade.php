@@ -14,7 +14,7 @@
   $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
 @endphp
-<div class="custom-success" style="display: flex" id="custom_success">
+<div class="custom-success" style="display: none" id="custom_success">
   <div class="success-content">
      <img src="{{ asset('customer_dashboards/img/success.gif') }}" alt="success">
      <h3 class="text-success">Log Out Successfully</h3>
@@ -156,11 +156,12 @@
       LoginStatusFetch("{{ route('getCustomerLoginStatus') }}", "{{ $customer->customer_type }}");
     };
     function  DisplaySuccessModal(id){
+      console.log(id);
       const url = "{{ route('getLogDetails') }}?log_id=" + id;
       axios.get(url)
             .then(function (response) {
 
-             const fetchData = response.data;
+            const fetchData = response.data;
             const date = document.getElementById('succ_date');
             const time = document.getElementById('succ_time');
             const total = document.getElementById('succ_total_time');
@@ -178,7 +179,7 @@
             }else{
               if(fetchData.log_status == 2){
                 status.innerHTML = '<strong>Cash - Paid</strong>';
-              }else{
+              } else{
                 status.innerHTML = '<strong>Cash - Unpaid</strong>';
               }
            
