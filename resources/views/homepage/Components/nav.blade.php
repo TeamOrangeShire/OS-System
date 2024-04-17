@@ -168,7 +168,6 @@
                         display: block;
                     }
                 </style>
->>>>>>> b8d6bb7b18978bea9960572c45abea206947a94f
             </div>
             @if($cookie_val === 'none')
             <a href="{{route('customer_login')}}" class="btn btn-primary px-3 d-mb-4 d-lg-flex custom_login" >Log in/Sign up</a>
