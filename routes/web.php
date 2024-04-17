@@ -11,6 +11,7 @@ use App\Http\Controllers\EditData;
 use App\Http\Controllers\GetDataViews;
 use App\Http\Controllers\Reservation;
 use App\Http\Controllers\CustomerLog;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -132,3 +133,6 @@ Route::post('/ConfirmReservation', [Reservation::class, 'ConfirmReservation'])->
 Route::post('/DeclineReservation', [Reservation::class, 'DeclineReservation'])->name('DeclineReservation');
 
 
+Route::get('/Link', function () {
+    Artisan::call('storage:link');
+});
