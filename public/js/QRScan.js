@@ -20,7 +20,7 @@ function StartScan(urls, toShire){
         qrbox: 250 // Set size of QR code scanning box (optional)
       },
       qrCodeMessage => {
-        
+        console.log(qrCodeMessage);
         const code = document.getElementById('code');
         code.value = qrCodeMessage;
         var formData = $('form#QRData').serialize(); 
