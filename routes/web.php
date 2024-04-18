@@ -37,6 +37,7 @@ Route::get('/checkTime',[GetDataViews::class, 'CheckTime'] )->name('checkTime');
 Route::get('/get-time-for-date',[GetDataViews::class,'GetTimeForDate'] )->name('getTimeDate');
 Route::get('/scanQrCode',[CustomerLog::class, 'Scanning'] )->name('scanQr');
 
+Route::get('/download',function (){ return view('homepage.downloadapk'); } )->name('download');
 //Client Back End
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
 Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');
@@ -49,6 +50,7 @@ Route::post('/customer-profile-update-picture',[EditAcc::class,'UpdateCustomerPr
 Route::post('/customer-subscribe-plan',[SubscriptionsData::class,'Subscribe'] )->name('customer_subscribe');
 Route::post('/customer-log-out',[Login::class,'LogOutCustomer'] )->name('customer_logOut');
 Route::post('/customer/redirectScan/updatelogs',[CustomerLog::class,'GetScannedURLlog'] )->name('updateQRLog');
+Route::post('/customer/redirectScan/GlobalScan',[CustomerLog::class,'GlobalScan'] )->name('GlobalScan');
 //Customer Dashboard
 Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');
 Route::get('/customer/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');
