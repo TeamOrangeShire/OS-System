@@ -35,7 +35,7 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle">
+              <img src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle" style="width: 100px; height:100px;">
               <h2>{{ $fullname }}</h2>
              
             </div>
