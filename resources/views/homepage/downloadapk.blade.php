@@ -11,6 +11,5 @@
     link.click();
     document.body.removeChild(link);
 
-    window.location.href = "{{ route('home') }}";
 }
 </script>
