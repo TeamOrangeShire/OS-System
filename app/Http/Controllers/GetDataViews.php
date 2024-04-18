@@ -119,8 +119,14 @@ class GetDataViews extends Controller
     }
     public function CustomerLoginToShire(Request $req){
         $userId = $req->cookie('customer_id');
-       
-        return view('homepage.Dashboard.loginshire', ['user_id'=> $userId]);
+        if($req->has('status')){
+            $stat = $req->status;
+            $id = $req->log_id;
+        }else{
+            $stat = 'none';
+            $id = 'none';
+        }
+        return view('homepage.Dashboard.loginshire', ['user_id'=> $userId, 'status'=>$stat, 'log_data'=>$id]);
     }
 
     public function GetRoomRate(Request $req){

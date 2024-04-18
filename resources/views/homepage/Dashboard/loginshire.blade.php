@@ -14,7 +14,7 @@
   $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
 @endphp
-<div class="custom-success" style="display: none" id="custom_success">
+<div class="custom-success" style="display: {{ $status === 'none' ? 'none' : 'flex' }}" id="custom_success">
   <div class="success-content text-center">
      <img src="{{ asset('customer_dashboards/img/success.gif') }}" alt="success">
      <h3 class="text-success">Log Out Successfully</h3>
@@ -149,6 +149,11 @@
     
     window.onload = function() {
       LoginStatusFetch("{{ route('getCustomerLoginStatus') }}");
+      const stats = {{ $status }};
+      const l_data = {{ $log_data }};
+      if(stats === 'success'){
+        DisplaySuccessModal(l_data);
+      }
     };
     function  DisplaySuccessModal(id){
  

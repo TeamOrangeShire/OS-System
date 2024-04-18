@@ -1,13 +1,13 @@
 
-function DetectScreenSize(route, update){
+function DetectScreenSize(route, update, toShire){
     if (/Mobi|Android/i.test(navigator.userAgent)) {
-        StartScan(update);
+        StartScan(update, toShire);
     } else {
        window.location.href = route;
     }
 }
 
-function StartScan(urls){
+function StartScan(urls, toShire){
 
     document.getElementById('qrScanner').style.display = 'block';
     const html5QrCode = new Html5Qrcode('qrScanner');
@@ -29,7 +29,12 @@ function StartScan(urls){
           url: urls,
           data: formData,
           success: function(response) {
-         
+           if(response.status === 'login'){
+            window.location.href = toShire;
+           }else{
+            const query = toShire + '?status=success&log_id=' + response.log_data;
+            window.location.href = query;
+           }
           }, 
           error: function (xhr) {
  
