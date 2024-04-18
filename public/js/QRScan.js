@@ -11,7 +11,7 @@ function StartScan(urls, toShire){
 
     document.getElementById('qrScanner').style.display = 'block';
     const html5QrCode = new Html5Qrcode('qrScanner');
-
+    console.log('start');
     // Start QR code scanning
     html5QrCode.start(
       { facingMode: "environment" }, 

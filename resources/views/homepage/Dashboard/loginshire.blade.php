@@ -45,7 +45,7 @@
     </div><!-- End Page Title -->
     <form method="post" id="scannedDataHolder">@csrf <input type="hidden" id="scannedQRCode" name="QRCode"><input type="hidden" name="cust_id" value="{{ $user_id }}"></form>
     <button type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
-                  <div id="qrScanner" style="display: none;"></div>
+      <div id="qrScanner" style="display: none;"></div>
        <div class="card">
         <div class="card-body">
           <h5 class="card-title">Customer Type: {{$customer->customer_type}}</h5>
