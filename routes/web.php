@@ -35,7 +35,8 @@ Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )-
 Route::get('/room_rates',[GetDataViews::class, 'GetRoomRate'] )->name('getRoomRates');
 Route::get('/checkTime',[GetDataViews::class, 'CheckTime'] )->name('checkTime');
 Route::get('/get-time-for-date',[GetDataViews::class,'GetTimeForDate'] )->name('getTimeDate');
-Route::get('/scanQrCode',function (){ return view('homepage.scanQr');} )->name('scanQr');
+Route::get('/scanQrCode',[CustomerLog::class, 'Scanning'] )->name('scanQr');
+
 //Client Back End
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
 Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');

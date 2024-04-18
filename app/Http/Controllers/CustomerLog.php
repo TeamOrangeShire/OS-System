@@ -131,5 +131,11 @@ public function GetLogDetails(Request $req){
   return response()->json(['log_details'=>$log]);
 }
 
+
+public function Scanning(Request $req){
+  $id = $req->cookie('customer_id');
+  return view('homepage.scanQr', ['user_id'=>$id]);
+}
+
 }
 
