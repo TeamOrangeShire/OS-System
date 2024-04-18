@@ -11,7 +11,6 @@ function StartScan(urls, toShire){
 
     document.getElementById('qrScanner').style.display = 'block';
     const html5QrCode = new Html5Qrcode('qrScanner');
-    console.log('start');
     // Start QR code scanning
     html5QrCode.start(
       { facingMode: "environment" }, 
@@ -20,16 +19,16 @@ function StartScan(urls, toShire){
         qrbox: 250 // Set size of QR code scanning box (optional)
       },
       qrCodeMessage => {
-        console.log(qrCodeMessage);
         const code = document.getElementById('code');
         code.value = qrCodeMessage;
         var formData = $('form#QRData').serialize(); 
+        console.log(formData);
         $.ajax({
           type: 'POST',
           url: urls,
           data: formData,
           success: function(response) {
-            console.log(response);
+           console.log(response);
            if(response.status === 'login'){
             window.location.href = toShire;
            }else{
