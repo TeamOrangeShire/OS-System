@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Scan Qr Code</title>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body style="background: rgb(250, 185, 114)">
     <form id="QRData">
