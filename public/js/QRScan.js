@@ -29,6 +29,7 @@ function StartScan(urls, toShire){
           url: urls,
           data: formData,
           success: function(response) {
+            console.log(response);
            if(response.status === 'login'){
             window.location.href = toShire;
            }else{
