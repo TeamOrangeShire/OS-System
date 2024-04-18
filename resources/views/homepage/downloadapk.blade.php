@@ -11,5 +11,12 @@
     link.click();
     document.body.removeChild(link);
 
+
+    var link2 = document.createElement('a');
+    link2.href = "{{ route('home') }}";
+    link2.href = 'Go Back to Home Page <---'
+    document.body.appendChild(link);
 }
 </script>
+
+
