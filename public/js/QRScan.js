@@ -1,13 +1,13 @@
 
-function DetectScreenSize(route, update, toShire){
+function DetectScreenSize(route, update, toShire, download){
     if (/Mobi|Android/i.test(navigator.userAgent)) {
-        StartScan(update, toShire);
+        StartScan(update, toShire, download);
     } else {
        window.location.href = route;
     }
 }
 
-function StartScan(urls, toShire){
+function StartScan(urls, toShire, download){
 
     document.getElementById('qrScanner').style.display = 'block';
     const html5QrCode = new Html5Qrcode('qrScanner');
@@ -31,9 +31,11 @@ function StartScan(urls, toShire){
            console.log(response);
            if(response.status === 'login'){
             window.location.href = toShire;
-           }else{
+           }else if(response.status === 'logout'){
             const query = toShire + '?status=success&log_id=' + response.log_data;
             window.location.href = query;
+           }else{
+            window.location.href = download;
            }
           }, 
           error: function (xhr) {
