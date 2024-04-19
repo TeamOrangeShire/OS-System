@@ -120,7 +120,9 @@ function startScan(scannedRoute, refreshURL) {
             const successData = document.getElementById('custom_success');
             successData.style.display = 'flex';
             DisplaySuccessModal(response.log_data);
-          }else{
+          }else if(response.status === 'already_login'){
+
+          }else {
             loading.style.display = 'none';
             const errorData = document.getElementById('custom_error');
             errorData.style.display = 'flex';

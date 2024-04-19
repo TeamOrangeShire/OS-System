@@ -58,6 +58,9 @@ class CustomerLog extends Controller
         $log->save();
         $status = 'login';
         $log_id = 'none';
+      }else{
+        $status = 'already_login';
+        $log_id = 'none';
       }
    
     }else if($QRCode === 'FLPguCIZSg9TTqO'){
