@@ -144,6 +144,7 @@
                                             <th>Date</th>
                                             <th>Start</th>
                                             <th>End</th>
+                                            <th>Payment</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -160,19 +161,20 @@
                                           $cus_id = $cus->customer_id;
                                           $cus_info = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
                                            $cus_fullname = $cus_info->customer_firstname .' '.$cus_info->customer_middlename.' '.$cus_info->customer_lastname;
-                                              
+                                            $payment = $cus->log_transaction===null?['']:explode('-',$cus->log_transaction);
                                           @endphp
                                         <tr>
                                             <td>{{$cus_fullname}}</td>
                                             <td>{{$cus->log_date}}</td>
                                             <td>{{$cus->log_start_time}}</td>
                                             <td>{{$cus->log_end_time}}</td>
+                                            <td>{{$payment[0]}}</td>
                                                 @if ($cus->log_status === 1)
                                                 <td>
                                                     Pending
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn  btn-icon btn-warning" onclick="accept_log($cus->log_id)"><i class="feather icon-clock"></i></button>
+                                                    <button type="button" class="btn  btn-icon btn-warning" onclick="accept_log('{{$cus->log_id}}')"><i class="feather icon-clock"></i></button>
                                                 </td>
                                                 @elseif ($cus->log_status === 2)
                                                 <td>
