@@ -140,6 +140,11 @@ public function GetLogDetails(Request $req){
 }
 
 
+public function Scanning(Request $req){
+  $id = $req->cookie('customer_id');
+  return view('homepage.scanQr', ['user_id'=>$id]);
+}
+
 
 }
 
