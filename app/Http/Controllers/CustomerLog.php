@@ -105,9 +105,7 @@ class CustomerLog extends Controller
               'log_transaction'=>$transaction,
             ]);
            
-            $customer->update([
-              'account_credits'=> $finalCredit,
-            ]);
+          
             $status = 'logout';
             $log_id = $checkLogOut->log_id;
           }
