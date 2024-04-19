@@ -33,7 +33,7 @@
           <input type="text" name="fname" oninput="restrictToText(event)" class="input" placeholder="First Name">
           <input type="text" name="mname" oninput="restrictToText(event)" class="input" placeholder="Middle Name">
           <input type="text" name="lname" oninput="restrictToText(event)" class="input" placeholder="Last Name">
-          <select name="ext" class="input">
+          <select name="extension" class="input">
               <option selected value="none" >None</option>
               <option value="Jr." >Junior(Jr.)</option>
               <option value="Sr." >Senior(Sr.)</option>

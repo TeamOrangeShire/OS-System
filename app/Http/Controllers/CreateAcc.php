@@ -33,7 +33,7 @@ class CreateAcc extends Controller
         $mname = $req->mname;
         $email = $req->email;
         $password = $req->password;
-        $ext = $req->ext;
+        $ext = $req->extension;
         
         $account = new CustomerAcc();
         $account->customer_firstname = $fname;
