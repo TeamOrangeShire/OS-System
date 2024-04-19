@@ -82,6 +82,7 @@
          <input type="hidden" id="fname" name="fname">
          <input type="hidden" id="mname" name="mname">
          <input type="hidden" id="lname" name="lname">
+         <input type="hidden" id="ext" name="ext">
          <input type="hidden" id="email" name="email">
          <input type="hidden" id="password" name="password">
 
@@ -122,6 +123,7 @@
           document.getElementById('fname').value = response.fname;
           document.getElementById('mname').value = response.mname;
           document.getElementById('lname').value = response.lname;
+          document.getElementById('ext').value = response.ext;
           document.getElementById('email').value = response.email;
           document.getElementById('password').value = response.password;
           document.getElementById('ver-code').value = response.code;
@@ -180,7 +182,7 @@
  
  function CreateAccount() {
      var formData = $('form#verification_code').serialize();
- 
+     document.getElementById('loadingDiv').style.display = 'flex';
      $.ajax({
          type: 'POST',
          url: '{{route('customer_create_account')}}',

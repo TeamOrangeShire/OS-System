@@ -15,6 +15,7 @@ class Mailing extends Controller
          'fname'=>'required',
          'mname'=>'required',
          'lname'=>'required',
+         'extension'=> 'required',
          'email'=>'required',
          'password'=>'required',
       ]);
@@ -27,6 +28,7 @@ class Mailing extends Controller
           'fname'=>$data['fname'],
           'mname'=>$data['mname'],
           'lname'=>$data['lname'],
+          'ext'=>$data['extension'],
           'email'=>$data['email'],
           'password'=>$data['password'],
           'code'=>$code,
