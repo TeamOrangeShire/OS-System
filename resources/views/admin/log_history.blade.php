@@ -150,7 +150,8 @@
                                       </thead>
                                       <tbody>
                                         @php
-                                        $Customer = App\Models\CustomerLogs::all();
+                                        
+                                        $Customer = App\Models\CustomerLogs::Where('log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
                                         
                                         
                                        @endphp
