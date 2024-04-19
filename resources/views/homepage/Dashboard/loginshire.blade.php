@@ -14,7 +14,7 @@
   $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
 @endphp
-<div class="custom-success" style="display: {{ $status === 'none' ? 'none' : 'flex' }}" id="custom_success">
+<div class="custom-success" style="display: {{ $status === 'success' ? 'flex' : 'none' }}" id="custom_success">
   <div class="success-content text-center">
      <img src="{{ asset('customer_dashboards/img/success.gif') }}" alt="success">
      <h3 class="text-success">Log Out Successfully</h3>
@@ -26,7 +26,17 @@
      <p id="succ_status"></p>   
      <i>Thank you for visiting  Orange Shire Coworking!</i>   
      <i>&trade; All Rights Reserved Orange Shire &trade;</i>
-     <button onclick="location.reload()" class="btn btn-success mt-2">Okay</button>
+     <button onclick="CloseDataModals('custom_success')" class="btn btn-success mt-2">Okay</button>
+  </div>
+</div>
+
+<div class="custom-success" style="display:{{ $status === 'not_enough' ? 'flex' : 'none' }}" id="custom_error">
+  <div class="success-content text-center">
+     <img src="{{ asset('customer_dashboards/img/ewallet.gif') }}" alt="error">
+     <h3 class="text-success">Not Enough Credit to Pay</h3>
+     <i>Please Make Sure to top up in our establishment to replenish your Orange Shire Credits</i>   
+     <i>&trade; All Rights Reserved Orange Shire &trade;</i>
+     <button onclick="CloseDataModals('custom_error')" class="btn btn-success mt-2">Scan Again</button>
   </div>
 </div>
   <!-- ======= Header ======= -->

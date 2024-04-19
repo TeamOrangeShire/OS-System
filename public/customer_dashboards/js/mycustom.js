@@ -116,10 +116,13 @@ function startScan(scannedRoute, refreshURL) {
           if(response.status === 'login'){
             loading.style.display = 'none';
             LoginStatusFetch(refURL);
-          }else{
+          }else if(response.status === 'logout'){
             const successData = document.getElementById('custom_success');
             successData.style.display = 'flex';
             DisplaySuccessModal(response.log_data);
+          }else{
+            const errorData = document.getElementById('custom_error');
+            errorData.style.display = 'flex';
           }
         }, 
         error: function (xhr) {
@@ -470,4 +473,8 @@ function formatDateTime(dateTimeString) {
   let formattedDateTime = year + '/' + month + '/' + day + ' - ' + hours + ':' + minutes + ':' + seconds;
 
   return formattedDateTime;
+}
+
+function CloseDataModals(id){
+  document.getElementById(id).style.display= 'none';
 }
