@@ -161,14 +161,14 @@
                                           $cus_id = $cus->customer_id;
                                           $cus_info = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
                                            $cus_fullname = $cus_info->customer_firstname .' '.$cus_info->customer_middlename.' '.$cus_info->customer_lastname;
-                                            $payment = explode('-',$cus->log_transaction) ;
+                                            // $payment = explode('-',$cus->log_transaction) ;
                                           @endphp
                                         <tr>
                                             <td>{{$cus_fullname}}</td>
                                             <td>{{$cus->log_date}}</td>
                                             <td>{{$cus->log_start_time}}</td>
                                             <td>{{$cus->log_end_time}}</td>
-                                            <td>{{$payment[0]}}</td>
+                                            <td>{{$cus->log_transaction}}</td>
                                                 @if ($cus->log_status === 1)
                                                 <td>
                                                     Pending
