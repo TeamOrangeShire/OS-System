@@ -21,7 +21,7 @@
     <p style="text-align: center;">Scan any QR-Code Related to Orange Shire</p>
     <script>
     window.onload = function (){
-    DetectScreenSize("{{ route('home') }}", "{{ route('GlobalScan') }}", "{{ route('logintoshire') }}", "{{ route('download') }}" );
+    DetectScreenSize("{{ route('home') }}", "{{ route('updateQRLog') }}", "{{ route('logintoshire') }}", "{{ route('download') }}" );
     }
     </script>
     <script src="{{ asset('js/QRScan.js') }}"></script>
