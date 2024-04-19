@@ -1,6 +1,3 @@
-![Logo](https://orangeshire.com/img/os_logo.png)
-
-
 
 # Orange Shire
 
