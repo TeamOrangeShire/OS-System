@@ -23,13 +23,22 @@ class CustomerLog extends Controller
    
 
     $log = CustomerLogs::where('log_id',$id)->first();
-    
+    $method=explode('-',$log->log_transaction);
+   
     $log->update([
 
         'log_status'=> 2,
 
     ]);
     $cus_info = CustomerAcc::where('customer_id',$log->customer_id)->first();
+    if($method[1]==='2'){
+      $credit=$cus_info->account_credits - $method[0];
+      $cus_info->update([
+
+        'account_credits'=> $credit,
+
+    ]);
+    }
     $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
     $data->act_user_type = "Admin";

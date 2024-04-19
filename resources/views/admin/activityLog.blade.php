@@ -76,7 +76,7 @@
                       </thead>
                       <tbody>
                         @php
-                        $loghistory = App\Models\ActivityLog::where('act_user_type','Admin')->get();
+                        $loghistory = App\Models\ActivityLog::where('act_user_type','Admin')->orderBy('created_at','desc')->get();
                         $num= 1;
                        @endphp
                           @foreach ($loghistory as $log)
