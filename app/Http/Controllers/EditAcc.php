@@ -192,12 +192,17 @@ class EditAcc extends Controller
 
         $customer_id = $request->cus_id;
         $addcredit = $request->cus_credit;
+        $operation = $request->operation;
 
         $customer_credit = CustomerAcc::where('customer_id', $customer_id)->first();
 
+       
         $current_credit = $customer_credit->account_credits;
-        $credit = $current_credit + $addcredit;
-
+        if($operation === 'add'){
+            $credit = $current_credit + $addcredit;
+        }else{
+            $credit = $current_credit - $addcredit;
+        }
         $customer_credit->update([
                
           'account_credits'=>$credit,
