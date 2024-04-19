@@ -26,7 +26,7 @@
      <p id="succ_status"></p>   
      <i>Thank you for visiting  Orange Shire Coworking!</i>   
      <i>&trade; All Rights Reserved Orange Shire &trade;</i>
-     <button onclick="location.reload()" class="btn btn-success mt-2">Okay</button>
+     <button onclick="CloseDataModals('custom_success')" class="btn btn-success mt-2">Okay</button>
   </div>
 </div>
 
@@ -36,7 +36,7 @@
      <h3 class="text-success">Not Enough Credit to Pay</h3>
      <i>Please Make Sure to top up in our establishment to replenish your Orange Shire Credits</i>   
      <i>&trade; All Rights Reserved Orange Shire &trade;</i>
-     <button onclick="location.reload()" class="btn btn-success mt-2">Scan Again</button>
+     <button onclick="CloseDataModals('custom_error')" class="btn btn-success mt-2">Scan Again</button>
   </div>
 </div>
   <!-- ======= Header ======= -->

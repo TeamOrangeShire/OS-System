@@ -474,3 +474,7 @@ function formatDateTime(dateTimeString) {
 
   return formattedDateTime;
 }
+
+function CloseDataModals(id){
+  document.getElementById(id).style.display= 'none';
+}
