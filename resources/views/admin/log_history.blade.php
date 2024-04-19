@@ -173,18 +173,18 @@
                                                     <button type="button" class="btn  btn-icon btn-warning" onclick="accept_log($cus->log_id)"><i class="feather icon-clock"></i></button>
                                                 </td>
                                                 @elseif ($cus->log_status === 2)
-                                                    <td>
-                                                        Completed
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-icon btn-success"><i class="feather icon-check "></i></button>
-                                                    </td>
+                                                <td>
+                                                    Completed
+                                                </td>
+                                                <td>
+                                                    <i class="feather icon-check btn btn-icon btn-success"></i>
+                                                </td>
                                                 @else
                                                 <td>
                                                     Active
                                                 </td>
                                                 <td>
-                                                   <button type="button" class=" btn btn-icon btn-primary"><i class="feather icon-zap"></i></button> 
+                                                    <i class="feather icon-zap btn btn-icon btn-primary"></i>
                                                 </td>
                                                 @endif
                                           
