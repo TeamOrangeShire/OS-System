@@ -101,7 +101,7 @@ class CustomerLog extends Controller
             $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();
             $updateLog->update([
               'log_end_time'=> Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'),
-              'log_status'=> 2,
+              'log_status'=> 1,
               'log_transaction'=>$transaction,
             ]);
            
