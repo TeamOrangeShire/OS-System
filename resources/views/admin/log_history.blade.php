@@ -161,7 +161,7 @@
                                           $cus_id = $cus->customer_id;
                                           $cus_info = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
                                            $cus_fullname = $cus_info->customer_firstname .' '.$cus_info->customer_middlename.' '.$cus_info->customer_lastname;
-                                            $payment = explode($cus->log_transaction,'-') ;
+                                            $payment = explode('-',$cus->log_transaction) ;
                                           @endphp
                                         <tr>
                                             <td>{{$cus_fullname}}</td>
