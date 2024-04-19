@@ -174,7 +174,7 @@
                                                     Pending
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn  btn-icon btn-warning" onclick="accept_log($cus->log_id)"><i class="feather icon-clock"></i></button>
+                                                    <button type="button" class="btn  btn-icon btn-warning" onclick="accept_log('{{$cus->log_id}}')"><i class="feather icon-clock"></i></button>
                                                 </td>
                                                 @elseif ($cus->log_status === 2)
                                                 <td>
