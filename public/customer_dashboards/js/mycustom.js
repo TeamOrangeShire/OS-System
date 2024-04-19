@@ -112,15 +112,16 @@ function startScan(scannedRoute, refreshURL) {
         url: route,
         data: formData,
         success: function(response) {
-          
           if(response.status === 'login'){
             loading.style.display = 'none';
             LoginStatusFetch(refURL);
           }else if(response.status === 'logout'){
+            loading.style.display = 'none';
             const successData = document.getElementById('custom_success');
             successData.style.display = 'flex';
             DisplaySuccessModal(response.log_data);
           }else{
+            loading.style.display = 'none';
             const errorData = document.getElementById('custom_error');
             errorData.style.display = 'flex';
           }
