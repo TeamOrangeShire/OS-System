@@ -46,7 +46,7 @@
      <h3 class="text-success">Oppss... Logout First</h3>
      <i>It looks like you are still logged in</i>   
      <i>&trade; All Rights Reserved Orange Shire &trade;</i>
-     <button onclick="CloseDataModals('custom_error')" class="btn btn-success mt-2">Scan Again</button>
+     <button onclick="CloseDataModals('custom_login')" class="btn btn-success mt-2">Scan Again</button>
   </div>
 </div>
   <!-- ======= Header ======= -->

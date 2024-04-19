@@ -121,7 +121,9 @@ function startScan(scannedRoute, refreshURL) {
             successData.style.display = 'flex';
             DisplaySuccessModal(response.log_data);
           }else if(response.status === 'already_login'){
-
+            loading.style.display = 'none';
+            const already = document.getElementById('custom_login');
+            already.style.display = 'flex';
           }else {
             loading.style.display = 'none';
             const errorData = document.getElementById('custom_error');
@@ -478,6 +480,6 @@ function formatDateTime(dateTimeString) {
   return formattedDateTime;
 }
 
-function CloseDataModals(id){
-  document.getElementById(id).style.display= 'none';
+function CloseDataModals(ids){
+  document.getElementById(ids).style.display= 'none';
 }
