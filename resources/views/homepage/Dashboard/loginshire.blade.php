@@ -169,16 +169,18 @@
     
     window.onload = function() {
       LoginStatusFetch("{{ route('getCustomerLoginStatus') }}");
-      const stats = {{ $status }};
-      const l_data = {{ $log_data }};
+      const stats = '{{ $status }}';
+      const l_data = '{{ $log_data }}';
+      console.log(stats);
+      console.log(l_data);
       if(stats === 'success'){
         DisplaySuccessModal(l_data);
       }
 
     };
-    function  DisplaySuccessModal(id){
+    function  DisplaySuccessModal(ids){
  
-      const url = "{{ route('getLogDetails') }}?log_id=" + id;
+      const url = "{{ route('getLogDetails') }}?log_id=" + ids;
       axios.get(url)
             .then(function (response) {
            
