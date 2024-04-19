@@ -39,6 +39,16 @@
      <button onclick="CloseDataModals('custom_error')" class="btn btn-success mt-2">Scan Again</button>
   </div>
 </div>
+
+<div class="custom-success" style="display:{{ $status === 'already_login' ? 'flex' : 'none' }}" id="custom_login">
+  <div class="success-content text-center">
+     <img src="{{ asset('customer_dashboards/img/work.gif') }}" alt="error">
+     <h3 class="text-success">Oppss... Logout First</h3>
+     <i>It looks like you are still logged in</i>   
+     <i>&trade; All Rights Reserved Orange Shire &trade;</i>
+     <button onclick="CloseDataModals('custom_login')" class="btn btn-success mt-2">Scan Again</button>
+  </div>
+</div>
   <!-- ======= Header ======= -->
   @include('homepage.Dashboard.Components.nav', ['user_id'=>$user_id])
   <main id="main" class="main">
@@ -159,15 +169,18 @@
     
     window.onload = function() {
       LoginStatusFetch("{{ route('getCustomerLoginStatus') }}");
-      const stats = {{ $status }};
-      const l_data = {{ $log_data }};
+      const stats = '{{ $status }}';
+      const l_data = '{{ $log_data }}';
+      console.log(stats);
+      console.log(l_data);
       if(stats === 'success'){
         DisplaySuccessModal(l_data);
       }
+
     };
-    function  DisplaySuccessModal(id){
+    function  DisplaySuccessModal(ids){
  
-      const url = "{{ route('getLogDetails') }}?log_id=" + id;
+      const url = "{{ route('getLogDetails') }}?log_id=" + ids;
       axios.get(url)
             .then(function (response) {
            

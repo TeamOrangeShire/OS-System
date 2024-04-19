@@ -37,7 +37,11 @@ function StartScan(urls, toShire, download){
            }else if(response.status === 'not_enough'){
             const query = toShire + '?status=not_enough&log_id=' + response.log_data;
             window.location.href = query;
-           }else{
+           }else if(response.status === 'already_login'){
+            const query = toShire + '?status=already_login&log_id=' + response.log_data;
+            window.location.href = query;
+           }
+           else{
             window.location.href = download;
            }
           }, 

@@ -112,15 +112,20 @@ function startScan(scannedRoute, refreshURL) {
         url: route,
         data: formData,
         success: function(response) {
-          
           if(response.status === 'login'){
             loading.style.display = 'none';
             LoginStatusFetch(refURL);
           }else if(response.status === 'logout'){
+            loading.style.display = 'none';
             const successData = document.getElementById('custom_success');
             successData.style.display = 'flex';
             DisplaySuccessModal(response.log_data);
-          }else{
+          }else if(response.status === 'already_login'){
+            loading.style.display = 'none';
+            const already = document.getElementById('custom_login');
+            already.style.display = 'flex';
+          }else {
+            loading.style.display = 'none';
             const errorData = document.getElementById('custom_error');
             errorData.style.display = 'flex';
           }
@@ -475,6 +480,6 @@ function formatDateTime(dateTimeString) {
   return formattedDateTime;
 }
 
-function CloseDataModals(id){
-  document.getElementById(id).style.display= 'none';
+function CloseDataModals(ids){
+  document.getElementById(ids).style.display= 'none';
 }
