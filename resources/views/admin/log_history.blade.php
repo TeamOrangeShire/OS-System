@@ -60,6 +60,7 @@
     <div class="card">
         <div class="card-header">
             <h5>Basic Tabs</h5>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#insertmodal">Insert Log</button>
         </div>
         <div class="card-body">
             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
