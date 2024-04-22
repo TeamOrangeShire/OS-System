@@ -14,16 +14,16 @@
   
    <body>
     
-   <div class="loadingDiv" id="loadingDiv">
-    <div class="typewriter">
-      <div class="slide"><i></i></div>
-      <div class="paper"></div>
-      <div class="keyboard"></div>
-      <br>
-      <p style="text-align: center; color:white">Just a moment....</p>
-  </div>
-   </div>
-
+    <div class="loadingDiv" id="loadingDiv">
+      <div class="typewriter">
+        <div class="slide"><i></i></div>
+        <div class="paper"></div>
+        <div class="keyboard"></div>
+        <br>
+        <p style="text-align: center; color:white">Just a moment....</p>
+    </div>
+     </div>
+  
     <div class="form-container" id="form-account" >
         <p class="title">Create account</p>
 

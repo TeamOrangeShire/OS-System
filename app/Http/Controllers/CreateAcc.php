@@ -51,7 +51,7 @@ class CreateAcc extends Controller
         $account->customer_profile_pic = 'none';
         $account->customer_type = null;
         $account->verification_status = 0;
-        $account->verification_status = 0;
+        $account->verification_code = 0;
         $account->save();
 
         $id = $account->customer_id;

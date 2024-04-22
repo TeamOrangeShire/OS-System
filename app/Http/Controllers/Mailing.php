@@ -6,34 +6,39 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CustomerVerification;
+use App\Models\CustomerAcc;
 class Mailing extends Controller
 {
 
     public function CreateAccGoogleVerification(Request $req){
 
-      $data = $req->validate([
-         'fname'=>'required',
-         'mname'=>'required',
-         'lname'=>'required',
-         'extension'=> 'required',
-         'email'=>'required',
-         'password'=>'required',
-      ]);
-     
+        $id = $req->cust_id;
+        $customer = CustomerAcc::where('customer_id', $id)->first();
+        $email = $customer->customer_email;
         $code = VerificationCodeGenerator();
-        Mail::to($data['email'])->send(new CustomerVerification($code));
-      
-        return response()->json([
-          'status'=>'success',
-          'fname'=>$data['fname'],
-          'mname'=>$data['mname'],
-          'lname'=>$data['lname'],
-          'ext'=>$data['extension'],
-          'email'=>$data['email'],
-          'password'=>$data['password'],
-          'code'=>$code,
+        $customer->update([
+           'verification_code' => $code,
         ]);
+
+        Mail::to($email)->send(new CustomerVerification($code, $customer->customer_id));
+        
+        return response()->json(['status'=>'success']);
     }
 
 
+    public function VerificationRoute(Request $req){
+       $code = $req->verificationcode;
+       $id = $req->id;
+       
+       $customer = CustomerAcc::where('customer_id', $id)->first();
+      if($customer->verification_code == $code){
+        $customer->update([
+          'verification_status'=> 1,
+        ]);
+        return redirect()->route('verified')->with(['id' => $id, 'status' => 'success']);
+      } else{
+        return redirect()->route('verified')->with(['id' => 'none', 'status' => 'fail']);
+      }
+      
+    }
 }

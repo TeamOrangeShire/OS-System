@@ -195,4 +195,5 @@ class GetDataViews extends Controller
             return response()->json(['status'=>'clear', 'time'=> 'none']);
         }
     }
+
 }
