@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RoomPricing;
 use App\Models\RoomRate;
 use App\Models\Reservations;
+use App\Models\CustomerAcc;
 use App\Models\Rooms;
 use Illuminate\Http\Request;
 
@@ -13,26 +14,49 @@ class GetDataViews extends Controller
 {
     public function GetHomeCookies(Request $req){
         $userId = $req->cookie('customer_id');
-
-        if ($userId) {
-            return view('homepage.index', [
-                'customer_id'=>$userId,
-            ]);
-        } else {
-            return view('homepage.index', ['customer_id'=> 'none']);
-        }
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.index', [
+                        'customer_id'=>$userId,
+                        'status'=> 'not_verified'
+                    ]);
+                }else{
+                    return view('homepage.index', [
+                        'customer_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.index', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
+            }
+        
+      
     }
 
     public function GetSolutionsCookies(Request $req){
         $userId = $req->cookie('customer_id');
-
-        if ($userId) {
-            return view('homepage.solutions', [
-                'customer_id'=>$userId,
-            ]);
-        } else {
-            return view('homepage.solutions', ['customer_id'=> 'none']);
-        }
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.solutions', [
+                        'customer_id'=>$userId,
+                        'status'=> 'not_verified'
+                    ]);
+                }else{
+                    return view('homepage.solutions', [
+                        'customer_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.solutions', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
+            }
+        
     }
 
     public function GetReservationCookies(Request $req){
@@ -56,14 +80,25 @@ class GetDataViews extends Controller
     
     public function GetContactCookies(Request $req){
         $userId = $req->cookie('customer_id');
-
-        if ($userId) {
-            return view('homepage.contact', [
-                'customer_id'=>$userId,
-            ]);
-        } else {
-            return view('homepage.contact', ['customer_id'=> 'none']);
-        }
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.contact', [
+                        'customer_id'=>$userId,
+                        'status'=> 'not_verified'
+                    ]);
+                }else{
+                    return view('homepage.contact', [
+                        'customer_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.contact', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
+            }
+        
     }
     public function GetBookCookies(Request $req){
         $userId = $req->cookie('customer_id');
@@ -86,36 +121,116 @@ class GetDataViews extends Controller
 
     public function CustomerProfile(Request $req){
         $userId = $req->cookie('customer_id');
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.Dashboard.profile', ['user_id'=>$userId,'status'=> 'not_verified' ]);
+                }else{
+                    return view('homepage.Dashboard.profile', [
+                        'user_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.Dashboard.profile', ['user_id'=>$userId, 'status'=> 'not_log_in']);
+            }
 
-        return view('homepage.Dashboard.profile', ['user_id'=>$userId]);
+
     }
 
     public function CustomerSubscription(Request $req){
         $userId = $req->cookie('customer_id');
-
-        return view('homepage.Dashboard.subscription', ['user_id'=>$userId]);
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.Dashboard.subscription', ['user_id'=>$userId,'status'=> 'not_verified' ]);
+                }else{
+                    return view('homepage.Dashboard.subscription', [
+                        'user_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.Dashboard.subscription', ['user_id'=>$userId, 'status'=> 'not_log_in']);
+            }
     }
     public function CustomerReservation(Request $req){
         $userId = $req->cookie('customer_id');
-
-        return view('homepage.Dashboard.reservation', ['user_id'=>$userId]);
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.Dashboard.reservation', ['user_id'=>$userId,'status'=> 'not_verified' ]);
+                }else{
+                    return view('homepage.Dashboard.reservation', [
+                        'user_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.Dashboard.reservation', ['user_id'=>$userId, 'status'=> 'not_log_in']);
+            }
     }
     public function CustomerSettings(Request $req){
         $userId = $req->cookie('customer_id');
-
-        return view('homepage.Dashboard.settings', ['user_id'=>$userId]);
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.Dashboard.settings', ['user_id'=>$userId,'status'=> 'not_verified' ]);
+                }else{
+                    return view('homepage.Dashboard.settings', [
+                        'user_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.Dashboard.settings', ['user_id'=>$userId, 'status'=> 'not_log_in']);
+            }
     }
 
     public function CustomerNotification(Request $req){
-       $userId = $req->cookie('customer_id');
-       
-       return view('homepage.Dashboard.notification', ['user_id'=> $userId]);
+        $userId = $req->cookie('customer_id');
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.Dashboard.notification', ['user_id'=>$userId,'status'=> 'not_verified' ]);
+                }else{
+                    return view('homepage.Dashboard.notification', [
+                        'user_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.Dashboard.notification', ['user_id'=>$userId, 'status'=> 'not_log_in']);
+            }
     }
 
     public function CustomerTransaction(Request $req){
         $userId = $req->cookie('customer_id');
-       
-        return view('homepage.Dashboard.transaction', ['user_id'=> $userId]);
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.Dashboard.transaction', ['user_id'=>$userId,'status'=> 'not_verified' ]);
+                }else{
+                    return view('homepage.Dashboard.transaction', [
+                        'user_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.Dashboard.transaction', ['user_id'=>$userId, 'status'=> 'not_log_in']);
+            }
     }
     public function CustomerLoginToShire(Request $req){
         $userId = $req->cookie('customer_id');

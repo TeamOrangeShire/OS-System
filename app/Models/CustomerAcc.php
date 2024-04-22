@@ -23,6 +23,7 @@ class CustomerAcc extends Model
       'account_credits',
       'customer_type',
       'verification_status',
-      'verification_code'
+      'verification_code',
+      'session_id',
     ];
 }

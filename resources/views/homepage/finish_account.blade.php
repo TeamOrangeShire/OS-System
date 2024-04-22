@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Orange Shire - Success</title>
+    <title>Orange Shire - New Account</title>
     <link rel="icon" href="img/os_logo.png">
     <link rel="stylesheet" href="{{ asset('css/finish.css') }}">
 
@@ -19,12 +19,19 @@
     </script>
 </head>
 <body>
+    @if ($id === 'none')
+     <script>
+        window.onload = function(){
+            window.location.href = "{{ route('signup') }}";
+        }
+     </script>
+    @else
     @php
-        $newAcc = App\Models\CustomerAcc::where('customer_id', $id)->first();
+    $newAcc = App\Models\CustomerAcc::where('customer_id', $id)->first();
 
-        $fullname = $newAcc->customer_firstname. " ". $newAcc->customer_middlename[0]. ". ". $newAcc->customer_lastname;
+    $fullname = $newAcc->customer_firstname. " ". $newAcc->customer_middlename[0]. ". ". $newAcc->customer_lastname;
     @endphp
-     <div class="loadingDiv" id="loadingDiv">
+       <div class="loadingDiv" id="loadingDiv">
         <div class="typewriter">
           <div class="slide"><i></i></div>
           <div class="paper"></div>
@@ -40,7 +47,12 @@
     </form>
     <div class="contain">
         <div class="congrats">
+            @if($redirect === 'true')
+            <h1>Account Needs Verification!</h1>
+            @else
             <h1>Account Created!</h1>
+            @endif
+            
             <div class="done">
                 <svg version="1.1" id="tick" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 37 37" style="enable-background:new 0 0 37 37;" xml:space="preserve">
@@ -55,7 +67,7 @@
                 <p>{{ $fullname }}</p>
                 <p>{{ $newAcc->customer_email }}</p>
                 
-                <button onclick="Verify('{{ route('customer_verification') }}')">
+                <button onclick="Verify(this, '{{ route('customer_verification') }}')">
                     <span id="send_button">Verify Account</span>
                   </button>
                   <p>
@@ -64,6 +76,9 @@
       
         </div> 
     </div> 
+    @endif
+
+  
     <script src="{{ asset('js/login.js') }}"></script>
 </body>
 </html>
