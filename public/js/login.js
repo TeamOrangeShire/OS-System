@@ -49,11 +49,53 @@ function restrictToNumbers(event, nextInputId, prevInputId) {
   input.value = sanitizedValue;
 }
 
-function clears(){
-document.getElementById('input-1').value= '';
-document.getElementById('input-2').value= '';
-document.getElementById('input-3').value= '';
-document.getElementById('input-4').value= '';
-document.getElementById('input-5').value= '';
-document.getElementById('input-6').value= '';
+function isEmail(email) {
+  if (email.includes('@') && email.includes('.')) {
+      return true;
+  }
+  return false;
+}
+
+function CreateAccount(url, goto) {
+  if(isEmail(document.getElementById('email').value)){
+    var formData = $('form#account_info').serialize();
+    document.getElementById('loadingDiv').style.display = 'flex';
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: formData,
+        success: function(response) {
+         if(response.email === 'exist'){
+          alertify.set('notifier','position', 'top-center');
+          alertify.warning('Email Account is already registered use another'); 
+          document.getElementById('loadingDiv').style.display = 'none';
+         }
+         else{
+          window.location.href = goto + "?id=" + response.id;
+         }
+        
+        },
+        error: function (xhr) {
+            console.log(xhr.responseText);
+        }
+    });
+  }else{
+    alertify.set('notifier','position', 'top-center');
+    alertify.warning('Not A valid Email'); 
+    document.getElementById('loadingDiv').style.display = 'none';
+  }
+  
+}
+function Verify(url){
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: formData,
+    success: function(response) {
+     
+    },
+    error: function (xhr) {
+        console.log(xhr.responseText);
+    }
+});
 }

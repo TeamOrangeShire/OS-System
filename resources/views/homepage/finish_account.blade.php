@@ -23,6 +23,10 @@
 
         $fullname = $newAcc->customer_firstname. " ". $newAcc->customer_middlename[0]. ". ". $newAcc->customer_lastname;
     @endphp
+    <form id="verify-account">
+        @csrf
+        <input type="hidden" name="cust_id" value="{{ $id }}">
+    </form>
     <div class="contain">
         <div class="congrats">
             <h1>Account Created!</h1>
@@ -40,17 +44,17 @@
                 <p>{{ $fullname }}</p>
                 <p>{{ $newAcc->customer_email }}</p>
                 
-                <button onclick="nextPage()">
-                    <span>Go to login</span>
+                <button onclick="Verify('hdasd')">
+                    <span>Verify Account</span>
                   </button>
+
+                  <p>
+                    To verify your account and gain access to the Orange Shire app, please check your email for a verification link and click on it. This step ensures the security of your account and grants you full access to our app's features and services. Thank you for choosing Orange Shire!</p>
+
             </div>
       
         </div>
     </div> 
-    <script>
-        function nextPage(){
-            window.location.href = "{{ route('customer_login') }}";
-        }
-      </script>
+    <script src="{{ asset('js/login.js') }}"></script>
 </body>
 </html>

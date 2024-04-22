@@ -35,6 +35,10 @@ class CreateAcc extends Controller
         $password = $req->password;
         $ext = $req->extension;
         
+        $checkEmail = CustomerAcc::where('customer_email', $email)->first();
+        if($checkEmail){
+            return response()->json(['id'=>'none', 'email'=>'exist']);
+        }
         $account = new CustomerAcc();
         $account->customer_firstname = $fname;
         $account->customer_middlename = $mname;
@@ -46,11 +50,13 @@ class CreateAcc extends Controller
         $account->customer_password = Hash::make($password);
         $account->customer_profile_pic = 'none';
         $account->customer_type = null;
+        $account->verification_status = 0;
+        $account->verification_status = 0;
         $account->save();
 
         $id = $account->customer_id;
 
-        return response()->json(['id'=>$id]);
+        return response()->json(['id'=>$id, 'email'=>'not_exist']);
     }
 
     public function SuccessCreateAccount(Request $request){

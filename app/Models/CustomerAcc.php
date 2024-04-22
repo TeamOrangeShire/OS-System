@@ -22,5 +22,6 @@ class CustomerAcc extends Model
       'customer_profile_pic',
       'account_credits',
       'customer_type',
+      'verification_status'
     ];
 }
