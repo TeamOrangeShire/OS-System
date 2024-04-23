@@ -6,6 +6,7 @@ use App\Models\ActivityLog;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerAcc;
 use App\Models\CustomerLogUnregister;
+use App\Models\UnregisterAcc;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -102,17 +103,32 @@ class CustomerLog extends Controller
 
   public function AcceptUnregisterLog(request $request){
 
-    $accept = new CustomerLogUnregister;
+    $accept = new UnregisterAcc;
     $accept -> un_firstname = $request->firstname;
     $accept -> un_middlename = $request->middlename;
     $accept -> un_lastname = $request->lastname;
     $accept -> un_ext = $request->ext;
     $accept -> un_email = $request->email;
-    $accept -> un_number = $request->number;
-    $accept -> un_log_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
-    $accept -> un_log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-    $accept -> un_log_status = 0;
+    $accept -> un_contact = $request->number;
     $accept->save();
+   
+    $unregister = new CustomerLogUnregister;
+    $unregister -> un_id = $accept->un_id; 
+    $unregister -> un_log_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+    $unregister -> un_log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+    $unregister -> un_log_status = 0;
+    $unregister->save();
+    return redirect()->back();
+  }
+   public function UnregisterLogin(request $request){
+
+    $id =$request ->login_id;
+    $unregister = new CustomerLogUnregister;
+    $unregister -> un_id = $id;
+    $unregister -> un_log_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+    $unregister -> un_log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+    $unregister -> un_log_status = 0;
+    $unregister->save();
     return redirect()->back();
   }
 
