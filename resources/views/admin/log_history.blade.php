@@ -63,7 +63,7 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h5>Basic Tabs</h5>
+            <h5>Log History</h5>
             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#insertmodal">Insert Log</button>
         </div>
         <div class="card-body">
@@ -77,6 +77,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-uppercase" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Unregister Log</a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-uppercase" id="contact-tab" data-toggle="tab" href="#unregister" role="tab" aria-controls="contact" aria-selected="false">Unregister Account</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -237,19 +240,18 @@
                                         @php
                                         
                                         $UnregisteredCustomer = App\Models\CustomerLogUnregister::orderBy('created_at','desc')->get();
-
-                                        
                                        @endphp
                                           @foreach ($UnregisteredCustomer as $uncus)
                                           @php
                                           $uncus_status = $uncus->un_log_transaction===null?['']:explode('-',$uncus->un_log_transaction);
-                                          $uncus_fullname = $uncus->un_firstname .' '.$uncus->un_middlename.' '.$uncus->un_lastname;
+                                          $unFullname = App\Models\UnregisterAcc::where('un_id',$uncus->un_id)->first();
+                                          $unrFullname = $unFullname->un_firstname .' '.$unFullname->un_middlename.' '.$unFullname->un_lastname;
 
                                           @endphp
                                         <tr>
-                                            <td>{{$uncus_fullname}}</td>
-                                            <td>{{$uncus->un_email}}</td>
-                                            <td>{{$uncus->un_number}}</td>
+                                            <td>{{$unrFullname}}</td>
+                                            <td>{{$unFullname->un_email}}</td>
+                                            <td>{{$unFullname->un_contact}}</td>
                                             <td>{{$uncus->un_log_date}}</td>
                                             <td>{{$uncus->un_log_start_time}}</td>
                                             <td>{{$uncus->un_log_end_time}}</td>
@@ -287,6 +289,72 @@
                 </div>
                     {{-- end content --}}
                 </div>
+                  <div class="tab-pane fade " id="unregister" role="tabpanel" aria-labelledby="home-tab">
+ 
+                    {{-- content --}}
+                    
+                        <section class="section">
+                            <div class="row">
+                              <div class="col-lg-12">
+                      
+                                    <!-- Table with stripped rows -->
+                                    <table class="table datatable">
+                                      <thead>
+                                        <tr>
+                                       
+                                            <th>Fullname</th>
+                                            <th>Email</th>
+                                            <th>Number</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        @php
+                                        $UnCustomer = App\Models\UnregisterAcc::all();
+                                       @endphp
+                                          @foreach ($UnCustomer as $Uncus)
+                                          @php
+                                           $Uncus_fullname = $Uncus->un_firstname .' '.$Uncus->un_middlename.' '.$Uncus->un_lastname;
+                                          @endphp
+                                        <tr>
+                                            <td>{{$Uncus_fullname}}</td>
+                                            <td>{{$Uncus->un_email}}</td>
+                                            <td>{{$Uncus->un_contact }}</td>
+                                            <td style="display: none;"></td>
+                                            @php
+                                                 $UnCustomer = App\Models\CustomerLogUnregister::where('un_id', $Uncus->un_id)->where('un_log_status', 0)->first();
+                                                $count = $UnCustomer ? 1 : 0;
+                                            @endphp
+                                            @if ($count > 0)
+                                                 <td>
+                                                    Active
+                                                </td>
+                                                <td>
+                                                    <i class="feather icon-zap btn btn-icon btn-primary" onclick="out('{{$UnCustomer->unregister_id}}')"></i>
+                                                </td>
+                                                @else
+                                                <td>
+                                                    Logged Out
+                                                </td>
+                                                <td>
+                                                    <i class="feather icon-log-in btn btn-icon btn-success" onclick="login('{{$Uncus->un_id}}')"></i>
+                                                </td>
+                                                @endif
+                                        </tr>
+                                        @endforeach
+                                      </tbody>
+                                    </table>
+                                  
+                              </div>
+                            </div>
+                          </section>
+    
+                        
+                 
+                    {{-- content end --}}
+
+                  </div>
             </div>
         </div>
     </div>
@@ -487,6 +555,10 @@
 @csrf
 <input type="hidden" name="unregister_id" id="unregister_id">
 </form>
+<form action="" method="POST" id="login_unregister"> 
+@csrf
+<input type="hidden" name="login_id" id="login_id">
+</form>
 <!-- [ Main Content ] end -->
     <script>
         function out(id){
@@ -508,6 +580,34 @@
              document.getElementById('end').textContent=response.end;
               document.getElementById('hours').textContent=response.hours +':'+ response.minutes;
 
+            }, 
+            error: function (xhr) {
+
+                console.log(xhr.responseText);
+            }
+        });
+        $('#out').modal('toggle');
+    }, function() {
+      
+        alertify.error('Cancel');
+     
+    });
+
+       
+        }
+         function login(id){
+             
+          alertify.confirm("Confirm Logout","Are you sure you want to logout this customer?", function() {
+        document.getElementById('roller').style.display='flex';
+        document.getElementById('login_id').value=id;
+        var formData = $("form#login_unregister").serialize();    
+        console.log(formData);    
+        $.ajax({
+            type: 'POST',
+            url: "{{route('UnregisterLogin')}}",
+            data: formData,
+            success: function(response) {
+               document.getElementById('roller').style.display='none';
             }, 
             error: function (xhr) {
 

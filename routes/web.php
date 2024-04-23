@@ -110,6 +110,7 @@ Route::post('/acceptLog',[CustomerLog::class,'acceptLog'] )->name('acceptLog');
 Route::post('/AcceptUnregisterLog',[CustomerLog::class,'AcceptUnregisterLog'] )->name('AcceptUnregisterLog');
 Route::post('/accept_unregistered',[CustomerLog::class,'accept_unregistered'] )->name('accept_unregistered');
 Route::post('/UnregisterLogout',[CustomerLog::class,'UnregisterLogout'] )->name('UnregisterLogout');
+Route::post('/UnregisterLogin',[CustomerLog::class,'UnregisterLogin'] )->name('UnregisterLogin');
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
