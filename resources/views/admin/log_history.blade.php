@@ -223,7 +223,6 @@
                                     <table class="table datatable">
                                       <thead>
                                         <tr>
-                                       
                                             <th>Fullname</th>
                                             <th>Email</th>
                                             <th>Phone Number</th>
@@ -232,8 +231,6 @@
                                             <th>End Time</th>
                                             <th>Status</th>
                                             <th>Action</th>
-
-
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -286,7 +283,6 @@
                               </div>
                             </div>
                           </section>
-
                     </p>
                 </div>
                     {{-- end content --}}
@@ -409,15 +405,16 @@
 </div>
 
 {{-- insert modal start --}}
-<div id="insertmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-<div class="modal-content">
-    <div class="modal-header" >
-        <h5 class="modal-title" id="exampleModalCenterTitle">Insert Log</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    </div>
-    <div class="modal-body">
-        <form class="needs-validation" novalidate method="POST" action="{{route('AcceptUnregisterLog')}}">
+<div id="insertmodal" class="custom-modal" tabindex="-1" role="dialog" aria-labelledby="customModalTitle" aria-hidden="true">
+    <div class="custom-modal-dialog custom-modal-fullscreen" role="document">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <h5 class="custom-modal-title" id="customModalTitle">Insert Log</h5>
+                <button type="button" class="custom-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="custom-modal-body">
+              
+                   <form class="needs-validation" novalidate method="POST" action="{{route('AcceptUnregisterLog')}}">
             @csrf
             <div class="form-row">
                 <div class="col-md-6 mb-6">
@@ -475,10 +472,12 @@
             </div>
             <button class="btn  btn-primary" type="submit">Insert Log</button>
         </form>
+
+            </div>
+        </div>
     </div>
 </div>
-</div>
-</div>
+
 
 <form action="" method="POST" id="acceplog"> 
 @csrf
