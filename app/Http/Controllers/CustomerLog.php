@@ -5,6 +5,7 @@ use App\Models\CustomerLogs;
 use App\Models\ActivityLog;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerAcc;
+use App\Models\CustomerLogUnregister;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -48,6 +49,71 @@ class CustomerLog extends Controller
     $data->save();
 
     return response()->json(['status'=> 'success']);
+  }
+
+  public function UnregisterLogout(Request $request){
+
+    $id = $request->un_id;
+   
+
+    $log = CustomerLogUnregister::where('unregister_id',$id)->first();
+    $log->update([
+
+        'un_log_status'=> 2,
+
+    ]);
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin accept payment of " . $log->un_lastname;
+    $data->act_header = "Accept logout payment";
+    $data->act_location = "customer_log_unregister";
+    $data->save();
+    return redirect()->back();
+  }
+
+   public function accept_unregistered(Request $request){
+
+    $id = $request->unregister_id;
+    
+
+    $log = CustomerLogUnregister::where('unregister_id',$id)->first();
+   $start = $log->un_log_start_time;
+   $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+
+   $time = timeDifference($start,$end);
+   $totalPayment= PaymentCalc($time['hours'],$time['minutes'],'Students');
+    $log->update([
+        'un_log_end_time'=>$end,
+        'un_log_status'=> 1,
+        'un_log_transaction' =>$totalPayment,
+    ]);
+    
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin accept payment of " . $log->un_lastname;
+    $data->act_header = "Accept unregister log payment";
+    $data->act_location = "customer_log_unregister";
+    $data->save();
+
+    return response()->json(['payment'=> $totalPayment,'start'=>$start,'end'=>$end,'hours'=>$time['hours'],'minutes'=>$time['minutes']]);
+  }
+
+  public function AcceptUnregisterLog(request $request){
+
+    $accept = new CustomerLogUnregister;
+    $accept -> un_firstname = $request->firstname;
+    $accept -> un_middlename = $request->middlename;
+    $accept -> un_lastname = $request->lastname;
+    $accept -> un_ext = $request->ext;
+    $accept -> un_email = $request->email;
+    $accept -> un_number = $request->number;
+    $accept -> un_log_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+    $accept -> un_log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+    $accept -> un_log_status = 0;
+    $accept->save();
+    return redirect()->back();
   }
 
   public function GetScannedURLlog(Request $request){

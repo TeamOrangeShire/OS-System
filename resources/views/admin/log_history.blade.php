@@ -31,6 +31,10 @@
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
 
+     {{-- alertify --}}
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css" />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
 
 </head>
 <body class="">
@@ -71,9 +75,9 @@
                 <li class="nav-item">
                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Customer Log</a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-uppercase" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-                </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Unregister Log</a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -148,6 +152,7 @@
                                             <th>Payment</th>
                                             <th>Status</th>
                                             <th>Action</th>
+        
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -162,7 +167,7 @@
                                           $cus_id = $cus->customer_id;
                                           $cus_info = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
                                            $cus_fullname = $cus_info->customer_firstname .' '.$cus_info->customer_middlename.' '.$cus_info->customer_lastname;
-                                            $payment = $cus->log_transaction===null?['']:explode('-',$cus->log_transaction);
+                                        $payment = $cus->log_transaction===null?['']:explode('-',$cus->log_transaction);
                                           @endphp
                                         <tr>
                                             <td>{{$cus_fullname}}</td>
@@ -205,13 +210,156 @@
                     </p>
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    {{-- content --}}
+
+            {{-- content --}}
+                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <p class="mb-0">
+
+                        <section class="section">
+                            <div class="row">
+                              <div class="col-lg-12">
+                      
+                                    <!-- Table with stripped rows -->
+                                    <table class="table datatable">
+                                      <thead>
+                                        <tr>
+                                       
+                                            <th>Fullname</th>
+                                            <th>Email</th>
+                                            <th>Phone Number</th>
+                                            <th>Log Date</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+
+
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        @php
+                                        
+                                        $UnregisteredCustomer = App\Models\CustomerLogUnregister::orderBy('created_at','desc')->get();
+
+                                        
+                                       @endphp
+                                          @foreach ($UnregisteredCustomer as $uncus)
+                                          @php
+                                          $uncus_status = $uncus->un_log_transaction===null?['']:explode('-',$uncus->un_log_transaction);
+                                          $uncus_fullname = $uncus->un_firstname .' '.$uncus->un_middlename.' '.$uncus->un_lastname;
+
+                                          @endphp
+                                        <tr>
+                                            <td>{{$uncus_fullname}}</td>
+                                            <td>{{$uncus->un_email}}</td>
+                                            <td>{{$uncus->un_number}}</td>
+                                            <td>{{$uncus->un_log_date}}</td>
+                                            <td>{{$uncus->un_log_start_time}}</td>
+                                            <td>{{$uncus->un_log_end_time}}</td>
+                                                @if ($uncus->un_log_status === 1)
+                                                <td>
+                                                    Pending
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn  btn-icon btn-warning" onclick="out('{{$uncus->unregister_id}}')"><i class="feather icon-clock"></i></button>
+                                                </td>
+                                                @elseif ($uncus->un_log_status === 2)
+                                                <td>
+                                                    Completed
+                                                </td>
+                                                <td>
+                                                    <i class="feather icon-check btn btn-icon btn-success"></i>
+                                                </td>
+                                                @else
+                                                <td>
+                                                    Active
+                                                </td>
+                                                <td>
+                                                    <i class="feather icon-zap btn btn-icon btn-primary" onclick="out('{{$uncus->unregister_id}}')"></i>
+                                                </td>
+                                                @endif
+                                        </tr>
+                                        @endforeach
+                                      </tbody>
+                                    </table>
+                                  
+                              </div>
+                            </div>
+                          </section>
+
+                    </p>
+                </div>
                     {{-- end content --}}
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+{{-- modal start info --}}
+<div id="out" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+           
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Customer Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('UnregisterLogout')}}" method="POST">
+                    @csrf
+              
+                 <div class="row">
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="email"><strong>Hours</strong></label> <br>
+                        <p class=""  id="hours"></p> 
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                     <div style="margin-left: 40px;">
+                        <br>
+                        <label for="email"><strong>Payment : </strong></label> <br>
+                        <p class=""  id="payment"></p> 
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div style="margin-left: 40px;">
+                        <br>
+                        <label for="email"><strong>Start time: </strong></label> <br>
+                        <p class=""  id="start"></p> 
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                     <div style="margin-left: 40px;">
+                        <br>
+                        <label for="email"><strong>End time: </strong></label> <br>
+                        <p class=""  id="end"></p> 
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <input type="hidden" id="un_id" name="un_id">
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-success">Accept Payment</button>
+            </div>
+             </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{{-- modal end info--}} 
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -269,48 +417,56 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
     <div class="modal-body">
-        <form class="needs-validation" novalidate>
+        <form class="needs-validation" novalidate method="POST" action="{{route('AcceptUnregisterLog')}}">
+            @csrf
             <div class="form-row">
                 <div class="col-md-6 mb-6">
                     <label for="validationTooltip01">First name</label>
-                    <input type="text" class="form-control" id="validationTooltip01" placeholder="First name" value="" required>
+                    <input type="text" class="form-control" id="" name="firstname" placeholder="First name" value="" required>
                     <div class="valid-tooltip">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-md-6 mb-6">
                     <label for="validationTooltip02">Middle name</label>
-                    <input type="text" class="form-control" id="validationTooltip02" placeholder="Middle name" value="" required>
+                    <input type="text" class="form-control" id="" name="middlename" placeholder="Middle name" value="" required>
                     <div class="valid-tooltip">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-md-6 mb-6">
                     <label for="validationTooltip03">Last name</label>
-                    <input type="text" class="form-control" id="validationTooltip03" placeholder="Last name" value="" required>
+                    <input type="text" class="form-control" id="" name="lastname" placeholder="Last name" value="" required>
                     <div class="valid-tooltip">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-md-6 mb-6">
-                    <label for="exampleFormControlSelect1">Ext.</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                                <option>Sr.</option>
-                                <option>Jr.</option>
+                    <label for="">Ext.</label>
+                            <select class="form-control" id="" name="ext">
+                                   <option value="N/A">N/A</option>
+                                    <option value="Jr.">Jr.</option>
+                                    <option value="Sr.">Sr.</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                    <option value="IV">IV</option>
+                                    <option value="V">V</option>
+                                    <option value="Jra.">Jra.</option>
+                                    <option value="Esq.">Esq.</option>
                             </select>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationTooltip04">Email</label>
-                    <input type="text" class="form-control" id="validationTooltip04" placeholder="Email" required>
+                    <input type="text" class="form-control" id="" name="email" placeholder="Email" required>
                     <div class="invalid-tooltip">
                         Please provide a valid city.
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="validationTooltip05">Number</label>
-                    <input type="Number" class="form-control" id="validationTooltip05" placeholder="Number" required>
+                    <input type="Number" class="form-control" id="" name="number" placeholder="Number" required>
                     <div class="invalid-tooltip">
                         Please provide a valid state.
                     </div>
@@ -328,8 +484,48 @@
 @csrf
 <input type="hidden" name="pending_log" id="pending_log">
 </form>
+<form action="" method="POST" id="acceplog_unregister"> 
+@csrf
+<input type="hidden" name="unregister_id" id="unregister_id">
+</form>
 <!-- [ Main Content ] end -->
     <script>
+        function out(id){
+             
+          alertify.confirm("Confirm Logout","Are you sure you want to logout this customer?", function() {
+        document.getElementById('roller').style.display='flex';
+        document.getElementById('unregister_id').value=id;
+        var formData = $("form#acceplog_unregister").serialize();    
+        console.log(formData);    
+        $.ajax({
+            type: 'POST',
+            url: "{{route('accept_unregistered')}}",
+            data: formData,
+            success: function(response) {
+                  document.getElementById('roller').style.display='none';
+                  document.getElementById('un_id').value=id;
+             document.getElementById('payment').textContent=response.payment;
+             document.getElementById('start').textContent=response.start;
+             document.getElementById('end').textContent=response.end;
+              document.getElementById('hours').textContent=response.hours +':'+ response.minutes;
+
+            }, 
+            error: function (xhr) {
+
+                console.log(xhr.responseText);
+            }
+        });
+        $('#out').modal('toggle');
+    }, function() {
+      
+        alertify.error('Cancel');
+     
+    });
+
+       
+        }
+
+
         function log(id,fullname){
             document.getElementById('cus_id').value=id;
             document.getElementById('cus_name').textContent=fullname;
@@ -439,7 +635,32 @@ event.preventDefault();
  });
 
 }
+function accept_unregistered(id){
+    document.getElementById('pending_log').value=id;
+document.getElementById('roller').style.display='flex';
+event.preventDefault();
+ var formData = $('form#unregister_acceplog').serialize();
 
+ $.ajax({
+     type: 'POST',
+     url: "{{route('acceptLog')}}",
+     data: formData,
+     success: function(response) {
+       if(response.status === 'exist'){
+        document.getElementById('roller').style.display='none';
+      
+       }else if(response.status === 'success'){
+        location.reload();
+       
+       }
+     }, 
+     error: function (xhr) {
+
+         console.log(xhr.responseText);
+     }
+ });
+
+}
     </script>
 
     @include('admin.assets.adminscript')

@@ -105,6 +105,9 @@ Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/addCredit',[EditAcc::class,'addCredit'] )->name('addCredit');
 Route::post('/changeType',[EditAcc::class,'changeType'] )->name('changeType');
 Route::post('/acceptLog',[CustomerLog::class,'acceptLog'] )->name('acceptLog');
+Route::post('/AcceptUnregisterLog',[CustomerLog::class,'AcceptUnregisterLog'] )->name('AcceptUnregisterLog');
+Route::post('/accept_unregistered',[CustomerLog::class,'accept_unregistered'] )->name('accept_unregistered');
+Route::post('/UnregisterLogout',[CustomerLog::class,'UnregisterLogout'] )->name('UnregisterLogout');
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
