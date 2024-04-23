@@ -66,10 +66,17 @@
             <div class="text">
                 <p>{{ $fullname }}</p>
                 <p>{{ $newAcc->customer_email }}</p>
-                
+                @if ($newAcc->verifcation_code === 0)
                 <button onclick="Verify(this, '{{ route('customer_verification') }}')">
                     <span id="send_button">Verify Account</span>
                   </button>
+                @else
+                <p>Verication was sent already please check your mail</p>
+                <button onclick="Verify(this, '{{ route('customer_verification') }}')">
+                    <span id="send_button">Send Verification Mail Again</span>
+                  </button>
+                @endif
+              
                   <p>
                     To verify your account and gain access to the Orange Shire app, please check your email for a verification link and click on it. This step ensures the security of your account and grants you full access to our app's features and services. Thank you for choosing Orange Shire!</p>
             </div>
