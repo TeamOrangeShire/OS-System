@@ -39,6 +39,8 @@ class CreateAcc extends Controller
         if($checkEmail){
             return response()->json(['id'=>'none', 'email'=>'exist']);
         }
+
+        $session_id =  Hash::make($email);
         $account = new CustomerAcc();
         $account->customer_firstname = $fname;
         $account->customer_middlename = $mname;
@@ -51,18 +53,26 @@ class CreateAcc extends Controller
         $account->customer_profile_pic = 'none';
         $account->customer_type = null;
         $account->verification_status = 0;
-        $account->verification_status = 0;
+        $account->verification_code = 0;
+        $account->session_id = $session_id;
         $account->save();
 
         $id = $account->customer_id;
 
-        return response()->json(['id'=>$id, 'email'=>'not_exist']);
+        return response()->json(['id'=>$session_id, 'email'=>'not_exist']);
     }
 
     public function SuccessCreateAccount(Request $request){
 
         $id = $request->id;
-        return view('homepage.finish_account', ['id'=>$id]);
+        $redirect = $request->redirect;
+        $customer = CustomerAcc::where('session_id', $id)->first();
+        if($customer){
+            return view('homepage.finish_account', ['id'=>$customer->customer_id, 'redirect'=> $redirect]);
+        }else{
+            return view('homepage.finish_account', ['id'=>'none',  'redirect'=> $redirect]);
+        }
+     
 
     }
     

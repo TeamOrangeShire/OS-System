@@ -36,6 +36,8 @@ Route::get('/room_rates',[GetDataViews::class, 'GetRoomRate'] )->name('getRoomRa
 Route::get('/checkTime',[GetDataViews::class, 'CheckTime'] )->name('checkTime');
 Route::get('/get-time-for-date',[GetDataViews::class,'GetTimeForDate'] )->name('getTimeDate');
 Route::get('/scanQrCode',[CustomerLog::class, 'Scanning'] )->name('scanQr');
+Route::get('/signup/verification',[Mailing::class, 'VerificationRoute'] )->name('verificationRoute');
+Route::get('/signup/verified', function (){ return view('homepage.verified');})->name('verified');
 
 Route::get('/download',function (){ return view('homepage.downloadapk'); } )->name('download');
 //Client Back End

@@ -34,3 +34,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+@if ($status === 'not_verified')
+@php
+    $checkStat = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+@endphp
+    <script>
+        window.onload = function(){
+            window.location.href = "{{ route('new_account') }}?id={{ $checkStat->session_id }}&redirect=true";
+        }
+    </script>
+@endif

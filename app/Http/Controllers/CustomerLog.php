@@ -217,8 +217,26 @@ public function GetLogDetails(Request $req){
 
 
 public function Scanning(Request $req){
-  $id = $req->cookie('customer_id');
-  return view('homepage.scanQr', ['user_id'=>$id]);
+  $userId = $req->cookie('customer_id');
+  $customer= CustomerAcc::where('customer_id', $userId)->first();
+
+      if ($userId) {
+          if($customer->verification_status === 0){
+              return view('homepage.scanQr', [
+                  'user_id'=>$userId,
+                  'status'=> 'not_verified'
+              ]);
+          }else{
+              return view('homepage.scanQr', [
+                  'user_id'=>$userId,
+                  'status'=> 'verified'
+              ]);
+          }
+         
+      } else {
+          return view('homepage.scanQr', ['user_id'=> 'none', 'status'=> 'not_log_in']);
+      }
+  
 }
 
 

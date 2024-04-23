@@ -7,6 +7,16 @@
     <title>Scan Qr Code</title>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @if ($status === 'not_verified')
+    @php
+        $checkStat = App\Models\CustomerAcc::where('customer_id', $customer_id)->first();
+    @endphp
+        <script>
+            window.onload = function(){
+                window.location.href = "{{ route('new_account') }}?id={{ $checkStat->session_id }}&redirect=true";
+            }
+        </script>
+    @endif
 </head>
 <body style="background: rgb(250, 185, 114)">
     <form id="QRData">

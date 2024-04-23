@@ -166,7 +166,7 @@
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Finishing setup of your Orange Shire Account. Use the 6 digit code below to verify your email account. </p>
+              <p style="margin: 0;">Finishing setup of your Orange Shire Account. Click the button below to verify your email account. </p>
             </td>
           </tr>
           <!-- end copy -->
@@ -180,7 +180,7 @@
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
-                          <p  style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">{{ $verificationCode }}</p>
+                          <a href="{{ route('verificationRoute') }}?verificationcode={{ $verificationCode }}&id={{ $customerId }}" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Verify Account</a>
                         </td>
                       </tr>
                     </table>
@@ -194,7 +194,7 @@
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Note! This is a one time password the code will only be valid during registration if you cancel the registration restart the process</p>
+              <p style="margin: 0;">Note! You will be unable to use your account until you verify atleast one contact information valid</p>
           
             </td>
           </tr>

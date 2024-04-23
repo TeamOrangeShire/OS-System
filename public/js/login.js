@@ -71,7 +71,7 @@ function CreateAccount(url, goto) {
           document.getElementById('loadingDiv').style.display = 'none';
          }
          else{
-          window.location.href = goto + "?id=" + response.id;
+          window.location.href = goto + "?id=" + response.id + "&redirect=false";
          }
         
         },
@@ -86,16 +86,26 @@ function CreateAccount(url, goto) {
   }
   
 }
-function Verify(url){
+function Verify(btn,url){
+  document.getElementById('loadingDiv').style.display = 'flex';
+  const sendButton =  document.getElementById('send_button');
+  var formData = $('form#verify-account').serialize();
+  sendButton.textContent = 'Sending....';
   $.ajax({
     type: 'POST',
     url: url,
     data: formData,
     success: function(response) {
-     
+      document.getElementById('loadingDiv').style.display = 'none';
+      sendButton.textContent = 'Sent ✔';
+      btn.disabled = true;
     },
     error: function (xhr) {
         console.log(xhr.responseText);
     }
 });
+}
+
+function goHome(url){
+  window.location.href = url;
 }

@@ -1,17 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Orange Shire - New Account</title>
-    <link rel="icon" href="img/os_logo.png">
+    <title>Orange Shire - Success</title>
+    <link rel="icon" href="{{ asset('img/os_logo.png') }}">
     <link rel="stylesheet" href="{{ asset('css/finish.css') }}">
-
     <!-- Include jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(window).on("load",function(){
+            
             setTimeout(function() {
                 $('.done').addClass("drawn");
             }, 500);
@@ -19,40 +20,28 @@
     </script>
 </head>
 <body>
-    @if ($id === 'none')
-     <script>
-        window.onload = function(){
-            window.location.href = "{{ route('signup') }}";
-        }
-     </script>
-    @else
-    @php
-    $newAcc = App\Models\CustomerAcc::where('customer_id', $id)->first();
-
-    $fullname = $newAcc->customer_firstname. " ". $newAcc->customer_middlename[0]. ". ". $newAcc->customer_lastname;
-    @endphp
-       <div class="loadingDiv" id="loadingDiv">
-        <div class="typewriter">
-          <div class="slide"><i></i></div>
-          <div class="paper"></div>
-          <div class="keyboard"></div>
-          <br>
-          <p style="text-align: center; color:white">Just a moment....</p>
-      </div>
-       </div>
-    
+  
+  
     <form id="verify-account">
         @csrf
-        <input type="hidden" name="cust_id" value="{{ $id }}">
+        <input type="hidden" name="cust_id" value="{{ session('id') }}">
     </form>
     <div class="contain">
         <div class="congrats">
-            @if($redirect === 'true')
-            <h1>Account Needs Verification!</h1>
-            @else
-            <h1>Account Created!</h1>
-            @endif
-            
+            @if(empty(session('status')))
+            <script>
+                window.onload = function(){
+                    window.location.href = "{{ route('signup') }}";
+                }
+            </script>
+            @else 
+            @php
+            $newAcc = App\Models\CustomerAcc::where('customer_id', session('id'))->first();
+    
+            $fullname = $newAcc->customer_firstname. " ". $newAcc->customer_middlename[0]. ". ". $newAcc->customer_lastname;
+            @endphp
+           @endif
+           <h1>Account Verified Successfully!</h1>
             <div class="done">
                 <svg version="1.1" id="tick" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 37 37" style="enable-background:new 0 0 37 37;" xml:space="preserve">
@@ -64,21 +53,27 @@
                 </svg>
             </div>
             <div class="text">
+                @if(empty(session('status')))
+                <script>
+                    window.onload = function(){
+                        window.location.href = "{{ route('signup') }}";
+                    }
+                </script>
+                @else 
                 <p>{{ $fullname }}</p>
                 <p>{{ $newAcc->customer_email }}</p>
-                
-                <button onclick="Verify(this, '{{ route('customer_verification') }}')">
-                    <span id="send_button">Verify Account</span>
+               @endif
+               
+                <button onclick="goHome('{{ route('home') }}')">
+                    <span>Go Home</span>
                   </button>
+              
                   <p>
-                    To verify your account and gain access to the Orange Shire app, please check your email for a verification link and click on it. This step ensures the security of your account and grants you full access to our app's features and services. Thank you for choosing Orange Shire!</p>
+                  Account Email has been successfully verified your gmail will be used as your contact information while using the orange shire app  thank you for trusting us.</p>
             </div>
       
         </div> 
     </div> 
-    @endif
-
-  
     <script src="{{ asset('js/login.js') }}"></script>
 </body>
 </html>

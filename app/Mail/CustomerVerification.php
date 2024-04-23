@@ -17,9 +17,11 @@ class CustomerVerification extends Mailable
      * Create a new message instance.
      */
     public $verificationCode;
-    public function __construct($verificationCode)
+    public $customerId;
+    public function __construct($verificationCode, $customerId)
     {
         $this->verificationCode = $verificationCode;
+        $this->customerId = $customerId;
     }
 
     /**
