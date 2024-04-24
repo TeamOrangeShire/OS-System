@@ -177,7 +177,8 @@
         DisplaySuccessModal(l_data);
       }
 
-    };
+      
+    }
     function  DisplaySuccessModal(ids){
  
       const url = "{{ route('getLogDetails') }}?log_id=" + ids;

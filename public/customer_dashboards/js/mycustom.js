@@ -199,7 +199,7 @@ function parseTime(time) {
 
 function PaymentCalc(hours, minutes, type){
   var payment = 0;
-  if(type === "Students" || type === "Teachers" || type === "Reviewers"){
+  if(type === "Student" || type === "Teacher" || type === "Reviewer"){
     switch(hours){
       case 1:
         payment += 50;
@@ -482,4 +482,15 @@ function formatDateTime(dateTimeString) {
 
 function CloseDataModals(ids){
   document.getElementById(ids).style.display= 'none';
+}
+
+function LogHistory(url){
+  axios.get(url)
+  .then(function (response) {
+       
+
+  })
+ .catch(function (error) {
+  console.error(error);
+  });
 }

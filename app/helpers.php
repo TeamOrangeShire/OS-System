@@ -137,7 +137,7 @@ function PaymentCalc($hoursString, $minutesString, $type){
     $hours = intval($hoursString);
     $minutes = intval($minutesString);
     $payment = 0;
-    if($type === "Students" || $type === "Teachers" || $type === "Reviewers"){
+    if($type === "Student" || $type === "Teacher" || $type === "Reviewer"){
       switch($hours){
         case 1:
           $payment += 50;
