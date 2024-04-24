@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CustomerVerification;
 use App\Models\CustomerAcc;
+use Illuminate\Support\Facades\Cookie;
 class Mailing extends Controller
 {
 
@@ -35,7 +36,8 @@ class Mailing extends Controller
         $customer->update([
           'verification_status'=> 1,
         ]);
-        return redirect()->route('verified')->with(['id' => $id, 'status' => 'success']);
+        $cookie = Cookie::make('customer_id', $id , 60 * 24 * 31);
+        return redirect()->route('verified')->with(['id' => $id, 'status' => 'success'])->withCookie($cookie);
       } else{
         return redirect()->route('verified')->with(['id' => 'none', 'status' => 'fail']);
       }

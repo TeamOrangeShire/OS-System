@@ -54,3 +54,18 @@
         }
     </script>
 @endif
+
+@if ($status === 'not_log_in')
+@php
+    $checkStat = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+@endphp
+    <script>
+        window.onload = function(){
+            window.location.href = "{{ route('home') }}";
+        }
+    </script>
+    @php
+        die();
+    @endphp
+@endif
+
