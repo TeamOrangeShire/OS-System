@@ -84,6 +84,7 @@ Route::get('/admin/admin_lockscreen', function () { return view('admin.admin_loc
 Route::get('/admin/admin_profile', function () { return view('admin.admin_profile');})->name('admin_profile');
 Route::get('/admin/log_history', function () { return view('admin.log_history');})->name('log_history');
 Route::get('/admin/promos', function () { return view('admin.promos');})->name('promos');
+Route::get('/admin/SalesReports', function () { return view('admin.sales_report');})->name('salesreports');
 Route::get('/admin/activitylog', function () { return view('admin.activityLog');})->name('activityLog');
 
 Route::get('/admin/plans_subscription', function () { return view('admin.plans_s');})->name('plans_s');
