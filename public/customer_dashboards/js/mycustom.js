@@ -501,7 +501,7 @@ function LogHistory(url, getLogInfo, cust_type){
     $('#historyBody').DataTable( {
       responsive: true,
       data: html
-  } );
+   });
 
     console.log(html)
   })

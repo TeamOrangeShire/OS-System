@@ -26,14 +26,22 @@
 <link href="{{ asset('customer_dashboards/css/style.css') }}" rel="stylesheet">
 <link href="{{ asset('customer_dashboards/css/mycustom.css') }}" rel="stylesheet">
 <link href="{{ asset('customer_dashboards/css/loader.css') }}" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<!--fontawsome-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+<!--Alertify-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+
+<!--QR Code Library-->
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+<!--Axios-->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!--Datatable-->
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
 @if ($status === 'not_verified')
