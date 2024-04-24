@@ -480,17 +480,38 @@ function formatDateTime(dateTimeString) {
   return formattedDateTime;
 }
 
-function CloseDataModals(ids){
-  document.getElementById(ids).style.display= 'none';
-}
 
-function LogHistory(url){
+
+function LogHistory(url, getLogInfo, cust_type){
   axios.get(url)
   .then(function (response) {
-       
+    const data = response.data.log;
+    var html = [];
+    data.forEach(dt =>{
+      const time = DisplayTime(dt.log_start_time, dt.log_end_time);
+      html.push([
+        dt.log_date,
+        dt.log_start_time,
+        dt.log_end_time,
+        dt.log_end_time === '' ? '' : time,
+        `<button data-bs-toggle="modal" data-bs-target="#MoreInfoLog" class="rounded-circle btn btn-primary" onclick="MoreInfoModal('${getLogInfo}?log_id=${dt.log_id}', '${cust_type}')">
+        <i class="bi bi-info-circle-fill" style="font-size: 1.3rem"></i></button>`,
+      ]);
+    });
+    $('#historyBody').DataTable( {
+      responsive: true,
+      data: html
+  } );
 
+    console.log(html)
   })
  .catch(function (error) {
   console.error(error);
   });
+}
+
+function DisplayTime(start, end){
+  const time = timeDifference(start, end);
+  const data = time.hours + 'hrs & ' + time.minutes + 'minutes';
+  return data;  
 }
