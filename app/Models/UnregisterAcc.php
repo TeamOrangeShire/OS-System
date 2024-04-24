@@ -16,6 +16,7 @@ class UnregisterAcc extends Model
        'un_lastname',
        'un_ext',
        'un_email',
-       'un_contact'
+       'un_contact',
+       'un_type'
     ];
 }

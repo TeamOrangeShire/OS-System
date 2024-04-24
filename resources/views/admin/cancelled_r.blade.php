@@ -4,28 +4,10 @@
 <html lang="en">
 
 <head>
-	<title> Admin Dashboard</title>
-   
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="">
-    <meta name="author" content="Phoenixcoded" />
-    <!-- Favicon icon -->
-	<link rel="icon" href="{{asset('assets/images/os_logo.png')}}" type="image/x-icon">
-
-    <!-- vendor css -->
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    @include('admin.assets.admintable')
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    
-    
-
+    @include('admin.assets.header')
 </head>
 <body class="">
+    <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 	<!-- [ Pre-loader ] start -->
 	<div class="loader-bg">
 		<div class="loader-track">
@@ -34,10 +16,10 @@
 	</div>
 	<!-- [ Pre-loader ] End -->
 	<!-- [ navigation menu ] start -->
-	@include('admin.nav')
+	@include('admin.component.nav')
 	<!-- [ navigation menu ] end -->
 	<!-- [ Header ] start -->
-  @include('admin.header')
+  @include('admin.component.header')
 	<!-- [ Header ] end -->
 	
 	
