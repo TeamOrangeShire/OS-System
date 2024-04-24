@@ -33,7 +33,7 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button type="button" onclick="Login('{{ route('custom_log') }}', '{{ route('home') }}')" class="login100-form-btn">
+							<button type="button" onclick="Login('{{ route('custom_log') }}', '{{ route('customerProfile') }}')" class="login100-form-btn">
 								Login
 							</button>
 						</div>
