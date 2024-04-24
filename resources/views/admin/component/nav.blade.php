@@ -78,6 +78,10 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                     <a href="{{route('promos')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-percent"></i></span><span class="pcoded-mtext">Promos</span></a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{route('salesreports')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-printer"></i></span><span class="pcoded-mtext">Sales Report</span></a>
+                </li>
+
             </ul>
         </div>
     </div>

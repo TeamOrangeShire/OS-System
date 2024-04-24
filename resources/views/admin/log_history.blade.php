@@ -5,37 +5,7 @@
 <html lang="en">
 
 <head>
-	<title> Admin Dashboard</title>
-    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 11]>
-    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    	<![endif]-->
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="">
-    <meta name="author" content="Phoenixcoded" />
-    <!-- Favicon icon -->
-	<link rel="icon" href="{{asset('assets/images/os_logo.png')}}" type="image/x-icon">
-
-    <!-- vendor css -->
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    @include('admin.assets.admintable')
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
-     {{-- new add --}}
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-     <link rel="stylesheet" href="{{asset('assets/css/admin_css.css')}}">
-
-     {{-- alertify --}}
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css" />
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
-
+    @include('admin.assets.header')
 </head>
 <body class="">
     <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -47,10 +17,10 @@
 	</div>
 	<!-- [ Pre-loader ] End -->
 	<!-- [ navigation menu ] start -->
-	@include('admin.nav')
+	@include('admin.component.nav')
 	<!-- [ navigation menu ] end -->
 	<!-- [ Header ] start -->
-  @include('admin.header')
+  @include('admin.component.header')
 	<!-- [ Header ] end -->
 	
 	
@@ -95,7 +65,6 @@
                                     <table class="table datatable">
                                       <thead>
                                         <tr>
-                                       
                                             <th>Fullname</th>
                                             <th>Email</th>
                                             <th>Number</th>
@@ -106,8 +75,6 @@
                                       <tbody>
                                         @php
                                         $Customer = App\Models\CustomerAcc::all();
-                                        
-                                        
                                        @endphp
                                           @foreach ($Customer as $cus)
                                           @php
@@ -536,9 +503,26 @@
                         Please provide a valid state.
                     </div>
                 </div>
-            
             </div>
-            <button class="btn  btn-primary" type="submit">Insert Log</button>
+            <div class="row">
+                 <div class="col-md-6 mb-3">
+                      <div class="form-group">
+                                <label for="">User Type</label>
+                                <select class="form-control" name="customer_type" id="">
+                                    <option value="Student">Student</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Reviewer">Reviewer</option>
+                                    <option value="Professional">Professional</option>
+                                </select>
+                            </div>  
+                </div>
+                 <div class="col-md-6 ">
+                 
+                     <button class="btn  btn-primary" type="submit" style="margin-top: 4%;">Insert Log</button>
+                   
+                </div>
+            </div>
+           
         </form>
 
             </div>
@@ -614,14 +598,11 @@
                 console.log(xhr.responseText);
             }
         });
-        $('#out').modal('toggle');
     }, function() {
       
         alertify.error('Cancel');
      
     });
-
-       
         }
 
 

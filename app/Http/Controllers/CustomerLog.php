@@ -63,10 +63,11 @@ class CustomerLog extends Controller
         'un_log_status'=> 2,
 
     ]);
+    $Unlog = UnregisterAcc::where('un_id',$log->un_id)->first();
     $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
     $data->act_user_type = "Admin";
-    $data->act_action = "Admin accept payment of " . $log->un_lastname;
+    $data->act_action = "Admin accept payment of " . $Unlog->un_lastname;
     $data->act_header = "Accept logout payment";
     $data->act_location = "customer_log_unregister";
     $data->save();
@@ -77,13 +78,13 @@ class CustomerLog extends Controller
 
     $id = $request->unregister_id;
     
-
     $log = CustomerLogUnregister::where('unregister_id',$id)->first();
    $start = $log->un_log_start_time;
    $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-
    $time = timeDifference($start,$end);
-   $totalPayment= PaymentCalc($time['hours'],$time['minutes'],'Students');
+   
+   $Unlog = UnregisterAcc::where('un_id',$log->un_id)->first();
+   $totalPayment= PaymentCalc($time['hours'],$time['minutes'],$Unlog->un_type);
     $log->update([
         'un_log_end_time'=>$end,
         'un_log_status'=> 1,
@@ -93,8 +94,8 @@ class CustomerLog extends Controller
     $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
     $data->act_user_type = "Admin";
-    $data->act_action = "Admin accept payment of " . $log->un_lastname;
-    $data->act_header = "Accept unregister log payment";
+    $data->act_action = "Admin set log status of " . $Unlog->un_lastname ." to pending";
+    $data->act_header = "Pending unregister log payment";
     $data->act_location = "customer_log_unregister";
     $data->save();
 
@@ -110,6 +111,7 @@ class CustomerLog extends Controller
     $accept -> un_ext = $request->ext;
     $accept -> un_email = $request->email;
     $accept -> un_contact = $request->number;
+    $accept -> un_type = $request->customer_type;
     $accept->save();
    
     $unregister = new CustomerLogUnregister;
@@ -118,18 +120,44 @@ class CustomerLog extends Controller
     $unregister -> un_log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
     $unregister -> un_log_status = 0;
     $unregister->save();
+
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin login customer " . $request->un_lastname;
+    $data->act_header = "Unregister login";
+    $data->act_location = "customer_log_unregister";
+    $data->save();
     return redirect()->back();
   }
    public function UnregisterLogin(request $request){
-
+    
     $id =$request ->login_id;
+     $check = CustomerLogUnregister::where('un_id',$id)->where('un_log_status',1)->first();
+     if($check !== null){
+      return response()->json(['status'=> 'failed']);
+     }else{
     $unregister = new CustomerLogUnregister;
     $unregister -> un_id = $id;
     $unregister -> un_log_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
     $unregister -> un_log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
     $unregister -> un_log_status = 0;
     $unregister->save();
-    return redirect()->back();
+
+    $Unlog = UnregisterAcc::where('un_id',$id)->first();
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin login customer " . $Unlog->un_lastname;
+    $data->act_header = "Unregister login";
+    $data->act_location = "customer_log_unregister";
+    $data->save();
+
+    return response()->json(['status'=> 'success']);
+     }
+    
+    
   }
 
   public function GetScannedURLlog(Request $request){
