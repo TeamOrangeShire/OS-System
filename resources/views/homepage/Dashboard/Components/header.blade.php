@@ -34,6 +34,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
 @if ($status === 'not_verified')
 @php
     $checkStat = App\Models\CustomerAcc::where('customer_id', $user_id)->first();

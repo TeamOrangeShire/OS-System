@@ -124,9 +124,9 @@
                                 <div class="bg-light rounded p-3">
                                     <div class="d-flex align-items-center bg-white rounded p-3" style="border: 1px dashed rgba(0, 185, 142, .3)">
                                         <div class="icon me-3" style="width: 45px; height: 45px;">
-                                            <i class="fa fa-envelope-open text-primary"></i>
+                                            <i class="fa fa-facebook text-primary"></i>
                                         </div>
-                                        <span>info@example.com</span>
+                                        <span>Facebook: <a href="https://www.facebook.com/profile.php?id=61554372145450">Orange Shire Coworking</a></span>
                                     </div>
                                 </div>
                             </div>

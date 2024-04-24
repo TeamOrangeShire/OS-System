@@ -65,7 +65,7 @@ Route::get('/customer/scanQrCode/',[GetDataViews::class, 'RedirectScanQR'] )->na
 Route::get('/customer/getLoginstatus/',[CustomerLog::class, 'GetCustomerLoginStatus'] )->name('getCustomerLoginStatus');
 Route::get('/customer/getLogInfo/',[CustomerLog::class, 'GetLogInfo'] )->name('getLogInfo');
 Route::get('/customer/successLogInfo/',[CustomerLog::class, 'GetLogDetails'] )->name('getLogDetails');
-
+Route::get('/customer/logintoshire/gethistory',[CustomerLog::class, 'GetHistoryData'] )->name('getHistoryData');
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');

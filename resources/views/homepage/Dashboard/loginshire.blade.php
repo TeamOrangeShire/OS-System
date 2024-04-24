@@ -26,7 +26,7 @@
      <p id="succ_status"></p>   
      <i>Thank you for visiting  Orange Shire Coworking!</i>   
      <i>&trade; All Rights Reserved Orange Shire &trade;</i>
-     <button onclick="CloseDataModals('custom_success')" class="btn btn-success mt-2">Okay</button>
+     <button data-bs-dismiss="modal" onclick="LogHistory('{{ route('getHistoryData') }}?cust_id={{ $user_id }}', '{{ route('getLogInfo') }}', '{{ $customer->customer_type }}')" class="btn btn-success mt-2">Okay</button>
   </div>
 </div>
 
@@ -93,7 +93,7 @@
             </div>
             <div class="tab-pane fade table-responsive" id="history" role="tabpanel" aria-labelledby="history-tab">
               
-                <table class="table datatable">
+                <table class="table " id="historyBody">
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -103,23 +103,7 @@
                       <th>More Info</th>
                     </tr>
                   </thead>
-                  <tbody id="historyBody">
-                    @php
-                    $logs = App\Models\CustomerLogs::where('customer_id', $user_id)->orderBy('created_at', 'desc')->get();
-                @endphp
-                
-                @foreach ($logs as $l)
-                <tr>
-                    <td>{{ $l->log_date }}</td>
-                    <td>{{ $l->log_start_time }}</td>
-                    <td>{{ $l->log_end_time }}</td>
-                    <td>{{ $l->log_end_time === '' ? '' : DisplayTime($l->log_start_time, $l->log_end_time) }}</td>
-                    <td><button data-bs-toggle="modal" data-bs-target="#MoreInfoLog" class="rounded-circle btn btn-primary" onclick="MoreInfoModal('{{ route('getLogInfo') }}?log_id={{ $l->log_id }}', '{{ $customer->customer_type }}')">
-                      <i class="bi bi-info-circle-fill" style="font-size: 1.3rem"></i></button></td>
-                </tr>
-                
-                @endforeach
-                
+                  <tbody class="w-100">
                   
                   </tbody>
                 </table>
@@ -152,7 +136,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Ok</button>
+          <button type="button"  data-bs-dismiss="modal" class="btn btn-primary">Okay</button>
         </div>
       </div>
     </div>
@@ -177,7 +161,8 @@
         DisplaySuccessModal(l_data);
       }
 
-    };
+      LogHistory("{{ route('getHistoryData') }}?cust_id={{ $user_id }}", "{{ route('getLogInfo') }}", "{{ $customer->customer_type }}");
+    }
     function  DisplaySuccessModal(ids){
  
       const url = "{{ route('getLogDetails') }}?log_id=" + ids;
