@@ -4,7 +4,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="{{ route('home') }}" class="logo d-flex align-items-center">
+      <a href="{{ route('customerHome') }}" class="logo d-flex align-items-center">
         <img src="{{ asset('img/os_logo.png') }}" alt="">
         <span class="d-none d-lg-block">Orange Shire</span>
       </a>
@@ -20,7 +20,6 @@
     $notif = App\Models\CustomerNotification::where('user_id', $user_id)->where('user_type', 'Customer');
     $notifCount = $notif->where('notif_status', 0)->get()->count();
     $notifMessage = $notif->get();
-
 @endphp
         <li class="nav-item dropdown">
 
