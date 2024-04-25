@@ -3,6 +3,13 @@
 <head>
   @include('homepage.login.components.header',['title'=>'Customer Login'])
 </head>
+@if ($user_id !== 'none')
+	<script>
+		window.onload = function(){
+			window.location.href = "{{ route('customerHome') }}";
+		}
+	</script>
+@endif
 <body>
 	@include('homepage.login.components.loader')
 	<div class="limiter">
@@ -33,7 +40,7 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button type="button" onclick="Login('{{ route('custom_log') }}', '{{ route('customerProfile') }}')" class="login100-form-btn">
+							<button type="button" onclick="Login('{{ route('custom_log') }}', '{{ route('customerHome') }}')" class="login100-form-btn">
 								Login
 							</button>
 						</div>
