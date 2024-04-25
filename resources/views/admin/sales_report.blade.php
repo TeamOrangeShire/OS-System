@@ -70,7 +70,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbody">
                              
                             </tbody>
                             <tfoot>
@@ -101,25 +101,18 @@
                 <!-- Modal body -->
                 <div class="modal-body">
 
-                    <table class="table datatable">
+                    <table id="detailedTbl" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                           <tr>
                          
                               <th>Fullname</th>
-                              <th>Email</th>
-                              <th>Number</th>
-                              <th>Status</th>
-                              <th>Action</th>
+                             
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
                               <td>dsfs</td>
-                              <td>scvd</td>
-                              <td>dsc</td>
-                              <td>scd</td>
-                              <td>sdf</td>
-                          </tr>
+                             
                         </tbody>
                       </table>
 
@@ -155,7 +148,50 @@ function viewdetail(date) {
         type: "GET",
         success: function(response) {
            console.log(response);
-
+            var data = [];
+            for (let i = 0; i < response.reg.length; i++) {
+                var time = timeDifference(response.reg[i].log_start_time,response.reg[i].log_end_time);
+                var total_time = time.hours +'Hrs & ' + time.minutes + 'Minutes'; 
+                var payment =   response.reg[i].log_transaction.split('-');
+                data.push([
+                    response.reg[i].log_status  == 2 ? 'Paid' : 'Unpaid',
+                    response.reg[i].log_start_time,
+                    response.reg[i].log_end_time,
+                    total_time,
+                    payment[0],
+                    'Registered Customer'
+                ]);
+            }
+             for (let i = 0; i < response.unreg.length; i++) {
+                var time = timeDifference(response.unreg[i].un_log_start_time,response.unreg[i].un_log_end_time);
+                var total_time = time.hours +'Hrs & ' + time.minutes + 'Minutes'; 
+                data.push([
+                     response.unreg[i].un_log_status == 2 ? 'Paid' : 'Unpaid',
+                    response.unreg[i].un_log_start_time,
+                    response.unreg[i].un_log_end_time,
+                    total_time,
+                   response.unreg[i].un_log_transaction,
+                    'Unregistered Customer'
+                ]);
+            }
+             new DataTable('#detailedTbl', {
+               destroy: true,
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'excel', 'pdf', 'colvis']
+                    }
+                },
+                columns: [
+                    { title: 'Status' },
+                    { title: 'Start' },
+                    { title: 'end' },
+                    { title: 'Total time' },
+                    { title: 'payment' },
+                     { title: 'type' },
+                    
+                ],
+                data: data
+            });
         },
         error: function(xhr, status, error) {
          
@@ -177,9 +213,7 @@ function CustomerLog() {
                     response.date[i],
                     response.transaction[i],
                     response.sale[i],
-                   `<button onclick="viewdetail('${response.date[i]}')" class= "btn btn-primary" data-toggle="modal" data-target="#modaldt"> <i class="fas fa-eye"></i>
- </button>
-`
+                   `<button onclick="viewdetail('${response.date[i]}')" class= "btn btn-primary" data-toggle="modal" data-target="#modaldt"> <i class="fas fa-eye"></i></button>`
                 ]);
                 totalsale += response.sale[i];
             }
