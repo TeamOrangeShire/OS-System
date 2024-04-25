@@ -197,6 +197,14 @@ class GetDataViews extends Controller
                 return view('homepage.Dashboard.index', ['user_id'=>$userId, 'status'=> 'not_log_in']);
             }
     }
+    public function CustomerLogin(Request $req){
+        $userId = $req->cookie('customer_id');
+       if($userId){
+        return view('homepage.login.index', ['user_id'=>$userId]);
+       }else{
+        return view('homepage.login.index', ['user_id'=>'none']);
+       }
+    }
     public function CustomerSettings(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
