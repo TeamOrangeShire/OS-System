@@ -308,7 +308,7 @@ File: style.css
     --cyan: #00acc1;
     --white: #fff;
     --gray: #6c757d;
-    --gray-dark: #3A1F1E    ;
+    --gray-dark: #31363F    ;
     --primary: #1abc9c;
     --secondary: #6c757d;
     --success: #2ecc71;
@@ -20993,7 +20993,7 @@ pre[class*=language-]:before {
 }
 
 .pcoded-navbar .pcoded-submenu {
-    background: #E64326  ;
+    background: #222831  ;
     padding: 15px 0;
 }
 
