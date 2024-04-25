@@ -56,7 +56,7 @@ function confirmPurchase(){
 
 }
 
-function logOut(route, home) {
+function logOut(route, home, mobileHome) {
   var formData = $('form#customer_logOut').serialize();
 
   $.ajax({
@@ -64,7 +64,12 @@ function logOut(route, home) {
       url: route,
       data: formData,
       success: function(response) {
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+          window.location.href = mobileHome;
+      } else {
         window.location.href = home;
+      }
+      
       }, 
       error: function (xhr) {
 
@@ -500,6 +505,7 @@ function LogHistory(url, getLogInfo, cust_type){
     });
     $('#historyBody').DataTable( {
       responsive: true,
+      select: true,
       data: html
    });
 
@@ -514,4 +520,16 @@ function DisplayTime(start, end){
   const time = timeDifference(start, end);
   const data = time.hours + 'hrs & ' + time.minutes + 'minutes';
   return data;  
+}
+
+function goTo(url){
+  window.location.href = url;
+}
+
+function detectGoto(mobile, web){
+  if (/Mobi|Android/i.test(navigator.userAgent)) {
+    window.location.href = mobile;
+} else {
+   window.location.href = web;
+}
 }

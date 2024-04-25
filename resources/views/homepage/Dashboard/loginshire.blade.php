@@ -57,7 +57,7 @@
       <h1>Log In to Shire</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('customerHome') }}">Home</a></li>
           <li class="breadcrumb-item"><a href="{{ route('customerProfile') }}">Profile</a></li>
           <li class="breadcrumb-item active">Log in</li>
         </ol>
@@ -93,7 +93,7 @@
             </div>
             <div class="tab-pane fade table-responsive" id="history" role="tabpanel" aria-labelledby="history-tab">
               
-                <table class="table " id="historyBody">
+                <table class="table w-100" id="historyBody">
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -103,7 +103,7 @@
                       <th>More Info</th>
                     </tr>
                   </thead>
-                  <tbody class="w-100">
+                  <tbody>
                   
                   </tbody>
                 </table>
