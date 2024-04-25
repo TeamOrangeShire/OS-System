@@ -1,6 +1,6 @@
-<div title="Scan QR" onclick="ScanDrag('{{ route('scanQr') }}')" class="QRCode-Fab btn btn-primary {{ $cookie_val === 'none' ? 'd-none' : '' }}" id="draggable">
+{{-- <div title="Scan QR" onclick="ScanDrag('{{ route('scanQr') }}')" class="QRCode-Fab btn btn-primary {{ $cookie_val === 'none' ? 'd-none' : '' }}" id="draggable">
  <img src="{{asset('img/qr_icon.png')}}" alt="QR" class="fab-image">
-</div>
+</div> --}}
 
 <div class="container-fluid nav-bar bg-transparent">
     <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">

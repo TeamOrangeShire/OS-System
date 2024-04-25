@@ -9,6 +9,9 @@
 			window.location.href = "{{ route('customerHome') }}";
 		}
 	</script>
+	@php
+		die();
+	@endphp
 @endif
 <body>
 	@include('homepage.login.components.loader')
