@@ -73,6 +73,8 @@ Route::get('/admin', function () { return view('admin.index');})->name('index');
 Route::get('/admin/admin_account', function () { return view('admin.admin_acc');})->name('admin_acc');
 Route::get('/admin/customer_account', function () { return view('admin.customer_acc');})->name('customer_acc');
 Route::get('/admin/getlog', [CustomerLog::class,"getlog"])->name('getlog');
+Route::get('/admin/CustomerLog', [GetDataViews::class,"CustomerLog"])->name('CustomerLog');
+Route::get('/admin/ViewDetails', [GetDataViews::class,"ViewDetails"])->name('ViewDetails');
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
