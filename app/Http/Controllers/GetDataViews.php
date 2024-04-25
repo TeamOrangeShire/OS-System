@@ -8,6 +8,8 @@ use App\Models\RoomRate;
 use App\Models\Reservations;
 use App\Models\CustomerAcc;
 use App\Models\Rooms;
+use App\Models\CustomerLogs;
+use App\Models\CustomerLogUnregister;
 use Illuminate\Http\Request;
 
 class GetDataViews extends Controller
@@ -309,6 +311,31 @@ class GetDataViews extends Controller
         }else{
             return response()->json(['status'=>'clear', 'time'=> 'none']);
         }
+    }
+    public function CustomerLog()
+    {
+        $unreg = CustomerLogUnregister::distinct()->pluck('un_log_date');
+        $regDate = CustomerLogs::distinct()->pluck('log_date');
+        $sale = [];
+        $u_date=[];
+        foreach($regDate as $date){
+              $reg = CustomerLogs::where('log_date',$date)->get();
+              $unreg = CustomerLogUnregister::where('un_log_date',$date)->get();
+              $total = 0;
+              foreach($reg as $r){
+                $transaction = explode('-',$r->log_transaction);
+                $total+=$transaction[0];
+              } 
+               foreach($unreg as $r){
+                $transaction = $r->un_log_transaction;
+                $total+=$transaction;
+              } 
+              array_push($sale,$total);
+             array_push($u_date,$date);
+        }
+
+         
+        return response()->json(['date'=>$u_date,'sale'=>$sale]);
     }
 
 }
