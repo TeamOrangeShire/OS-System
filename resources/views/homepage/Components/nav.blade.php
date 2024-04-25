@@ -24,7 +24,7 @@
                         <a href="" class="dropdown-item">Others</a>
                     </div>
                 </div> --}}
-                <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a>
+                {{-- <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a> --}}
                 <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
                 <a href="{{ route('scanQr') }}" class="nav-item nav-link d-lg-none ">Scan QR</a>
             @if($cookie_val === 'none')

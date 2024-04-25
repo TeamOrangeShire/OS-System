@@ -1231,3 +1231,9 @@ h6 {
   font-size: 13px;
   color: #ff5c40;
 }
+
+.disable{
+  color: #999999;
+  background-color: #555555;
+  text-decoration: line-through;
+}
