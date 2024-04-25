@@ -314,28 +314,44 @@ class GetDataViews extends Controller
     }
     public function CustomerLog()
     {
-        $unreg = CustomerLogUnregister::distinct()->pluck('un_log_date');
-        $regDate = CustomerLogs::distinct()->pluck('log_date');
-        $sale = [];
-        $u_date=[];
-        foreach($regDate as $date){
-              $reg = CustomerLogs::where('log_date',$date)->get();
-              $unreg = CustomerLogUnregister::where('un_log_date',$date)->get();
-              $total = 0;
-              foreach($reg as $r){
-                $transaction = explode('-',$r->log_transaction);
-                $total+=$transaction[0];
-              } 
-               foreach($unreg as $r){
-                $transaction = $r->un_log_transaction;
-                $total+=$transaction;
-              } 
-              array_push($sale,$total);
-             array_push($u_date,$date);
-        }
+                $unregDates = CustomerLogUnregister::distinct()->pluck('un_log_date');
+                $regDates = CustomerLogs::distinct()->pluck('log_date');
 
-         
-        return response()->json(['date'=>$u_date,'sale'=>$sale]);
+                $sale = [];
+                $u_date = [];
+                $u_tran = []; 
+
+                foreach ($regDates as $date) {
+                    $reg = CustomerLogs::where('log_date', $date)->get();
+                    $unreg = CustomerLogUnregister::where('un_log_date', $date)->get();
+                    
+                    $total = 0;
+                    $totalTransactions = 0; 
+                    
+                    foreach ($reg as $r) {
+                        $transaction = explode('-', $r->log_transaction);
+                        $total += $transaction[0];
+                        $totalTransactions++; 
+                    }
+                    
+                    foreach ($unreg as $r) {
+                        $total += $r->un_log_transaction;
+                        $totalTransactions++; 
+                    }
+                    
+                    array_push($sale, $total);
+                    array_push($u_date, $date);
+                    array_push($u_tran, $totalTransactions); 
+                }
+        return response()->json(['date'=>$u_date,'sale'=>$sale,'transaction'=>$u_tran]);
+    }
+    public function ViewDetails(Request $request){
+
+        $date = $request->query('date');
+         $reg = CustomerLogs::where('log_date', $date)->get();
+        $unreg = CustomerLogUnregister::where('un_log_date', $date)->get();
+
+        return response()->json(['reg'=>$reg,'unreg'=>$unreg]);
     }
 
 }
