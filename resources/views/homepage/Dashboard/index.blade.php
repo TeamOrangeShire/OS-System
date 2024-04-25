@@ -80,7 +80,9 @@
     <div class="copyright">
       &copy; Copyright <strong><span>Orange Shire</span></strong>. All Rights Reserved
     </div>
-   
+    <div class="credits">
+      Designed by <a href="coresupporthub.com">Core Support Hub Dev</a>
+    </div>
   </footer><!-- End Footer -->
 
 
