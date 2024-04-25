@@ -26,7 +26,8 @@
                 <div class="col-md-6 p-5 mt-lg-5">
                     <h1 class="display-5 animated fadeIn mb-4">A <span class="text-primary">Coworking</span> and <span class="text-primary">Costudying Space</span> in the heart of Bacolod City</h1>
                     <p class="animated fadeIn mb-4 pb-2">Experience the vibrant atmosphere of our coworking and co-studying space, where productivity thrives amidst a supportive community, right in the heart of Bacolod City.</p>
-                    <a href="{{ route('solutions') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Browse Solutions</a>
+                        <a href="{{ route('solutions') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn"> <i class="fa-solid fa-magnifying-glass"></i> Browse Solutions</a>
+                 
                 </div>
                 <div class="col-md-5 animated fadeIn">
                     <div class="owl-carousel header-carousel" style="top: 2rem;">
@@ -55,41 +56,7 @@
         <!-- Header End -->
 
 
-        <!-- Search Start -->
-        <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-            <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control border-0 py-3" placeholder="Search Keyword">
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Property Type</option>
-                                    <option value="1">Property Type 1</option>
-                                    <option value="2">Property Type 2</option>
-                                    <option value="3">Property Type 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Location</option>
-                                    <option value="1">Location 1</option>
-                                    <option value="2">Location 2</option>
-                                    <option value="3">Location 3</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100 py-3">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- Search End -->
-
+   
         <!-- AMENITIES Start -->
         <br><br><br><br>
         <div class="container-xxl py-5">
@@ -147,27 +114,7 @@
         <!-- AMENITIES End -->
 
 
-        <!-- About Start -->
-        {{-- <br><br>
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-5 align-items-center">
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                        <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                            <img class="img-fluid w-100" src="img/os_6.jpg">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="mb-4">Where Passion Meets Purpose: The Orange Shire Experience</h1>
-                        <p class="mb-4">Welcome to Orange Shire, a dynamic co-working and co-studying space situated in the heart of Bacolod City. Our vibrant hub is tailored to meet the diverse needs of students, teachers, board and bar exam reviewers, as well as hybrid professionals and freelancers. Nestled in this thriving city, Orange Shire provides a conducive environment for collaborative learning and innovation. Equipped with state-of-the-art facilities and flexible workspaces, our goal is to create a space where individuals from various backgrounds can come together to share ideas, knowledge, and expertise. Whether you're gearing up for exams, working on projects, or seeking a hub to enhance your professional skills, Orange Shire is the perfect blend of innovation and education. Join us on this exciting journey of collaboration, creativity, and continuous learning at Orange Shire.</p>
-
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="{{ route('contact') }}">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <!-- About End -->
-
+      
 
 
 
@@ -294,115 +241,13 @@
                         </div>
                     </div>
 
-                     {{-- <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/os_c1.jfif" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Students and Teachers</h5>
-                                <small>
-                                    The Shire is a place where you can focus on your studies, review for exams, work on your thesis, study with your groupmates, prepare for classes, check and score test papers and more.</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="team-item rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/os_c2.jfif" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Freelancers</h5>
-                                <small>
-                                    Work days or nights at the Shire, connect to our fast internet, get comfortable for the next few hours in one of our hot desks, get a cup of hot brewed coffee to keep you sharp and be able to focus on work.</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="team-item rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/os_c3.jfif" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Board and Bar exam Reviewers</h5>
-                                <small>The Shire is the best place for you to focus on reviewing for that upcoming board or bar exam. Get from one of our multi-hour consumable plans to set you up for the next few weeks to do your exam reviews at the Shire.</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="team-item rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/os_c4.jfif" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Remote Workers</h5>
-                                <small>
-                                    Tired of working from home for several weeks at a time and feeling that cabin fever? Step out of the house once in a while and visit the Shire. Set up in one of our hot desks, meet new friends, and maybe go on breaks to take some walks around the neighborhood.</small>
-                            </div>
-                        </div>
-                    </div> --}}
+                 
                 </div>
             </div>
         </div>
         <!-- Shire's Purpose Start -->
 
 
-        <!-- Testimonial Start -->
-        {{-- <div class="container-xxl py-5">
-            <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Our Clients Say!</h1>
-                    <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
-                </div>
-                <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="testimonial-item bg-light rounded p-3">
-                        <div class="bg-white border rounded p-4">
-                            <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                            <div class="d-flex align-items-center">
-                                <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-1.jpg" style="width: 45px; height: 45px;">
-                                <div class="ps-3">
-                                    <h6 class="fw-bold mb-1">Client Name</h6>
-                                    <small>Profession</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-3">
-                        <div class="bg-white border rounded p-4">
-                            <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                            <div class="d-flex align-items-center">
-                                <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-2.jpg" style="width: 45px; height: 45px;">
-                                <div class="ps-3">
-                                    <h6 class="fw-bold mb-1">Client Name</h6>
-                                    <small>Profession</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-3">
-                        <div class="bg-white border rounded p-4">
-                            <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                            <div class="d-flex align-items-center">
-                                <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-3.jpg" style="width: 45px; height: 45px;">
-                                <div class="ps-3">
-                                    <h6 class="fw-bold mb-1">Client Name</h6>
-                                    <small>Profession</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <!-- Testimonial End -->
         
 
         <!-- Footer Start -->

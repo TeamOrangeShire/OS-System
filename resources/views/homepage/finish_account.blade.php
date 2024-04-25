@@ -47,12 +47,7 @@
     </form>
     <div class="contain">
         <div class="congrats">
-            @if($redirect === 'true')
-            <h1>Account Needs Verification!</h1>
-            @else
-            <h1>Account Created!</h1>
-            @endif
-            
+            <h1>{{ $redirect === 'true' ? 'Account Needs Verification!' : 'Account Created!'}}</h1>
             <div class="done">
                 <svg version="1.1" id="tick" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 37 37" style="enable-background:new 0 0 37 37;" xml:space="preserve">
@@ -66,17 +61,9 @@
             <div class="text">
                 <p>{{ $fullname }}</p>
                 <p>{{ $newAcc->customer_email }}</p>
-                @if ($newAcc->verifcation_code === 0)
                 <button onclick="Verify(this, '{{ route('customer_verification') }}')">
-                    <span id="send_button">Verify Account</span>
+                    <span id="send_button">{{ $newAcc->verification_code === 0 ? 'Verify Account' : 'Send Verification Mail Again' }}</span>
                   </button>
-                @else
-                <p>Verication was sent already please check your mail</p>
-                <button onclick="Verify(this, '{{ route('customer_verification') }}')">
-                    <span id="send_button">Send Verification Mail Again</span>
-                  </button>
-                @endif
-              
                   <p>
                     To verify your account and gain access to the Orange Shire app, please check your email for a verification link and click on it. This step ensures the security of your account and grants you full access to our app's features and services. Thank you for choosing Orange Shire!</p>
             </div>

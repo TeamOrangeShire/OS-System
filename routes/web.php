@@ -28,7 +28,7 @@ Route::get('/', [GetDataViews::class, 'GetHomeCookies'])->name('home');
 Route::get('/contactus', [GetDataViews::class, 'GetContactCookies'])->name('contact');
 Route::get('/reservation', [GetDataViews::class, 'GetReservationCookies'])->name('reservation');
 Route::get('/signup', function () { return view('homepage.signup');})->name('signup');
-Route::get('/customerlogin', function () { return view('homepage.customer_login');})->name('customer_login');
+Route::get('/customerlogin', function () { return view('homepage.login.index');})->name('customer_login');
 Route::get('/solutions', [GetDataViews::class, 'GetSolutionsCookies'])->name('solutions');
 Route::get('/reservation/book', [GetDataViews::class, 'GetBookCookies'])->name('book');
 Route::get('/customer-new-account',[CreateAcc::class, 'SuccessCreateAccount'] )->name('new_account');

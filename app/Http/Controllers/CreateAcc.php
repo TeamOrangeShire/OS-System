@@ -57,8 +57,6 @@ class CreateAcc extends Controller
         $account->session_id = $session_id;
         $account->save();
 
-        $id = $account->customer_id;
-
         return response()->json(['id'=>$session_id, 'email'=>'not_exist']);
     }
 

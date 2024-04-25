@@ -46,61 +46,7 @@
             </div>
             <!-- Header End -->
 
-        <!-- Header Start -->
-        {{-- <div class="container-fluid header bg-white p-0 mt-4">
-            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
-                <div class="col-md-6 p-5 mt-lg-5">
-                    <h1 class="display-5 animated fadeIn mb-4">Contact Us</h1> 
-                        <nav aria-label="breadcrumb animated fadeIn">
-                        <ol class="breadcrumb text-uppercase">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                            <li class="breadcrumb-item text-body active" aria-current="page">Contact</li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="col-md-6 animated fadeIn">
-                    <img class="img-fluid" src="img/os_6.jpg" alt="">
-                </div>
-            </div>
-        </div> --}}
-        <!-- Header End -->
-
-
-        <!-- Search Start -->
-        <!--<div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-            <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control border-0 py-3" placeholder="Search Keyword">
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Property Type</option>
-                                    <option value="1">Property Type 1</option>
-                                    <option value="2">Property Type 2</option>
-                                    <option value="3">Property Type 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Location</option>
-                                    <option value="1">Location 1</option>
-                                    <option value="2">Location 2</option>
-                                    <option value="3">Location 3</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100 py-3">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <!-- Search End -->
+      
 
 
         <!-- Contact Start -->
@@ -116,7 +62,7 @@
                                         <div class="icon me-3" style="width: 45px; height: 45px;">
                                             <i class="fa fa-map-marker-alt text-primary"></i>
                                         </div>
-                                        <span>21st Lacson Street, Bacolod City</span>
+                                        <a href="https://www.google.com/maps/place/Orange+Shire+Coworking/@10.6830411,122.9553474,21z/data=!4m7!3m6!1s0x33aed1c7c73593a5:0xc5525892f9d05c7a!4b1!8m2!3d10.68311!4d122.9553858!16s%2Fg%2F11vq68hpyn?entry=ttu">21st Lacson Street, Bacolod City</a>
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +72,7 @@
                                         <div class="icon me-3" style="width: 45px; height: 45px;">
                                             <i class="fa fa-facebook text-primary"></i>
                                         </div>
-                                        <span>Facebook: <a href="https://www.facebook.com/profile.php?id=61554372145450">Orange Shire Coworking</a></span>
+                                        <span>Message us: <a href="https://www.facebook.com/profile.php?id=61554372145450">Orange Shire Coworking</a></span>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +82,7 @@
                                         <div class="icon me-3" style="width: 45px; height: 45px;">
                                             <i class="fa fa-phone-alt text-primary"></i>
                                         </div>
-                                        <span>+63966 065 8143</span>
+                                        <a href="tel: +63966 065 8143">+63966 065 8143</a>
                                     </div>
                                 </div>
                             </div>

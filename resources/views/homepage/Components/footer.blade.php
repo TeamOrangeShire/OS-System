@@ -16,7 +16,7 @@
                 <a class="btn btn-link text-white-50" href="{{ route('home') }}">Home</a>
                 <a class="btn btn-link text-white-50" href="{{ route('contact') }}">Contact Us</a>
                 <a class="btn btn-link text-white-50" href="{{ route('solutions') }}">Solutions</a>
-                <a class="btn btn-link text-white-50" href="{{ route('reservation') }}">Reservation</a>
+                {{-- <a class="btn btn-link text-white-50" href="{{ route('reservation') }}">Reservation</a> --}}
                 
             </div>
             <div class="col-lg-3 col-md-6">
