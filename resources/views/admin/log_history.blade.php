@@ -273,6 +273,7 @@
                                             <th>Email</th>
                                             <th>Number</th>
                                             <th>Status</th>
+                                            <th style="display: none;">Status</th>
                                             <th>Action</th>
                                         </tr>
                                       </thead>
