@@ -8,8 +8,9 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
         <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
         <a href="#!" class="b-brand">
             <!-- ========   change your logo hear   ============ -->
-            <img src="{{ asset('assets/images/os_logo.png') }}" style="width: 20%;" alt="" class="logo"> <label for="logo">  Orange Shire</label>
-            <img src="{{ asset('assets/images/logo-icon.png') }}" alt="" style="width: 15%;" class="logo-thumb">
+                <img src="{{ asset('assets/images/os_logo.png') }}" style="max-width: 30%; height: auto; margin-left: 5%;" alt="" class="">
+                <label for="logo" style="margin-left: 5%;">  Orange Shire</label>
+              
         </a>
         <a href="#!" class="mob-toggler">
             <i class="feather icon-more-vertical"></i>
