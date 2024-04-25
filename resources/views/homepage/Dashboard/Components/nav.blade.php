@@ -102,7 +102,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
+          
             <li>
               <a class="dropdown-item d-flex align-items-center" href="{{ route('customerProfile') }}">
                 <i class="bi bi-person"></i>
@@ -136,7 +136,7 @@
             <li>
               <form method="POST" id="customer_logOut">
                 @csrf
-              <button onclick="logOut('{{ route('customer_logOut') }}', '{{ route('home') }}')" class="dropdown-item d-flex align-items-center" href="#">
+              <button type="button" onclick="logOut('{{ route('customer_logOut') }}', '{{ route('home') }}', '{{ route('customer_login') }}')" class="dropdown-item d-flex align-items-center" >
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </button>
@@ -158,6 +158,12 @@
 
 
       <li class="nav-heading">Account Details</li>
+      <li class="nav-item">
+        <a class="nav-link " href="{{ route('customerHome') }}">
+          <i class="bi bi-house-door"></i>
+          <span>Home</span>
+        </a>
+      </li>
 
       <li class="nav-item">
         <a class="nav-link " href="{{ route('customerProfile') }}">

@@ -20,12 +20,14 @@
 <link href="{{ asset('customer_dashboards/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
 <link href="{{ asset('customer_dashboards/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
 <link href="{{ asset('customer_dashboards/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-<link href="{{ asset('customer_dashboards/vendor/simple-datatables/style.css') }}" rel="stylesheet">
 
 <!-- Template Main CSS File -->
 <link href="{{ asset('customer_dashboards/css/style.css') }}" rel="stylesheet">
 <link href="{{ asset('customer_dashboards/css/mycustom.css') }}" rel="stylesheet">
 <link href="{{ asset('customer_dashboards/css/loader.css') }}" rel="stylesheet">
+
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!--fontawsome-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>

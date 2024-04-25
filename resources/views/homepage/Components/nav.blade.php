@@ -1,4 +1,4 @@
-<div title="Scan QR" class="QRCode-Fab btn btn-primary " id="draggable">
+<div title="Scan QR" onclick="ScanDrag('{{ route('scanQr') }}')" class="QRCode-Fab btn btn-primary {{ $cookie_val === 'none' ? 'd-none' : '' }}" id="draggable">
  <img src="{{asset('img/qr_icon.png')}}" alt="QR" class="fab-image">
 </div>
 

@@ -220,8 +220,6 @@ function TimeFinder4(time) {
 
 const draggableElement = document.getElementById('draggable');
 
-
-
 let offsetX, offsetY, isDragging = false;
 
 // Function to handle touch start event
@@ -294,5 +292,5 @@ document.addEventListener('mouseup', () => {
 
 // Function to handle onclick event
 function ScanDrag(url){
-    window.location.href= url;
+   window.location.href = url;
 }
