@@ -86,6 +86,8 @@
             </div>
         </div>
         </div>
+
+        
         <!-- [ Main Content ] end -->
     </div>
 </div>
@@ -105,7 +107,7 @@ function viewdetail(date) {
         type: "GET",
         success: function(response) {
            console.log(response);
-           
+
         },
         error: function(xhr, status, error) {
          
@@ -127,7 +129,7 @@ function CustomerLog() {
                     response.date[i],
                     response.transaction[i],
                     response.sale[i],
-                   `<button onclick="viewdetail('${response.date[i]}')">Button</button>`
+                   `<button  onclick="viewdetail('${response.date[i]}')">Button</button>`
                 ]);
                 totalsale += response.sale[i];
             }
