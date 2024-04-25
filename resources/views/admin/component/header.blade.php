@@ -1,4 +1,4 @@
-<header class="navbar pcoded-header navbar-expand-lg navbar-light header-dark" style="background-color: #3a3a3a;">
+<header class="navbar pcoded-header navbar-expand-lg navbar-light header-dark" style="background-color: #222831;">
 		
 	@php
 $admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
