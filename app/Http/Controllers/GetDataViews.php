@@ -178,6 +178,25 @@ class GetDataViews extends Controller
                 return view('homepage.Dashboard.reservation', ['user_id'=>$userId, 'status'=> 'not_log_in']);
             }
     }
+
+    public function CustomerHome(Request $req){
+        $userId = $req->cookie('customer_id');
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.Dashboard.index', ['user_id'=>$userId,'status'=> 'not_verified' ]);
+                }else{
+                    return view('homepage.Dashboard.index', [
+                        'user_id'=>$userId,
+                        'status'=> 'verified'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.Dashboard.index', ['user_id'=>$userId, 'status'=> 'not_log_in']);
+            }
+    }
     public function CustomerSettings(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();

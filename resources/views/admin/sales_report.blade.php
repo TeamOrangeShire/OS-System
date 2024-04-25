@@ -87,7 +87,55 @@
         </div>
         </div>
 
-        
+{{-- Modal with data table --}}
+        <div class="modal" id="modaldt">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+          
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title"> View Details </h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+          
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <table class="table datatable">
+                        <thead>
+                          <tr>
+                         
+                              <th>Fullname</th>
+                              <th>Email</th>
+                              <th>Number</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                              <td>dsfs</td>
+                              <td>scvd</td>
+                              <td>dsc</td>
+                              <td>scd</td>
+                              <td>sdf</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+
+                </div>
+          
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+          
+              </div>
+            </div>
+          </div>
+{{-- Modal with data table --}}
+
         <!-- [ Main Content ] end -->
     </div>
 </div>
@@ -129,7 +177,9 @@ function CustomerLog() {
                     response.date[i],
                     response.transaction[i],
                     response.sale[i],
-                   `<button  onclick="viewdetail('${response.date[i]}')">Button</button>`
+                   `<button onclick="viewdetail('${response.date[i]}')" class= "btn btn-primary" data-toggle="modal" data-target="#modaldt"> <i class="fas fa-eye"></i>
+ </button>
+`
                 ]);
                 totalsale += response.sale[i];
             }
@@ -159,6 +209,9 @@ function CustomerLog() {
 
 
 </script>
+
+@include('admin.assets.adminscript')
+
   <!-- Required Js -->
     <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>

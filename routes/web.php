@@ -54,18 +54,18 @@ Route::post('/customer-log-out',[Login::class,'LogOutCustomer'] )->name('custome
 Route::post('/customer/redirectScan/updatelogs',[CustomerLog::class,'GetScannedURLlog'] )->name('updateQRLog');
 
 //Customer Dashboard
-Route::get('/customer/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');
-Route::get('/customer/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');
-Route::get('/customer/reservation',[GetDataViews::class, 'CustomerReservation'] )->name('customerReservation');
-Route::get('/customer/settings',[GetDataViews::class, 'CustomerSettings'] )->name('customerSettings');
-Route::get('/customer/profile/notification',[GetDataViews::class, 'CustomerNotification'] )->name('customerNotification');
-Route::get('/customer/profile/transaction',[GetDataViews::class, 'CustomerTransaction'] )->name('customerTransaction');
-Route::get('/customer/logintoshire',[GetDataViews::class, 'CustomerLoginToShire'] )->name('logintoshire');
-Route::get('/customer/scanQrCode/',[GetDataViews::class, 'RedirectScanQR'] )->name('redirectScan');
-Route::get('/customer/getLoginstatus/',[CustomerLog::class, 'GetCustomerLoginStatus'] )->name('getCustomerLoginStatus');
-Route::get('/customer/getLogInfo/',[CustomerLog::class, 'GetLogInfo'] )->name('getLogInfo');
-Route::get('/customer/successLogInfo/',[CustomerLog::class, 'GetLogDetails'] )->name('getLogDetails');
-Route::get('/customer/logintoshire/gethistory',[CustomerLog::class, 'GetHistoryData'] )->name('getHistoryData');
+Route::get('/customer/home/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');
+Route::get('/customer/home/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');
+Route::get('/customer/home/reservation',[GetDataViews::class, 'CustomerReservation'] )->name('customerReservation');
+Route::get('/customer/home/settings',[GetDataViews::class, 'CustomerSettings'] )->name('customerSettings');
+Route::get('/customer/home/profile/notification',[GetDataViews::class, 'CustomerNotification'] )->name('customerNotification');
+Route::get('/customer/home/profile/transaction',[GetDataViews::class, 'CustomerTransaction'] )->name('customerTransaction');
+Route::get('/customer/home/logintoshire',[GetDataViews::class, 'CustomerLoginToShire'] )->name('logintoshire');
+Route::get('/customer/home/getLoginstatus/',[CustomerLog::class, 'GetCustomerLoginStatus'] )->name('getCustomerLoginStatus');
+Route::get('/customer/home/getLogInfo/',[CustomerLog::class, 'GetLogInfo'] )->name('getLogInfo');
+Route::get('/customer/home/successLogInfo/',[CustomerLog::class, 'GetLogDetails'] )->name('getLogDetails');
+Route::get('/customer/home/logintoshire/gethistory',[CustomerLog::class, 'GetHistoryData'] )->name('getHistoryData');
+Route::get('/customer/home',[GetDataViews::class, 'CustomerHome'] )->name('customerHome');
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');
