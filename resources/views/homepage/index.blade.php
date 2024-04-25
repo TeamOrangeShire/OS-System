@@ -26,10 +26,8 @@
                 <div class="col-md-6 p-5 mt-lg-5">
                     <h1 class="display-5 animated fadeIn mb-4">A <span class="text-primary">Coworking</span> and <span class="text-primary">Costudying Space</span> in the heart of Bacolod City</h1>
                     <p class="animated fadeIn mb-4 pb-2">Experience the vibrant atmosphere of our coworking and co-studying space, where productivity thrives amidst a supportive community, right in the heart of Bacolod City.</p>
-                    <div class="d-flex gap-8">
                         <a href="{{ route('solutions') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn"> <i class="fa-solid fa-magnifying-glass"></i> Browse Solutions</a>
-                        <a href="{{ route('download') }}" class="btn btn-primary py-3 px-5 me-3 animated fadeIn"> <i class="fa-brands fa-android"></i> Download Apk </a>
-                    </div>
+                 
                 </div>
                 <div class="col-md-5 animated fadeIn">
                     <div class="owl-carousel header-carousel" style="top: 2rem;">

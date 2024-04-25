@@ -1,3 +1,7 @@
+<div title="Scan QR" class="QRCode-Fab btn btn-primary " id="draggable">
+ <img src="{{asset('img/qr_icon.png')}}" alt="QR" class="fab-image">
+</div>
+
 <div class="container-fluid nav-bar bg-transparent">
     <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
         <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center text-center c_primary">
@@ -26,7 +30,7 @@
                 </div> --}}
                 {{-- <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a> --}}
                 <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
-                <a href="{{ route('scanQr') }}" class="nav-item nav-link d-lg-none ">Scan QR</a>
+                <a href="{{ route('scanQr') }}" class="nav-item nav-link d-lg-none {{ $cookie_val === 'none' ? 'd-none' : ''}} ">Scan QR</a>
             @if($cookie_val === 'none')
         </div>
             <a href="{{route('customer_login')}}" class="btn btn-primary px-3 d-mb-4 d-lg-flex custom_login" >Log in/Sign up</a>

@@ -218,3 +218,81 @@ function TimeFinder4(time) {
     return timeList;
 }
 
+const draggableElement = document.getElementById('draggable');
+
+
+
+let offsetX, offsetY, isDragging = false;
+
+// Function to handle touch start event
+const handleTouchStart = (e) => {
+  const touch = e.touches[0];
+  isDragging = true;
+  offsetX = touch.clientX - draggableElement.getBoundingClientRect().left;
+  offsetY = touch.clientY - draggableElement.getBoundingClientRect().top;
+  e.preventDefault();
+};
+
+// Function to handle touch move event
+const handleTouchMove = (e) => {
+  if (isDragging) {
+    const touch = e.touches[0];
+    let newX = touch.clientX - offsetX;
+    let newY = touch.clientY - offsetY;
+    
+    // Ensure the element stays within the viewport
+    newX = Math.max(0, newX);
+    newX = Math.min(newX, window.innerWidth - draggableElement.offsetWidth);
+    newY = Math.max(0, newY);
+    newY = Math.min(newY, window.innerHeight - draggableElement.offsetHeight);
+    
+    // Update element's position directly
+    draggableElement.style.left = newX + 'px';
+    draggableElement.style.top = newY + 'px';
+  }
+  e.preventDefault();
+};
+
+// Function to handle touch end event
+const handleTouchEnd = () => {
+  isDragging = false;
+};
+
+// Add touch event listeners
+draggableElement.addEventListener('touchstart', handleTouchStart);
+draggableElement.addEventListener('touchmove', handleTouchMove);
+draggableElement.addEventListener('touchend', handleTouchEnd);
+
+// Add mouse event listeners for desktop
+draggableElement.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  offsetX = e.clientX - draggableElement.getBoundingClientRect().left;
+  offsetY = e.clientY - draggableElement.getBoundingClientRect().top;
+  e.preventDefault();
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    let newX = e.clientX - offsetX;
+    let newY = e.clientY - offsetY;
+    
+    // Ensure the element stays within the viewport
+    newX = Math.max(0, newX);
+    newX = Math.min(newX, window.innerWidth - draggableElement.offsetWidth);
+    newY = Math.max(0, newY);
+    newY = Math.min(newY, window.innerHeight - draggableElement.offsetHeight);
+    
+    // Update element's position directly
+    draggableElement.style.left = newX + 'px';
+    draggableElement.style.top = newY + 'px';
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+// Function to handle onclick event
+function ScanDrag(url){
+    window.location.href= url;
+}
