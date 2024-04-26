@@ -118,6 +118,7 @@ function startScan(scannedRoute, refreshURL) {
         data: formData,
         success: function(response) {
           if(response.status === 'login'){
+            document.getElementById('scanner').textContent= 'Scan to Log Out';
             loading.style.display = 'none';
             LoginStatusFetch(refURL);
           }else if(response.status === 'logout'){

@@ -63,19 +63,19 @@ $tour = App\Models\Tour::where('customer_id', $user_id)->first();
      
             <button style="background-color:#212124; color:#fff" id="unavailable" title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
               <i class="bx bxs-bell fs-1"></i>
-              <p>Subscription <i>(Not yet Available)</i></p>
+              <p>Subscription <i>(Coming Soon)</i></p>
               <div class="lock"> <i class="bx bxs-lock-alt fs-1"></i>
               <p>Subscription(Lock)</p></div>
              </button>
              <button   style="background-color:#212124; color:#fff" title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
               <i class="bx bxs-calendar-edit fs-1"></i>
-              <p>Reservation <i>(Not yet Available)</i></p>
+              <p>Reservation <i>(Coming Soon)</i></p>
               <div class="lock"> <i class="bx bxs-lock-alt fs-1"></i>
                 <p>Reservation(Lock)</p></div>
              </button>
                <button  style="background-color:#212124; color:#fff" title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
               <i class="bi bi-gear fs-1"></i>
-              <p>Settings <i>(Not yet Available)</i></p>
+              <p>Settings <i>(Coming Soon)</i></p>
               <div class="lock"> <i class="bx bxs-lock-alt fs-1"></i>
                 <p>Settings(Lock)</p></div>
              </button>
