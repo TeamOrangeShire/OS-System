@@ -54,7 +54,7 @@
 							Don’t have an account?
 						</span>
 
-						<a class="txt2" href="{{ route('signup') }}">
+						<a class="txt2" style="color:#ff5c40" href="{{ route('signup') }}">
 							Sign Up
 						</a>
 					</div>
