@@ -347,25 +347,34 @@ class GetDataViews extends Controller
                 $sale = [];
                 $u_date = [];
                 $u_tran = []; 
-
+                $overallDate =[];
                 foreach ($regDates as $date) {
+                    array_push($overallDate,$date); 
+                }
+
+                foreach ($unregDates as $date) {
+                     array_push($overallDate,$date);
+                }
+                $filterDate = array_unique($overallDate);
+
+                foreach($filterDate as $date){
                     $reg = CustomerLogs::where('log_date', $date)->get();
                     $unreg = CustomerLogUnregister::where('un_log_date', $date)->get();
-                    
                     $total = 0;
                     $totalTransactions = 0; 
-                    
+                    if($reg){
                     foreach ($reg as $r) {
                         $transaction = explode('-', $r->log_transaction);
                         $total += $transaction[0];
                         $totalTransactions++; 
                     }
-                    
+                    }
+                    if($unreg){
                     foreach ($unreg as $r) {
                         $total += $r->un_log_transaction;
                         $totalTransactions++; 
                     }
-                    
+                    }
                     array_push($sale, $total);
                     array_push($u_date, $date);
                     array_push($u_tran, $totalTransactions); 

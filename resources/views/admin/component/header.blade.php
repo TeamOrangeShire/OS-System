@@ -19,7 +19,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
     <div class="collapse navbar-collapse">
       
         <ul class="navbar-nav ml-auto">
-            <li>
+            {{-- <li>
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                         <i class="icon feather icon-bell"></i>
@@ -66,7 +66,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                         </div>
                     </div>
                 </div>
-            </li>
+            </li> --}}
             <li>
                 <div class="dropdown drp-user">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -82,7 +82,6 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                         </div>
                         <ul class="pro-body">
                             <li><a href="{{asset('admin/admin_profile')}}" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
-                            <li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
                             <li><a href="{{route('admin_lockscreen')}}" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
                         </ul>
                     </div>
