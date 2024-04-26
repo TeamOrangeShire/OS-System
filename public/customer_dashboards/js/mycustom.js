@@ -543,4 +543,5 @@ function detectGoto(mobile, web){
 }
 function CloseDataModals(element){
   document.getElementById(element).style.display = 'none';
+  location.reload();
 }
