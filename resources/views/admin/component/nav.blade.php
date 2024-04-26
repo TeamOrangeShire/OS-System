@@ -9,7 +9,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
             
             <div class="">
                 <div class="main-menu-header">
-                    <img class="img-radius" src="{{ asset('User/Admin/'.$admin_name->admin_profile_pic)}}" height="40px" width="50px" alt="User-Profile-Image">
+                    <img class="img-radius" src="{{ $admin_name->admin_profile_pic ? asset('User/Admin/'.$admin_name->admin_profile_pic) : asset('assets/images/os_logo.png') }}" height="40px" width="50px" alt="User-Profile-Image">
                     <div class="user-details">
                         <span> {{$fullname}} </span>
                         <div id="more-details"> Admin <i class="fa fa-chevron-down m-l-5"></i></div>

@@ -128,10 +128,10 @@
                                             <div class="col-sm-8 text-md-center">
                                                 <h5>
                                                 @php
-                                                    $Customerlog = App\Models\Customerlogs::Where('log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
+                                                    $Customerlog = App\Models\CustomerLogs::Where('log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
                                                     $Customerlogcount = $Customerlog->count();
 
-                                                    $unCustomerlog = App\Models\CustomerlogUnregister::Where('un_log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
+                                                    $unCustomerlog = App\Models\CustomerLogUnregister::Where('un_log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
                                                     $unCustomerlogcount = $unCustomerlog->count();
 
                                                     $logTotal = $Customerlogcount + $unCustomerlogcount;
