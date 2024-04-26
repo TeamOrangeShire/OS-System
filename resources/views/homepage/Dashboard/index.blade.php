@@ -6,22 +6,22 @@
     @include('homepage.Dashboard.Components.header', ['title'=>'Home Dashboard - Orange Shire'])
     <link rel="stylesheet" href="{{ asset('tour/tour_style.css') }}">
 </head>
+@php
+$customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+$customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
+$fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
+$logStatus = App\Models\CustomerLogs::
+  where('customer_id', $user_id)
+->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
+->where('log_status', 0)
+->first();
 
+$tour = App\Models\Tour::where('customer_id', $user_id)->first();
+@endphp
 <body>
     @include('homepage.Dashboard.Components.nav', ['user_id'=>$user_id])
   <main id="main" class="main">
-    @php
-    $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
-    $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
-    $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
-    $logStatus = App\Models\CustomerLogs::
-      where('customer_id', $user_id)
-    ->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
-    ->where('log_status', 0)
-    ->first();
-
-    $tour = App\Models\Tour::where('customer_id', $user_id)->first();
-  @endphp
+  
 
     <div class="pagetitle">
       <h1>Welcome! {{ $customer->customer_firstname }}</h1>
@@ -56,9 +56,9 @@
             <i class="bi bi-person fs-1"></i>
             <p>Profile</p>
            </button>
-           <button title="Login To Shire"  style="background-color:#212124; color:#fff" onclick="goTo('{{ route('logintoshire') }}')" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center" >
+           <button title="{{ $logStatus ? 'Log out to Shire' : 'Log in to Shire' }}"  style="background-color:#212124; color:#fff" onclick="goTo('{{ route('logintoshire') }}')" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center" >
             <i class="bi bi-lightning-fill fs-1"></i>
-            <p>Login To Shire</p>
+            <p>{{ $logStatus ? 'Log out to Shire' : 'Log in to Shire' }}</p>
            </button>
      
             <button style="background-color:#212124; color:#fff" id="unavailable" title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
