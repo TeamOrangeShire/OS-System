@@ -222,6 +222,7 @@
                                     <option value="Teacher">Teacher</option>
                                     <option value="Reviewer">Reviewer</option>
                                     <option value="Professional">Professional</option>
+                                     <option value="Regular">Regular</option>
                                 </select>
                             </div>  
                         </div>
@@ -231,7 +232,7 @@
             </div>
                 <br>
                 <div style="text-align: center;">
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary">Set</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
                  </form>
