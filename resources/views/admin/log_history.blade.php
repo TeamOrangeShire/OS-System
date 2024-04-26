@@ -298,14 +298,14 @@
                                                  <td>
                                                     Active
                                                 </td>
-                                                <td style="display:grid; place-items:center;">
+                                                <td style="display:grid; place-items:center;" id='un_logout'>
                                                     <button class=" btn btn-primary" onclick="out('{{$UnCustomer->unregister_id}}')">Logout</button>
                                                 </td>
                                                 @else
                                                 <td>
                                                     Logged Out
                                                 </td>
-                                                <td style="display:grid; place-items:center;">
+                                                <td style="display:grid; place-items:center;" id='un_login'>
                                                     <button class=" btn btn-success" onclick="login('{{$Uncus->un_id}}')">Login</button>
                                                 </td>
                                                 @endif
@@ -582,7 +582,7 @@
         }
          function login(id){
              
-          alertify.confirm("Confirm Logout","Are you sure you want to logout this customer?", function() {
+          alertify.confirm("Confirm Logout","Are you sure you want to login this customer?", function() {
         document.getElementById('roller').style.display='flex';
         document.getElementById('login_id').value=id;
         var formData = $("form#login_unregister").serialize();    
@@ -593,6 +593,10 @@
             data: formData,
             success: function(response) {
                document.getElementById('roller').style.display='none';
+               document.getElementById('un_login').innerHTML='';
+                document.getElementById('un_login').innerHTML=` <button class=" btn btn-primary" onclick="out('${response.id}')">Logout</button>`;
+              
+                                               
             }, 
             error: function (xhr) {
 

@@ -101,7 +101,7 @@ class EditAcc extends Controller
     $fileName = $admin_id . '.' . $file->getClientOriginalExtension();
   
    
-    $file->move(public_path('User/Admin'), $fileName); 
+    $file->move(public_path('User/Admin/'), $fileName); 
   
   
     $update =  AdminAcc::where('admin_id', $admin_id)->first();

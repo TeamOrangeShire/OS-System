@@ -135,7 +135,9 @@ class CustomerLog extends Controller
     
     $id =$request ->login_id;
      $check = CustomerLogUnregister::where('un_id',$id)->where('un_log_status',1)->first();
-     if($check !== null){
+      $check2 = CustomerLogUnregister::where('un_id',$id)->where('un_log_status',0)->first();
+
+     if($check  && $check2 ){
       return response()->json(['status'=> 'failed']);
      }else{
     $unregister = new CustomerLogUnregister;
@@ -154,7 +156,7 @@ class CustomerLog extends Controller
     $data->act_location = "customer_log_unregister";
     $data->save();
 
-    return response()->json(['status'=> 'success']);
+    return response()->json(['status'=> 'success','id'=>$unregister->unregister_id]);
      }
     
     
