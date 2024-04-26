@@ -52,6 +52,7 @@ Route::post('/customer-profile-update-picture',[EditAcc::class,'UpdateCustomerPr
 Route::post('/customer-subscribe-plan',[SubscriptionsData::class,'Subscribe'] )->name('customer_subscribe');
 Route::post('/customer-log-out',[Login::class,'LogOutCustomer'] )->name('customer_logOut');
 Route::post('/customer/redirectScan/updatelogs',[CustomerLog::class,'GetScannedURLlog'] )->name('updateQRLog');
+Route::post('/customer/tourend',[CreateAcc::class,'UpdateTour'] )->name('updateTour');
 
 //Customer Dashboard
 Route::get('/customer/home/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');

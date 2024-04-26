@@ -3,7 +3,7 @@
 
 <head>
  @include('homepage.Dashboard.Components.header', ['title'=>'Customer Login - Orange Shire'])
-
+ <link rel="stylesheet" href="{{ asset('tour/tour_style.css') }}">
 </head>
 
 <body>
@@ -13,6 +13,8 @@
   $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
   $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
+  
+  $tour = App\Models\Tour::where('customer_id', $user_id)->first();
 @endphp
 <div class="custom-success" style="display: {{ $status === 'success' ? 'flex' : 'none' }}" id="custom_success">
   <div class="success-content text-center">
@@ -66,7 +68,7 @@
       </nav>
     </div><!-- End Page Title -->
     <form method="post" id="scannedDataHolder">@csrf <input type="hidden" id="scannedQRCode" name="QRCode"><input type="hidden" name="cust_id" value="{{ $user_id }}"></form>
-    <button type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
+    <button id="scanner" type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
       <div id="qrScanner" style="display: none;"></div>
        <div class="card">
         <div class="card-body">
@@ -74,10 +76,10 @@
 
           <!-- Default Tabs -->
           <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
+            <li id="nav_status" class="nav-item" role="presentation">
               <button class="nav-link active" id="status-tab" data-bs-toggle="tab" data-bs-target="#status" type="button" role="tab" aria-controls="status" aria-selected="true">Status</button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li id="nav_history" class="nav-item" role="presentation">
               <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">History</button>
             </li>
           </ul>
@@ -148,9 +150,19 @@
   <!-- script end for change password -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+  <form id="tour_status" method="POST">
+    @csrf
+    <input type="hidden" name="user_id" value="{{ $user_id }}">
+    <input type="hidden" name="location" value="login">
+    <input type="hidden" id="status_route" value="{{ route('updateTour') }}">
+  </form>
   <!-- Vendor JS Files -->
   @include('homepage.Dashboard.Components.scripts')
+  
+  @if ($tour->tour_login === 0)
+  <script src="{{ asset('tour/login.js') }}"></script>
+  @endif
+
   <script>
     
     window.onload = function() {
@@ -203,7 +215,7 @@
             });
     };
   </script>
-  <!-- Template Main JS File -->
+
 
 
   

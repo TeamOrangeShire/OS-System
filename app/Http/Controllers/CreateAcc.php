@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
 use App\Models\CustomerAcc;
+use App\Models\Tour;
 use Illuminate\Support\Facades\Hash;
 
 class CreateAcc extends Controller
@@ -56,6 +57,16 @@ class CreateAcc extends Controller
         $account->verification_code = 0;
         $account->session_id = $session_id;
         $account->save();
+        
+        $tour = new Tour();
+        $tour->customer_id = $account->customer_id;
+        $tour->tour_home = 0;
+        $tour->tour_login = 0;
+        $tour->tour_profile = 0;
+        $tour->tour_subscription = 0;
+        $tour->tour_reservation = 0;
+        $tour->tour_settings = 0;
+        $tour->save();
 
         return response()->json(['id'=>$session_id, 'email'=>'not_exist']);
     }
@@ -72,6 +83,33 @@ class CreateAcc extends Controller
         }
      
 
+    }
+
+    public function UpdateTour(Request $req){
+        $user = $req->user_id;
+        $location = $req->location;
+
+        $tour = Tour::where('customer_id', $user)->first();
+
+        switch($location){
+            case 'home':
+                $tour->update([
+                   'tour_home'=> 1,
+                ]);
+                break;
+            case 'login':
+                $tour->update([
+                    'tour_login'=> 1,
+                 ]);
+                 break;
+            case 'profile':
+                $tour->update([
+                    'tour_profile'=> 1,
+                 ]);
+                 break;
+        }
+
+        return response()->json(['status'=>'success']);
     }
     
 }

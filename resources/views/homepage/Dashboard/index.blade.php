@@ -4,6 +4,7 @@
 
 <head>
     @include('homepage.Dashboard.Components.header', ['title'=>'Home Dashboard - Orange Shire'])
+    <link rel="stylesheet" href="{{ asset('tour/tour_style.css') }}">
 </head>
 
 <body>
@@ -18,7 +19,10 @@
     ->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
     ->where('log_status', 0)
     ->first();
+
+    $tour = App\Models\Tour::where('customer_id', $user_id)->first();
   @endphp
+
     <div class="pagetitle">
       <h1>Welcome! {{ $customer->customer_firstname }}</h1>
       <nav>
@@ -30,11 +34,11 @@
 
     <section class="section shadow w-100 back-gradient rounded p-4 row mx-auto">
       
-         <div class="col col-6">
+         <div id="currentCredit" class="col col-6">
             <h1 class="text-white">₱{{ $customer->account_credits === null ? 0 : $customer->account_credits }}.00</h1>
             <small class="text-white">Current Credit</small>
          </div>
-         <div class="col col-6 row">
+         <div id="logStatus" class="col col-6 row">
             <h1 class="text-white">Status</h1>
             <p class="text-white">{{ $logStatus ? 'Logged In' : 'Not Logged In' }} <br> {{ $logStatus ? $logStatus->log_date : '---------' }} <br> {{ $logStatus ? $logStatus->log_start_time : '---------' }} </p>
          </div>
@@ -44,7 +48,7 @@
     <section class="section mt-4 shadow rounded p-4  mx-auto">
         <p>Navigate Our App</p>
         <div  class="w-100 row gap-1 align-items-center">
-           <button title="Home" onclick="detectGoto('{{ route('customerHome') }}', '{{ route('home') }}')" class="btn btn-primary col-md-3 mx-auto mt-4 rounded shadow text-center" >
+           <button id="available" title="Home" onclick="detectGoto('{{ route('customerHome') }}', '{{ route('home') }}')" class="btn btn-primary col-md-3 mx-auto mt-4 rounded shadow text-center" >
             <i class="bi bi-house-door fs-1"></i>
             <p>Home</p>
            </button>
@@ -56,21 +60,23 @@
             <i class="bi bi-lightning-fill fs-1"></i>
             <p>Login To Shire</p>
            </button>
-           <button title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
-            <i class="bx bxs-bell fs-1"></i>
-            <p>Subscription <i>(Not yet Available)</i></p>
-            <img src="{{ asset('img/lock.png') }}" alt="lock" class="lock">
-           </button>
-           <button  title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
-            <i class="bx bxs-calendar-edit fs-1"></i>
-            <p>Reservation <i>(Not yet Available)</i></p>
-            <img src="{{ asset('img/lock.png') }}" alt="lock" class="lock" >
-           </button>
-             <button title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
-            <i class="bi bi-gear fs-1"></i>
-            <p>Settings <i>(Not yet Available)</i></p>
-            <img src="{{ asset('img/lock.png') }}" alt="lock" class="lock">
-           </button>
+     
+            <button id="unavailable" title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
+              <i class="bx bxs-bell fs-1"></i>
+              <p>Subscription <i>(Not yet Available)</i></p>
+              <img src="{{ asset('img/lock.png') }}" alt="lock" class="lock">
+             </button>
+             <button  title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
+              <i class="bx bxs-calendar-edit fs-1"></i>
+              <p>Reservation <i>(Not yet Available)</i></p>
+              <img src="{{ asset('img/lock.png') }}" alt="lock" class="lock" >
+             </button>
+               <button title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
+              <i class="bi bi-gear fs-1"></i>
+              <p>Settings <i>(Not yet Available)</i></p>
+              <img src="{{ asset('img/lock.png') }}" alt="lock" class="lock">
+             </button>
+           
         </div>
      </section>
  
@@ -87,9 +93,18 @@
 
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+  <form id="tour_status" method="POST">
+    @csrf
+    <input type="hidden" name="user_id" value="{{ $user_id }}">
+    <input type="hidden" name="location" value="home">
+    <input type="hidden" id="status_route" value="{{ route('updateTour') }}">
+  </form>
   @include('homepage.Dashboard.Components.scripts')
 
+  @if ($tour->tour_home === 0)
+  <script src="{{ asset('tour/home.js') }}"></script>
+  @endif
+  
 </body>
 
 </html>
