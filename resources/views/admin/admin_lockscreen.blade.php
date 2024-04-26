@@ -44,8 +44,8 @@
     }
 
     .lock-screen-logo img {
-      max-width: 60%;
-      height: auto;
+      max-width: 200px;
+      height: 200px;
       border-radius: inherit; /* Inherit the border radius from parent */
       box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7); /* Add box shadow */
     }
@@ -109,7 +109,7 @@
       $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
     @endphp
     <div class="lock-screen-logo">
-      <img src="{{asset('assets/images/user/avatar-2.jpg')}}" alt="Logo">
+      <img src="{{ $admin_name->admin_profile_pic ? asset('User/Admin/'.$admin_name->admin_profile_pic) : asset('assets/images/os_logo.png') }}" alt="Logo">
     </div>
     <form class="lock-screen-form" method="POST" action="{{route('Admin_lockscreen')}}">
       @csrf
