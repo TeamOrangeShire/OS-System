@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('homepage/Components/header', ['current_page'=>'Orange Shire'])
+    @include('homepage/Components/header', ['current_page'=>'Orange Shire Coworking'])
 </head>
 
 <body style="background-color: #ffffff !important">
