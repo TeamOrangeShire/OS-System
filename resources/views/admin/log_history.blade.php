@@ -86,7 +86,7 @@
                                             <td>{{$cus->customer_email}}</td>
                                             <td>{{$cus->customer_phone_num }}</td>
                                             <td style="display: none;"></td>
-                                            <td>
+                                            <td style="display:grid; place-items:center;">
                                                 <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="log('{{$cus->customer_id}}','{{$cus_fullname}}')"><i class="feather icon-info"></i></button>
                                             </td>
                                         </tr>
@@ -149,21 +149,21 @@
                                                 <td>
                                                     Pending
                                                 </td>
-                                                <td>
-                                                    <button type="button" class="btn  btn-icon btn-warning" onclick="accept_log('{{$cus->log_id}}')"><i class="feather icon-clock"></i></button>
+                                                <td style="display:grid; place-items:center;">
+                                                    <button type="button" class="btn btn-warning" onclick="accept_log('{{$cus->log_id}}')">Confirm</button>
                                                 </td>
                                                 @elseif ($cus->log_status === 2)
                                                 <td>
                                                     Completed
                                                 </td>
-                                                <td>
+                                                <td style="display:grid; place-items:center;">
                                                     <i class="feather icon-check btn btn-icon btn-success"></i>
                                                 </td>
                                                 @else
                                                 <td>
                                                     Active
                                                 </td>
-                                                <td>
+                                                <td style="display:grid; place-items:center;">
                                                     <i class="feather icon-zap btn btn-icon btn-primary"></i>
                                                 </td>
                                                 @endif
@@ -215,7 +215,7 @@
                                           $unrFullname = $unFullname->un_firstname .' '.$unFullname->un_middlename.' '.$unFullname->un_lastname;
 
                                           @endphp
-                                        <tr>
+                                        <tr >
                                             <td>{{$unrFullname}}</td>
                                             <td>{{$unFullname->un_email}}</td>
                                             <td>{{$unFullname->un_contact}}</td>
@@ -226,22 +226,22 @@
                                                 <td>
                                                     Pending
                                                 </td>
-                                                <td>
-                                                    <button type="button" class="btn  btn-icon btn-warning" onclick="out('{{$uncus->unregister_id}}')"><i class="feather icon-clock"></i></button>
+                                                <td style="display:grid; place-items:center;">
+                                                    <button type="button" class="btn btn-warning" onclick="out('{{$uncus->unregister_id}}')">Confirm</i></button>
                                                 </td>
                                                 @elseif ($uncus->un_log_status === 2)
-                                                <td>
+                                                <td >
                                                     Completed
                                                 </td>
-                                                <td>
+                                                <td style="display:grid; place-items:center;">
                                                     <i class="feather icon-check btn btn-icon btn-success"></i>
                                                 </td>
                                                 @else
                                                 <td>
                                                     Active
                                                 </td>
-                                                <td>
-                                                    <i class="feather icon-zap btn btn-icon btn-primary" onclick="out('{{$uncus->unregister_id}}')"></i>
+                                                <td style="display:grid; place-items:center;">
+                                                    <button class="btn btn-primary" onclick="out('{{$uncus->unregister_id}}')">Logout</button>
                                                 </td>
                                                 @endif
                                         </tr>
@@ -298,15 +298,15 @@
                                                  <td>
                                                     Active
                                                 </td>
-                                                <td>
-                                                    <i class="feather icon-zap btn btn-icon btn-primary" onclick="out('{{$UnCustomer->unregister_id}}')"></i>
+                                                <td style="display:grid; place-items:center;">
+                                                    <button class=" btn btn-primary" onclick="out('{{$UnCustomer->unregister_id}}')">Logout</button>
                                                 </td>
                                                 @else
                                                 <td>
                                                     Logged Out
                                                 </td>
-                                                <td>
-                                                    <i class="feather icon-log-in btn btn-icon btn-success" onclick="login('{{$Uncus->un_id}}')"></i>
+                                                <td style="display:grid; place-items:center;">
+                                                    <button class=" btn btn-success" onclick="login('{{$Uncus->un_id}}')">Login</button>
                                                 </td>
                                                 @endif
                                         </tr>
