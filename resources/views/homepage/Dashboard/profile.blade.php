@@ -3,7 +3,7 @@
 
 <head>
  @include('homepage.Dashboard.Components.header', ['title'=>'My Profile - Orange Shire'])
-
+ <link rel="stylesheet" href="{{ asset('tour/tour_style.css') }}">
 </head>
 
 <body>
@@ -13,6 +13,8 @@
   $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
   $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
+  
+  $tour = App\Models\Tour::where('customer_id', $user_id)->first();
 @endphp
   <!-- ======= Header ======= -->
   @include('homepage.Dashboard.Components.nav', ['user_id'=>$user_id])
@@ -50,15 +52,15 @@
               <!-- Bordered Tabs -->
               <ul class="nav nav-tabs nav-tabs-bordered">
 
-                <li class="nav-item">
+                <li id="nav_overview" class="nav-item">
                   <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
                 </li>
 
-                <li class="nav-item">
+                <li id="nav_edit" class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
                 </li>
 
-                <li class="nav-item">
+                <li id="nav_changepass" class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
                 </li>
 
@@ -283,7 +285,16 @@
       </div>
     </div>
   </div>
-
+  <form id="tour_status" method="POST">
+    @csrf
+    <input type="hidden" name="user_id" value="{{ $user_id }}">
+    <input type="hidden" name="location" value="profile">
+    <input type="hidden" id="status_route" value="{{ route('updateTour') }}">
+  </form>
+  
+  @if ($tour->tour_profile === 0)
+  <script src="{{ asset('tour/profile.js') }}"></script>
+  @endif
   <!--script start for change password-->
   <script>
     function ChangePassword(){
@@ -379,9 +390,6 @@
 
   <!-- Vendor JS Files -->
   @include('homepage.Dashboard.Components.scripts')
-
-  <!-- Template Main JS File -->
-
 
   
 </body>

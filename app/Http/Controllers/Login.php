@@ -57,8 +57,8 @@ class Login extends Controller
         
         $username = $req->username;
         $password = $req->password;
-
-        $customer  =  CustomerAcc::where('customer_username', $username)->first();
+        $email =strtolower($username);
+        $customer  =  CustomerAcc::where('customer_username', $email)->first();
         if($customer){
             if(Hash::check($password, $customer->customer_password)){
                 $cookie = Cookie::make('customer_id', $customer->customer_id, 60 * 24 * 31);

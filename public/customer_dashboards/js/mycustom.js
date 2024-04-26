@@ -545,3 +545,40 @@ function CloseDataModals(element){
   document.getElementById(element).style.display = 'none';
   location.reload();
 }
+
+function SnackBar(message){
+   const snackbar = document.getElementById('snackbar');
+   const content = document.getElementById('snackbarContent');
+
+   snackbar.style.display = '';
+   content.textContent = message;
+
+   setTimeout(()=>{
+     snackbar.style.animation = 'fadeOutSnackBar 0.7s';
+     setTimeout(()=>{
+        snackbar.style.display = 'none';
+     }, 700);
+   }, 2000);
+}
+
+
+function UpdateTour(userChoice){
+  const route = document.getElementById('status_route').value;
+  var formData = $('form#tour_status').serialize();
+  console.log(formData);
+  $.ajax({
+    type: 'POST',
+    url: route,
+    data: formData,
+    success: function(response) {
+     if(response.status === 'success'){
+      const formatString = userChoice + ' Tour is Finished';
+      SnackBar(formatString);
+     }
+    }, 
+    error: function (xhr) {
+
+        console.log(xhr.responseText);
+    }
+});
+}
