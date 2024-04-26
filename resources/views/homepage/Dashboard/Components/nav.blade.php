@@ -187,7 +187,7 @@
       <li class="nav-item ">
         <a class="nav-link disable" href="{{ /*route('customerSubscription')*/'#' }}">
           <i class="bx bxs-bell disable"></i>
-          <span>My Subscriptions <small>(Unavailable)</small></span>
+          <span>My Subscriptions <small>(Coming Soon)</small></span>
         </a>
       </li>
 
@@ -195,14 +195,14 @@
       <li class="nav-item">
         <a class="nav-link disable" href="{{ /*route('customerReservation')*/ '#'}}">
           <i class="bx bxs-calendar-edit disable"></i>
-          <span>My Reservation <small>(Unavailable)</small></span>
+          <span>My Reservation <small>(Coming Soon)</small></span>
         </a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link disable" href="{{ /*route('customerSettings')*/ '#' }}">
           <i class="bi bi-gear disable"></i>
-          <span>Settings <small>(Unavailable)</small></span>
+          <span>Settings <small>(Coming Soon)</small></span>
         </a>
       </li>
 
