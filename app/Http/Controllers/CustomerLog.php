@@ -167,7 +167,8 @@ class CustomerLog extends Controller
 
     if($QRCode === 'XCgEMtt4XMC9DN2'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
-      if(!$checkLogOut){
+      $checkTransaction =  CustomerLogs::where('customer_id', $id)->where('log_status', 1)->first();
+      if(!$checkLogOut && !$checkTransaction){
         $log = new CustomerLogs();
         $log->customer_id = $id;
         $log->log_date =  Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');

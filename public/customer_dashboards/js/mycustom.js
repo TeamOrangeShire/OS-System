@@ -488,7 +488,7 @@ function formatDateTime(dateTimeString) {
 
 
 function LogHistory(url, getLogInfo, cust_type){
-  document.getElementById('custom_success').style.display = 'none';
+  document.getElementById('custom_success').style.display = 'none';    
   axios.get(url)
   .then(function (response) {
     const data = response.data.log;
@@ -504,13 +504,20 @@ function LogHistory(url, getLogInfo, cust_type){
         <i class="bi bi-info-circle-fill" style="font-size: 1.3rem"></i></button>`,
       ]);
     });
-    $('#historyBody').DataTable( {
+    
+if ( ! $.fn.DataTable.isDataTable( '#historyBody' ) ) {
+  // If not initialized, then initialize the DataTable
+  $('#historyBody').DataTable({
       responsive: true,
       select: true,
       data: html
-   });
+  });
+} else {
+  // If DataTable is already initialized, you can update its data
+  var table = $('#historyBody').DataTable();
+  table.clear().rows.add(html).draw();
+}
 
-    console.log(html)
   })
  .catch(function (error) {
   console.error(error);
@@ -533,4 +540,7 @@ function detectGoto(mobile, web){
 } else {
    window.location.href = web;
 }
+}
+function CloseDataModals(element){
+  document.getElementById(element).style.display = 'none';
 }
