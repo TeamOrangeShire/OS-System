@@ -187,13 +187,13 @@ class CustomerLog extends Controller
    
     }else if($QRCode === 'FLPguCIZSg9TTqO'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
-      $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-      $time = timeDifference($checkLogOut->log_start_time, $end);
-      $hours = $time['hours'];
-      $minutes = $time['minutes'];
-      $payment = PaymentCalc($hours, $minutes, $customer->customer_type);
-      $transaction = $payment . "-1";
       if($checkLogOut){
+        $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+        $time = timeDifference($checkLogOut->log_start_time, $end);
+        $hours = $time['hours'];
+        $minutes = $time['minutes'];
+        $payment = PaymentCalc($hours, $minutes, $customer->customer_type);
+        $transaction = $payment . "-1";
         $updateLog = CustomerLogs::where('log_id', $checkLogOut->log_id)->first();
         $updateLog->update([
           'log_end_time'=> $end,
@@ -206,16 +206,17 @@ class CustomerLog extends Controller
    
     }else if($QRCode === 'IuFiIJwM3AupqAK'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
-      $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-      $time = timeDifference($checkLogOut->log_start_time, $end);
-      $hours = $time['hours'];
-      $minutes = $time['minutes'];
-      
-      $payment = PaymentCalc($hours, $minutes, $customer->customer_type);
-      $finalCredit = $customer->account_credits - $payment;
      
-      $transaction = $payment . "-2";
         if($checkLogOut){
+          $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+          $time = timeDifference($checkLogOut->log_start_time, $end);
+          $hours = $time['hours'];
+          $minutes = $time['minutes'];
+          
+          $payment = PaymentCalc($hours, $minutes, $customer->customer_type);
+          $finalCredit = $customer->account_credits - $payment;
+         
+          $transaction = $payment . "-2";
           if($finalCredit < 0){
             $status = 'not_enough';
             $log_id = $checkLogOut->log_id;
