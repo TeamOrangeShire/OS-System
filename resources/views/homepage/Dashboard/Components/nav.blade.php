@@ -37,7 +37,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have {{ $notifCount }} new notifications
-              <a href="{{ route('customerNotification') }}"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
   
             <li>
