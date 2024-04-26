@@ -298,14 +298,14 @@
                                                  <td>
                                                     Active
                                                 </td>
-                                                <td style="display:grid; place-items:center;" id='un_logout'>
+                                                <td style="display:grid; place-items:center;">
                                                     <button class=" btn btn-primary" onclick="out('{{$UnCustomer->unregister_id}}')">Logout</button>
                                                 </td>
                                                 @else
-                                                <td>
+                                                <td id='unstatus{{$Uncus->un_id}}'>
                                                     Logged Out
                                                 </td>
-                                                <td style="display:grid; place-items:center;" id='un_login'>
+                                                <td style="display:grid; place-items:center;" id='un_login{{$Uncus->un_id}}'>
                                                     <button class=" btn btn-success" onclick="login('{{$Uncus->un_id}}')">Login</button>
                                                 </td>
                                                 @endif
@@ -593,8 +593,11 @@
             data: formData,
             success: function(response) {
                document.getElementById('roller').style.display='none';
-               document.getElementById('un_login').innerHTML='';
-                document.getElementById('un_login').innerHTML=` <button class=" btn btn-primary" onclick="out('${response.id}')">Logout</button>`;
+               const element='un_login'+id;
+                const unstatus='unstatus'+id;
+                 document.getElementById(unstatus).textContent='Active';
+               document.getElementById(element).innerHTML='';
+                document.getElementById(element).innerHTML=` <button class=" btn btn-primary" onclick="out('${response.id}')">Logout</button>`;
               
                                                
             }, 

@@ -34,7 +34,7 @@
                 <div class="card-header">
                     
                     <h5>Customer Account</h5> 
-                    <button class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#addcustomermodal" type="submit">Add New Customer</button>
+                    {{-- <button class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#addcustomermodal" type="submit">Add New Customer</button> --}}
                     <br>
                 </div>
                 <div class="card-body table-border-style">
@@ -68,7 +68,7 @@
                                     <td>{{$cus->customer_type}}</td>
                                     <td>
                                         <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick="view('{{$cus->customer_id}}','{{$cus_fullname}}','{{$cus->customer_email}}','{{$cus->customer_phone_num}}','{{$cus->customer_type}}','{{$cus->account_credits}}')"> <i class="feather icon-info"> </i></button>
-                                        <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#declinemodal" ><i class="feather icon-x-circle"></i></button>   </td>
+                                        {{-- <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#declinemodal" ><i class="feather icon-x-circle"></i></button>   </td> --}}
                                     </td>
                                 </tr>
                                 @php

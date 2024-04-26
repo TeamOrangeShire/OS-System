@@ -68,7 +68,7 @@
         <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
                 <div class="col-md-6 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{asset('User/Admin/'.$admin_name->admin_profile_pic)}}"  data-toggle="modal" data-target="#exampleModalCenter">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px;" height="150px;" src="{{asset('User/Admin/'.$admin_name->admin_profile_pic)}}"  data-toggle="modal" data-target="#exampleModalCenter">
                         <span class="font-weight-bold">{{$admin_name->admin_username}}</span>
                         <span class="text-black-50">{{$fullname}}</span>
                         <span> </span>
