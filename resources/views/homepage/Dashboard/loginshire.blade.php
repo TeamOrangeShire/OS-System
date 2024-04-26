@@ -15,8 +15,14 @@
   $profile = $customer->customer_profile_pic;
   
   $tour = App\Models\Tour::where('customer_id', $user_id)->first();
+  $logStatus = App\Models\CustomerLogs::
+  where('customer_id', $user_id)
+->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
+->where('log_status', 0)
+->first();
+
 @endphp
-<div class="custom-success" style="display: {{ $status === 'success' ? 'flex' : 'none' }}" id="custom_success">
+<div class="custom-success" onclick="CloseDataModals('custom_success')" style="display: {{ $status === 'success' ? 'flex' : 'none' }}" id="custom_success">
   <div class="success-content text-center">
      <img src="{{ asset('customer_dashboards/img/success.gif') }}" alt="success">
      <h3 class="text-success">Log Out Successfully</h3>
@@ -32,7 +38,7 @@
   </div>
 </div>
 
-<div class="custom-success" style="display:{{ $status === 'not_enough' ? 'flex' : 'none' }}" id="custom_error">
+<div class="custom-success" onclick="CloseDataModals('custom_error')" style="display:{{ $status === 'not_enough' ? 'flex' : 'none' }}" id="custom_error">
   <div class="success-content text-center">
      <img src="{{ asset('customer_dashboards/img/ewallet.gif') }}" alt="error">
      <h3 class="text-success">Not Enough Credit to Pay</h3>
@@ -42,7 +48,7 @@
   </div>
 </div>
 
-<div class="custom-success" style="display:{{ $status === 'already_login' ? 'flex' : 'none' }}" id="custom_login">
+<div class="custom-success" style="display:{{ $status === 'already_login' ? 'flex' : 'none' }}" onclick="CloseDataModals('custom_login')" id="custom_login">
   <div class="success-content text-center">
      <img src="{{ asset('customer_dashboards/img/work.gif') }}" alt="error">
      <h3 class="text-success">Oppss... Something Went Wrong</h3>
@@ -68,7 +74,7 @@
       </nav>
     </div><!-- End Page Title -->
     <form method="post" id="scannedDataHolder">@csrf <input type="hidden" id="scannedQRCode" name="QRCode"><input type="hidden" name="cust_id" value="{{ $user_id }}"></form>
-    <button id="scanner" type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> Scan QR Code</button>
+    <button id="scanner" type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> {{ $logStatus ? 'Scan to Log out' : 'Scan to Log in'}}</button>
       <div id="qrScanner" style="display: none;"></div>
        <div class="card">
         <div class="card-body">

@@ -6,22 +6,22 @@
     @include('homepage.Dashboard.Components.header', ['title'=>'Home Dashboard - Orange Shire'])
     <link rel="stylesheet" href="{{ asset('tour/tour_style.css') }}">
 </head>
+@php
+$customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+$customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
+$fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
+$logStatus = App\Models\CustomerLogs::
+  where('customer_id', $user_id)
+->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
+->where('log_status', 0)
+->first();
 
+$tour = App\Models\Tour::where('customer_id', $user_id)->first();
+@endphp
 <body>
     @include('homepage.Dashboard.Components.nav', ['user_id'=>$user_id])
   <main id="main" class="main">
-    @php
-    $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
-    $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
-    $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
-    $logStatus = App\Models\CustomerLogs::
-      where('customer_id', $user_id)
-    ->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
-    ->where('log_status', 0)
-    ->first();
-
-    $tour = App\Models\Tour::where('customer_id', $user_id)->first();
-  @endphp
+  
 
     <div class="pagetitle">
       <h1>Welcome! {{ $customer->customer_firstname }}</h1>
@@ -48,33 +48,36 @@
     <section class="section mt-4 shadow rounded p-4  mx-auto">
         <p>Navigate Our App</p>
         <div  class="w-100 row gap-1 align-items-center">
-           <button id="available" title="Home" onclick="detectGoto('{{ route('customerHome') }}', '{{ route('home') }}')" class="btn btn-primary col-md-3 mx-auto mt-4 rounded shadow text-center" >
+           <button id="available" style="background-color:#212124; color:#fff" title="Home" onclick="detectGoto('{{ route('customerHome') }}',   '{{ route('home') }}')" class="btn  col-md-3 mx-auto mt-4 rounded shadow text-center" >
             <i class="bi bi-house-door fs-1"></i>
             <p>Home</p>
            </button>
-           <button title="Profile" onclick="goTo('{{ route('customerProfile') }}')" class="btn btn-primary col-md-3 mx-auto mt-4 rounded shadow text-center" >
+           <button title="Profile"  style="background-color:#212124; color:#fff" onclick="goTo('{{ route('customerProfile') }}')" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center" >
             <i class="bi bi-person fs-1"></i>
             <p>Profile</p>
            </button>
-           <button title="Login To Shire" onclick="goTo('{{ route('logintoshire') }}')" class="btn btn-primary col-md-3 mx-auto mt-4 rounded shadow text-center" >
+           <button title="{{ $logStatus ? 'Log out to Shire' : 'Log in to Shire' }}"  style="background-color:#212124; color:#fff" onclick="goTo('{{ route('logintoshire') }}')" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center" >
             <i class="bi bi-lightning-fill fs-1"></i>
-            <p>Login To Shire</p>
+            <p>{{ $logStatus ? 'Log out to Shire' : 'Log in to Shire' }}</p>
            </button>
      
-            <button id="unavailable" title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
+            <button style="background-color:#212124; color:#fff" id="unavailable" title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
               <i class="bx bxs-bell fs-1"></i>
               <p>Subscription <i>(Not yet Available)</i></p>
-              <img src="{{ asset('img/lock.png') }}" alt="lock" class="lock">
+              <div class="lock"> <i class="bx bxs-lock-alt fs-1"></i>
+              <p>Subscription(Lock)</p></div>
              </button>
-             <button  title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
+             <button   style="background-color:#212124; color:#fff" title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
               <i class="bx bxs-calendar-edit fs-1"></i>
               <p>Reservation <i>(Not yet Available)</i></p>
-              <img src="{{ asset('img/lock.png') }}" alt="lock" class="lock" >
+              <div class="lock"> <i class="bx bxs-lock-alt fs-1"></i>
+                <p>Reservation(Lock)</p></div>
              </button>
-               <button title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
+               <button  style="background-color:#212124; color:#fff" title="Locked" class="btn col-md-3 mx-auto mt-4 rounded shadow text-center position-relative" >
               <i class="bi bi-gear fs-1"></i>
               <p>Settings <i>(Not yet Available)</i></p>
-              <img src="{{ asset('img/lock.png') }}" alt="lock" class="lock">
+              <div class="lock"> <i class="bx bxs-lock-alt fs-1"></i>
+                <p>Settings(Lock)</p></div>
              </button>
            
         </div>

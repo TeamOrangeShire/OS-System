@@ -20,6 +20,12 @@
     $notif = App\Models\CustomerNotification::where('user_id', $user_id)->where('user_type', 'Customer');
     $notifCount = $notif->where('notif_status', 0)->get()->count();
     $notifMessage = $notif->get();
+    $logStatus = App\Models\CustomerLogs::
+  where('customer_id', $user_id)
+->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
+->where('log_status', 0)
+->first();
+
 @endphp
         <li class="nav-item dropdown">
 
@@ -174,7 +180,7 @@
       <li class="nav-item">
         <a class="nav-link " href="{{ route('logintoshire') }}">
           <i class="bi bi-lightning-fill"></i>
-          <span>Login to Shire</span>
+          <span>{{ $logStatus ? 'Log out to Shire' : 'Log in to Shire' }}</span>
         </a>
       </li>
 
