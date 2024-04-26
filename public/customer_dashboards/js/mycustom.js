@@ -488,6 +488,7 @@ function formatDateTime(dateTimeString) {
 
 
 function LogHistory(url, getLogInfo, cust_type){
+  document.getElementById('custom_success').style.display = 'none';
   axios.get(url)
   .then(function (response) {
     const data = response.data.log;

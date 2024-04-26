@@ -26,7 +26,7 @@
      <p id="succ_status"></p>   
      <i>Thank you for visiting  Orange Shire Coworking!</i>   
      <i>&trade; All Rights Reserved Orange Shire &trade;</i>
-     <button data-bs-dismiss="modal" onclick="LogHistory('{{ route('getHistoryData') }}?cust_id={{ $user_id }}', '{{ route('getLogInfo') }}', '{{ $customer->customer_type }}')" class="btn btn-success mt-2">Okay</button>
+     <button  onclick="LogHistory('{{ route('getHistoryData') }}?cust_id={{ $user_id }}', '{{ route('getLogInfo') }}', '{{ $customer->customer_type }}')" class="btn btn-success mt-2">Okay</button>
   </div>
 </div>
 
