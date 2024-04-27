@@ -259,7 +259,13 @@
                   <div class="tab-pane fade " id="unregister" role="tabpanel" aria-labelledby="home-tab">
  
                     {{-- content --}}
-                    
+                    <style>
+                        .clickable:hover{
+                            cursor:pointer;
+                            text-decoration:underline;
+                            color: #ff5c40;
+                        }
+                    </style>
                         <section class="section">
                             <div class="row">
                               <div class="col-lg-12">
@@ -286,7 +292,7 @@
                                            $Uncus_fullname = $Uncus->un_firstname .' '.$Uncus->un_middlename.' '.$Uncus->un_lastname;
                                           @endphp
                                         <tr>
-                                            <td>{{$Uncus_fullname}}</td>
+                                            <td onclick="editType('{{$Uncus->un_id}}','{{ $Uncus_fullname}}')" class="clickable" data-toggle="modal" data-target="#editType"> {{$Uncus_fullname}}</td>
                                             <td>{{$Uncus->un_email}}</td>
                                             <td>{{$Uncus->un_contact }}</td>
                                             <td style="display: none;"></td>
@@ -328,6 +334,58 @@
     </div>
 </div>
 
+{{-- modal start info --}}
+<div id="editType" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+           
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Customer Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                  <form action="{{route('editType')}}" method="POST">
+                        @csrf
+                  <div class="container">
+                    <div class="row" style="">
+                        <div class="col-sm-12">
+                        <br>
+                        <input type="hidden" name="Un_id_type" id="Un_id_type">
+                        <label for="customer_name_type"> <strong>Customer Name: </strong> </label> <br>
+                        <p class="" name="cname" id="Unname">  </p> 
+                    </div>
+                    </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                      
+                            <br>
+                            <div class="form-group">
+                                <label for="">User Type</label>
+                                <select class="form-control" name="Un_customer_type" id="Un_customer_type">
+                                    <option value="Student">Student</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Reviewer">Reviewer</option>
+                                    <option value="Professional">Professional</option>
+                                     <option value="Regular">Regular</option>
+                                </select>
+                            </div>  
+                        </div>
+                   
+    
+                </div>
+            </div>
+                <br>
+                <div style="text-align: center;">
+                    <button type="submit" class="btn btn-primary">Set</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+                 </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{{-- modal end info--}} 
 
 {{-- modal start info --}}
 <div id="out" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -546,6 +604,11 @@
 </form>
 <!-- [ Main Content ] end -->
     <script>
+function editType(id,name){
+     document.getElementById('Un_id_type').value=id;
+     document.getElementById('Unname').textContent=name;
+}
+
         function out(id){
              
           alertify.confirm("Confirm Logout","Are you sure you want to logout this customer?", function() {

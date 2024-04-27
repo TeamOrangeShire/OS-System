@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
 use App\Models\CustomerAcc;
+use App\Models\UnregisterAcc;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 
@@ -220,6 +221,20 @@ class EditAcc extends Controller
         $change->update([
 
           'customer_type'=>$changeType,
+
+        ]);
+        return redirect()->back();
+    }
+
+    public function editType(Request $request){
+
+        $Un_id_type = $request->Un_id_type;
+        $Un_customer_type = $request->Un_customer_type;
+
+        $change = UnregisterAcc::where('un_id', $Un_id_type)->first();
+        $change->update([
+
+          'un_type'=>$Un_customer_type,
 
         ]);
         return redirect()->back();
