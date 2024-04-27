@@ -292,7 +292,7 @@
                                            $Uncus_fullname = $Uncus->un_firstname .' '.$Uncus->un_middlename.' '.$Uncus->un_lastname;
                                           @endphp
                                         <tr>
-                                            <td onclick="editType('{{$Uncus->un_id}}','{{ $Uncus_fullname}}')" class="clickable" data-toggle="modal" data-target="#editType"> {{$Uncus_fullname}}</td>
+                                            <td onclick="editType('{{$Uncus->un_id}}','{{$Uncus->un_firstname}}','{{$Uncus->un_middlename}}','{{$Uncus->un_lastname}}','{{$Uncus->un_email}}','{{$Uncus->un_contact}}','{{$Uncus->un_ext}}','{{$Uncus->un_type}}')" class="clickable" data-toggle="modal" data-target="#editType"> {{$Uncus_fullname}}</td>
                                             <td>{{$Uncus->un_email}}</td>
                                             <td>{{$Uncus->un_contact }}</td>
                                             <td style="display: none;"></td>
@@ -335,53 +335,93 @@
 </div>
 
 {{-- modal start info --}}
-<div id="editType" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-           
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Customer Info</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<div id="editType" class="custom-modal" tabindex="-1" role="dialog" aria-labelledby="customModalTitle" aria-hidden="true">
+    <div class="custom-modal-dialog custom-modal-fullscreen" role="document">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <h5 class="custom-modal-title" id="customModalTitle">Update Guest</h5>
+                <button type="button" class="custom-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <div class="modal-body">
-                  <form action="{{route('editType')}}" method="POST">
-                        @csrf
-                  <div class="container">
-                    <div class="row" style="">
-                        <div class="col-sm-12">
-                        <br>
-                        <input type="hidden" name="Un_id_type" id="Un_id_type">
-                        <label for="customer_name_type"> <strong>Customer Name: </strong> </label> <br>
-                        <p class="" name="cname" id="Unname">  </p> 
+            <div class="custom-modal-body">
+              
+                   <form class="needs-validation" novalidate method="POST" action="{{route('editType')}}">
+            @csrf
+            <div class="form-row">
+                <div class="col-md-6 mb-6">
+                      <input type="hidden" name="Un_id_type" id="Un_id_type">
+                    <label for="validationTooltip01">First name</label>
+                    <input type="text" class="form-control" id="unfirstname" name="unfirstname" placeholder="First name" value="" required>
+                    <div class="valid-tooltip">
+                        Looks good!
                     </div>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <label for="validationTooltip02">Middle name</label>
+                    <input type="text" class="form-control" id="unmiddlename" name="unmiddlename" placeholder="Middle name" value="" required>
+                    <div class="valid-tooltip">
+                        Looks good!
                     </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                      
-                            <br>
-                            <div class="form-group">
+                </div>
+                <div class="col-md-6 mb-6">
+                    <label for="validationTooltip03">Last name</label>
+                    <input type="text" class="form-control" id="unlastname" name="unlastname" placeholder="Last name" value="" required>
+                    <div class="valid-tooltip">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <label for="">Ext.</label>
+                            <select class="form-control" id="unext" name="unext">
+                                   <option value="N/A">N/A</option>
+                                    <option value="Jr.">Jr.</option>
+                                    <option value="Sr.">Sr.</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                    <option value="IV">IV</option>
+                                    <option value="V">V</option>
+                                    <option value="Jra.">Jra.</option>
+                                    <option value="Esq.">Esq.</option>
+                            </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationTooltip04">Email</label>
+                    <input type="text" class="form-control" id="unemail" name="unemail" placeholder="Email" required>
+                    <div class="invalid-tooltip">
+                        Please provide a valid city.
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="validationTooltip05">Number</label>
+                    <input type="Number" class="form-control" id="unnumber" name="unnumber" placeholder="Number" required>
+                    <div class="invalid-tooltip">
+                        Please provide a valid state.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                 <div class="col-md-6 mb-3">
+                      <div class="form-group">
                                 <label for="">User Type</label>
                                 <select class="form-control" name="Un_customer_type" id="Un_customer_type">
                                     <option value="Student">Student</option>
                                     <option value="Teacher">Teacher</option>
                                     <option value="Reviewer">Reviewer</option>
                                     <option value="Professional">Professional</option>
-                                     <option value="Regular">Regular</option>
                                 </select>
                             </div>  
-                        </div>
+                </div>
+                 <div class="col-md-6 ">
+                 
+                     <button class="btn  btn-primary" type="submit" style="margin-top: 4%;">Update Guest</button>
                    
-    
                 </div>
             </div>
-                <br>
-                <div style="text-align: center;">
-                    <button type="submit" class="btn btn-primary">Set</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-                 </form>
+           
+        </form>
+
             </div>
-            
         </div>
     </div>
 </div>
@@ -512,6 +552,7 @@
             @csrf
             <div class="form-row">
                 <div class="col-md-6 mb-6">
+                  
                     <label for="validationTooltip01">First name</label>
                     <input type="text" class="form-control" id="" name="firstname" placeholder="First name" value="" required>
                     <div class="valid-tooltip">
@@ -604,10 +645,17 @@
 </form>
 <!-- [ Main Content ] end -->
     <script>
-function editType(id,name){
+function editType(id,first,mid,last,email,contact,ext,type){
      document.getElementById('Un_id_type').value=id;
-     document.getElementById('Unname').textContent=name;
+     document.getElementById('unfirstname').value=first;
+     document.getElementById('unmiddlename').value=mid;
+     document.getElementById('unlastname').value=last;
+      document.getElementById('unemail').value=email;
+       document.getElementById('unnumber').value=contact;
+        document.getElementById('unext').value=ext;
+          document.getElementById('Un_customer_type').value=type;
 }
+
 
         function out(id){
              

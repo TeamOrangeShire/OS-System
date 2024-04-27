@@ -230,11 +230,19 @@ class EditAcc extends Controller
 
         $Un_id_type = $request->Un_id_type;
         $Un_customer_type = $request->Un_customer_type;
+       
+
 
         $change = UnregisterAcc::where('un_id', $Un_id_type)->first();
         $change->update([
+        'un_firstname'=>$request->unfirstname,
+        'un_middlename'=>$request->unmiddlename,
+        'un_lastname'=>$request->unlastname,
+        'un_email'=>$request->unemail,
+        'un_contact'=>$request->unnumber,
+        'un_ext'=>$request->unext,
+        'un_type'=>$Un_customer_type,
 
-          'un_type'=>$Un_customer_type,
 
         ]);
         return redirect()->back();
