@@ -46,10 +46,10 @@
                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Customer Log</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-uppercase" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Unregister Log</a>
+                    <a class="nav-link text-uppercase" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Guest Log</a>
                 </li>
                   <li class="nav-item">
-                    <a class="nav-link text-uppercase" id="contact-tab" data-toggle="tab" href="#unregister" role="tab" aria-controls="contact" aria-selected="false">Unregister Account</a>
+                    <a class="nav-link text-uppercase" id="contact-tab" data-toggle="tab" href="#unregister" role="tab" aria-controls="contact" aria-selected="false">Guest List</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
