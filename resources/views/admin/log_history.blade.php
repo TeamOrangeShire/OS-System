@@ -357,14 +357,14 @@
                 </div>
                 <div class="col-md-6 mb-6">
                     <label for="validationTooltip02">Middle name</label>
-                    <input type="text" class="form-control" id="unmiddlename" name="unmiddlename" placeholder="Middle name" value="" required>
+                    <input type="text" class="form-control" id="unmiddlename" name="unmiddlename" placeholder="Middle name" value="" >
                     <div class="valid-tooltip">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-md-6 mb-6">
                     <label for="validationTooltip03">Last name</label>
-                    <input type="text" class="form-control" id="unlastname" name="unlastname" placeholder="Last name" value="" required>
+                    <input type="text" class="form-control" id="unlastname" name="unlastname" placeholder="Last name" value="" >
                     <div class="valid-tooltip">
                         Looks good!
                     </div>
@@ -387,14 +387,14 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationTooltip04">Email</label>
-                    <input type="text" class="form-control" id="unemail" name="unemail" placeholder="Email" required>
+                    <input type="text" class="form-control" id="unemail" name="unemail" placeholder="Email" >
                     <div class="invalid-tooltip">
                         Please provide a valid city.
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="validationTooltip05">Number</label>
-                    <input type="Number" class="form-control" id="unnumber" name="unnumber" placeholder="Number" required>
+                    <input type="Number" class="form-control" id="unnumber" name="unnumber" placeholder="Number" >
                     <div class="invalid-tooltip">
                         Please provide a valid state.
                     </div>
@@ -561,14 +561,14 @@
                 </div>
                 <div class="col-md-6 mb-6">
                     <label for="validationTooltip02">Middle name</label>
-                    <input type="text" class="form-control" id="" name="middlename" placeholder="Middle name" value="" required>
+                    <input type="text" class="form-control" id="" name="middlename" placeholder="Middle name" value="" >
                     <div class="valid-tooltip">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-md-6 mb-6">
                     <label for="validationTooltip03">Last name</label>
-                    <input type="text" class="form-control" id="" name="lastname" placeholder="Last name" value="" required>
+                    <input type="text" class="form-control" id="" name="lastname" placeholder="Last name" value="" >
                     <div class="valid-tooltip">
                         Looks good!
                     </div>
@@ -591,14 +591,14 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationTooltip04">Email</label>
-                    <input type="text" class="form-control" id="" name="email" placeholder="Email" required>
+                    <input type="text" class="form-control" id="" name="email" placeholder="Email" >
                     <div class="invalid-tooltip">
                         Please provide a valid city.
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="validationTooltip05">Number</label>
-                    <input type="Number" class="form-control" id="" name="number" placeholder="Number" required>
+                    <input type="Number" class="form-control" id="" name="number" placeholder="Number" >
                     <div class="invalid-tooltip">
                         Please provide a valid state.
                     </div>
