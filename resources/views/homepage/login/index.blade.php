@@ -24,7 +24,7 @@
 						Orange Shire Login
 					</span>
 					<center>
-						<img src="{{ asset('img/os_logo.png') }}" alt="">
+						<img src="{{ asset('img/os_logo.png') }}" alt="Logo">
 					</center>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">

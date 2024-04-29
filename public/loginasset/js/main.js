@@ -124,3 +124,173 @@ function Login(url, home) {
     }
  
 }
+function CleanInput(event, requiredInput) {
+    const input = event.target;
+    const inputValue = input.value;
+    const newValue = inputValue.replace(/[^a-zA-Z\s]/g, '');  // Replace any non-letter characters with an empty string
+    input.value = newValue; 
+
+    if(requiredInput !== ''){
+        document.getElementById(requiredInput).style.display = 'none';
+    }
+
+    if(input.value === ''){
+        document.getElementById(requiredInput).style.display = '';
+    }
+}
+function CleanContact(event, contact) {
+    document.getElementById(contact).style.display = 'none'
+    const input = event.target;
+    let inputValue = input.value;
+ 
+    inputValue = inputValue.replace(/\D/g, '').slice(0, 11);
+
+    input.value = inputValue;
+}
+
+function CloseError(email){
+    document.getElementById(email).style.display = 'none';
+}
+function CleanMail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression for validating email addresses
+    return emailPattern.test(email);
+}
+
+function Proceed(step, instruct){
+  const step1 = document.getElementById('step1');
+  const step2 = document.getElementById('step2');
+  const step3 = document.getElementById('step3');
+
+  if(step === 'step2' && instruct === 'next'){
+    const fname = document.getElementById('firstname');
+    const mname = document.getElementById('middlename');
+    const lname = document.getElementById('lastname');
+    let validty = 0;
+    if(fname.value === ''){
+        document.getElementById('fname_required').style.display = '';
+    }else{
+        document.getElementById('fname_required').style.display = 'none';
+        document.getElementById('f_fname').value = fname.value;
+        validty++;
+    }
+
+    if(lname.value === ''){
+        document.getElementById('lname_required').style.display = '';
+    }else{
+        document.getElementById('lname_required').style.display = 'none';
+        document.getElementById('f_lname').value = lname.value;
+        validty++;
+    }
+
+    document.getElementById('f_mname').value = mname.value;
+    if(validty == 2){
+       step1.style.display = 'none';
+       step2.style.display = '';
+    }
+  }else if(step === 'step1' && instruct === 'previous'){
+    step1.style.display = '';
+    step2.style.display = 'none';
+  }else if(step === 'step3' && instruct === 'next'){
+    let validity = 0;
+    const remail = document.getElementById('email_required');
+    if(document.getElementById('email').value === ''){
+        remail.style.display = '';
+        remail.textContent = 'Field Required';
+    }else{
+        if(CleanMail(document.getElementById('email').value)){
+            document.getElementById('f_email').value = document.getElementById('email').value;
+            validity++;
+         }else{
+            remail.style.display = '';
+            remail.textContent = 'Invalid Email';
+         }
+    }
+    
+     const contact = document.getElementById('contact');
+     if(contact.value === '' || contact.value.length < 11){
+        document.getElementById('contact_required').style.display = '';
+     }else{
+        document.getElementById('f_contact').value = contact.value;
+        validity++;
+     }
+
+     if(validity == 2){
+        step2.style.display = 'none';
+        step3.style.display = '';
+     }
+  }else if(step === 'step2' || instruct === 'previous'){
+    step2.style.display = '';
+    step3.style.display = 'none';
+  }
+
+}
+
+function Register(){
+
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
+    const confirm = document.getElementById('confirm_password');
+    let validity = 0;
+    if(username.value === ''){
+        document.getElementById('username_required').style.display = '';
+    }else{
+        document.getElementById('username_required').style.display = 'none';
+        validity++;
+    }
+    if(password.value === ''){
+        document.getElementById('password_required').style.display = '';
+    }else{
+        document.getElementById('password_required').style.display = 'none';
+        validity++;
+    }
+    if(confirm.value === ''){
+        document.getElementById('confirm_required').style.display = '';
+    }else{
+        document.getElementById('confirm_required').style.display = 'none';
+        validity++;
+    }
+
+    if(validity === 3){
+        if(confirm.value === password.value){
+            document.getElementById('f_password').value = password.value;
+            document.getElementById('f_username').value = username.value;   
+            document.getElementById('b_fname').textContent = document.getElementById('f_fname').value;
+            document.getElementById('b_mname').textContent = document.getElementById('f_mname').value;
+            document.getElementById('b_lname').textContent = document.getElementById('f_lname').value;
+
+            document.getElementById('b_email').textContent = document.getElementById('f_email').value;
+            document.getElementById('b_contact').textContent = document.getElementById('f_contact').value;
+
+            document.getElementById('b_username').textContent = document.getElementById('f_username').value;
+            let passChar = '';
+            for(let i = 0; document.getElementById('f_password').value.length > i; i++){
+                passChar += "*";
+            }
+            document.getElementById('b_password').textContent = passChar;
+            const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+           registerModal.show();
+        }else{
+            document.getElementById('confirm_required').style.display = '';
+            document.getElementById('password_required').style.display = '';
+            document.getElementById('confirm_required').textContent = 'Not Match';
+            document.getElementById('password_required').textContent = 'Not Match';
+        }
+    }
+   
+}
+
+function SubmitRegistration(url){
+    var formData = $('form#signUpForm').serialize();
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: formData,
+        success: function(response) {
+          
+        }, 
+        error: function (xhr) {
+  
+            console.log(xhr.responseText);
+        }
+    });
+}
