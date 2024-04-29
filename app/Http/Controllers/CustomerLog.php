@@ -6,9 +6,11 @@ use App\Models\ActivityLog;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerAcc;
 use App\Models\CustomerLogUnregister;
+use App\Models\Tour;
 use App\Models\UnregisterAcc;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerLog extends Controller
 {
@@ -52,114 +54,85 @@ class CustomerLog extends Controller
     return response()->json(['status'=> 'success']);
   }
 
-  public function UnregisterLogout(Request $request){
+public function GetCustomerAcc() {
+    $logs = CustomerAcc::all();
 
-    $id = $request->un_id;
-   
+    return response()->json(['data' => $logs]);
+}
+public function GetCustomerlog(Request $request) {
 
-    $log = CustomerLogUnregister::where('unregister_id',$id)->first();
-    $log->update([
+    $logs = CustomerLogs::where('customer_id',$request->cuslogid)->get();
 
-        'un_log_status'=> 2,
+    return response()->json(['data' => $logs]);
+}
+
+public function LogToPending(Request $request) {
+
+    $logs = CustomerLogs::where('log_id',$request->id)->first();
+    $start = $logs->log_start_time;
+    $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+    $totalTime = timeDifference($start, $current);
+    $cusAcc = CustomerAcc::where('customer_id',$logs->customer_id)->first();
+    $type =$cusAcc->customer_type;
+    $payment = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
+    if($logs->log_status == 0){
+      $logs->update([
+
+      'log_status'=> 1,
+      'log_end_time'=> $current,
+      'log_transaction'=>$payment.'-0',
 
     ]);
-    $Unlog = UnregisterAcc::where('un_id',$log->un_id)->first();
-    $data = new ActivityLog;
-    $data->act_user_id =session('Admin_id');
-    $data->act_user_type = "Admin";
-    $data->act_action = "Admin accept payment of " . $Unlog->un_lastname;
-    $data->act_header = "Accept logout payment";
-    $data->act_location = "customer_log_unregister";
-    $data->save();
-    return redirect()->back();
-  }
+    return response()->json(['data' => $logs->customer_id]);
+    }else if($logs->log_status == 1){
+        $logs->update([
 
-   public function accept_unregistered(Request $request){
+      'log_status'=> 2,
+     
 
-    $id = $request->unregister_id;
-    
-    $log = CustomerLogUnregister::where('unregister_id',$id)->first();
-   $start = $log->un_log_start_time;
-   $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-   $time = timeDifference($start,$end);
-   
-   $Unlog = UnregisterAcc::where('un_id',$log->un_id)->first();
-   $totalPayment= PaymentCalc($time['hours'],$time['minutes'],$Unlog->un_type);
-    $log->update([
-        'un_log_end_time'=>$end,
-        'un_log_status'=> 1,
-        'un_log_transaction' =>$totalPayment,
     ]);
+    return response()->json(['data' => $logs->customer_id]);
+    }
     
-    $data = new ActivityLog;
-    $data->act_user_id =session('Admin_id');
-    $data->act_user_type = "Admin";
-    $data->act_action = "Admin set log status of " . $Unlog->un_lastname ." to pending";
-    $data->act_header = "Pending unregister log payment";
-    $data->act_location = "customer_log_unregister";
-    $data->save();
-
-    return response()->json(['payment'=> $totalPayment,'start'=>$start,'end'=>$end,'hours'=>$time['hours'],'minutes'=>$time['minutes']]);
-  }
-
-  public function AcceptUnregisterLog(request $request){
-
-    $accept = new UnregisterAcc;
-    $accept -> un_firstname = $request->firstname;
-    $accept -> un_middlename = $request->middlename;
-    $accept -> un_lastname = $request->lastname;
-    $accept -> un_ext = $request->ext;
-    $accept -> un_email = $request->email;
-    $accept -> un_contact = $request->number;
-    $accept -> un_type = $request->customer_type;
-    $accept->save();
-   
-    $unregister = new CustomerLogUnregister;
-    $unregister -> un_id = $accept->un_id; 
-    $unregister -> un_log_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
-    $unregister -> un_log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-    $unregister -> un_log_status = 0;
-    $unregister->save();
+}
 
 
-    $data = new ActivityLog;
-    $data->act_user_id =session('Admin_id');
-    $data->act_user_type = "Admin";
-    $data->act_action = "Admin login customer " . $request->un_lastname;
-    $data->act_header = "Unregister login";
-    $data->act_location = "customer_log_unregister";
-    $data->save();
-    return redirect()->back();
-  }
-   public function UnregisterLogin(request $request){
-    
-    $id =$request ->login_id;
-     $check = CustomerLogUnregister::where('un_id',$id)->where('un_log_status',1)->first();
-      $check2 = CustomerLogUnregister::where('un_id',$id)->where('un_log_status',0)->first();
+  public function InsertNewCustomer(Request $request){
 
-     if($check  && $check2 ){
+    $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->count();
+    if($request->firstname == '' || $request->lastname == '' || $request->number == '') {
       return response()->json(['status'=> 'failed']);
-     }else{
-    $unregister = new CustomerLogUnregister;
-    $unregister -> un_id = $id;
-    $unregister -> un_log_date = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
-    $unregister -> un_log_start_time = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-    $unregister -> un_log_status = 0;
-    $unregister->save();
+    }elseif($acc){
+      return response()->json(['status'=> 'exist']);
+    }
+    else{
+    $format = strtolower(str_replace(' ', '', $request->firstname));
+        $insertnew = new CustomerAcc;
+        $insertnew->customer_firstname= $request->firstname;
+        $insertnew->customer_middlename= $request->middlename;
+        $insertnew->customer_lastname= $request->lastname;
+        $insertnew->customer_ext= $request->ext;
+        $insertnew->customer_email= $request->email;
+        $insertnew->customer_phone_num= $request->number;
+        $insertnew->customer_profile_pic= 'none';
+        $insertnew->customer_username = strtolower(str_replace(' ', '', $request->firstname));
+        $insertnew->customer_password= Hash::make($format.'123');
+        $insertnew->save();
 
-    $Unlog = UnregisterAcc::where('un_id',$id)->first();
-    $data = new ActivityLog;
-    $data->act_user_id =session('Admin_id');
-    $data->act_user_type = "Admin";
-    $data->act_action = "Admin login customer " . $Unlog->un_lastname;
-    $data->act_header = "Unregister login";
-    $data->act_location = "customer_log_unregister";
-    $data->save();
-
-    return response()->json(['status'=> 'success','id'=>$unregister->unregister_id]);
-     }
-    
-    
+        $tour = new Tour;
+        $tour->customer_id = $insertnew->customer_id;
+        $tour->save();
+      
+        $insertnewlog = new CustomerLogs;
+        $insertnewlog->customer_id = $insertnew->customer_id;
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d-m-Y');
+        $insertnewlog->log_start_time = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+        $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 1;
+        $insertnewlog->save();
+        
+        return response()->json(['status'=> 'success']);
+    }
   }
 
   public function GetScannedURLlog(Request $request){

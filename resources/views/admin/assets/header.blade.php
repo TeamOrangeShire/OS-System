@@ -11,7 +11,7 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    @include('admin.assets.admintable')
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
      {{-- new add --}}
@@ -23,7 +23,10 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css" />
      <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
 
-     <script src="{{asset('customer_dashboards/js/mycustom.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
+
+  
 
   
     
