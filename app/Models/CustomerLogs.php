@@ -17,5 +17,6 @@ class CustomerLogs extends Model
       'log_end_time',
       'log_status',
       'log_transaction',
+      'log_type'
     ];
 }

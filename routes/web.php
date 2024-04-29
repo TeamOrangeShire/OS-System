@@ -77,6 +77,8 @@ Route::get('/admin/customer_account', function () { return view('admin.customer_
 Route::get('/admin/getlog', [CustomerLog::class,"getlog"])->name('getlog');
 Route::get('/admin/CustomerLog', [GetDataViews::class,"CustomerLog"])->name('CustomerLog');
 Route::get('/admin/ViewDetails', [GetDataViews::class,"ViewDetails"])->name('ViewDetails');
+Route::get('/admin/GetCustomerAcc', [CustomerLog::class,"GetCustomerAcc"])->name('GetCustomerAcc');
+Route::get('/admin/GetCustomerlog', [CustomerLog::class,"GetCustomerlog"])->name('GetCustomerlog');
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
@@ -113,10 +115,8 @@ Route::post('/addCredit',[EditAcc::class,'addCredit'] )->name('addCredit');
 Route::post('/changeType',[EditAcc::class,'changeType'] )->name('changeType');
 Route::post('/editType',[EditAcc::class,'editType'] )->name('editType');
 Route::post('/acceptLog',[CustomerLog::class,'acceptLog'] )->name('acceptLog');
-Route::post('/AcceptUnregisterLog',[CustomerLog::class,'AcceptUnregisterLog'] )->name('AcceptUnregisterLog');
-Route::post('/accept_unregistered',[CustomerLog::class,'accept_unregistered'] )->name('accept_unregistered');
-Route::post('/UnregisterLogout',[CustomerLog::class,'UnregisterLogout'] )->name('UnregisterLogout');
-Route::post('/UnregisterLogin',[CustomerLog::class,'UnregisterLogin'] )->name('UnregisterLogin');
+Route::post('/InsertNewCustomer',[CustomerLog::class,'InsertNewCustomer'] )->name('InsertNewCustomer');
+Route::post('/LogToPending',[CustomerLog::class,'LogToPending'] )->name('LogToPending');
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
