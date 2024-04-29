@@ -279,14 +279,45 @@ function Register(){
    
 }
 
-function SubmitRegistration(url){
+function SubmitRegistration(url, login, home){
+    document.getElementById('loader').style.display = 'flex';
     var formData = $('form#signUpForm').serialize();
     $.ajax({
         type: 'POST',
         url: url,
         data: formData,
         success: function(response) {
+          if(response.status === 'not_exist'){
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('loader').style.display = 'none';
+            alertify.set('notifier','position', 'top-center');
+            alertify.success('Account Created Successfully');
+            alertify.success('Redirecting to home dashboard please wait....');
+            
+            document.getElementById('l_username').value = response.username;
+            document.getElementById('l_password').value = response.password;
+            var autoLogin = $('form#autoLogin').serialize();
+            const formData2 = autoLogin + '&username=' + response.username + '&password=' + response.password;
+            console.log(formData2);
+            $.ajax({
+                type: 'POST',
+                url: login,
+                data: formData2,
+                success: function(responsedata) {
+                    if(responsedata.status === 'success'){
+                        window.location.href = home;
+                    }
+                }, 
+                error: function (xhr) {
           
+                    console.log(xhr.responseText);
+                }
+            });
+          }else{
+            document.getElementById('loader').style.display = 'none';
+            alertify.set('notifier','position', 'top-center');
+            alertify.warning('Username Already Exist');
+          }
         }, 
         error: function (xhr) {
   

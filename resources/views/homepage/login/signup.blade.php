@@ -145,7 +145,7 @@
 	</div>
 	
     <div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-3" id="staticBackdropLabel">Review Details</h1>
@@ -166,23 +166,29 @@
                  <p class="col-md-12">Username: <span id="b_username"></span></p>
                  <p class="col-md-12">Password: <span id="b_password"></span></p>
               </div>
+            
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" onclick="SubmitRegistration('{{route('customer_create_account')}}')" class="btn btn-primary" style="background-color: #ff5c40 !important">Register</button>
+              <button type="button" onclick="SubmitRegistration('{{route('customer_create_account')}}', '{{ route('custom_log') }}', '{{ route('customerHome') }}')" class="btn btn-primary" style="background-color: #ff5c40 !important">Register</button>
             </div>
           </div>
         </div>
       </div>
     <form id="signUpForm" method="post">
       @csrf
-      <input type="hidden" name="firstname" id="f_fname">
-      <input type="hidden" name="middlename" id="f_mname">
-      <input type="hidden" name="lastname" id="f_lname">
+      <input type="hidden" name="fname" id="f_fname">
+      <input type="hidden" name="mname" id="f_mname">
+      <input type="hidden" name="lname" id="f_lname">
       <input type="hidden" name="email" id="f_email">
       <input type="hidden" name="contact" id="f_contact">
       <input type="hidden" name="username" id="f_username">
       <input type="hidden" name="password" id='f_password'>
+    </form>
+    <form id="autoLogin" method="post">
+        @csrf
+        <input type="hidden" id="l_username">
+        <input type="hidden" id="l_password">
     </form>
 
 	<div id="dropDownSelect1"></div>

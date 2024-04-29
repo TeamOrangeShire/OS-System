@@ -53,6 +53,7 @@ Route::post('/customer-subscribe-plan',[SubscriptionsData::class,'Subscribe'] )-
 Route::post('/customer-log-out',[Login::class,'LogOutCustomer'] )->name('customer_logOut');
 Route::post('/customer/redirectScan/updatelogs',[CustomerLog::class,'GetScannedURLlog'] )->name('updateQRLog');
 Route::post('/customer/tourend',[CreateAcc::class,'UpdateTour'] )->name('updateTour');
+Route::post('/customer/updateType',[CreateAcc::class,'UpdateType'] )->name('UpdateType');
 
 //Customer Dashboard
 Route::get('/customer/home/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');

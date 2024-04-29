@@ -32,43 +32,34 @@ class CreateAcc extends Controller
         $fname = $req->fname;
         $lname = $req->lname;
         $mname = $req->mname;
+        $username = $req->username;
         $email = $req->email;
         $password = $req->password;
-        $ext = $req->extension;
-        
-        $checkEmail = CustomerAcc::where('customer_email', $email)->first();
-        if($checkEmail){
-            return response()->json(['id'=>'none', 'email'=>'exist']);
+
+        $usernameCheck = CustomerAcc::where('customer_username', $username)->first();
+        if($usernameCheck){
+            return response()->json(['id'=>'none', 'status'=>'exist', 'username'=>'none', 'password'=>'none']);
         }
 
-        $session_id =  Hash::make($email);
         $account = new CustomerAcc();
         $account->customer_firstname = $fname;
         $account->customer_middlename = $mname;
         $account->customer_lastname = $lname;
-        $account->customer_ext = $ext;
+        $account->customer_ext = 'none';
         $account->customer_email = $email;
         $account->customer_phone_num = 'none';
-        $account->customer_username = $email;
+        $account->customer_username = $username;
         $account->customer_password = Hash::make($password);
         $account->customer_profile_pic = 'none';
-        $account->customer_type = null;
         $account->verification_status = 0;
         $account->verification_code = 0;
-        $account->session_id = $session_id;
         $account->save();
         
         $tour = new Tour();
         $tour->customer_id = $account->customer_id;
-        $tour->tour_home = 0;
-        $tour->tour_login = 0;
-        $tour->tour_profile = 0;
-        $tour->tour_subscription = 0;
-        $tour->tour_reservation = 0;
-        $tour->tour_settings = 0;
         $tour->save();
 
-        return response()->json(['id'=>$session_id, 'email'=>'not_exist']);
+        return response()->json(['id'=>$account->customer_id, 'status'=>'not_exist', 'username'=>$username, 'password'=>$password]);
     }
 
     public function SuccessCreateAccount(Request $request){
@@ -108,6 +99,20 @@ class CreateAcc extends Controller
                  ]);
                  break;
         }
+
+        return response()->json(['status'=>'success']);
+    }
+
+
+    public function UpdateType(Request $req){
+        $type = $req->type;
+        $id = $req->cust_id;
+
+        $customer = CustomerAcc::where('customer_id', $id)->first();
+
+        $customer->update([
+            'customer_type'=> $type."(Pending Validity)",
+        ]);
 
         return response()->json(['status'=>'success']);
     }

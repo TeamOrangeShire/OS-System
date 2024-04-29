@@ -1,6 +1,18 @@
 <div class="snackbar" id="snackbar" style="display: none">
   <span class="snackbarContent" id="snackbarContent"></span>
 </div>
+@include('homepage.Dashboard.Components.select_type')
+@php
+    $CheckType = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+@endphp
+@if($CheckType->customer_type === null)
+  <script>
+    window.onload = function(){    
+          const selectType = new bootstrap.Modal(document.getElementById('selectType'));
+          selectType.show();
+    }
+  </script>
+@endif
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
