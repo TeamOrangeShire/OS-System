@@ -409,3 +409,7 @@ function UploadingPhase() {
     uploading.style.animation = 'phaseIn 0.4s';
   }, 400);
 }
+
+function UploadPhoto(){
+  
+}

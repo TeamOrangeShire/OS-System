@@ -109,11 +109,18 @@ class CreateAcc extends Controller
         $id = $req->cust_id;
 
         $customer = CustomerAcc::where('customer_id', $id)->first();
-
-        $customer->update([
-            'customer_type'=> $type."(Pending Validity)",
-        ]);
-
+        if($type === 'Regular/Professional'){
+            $customer->update([
+                'customer_type'=> $type,
+            ]);
+    
+        }else{
+            $customer->update([
+                'customer_type'=> $type."(Pending Validity)",
+            ]);
+    
+        }
+    
         return response()->json(['status'=>'success']);
     }
     

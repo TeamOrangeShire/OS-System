@@ -8,6 +8,7 @@
         <div class="modal-body">
           <form id="typeChange">
             @csrf
+            
             <input type="hidden" value="{{ $user_id }}" name="cust_id">
             <input type="hidden" name="type" id="customerTypeSelected">
           </form>
@@ -84,8 +85,13 @@
                <img src="{{ asset('customer_dashboards/img/id_placeholder.png') }}" alt="placeholder" class="w-100 col-md-12">
                <p>Upload the front part of your ID where your picture and names are capture it very clearly</p>
             </div>
-            <div class="d-flex container mt-4">
-              <button class="btn btn-primary">Upload Photo</button>
+            <div class="d-flex row container mt-4">
+              <form id="uploadedFile" enctype="multipart/form-data">
+                @csrf
+              <div class="col-sm-12">
+                <input class="form-control" type="file" name="id_photo" id="formFile">
+              </div>
+            </form>
            </div>
         </div>
 
