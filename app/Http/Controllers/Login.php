@@ -63,7 +63,6 @@ class Login extends Controller
             if(Hash::check($password, $customer->customer_password)){
                 $cookie = Cookie::make('customer_id', $customer->customer_id, 60 * 24 * 31);
                 return response()->json(['status'=>'success'])->withCookie($cookie);
-                
             }else{
                 return response()->json(['status'=>'fail']);
             }

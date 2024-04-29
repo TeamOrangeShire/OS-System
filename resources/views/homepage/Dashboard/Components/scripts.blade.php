@@ -8,3 +8,4 @@
   
   <script src="{{ asset('customer_dashboards/js/main.js') }}"></script>
   <script src="{{ asset('customer_dashboards/js/mycustom.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>

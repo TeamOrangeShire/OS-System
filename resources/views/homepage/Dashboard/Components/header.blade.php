@@ -50,17 +50,8 @@
 <!--Datatable-->
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
-@if ($status === 'not_verified')
-@php
-    $checkStat = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
-@endphp
-    <script>
-        window.onload = function(){
-            window.location.href = "{{ route('new_account') }}?id={{ $checkStat->session_id }}&redirect=true";
-        }
-    </script>
-@endif
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css" />
 @if ($status === 'not_log_in')
 @php
     $checkStat = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
