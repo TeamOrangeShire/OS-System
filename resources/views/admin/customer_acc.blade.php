@@ -241,6 +241,7 @@
             </div>
         </div>
     </div>
+    
     {{-- modal end info--}}
 
 
