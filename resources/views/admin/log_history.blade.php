@@ -119,7 +119,9 @@
                                             <th>Log Date</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
+                                            <th>Total Time</th>
                                             <th>Transaction Amount</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -431,12 +433,23 @@
                                 "data": "log_end_time"
                             },
                             {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var start_time = row.log_start_time;
+                                    var end_time = row.log_end_time;
+                                    var totaltime = timeDifference(start_time, end_time);
+                                    var between = totaltime.hours+':'+totaltime.minutes; 
+                                    return between;
+                                }
+                            },
+
+                            {
                                 "data": "log_transaction",
                                 "render": function(data, type, row) {
-                                    var renderedContent = data || '0-0'; 
+                                    var renderedContent = data || '0-0';
                                     var payment = renderedContent.split('-');
                                     return payment[0];
-                                  
+
                                 }
                             },
 
@@ -466,8 +479,17 @@
                                         } else {
                                             return "Paid";
                                         }
-                                    } else {
-                                        return '';
+                                    } else if(data === 0){
+                                       var log_status = row.log_status;
+                                        if (log_status === 0) {
+                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Logout</button>";
+                                        } else if (log_status === 1) {
+                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Confirm</button>";
+                                        } else {
+                                            return "Paid";
+                                        }
                                     }
                                 }
                             }
