@@ -391,7 +391,6 @@
                 });
 
                 function getCustomerData() {
-
                     $('#myTable').DataTable({
                         destroy: true,
                         "ajax": {
@@ -410,8 +409,73 @@
                                     return "<button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#viewcuslog' type='button' onclick='viewLog(" +
                                         data + ")'>View Log</button>";
                                 }
+                            },
+                            {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var customer_id = row.customer_id;
+                                    var log_in = row.log_in;
+                                    var log_id = row.log_id;
+                                    if (log_in === '0') {
+                                        return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
+                                        log_id + ")'>Logout</button>";
+                                    } else if(log_in === '1'){
+                                        return "<button class='btn btn-warning' type='button' onclick='inAndout(" +
+                                        log_id + ")'>Confirm</button>";
+                                    }else{
+                                        return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
+                                            customer_id + ")'>Login</button>";
+                                    }
+                                }
                             }
+
                         ]
+                    });
+                }
+
+                function inAndout(id){
+                    console.log(id);
+
+                    document.getElementById('cuslogoutid').value = id;
+                    var formData = $("form#pendingLog").serialize();
+                    var Dataform = formData + '&id=' + id;
+                    console.log(formData);
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('LogToPending') }}",
+                        data: Dataform,
+                        success: function(response) {
+                            getCustomerData();
+                            viewLog(response.data);
+
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+
+                function AccLogin(id){
+                    console.log(id);
+
+                    document.getElementById('cuslogoutid').value = id;
+                    var formData = $("form#pendingLog").serialize();
+                    var Dataform = formData + '&id=' + id;
+                    console.log(formData);
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('AccLogin') }}",
+                        data: Dataform,
+                        success: function(response) {
+                            getCustomerData();
+                            viewLog(response.data);
+
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.error(xhr.responseText);
+                        }
                     });
                 }
 
@@ -436,13 +500,17 @@
                                 "data": null,
                                 "render": function(data, type, row) {
                                     var start_time = row.log_start_time;
-                                    var end_time = row.log_end_time;
-                                    var totaltime = timeDifference(start_time, end_time);
-                                    var between = totaltime.hours+':'+totaltime.minutes; 
-                                    return between;
+                                    var end_time = row.log_end_time || null;
+                                    if (end_time === null) {
+                                        return '';
+                                    } else {
+                                        var totaltime = timeDifference(start_time, end_time);
+                                        var between = totaltime.hours + ':' + totaltime.minutes;
+                                        return between;
+
+                                    }
                                 }
                             },
-
                             {
                                 "data": "log_transaction",
                                 "render": function(data, type, row) {
@@ -452,7 +520,6 @@
 
                                 }
                             },
-
                             {
                                 "data": "log_status",
                                 "render": function(data, type, row) {
@@ -479,8 +546,8 @@
                                         } else {
                                             return "Paid";
                                         }
-                                    } else if(data === 0){
-                                       var log_status = row.log_status;
+                                    } else if (data === 0) {
+                                        var log_status = row.log_status;
                                         if (log_status === 0) {
                                             return "<button class='btn btn-primary' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
@@ -510,8 +577,9 @@
                         url: "{{ route('LogToPending') }}",
                         data: Dataform,
                         success: function(response) {
-
+                            getCustomerData();
                             viewLog(response.data);
+
                         },
                         error: function(xhr, status, error) {
 
@@ -519,6 +587,7 @@
                         }
                     });
                 }
+                
             </script>
 
     </body>

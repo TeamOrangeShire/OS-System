@@ -54,11 +54,34 @@ class CustomerLog extends Controller
     return response()->json(['status'=> 'success']);
   }
 
-public function GetCustomerAcc() {
-    $logs = CustomerAcc::all();
-
-    return response()->json(['data' => $logs]);
+  public function GetCustomerAcc() {
+    $accounts = CustomerAcc::all();
+    foreach ($accounts as $acc) {
+        $customerLogs1 = CustomerLogs::where('customer_id', $acc->customer_id)
+                                     ->whereIn('log_status', [0]) // Changed to an array with one element
+                                     ->first();
+        $customerLogs2 = CustomerLogs::where('customer_id', $acc->customer_id)
+                                     ->whereIn('log_status', [1]) // Changed to an array with one element
+                                     ->first();
+        if ($customerLogs1) {
+            $acc->log_in = "0";
+            $acc->log_id = $customerLogs1->log_id;
+        } elseif ($customerLogs2) {
+            $acc->log_in = "1"; 
+            $acc->log_id = $customerLogs2->log_id;
+        } else {
+            $acc->log_in = "2"; 
+        }
+        unset($acc->created_at);
+        unset($acc->updated_at);
+      
+    }
+    $accounts = $accounts->toArray();
+    return response()->json(['data' => $accounts]);
 }
+
+
+
 public function GetCustomerlog(Request $request) {
 
     $logs = CustomerLogs::where('customer_id',$request->cuslogid)->get();
@@ -95,7 +118,20 @@ public function LogToPending(Request $request) {
     }
     
 }
+ 
+public function AccLogin(Request $request){
 
+
+        $insertnewlog = new CustomerLogs;
+        $insertnewlog->customer_id = $request->id;
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d-m-Y');
+        $insertnewlog->log_start_time = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+        $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 1;
+        $insertnewlog->save();
+        
+        return response()->json(['status'=> 'success']);
+}
 
   public function InsertNewCustomer(Request $request){
 
