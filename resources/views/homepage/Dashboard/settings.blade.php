@@ -5,62 +5,14 @@
 <head>
  @include('homepage.Dashboard.Components.header', ['title'=>'My Settings - Orange Shire'])
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.20/css/uikit.min.css">
-  <style>
-        .toggleWrapper {
-            margin: left;
-            padding: 20px;
-            width: 55px;
-            margin-top: 20px;
-        }
-        .toggleWrapper input.mobileToggle {
-            opacity: 0;
-            position: absolute;
-        }
-        .toggleWrapper input.mobileToggle + label {
-            position: relative;
-            display: inline-block;
-            user-select: none;
-            transition: .4s ease;
-            -webkit-tap-highlight-color: transparent;
-            height: 25px;
-            width: 50px;
-            border: 1px solid #e4e4e4;
-            background: #d9d9d9;
-            border-radius: 60px;
-        }
-        .toggleWrapper input.mobileToggle + label:before,
-        .toggleWrapper input.mobileToggle + label:after {
-            content: "";
-            position: absolute;
-            display: block;
-        }
-        .toggleWrapper input.mobileToggle + label:before {
-            height: 25px;
-            width: 44px;
-            top: 0;
-            left: 0;
-            border-radius: 30px;
-            transition: width .2s cubic-bezier(0, 0, 0, .1);
-        }
-        .toggleWrapper input.mobileToggle + label:after {
-            background: whitesmoke;
-            height: 23px;
-            width: 23px;
-            top: 1px;
-            left: 0px;
-            border-radius: 60px;
-            box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 0px 0 hsla(0, 0%, 0%, .04), 0 4px 9px hsla(0, 0%, 0%, .13), 0 3px 3px hsla(0, 0%, 0%, .05);
-            transition: .35s cubic-bezier(.54, 1.60, .5, 1);
-        }
-        .toggleWrapper input.mobileToggle:checked + label:before {
-            background: #ff5c40; /* Active Color */
-        }
-        .toggleWrapper input.mobileToggle:checked + label:after {
-            left: 24px;
-        }
-  </style>
+ 
 </head>
-
+@php
+     $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
+  $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
+  $profile = $customer->customer_profile_pic;
+  
+@endphp
 <body>
 
   <!-- ======= Header ======= -->
@@ -71,36 +23,261 @@
       <h1>Settings</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('customerHome') }}">Home</a></li>
           <li class="breadcrumb-item active">Settings</li>
         </ol>
       </nav>
-    </div><!-- End Page Title -->
-
-    <!--notification toggle start-->
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-3">
-            <h6 class="card-title mt-4">Receive Notifications</h6>
-          </div>
-  
-          <div class="toggleWrapper col-md-1">
-            <input type="checkbox" name="toggle1" class="mobileToggle" id="toggle1" checked>
-            <label for="toggle1"></label>
-          </div>
-        </div>
-      </div>
     </div>
-    <!--notification toggle end-->
+  
+    <section>
+      <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+        <li class="nav-item flex-fill" role="presentation">
+          <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#editProfile" type="button" role="tab" aria-controls="edit" aria-selected="editProfile">Edit Profile</button>
+        </li>
+        <li class="nav-item flex-fill" role="presentation">
+          <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#changePass" type="button" role="tab" aria-controls="change" aria-selected="false">Change Password</button>
+        </li>
+       
+      </ul>
+      <div class="tab-content pt-2" id="myTabjustifiedContent">
+        <div class="tab-pane fade show active" id="editProfile" role="tabpanel" aria-labelledby="edit-tab">
+        
+        <!-- Profile Edit Form -->
+        <form method="POST" action="{{route('editProfile')}}">
+          @csrf 
+            <input type="hidden" name="customer_id" value="{{$user_id}}">
+          <div class="row mb-3">
+            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+            <div class="col-md-8 col-lg-9">
+              <img  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile">
+              <div class="pt-2">
+                <button data-bs-toggle="modal" data-bs-target="#uploadProfilePic" type="button" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
+                <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+            <div class="col-md-8 col-lg-9">
+              <input name="firstName" type="text" class="form-control" id="fullName" value="{{$customer->customer_firstname}}">
+            </div>
+          </div>
+
+
+          <div class="row mb-3">
+            <label for="company" class="col-md-4 col-lg-3 col-form-label">Middle Name</label>
+            <div class="col-md-8 col-lg-9">
+              <input name="midName" type="text" class="form-control" id="company" value="{{$customer->customer_middlename}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="Job" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+            <div class="col-md-8 col-lg-9">
+              <input name="lastName" type="text" class="form-control" id="Job" value="{{$customer->customer_lastname}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+      
+            <label class="col-md-3 col-form-label">Suffix</label>
+            <div class="col-md-9">
+              <select class="form-select" name="extName" aria-label="Default select example">
+                <option value="none" {{ $customer->customer_ext === 'none' ? 'selected' : '' }}>None</option>
+                <option value="Jr." {{ $customer->customer_ext === 'Jr.' ? 'selected' : '' }}>Junior(Jr.)</option>
+                <option value="Sr." {{ $customer->customer_ext === 'Sr.' ? 'selected' : '' }}>Senior(Sr.)</option>
+                <option value="I" {{ $customer->customer_ext === 'I' ? 'selected' : '' }}>I</option>
+                <option value="II" {{ $customer->customer_ext === 'II' ? 'selected' : '' }}>II</option>
+                <option value="III" {{ $customer->customer_ext === 'III' ? 'selected' : '' }}>III</option>
+                <option value="IV" {{ $customer->customer_ext === 'IV' ? 'selected' : '' }}>IV</option>
+                <option value="V" {{ $customer->customer_ext === 'V' ? 'selected' : '' }}>V</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="Address" class="col-md-4 col-lg-3 col-form-label">E-mail</label>
+            <div class="col-md-8 col-lg-9">
+              <input name="emailAddress" type="text" class="form-control" id="Address" value="{{$customer->customer_email}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
+            <div class="col-md-8 col-lg-9">
+              <input name="phoneNumber" type="text" class="form-control" id="Phone" value="{{$customer->customer_phone_num === "none" ? '' : $customer->customer_phone_num}}">
+            </div>
+          </div>
+
+    
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form> 
+        </div>
+        <div class="tab-pane fade" id="changePass" role="tabpanel" aria-labelledby="change-tab">
+          <form method="POST" id="changePass">
+            @csrf 
+            <input type="hidden" name="customer_id" value="{{$user_id}}">
+
+            <div class="text-center" style="display: none;" id="errorMessage">
+              
+            </div>
+
+          <div class="row mb-3">
+            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+            <div class="col-md-8 col-lg-9">
+              <input name="password" type="password" class="form-control" id="currentPassword">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+            <div class="col-md-8 col-lg-9">
+              <input name="newpassword" type="password" class="form-control" id="newPassword">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+            <div class="col-md-8 col-lg-9">
+              <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="button" class="btn btn-primary" onclick="ChangePassword()">Change Password</button>
+          </div>
+
+        </form><!-- End Change Password Form -->
+        </div>
+      
+      </div>
+
+
+    </section>
 
   </main><!-- End #main -->
-
+  <div class="modal fade" id="uploadProfilePic" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Change Profile Pic</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+       <form method="POST" id="updateProfilePic" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body modal-profile">
+          <img id="profilePicHolder" accept="image/*"  src="{{ $profile === "none" ? asset('User/Customer/placeholder.png') : asset('User/Customer/'. $profile) }}" alt="Profile" class="rounded-circle profilePicture">
+          <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+          <div class="col-sm-10">
+            <input type="hidden" name="user_id" value="{{ $user_id }}">
+            <input class="form-control" name="profilePic" type="file" id="profilePicSelect">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary"  onclick="UpdateProfilePic()">Save changes</button>
+        </div>
+       </form>
+      </div>
+    </div>
+  </div>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   @include('homepage.Dashboard.Components.scripts')
+  <script>
+    function ChangePassword(){
+    event.preventDefault();
+     var formData = $('form#changePass').serialize();
+  
+     $.ajax({
+         type: 'POST',
+         url: "{{route('editPassword')}}",
+         data: formData,
+         success: function(response) {
+          if(response.status === 'success'){
+            document.getElementById('errorMessage').style.display = '';
+            document.getElementById('errorMessage').innerHTML="<p style= 'color:green'>Successfully Changed Password!</p>";
+          }else if(response.status === 'current password not match'){
+            document.getElementById('errorMessage').style.display = '';
+            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>Incorrect Password!</p>";
+          }else{
+            document.getElementById('errorMessage').style.display = '';
+            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>New Password does not match!</p>";
+          }
+         }, 
+         error: function (xhr) {
+  
+             console.log(xhr.responseText);
+         }
+     });
+  }
+
+  function UpdateProfilePic(){
+    document.getElementById('loadingDiv').style.display = "flex";
+    event.preventDefault();
+    var formData = new FormData($('#updateProfilePic')[0]);
+  
+     $.ajax({
+         type: 'POST',
+         url: "{{ route('customerUpdatePic') }}",
+         data: formData,
+         contentType: false, 
+         processData: false,
+         success: function(response) {
+          document.getElementById('loadingDiv').style.display = "none";
+          document.getElementById('snackbar').style.display = "";
+            if(response.status === "success"){
+              document.getElementById('snackbarContent').textContent = "Successfully Updated Profile Picture";
+              fadeAnimate('success');
+            }else if(response.status === "exceed"){
+              document.getElementById('snackbarContent').textContent = "Error: Image Exceed to 10mb";
+              fadeAnimate('error');
+            }else{
+              document.getElementById('snackbarContent').textContent = "Error: Invalid Image Type(Accepted: jpeg, png, jpg)";
+              fadeAnimate('error');
+            }
+         }, 
+         error: function (xhr) {
+  
+             console.log(xhr.responseText);
+         }
+     });
+  }
+
+  function fadeAnimate(res) {
+    setTimeout(() => {
+        const snackbar = document.getElementById('snackbar');
+        snackbar.style.animation = "fadeOutSnackBar .5s";
+        setTimeout(() => {
+            snackbar.style.display = "none";
+         
+        }, 500);
+        if(res === 'success'){
+              location.reload();
+        }
+    }, 3000);
+}
+
+  document.getElementById('profilePicSelect').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const image = document.getElementById('profilePicHolder');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            image.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    } 
+});
+
+  </script>
 
   <!-- Template Main JS File -->
 

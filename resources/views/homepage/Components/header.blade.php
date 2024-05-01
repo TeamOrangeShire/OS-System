@@ -34,15 +34,4 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
-    
-    @if ($status === 'not_verified')
-    @php
-        $checkStat = App\Models\CustomerAcc::where('customer_id', $customer_id)->first();
-    @endphp
-        <script>
-            window.onload = function(){
-                window.location.href = "{{ route('new_account') }}?id={{ $checkStat->session_id }}&redirect=true";
-            }
-        </script>
-    @endif
-    
+ 
