@@ -67,7 +67,10 @@ class CustomerLog extends Controller
             $acc->log_in = "0";
             $acc->log_id = $customerLogs1->log_id;
         } elseif ($customerLogs2) {
-            $acc->log_in = "1"; 
+            $acc->log_in = "1";
+            $acc->log_payment = $customerLogs2->log_transaction;
+            $acc->log_start_time = $customerLogs2->log_start_time;
+            $acc->log_end_time = $customerLogs2->log_end_time;
             $acc->log_id = $customerLogs2->log_id;
         } else {
             $acc->log_in = "2"; 
@@ -90,7 +93,7 @@ public function GetCustomerlog(Request $request) {
 }
 
 public function LogToPending(Request $request) {
-
+  
     $logs = CustomerLogs::where('log_id',$request->id)->first();
     $start = $logs->log_start_time;
     $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');

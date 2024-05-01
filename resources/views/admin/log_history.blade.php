@@ -71,6 +71,7 @@
                                             <tr>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
+                                                <th>Log</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -149,17 +150,18 @@
 
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalCenterTitle">Customer Info</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="POST">
+                                <form action="" id="pendingPayment">
                                     @csrf
 
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div style="margin-left: 40px;">
                                                 <br>
+                                                <input type="hidden" name="id" id="id">
                                                 <label for="email"><strong>Hours</strong></label> <br>
                                                 <p class="" id="hours"></p>
                                             </div>
@@ -195,9 +197,9 @@
 
                                     </div>
                                     <br>
-                                    <input type="hidden" id="un_id" name="un_id">
+                                   
                                     <div style="text-align: center;">
-                                        <button type="submit" class="btn btn-success">Accept Payment</button>
+                                        <button type="button" class="btn btn-success" onclick="acceptPending()">Accept Payment</button>
                                     </div>
                                 </form>
                             </div>
@@ -416,24 +418,61 @@
                                     var customer_id = row.customer_id;
                                     var log_in = row.log_in;
                                     var log_id = row.log_id;
+                                    var payment = row.log_payment;
+                                    var payment2 = parseFloat(payment).toFixed(2);
+                                    var start_time = row.log_start_time;
+                                    var end_time = row.log_end_time;
                                     if (log_in === '0') {
                                         return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
-                                        log_id + ")'>Logout</button>";
-                                    } else if(log_in === '1'){
-                                        return "<button class='btn btn-warning' type='button' onclick='inAndout(" +
-                                        log_id + ")'>Confirm</button>";
-                                    }else{
+                                            log_id + ")'>Logout</button>";
+                                    } else if (log_in === '1') {
+                                        return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                            log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
+                                            "')\">Confirm</button>"; 
+                                    } else {
                                         return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
                                             customer_id + ")'>Login</button>";
                                     }
                                 }
                             }
-
                         ]
                     });
                 }
 
-                function inAndout(id){
+                function PendingToOut(id, payment, start, end) {
+                    console.log(id);
+                    console.log(payment);
+                    document.getElementById('id').value = id;
+                    document.getElementById('payment').textContent ="₱"+payment;
+                    document.getElementById('start').textContent = start;
+                    document.getElementById('end').textContent = end;
+                    var totaltime = timeDifference(start, end);
+                     var between = totaltime.hours + ':' + totaltime.minutes;
+                     document.getElementById('hours').textContent = between;
+
+                }
+                function acceptPending() {
+                   
+                    var formData = $("form#pendingPayment").serialize();
+                  
+                    console.log(formData);
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('LogToPending') }}",
+                        data: formData,
+                        success: function(response) {
+                            getCustomerData();
+                            viewLog(response.data);
+
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+
+                function inAndout(id) {
                     console.log(id);
 
                     document.getElementById('cuslogoutid').value = id;
@@ -456,7 +495,7 @@
                     });
                 }
 
-                function AccLogin(id){
+                function AccLogin(id) {
                     console.log(id);
 
                     document.getElementById('cuslogoutid').value = id;
@@ -587,7 +626,6 @@
                         }
                     });
                 }
-                
             </script>
 
     </body>
