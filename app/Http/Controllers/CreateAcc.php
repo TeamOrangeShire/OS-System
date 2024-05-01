@@ -123,5 +123,25 @@ class CreateAcc extends Controller
     
         return response()->json(['status'=>'success']);
     }
+
+    public function UploadVerificationPhone(Request $req){
+        $verify = $req->file('id_photo');
+        $id = $req->cust_id;
+        $type = $req->type;
+        if(!in_array($verify->getClientOriginalExtension(), ['jpg', 'jpeg', 'png'])){
+            return response()->json(['status'=>'invalid_ext', 'ext'=>$verify->getClientOriginalExtension()]);
+        }else{
+            $filename = 'Verification'. $id . "." . $verify->getClientOriginalExtension();
+            $verify->move(public_path('verification/'), $filename);
+
+            $customer = CustomerAcc::where('customer_id', $id)->first();
+
+            $customer->update([
+                'customer_type' => $type . "(Pending Validity)",
+            ]);
+
+            return response()->json(['status'=>'success']);
+        }
+    }
     
 }

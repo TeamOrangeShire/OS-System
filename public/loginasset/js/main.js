@@ -95,8 +95,10 @@ function isEmail(email) {
   }
 
 function Login(url, home) {
+    
     document.getElementById('loader').style.display = 'flex';
-    if(isEmail(document.getElementById('email').value)){
+    console.log(url);
+
         var formData = $('form#login-form').serialize();
    $.ajax({
        type: 'POST',
@@ -104,6 +106,7 @@ function Login(url, home) {
        data: formData,
        success: function(response) {
         document.getElementById('loader').style.display = 'none';
+        
          if(response.status === 'success'){
           window.location.href = home;
          }else if(response.status === 'fail'){
@@ -119,9 +122,7 @@ function Login(url, home) {
            console.log(xhr.responseText);
        }
    });
-    }else{
-        document.getElementById('loader').style.display = 'none';
-    }
+   
  
 }
 function CleanInput(event, requiredInput) {

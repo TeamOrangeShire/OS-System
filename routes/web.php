@@ -54,6 +54,7 @@ Route::post('/customer-log-out',[Login::class,'LogOutCustomer'] )->name('custome
 Route::post('/customer/redirectScan/updatelogs',[CustomerLog::class,'GetScannedURLlog'] )->name('updateQRLog');
 Route::post('/customer/tourend',[CreateAcc::class,'UpdateTour'] )->name('updateTour');
 Route::post('/customer/updateType',[CreateAcc::class,'UpdateType'] )->name('UpdateType');
+Route::post('/customer/updateType/upload',[CreateAcc::class,'UploadVerificationPhone'] )->name('UploadVerificationPhone');
 
 //Customer Dashboard
 Route::get('/customer/home/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');

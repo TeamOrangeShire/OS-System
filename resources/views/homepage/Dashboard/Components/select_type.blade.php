@@ -68,7 +68,7 @@
         </div>
   
         <div id="decidingPhase" style="display:none">
-          <button onclick="BackToSelection()" type="button" class="btn fs-3 mb-3"><i class="bi bi-arrow-left"></i>Back</button>
+          <button onclick="BackTo('selectionPhase', 'decidingPhase')" type="button" class="btn fs-3 mb-3"><i class="bi bi-arrow-left"></i>Back</button>
            <p>To verify your account type, please upload a valid ID. Customers associated with educational sectors enjoy discounts at Orange Shire. For educational sector accounts, please upload your school or student ID, or PRC exam permit. Alternatively, you can present these documents during your visit to Orange Shire.</p>
            <br>
            <h3>Account Type: <span id="spanTypeHolder"></span></h3>
@@ -79,17 +79,22 @@
            <button onclick="UploadingPhase()" class="btn btn-primary">Upload Photo</button>
           </div>
         <div id="uploadingPhase" style="display: none">
+          <button  onclick="BackTo('decidingPhase', 'uploadingPhase')" type="button" class="btn fs-3 mb-3"><i class="bi bi-arrow-left"></i>Back</button>
         <p>After uploading, please note that the verification process may take some time for confirmation. You can start using the app immediately, but the Education Sector discount will not be applied until your verification request is approved.</p>
             <h2 class="fs-3">Students(Upload Photo)</h2>
             <div class="rounded mx-auto p-4 container border border-dark-subtle row text-center">
-               <img src="{{ asset('customer_dashboards/img/id_placeholder.png') }}" alt="placeholder" class="w-100 col-md-12">
+               <img id="previewImg" src="{{ asset('customer_dashboards/img/id_placeholder.png') }}" alt="placeholder" class="w-100 col-md-12">
                <p>Upload the front part of your ID where your picture and names are capture it very clearly</p>
             </div>
             <div class="d-flex row container mt-4">
-              <form id="uploadedFile" enctype="multipart/form-data">
+              <form id="uploadedFile" method="POST" enctype="multipart/form-data">
                 @csrf
               <div class="col-sm-12">
-                <input class="form-control" type="file" name="id_photo" id="formFile">
+                <label for="formFile">Upload your Picture</label>
+                <input type="hidden" name="cust_id" value="{{$user_id}}">
+                <input type="hidden" id="upload_cust_type" name="type">
+                <input class="form-control" onchange="previewImage(this, 'previewImg')" type="file" accept="image/*" name="id_photo" id="formFile">
+                <button type="button" onclick="uploadPhoto('{{route('UploadVerificationPhone')}}')" class="btn btn-primary mt-4">Submit Photo</button>
               </div>
             </form>
            </div>
