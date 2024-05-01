@@ -454,10 +454,10 @@
                                     if (data === 1) {
                                         var log_status = row.log_status;
                                         if (log_status === 0) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
@@ -465,10 +465,10 @@
                                     } else if (data === 0) {
                                         var log_status = row.log_status;
                                         if (log_status === 0) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
@@ -573,6 +573,7 @@
                         data: formData,
                         success: function(response) {
                             getCustomerData();
+                            CustomerlogHistory();
                             viewLog(response.data);
 
                         },
@@ -596,6 +597,7 @@
                         data: Dataform,
                         success: function(response) {
                             getCustomerData();
+                            CustomerlogHistory();
                             viewLog(response.data);
 
                         },
@@ -619,6 +621,7 @@
                         data: Dataform,
                         success: function(response) {
                             getCustomerData();
+                            CustomerlogHistory();
                             viewLog(response.data);
 
                         },
@@ -688,10 +691,10 @@
                                     if (data === 1) {
                                         var log_status = row.log_status;
                                         if (log_status === 0) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
@@ -699,10 +702,10 @@
                                     } else if (data === 0) {
                                         var log_status = row.log_status;
                                         if (log_status === 0) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
@@ -728,7 +731,7 @@
                         data: Dataform,
                         success: function(response) {
                             getCustomerData();
-                            CustomerlogHistory()
+                            CustomerlogHistory();
                             viewLog(response.data);
 
                         },
