@@ -92,7 +92,25 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <!-- Table with stripped rows -->
-
+                                                <table id="loghistory" class="table table-striped" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Log Date</th>
+                                                            <th>Start</th>
+                                                            <th>End</th>
+                                                            <th>Total Time</th>
+                                                            <th>Payment</th>
+                                                           <th>Status</th>
+                                                           <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+            
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
 
                                             </div>
                                         </div>
@@ -369,8 +387,100 @@
                     document.getElementById('Un_customer_type').value = type;
                 }
 
-                function insertnewcustomer() {
 
+                function CustomerlogHistory() {
+                    $('#loghistory').DataTable({
+                        destroy: true,
+                        "ajax": {
+                            "url": "{{ route('CustomerlogHistory') }}",
+                            "type": "GET"
+                        },
+                        "columns": [{
+                                "data": "fullname"
+                            },
+                            {
+                                "data": "log_date"
+                            },
+                            {
+                                "data": "log_start_time"
+                                
+                            },
+                            {
+                                "data": "log_end_time"
+                            },
+                            {
+                                "data":null,
+                                "render": function(data, type, row) {
+                                    var start = row.log_start_time;
+                                    var end = row.log_end_time;
+                                    if(end == '' || end == null){
+                                        return '';
+                                    }else{
+                                        var totaltime = timeDifference(start, end);
+                                    var between = totaltime.hours + ':' + totaltime.minutes;
+                                        return between;
+                                    }
+                                   
+                                }
+                            },
+                            {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var payment = row.log_transaction;
+                                    if(payment == '' || payment == null){
+                                        return '';
+                                    }else{
+                                        var payment2 = parseFloat(payment).toFixed(2);
+                                    return payment2;
+                                    }
+                                   
+                                }
+                            },
+                            {
+                                "data": "log_status",
+                                "render": function(data, type, row) {
+                                    if (data === 0) {
+                                        return "Active";
+                                    } else if (data === 1) {
+                                        return "Pending";
+                                    } else {
+                                        return "Completed";
+                                    }
+                                }
+                            },
+                            {
+                                "data": "log_type",
+                                "render": function(data, type, row) {
+                                    if (data === 1) {
+                                        var log_status = row.log_status;
+                                        if (log_status === 0) {
+                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Logout</button>";
+                                        } else if (log_status === 1) {
+                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Confirm</button>";
+                                        } else {
+                                            return "Paid";
+                                        }
+                                    } else if (data === 0) {
+                                        var log_status = row.log_status;
+                                        if (log_status === 0) {
+                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Logout</button>";
+                                        } else if (log_status === 1) {
+                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Confirm</button>";
+                                        } else {
+                                            return "Paid";
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                }
+
+                function insertnewcustomer() {
                     var formData = $("form#Insertnewcus").serialize();
                     $.ajax({
                         type: "POST",
@@ -390,6 +500,7 @@
 
                 $(document).ready(function() {
                     getCustomerData();
+                    CustomerlogHistory();
                 });
 
                 function getCustomerData() {
@@ -617,6 +728,7 @@
                         data: Dataform,
                         success: function(response) {
                             getCustomerData();
+                            CustomerlogHistory()
                             viewLog(response.data);
 
                         },

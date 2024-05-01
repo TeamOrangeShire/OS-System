@@ -91,9 +91,22 @@ public function GetCustomerlog(Request $request) {
 
     return response()->json(['data' => $logs]);
 }
+public function CustomerlogHistory() {
+
+  $logs = CustomerLogs::all();
+  foreach($logs as $log){
+    $accounts = CustomerAcc::where('customer_id',$log->customer_id)->first();
+    
+    $log->fullname = $accounts->customer_firstname .' ' .$accounts->customer_lastname;
+    unset($log->created_at);
+    unset($log->updated_at);
+  }
+
+  return response()->json(['data' => $logs]);
+}
 
 public function LogToPending(Request $request) {
-  
+
     $logs = CustomerLogs::where('log_id',$request->id)->first();
     $start = $logs->log_start_time;
     $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');

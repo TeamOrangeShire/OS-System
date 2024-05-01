@@ -80,6 +80,7 @@ Route::get('/admin/CustomerLog', [GetDataViews::class,"CustomerLog"])->name('Cus
 Route::get('/admin/ViewDetails', [GetDataViews::class,"ViewDetails"])->name('ViewDetails');
 Route::get('/admin/GetCustomerAcc', [CustomerLog::class,"GetCustomerAcc"])->name('GetCustomerAcc');
 Route::get('/admin/GetCustomerlog', [CustomerLog::class,"GetCustomerlog"])->name('GetCustomerlog');
+Route::get('/admin/CustomerlogHistory', [CustomerLog::class,"CustomerlogHistory"])->name('CustomerlogHistory');
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
