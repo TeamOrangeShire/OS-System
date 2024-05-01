@@ -358,6 +358,7 @@ function SelectType(type) {
 
   document.getElementById('customerTypeSelected').value = type
   document.getElementById('spanTypeHolder').textContent = type;
+  document.getElementById('upload_cust_type').value = type;
 }
 
 function UpdateSelection(url) {
@@ -384,15 +385,15 @@ function UpdateSelection(url) {
   
 }
 
-function BackToSelection() {
-  const selection = document.getElementById('selectionPhase');
-  const deciding = document.getElementById('decidingPhase');
+function BackTo(back, current) {
+  const backto = document.getElementById(back);
+  const currents = document.getElementById(current);
 
-  deciding.style.animation = "phaseOut 0.4s";
+  currents.style.animation = "phaseOut 0.4s";
   setTimeout(() => {
-    deciding.style.display = 'none';
-    selection.style.display = '';
-    selection.style.animation = 'phaseIn 0.4s';
+    currents.style.display = 'none';
+    backto.style.display = '';
+    backto.style.animation = 'phaseIn 0.4s';
   }, 400);
 
 }
@@ -410,6 +411,51 @@ function UploadingPhase() {
   }, 400);
 }
 
-function UploadPhoto(){
+function previewImage(input, imgId) {
+  const file = input.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      const img = document.getElementById(imgId);
+      img.src = e.target.result;
+    }
+
+    reader.readAsDataURL(file);
+  }
+}
+
+function uploadPhoto(route){
+  const file = document.getElementById("formFile");
+  if(file.files.length === 0){
+     SnackBar('No File Selected');
+  }else{
+    document.getElementById('loadingDiv').style.display = 'flex';
+
+    var formData = new FormData($('#uploadedFile')[0]);
   
+    $.ajax({
+      type: 'POST',
+      url: route,
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function (response){
+       if(response.status === 'success'){
+        document.getElementById('loadingDiv').style.display = 'none';
+        SnackBar('Upload Successfully! Page will reload in a second');
+        location.reload();
+       }else{
+        document.getElementById('loadingDiv').style.display = 'none';
+        const errorMessage = 'Error: Invalid Image Type ->' + response.ext + '<-';
+        SnackBar(errorMessage);
+       }
+      },
+      error: function(xhr){
+        console.log(xhr.responseText);
+      }
+    });
+  }
+
 }

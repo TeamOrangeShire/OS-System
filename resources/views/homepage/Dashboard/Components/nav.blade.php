@@ -1,7 +1,7 @@
 <div class="snackbar" id="snackbar" style="display: none">
   <span class="snackbarContent" id="snackbarContent"></span>
 </div>
-@include('homepage.Dashboard.Components.select_type')
+@include('homepage.Dashboard.Components.select_type', ['user_id'=> $user_id])
 @php
     $CheckType = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
 @endphp

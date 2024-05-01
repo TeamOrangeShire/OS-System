@@ -132,11 +132,11 @@
 
 					<div class="text-center p-t-115">
 						<span class="txt1">
-							Don’t have an account?
+							Already have an account?
 						</span>
 
-						<a class="txt2" style="color:#ff5c40" href="{{ route('signup') }}">
-							Sign Up
+						<a class="txt2" style="color:#ff5c40" href="{{ route('customer_login') }}">
+							Login
 						</a>
 					</div>
 				</form>
