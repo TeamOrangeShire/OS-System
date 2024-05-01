@@ -71,6 +71,7 @@
                                             <tr>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
+                                                <th>Log</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -91,7 +92,25 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <!-- Table with stripped rows -->
-
+                                                <table id="loghistory" class="table table-striped" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Log Date</th>
+                                                            <th>Start</th>
+                                                            <th>End</th>
+                                                            <th>Total Time</th>
+                                                            <th>Payment</th>
+                                                           <th>Status</th>
+                                                           <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+            
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
 
                                             </div>
                                         </div>
@@ -149,17 +168,18 @@
 
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalCenterTitle">Customer Info</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="POST">
+                                <form action="" id="pendingPayment">
                                     @csrf
 
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div style="margin-left: 40px;">
                                                 <br>
+                                                <input type="hidden" name="id" id="id">
                                                 <label for="email"><strong>Hours</strong></label> <br>
                                                 <p class="" id="hours"></p>
                                             </div>
@@ -195,9 +215,9 @@
 
                                     </div>
                                     <br>
-                                    <input type="hidden" id="un_id" name="un_id">
+                                   
                                     <div style="text-align: center;">
-                                        <button type="submit" class="btn btn-success">Accept Payment</button>
+                                        <button type="button" class="btn btn-success" onclick="acceptPending()">Accept Payment</button>
                                     </div>
                                 </form>
                             </div>
@@ -367,8 +387,100 @@
                     document.getElementById('Un_customer_type').value = type;
                 }
 
-                function insertnewcustomer() {
 
+                function CustomerlogHistory() {
+                    $('#loghistory').DataTable({
+                        destroy: true,
+                        "ajax": {
+                            "url": "{{ route('CustomerlogHistory') }}",
+                            "type": "GET"
+                        },
+                        "columns": [{
+                                "data": "fullname"
+                            },
+                            {
+                                "data": "log_date"
+                            },
+                            {
+                                "data": "log_start_time"
+                                
+                            },
+                            {
+                                "data": "log_end_time"
+                            },
+                            {
+                                "data":null,
+                                "render": function(data, type, row) {
+                                    var start = row.log_start_time;
+                                    var end = row.log_end_time;
+                                    if(end == '' || end == null){
+                                        return '';
+                                    }else{
+                                        var totaltime = timeDifference(start, end);
+                                    var between = totaltime.hours + ':' + totaltime.minutes;
+                                        return between;
+                                    }
+                                   
+                                }
+                            },
+                            {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var payment = row.log_transaction;
+                                    if(payment == '' || payment == null){
+                                        return '';
+                                    }else{
+                                        var payment2 = parseFloat(payment).toFixed(2);
+                                    return payment2;
+                                    }
+                                   
+                                }
+                            },
+                            {
+                                "data": "log_status",
+                                "render": function(data, type, row) {
+                                    if (data === 0) {
+                                        return "Active";
+                                    } else if (data === 1) {
+                                        return "Pending";
+                                    } else {
+                                        return "Completed";
+                                    }
+                                }
+                            },
+                            {
+                                "data": "log_type",
+                                "render": function(data, type, row) {
+                                    if (data === 1) {
+                                        var log_status = row.log_status;
+                                        if (log_status === 0) {
+                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Logout</button>";
+                                        } else if (log_status === 1) {
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Confirm</button>";
+                                        } else {
+                                            return "Paid";
+                                        }
+                                    } else if (data === 0) {
+                                        var log_status = row.log_status;
+                                        if (log_status === 0) {
+                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Logout</button>";
+                                        } else if (log_status === 1) {
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Confirm</button>";
+                                        } else {
+                                            return "Paid";
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                }
+
+                function insertnewcustomer() {
                     var formData = $("form#Insertnewcus").serialize();
                     $.ajax({
                         type: "POST",
@@ -388,6 +500,7 @@
 
                 $(document).ready(function() {
                     getCustomerData();
+                    CustomerlogHistory();
                 });
 
                 function getCustomerData() {
@@ -416,24 +529,62 @@
                                     var customer_id = row.customer_id;
                                     var log_in = row.log_in;
                                     var log_id = row.log_id;
+                                    var payment = row.log_payment;
+                                    var payment2 = parseFloat(payment).toFixed(2);
+                                    var start_time = row.log_start_time;
+                                    var end_time = row.log_end_time;
                                     if (log_in === '0') {
                                         return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
-                                        log_id + ")'>Logout</button>";
-                                    } else if(log_in === '1'){
-                                        return "<button class='btn btn-warning' type='button' onclick='inAndout(" +
-                                        log_id + ")'>Confirm</button>";
-                                    }else{
+                                            log_id + ")'>Logout</button>";
+                                    } else if (log_in === '1') {
+                                        return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                            log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
+                                            "')\">Confirm</button>"; 
+                                    } else {
                                         return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
                                             customer_id + ")'>Login</button>";
                                     }
                                 }
                             }
-
                         ]
                     });
                 }
 
-                function inAndout(id){
+                function PendingToOut(id, payment, start, end) {
+                    console.log(id);
+                    console.log(payment);
+                    document.getElementById('id').value = id;
+                    document.getElementById('payment').textContent ="₱"+payment;
+                    document.getElementById('start').textContent = start;
+                    document.getElementById('end').textContent = end;
+                    var totaltime = timeDifference(start, end);
+                     var between = totaltime.hours + ':' + totaltime.minutes;
+                     document.getElementById('hours').textContent = between;
+
+                }
+                function acceptPending() {
+                   
+                    var formData = $("form#pendingPayment").serialize();
+                  
+                    console.log(formData);
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('LogToPending') }}",
+                        data: formData,
+                        success: function(response) {
+                            getCustomerData();
+                            CustomerlogHistory();
+                            viewLog(response.data);
+
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+
+                function inAndout(id) {
                     console.log(id);
 
                     document.getElementById('cuslogoutid').value = id;
@@ -446,6 +597,7 @@
                         data: Dataform,
                         success: function(response) {
                             getCustomerData();
+                            CustomerlogHistory();
                             viewLog(response.data);
 
                         },
@@ -456,7 +608,7 @@
                     });
                 }
 
-                function AccLogin(id){
+                function AccLogin(id) {
                     console.log(id);
 
                     document.getElementById('cuslogoutid').value = id;
@@ -469,6 +621,7 @@
                         data: Dataform,
                         success: function(response) {
                             getCustomerData();
+                            CustomerlogHistory();
                             viewLog(response.data);
 
                         },
@@ -538,10 +691,10 @@
                                     if (data === 1) {
                                         var log_status = row.log_status;
                                         if (log_status === 0) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
@@ -549,10 +702,10 @@
                                     } else if (data === 0) {
                                         var log_status = row.log_status;
                                         if (log_status === 0) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-primary' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
@@ -578,6 +731,7 @@
                         data: Dataform,
                         success: function(response) {
                             getCustomerData();
+                            CustomerlogHistory();
                             viewLog(response.data);
 
                         },
@@ -587,7 +741,6 @@
                         }
                     });
                 }
-                
             </script>
 
     </body>
