@@ -383,10 +383,9 @@ class GetDataViews extends Controller
     // }
     public function CustomerLog()
     {
-        // Retrieve logs grouped by date
+       
         $logs = CustomerLogs::all()->groupBy('log_date');
     
-        // Construct an array with the desired structure
         $logsByDate = [];
         foreach ($logs as $logDate => $logEntries) {
             $totalLogTransactions = 0;
@@ -400,8 +399,6 @@ class GetDataViews extends Controller
                 'total_log_transactions' => $totalLogTransactions 
             ];
         }
-    
-        // Construct and return response
         return response()->json(['logsByDate' => $logsByDate]);
     }
     
@@ -410,9 +407,13 @@ class GetDataViews extends Controller
     public function ViewDetails(Request $request){
 
         $date = $request->query('date');
-         $reg = CustomerLogs::where('log_date', $date)->get();
+        $reg = CustomerLogs::where('log_date', $date)->get();
         
-
         return response()->json(['reg'=>$reg]);
     }
+    public function GetCustomerAccDetail(){
+         $Acc = CustomerAcc::all();
+         return response()->json(['data'=>$Acc]);
+    }
+
 }

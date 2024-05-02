@@ -214,14 +214,13 @@ class EditAcc extends Controller
     }
 
     public function changeType(Request $request){
-
         $customer_id = $request->cus_id;
-        $changeType = $request->customer_type;
-
         $change = CustomerAcc::where('customer_id', $customer_id)->first();
+        $type = $change->customer_type;
+        $changetype = str_replace('(Pending Validity)', '', $type);
         $change->update([
 
-          'customer_type'=>$changeType,
+          'customer_type'=>$changetype,
 
         ]);
         return redirect()->back();

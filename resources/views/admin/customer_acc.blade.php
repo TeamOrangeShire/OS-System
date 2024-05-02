@@ -40,44 +40,21 @@
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
 
-                    <table class="table datatable">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>User Type</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                 $Customer = App\Models\CustomerAcc::all();
-                                 $num= 1;
-                                 
-                                @endphp
-                                @foreach ($Customer as $cus)
-                               @php
-                                $cus_fullname = $cus->customer_firstname .' '.$cus->customer_middlename.' '.$cus->customer_lastname;
-                                   
-                               @endphp
-                                <tr>
-                                    <td>{{$num}}</td>
-                                   <td>{{$cus_fullname}}</td>
-                                    <td>{{$cus->customer_email}}</td>
-                                    <td>{{$cus->customer_type}}</td>
-                                    <td>
-                                        <button type="button" class="btn  btn-icon btn-info" data-toggle="modal" data-target="#infomodal"  onclick="view('{{$cus->customer_id}}','{{$cus_fullname}}','{{$cus->customer_email}}','{{$cus->customer_phone_num}}','{{$cus->customer_type}}','{{$cus->account_credits}}')"> <i class="feather icon-info"> </i></button>
-                                        {{-- <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#declinemodal" ><i class="feather icon-x-circle"></i></button>   </td> --}}
-                                    </td>
-                                </tr>
-                                @php
-                                    $num++
-                                @endphp
-                                @endforeach
-                               
-                            </tbody>
-                        </table>
+                   <table id="myTable" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Username</th>
+                                                <th>Email</th>
+                                                <th>User Type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
                     </div>
                 </div>
             </div>
@@ -101,6 +78,7 @@
                     <div style="margin-left: 40px;">
                         <br>
                        <input type="hidden" id="cus_id">
+                       <input type="text" name="" id="verify">
                         <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
                         <p class="" name="cname" id="cus_name">  </p> 
                         <input type="hidden" name="" id="customer_id">
@@ -213,21 +191,8 @@
                     </div>
                 <div class="row">
                     <div class="col-sm-12">
-                      
-                            <br>
-                            <div class="form-group">
-                                <label for="">User Type</label>
-                                <select class="form-control" name="customer_type" id="customer_type">
-                                    <option value="Student">Student</option>
-                                    <option value="Teacher">Teacher</option>
-                                    <option value="Reviewer">Reviewer</option>
-                                    <option value="Professional">Professional</option>
-                                     <option value="Regular">Regular</option>
-                                </select>
-                            </div>  
+                          <img class="img-fluid" alt="Responsive image" id="verification_image"> 
                         </div>
-                   
-    
                 </div>
             </div>
                 <br>
@@ -301,15 +266,58 @@
     </div>
 </div>
 
-
+@include('admin.assets.adminscript')
 <script>
- function view(id,fullname,email,number,customer_type,credit){
+ $(document).ready(function() {
+                    GetCustomerAccDetail()
+                });
+function GetCustomerAccDetail() {
+    $('#myTable').DataTable({
+        destroy: true,
+        "ajax": {
+            "url": "{{ route('GetCustomerAccDetail') }}",
+            "type": "GET"
+        },
+        "columns": [{
+                "data": null,
+                "render": function(data, type, row) {
+                    return row.customer_firstname + ' ' + row.customer_lastname;
+                }
+            },
+            {
+                "data": "customer_email"
+            },
+            {
+                "data": "customer_type"
+            },
+            {
+                "data": null,
+                "render": function(data, type, row) {
+                   return '<button type="button" class="btn btn-icon btn-info" data-toggle="modal" data-target="#infomodal" onclick="view(' + 
+                        row.customer_id + ',\'' + 
+                        row.customer_firstname + ' ' + row.customer_lastname + '\',\'' +
+                        row.customer_email + '\',\'' + 
+                        row.customer_phone_num + '\',\'' + 
+                        row.customer_type + '\',\'' + 
+                        row.verification_image + '\',\'' + 
+                        row.account_credits + '\')"> <i class="feather icon-info"> </i></button>';
+                   }
+            },
+
+        ]
+    });
+}
+
+
+
+ function view(id,fullname,email,number,customer_type,image,credit){
             
             document.getElementById('cus_id').value=id;
             document.getElementById('cus_name').textContent=fullname;
             document.getElementById('cus_email').textContent=email;
             document.getElementById('cus_num').textContent=number;
             document.getElementById('user_type').textContent=customer_type;
+             document.getElementById('verify').value=image;
             document.getElementById('cus_credit').textContent=credit;
            
 
@@ -323,7 +331,7 @@
     function user_type(){
         document.getElementById('cus_id2').value=document.getElementById('cus_id').value;
         document.getElementById('customer_name_type').textContent=document.getElementById('cus_name').textContent;
-        document.getElementById('customer_type').value=document.getElementById('user_type').textContent;
+        document.getElementById('verification_image').src='{{asset('verification/')}}/'+ document.getElementById('verify').value;
     }
 
 
@@ -360,25 +368,13 @@
     });
 
   </script>
-
-@include('admin.assets.adminscript')
-
   
 {{-- add customer modal end --}}
 <!-- [ Main Content ] end -->
    
 
     <!-- Required Js -->
-    <script src="{{asset('assets/js/vendor-all.min.js')}}"></script>
-    <script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
-
-<!-- Apex Chart -->
-<script src="{{asset('assets/js/plugins/apexcharts.min.js')}}"></script>
-
-
-<!-- custom-chart js -->
-<script src="{{asset('assets/js/pages/dashboard-main.js')}}"></script>
-<script src="{{asset('assets/js/pcoded.min.js')}}"></script>
+   
 
 </body>
 
