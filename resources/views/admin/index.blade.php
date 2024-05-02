@@ -60,17 +60,19 @@
                     <div class="col-md-12 col-xl-4">
                         <div class="card flat-card">
                             <div class="card-header">
-                                <h5>Customers</h5>
+                                {{-- <h5>Customers</h5> --}}
                                 <div class="row-table">
                                     <div class="col-sm-6 card-body br">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <i><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"
-                                                            width="24" height="24">
-                                                            <path
-                                                                d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z"
-                                                                fill="#405cff" />
-                                                        </svg> </i>
+                                                <i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#31363f" stroke="#222831 " stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                        <circle cx="9" cy="7" r="4"></circle>
+                                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                      </svg>
+                                                      
                                                 </i>
                                             </div>
                                             <div class="col-sm-8 text-md-center">
@@ -82,32 +84,31 @@
                                                 @endphp
                                                     {{ $count }}
                                                 </h5>
-                                                <span>Total</span>
+                                                <span>Customers</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 card-body">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <i> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"
-                                                        width="24" height="24">
-                                                        <path
-                                                            d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
-                                                            fill="#405cff" />
-                                                    </svg>
-
-                                                </i>
+                                                <i> 
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#31363f" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">
+                                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                                      </svg>                                               
+                                                  </i>
                                             </div>
                                             <div class="col-sm-8 text-md-center">
                                                 <h5>
+                                                    
                                                 @php
                                                     $newCustomer = App\Models\CustomerAcc::Where('created_at',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
                                                     $newCustomercount = $newCustomer->count();
 
                                                 @endphp
                                                     {{ $newCustomercount }}
+
                                                 </h5>
-                                                <span>New</span>
+                                                <span>logged in</span>
                                             </div>
                                         </div>
                                     </div>
@@ -116,13 +117,11 @@
                                     <div class="col-sm-6 card-body br">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <i> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"
-                                                        width="24" height="24">
-                                                        <path
-                                                            d="M224 0a128 128 0 1 1 0 256A128 128 0 1 1 224 0zM178.3 304h91.4c20.6 0 40.4 3.5 58.8 9.9C323 331 320 349.1 320 368c0 59.5 29.5 112.1 74.8 144H29.7C13.3 512 0 498.7 0 482.3C0 383.8 79.8 304 178.3 304zM352 368a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-80c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H512V304c0-8.8-7.2-16-16-16z"
-                                                            fill="#405cff" />
-                                                    </svg>
-
+                                                <i> 
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#31363f" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award">
+                                                        <circle cx="12" cy="8" r="7"></circle>
+                                                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                                                      </svg>                                                      
                                                 </i>
                                             </div>
                                             <div class="col-sm-8 text-md-center">
@@ -138,26 +137,34 @@
                                                 @endphp
                                                     {{ $logTotal }}
                                                 </h5>
-                                                <span>Daily</span>
+                                                <span>regular</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 card-body">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <i> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
-                                                        width="24" height="24">
-                                                        <path
-                                                            d="M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.4 7.6 27 19 34L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c5-6.7 8-15 8-24c0-22.1-17.9-40-40-40S0 113.9 0 136s17.9 40 40 40c.2 0 .5 0 .7 0L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c.2 0 .5 0 .7 0c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40c0 9 3 17.3 8 24l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106z"
-                                                            fill="#405cff" />
-                                                    </svg>
+                                                <i>        
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#31363f" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open">
+                                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                                      </svg>                                                                                                            
                                                 </i>
                                             </div>
                                             <div class="col-sm-8 text-md-center">
                                                 <h5>
-                                                    
+                                                    @php
+                                                    $Customerlog = App\Models\CustomerLogs::Where('log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
+                                                    $Customerlogcount = $Customerlog->count();
+
+                                                    $unCustomerlog = App\Models\CustomerLogUnregister::Where('un_log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
+                                                    $unCustomerlogcount = $unCustomerlog->count();
+
+                                                    $logTotal = $Customerlogcount + $unCustomerlogcount;
+                                                @endphp
+                                                    {{ $logTotal }}
                                                 </h5>
-                                                <span>Repeat</span>
+                                                <span>students</span>
                                             </div>
                                         </div>
                                     </div>
