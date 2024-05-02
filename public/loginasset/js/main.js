@@ -192,33 +192,8 @@ function Proceed(step, instruct){
     step1.style.display = '';
     step2.style.display = 'none';
   }else if(step === 'step3' && instruct === 'next'){
-    let validity = 0;
-    const remail = document.getElementById('email_required');
-    if(document.getElementById('email').value === ''){
-        remail.style.display = '';
-        remail.textContent = 'Field Required';
-    }else{
-        if(CleanMail(document.getElementById('email').value)){
-            document.getElementById('f_email').value = document.getElementById('email').value;
-            validity++;
-         }else{
-            remail.style.display = '';
-            remail.textContent = 'Invalid Email';
-         }
-    }
-    
-     const contact = document.getElementById('contact');
-     if(contact.value === '' || contact.value.length < 11){
-        document.getElementById('contact_required').style.display = '';
-     }else{
-        document.getElementById('f_contact').value = contact.value;
-        validity++;
-     }
-
-     if(validity == 2){
-        step2.style.display = 'none';
-        step3.style.display = '';
-     }
+    step2.style.display = 'none';
+    step3.style.display = '';
   }else if(step === 'step2' || instruct === 'previous'){
     step2.style.display = '';
     step3.style.display = 'none';

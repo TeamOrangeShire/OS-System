@@ -11,7 +11,13 @@
   @php
   $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
   $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
-  $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
+  $fullname = $customer->customer_firstname . " ";
+
+if ($customer->customer_middlename !== null) {
+    $fullname .= $customer->customer_middlename[0] . ". ";
+}
+
+$fullname .= $customer->customer_lastname;
   $profile = $customer->customer_profile_pic;
   
 @endphp

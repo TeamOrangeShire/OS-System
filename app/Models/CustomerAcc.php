@@ -25,5 +25,6 @@ class CustomerAcc extends Model
       'verification_status',
       'verification_code',
       'session_id',
+      'verification_image',
     ];
 }

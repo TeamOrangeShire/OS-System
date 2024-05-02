@@ -227,6 +227,9 @@ public function AccLogin(Request $request){
         ]);
         $status = 'logout';
         $log_id = $checkLogOut->log_id;
+      }else{
+        $status = 'not_login';
+        $log_id = 'none';
       }
    
     }else if($QRCode === 'IuFiIJwM3AupqAK'){
@@ -257,10 +260,16 @@ public function AccLogin(Request $request){
             $status = 'logout';
             $log_id = $checkLogOut->log_id;
           }
+        }else{
+          $status = 'not_login';
+          $log_id = $checkLogOut->log_id;
         }
-  }else{
+  }else if($QRCode === 'https://orangeshire.com/download'){
     $status = 'download';
     $log_id = 'none';
+  }else{
+    $status = 'fail';
+    $log_id = 'fail';
   }
   return response()->json(['status'=>$status, 'log_data'=>$log_id]);
 }

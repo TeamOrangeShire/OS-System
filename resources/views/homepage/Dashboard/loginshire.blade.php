@@ -11,13 +11,11 @@
   @php
   $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
   $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
-  $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
   
   $tour = App\Models\Tour::where('customer_id', $user_id)->first();
   $logStatus = App\Models\CustomerLogs::
   where('customer_id', $user_id)
-->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
 ->where('log_status', 0)
 ->first();
 
@@ -34,7 +32,7 @@
      <p id="succ_status"></p>   
      <i>Thank you for visiting  Orange Shire Coworking!</i>   
      <i>&trade; All Rights Reserved Orange Shire &trade;</i>
-     <button  onclick="LogHistory('{{ route('getHistoryData') }}?cust_id={{ $user_id }}', '{{ route('getLogInfo') }}', '{{ $customer->customer_type }}')" class="btn btn-success mt-2">Okay</button>
+     <button type="button"  onclick="LogHistory('{{ route('getHistoryData') }}?cust_id={{ $user_id }}', '{{ route('getLogInfo') }}', '{{ $customer->customer_type }}', 'click_button','{{ route('logintoshire') }}')" class="btn btn-success mt-2">Okay</button>
   </div>
 </div>
 
@@ -64,17 +62,17 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Log In to Shire</h1>
+      <h1>{{ $logStatus ? 'Log Out' : 'Log In' }} to Shire</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('customerHome') }}">Home</a></li>
           <li class="breadcrumb-item"><a href="{{ route('customerProfile') }}">Profile</a></li>
-          <li class="breadcrumb-item active">Log in</li>
+          <li class="breadcrumb-item active">{{ $logStatus ? 'Log Out' : 'Log In' }}  </li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
     <form method="post" id="scannedDataHolder">@csrf <input type="hidden" id="scannedQRCode" name="QRCode"><input type="hidden" name="cust_id" value="{{ $user_id }}"></form>
-    <button id="scanner" type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> {{ $logStatus ? 'Scan to Log out' : 'Scan to Log in'}}</button>
+    <button id="scanner" type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}', 'login')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> {{ $logStatus ? 'Scan to Log out' : 'Scan to Log in'}}</button>
       <div id="qrScanner" style="display: none;"></div>
        <div class="card">
         <div class="card-body">
@@ -179,9 +177,11 @@
       console.log(l_data);
       if(stats === 'success'){
         DisplaySuccessModal(l_data);
+      }else{
+        LogHistory("{{ route('getHistoryData') }}?cust_id={{ $user_id }}", "{{ route('getLogInfo') }}", "{{ $customer->customer_type }}", 'redirect', 'dummy');
       }
 
-      LogHistory("{{ route('getHistoryData') }}?cust_id={{ $user_id }}", "{{ route('getLogInfo') }}", "{{ $customer->customer_type }}");
+    
     }
     function  DisplaySuccessModal(ids){
  

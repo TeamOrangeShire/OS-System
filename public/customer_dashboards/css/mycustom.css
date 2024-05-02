@@ -104,6 +104,13 @@
 	
 	background-image: url('../img/card-bg.png');
 	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+@media(max-width:600px){
+	.back-gradient{
+		background-size: auto;
+	}
 }
 
 .status-log{

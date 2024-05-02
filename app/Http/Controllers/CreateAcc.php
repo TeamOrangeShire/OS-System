@@ -138,6 +138,7 @@ class CreateAcc extends Controller
 
             $customer->update([
                 'customer_type' => $type . "(Pending Validity)",
+                'verification_image'=> $filename,
             ]);
 
             return response()->json(['status'=>'success']);
