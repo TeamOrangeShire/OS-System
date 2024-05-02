@@ -150,6 +150,7 @@ class EditAcc extends Controller
         $customerEmail = $customerProfile->emailAddress;
         $customerPhoneNumber = $customerProfile->phoneNumber;
         $customer_id = $customerProfile->customer_id;
+        $username = $customerProfile->username;
 
         $editProfilequery = CustomerAcc::where('customer_id', $customer_id)->first();
             $editProfilequery->update([
@@ -159,9 +160,9 @@ class EditAcc extends Controller
                 'customer_ext' => $customerExtName,
                 'customer_email' => $customerEmail,
                 'customer_phone_num' => $customerPhoneNumber,
+                'customer_username'=> $username,
             ]);
         return redirect()->back();
-        
         
     }
 

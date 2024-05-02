@@ -176,9 +176,6 @@ $tour = App\Models\Tour::where('customer_id', $user_id)->first();
   </form>
   @include('homepage.Dashboard.Components.scripts')
 
-  @if ($tour->tour_home === 0)
-  <script src="{{ asset('tour/home.js') }}"></script>
-  @endif
   
 </body>
 
