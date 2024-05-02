@@ -387,22 +387,28 @@ function UpdateTour(userChoice) {
   });
 }
 
-function SelectType(type) {
+function SelectType(type, url) {
 
-  const selection = document.getElementById('selectionPhase');
-  const deciding = document.getElementById('decidingPhase');
+  if(type === 'Regular/Professional'){
+    document.getElementById('customerTypeSelected').value = type;
+    UpdateSelection(url);
+  }else{
+    const selection = document.getElementById('selectionPhase');
+    const deciding = document.getElementById('decidingPhase');
+  
+    selection.style.animation = "phaseOut 0.4s";
+    setTimeout(() => {
+      selection.style.display = 'none';
+      deciding.style.display = '';
+      deciding.style.animation = 'phaseIn 0.4s';
+    }, 400);
+  
+  
+    document.getElementById('customerTypeSelected').value = type
+    document.getElementById('spanTypeHolder').textContent = type;
+    document.getElementById('upload_cust_type').value = type;
+  }
 
-  selection.style.animation = "phaseOut 0.4s";
-  setTimeout(() => {
-    selection.style.display = 'none';
-    deciding.style.display = '';
-    deciding.style.animation = 'phaseIn 0.4s';
-  }, 400);
-
-
-  document.getElementById('customerTypeSelected').value = type
-  document.getElementById('spanTypeHolder').textContent = type;
-  document.getElementById('upload_cust_type').value = type;
 }
 
 function UpdateSelection(url) {

@@ -188,12 +188,6 @@ $fullname .= $customer->customer_lastname;
         </a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link " href="{{ route('customerProfile') }}">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li>
 
       <li class="nav-item">
         <a class="nav-link " href="{{ route('logintoshire') }}">

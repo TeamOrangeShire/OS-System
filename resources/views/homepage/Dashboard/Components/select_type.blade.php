@@ -23,7 +23,7 @@
               </h2>
               <div id="student_select" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body"><i>Note: If you select Student under Educational Sector, you'll be required to submit or present a photo of your valid Student ID for verification purposes only.</i>
-                <br><button onclick="SelectType('Student')" class="btn btn-primary mt-4">Select Student</button> 
+                <br><button onclick="SelectType('Student', '{{ route('UpdateType') }}')" class="btn btn-primary mt-4">Select Student</button> 
                 </div>
 
               </div>
@@ -36,7 +36,7 @@
               </h2>
               <div id="teacher_select" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body"><i>Note: If you select Teacher under Educational Sector, you'll be required to  or present a photo of your valid ID of your employment as a Teacher in a school for verification purposes only.</i>
-                  <br><button onclick="SelectType('Teacher')" class="btn btn-primary mt-4">Select Teacher</button>  
+                  <br><button onclick="SelectType('Teacher', '{{ route('UpdateType') }}')" class="btn btn-primary mt-4">Select Teacher</button>  
                 </div>
               </div>
             </div>
@@ -48,7 +48,7 @@
               </h2>
               <div id="reviewer_select" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body"><i>Note: If you select Reviewer under Educational Sector, you'll be required to submit a photo of your valid ID for verification purposes only.</i>
-                  <br><button onclick="SelectType('Reviewer')" class="btn btn-primary mt-4">Select Reviewer</button>  
+                  <br><button onclick="SelectType('Reviewer', '{{ route('UpdateType') }}')" class="btn btn-primary mt-4">Select Reviewer</button>  
                 </div>
               </div>
             </div>
@@ -60,7 +60,7 @@
               </h2>
               <div id="professional_select" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body"><i>Note! No Verification process for this customer type and regular charges will be apply to all of your transaction</i></div>
-                <br><button onclick="SelectType('Regular/Professional')" class="btn btn-primary mt-4">Select Regular/Professional</button> 
+                <br><button onclick="SelectType('Regular/Professional', '{{ route('UpdateType') }}')" class="btn btn-primary mt-4">Select Regular/Professional</button> 
               </div>
             </div>
           
