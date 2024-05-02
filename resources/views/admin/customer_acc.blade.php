@@ -191,21 +191,8 @@
                     </div>
                 <div class="row">
                     <div class="col-sm-12">
-                      
-                            <br>
-                            <div class="form-group">
-                                <label for="">User Type</label>
-                                <select class="form-control" name="customer_type" id="customer_type">
-                                    <option value="Student">Student</option>
-                                    <option value="Teacher">Teacher</option>
-                                    <option value="Reviewer">Reviewer</option>
-                                    <option value="Professional">Professional</option>
-                                     <option value="Regular">Regular</option>
-                                </select>
-                            </div>  
+                          <img class="img-fluid" alt="Responsive image" id="verification_image"> 
                         </div>
-                   
-    
                 </div>
             </div>
                 <br>
@@ -312,7 +299,7 @@ function GetCustomerAccDetail() {
                         row.customer_email + '\',\'' + 
                         row.customer_phone_num + '\',\'' + 
                         row.customer_type + '\',\'' + 
-                         row.customer_type + '\',\'' + 
+                        row.verification_image + '\',\'' + 
                         row.account_credits + '\')"> <i class="feather icon-info"> </i></button>';
                    }
             },
@@ -323,13 +310,14 @@ function GetCustomerAccDetail() {
 
 
 
- function view(id,fullname,email,number,customer_type,credit){
+ function view(id,fullname,email,number,customer_type,image,credit){
             
             document.getElementById('cus_id').value=id;
             document.getElementById('cus_name').textContent=fullname;
             document.getElementById('cus_email').textContent=email;
             document.getElementById('cus_num').textContent=number;
             document.getElementById('user_type').textContent=customer_type;
+             document.getElementById('verify').value=image;
             document.getElementById('cus_credit').textContent=credit;
            
 
@@ -343,7 +331,7 @@ function GetCustomerAccDetail() {
     function user_type(){
         document.getElementById('cus_id2').value=document.getElementById('cus_id').value;
         document.getElementById('customer_name_type').textContent=document.getElementById('cus_name').textContent;
-        document.getElementById('customer_type').value=document.getElementById('user_type').textContent;
+        document.getElementById('verification_image').src='{{asset('verification/')}}/'+ document.getElementById('verify').value;
     }
 
 
