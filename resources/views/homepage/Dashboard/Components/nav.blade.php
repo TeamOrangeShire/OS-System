@@ -103,7 +103,13 @@
            @php
                $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
                $profile_pic = $customer->customer_profile_pic;
-               $fullname = $customer->customer_firstname . " ". $customer->customer_middlename[0]. ". " .$customer->customer_lastname;
+               $fullname = $customer->customer_firstname . " ";
+
+if ($customer->customer_middlename !== null) {
+    $fullname .= $customer->customer_middlename[0] . ". ";
+}
+
+$fullname .= $customer->customer_lastname;
                $semi_full = FirstNameFormat($customer->customer_firstname). ". ". $customer->customer_lastname;
            @endphp
           <a id="profilebtn" class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -131,7 +137,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('customerSettings') }}">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>

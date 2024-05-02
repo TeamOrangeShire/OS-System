@@ -11,7 +11,6 @@
   @php
   $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
   $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
-  $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
   
   $tour = App\Models\Tour::where('customer_id', $user_id)->first();
@@ -63,12 +62,12 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Log In to Shire</h1>
+      <h1>{{ $logStatus ? 'Log Out' : 'Log In' }} to Shire</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('customerHome') }}">Home</a></li>
           <li class="breadcrumb-item"><a href="{{ route('customerProfile') }}">Profile</a></li>
-          <li class="breadcrumb-item active">Log in</li>
+          <li class="breadcrumb-item active">{{ $logStatus ? 'Log Out' : 'Log In' }}  </li>
         </ol>
       </nav>
     </div><!-- End Page Title -->

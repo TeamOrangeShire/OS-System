@@ -9,7 +9,6 @@
 @php
 $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
 $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
-$fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
 $logStatus = App\Models\CustomerLogs::
   where('customer_id', $user_id)
 ->where('log_status', 0)
@@ -43,8 +42,8 @@ $tour = App\Models\Tour::where('customer_id', $user_id)->first();
          <div id="logStatus" class="col col-lg-6 col-sm-6 row p-2 ">
             <div class="status-log rounded mx-auto my-auto h-100 d-flex flex-column">
               <div class="border-bottom border-black h-50 w-100 p-2">
-                  <p class="text-success"><i class="bi bi-box-arrow-in-right"></i> IN</p>
-                  <p>{{$logStatus ? $logStatus->log_start_time : '???????'}}</p>
+                  <p class="text-success"><i class="bi bi-box-arrow-in-right"></i> Time In</p>
+                  <p>{{$logStatus ? $logStatus->log_start_time : 'Not Set'}}</p>
               </div>
               <div class="border-top border-black h-50 w-100 p-2">
                  <small>Status</small>
