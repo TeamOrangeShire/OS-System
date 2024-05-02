@@ -93,23 +93,37 @@ $tour = App\Models\Tour::where('customer_id', $user_id)->first();
         <!-- List group with custom content -->
         <ul class="list-group ">
       @foreach ($login_data as $log)
+      @php
+      $timePass = PastTimeCalc($log->created_at);
+
+      if($timePass[0]>0 && $timePass[2] == 0){
+        $showTimePass = $timePass[0] . " Hrs Ago";
+      }else if($timePass[2]>0){
+        $showTimePass = $timePass[2] . " Days Ago";
+      }else{
+        $showTimePass = $timePass[1] . " Minutes Ago";
+      }
+
+     switch ($log->log_status) {
+      case 2:
+        $log_status = 'Completed';
+        $log_color = 'success';
+        break;
+      case 1:
+        $log_status = 'Pending Payment';
+        $log_color = 'danger';
+        break;
+      default:
+        $log_status = 'Active';
+        $log_color = 'warning';
+        break;
+     }
+  @endphp
       <li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
-          <div class="fw-bold">Log in to Shire</div>
-          @php
-          $timePass = PastTimeCalc($log->created_at);
-
-          if($timePass[0]>0 && $timePass[2] == 0){
-            $showTimePass = $timePass[0] . " Hrs Ago";
-          }else if($timePass[2]>0){
-            $showTimePass = $timePass[2] . " Days Ago";
-          }else{
-            $showTimePass = $timePass[1] . " Minutes Ago";
-          }
-
-          if($log->log_status ===)
-      @endphp
-          {{$log->log_date}} ({{  }})
+          <div class="fw-bold">Log in to Shire <span class="text-{{ $log_color }}">({{ $log_status }})</span></div>
+         
+          {{$log->log_date}} 
         </div>
         
         <span class="text-secondary">{{$showTimePass}}</span>
