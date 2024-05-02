@@ -157,16 +157,24 @@ function GlobalSubmitScanned(route, refURL) {
     url: route,
     data: formData,
     success: function (response) {
+      loading.style.display = 'none';
       if(response.status === 'fail'){
-        SnackBar('Error: You scanned a non-Orange Shire QR-Code')
+        SnackBar('Error: You scanned a non-Orange Shire QR-Code');
+        startScan(route, refURL, 'global');
       }else if(response.status === 'download'){
         SnackBar('Unable to use download QR here');
+        startScan(route, refURL, 'global');
       }else if(response.status === 'not_login'){
         SnackBar('Unable to Logout you did not Log in Yet');
+        startScan(route, refURL, 'global');
       }else if(response.status === 'already_login'){
         SnackBar('You\'re still have unfinished login transaction unable to accept that code');
+        startScan(route, refURL, 'global');
       }else if(response.status === 'not_enough'){
         SnackBar('Not Enough balance to pay unable to accept that code');
+        startScan(route, refURL, 'global');
+      }else if(response.status === 'login'){
+        window.location.href = refURL;
       }else{
         window.location.href = refURL + '?status=success&log_id=' + response.log_data;
       }
@@ -282,8 +290,10 @@ function formatDateTime(dateTimeString) {
 
 
 
-function LogHistory(url, getLogInfo, cust_type) {
-  document.getElementById('custom_success').style.display = 'none';
+function LogHistory(url, getLogInfo, cust_type, method) {
+  if(method === 'click_button'){
+    document.getElementById('custom_success').style.display = 'none';
+  }
   axios.get(url)
     .then(function (response) {
       const data = response.data.log;

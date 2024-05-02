@@ -33,7 +33,7 @@
      <p id="succ_status"></p>   
      <i>Thank you for visiting  Orange Shire Coworking!</i>   
      <i>&trade; All Rights Reserved Orange Shire &trade;</i>
-     <button  onclick="LogHistory('{{ route('getHistoryData') }}?cust_id={{ $user_id }}', '{{ route('getLogInfo') }}', '{{ $customer->customer_type }}')" class="btn btn-success mt-2">Okay</button>
+     <button  onclick="LogHistory('{{ route('getHistoryData') }}?cust_id={{ $user_id }}', '{{ route('getLogInfo') }}', '{{ $customer->customer_type }}', 'click_button')" class="btn btn-success mt-2">Okay</button>
   </div>
 </div>
 
@@ -180,7 +180,7 @@
         DisplaySuccessModal(l_data);
       }
 
-      LogHistory("{{ route('getHistoryData') }}?cust_id={{ $user_id }}", "{{ route('getLogInfo') }}", "{{ $customer->customer_type }}");
+      LogHistory("{{ route('getHistoryData') }}?cust_id={{ $user_id }}", "{{ route('getLogInfo') }}", "{{ $customer->customer_type }}", 'redirect');
     }
     function  DisplaySuccessModal(ids){
  
