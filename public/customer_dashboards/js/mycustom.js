@@ -391,7 +391,7 @@ function SelectType(type, url) {
 
   if(type === 'Regular/Professional'){
     document.getElementById('customerTypeSelected').value = type;
-    UpdateSelection(url);
+    UpdateSelection('proceed',url);
   }else{
     const selection = document.getElementById('selectionPhase');
     const deciding = document.getElementById('decidingPhase');
@@ -411,8 +411,32 @@ function SelectType(type, url) {
 
 }
 
-function UpdateSelection(url) {
-  alertify.confirm('Confirm Selection','Are you sure you want to chose', function () {
+function UpdateSelection(method,url) {
+  if(method === 'skip'){
+    document.getElementById('customerTypeSelected').value = "Regular/Professional";
+
+    alertify.confirm('Confirm Selection','Are you sure you want to chose', function () {
+      var formData = $('form#typeChange').serialize();
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: formData,
+        success: function (response) {
+          if (response.status === 'success') {
+            location.reload();
+          }
+        },
+        error: function (xhr) {
+    
+          console.log(xhr.responseText);
+        }
+      });
+    }, function () {
+      alertify.set('notifier','position', 'top-center');
+      alertify.success('Cancelled');
+    });
+  }else{
+    alertify.confirm('Confirm Selection','Are you sure you want to chose', function () {
     var formData = $('form#typeChange').serialize();
     $.ajax({
       type: 'POST',
@@ -433,6 +457,7 @@ function UpdateSelection(url) {
     alertify.success('Cancelled');
   });
   
+  }
 }
 
 function BackTo(back, current) {
