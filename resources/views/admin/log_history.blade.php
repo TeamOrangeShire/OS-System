@@ -66,7 +66,7 @@
 
 
                                     <!-- Table with stripped rows -->
-                                    <table id="myTable" class="table table-striped" style="width:100%">
+                                    <table id="customerlog" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>First Name</th>
@@ -386,11 +386,32 @@
                     document.getElementById('unext').value = ext;
                     document.getElementById('Un_customer_type').value = type;
                 }
+                function insertnewcustomer() {
+                    var formData = $("form#Insertnewcus").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('InsertNewCustomer') }}",
+                        data: formData,
+                        success: function(response) {
 
+                            console.log(response);
+                        },
+                        error: function(xhr, status, error) {
 
+                            console.error(xhr.responseText);
+                        }
+                    });
+
+                }
+
+                $(document).ready(function() {
+                    CustomerlogHistory();
+                    getCustomerData();
+                   
+                });
                 function CustomerlogHistory() {
                     $('#loghistory').DataTable({
-                        destroy: true,
+                        "destroy": "true",
                         "ajax": {
                             "url": "{{ route('CustomerlogHistory') }}",
                             "type": "GET"
@@ -480,32 +501,9 @@
                     });
                 }
 
-                function insertnewcustomer() {
-                    var formData = $("form#Insertnewcus").serialize();
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('InsertNewCustomer') }}",
-                        data: formData,
-                        success: function(response) {
-
-                            console.log(response);
-                        },
-                        error: function(xhr, status, error) {
-
-                            console.error(xhr.responseText);
-                        }
-                    });
-
-                }
-
-                $(document).ready(function() {
-                    getCustomerData();
-                    CustomerlogHistory();
-                });
-
                 function getCustomerData() {
-                    $('#myTable').DataTable({
-                        destroy: true,
+                    $('#customerlog').DataTable({
+                        "destroy": "true",
                         "ajax": {
                             "url": "{{ route('GetCustomerAcc') }}",
                             "type": "GET"
