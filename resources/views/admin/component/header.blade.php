@@ -76,9 +76,9 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                         <div class="pro-head">
                             <img src="{{ $admin_name->admin_profile_pic ? asset('User/Admin/'.$admin_name->admin_profile_pic) : asset('assets/images/os_logo.png') }}" height="35" width="30" class="img-radius" alt="User-Profile-Image">
                             <span>{{$fullname}}</span>
-                            <a href="{{route('login')}}" class="dud-logout" title="Logout">
+                            {{-- <a href="{{route('login')}}" class="dud-logout" title="Logout">
                                 <i class="feather icon-log-out"></i>
-                            </a>
+                            </a> --}}
                         </div>
                         <ul class="pro-body">
                             <li><a href="{{asset('admin/admin_profile')}}" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
