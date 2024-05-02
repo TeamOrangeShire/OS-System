@@ -78,7 +78,7 @@ function logOut(route, home, mobileHome) {
   });
 }
 
-function startScan(scannedRoute, refreshURL) {
+function startScan(scannedRoute, refreshURL, type) {
 
   document.getElementById('qrScanner').style.display = 'block';
   const formInput = document.getElementById('scannedQRCode');
@@ -95,7 +95,11 @@ function startScan(scannedRoute, refreshURL) {
     qrCodeMessage => {
 
       formInput.value = qrCodeMessage;
-      SubmitScannedData(scannedRoute, refreshURL);
+      if(type === 'global'){
+         GlobalSubmitScanned(scannedRoute, refreshURL);
+      }else{
+        SubmitScannedData(scannedRoute, refreshURL);
+      }
       html5QrCode.stop().then(ignore => {
         document.getElementById('qrScanner').style.display = 'none';
       }).catch(err => console.error(err));
@@ -134,6 +138,37 @@ function SubmitScannedData(route, refURL) {
         loading.style.display = 'none';
         const errorData = document.getElementById('custom_error');
         errorData.style.display = 'flex';
+      }
+    },
+    error: function (xhr) {
+
+      console.log(xhr.responseText);
+    }
+  });
+}
+
+function GlobalSubmitScanned(route, refURL) {
+  const loading = document.getElementById('loadingDiv');
+  loading.style.display = 'flex';
+  var formData = $('form#scannedDataHolder').serialize();
+
+  $.ajax({
+    type: 'POST',
+    url: route,
+    data: formData,
+    success: function (response) {
+      if(response.status === 'fail'){
+        SnackBar('Error: You scanned a non-Orange Shire QR-Code')
+      }else if(response.status === 'download'){
+        SnackBar('Unable to use download QR here');
+      }else if(response.status === 'not_login'){
+        SnackBar('Unable to Logout you did not Log in Yet');
+      }else if(response.status === 'already_login'){
+        SnackBar('You\'re still have unfinished login transaction unable to accept that code');
+      }else if(response.status === 'not_enough'){
+        SnackBar('Not Enough balance to pay unable to accept that code');
+      }else{
+        window.location.href = refURL + '?status=success&log_id=' + response.log_data;
       }
     },
     error: function (xhr) {
@@ -459,3 +494,4 @@ function uploadPhoto(route){
   }
 
 }
+

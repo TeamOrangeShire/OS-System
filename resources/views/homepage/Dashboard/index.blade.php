@@ -12,10 +12,9 @@ $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_
 $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
 $logStatus = App\Models\CustomerLogs::
   where('customer_id', $user_id)
-->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
 ->where('log_status', 0)
 ->first();
-$login_data = App\Models\CustomerLogs::where('customer_id', $user_id)->get();
+$login_data = App\Models\CustomerLogs::where('customer_id', $user_id)->orderBy('created_at', 'desc')->limit(6)->get();
 $tour = App\Models\Tour::where('customer_id', $user_id)->first();
 @endphp
 <body>
@@ -58,10 +57,10 @@ $tour = App\Models\Tour::where('customer_id', $user_id)->first();
 
     <section class="mt-4 container d-flex justify-content-center">
        <div class="p-3 text-center">
-        <button id="available" style="background-color:#212124; color:#fff" title="Home" onclick="detectGoto('{{ route('customerHome') }}',   '{{ route('home') }}')" class="btn text-center rounded-circle" >
-          <i class="bi bi-house-door fs-2"></i>
+        <button id="available"  onclick="startScan('{{ route('updateQRLog') }}', '{{ route('logintoshire') }}', 'global')" style="background-color:#212124; color:#fff" title="Scan"  data-bs-toggle="modal" data-bs-target="#ScanQr" class="btn text-center rounded-circle" >
+          <i class="ri ri-qr-code-line fs-2"></i>
          </button>
-         <p class="mt-1">Home</p>
+         <p class="mt-1">Scan</p>
        </div>
        <div class="p-3 text-center">
         <button title="Profile"  style="background-color:#212124; color:#fff" onclick="goTo('{{ route('customerProfile') }}')" class="btn rounded-circle text-center" >
@@ -76,7 +75,7 @@ $tour = App\Models\Tour::where('customer_id', $user_id)->first();
          <p class="mt-1">{{ $logStatus ? 'Log out' : 'Log in' }}</p>
        </div>
        <div class="p-3 text-center">
-        <button  style="background-color:#212124; color:#fff" title="Locked" class="btn  text-center rounded-circle" >
+        <button onclick="goTo('{{ route('customerSettings') }}')" style="background-color:#212124; color:#fff" title="Locked" class="btn  text-center rounded-circle" >
           <i class="bi bi-gear fs-2"></i>
          </button>
          <p>Settings</p>
@@ -121,16 +120,36 @@ $tour = App\Models\Tour::where('customer_id', $user_id)->first();
 
    </section>
 
-  </main><!-- End #main -->
-  <footer id="footer" class="footer">
+  </main>
+ 
+  <form method="post" id="scannedDataHolder">@csrf <input type="hidden" id="scannedQRCode" name="QRCode"><input type="hidden" name="cust_id" value="{{ $user_id }}"></form>
+  <!-- End #main -->
+  {{-- <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>Orange Shire</span></strong>. All Rights Reserved
     </div>
-    {{-- <div class="credits">
+    <div class="credits">
       Designed by <a href="coresupporthub.com">Core Support Hub Dev</a>
-    </div> --}}
-  </footer><!-- End Footer -->
+    </div> 
+  </footer> --}}
 
+  <div class="modal fade" id="ScanQr" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Scan QR-Code</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <p>Scan only Orange Shire related QR-Code</p>
+        <div class="mt-4 border border-4 border-info" id="qrScanner" style="display: none;"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <form id="tour_status" method="POST">

@@ -17,7 +17,6 @@
   $tour = App\Models\Tour::where('customer_id', $user_id)->first();
   $logStatus = App\Models\CustomerLogs::
   where('customer_id', $user_id)
-->where('log_date',Carbon\Carbon::now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y'))
 ->where('log_status', 0)
 ->first();
 
@@ -74,7 +73,7 @@
       </nav>
     </div><!-- End Page Title -->
     <form method="post" id="scannedDataHolder">@csrf <input type="hidden" id="scannedQRCode" name="QRCode"><input type="hidden" name="cust_id" value="{{ $user_id }}"></form>
-    <button id="scanner" type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> {{ $logStatus ? 'Scan to Log out' : 'Scan to Log in'}}</button>
+    <button id="scanner" type="button" onclick="startScan('{{ route('updateQRLog') }}', '{{ route('getCustomerLoginStatus') }}', 'login')" class="btn btn-primary mb-4"><i class="bx bx-qr-scan"></i> {{ $logStatus ? 'Scan to Log out' : 'Scan to Log in'}}</button>
       <div id="qrScanner" style="display: none;"></div>
        <div class="card">
         <div class="card-body">
