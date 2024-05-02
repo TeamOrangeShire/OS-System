@@ -96,19 +96,22 @@ $tour = App\Models\Tour::where('customer_id', $user_id)->first();
       <li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
           <div class="fw-bold">Log in to Shire</div>
-          {{$log->log_date}} ({{$log->log_start_time}} - {{$log->log_end_time}})
-        </div>
-        @php
-            $timePass = PastTimeCalc($log->created_at);
+          @php
+          $timePass = PastTimeCalc($log->created_at);
 
-            if($timePass[0]>0 && $timePass[2] == 0){
-              $showTimePass = $timePass[0] . " Hrs Ago";
-            }else if($timePass[2]>0){
-              $showTimePass = $timePass[2] . " Days Ago";
-            }else{
-              $showTimePass = $timePass[1] . " Minutes Ago";
-            }
-        @endphp
+          if($timePass[0]>0 && $timePass[2] == 0){
+            $showTimePass = $timePass[0] . " Hrs Ago";
+          }else if($timePass[2]>0){
+            $showTimePass = $timePass[2] . " Days Ago";
+          }else{
+            $showTimePass = $timePass[1] . " Minutes Ago";
+          }
+
+          if($log->log_status ===)
+      @endphp
+          {{$log->log_date}} ({{  }})
+        </div>
+        
         <span class="text-secondary">{{$showTimePass}}</span>
       </li>
    
