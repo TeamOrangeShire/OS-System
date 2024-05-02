@@ -290,10 +290,10 @@ function formatDateTime(dateTimeString) {
 
 
 
-function LogHistory(url, getLogInfo, cust_type, method) {
-  if(method === 'click_button'){
-    document.getElementById('custom_success').style.display = 'none';
-  }
+function LogHistory(url, getLogInfo, cust_type, method, reloads) {
+   if(method=== 'click_button'){
+    window.location.href = reloads;
+   }
   axios.get(url)
     .then(function (response) {
       const data = response.data.log;
@@ -348,7 +348,6 @@ function detectGoto(mobile, web) {
 }
 function CloseDataModals(element) {
   document.getElementById(element).style.display = 'none';
-  location.reload();
 }
 
 function SnackBar(message) {
