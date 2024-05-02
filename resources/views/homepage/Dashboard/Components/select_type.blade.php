@@ -72,9 +72,6 @@
            <p>To verify your account type, please upload a valid ID. Customers associated with educational sectors enjoy discounts at Orange Shire. For educational sector accounts, please upload your school or student ID, or PRC exam permit. Alternatively, you can present these documents during your visit to Orange Shire.</p>
            <br>
            <h3>Account Type: <span id="spanTypeHolder"></span></h3>
-           <p>Visit Orange Shire: Your account will temporarily be designated as a Professional/Regular Account, with your request pending until confirmation by our staff during your visit to Orange Shire.</p>
-           <button onclick="UpdateSelection('{{ route('UpdateType') }}')" class="btn btn-primary">Visit Orange Shire</button>
-           <br><br>
            <p>Upload Photo: Your uploaded photo will be securely transmitted to Orange Shire's administrators for verification. While your verification is in progress, you can continue to use the app. Please note that the verification process may take some time. Thank you for your patience and cooperation.</p>
            <button onclick="UploadingPhase()" class="btn btn-primary">Upload Photo</button>
           </div>
@@ -102,8 +99,7 @@
 
         </div>
         <div class="modal-footer">
-          <p>Complete the set up to start using your account</p>
-          {{-- <button type="button" class="btn btn-primary">Confirm Set Up</button> --}}
+          <button onclick="UpdateSelection('skip','{{ route('UpdateType') }}')" class="btn btn-primary">Skip</button>
         </div>
       </div>
     </div>
