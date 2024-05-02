@@ -78,7 +78,7 @@
                     <div style="margin-left: 40px;">
                         <br>
                        <input type="hidden" id="cus_id">
-                       <input type="text" name="" id="verify">
+                       <input type="hidden" name="" id="verify">
                         <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
                         <p class="" name="cname" id="cus_name">  </p> 
                         <input type="hidden" name="" id="customer_id">
