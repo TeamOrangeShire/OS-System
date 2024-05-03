@@ -533,15 +533,15 @@
                                     var customer_id = row.customer_id;
                                     var log_in = row.log_in;
                                     var log_id = row.log_id;
-                                    var payment = row.log_payment;
-                                    var payment2 = parseFloat(payment).toFixed(2);
+                                    var payment = row.log_payment.split('-');
+                                    var payment2 = parseFloat(payment[0]).toFixed(2);
                                     var start_time = row.log_start_time;
                                     var end_time = row.log_end_time;
                                     if (log_in === '0') {
                                         return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
                                             log_id + ")'>Logout</button>";
                                     } else if (log_in === '1') {
-                                        return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"acceptLog('" +
+                                        return "<button class='btn btn-warning' type='button' onclick=\"acceptLog('" +
                                             log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
                                             "')\">Confirm1</button>"; 
                                     } else {

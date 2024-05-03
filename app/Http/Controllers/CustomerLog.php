@@ -40,13 +40,7 @@ class CustomerLog extends Controller
         'account_credits'=> $credit,
     ]);
     }
-    $data = new ActivityLog;
-    $data->act_user_id =session('Admin_id');
-    $data->act_user_type = "Admin";
-    $data->act_action = "Admin accept payment of " . $cus_info->customer_lastname;
-    $data->act_header = "Accept log payment";
-    $data->act_location = "customer_log";
-    $data->save();
+  
 
      return response()->json(['data' => $log->customer_id]);
   }
