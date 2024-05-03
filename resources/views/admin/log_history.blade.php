@@ -533,17 +533,17 @@
                                     var customer_id = row.customer_id;
                                     var log_in = row.log_in;
                                     var log_id = row.log_id;
-                                    var payment = row.log_payment.split('-');
-                                    var payment2 = parseFloat(payment[0]).toFixed(2);
+                                    var payment = row.log_payment;
+                                    var payment2 = parseFloat(payment).toFixed(2);
                                     var start_time = row.log_start_time;
                                     var end_time = row.log_end_time;
                                     if (log_in === '0') {
                                         return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
                                             log_id + ")'>Logout</button>";
                                     } else if (log_in === '1') {
-                                        return "<button class='btn btn-warning' type='button' onclick=\"acceptLog('" +
+                                        return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
                                             log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
-                                            "')\">Confirm1</button>"; 
+                                            "')\">Confirm</button>"; 
                                     } else {
                                         return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
                                             customer_id + ")'>Login</button>";
@@ -709,8 +709,8 @@
                                             return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm2</button>";
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
                                         }
@@ -722,29 +722,6 @@
                     });
                 }
 
-                function acceptLog(id) {
-                    console.log(id);
-
-                    document.getElementById('cuslogoutid').value = id;
-                    var formData = $("form#pendingLog").serialize();
-                    var Dataform = formData + '&id=' + id;
-                    console.log(formData);
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('acceptLog') }}",
-                        data: Dataform,
-                        success: function(response) {
-                            getCustomerData();
-                            CustomerlogHistory();
-                            viewLog(response.data);
-
-                        },
-                        error: function(xhr, status, error) {
-
-                            console.error(xhr.responseText);
-                        }
-                    });
-                }
                 function Pending(id) {
                     console.log(id);
 
@@ -768,6 +745,7 @@
                         }
                     });
                 }
+                
             </script>
 
     </body>
