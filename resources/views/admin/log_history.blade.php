@@ -417,7 +417,12 @@
                             "type": "GET"
                         },
                         "columns": [{
-                                "data": "fullname"
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var first = row.firstname;
+                                    var last = row.lastname;
+                                    return first +" "+ last;
+                                }
                             },
                             {
                                 "data": "log_date"

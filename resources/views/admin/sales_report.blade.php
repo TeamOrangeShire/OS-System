@@ -153,6 +153,7 @@
                                 <table id="detailsalesreport" class="table table-striped" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th>Name</th>
                                             <th>Log Start</th>
                                             <th>Log End</th>
                                             <th>Total Time</th>
@@ -166,7 +167,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="3" style="text-align:right">Total:</th>
+                                            <th colspan="4" style="text-align:right">Total:</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -234,9 +235,14 @@
                     "columns": [{
                             "data": "log_date"
                         },
-                        {
-                            "data": "firstname"
-                        },
+                       {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var first = row.firstname;
+                                    var last = row.lastname;
+                                    return first +" "+ last;
+                                }
+                            },
                         {
                             "data": "email"
                         },
@@ -412,7 +418,16 @@
                         "dataType": "json",
                         "dataSrc": "reg"
                     },
-                    "columns": [{
+                    "columns": [
+                        {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var first = row.firstname;
+                                    var last = row.lastname;
+                                    return first +" "+ last;
+                                }
+                            },
+                    {
                             "data": "log_start_time",
                             "render": function(data, type, row) {
                                 return data;
@@ -451,20 +466,20 @@
 
                         // Total over all pages
                         total = api
-                            .column(3)
+                            .column(4)
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Total over this page
                         pageTotal = api
-                            .column(3, {
+                            .column(4, {
                                 page: 'current'
                             })
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Update footer
-                        api.column(3).footer().innerHTML =
+                        api.column(4).footer().innerHTML =
                             '₱' + pageTotal + ' ( ₱' + total + ' total)';
                     }
                 });

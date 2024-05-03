@@ -405,7 +405,9 @@ class GetDataViews extends Controller
 
         $date = $request->query('date');
 
-        $reg = CustomerLogs::where('log_date', $date)->get();
+        $reg = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
+  select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
+  'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact')->where('customer_logs.log_date', $date)->get();
         foreach($reg as $log){
             $log->payment = explode('-',$log->log_transaction)[0];
         }
