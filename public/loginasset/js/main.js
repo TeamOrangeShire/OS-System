@@ -192,6 +192,8 @@ function Proceed(step, instruct){
     step1.style.display = '';
     step2.style.display = 'none';
   }else if(step === 'step3' && instruct === 'next'){
+    document.getElementById('f_email').value = document.getElementById('email').value;
+    document.getElementById('f_contact').value = document.getElementById('contact').value;
     step2.style.display = 'none';
     step3.style.display = '';
   }else if(step === 'step2' || instruct === 'previous'){
