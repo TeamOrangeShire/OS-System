@@ -416,36 +416,21 @@ class GetDataViews extends Controller
          return response()->json(['data'=>$Acc]);
     }
 
- public function CustomerlogHistory(Request $request)
-{
-    try {
-        // Retrieve all log entries
-        $logs = CustomerLogs::all();
+    public function GeneralReport() {
 
-        // Loop through each log entry to add the full name of the customer
-        foreach ($logs as $log) {
-            // Retrieve the associated customer account
-            $account = CustomerAcc::where('customer_id', $log->customer_id)->first();
+  $logs = CustomerLogs::where('log_status',2)->get();
 
-            // If a customer account is found, set the full name in the log entry
-            if ($account) {
-                $log->fullname = $account->customer_firstname . ' ' . $account->customer_lastname;
-            } else {
-                // If no associated customer account is found, set an empty full name
-                $log->fullname = 'Unknown';
-            }
+  foreach($logs as $log){
+    $accounts = CustomerAcc::where('customer_id',$log->customer_id)->first();
+    $log->payment = explode('-',$log->log_transaction)[0];
+    $log->fullname = $accounts->customer_firstname .' ' .$accounts->customer_lastname;
+    $log->email = $accounts->customer_email;
+    $log->contact = $accounts->customer_phone_num;
+    unset($log->created_at);
+    unset($log->updated_at);
+  }
 
-            // Remove unnecessary fields from the log entry
-            unset($log->created_at);
-            unset($log->updated_at);
-        }
-
-        // Return the log data as JSON
-        return response()->json(['data' => $logs]);
-    } catch (\Exception $e) {
-        // Handle any exceptions that occur during data retrieval or manipulation
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
+  return response()->json(['data' => $logs]);
 }
 
 }
