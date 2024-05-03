@@ -418,16 +418,14 @@ class GetDataViews extends Controller
 
     public function GeneralReport() {
 
-  $logs = CustomerLogs::where('log_status',2)->get();
+  $logs = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
+  select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
+  'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact')->get();
 
   foreach($logs as $log){
-    $accounts = CustomerAcc::where('customer_id',$log->customer_id)->first();
+
     $log->payment = explode('-',$log->log_transaction)[0];
-    $log->fullname = $accounts->customer_firstname .' ' .$accounts->customer_lastname;
-    $log->email = $accounts->customer_email;
-    $log->contact = $accounts->customer_phone_num;
-    unset($log->created_at);
-    unset($log->updated_at);
+ 
   }
 
   return response()->json(['data' => $logs]);

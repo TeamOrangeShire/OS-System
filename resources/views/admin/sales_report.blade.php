@@ -235,7 +235,7 @@
                             "data": "log_date"
                         },
                         {
-                            "data": "fullname"
+                            "data": "firstname"
                         },
                         {
                             "data": "email"
