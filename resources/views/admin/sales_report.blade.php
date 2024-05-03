@@ -196,7 +196,7 @@
         <script>
             $(document).ready(function() {
                 CustomerlogHistory();
-                // getsalereport();
+                getsalereport();
             });
 
 
@@ -235,8 +235,11 @@
                             "data": "log_date"
                         },
                         {
-                            "data": "fullname"
-                        },
+        "data": null,
+        "render": function(data, type, row) {
+            return row.fullname; // Assuming "fullname" is a field in your response
+        }
+    },
                         {
                             "data": "email"
                         },
