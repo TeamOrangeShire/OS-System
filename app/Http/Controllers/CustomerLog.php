@@ -23,9 +23,8 @@ class CustomerLog extends Controller
   }
   public function acceptLog(Request $request){
 
-    $id = $request->pending_log;
+    $id = $request->id;
    
-
     $log = CustomerLogs::where('log_id',$id)->first();
     $method=explode('-',$log->log_transaction);
    
@@ -38,9 +37,7 @@ class CustomerLog extends Controller
     if($method[1]==='2'){
       $credit=$cus_info->account_credits - $method[0];
       $cus_info->update([
-
         'account_credits'=> $credit,
-
     ]);
     }
     $data = new ActivityLog;
@@ -51,7 +48,7 @@ class CustomerLog extends Controller
     $data->act_location = "customer_log";
     $data->save();
 
-    return response()->json(['status'=> 'success']);
+     return response()->json(['data' => $log->customer_id]);
   }
 
   public function GetCustomerAcc() {
@@ -118,6 +115,7 @@ public function LogToPending(Request $request) {
     $type =$cusAcc->customer_type;
     $payment = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
     if($logs->log_status == 0){
+
       $logs->update([
 
       'log_status'=> 1,
