@@ -423,7 +423,7 @@ class GetDataViews extends Controller
   foreach($logs as $log){
     $accounts = CustomerAcc::where('customer_id',$log->customer_id)->first();
     $log->payment = explode('-',$log->log_transaction)[0];
-   
+    $log->fullname = $accounts->customer_firstname .' ' .$accounts->customer_lastname;
     $log->email = $accounts->customer_email;
     $log->contact = $accounts->customer_phone_num;
     unset($log->created_at);
