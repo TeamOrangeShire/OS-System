@@ -104,7 +104,6 @@ public function CustomerlogHistory() {
 
   return response()->json(['data' => $logs]);
 }
-
 public function LogToPending(Request $request) {
 
     $logs = CustomerLogs::where('log_id',$request->id)->first();

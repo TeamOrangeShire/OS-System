@@ -224,6 +224,16 @@ class EditAcc extends Controller
         ]);
         return redirect()->back();
     }
+    public function changeCusttype(Request $request){
+        $customer_id = $request->cus_id;
+        $change = CustomerAcc::where('customer_id', $customer_id)->first();
+        $change->update([
+
+          'customer_type'=>$request->customertype,
+
+        ]);
+        return redirect()->back();
+    }
 
     public function editType(Request $request){
 

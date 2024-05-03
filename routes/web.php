@@ -82,6 +82,7 @@ Route::get('/admin/GetCustomerAccDetail', [GetDataViews::class,"GetCustomerAccDe
 Route::get('/admin/GetCustomerAcc', [CustomerLog::class,"GetCustomerAcc"])->name('GetCustomerAcc');
 Route::get('/admin/GetCustomerlog', [CustomerLog::class,"GetCustomerlog"])->name('GetCustomerlog');
 Route::get('/admin/CustomerlogHistory', [CustomerLog::class,"CustomerlogHistory"])->name('CustomerlogHistory');
+Route::get('/admin/GeneralReport', [GetDataViews::class,"GeneralReport"])->name('GeneralReport');
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
@@ -116,6 +117,7 @@ Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfi
 Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/addCredit',[EditAcc::class,'addCredit'] )->name('addCredit');
 Route::post('/changeType',[EditAcc::class,'changeType'] )->name('changeType');
+Route::post('/changeCusttype',[EditAcc::class,'changeCusttype'] )->name('changeCusttype');
 Route::post('/editType',[EditAcc::class,'editType'] )->name('editType');
 Route::post('/acceptLog',[CustomerLog::class,'acceptLog'] )->name('acceptLog');
 Route::post('/InsertNewCustomer',[CustomerLog::class,'InsertNewCustomer'] )->name('InsertNewCustomer');

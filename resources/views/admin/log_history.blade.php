@@ -127,7 +127,7 @@
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Customer Log</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -573,7 +573,7 @@
                             getCustomerData();
                             CustomerlogHistory();
                             viewLog(response.data);
-
+                           $('#out').modal('hide');
                         },
                         error: function(xhr, status, error) {
 
@@ -597,7 +597,7 @@
                             getCustomerData();
                             CustomerlogHistory();
                             viewLog(response.data);
-
+                              
                         },
                         error: function(xhr, status, error) {
 
