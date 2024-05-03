@@ -50,7 +50,7 @@
   <div class="success-content text-center">
      <img src="{{ asset('customer_dashboards/img/work.gif') }}" alt="error">
      <h3 class="text-success">Oppss... Something Went Wrong</h3>
-     <i>It looks like you are still logged in or you have a unpaid transaction</i>   
+     <i>It looks like you are still logged in or you have an unpaid transaction</i>   
      <i>&trade; All Rights Reserved Orange Shire &trade;</i>
      <button onclick="CloseDataModals('custom_login')" class="btn btn-success mt-2">Scan Again</button>
   </div>

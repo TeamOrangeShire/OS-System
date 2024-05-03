@@ -415,7 +415,7 @@ function UpdateSelection(method,url) {
   if(method === 'skip'){
     document.getElementById('customerTypeSelected').value = "Regular/Professional";
 
-    alertify.confirm('Confirm Selection','Are you sure you want to chose', function () {
+    alertify.confirm('Skip Selection','By Skipping this you will be place under Regular/Professional as our default Customer type', function () {
       var formData = $('form#typeChange').serialize();
       $.ajax({
         type: 'POST',

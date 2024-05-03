@@ -60,7 +60,7 @@
                                 Field Required   
                              </span>
                             <input class="input100" type="text" name="contact" oninput="CleanContact(event, 'contact_required')" id="contact">
-                            <span class="focus-input100" data-placeholder="Enter Contact" ></span>
+                            <span class="focus-input100" data-placeholder="Enter Contact #" ></span>
                         </div>
     
                         <div class="container-login100-form-btn">
