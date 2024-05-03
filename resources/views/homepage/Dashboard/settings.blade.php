@@ -43,7 +43,7 @@
         <div class="tab-pane fade show active" id="editProfile" role="tabpanel" aria-labelledby="edit-tab">
         
         <!-- Profile Edit Form -->
-        <form method="POST" action="{{route('editProfile')}}">
+        <form method="POST" id="formEditData">
           @csrf 
             <input type="hidden" name="customer_id" value="{{$user_id}}">
           <div class="row mb-3">
@@ -119,7 +119,7 @@
           </div>
 
           <div class="text-center">
-            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="button" onclick="UpdateProfileData()" class="btn btn-primary">Save Changes</button>
           </div>
         </form> 
         </div>
@@ -127,11 +127,6 @@
           <form method="POST" id="changePass">
             @csrf 
             <input type="hidden" name="customer_id" value="{{$user_id}}">
-
-            <div class="text-center" style="display: none;" id="errorMessage">
-              
-            </div>
-
           <div class="row mb-3">
             <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
             <div class="col-md-8 col-lg-9">
@@ -207,14 +202,14 @@
          data: formData,
          success: function(response) {
           if(response.status === 'success'){
-            document.getElementById('errorMessage').style.display = '';
-            document.getElementById('errorMessage').innerHTML="<p style= 'color:green'>Successfully Changed Password!</p>";
+            SnackBar('Successfully Change Password');
+            document.getElementById('currentPassword').value = "";
+            document.getElementById('newPassword').value = "";
+            document.getElementById('renewPassword').value = "";
           }else if(response.status === 'current password not match'){
-            document.getElementById('errorMessage').style.display = '';
-            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>Incorrect Password!</p>";
+            SnackBar('Current Password does not match');
           }else{
-            document.getElementById('errorMessage').style.display = '';
-            document.getElementById('errorMessage').innerHTML="<p style= 'color:red'>New Password does not match!</p>";
+            SnackBar('New Password does not Match')
           }
          }, 
          error: function (xhr) {
@@ -239,14 +234,14 @@
           document.getElementById('loadingDiv').style.display = "none";
           document.getElementById('snackbar').style.display = "";
             if(response.status === "success"){
-              document.getElementById('snackbarContent').textContent = "Successfully Updated Profile Picture";
-              fadeAnimate('success');
+             SnackBar('Successfully Updated Profile Picture');
+             setTimeout(() => {
+               location.reload();
+             }, 2000);
             }else if(response.status === "exceed"){
-              document.getElementById('snackbarContent').textContent = "Error: Image Exceed to 10mb";
-              fadeAnimate('error');
+              SnackBar('Error: Image Exceed to 10mb');
             }else{
-              document.getElementById('snackbarContent').textContent = "Error: Invalid Image Type(Accepted: jpeg, png, jpg)";
-              fadeAnimate('error');
+              SnackBar('Error: Invalid Image Type(Accepted: jpeg, png, jpg)');
             }
          }, 
          error: function (xhr) {
@@ -255,20 +250,6 @@
          }
      });
   }
-
-  function fadeAnimate(res) {
-    setTimeout(() => {
-        const snackbar = document.getElementById('snackbar');
-        snackbar.style.animation = "fadeOutSnackBar .5s";
-        setTimeout(() => {
-            snackbar.style.display = "none";
-         
-        }, 500);
-        if(res === 'success'){
-              location.reload();
-        }
-    }, 3000);
-}
 
   document.getElementById('profilePicSelect').addEventListener('change', function(event) {
     const file = event.target.files[0];
@@ -282,6 +263,23 @@
         reader.readAsDataURL(file);
     } 
 });
+
+function UpdateProfileData(){
+  var formData = $('form#formEditData').serialize();
+
+  $.ajax({
+     type:"POST",
+     url: "{{route('editProfile')}}",
+     data: formData,
+     success: function(response){
+      if(response.status === 'success'){
+        SnackBar('Profile Information Updated');
+      }
+     }, error: function(xhr){
+      console.log(xhr.responseText);
+     }
+  });
+}
 
   </script>
 
