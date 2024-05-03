@@ -23,7 +23,7 @@ class CustomerLog extends Controller
   }
   public function acceptLog(Request $request){
 
-    $id = $request->pending_log;
+    $id = $request->id;
    
 
     $log = CustomerLogs::where('log_id',$id)->first();
@@ -51,7 +51,7 @@ class CustomerLog extends Controller
     $data->act_location = "customer_log";
     $data->save();
 
-    return response()->json(['status'=> 'success']);
+    return response()->json(['data' => $cus_info->customer_id]);
   }
 
   public function GetCustomerAcc() {
@@ -65,9 +65,11 @@ class CustomerLog extends Controller
                                      ->first();
         if ($customerLogs1) {
             $acc->log_in = "0";
+            $acc->logtype = $customerLogs1->log_type;
             $acc->log_id = $customerLogs1->log_id;
         } elseif ($customerLogs2) {
             $acc->log_in = "1";
+            $acc->logtype = $customerLogs2->log_type;
             $acc->log_payment = $customerLogs2->log_transaction;
             $acc->log_start_time = $customerLogs2->log_start_time;
             $acc->log_end_time = $customerLogs2->log_end_time;
@@ -117,22 +119,44 @@ public function LogToPending(Request $request) {
     $cusAcc = CustomerAcc::where('customer_id',$logs->customer_id)->first();
     $type =$cusAcc->customer_type;
     $payment = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
+   
     if($logs->log_status == 0){
-      $logs->update([
+      if($logs->log_type == 0){
+        $logs->update([
 
-      'log_status'=> 1,
-      'log_end_time'=> $current,
-      'log_transaction'=>$payment.'-0',
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$payment.'-1',
+    
+        ]);
+      }else{
+        $logs->update([
 
-    ]);
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$payment.'-0',
+    
+        ]);
+      }
+   
     return response()->json(['data' => $logs->customer_id]);
     }else if($logs->log_status == 1){
+      if($logs->log_type == 0){
         $logs->update([
-      'log_transaction'=>$request->payment.'-0',
-      'log_status'=> 2,
+          'log_transaction'=>$request->payment.'-1',
+          'log_status'=> 2,
+         
+    
+        ]);
+      }else{
+        $logs->update([
+          'log_transaction'=>$request->payment.'-0',
+          'log_status'=> 2,
+         
+    
+        ]);
+      }
      
-
-    ]);
     return response()->json(['data' => $logs->customer_id]);
     }
     
