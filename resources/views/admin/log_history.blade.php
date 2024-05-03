@@ -543,7 +543,7 @@
                                     } else if (log_in === '1') {
                                         return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
                                             log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
-                                            "')\">Confirm</button>"; 
+                                            "')\">Confirm1</button>"; 
                                     } else {
                                         return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
                                             customer_id + ")'>Login</button>";
