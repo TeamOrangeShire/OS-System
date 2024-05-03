@@ -159,7 +159,7 @@
                  <p class="col-md-12">Last Name: <span id="b_lname"></span></p>
                  <br>
                  <h5 class="col-md-12">Contact Information</h5>
-                 <p class="col-md-12">Emai: <span id="b_email"></span></p>
+                 <p class="col-md-12">Email: <span id="b_email"></span></p>
                  <p class="col-md-12">Contact: <span id="b_contact"></span></p>
                  <br>
                  <h5 class="col-md-12">Account Credentials</h5>
