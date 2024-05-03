@@ -161,7 +161,7 @@ class EditAcc extends Controller
                 'customer_phone_num' => $customerPhoneNumber,
                 'customer_username'=> $username,
             ]);
-        return redirect()->back();
+        return response()->json(['status'=>'success']);
         
     }
 

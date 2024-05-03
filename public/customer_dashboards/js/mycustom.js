@@ -353,15 +353,17 @@ function CloseDataModals(element) {
 function SnackBar(message) {
   const snackbar = document.getElementById('snackbar');
   const content = document.getElementById('snackbarContent');
-
+  snackbar.style.animation = '';
+  snackbar.style.display = 'none';
   snackbar.style.display = '';
   content.textContent = message;
 
   setTimeout(() => {
-    snackbar.style.animation = 'fadeOutSnackBar 0.7s';
+    snackbar.style.animation = 'fadeOutSnackBar 0.6s';
     setTimeout(() => {
+      snackbar.style.animation = '';
       snackbar.style.display = 'none';
-    }, 700);
+    }, 600);
   }, 2000);
 }
 
