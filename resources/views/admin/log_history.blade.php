@@ -710,7 +710,7 @@
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
                                             return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm</button>";
+                                                row.log_id + ")'>Confirm1</button>";
                                         } else {
                                             return "Paid";
                                         }
