@@ -128,8 +128,7 @@ class EditAcc extends Controller
 
             if(Hash::check($password, $passquery->customer_password)){
                 $passquery->update([
-                    'customer_password' => $newpassword,
-
+                    'customer_password' => Hash::make($newpassword),
                 ]);
                 return response()->json(['status'=>'success']);
 
