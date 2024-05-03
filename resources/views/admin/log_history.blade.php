@@ -541,7 +541,7 @@
                                         return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
                                             log_id + ")'>Logout</button>";
                                     } else if (log_in === '1') {
-                                        return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                        return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"acceptLog('" +
                                             log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
                                             "')\">Confirm1</button>"; 
                                     } else {
@@ -710,7 +710,7 @@
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
                                             return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm1</button>";
+                                                row.log_id + ")'>Confirm2</button>";
                                         } else {
                                             return "Paid";
                                         }
