@@ -128,7 +128,7 @@ public function LogToPending(Request $request) {
     return response()->json(['data' => $logs->customer_id]);
     }else if($logs->log_status == 1){
         $logs->update([
-
+      'log_transaction'=>$request->payment.'-0',
       'log_status'=> 2,
      
 

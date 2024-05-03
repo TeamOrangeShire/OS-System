@@ -190,7 +190,8 @@
                                             <div style="margin-left: 40px;">
                                                 <br>
                                                 <label for="email"><strong>Payment : </strong></label> <br>
-                                                <p class="" id="payment"></p>
+                                              
+                                                <input type="text" name="payment" style="width: 80px;height:40px;" class="form-control" id="payment">
                                             </div>
                                         </div>
 
@@ -557,7 +558,7 @@
                     console.log(id);
                     console.log(payment);
                     document.getElementById('id').value = id;
-                    document.getElementById('payment').textContent ="₱"+payment;
+                    document.getElementById('payment').value = payment;
                     document.getElementById('start').textContent = start;
                     document.getElementById('end').textContent = end;
                     var totaltime = timeDifference(start, end);
