@@ -235,11 +235,8 @@
                             "data": "log_date"
                         },
                         {
-        "data": null,
-        "render": function(data, type, row) {
-            return row.fullname; // Assuming "fullname" is a field in your response
-        }
-    },
+                            "data": "fullname"
+                        },
                         {
                             "data": "email"
                         },
