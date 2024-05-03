@@ -333,7 +333,7 @@
                             ]
                         }
                     },
-                    destroy: true,
+                    "destroy": "true",
                     ajax: {
                         url: "{{ route('CustomerLog') }}",
                         type: "GET",
