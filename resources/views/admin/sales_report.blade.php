@@ -195,8 +195,8 @@
         <!-- Required Js -->
         <script>
             $(document).ready(function() {
-                // CustomerlogHistory();
-                getsalereport();
+                CustomerlogHistory();
+                // getsalereport();
             });
 
 
