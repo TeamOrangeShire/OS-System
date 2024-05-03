@@ -102,7 +102,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Date</th>
-                                                         
+                                                            <th>Name</th>
                                                             <th>Email</th>
                                                             <th>Number</th>
                                                             <th>Start</th>
@@ -118,7 +118,7 @@
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th colspan="6" style="text-align:right">Total:</th>
+                                                            <th colspan="7" style="text-align:right">Total:</th>
                                                             <th></th>
                                                         </tr>
                                                     </tfoot>
@@ -234,7 +234,9 @@
                     "columns": [{
                             "data": "log_date"
                         },
-                       
+                        {
+                            "data": "fullname"
+                        },
                         {
                             "data": "email"
                         },
@@ -285,20 +287,20 @@
 
                         // Total over all pages
                         total = api
-                            .column(6)
+                            .column(7)
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Total over this page
                         pageTotal = api
-                            .column(6, {
+                            .column(7, {
                                 page: 'current'
                             })
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Update footer
-                        api.column(6).footer().innerHTML =
+                        api.column(7).footer().innerHTML =
                             '₱' + pageTotal + ' ( ₱' + total + ' total)';
                     }
                 });
