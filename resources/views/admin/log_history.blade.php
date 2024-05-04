@@ -500,10 +500,10 @@
                                             var parts = transac.split('-');
                                             var secondPart = parts[1];
                                             var payment =  parts[0];
-                                            if(secondPart == 1 ){
+                                            if(secondPart === 1 ){
                                                   return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
                                             row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" + row.log_end_time +
-                                            "')\">Confirm2</button>"; 
+                                            "')\">Confirm22</button>"; 
                                             }else{
                                                    return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
                                                 row.log_id + ")'>Confirm21</button>";
