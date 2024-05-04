@@ -495,7 +495,7 @@
                                             return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
                                                 row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
@@ -537,6 +537,8 @@
                                     var payment2 = parseFloat(payment).toFixed(2);
                                     var start_time = row.log_start_time;
                                     var end_time = row.log_end_time;
+                                    var logtype = row.logtype;
+                                    if(logtype == 1){
                                     if (log_in === '0') {
                                         return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
                                             log_id + ")'>Logout</button>";
@@ -547,6 +549,17 @@
                                     } else {
                                         return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
                                             customer_id + ")'>Login</button>";
+                                    }}else{
+                                        if (log_in === '0') {
+                                        return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
+                                            log_id + ")'>Logout</button>";
+                                    } else if (log_in === '1') {
+                                        return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
+                                                row.log_id + ")'>Confirm</button>";
+                                    } else {
+                                        return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
+                                            customer_id + ")'>Login</button>";
+                                    }
                                     }
                                 }
                             }
@@ -709,7 +722,7 @@
                                             return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
                                                 row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
@@ -719,6 +732,30 @@
                             }
 
                         ]
+                    });
+                }
+
+                function acceptLog(id) {
+                    console.log(id);
+
+                    document.getElementById('cuslogoutid').value = id;
+                    var formData = $("form#pendingLog").serialize();
+                    var Dataform = formData + '&id=' + id;
+                    console.log(formData);
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('acceptLog') }}",
+                        data: Dataform,
+                        success: function(response) {
+                            getCustomerData();
+                            CustomerlogHistory();
+                            viewLog(response.data);
+
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.error(xhr.responseText);
+                        }
                     });
                 }
 
@@ -745,6 +782,7 @@
                         }
                     });
                 }
+                
             </script>
 
     </body>
