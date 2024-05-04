@@ -29,7 +29,7 @@
 
 
     @php
-        $notification = App\Models\CustomerNotification::where('user_id', $user_id)->where('user_type', 'Customer')->get();
+        $notification = App\Models\CustomerNotification::where('user_id', $user_id)->where('user_type', 'Customer')->orderBy('created_at', 'desc')->get();
         
     @endphp
           <!-- List group with Advanced Contents -->
