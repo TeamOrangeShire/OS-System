@@ -393,22 +393,21 @@
                     document.getElementById('Un_customer_type').value = type;
                 }
                 function insertnewcustomer() {
-                    var formData = $("form#Insertnewcus").serialize();
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('InsertNewCustomer') }}",
-                        data: formData,
-                        success: function(response) {
-                            $('#insertmodal').modal('hide');
-                            console.log(response);
-                        },
-                        error: function(xhr, status, error) {
+    var formData = $("form#Insertnewcus").serialize();
+    $.ajax({
+        type: "POST",
+        url: "{{ route('InsertNewCustomer') }}",
+        data: formData,
+        success: function(response) {
+            location.reload();
+           
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
 
-                            console.error(xhr.responseText);
-                        }
-                    });
-
-                }
 
                 $(document).ready(function() {
                     CustomerlogHistory();
