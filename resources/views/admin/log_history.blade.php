@@ -485,7 +485,7 @@
                                 "render": function(data, type, row) {
 
                                     // return row.log_comment;
-                                    return `<input value="${row.log_comment === null ? '' : row.log_comment}" style="border:none" placeholder="No Comment" class="undeditSpan" id="log_comment${row.log_id}" onclick="editComment(${row.log_id})" >`;
+                                    return `<input value="${row.log_comment === null ? '' : row.log_comment}" style="border:none;background-color:transparent" placeholder="No Comment" class="undeditSpan" id="log_comment${row.log_id}" onclick="editComment(${row.log_id})" >`;
                                 }
                             },
                             {
