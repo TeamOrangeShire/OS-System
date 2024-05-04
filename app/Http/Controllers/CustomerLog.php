@@ -130,15 +130,14 @@ public function LogToPending(Request $request) {
     
         ]);
       }
-   
     return response()->json(['data' => $logs->customer_id]);
     }else if($logs->log_status == 1){
       if($logs->log_type == 0){
         $logs->update([
+          'log_payment_method'=>$request->paymentMethod,
           'log_transaction'=>$request->payment.'-1',
           'log_status'=> 2,
          
-    
         ]);
         $data = new CustomerNotification;
     $data->user_type ='Customer';
@@ -153,6 +152,7 @@ public function LogToPending(Request $request) {
     $data->save();
       }else{
         $logs->update([
+          'log_payment_method'=>$request->paymentMethod,
           'log_transaction'=>$request->payment.'-0',
           'log_status'=> 2,
          

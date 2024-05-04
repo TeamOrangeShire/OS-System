@@ -108,6 +108,7 @@
                                                             <th>Start</th>
                                                             <th>End</th>
                                                             <th>Total Time</th>
+                                                            <th>Method</th>
                                                             <th>Comment</th>
                                                             <th>Payment</th>
                                                         </tr>
@@ -119,7 +120,7 @@
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th colspan="8" style="text-align:right">Total:</th>
+                                                            <th colspan="9" style="text-align:right">Total:</th>
                                                             <th></th>
                                                         </tr>
                                                     </tfoot>
@@ -158,6 +159,8 @@
                                             <th>Log Start</th>
                                             <th>Log End</th>
                                             <th>Total Time</th>
+                                            <th>Method</th>
+                                            <th>Comment</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -168,7 +171,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="4" style="text-align:right">Total:</th>
+                                            <th colspan="6" style="text-align:right">Total:</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -222,7 +225,7 @@
                                 {
                                     extend: 'pdfHtml5',
                                     exportOptions: {
-                                        columns: [0, 1, 2,4,5,6,7]
+                                        columns: [0, 1, 2,4,5,6,7,8,9]
                                     }
                                 },
                                 'colvis'
@@ -273,6 +276,9 @@
 
                             }
                         },
+                        {
+                            'data':'log_payment_method'
+                        },
                          {
                             "data": "log_comment",
                             "render": function(data, type, row) {
@@ -303,21 +309,21 @@
 
                         // Total over all pages
                         total = api
-                            .column(8)
+                            .column(9)
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Total over this page
                         pageTotal = api
-                            .column(8, {
+                            .column(9, {
                                 page: 'current'
                             })
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Update footer
-                        api.column(8).footer().innerHTML =
-                            '₱' + pageTotal + ' ( ₱' + total + ' total)';
+                        api.column(9).footer().innerHTML =
+                            '₱' + pageTotal;
                     }
                 });
             }
@@ -409,7 +415,7 @@
 
                         // Update footer
                         api.column(2).footer().innerHTML =
-                            '₱' + pageTotal + ' ( ₱' + total + ' total)';
+                            'Total: ₱' + pageTotal;
                     }
                 });
             }
@@ -461,6 +467,12 @@
                             }
                         },
                         {
+                            'data':'log_payment_method'
+                        },
+                        {
+                            'data':'log_comment'
+                        },
+                        {
                             "data": "payment"
                         },
                     ],
@@ -478,21 +490,23 @@
 
                         // Total over all pages
                         total = api
-                            .column(4)
+                            .column(6)
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Total over this page
                         pageTotal = api
-                            .column(4, {
+                            .column(6, {
                                 page: 'current'
                             })
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Update footer
-                        api.column(4).footer().innerHTML =
-                            '₱' + pageTotal + ' ( ₱' + total + ' total)';
+                        api.column(6).footer().innerHTML =
+                            ' Total: ₱' + pageTotal;
+                            api.column(5).footer().innerHTML =
+                            'Date: '+ date;
                     }
                 });
             }
