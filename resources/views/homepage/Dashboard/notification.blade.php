@@ -48,14 +48,14 @@
             <button class="list-group-item list-group-item-action {{ $notif->notif_status === 1? '' : 'active' }}" {{ $notif->notif_status === 1 ? '' : 'aria-current="true"' }}>
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">{!! $notif->notif_header !!}</h5>
-                  <small class="text-muted">{{ $calcTime }}</small>
+                  <small class="text-muted"><i>{{ $calcTime }}</i></small>
                 </div>
                 <p class="mb-1">{!! substr($notif->notif_message,0, 40). "...." !!}</p>
-                <small class="text-muted">{{ $notif->notif_status === 0 ? 'Unread' : 'Read' }}</small>
+                <small class="text-muted"><i>{{ $notif->notif_status === 0 ? 'Unread' : 'Read' }}</i></small>
             </button>
             @endforeach
          
-            <button href="#" class="list-group-item list-group-item-action">
+            <button class="list-group-item list-group-item-action active">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">List group item heading</h5>
                 <small class="text-muted">3 days ago</small>
