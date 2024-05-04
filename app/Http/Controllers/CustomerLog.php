@@ -327,7 +327,7 @@ public function Scanning(Request $req){
 public function GetHistoryData(Request $req){
 $id = $req->cust_id;
 
-$log = CustomerLogs::where('customer_id', $id)->get();
+$log = CustomerLogs::where('customer_id', $id)->orderBy('created_at', 'desc')->get();
 
 return response()->json([
   'log' => $log
