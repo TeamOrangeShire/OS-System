@@ -108,6 +108,7 @@
                                                             <th>Start</th>
                                                             <th>End</th>
                                                             <th>Total Time</th>
+                                                            <th>Comment</th>
                                                             <th>Payment</th>
                                                         </tr>
                                                     </thead>
@@ -118,7 +119,7 @@
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th colspan="7" style="text-align:right">Total:</th>
+                                                            <th colspan="8" style="text-align:right">Total:</th>
                                                             <th></th>
                                                         </tr>
                                                     </tfoot>
@@ -272,6 +273,13 @@
 
                             }
                         },
+                         {
+                            "data": "log_comment",
+                            "render": function(data, type, row) {
+                            
+                            return data;
+                            }
+                        },
                         {
                             "data": "payment",
                             "render": function(data, type, row) {
@@ -279,6 +287,7 @@
                             return data;
                             }
                         },
+                       
                     ],
                     footerCallback: function(row, data, start, end, display) {
                         let api = this.api();
@@ -294,20 +303,20 @@
 
                         // Total over all pages
                         total = api
-                            .column(7)
+                            .column(8)
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Total over this page
                         pageTotal = api
-                            .column(7, {
+                            .column(8, {
                                 page: 'current'
                             })
                             .data()
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
 
                         // Update footer
-                        api.column(7).footer().innerHTML =
+                        api.column(8).footer().innerHTML =
                             '₱' + pageTotal + ' ( ₱' + total + ' total)';
                     }
                 });
