@@ -45,7 +45,7 @@
                     $calcTime = $pastTime[0]. " hrs, ". $calcMinutes . "mins ago";
                 }
             @endphp
-            <button class="list-group-item list-group-item-action {{ $notif->notif_status === 0? '' : 'active' }}" {{ $notif->notif_status === 0 ? '' : 'aria-current="true"' }}>
+            <button class="list-group-item list-group-item-action {{ $notif->notif_status === 1? '' : 'active' }}" {{ $notif->notif_status === 1 ? '' : 'aria-current="true"' }}>
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">{!! $notif->notif_header !!}</h5>
                   <small>{{ $calcTime }}</small>
@@ -54,8 +54,7 @@
                 <small>{{ $notif->notif_status === 0 ? 'Unread' : 'Read' }}</small>
             </button>
             @endforeach
-         
-
+        
      
 
 
