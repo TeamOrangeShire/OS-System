@@ -247,7 +247,24 @@
         </div>
         <!-- Shire's Purpose Start -->
 
-
+       <div class="container-xxl py-5" >
+        <div class="container-sm py-5">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                       <h1 class="mb-3">Download our App</h1> 
+                        <p class="mb-3">Orange Shire is now available in android phones. Just click the button below to download or Scan our QR Code</p>
+                        <a class="btn btn-primary py-2 px-4 mt-2" href="{{ route('download') }}">Download Apk <i class="fa-brands fa-android"></i></a>
+                    </div>
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                        <div class="about-img position-relative overflow-hidden p-4 pe-0">
+                            <img class="img-fluid w-100" src="{{ asset('img/download-apk.png') }}" style="max-width: 100%; height: auto;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </div>
         
 
         <!-- Footer Start -->
