@@ -42,7 +42,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h5>Sales report</h5>
-                       
+
                         </div>
                         <div class="card-body">
                             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
@@ -55,6 +55,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#home"
                                         role="tab" aria-controls="home" aria-selected="true">Daily Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link  text-uppercase" id="" data-toggle="tab" href="#weekly"
+                                        role="tab" aria-controls="home" aria-selected="true">Weekly/Monthly Report</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -131,6 +135,60 @@
                                     </section>
                                     </p>
                                 </div>
+
+                                <div class="tab-pane fade " id="weekly" role="tabpanel" aria-labelledby="">
+                                    <form action="" id="filter">@csrf
+
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <label for="startdate">Start Date</label>
+                                                <input type="date" class="form-control" id="startdate"
+                                                    name="startdate">
+                                            </div>
+                                            <div class="col">
+                                                <label for="end">End Date</label>
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control" id="enddate"
+                                                        name="enddate">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary" type="button"
+                                                            onclick="filterdate()">Filter Date</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <table id="weeklyreport" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Number</th>
+                                                <th>Start</th>
+                                                <th>End</th>
+                                                <th>Total Time</th>
+                                                <th>Method</th>
+                                                <th>Comment</th>
+                                                <th>Payment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="9" style="text-align:right">Total:</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -144,8 +202,8 @@
                             <div class="modal-header">
                                 <h4 class="modal-title"> View Details </h4>
 
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
+                                <button type="button" class="close" data-bs-dismiss="modal"
+                                    aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                             </div>
 
@@ -182,7 +240,8 @@
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
                             </div>
 
                         </div>
@@ -202,13 +261,16 @@
             $(document).ready(function() {
                 CustomerlogHistory();
                 getsalereport();
+
             });
 
 
             function CustomerlogHistory() {
                 $('#generalhistory').DataTable({
-                     order: [[0, 'desc']],
-                     layout: {
+                    order: [
+                        [0, 'desc']
+                    ],
+                    layout: {
                         topStart: {
                             buttons: [{
                                     extend: 'copyHtml5',
@@ -225,7 +287,7 @@
                                 {
                                     extend: 'pdfHtml5',
                                     exportOptions: {
-                                        columns: [0, 1, 2,4,5,6,7,8,9]
+                                        columns: [0, 1, 2, 4, 5, 6, 7, 8, 9]
                                     }
                                 },
                                 'colvis'
@@ -240,14 +302,14 @@
                     "columns": [{
                             "data": "log_date"
                         },
-                       {
-                                "data": null,
-                                "render": function(data, type, row) {
-                                    var first = row.firstname;
-                                    var last = row.lastname;
-                                    return first +" "+ last;
-                                }
-                            },
+                        {
+                            "data": null,
+                            "render": function(data, type, row) {
+                                var first = row.firstname;
+                                var last = row.lastname;
+                                return first + " " + last;
+                            }
+                        },
                         {
                             "data": "email"
                         },
@@ -277,23 +339,23 @@
                             }
                         },
                         {
-                            'data':'log_payment_method'
+                            'data': 'log_payment_method'
                         },
-                         {
+                        {
                             "data": "log_comment",
                             "render": function(data, type, row) {
-                            
-                            return data;
+
+                                return data;
                             }
                         },
                         {
                             "data": "payment",
                             "render": function(data, type, row) {
-                            
-                            return data;
+
+                                return data;
                             }
                         },
-                       
+
                     ],
                     footerCallback: function(row, data, start, end, display) {
                         let api = this.api();
@@ -331,7 +393,9 @@
 
             function getsalereport() {
                 $('#salesreport').DataTable({
-                     order: [[0, 'desc']],
+                    order: [
+                        [0, 'desc']
+                    ],
                     layout: {
                         topStart: {
                             buttons: [{
@@ -423,7 +487,9 @@
 
             function viewLog(date) {
                 $('#detailsalesreport').DataTable({
-                     order: [[1, 'desc']],
+                    order: [
+                        [1, 'desc']
+                    ],
                     layout: {
                         topStart: {
                             buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
@@ -436,16 +502,15 @@
                         "dataType": "json",
                         "dataSrc": "reg"
                     },
-                    "columns": [
+                    "columns": [{
+                            "data": null,
+                            "render": function(data, type, row) {
+                                var first = row.firstname;
+                                var last = row.lastname;
+                                return first + " " + last;
+                            }
+                        },
                         {
-                                "data": null,
-                                "render": function(data, type, row) {
-                                    var first = row.firstname;
-                                    var last = row.lastname;
-                                    return first +" "+ last;
-                                }
-                            },
-                    {
                             "data": "log_start_time",
                             "render": function(data, type, row) {
                                 return data;
@@ -467,10 +532,10 @@
                             }
                         },
                         {
-                            'data':'log_payment_method'
+                            'data': 'log_payment_method'
                         },
                         {
-                            'data':'log_comment'
+                            'data': 'log_comment'
                         },
                         {
                             "data": "payment"
@@ -505,8 +570,152 @@
                         // Update footer
                         api.column(6).footer().innerHTML =
                             ' Total: ₱' + pageTotal;
-                            api.column(5).footer().innerHTML =
-                            'Date: '+ date;
+                        api.column(5).footer().innerHTML =
+                            'Date: ' + date;
+                    }
+                });
+            }
+
+
+
+            function filterdate() {
+                var startDate = document.getElementById('startdate').value;
+                var parsedDate = new Date(startDate);
+
+                var formattedStartDate = parsedDate.getDate().toString().padStart(2, '0') + '-' +
+                    (parsedDate.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                    parsedDate.getFullYear();
+
+                var endDate = document.getElementById('enddate').value;
+                var parsedEndDate = new Date(endDate);
+
+                var formattedEndDate = parsedEndDate.getDate().toString().padStart(2, '0') + '-' +
+                    (parsedEndDate.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                    parsedEndDate.getFullYear();
+                console.log("Start Date:", formattedStartDate);
+                console.log("End Date:", formattedEndDate);
+
+                $('#weeklyreport').DataTable({
+                    order: [
+                        [0, 'desc']
+                    ],
+                    layout: {
+                        topStart: {
+                            buttons: [{
+                                    extend: 'copyHtml5',
+                                    exportOptions: {
+                                        columns: [0, ':visible']
+                                    }
+                                },
+                                {
+                                    extend: 'excelHtml5',
+                                    exportOptions: {
+                                        columns: ':visible'
+                                    }
+                                },
+                                {
+                                    extend: 'pdfHtml5',
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 4, 5, 6, 7, 8, 9]
+                                    }
+                                },
+                                'colvis'
+                            ]
+                        }
+                    },
+                    "destroy": "true",
+                    "ajax": {
+                        "url": "{{ route('GetWeeklyReport') }}?startdate=" + formattedStartDate + "&enddate=" +
+                            formattedEndDate,
+                        "type": "GET"
+                    },
+                    "columns": [{
+                            "data": "log_date"
+                        },
+                        {
+                            "data": null,
+                            "render": function(data, type, row) {
+                                var first = row.firstname;
+                                var last = row.lastname;
+                                return first + " " + last;
+                            }
+                        },
+                        {
+                            "data": "email"
+                        },
+                        {
+                            "data": "contact"
+                        },
+                        {
+                            "data": "log_start_time"
+
+                        },
+                        {
+                            "data": "log_end_time"
+                        },
+                        {
+                            "data": null,
+                            "render": function(data, type, row) {
+                                var start = row.log_start_time;
+                                var end = row.log_end_time;
+                                if (end == '' || end == null) {
+                                    return '';
+                                } else {
+                                    var totaltime = timeDifference(start, end);
+                                    var between = totaltime.hours + ':' + totaltime.minutes;
+                                    return between;
+                                }
+
+                            }
+                        },
+                        {
+                            'data': 'log_payment_method'
+                        },
+                        {
+                            "data": "log_comment",
+                            "render": function(data, type, row) {
+
+                                return data;
+                            }
+                        },
+                        {
+                            "data": "payment",
+                            "render": function(data, type, row) {
+
+                                return data;
+                            }
+                        },
+
+                    ],
+                    footerCallback: function(row, data, start, end, display) {
+                        let api = this.api();
+
+                        // Remove the formatting to get integer data for summation
+                        let intVal = function(i) {
+                            return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '') * 1 :
+                                typeof i === 'number' ?
+                                i :
+                                0;
+                        };
+
+                        // Total over all pages
+                        total = api
+                            .column(9)
+                            .data()
+                            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                        // Total over this page
+                        pageTotal = api
+                            .column(9, {
+                                page: 'current'
+                            })
+                            .data()
+                            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                        // Update footer
+                        api.column(9).footer().innerHTML =
+                            '₱' + pageTotal;
                     }
                 });
             }

@@ -83,6 +83,7 @@ Route::get('/admin/GetCustomerAcc', [CustomerLog::class,"GetCustomerAcc"])->name
 Route::get('/admin/GetCustomerlog', [CustomerLog::class,"GetCustomerlog"])->name('GetCustomerlog');
 Route::get('/admin/CustomerlogHistory', [CustomerLog::class,"CustomerlogHistory"])->name('CustomerlogHistory');
 Route::get('/admin/GeneralReport', [GetDataViews::class,"GeneralReport"])->name('GeneralReport');
+Route::get('/admin/GetWeeklyReport', [GetDataViews::class,"GetWeeklyReport"])->name('GetWeeklyReport');
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
