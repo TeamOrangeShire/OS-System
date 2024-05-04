@@ -203,6 +203,7 @@
 
             function CustomerlogHistory() {
                 $('#generalhistory').DataTable({
+                     order: [[0, 'desc']],
                      layout: {
                         topStart: {
                             buttons: [{
@@ -315,6 +316,7 @@
 
             function getsalereport() {
                 $('#salesreport').DataTable({
+                     order: [[0, 'desc']],
                     layout: {
                         topStart: {
                             buttons: [{
@@ -406,6 +408,7 @@
 
             function viewLog(date) {
                 $('#detailsalesreport').DataTable({
+                     order: [[1, 'desc']],
                     layout: {
                         topStart: {
                             buttons: ['copy', 'csv', 'excel', 'pdf', 'print']

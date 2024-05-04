@@ -416,6 +416,7 @@
                 });
                 function CustomerlogHistory() {
                     $('#loghistory').DataTable({
+                        order: [[1, 'desc']],
                         "destroy": "true",
                         "ajax": {
                             "url": "{{ route('CustomerlogHistory') }}",
@@ -496,8 +497,12 @@
                                             return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
-                                                row.log_id + ")'>Confirm</button>";
+                                              var transac = row.log_transaction; 
+                                            var parts = transac.split('-');
+                                             var payment =  parts[0];
+                                            return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                            row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" + row.log_end_time +
+                                            "')\">Confirm</button>"; 
                                         } else {
                                             return "Paid";
                                         }
@@ -686,6 +691,7 @@
                 function viewLog(id) {
                     console.log(id);
                     $('#viewcustomerlog').DataTable({
+                         order: [[0, 'desc']],
                         destroy: true,
                         "ajax": {
                             "url": "{{ route('GetCustomerlog') }}?cuslogid=" + id,
