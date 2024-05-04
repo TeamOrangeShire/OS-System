@@ -506,7 +506,7 @@
                                             "')\">Confirm2</button>"; 
                                             }else{
                                                    return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm3</button>";
+                                                row.log_id + ")'>Confirm21</button>";
                                             }
                                          
                                         } else {
