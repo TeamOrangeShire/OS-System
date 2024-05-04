@@ -350,5 +350,14 @@ return response()->json([
 ]);
 }
 
+public function SaveComment(Request $req){
+  $log = CustomerLogs::where('log_id', $req->log_id)->first();
+  $log->update([
+     'log_comment'=>$req->comment,
+  ]);
+
+  return response()->json(['status'=>'success']);
+}
+
 }
 

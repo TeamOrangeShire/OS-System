@@ -373,7 +373,11 @@
             </form>
 
             <!-- [ Main Content ] end -->
-
+            <form id="submitComment" method="post">
+                @csrf
+                <input type="hidden" name="log_id" id="comment_log_id">
+                <input type="hidden" name="comment" id="comment_log_message">
+            </form>
 
             @include('admin.assets.adminscript')
             <!-- Required Js -->
@@ -395,7 +399,7 @@
                         url: "{{ route('InsertNewCustomer') }}",
                         data: formData,
                         success: function(response) {
-
+                            $('#insertmodal').modal('hide');
                             console.log(response);
                         },
                         error: function(xhr, status, error) {
@@ -481,7 +485,7 @@
                                 "render": function(data, type, row) {
 
                                     // return row.log_comment;
-                                    return `<span></span>`;
+                                    return `<input value="${row.log_comment === null ? '' : row.log_comment}" style="border:none" placeholder="No Comment" class="undeditSpan" id="log_comment${row.log_id}" onclick="editComment(${row.log_id})" >`;
                                 }
                             },
                             {
@@ -494,7 +498,7 @@
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
                                             return "<button class='btn btn-warning' type='button' onclick='Pending(" +
-                                                row.log_id + ")'>Confirm1</button>";
+                                                row.log_id + ")'>Confirm</button>";
                                         } else {
                                             return "Paid";
                                         }
@@ -524,7 +528,7 @@
                                     }
                                 }
                             }
-                        ]
+                        ], 
                     });
                 }
 
@@ -824,6 +828,53 @@
                     });
                 }
                 
+
+                function editComment(id){
+                    const spanName = "log_comment" + id;
+                    const editSpan = document.getElementById(spanName);
+                    editSpan.addEventListener("dblclick", function() {
+
+                        const unedit = document.querySelectorAll('.undeditSpan');
+                        unedit.forEach( un =>{
+                            un.contentEditable = false;
+                            un.style.border = "none";
+                        });
+                       editSpan.contentEditable = true;
+                       editSpan.style.border = "1px solid black";
+                     });
+                }
+                document.addEventListener("click", function(event) {
+    const editSpans = document.querySelectorAll(".undeditSpan");
+
+    let clickedInsideEditSpan = false;
+    editSpans.forEach(editSpan => {
+        if (editSpan.contains(event.target)) {
+            clickedInsideEditSpan = true;
+        }
+    });
+
+    if (!clickedInsideEditSpan) {
+        editSpans.forEach(edit => {
+            const editId = edit.id.substring("log_comment".length);
+            document.getElementById('comment_log_id').value = editId;
+            document.getElementById('comment_log_message').value = edit.value;
+            const formData = $('form#submitComment').serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('SaveComment') }}",
+                data: formData,
+                success: function(response) {
+                  edit.style.border = "none";
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    }
+});
+
             </script>
 
     </body>

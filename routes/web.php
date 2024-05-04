@@ -145,6 +145,8 @@ Route::post('/DisablePromo', [EditData::class, 'DisablePromo'])->name('DisablePr
 Route::post('/EnablePromo', [EditData::class, 'EnablePromo'])->name('EnablePromo');
 Route::post('/DisablePlan', [EditData::class, 'DisablePlan'])->name('DisablePlan');
 Route::post('/EnablePlan', [EditData::class, 'EnablePlan'])->name('EnablePlan');
+
+Route::post('/submitComment', [CustomerLog::class, 'SaveComment'])->name('SaveComment');
 //Subscription
 Route::post('/ConfirmSubscription', [SubscriptionsData::class, 'ConfirmSubscription'])->name('ConfirmSubscription');
 Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');
