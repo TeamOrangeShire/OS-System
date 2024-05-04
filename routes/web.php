@@ -55,7 +55,7 @@ Route::post('/customer/redirectScan/updatelogs',[CustomerLog::class,'GetScannedU
 Route::post('/customer/tourend',[CreateAcc::class,'UpdateTour'] )->name('updateTour');
 Route::post('/customer/updateType',[CreateAcc::class,'UpdateType'] )->name('UpdateType');
 Route::post('/customer/updateType/upload',[CreateAcc::class,'UploadVerificationPhone'] )->name('UploadVerificationPhone');
-
+Route::post('/customer/home/profile/notification/readall',[EditData::class,'ReadAllNotificationCustomer'] )->name('readAllCustomer');
 //Customer Dashboard
 Route::get('/customer/home/profile',[GetDataViews::class, 'CustomerProfile'] )->name('customerProfile');
 Route::get('/customer/home/subscription',[GetDataViews::class, 'CustomerSubscription'] )->name('customerSubscription');

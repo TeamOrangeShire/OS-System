@@ -10,8 +10,6 @@
 
   @php
   $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
-  $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
-  $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
 @endphp
   <!-- ======= Header ======= -->
@@ -22,7 +20,7 @@
       <h1>Notifications</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('customerHome') }}">Home</a></li>
           <li class="breadcrumb-item"><a href="{{ route('customerProfile') }}">Profile</a></li>
           <li class="breadcrumb-item active">Notification</li>
         </ol>
@@ -31,13 +29,12 @@
 
 
     @php
-        $notif = App\Models\CustomerNotification::where('user_id', $user_id)->where('user_type', 'Customer');
-        $notifUnread = $notif->where('notif_status', 0)->orderBy('created_at', 'desc')->get();
-        $notifRead = $notif->where('notif_status', 1)->orderBy('created_at', 'desc')->get();
+        $notification = App\Models\CustomerNotification::where('user_id', $user_id)->where('user_type', 'Customer')->orderBy('created_at', 'desc')->get();
+        
     @endphp
           <!-- List group with Advanced Contents -->
           <div class="list-group">
-            @foreach ($notifUnread as $notif)
+            @foreach ($notification as $notif)
             @php
                 $pastTime = PastTimeCalc($notif->created_at);
 
@@ -48,27 +45,16 @@
                     $calcTime = $pastTime[0]. " hrs, ". $calcMinutes . "mins ago";
                 }
             @endphp
-            <button class="list-group-item list-group-item-action active" aria-current="true">
+            <button class="list-group-item list-group-item-action {{ $notif->notif_status == 1? '' : 'active' }}" {{ $notif->notif_status == 1 ? '' : 'aria-current="true"' }}>
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">{!! $notif->notif_header !!}</h5>
-                  <small>{{ $calcTime }}</small>
+                  <small class="text-muted"><i>{{ $calcTime }}</i></small>
                 </div>
                 <p class="mb-1">{!! substr($notif->notif_message,0, 40). "...." !!}</p>
-                <small>Unread</small>
+                <small class="text-muted"><i>{{ $notif->notif_status == 0 ? 'Unread' : 'Read' }}</i></small>
             </button>
             @endforeach
-            @foreach ($notifRead as $notif)
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">List group item heading</h5>
-                  <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-muted">And some muted small print.</small>
-              </a>
-            @endforeach
-
-     
+         
 
 
   </main><!-- End #main -->
