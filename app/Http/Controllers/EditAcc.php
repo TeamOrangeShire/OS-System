@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use App\Models\AdminAcc;
 use App\Models\CustomerAcc;
@@ -201,14 +202,29 @@ class EditAcc extends Controller
         $current_credit = $customer_credit->account_credits;
         if($operation === 'add'){
             $credit = $current_credit + $addcredit;
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin add credit of " . $customer_credit->customer_lastname ." added ".$addcredit;
+    $data->act_header = "Add Credit";
+    $data->act_location = "customer_acc";
+    $data->save();
         }else{
             $credit = $current_credit - $addcredit;
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin deduct credit of " . $customer_credit->customer_lastname ." deduct ".$addcredit;
+    $data->act_header = "Deduct Credit";
+    $data->act_location = "customer_acc";
+    $data->save();
         }
         $customer_credit->update([
                
           'account_credits'=>$credit,
     
         ]);
+
         return redirect()->back();
     }
 
