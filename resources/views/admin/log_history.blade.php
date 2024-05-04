@@ -102,6 +102,7 @@
                                                             <th>Total Time</th>
                                                             <th>Payment</th>
                                                            <th>Status</th>
+                                                            <th>Comment</th>
                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -473,6 +474,12 @@
                                     } else {
                                         return "Completed";
                                     }
+                                }
+                            },
+                            {
+                                 "data": null,
+                                "render": function(data, type, row) {
+                                    return row.log_transaction;
                                 }
                             },
                             {
