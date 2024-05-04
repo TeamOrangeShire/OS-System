@@ -479,7 +479,9 @@
                             {
                                  "data": null,
                                 "render": function(data, type, row) {
-                                    return row.log_transaction;
+
+                                    // return row.log_comment;
+                                    return `<span></span>`;
                                 }
                             },
                             {
