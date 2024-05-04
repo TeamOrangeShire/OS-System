@@ -566,8 +566,18 @@
                                         return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
                                             log_id + ")'>Logout</button>";
                                     } else if (log_in === '1') {
-                                        return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm2</button>";
+                                            var transac = row.log_payment; 
+                                            var parts = transac.split('-');
+                                            var secondPart = parts[1];
+                                            var payment =  parts[0];
+                                            if(secondPart == 1 ){
+                                                  return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                            row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" + row.log_end_time +
+                                            "')\">Confirm26</button>"; 
+                                            }else{
+                                                   return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
+                                                row.log_id + ")'>Confirm21</button>";
+                                            }
                                     } else {
                                         return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
                                             customer_id + ")'>Login</button>";
