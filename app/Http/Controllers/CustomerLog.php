@@ -5,9 +5,8 @@ use App\Models\CustomerLogs;
 use App\Models\ActivityLog;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerAcc;
-use App\Models\CustomerLogUnregister;
 use App\Models\Tour;
-use App\Models\UnregisterAcc;
+use App\Models\CustomerNotification;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -121,6 +120,7 @@ public function LogToPending(Request $request) {
           'log_transaction'=>$payment.'-1',
     
         ]);
+        
       }else{
         $logs->update([
 
@@ -140,6 +140,17 @@ public function LogToPending(Request $request) {
          
     
         ]);
+        $data = new CustomerNotification;
+    $data->user_type ='Customer';
+    $data->user_id = $logs->customer_id;
+    $data->notif_header = "Payment Confirmed ";
+    $data->notif_message = "You have successfully logged out at Orange Shire, and we have received your payment.";
+    $data->notif_status = "0";
+    $data->notif_label = "Success";
+    $data->notif_table ="customer_logs";
+    $data->notif_table_id = $request->id;   
+    $data->notif_table_pk = "log_id";
+    $data->save();
       }else{
         $logs->update([
           'log_transaction'=>$request->payment.'-0',
