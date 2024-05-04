@@ -125,16 +125,16 @@
                     <div class="bg-white rounded p-4" style="border: 1px dashed rgba(0, 185, 142, .3)">
                         <div class="row g-5 align-items-center">
                             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                                <img class="img-fluid rounded w-100" src="img/os_loc.jpg" alt="">
+                                <img class="img-fluid rounded w-100" src="{{ asset('img/24hoursOrangeShire.png') }}" alt="">
                             </div>
                             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                                 <div class="mb-4">
-                                    <h1 class="mb-3">Contact Us and Reserve Now!</h1>
-                                    <p>Call us for more information about the promo you would like to avail and more.</p>
+                                    <h1 class="mb-3">Contact Us</h1>
+                                    <p>Call us for more information about the Orange Shires Solutions</p>
                                 </div>
                                 <div class="d-grid gap-2 d-md-block">
                                      <a href="{{ route('contact') }}" class="btn btn-primary py-3 px-4"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
-                                <a href="{{ route('reservation') }}#calendars" class="btn btn-dark py-3 px-4"><i class="fa fa-calendar-alt me-2"></i>Reserve Now</a>
+                                {{-- <a href="{{ route('reservation') }}#calendars" class="btn btn-dark py-3 px-4"><i class="fa fa-calendar-alt me-2"></i>Reserve Now</a> --}}
                                 </div>
                                
                             </div>
