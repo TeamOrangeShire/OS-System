@@ -62,7 +62,7 @@
                   url: "{{ route('readAllCustomer') }}",
                   data:formData,
                   success: function(response){
-                    SnackB ar("All Notifications are read");
+                    SnackBar("All Notifications are read");
                     location.reload();
                   },error: function(xhr){
                     console.log(xhr.responseText);
