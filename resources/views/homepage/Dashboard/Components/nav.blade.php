@@ -45,13 +45,31 @@
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">{{ $notifCount }}</span>
           </a><!-- End Notification Icon -->
-
+           <form id="readAllForm" method="POST">
+            @csrf
+            <input type="hidden" name="cust_id" value="{{ $user_id }}">
+           </form>
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have {{ $notifCount }} new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              <a href="#" onclick="ReadAllForm()"><span class="badge rounded-pill bg-primary p-2 ms-2">Read all</span></a>
             </li>
-  
+             <script>
+              function ReadAllForm(){
+                const formData = $('form#readAllForm').serialize();
+                $.ajax({
+                  type:"POST",
+                  url: "{{ route('readAllCustomer') }}",
+                  data:formData,
+                  success: function(response){
+                    SnackB ar("All Notifications are read");
+                    location.reload();
+                  },error: function(xhr){
+                    console.log(xhr.responseText);
+                  }
+                })
+              }
+             </script>
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -79,7 +97,7 @@
               <i class="bi bi-{{ $label }} text-{{ $color }}"></i>
               <div>
                 <h4>{!! $notif->notif_header !!}</h4>
-                <p>{!! substr($notif->notif_message, 0, 40). "...." . "(Status: ".$notif->notif_label.")" !!}</p>
+                <p>{!! substr($notif->notif_message, 0, 40). "...." !!}</p>
                 <p>{{ $timeAgo[0] }} hrs. and {{ $timeInMinutes }} mins ago </p>
               </div>
             </li>
@@ -90,7 +108,7 @@
             @endforeach
           
             <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
+              <a href="{{ route('customerNotification') }}">Show all notifications</a>
             </li>
 
           </ul><!-- End Notification Dropdown Items -->

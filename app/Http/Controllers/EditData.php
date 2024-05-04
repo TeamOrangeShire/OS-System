@@ -8,6 +8,7 @@ use App\Models\RoomPricing;
 use App\Models\RoomRate;
 use App\Models\Rooms;
 use App\Models\ServiceHP;
+use App\Models\CustomerNotification;
 use Illuminate\Http\Request;
 
 class EditData extends Controller
@@ -398,4 +399,15 @@ class EditData extends Controller
 
         }
 
+  public function ReadAllNotificationCustomer(Request $req){
+    $cust = CustomerNotification::where('user_id', $req->cust_id)->where('user_type', 'Customer')->get();
+
+    foreach($cust as $notif){
+        $notif->update([
+            'notif_status'=>1,
+        ]);
+    
+    }
+    return response()->json(['status'=>'success']);
+  }
 }
