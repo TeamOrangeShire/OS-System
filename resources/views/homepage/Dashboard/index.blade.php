@@ -86,7 +86,7 @@ $tour = App\Models\Tour::where('customer_id', $user_id)->first();
       <div class="card-body">
        <div class="d-flex justify-content-between ">
         <h5 class="card-title text-secondary">Recent Transactions</h5>
-        <a class="card-title" href="">See All</a>
+        <a class="card-title" href="{{ route('logintoshire') }}">See All</a>
        </div>
 
         <!-- List group with custom content -->
