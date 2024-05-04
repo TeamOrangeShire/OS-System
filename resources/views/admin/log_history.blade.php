@@ -503,10 +503,10 @@
                                             if(secondPart == 1 ){
                                                   return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
                                             row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" + row.log_end_time +
-                                            "')\">Confirm26</button>"; 
+                                            "')\">Confirm</button>"; 
                                             }else{
                                                    return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm21</button>";
+                                                row.log_id + ")'>Confirm</button>";
                                             }
                                          
                                         } else {
@@ -576,7 +576,7 @@
                                             "')\">Confirm26</button>"; 
                                             }else{
                                                    return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm21</button>";
+                                                row.log_id + ")'>Confirm</button>";
                                             }
                                     } else {
                                         return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
@@ -751,10 +751,10 @@
                                             if(secondPart == 1 ){
                                                   return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
                                             row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" + row.log_end_time +
-                                            "')\">Confirm26</button>"; 
+                                            "')\">Confirm</button>"; 
                                             }else{
                                                    return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm21</button>";
+                                                row.log_id + ")'>Confirm</button>";
                                             }
                                         } else {
                                             return "Paid";
