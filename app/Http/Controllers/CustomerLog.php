@@ -184,7 +184,16 @@ public function AccLogin(Request $request){
 
     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->count();
     if($request->firstname == '' || $request->lastname == '' || $request->number == '') {
-      return response()->json(['status'=> 'failed']);
+      if($request->firstname == '' && $request->lastname == '' && $request->number == ''){
+         return response()->json(['status'=> 'failed']);
+      }else if($request->firstname == ''){
+         return response()->json(['status'=> 'firstname']);
+      }else if($request->lastname == ''){
+         return response()->json(['status'=> 'lastname']);
+      }else if($request->number == ''){
+        return response()->json(['status'=> 'number']);
+      }
+     
     }elseif($acc){
       return response()->json(['status'=> 'exist']);
     }

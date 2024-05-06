@@ -297,8 +297,8 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 mb-6">
-                                        <label for="validationTooltip01">First name</label>
-                                        <input type="text" class="form-control" id="" name="firstname"
+                                        <label for="validationTooltip01">First name <span style="color: red;">*</span></label>
+                                        <input type="text" class="form-control" id="firstname" name="firstname"
                                             placeholder="First name" value="" required>
                                         <div class="valid-tooltip">
                                             Looks good!
@@ -313,8 +313,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-6">
-                                        <label for="validationTooltip03">Last name</label>
-                                        <input type="text" class="form-control" id="" name="lastname"
+                                        <label for="validationTooltip03">Last name <span style="color: red;">*</span></label>
+                                        <input type="text" class="form-control" id="lastname" name="lastname"
                                             placeholder="Last name" value="" required>
                                         <div class="valid-tooltip">
                                             Looks good!
@@ -345,8 +345,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="validationTooltip05">Number</label>
-                                        <input type="Number" class="form-control" id="" name="number"
+                                        <label for="validationTooltip05">Number <span style="color: red;">*</span></label>
+                                        <input type="Number" class="form-control" id="number" name="number"
                                             placeholder="Number" required>
                                         <div class="invalid-tooltip">
                                             Please provide a valid number
@@ -414,7 +414,20 @@
         url: "{{ route('InsertNewCustomer') }}",
         data: formData,
         success: function(response) {
-            location.reload();
+            if(response.status == 'firstname'){
+             document.getElementById('firstname').style.border = '1px solid red';
+            }else if(response.status == 'lastname'){
+                document.getElementById('lastname').style.border = '1px solid red';
+            }else if(response.status == 'number'){
+                 document.getElementById('number').style.border = '1px solid red';
+            }else if(response.status == 'failed'){
+                 document.getElementById('firstname').style.border = '1px solid red';
+                  document.getElementById('lastname').style.border = '1px solid red';
+                   document.getElementById('number').style.border = '1px solid red';
+            }else{
+                location.reload();
+            }
+
            
         },
         error: function(xhr, status, error) {
