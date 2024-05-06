@@ -582,15 +582,15 @@
                 var startDate = document.getElementById('startdate').value;
                 var parsedDate = new Date(startDate);
 
-                var formattedStartDate = parsedDate.getDate().toString().padStart(2, '0') + '-' +
-                    (parsedDate.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                var formattedStartDate = parsedDate.getDate().toString().padStart(2, '0') + '/' +
+                    (parsedDate.getMonth() + 1).toString().padStart(2, '0') + '/' +
                     parsedDate.getFullYear();
 
                 var endDate = document.getElementById('enddate').value;
                 var parsedEndDate = new Date(endDate);
 
-                var formattedEndDate = parsedEndDate.getDate().toString().padStart(2, '0') + '-' +
-                    (parsedEndDate.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                var formattedEndDate = parsedEndDate.getDate().toString().padStart(2, '0') + '/' +
+                    (parsedEndDate.getMonth() + 1).toString().padStart(2, '0') + '/' +
                     parsedEndDate.getFullYear();
                 console.log("Start Date:", formattedStartDate);
                 console.log("End Date:", formattedEndDate);
@@ -626,7 +626,7 @@
                     "destroy": "true",
                     "ajax": {
                         "url": "{{ route('GetWeeklyReport') }}?startdate=" + formattedStartDate + "&enddate=" +
-                            formattedEndDate,
+                            parsedEndDate,
                         "type": "GET"
                     },
                     "columns": [{

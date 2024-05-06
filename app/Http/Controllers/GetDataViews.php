@@ -466,7 +466,7 @@ public function GetWeeklyReport(Request $request) {
         'customer_acc.customer_email as email',
         'customer_acc.customer_phone_num as contact'
     )
-    ->whereBetween('log_date', [$startDate, $endDate])
+    ->whereBetween('customer_logs.log_date', [$startDate, $endDate])
     ->where('customer_logs.log_status',2)
     ->get();
 
