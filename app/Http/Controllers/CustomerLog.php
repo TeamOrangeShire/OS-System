@@ -171,7 +171,7 @@ public function AccLogin(Request $request){
 
         $insertnewlog = new CustomerLogs;
         $insertnewlog->customer_id = $request->id;
-        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d-m-Y');
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
         $insertnewlog->log_start_time = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
         $insertnewlog->log_status = 0;
         $insertnewlog->log_type= 1;
