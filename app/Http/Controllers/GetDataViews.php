@@ -11,6 +11,7 @@ use App\Models\Rooms;
 use App\Models\CustomerLogs;
 use App\Models\CustomerLogUnregister;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class GetDataViews extends Controller
 {
@@ -402,8 +403,7 @@ class GetDataViews extends Controller
     // }
     public function CustomerLog()
     {
-       
-        $logs = CustomerLogs::all()->groupBy('log_date');
+        $logs = CustomerLogs::where('log_status', 2)->get()->groupBy('log_date');
     
         $logsByDate = [];
         foreach ($logs as $logDate => $logEntries) {
@@ -420,6 +420,7 @@ class GetDataViews extends Controller
         }
         return response()->json(['logsByDate' => $logsByDate]);
     }
+    
     public function ViewDetails(Request $request){
 
         $date = $request->query('date');
@@ -441,7 +442,7 @@ class GetDataViews extends Controller
 
   $logs = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
   select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
-  'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact')->get();
+  'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact')->Where('customer_logs.log_status',2)->get();
 
   foreach($logs as $log){
 
@@ -451,5 +452,30 @@ class GetDataViews extends Controller
 
   return response()->json(['data' => $logs]);
 }
+public function GetWeeklyReport(Request $request) {
 
+    $startDate = $request->startdate;
+    $endDate = $request->enddate;
+
+
+    $logs = CustomerLogs::join('customer_acc', 'customer_logs.customer_id', '=', 'customer_acc.customer_id')
+    ->select(
+        'customer_logs.*',
+        'customer_acc.customer_firstname as firstname',
+        'customer_acc.customer_lastname as lastname',
+        'customer_acc.customer_email as email',
+        'customer_acc.customer_phone_num as contact'
+    )
+    ->whereBetween('log_date', [$startDate, $endDate])
+    ->where('customer_logs.log_status',2)
+    ->get();
+
+  
+    foreach($logs as $log){
+  
+      $log->payment = explode('-',$log->log_transaction)[0];
+   
+    }
+    return response()->json(['data' => $logs]);
+}
 }

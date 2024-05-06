@@ -101,6 +101,7 @@
                                                             <th>End</th>
                                                             <th>Total Time</th>
                                                             <th>Payment</th>
+                                                            <th>Method</th>
                                                            <th>Status</th>
                                                             <th>Comment</th>
                                                            <th>Action</th>
@@ -141,6 +142,7 @@
                                             <th>End Time</th>
                                             <th>Total Time</th>
                                             <th>Transaction Amount</th>
+                                            <th>Method</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -195,7 +197,7 @@
                                                 <input type="text" name="payment" style="width: 80px;height:40px;" class="form-control" id="payment">
                                             </div>
                                         </div>
-
+                                        
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -214,7 +216,20 @@
                                                 <p class="" id="end"></p>
                                             </div>
                                         </div>
-
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div style="margin-left: 40px;">
+                                            <label for=""><strong>Payment Method</strong></label>
+                                            <select class="form-control" style="width: 80px;height:40px;" id="" name="paymentMethod">
+                                                <option value="Cash">Cash</option>
+                                                <option value="E-Pay">E-Pay</option>
+                                            </select>
+                                        </div>
+                                        </div>
                                     </div>
                                     <br>
                                    
@@ -467,6 +482,9 @@
                                     }
                                    
                                 }
+                            },
+                            {
+                                'data':'log_payment_method'
                             },
                             {
                                 "data": "log_status",
@@ -729,6 +747,9 @@
                                     return payment[0];
 
                                 }
+                            },
+                            {
+                                'data':'log_payment_method'
                             },
                             {
                                 "data": "log_status",

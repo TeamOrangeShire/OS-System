@@ -18,6 +18,7 @@ class CustomerLogs extends Model
       'log_status',
       'log_transaction',
       'log_type',
+      'log_payment_method',
       'log_comment',
     ];
 }

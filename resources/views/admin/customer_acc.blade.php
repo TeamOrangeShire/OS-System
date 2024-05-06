@@ -113,7 +113,7 @@
                                             <span type="button" class="badge badge-primary" style="width: 60%;"
                                                 data-toggle="modal" id="changecustomertype" data-target="#changeCustype"
                                                 onclick="changeCusttype()">Change Type</span>
-                                            <br><br>
+                                            <br>
                                             <label for="email"><strong>Credit Balance: </strong></label>
                                             <p class="" name="cus_credit" id="cus_credit"></p> <span
                                                 type="button" style="width: 60%;" class="badge badge-primary"
@@ -400,13 +400,6 @@
                 document.getElementById('cus_email').textContent = email;
                 document.getElementById('cus_num').textContent = number;verify
                  document.getElementById('verify').value = image;
-                if (customer_type === 'Student' || customer_type ==='Professional' ||customer_type === 'Reviewer' ||customer_type === 'Teacher') {
-                    document.getElementById('verifycustomer').style.display = 'none';
-                    document.getElementById('changecustomertype').style.display = 'block';
-                } else {
-                    document.getElementById('changecustomertype').style.display = 'none';
-                    document.getElementById('verifycustomer').style.display = 'block';
-                }
                 document.getElementById('user_type').textContent = customer_type;
                 document.getElementById('cus_credit').textContent = credit;
             }
