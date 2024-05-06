@@ -293,6 +293,7 @@ public function AccLogin(Request $request){
               'log_end_time'=> Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A'),
               'log_status'=> 1,
               'log_transaction'=>$transaction,
+              'log_payment_method'=> 'Credit',
             ]);
            
           
