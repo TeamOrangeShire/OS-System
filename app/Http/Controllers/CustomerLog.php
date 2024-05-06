@@ -207,7 +207,6 @@ public function AccLogin(Request $request){
       }else if($request->number == ''){
         return response()->json(['status'=> 'number']);
       }
-     
     }elseif($acc){
       return response()->json(['status'=> 'exist']);
     }
