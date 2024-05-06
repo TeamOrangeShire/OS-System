@@ -31,7 +31,6 @@ class CustomerLog extends Controller
     $log->update([
 
         'log_status'=> 2,
-        'log_payment_method'=>'Credit',
 
     ]);
     $cus_info = CustomerAcc::where('customer_id',$log->customer_id)->first();
