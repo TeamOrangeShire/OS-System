@@ -62,6 +62,7 @@ Route::get('/customer/home/subscription',[GetDataViews::class, 'CustomerSubscrip
 Route::get('/customer/home/reservation',[GetDataViews::class, 'CustomerReservation'] )->name('customerReservation');
 Route::get('/customer/home/settings',[GetDataViews::class, 'CustomerSettings'] )->name('customerSettings');
 Route::get('/customer/home/profile/notification',[GetDataViews::class, 'CustomerNotification'] )->name('customerNotification');
+Route::get('/customer/home/profile/notification/view',[GetDataViews::class, 'CustomerViewNotification'] )->name('customerViewNotification');
 Route::get('/customer/home/profile/transaction',[GetDataViews::class, 'CustomerTransaction'] )->name('customerTransaction');
 Route::get('/customer/home/logintoshire',[GetDataViews::class, 'CustomerLoginToShire'] )->name('logintoshire');
 Route::get('/customer/home/getLoginstatus/',[CustomerLog::class, 'GetCustomerLoginStatus'] )->name('getCustomerLoginStatus');

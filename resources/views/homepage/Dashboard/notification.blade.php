@@ -45,7 +45,7 @@
                     $calcTime = $pastTime[0]. " hrs, ". $calcMinutes . "mins ago";
                 }
             @endphp
-            <button class="list-group-item list-group-item-action {{ $notif->notif_status == 1? '' : 'active' }}" {{ $notif->notif_status == 1 ? '' : 'aria-current="true"' }}>
+            <button onclick="ReadNotif({{ $notif->notif_id }})" class="list-group-item list-group-item-action {{ $notif->notif_status == 1? '' : 'active' }}" {{ $notif->notif_status == 1 ? '' : 'aria-current="true"' }}>
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">{!! $notif->notif_header !!}</h5>
                   <small class="text-muted"><i>{{ $calcTime }}</i></small>
@@ -55,6 +55,12 @@
             </button>
             @endforeach
          
+            <script>
+              function ReadNotif(notif){
+                window.location.href = `{{ route('customerViewNotification') }}?notification=${notif}`;
+
+              }
+            </script>
 
 
   </main><!-- End #main -->

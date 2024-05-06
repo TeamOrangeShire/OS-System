@@ -224,6 +224,25 @@ class GetDataViews extends Controller
             }
     }
 
+    public function CustomerViewNotification(Request $req){
+        $userId = $req->cookie('customer_id');
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.Dashboard.notification_open', ['user_id'=>$userId,'status'=> 'not_verified', 'notif'=> $req->notification ]);
+                }else{
+                    return view('homepage.Dashboard.notification_open', [
+                        'user_id'=>$userId,
+                        'status'=> 'verified',
+                        'notif'=>'none'
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.Dashboard.notification', ['user_id'=>$userId, 'status'=> 'not_log_in', 'notif'=>'none']);
+            }
+    }
     public function CustomerNotification(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();

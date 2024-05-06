@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
- @include('homepage.Dashboard.Components.header', ['title'=>'My Profile - Orange Shire'])
+ @include('homepage.Dashboard.Components.header', ['title'=>'View Notification - Orange Shire'])
 
 </head>
 
@@ -10,8 +10,6 @@
 
   @php
   $customer = App\Models\CustomerAcc::where('customer_id', $user_id)->first();
-  $customer_ext = $customer->customer_ext === 'none' ?   '' : $customer->customer_ext;
-  $fullname = $customer->customer_firstname . " " . $customer->customer_middlename[0]. ". ". $customer->customer_lastname. " " . $customer_ext;
   $profile = $customer->customer_profile_pic;
 @endphp
   <!-- ======= Header ======= -->
@@ -19,16 +17,42 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Notifications</h1>
+      <h1>View Notification</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
           <li class="breadcrumb-item"><a href="{{ route('customerProfile') }}">Profile</a></li>
-          <li class="breadcrumb-item active">Notification</li>
+          <li class="breadcrumb-item"><a href="{{ route('customerNotification') }}">Notification</a></li>
+          <li class="breadcrumb-item active">View</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
+   @php
+    $notification = App\Models\CustomerNotification::where('notif_id', $notif)->first();
+   @endphp
+    <div class="container w-100 p-4 border border-2 border-secondary shadow rounded">
+     <h3 class="text-center">{{ $notification->notif_header }}</h3>
+      <div class="container rounded w-100 border border-1 p-3 text-left">
+        @php
+            switch($notification->notif_table){
+              case 'customer_logs':
+                 $notif_data = App\Models\CustomerLogs::where('log_id', $notification->notif_table_id)->first();
+                 $columns = ['Date', 'Start Time', 'End Time', 'Status', 'Payment', 'Transaction'];
+                 $data = [$notif_data->log_date, $notif_data->log_start_time, $notif_data->log_end_time, 'Paid', explode('-',$notif_data->log_transaction)[0], explode( '-', $notif_data->log_transaction)[0] === 2 ? 'Credit':'Walkin' ];
+                 break;
+              default:
+                 break;
+            }
+            $counter = 0;
+        @endphp
+        @foreach ($columns as $tags)
+            <p>{{ $tags }}: {{ $data[$counter] }}</p>
+            @php
+                $counter++;
+            @endphp
+        @endforeach
+      </div>
+    </div>
 
   </main><!-- End #main -->
 
