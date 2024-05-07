@@ -345,9 +345,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="validationTooltip05">Number <span style="color: red;">*</span></label>
-                                        <input type="Number" class="form-control" id="number" name="number"
-                                            placeholder="Number" required>
+                                        <label for="validationTooltip05">Phone Number <span style="color: red;">*</span></label>
+                                        <input type="number" class="form-control" id="number" name="number" 
+                                        placeholder="Phone Number" required>
                                         <div class="invalid-tooltip">
                                             Please provide a valid number
                                         </div>
@@ -946,6 +946,39 @@
         });
     }
 });
+
+function validatePhoneNumber(event) {
+                const phoneNumberInput = event.target;
+                let phoneNumber = phoneNumberInput.value;
+
+                phoneNumber = phoneNumber.replace(/\D/g, '');
+
+                if (phoneNumber.length > 10) {
+                    phoneNumber = phoneNumber.slice(0, 10);
+                }
+
+                if (phoneNumber.length > 0 && phoneNumber.charAt(0) !== '9') {
+                    phoneNumberInput.setCustomValidity("Please Enter Valid Phone Number.");
+                } else if (phoneNumber.length !== 10) {
+                    phoneNumberInput.setCustomValidity("Phone number must be exactly 10 digits.");
+                } else {
+                    phoneNumberInput.setCustomValidity("");
+                }
+
+                phoneNumberInput.value = phoneNumber;
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                const phoneInputs = document.querySelectorAll('input[placeholder="Phone Number"]');
+                if (phoneInputs.length > 0) {
+                    phoneInputs.forEach(function(phoneInput) {
+                        phoneInput.addEventListener('input', validatePhoneNumber);
+                        validatePhoneNumber({
+                            target: phoneInput
+                        });
+                    });
+                }
+            });
 
             </script>
 
