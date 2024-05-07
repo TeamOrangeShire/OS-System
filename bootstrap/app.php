@@ -16,7 +16,7 @@ $app = new Illuminate\Foundation\Application(
 );
 
 
-$app->usePublicPath($app->basePath('../public_html'));
+// $app->usePublicPath($app->basePath('../public_html'));
 
 /*
 |--------------------------------------------------------------------------

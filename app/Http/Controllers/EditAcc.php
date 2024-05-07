@@ -26,8 +26,6 @@ class EditAcc extends Controller
 
     if(empty($EditAdmin->new_password )|| empty($EditAdmin->old_password)){
         
-       
-
         $update->update([
            
             'admin_firstname'=> $firstname,
@@ -36,7 +34,6 @@ class EditAcc extends Controller
             'admin_ext'=> $ext,
             'admin_username'=> $username,
            
-    
         ]);
         return redirect()->back();
     }
@@ -61,24 +58,7 @@ class EditAcc extends Controller
     }
     else
     {
-        $update =  AdminAcc::where('admin_id',$admin_id)->first();
-        if(Hash::check($old_password,$update->admin_password))
-        {
-            $update->update([
-               
-                'admin_firstname'=> $firstname,
-                'admin_middlename'=> $middlename,
-                'admin_lastname'=> $lastname,
-                'admin_ext'=> $ext,
-                'admin_username'=> $username,
-                'admin_password' => Hash::make($new_password),
-        
-            ]);
-            return redirect()->back();
-        }
-        else{
-            return redirect()->back();
-        }
+           return redirect()->back();
     }
 }
     
