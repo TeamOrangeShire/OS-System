@@ -426,12 +426,12 @@
                    document.getElementById('number').style.border = '1px solid red';
             }else if(response.status == 'exist'){
                 alertify
-  .alert("Customer Already Exist!", function(){
+  .alert("Customer Already Exists!", function(){
     alertify.message('OK');
   });
             }else{
                 alertify
-                .alert("Customer Successfully Log", function(){
+                .alert("Customer Successfully Loged", function(){
     alertify.message('OK');
     location.reload();
   });
