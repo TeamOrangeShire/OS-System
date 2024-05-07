@@ -971,13 +971,13 @@
 
                     phoneNumber = phoneNumber.replace(/\D/g, '');
 
-                    if (phoneNumber.length > 10) {
-                        phoneNumber = phoneNumber.slice(0, 10);
+                    if (phoneNumber.length > 11) {
+                        phoneNumber = phoneNumber.slice(0, 11);
                     }
 
                     if (phoneNumber.length > 0 && phoneNumber.charAt(0) !== '9') {
                         phoneNumberInput.setCustomValidity("Please Enter Valid Phone Number.");
-                    } else if (phoneNumber.length !== 10) {
+                    } else if (phoneNumber.length !== 11) {
                         phoneNumberInput.setCustomValidity("Phone number must be exactly 10 digits.");
                     } else {
                         phoneNumberInput.setCustomValidity("");
