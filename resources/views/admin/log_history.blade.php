@@ -3,7 +3,7 @@
     <html lang="en">
 
     <head>
-        @include('admin.assets.header')
+        @include('admin.assets.header', ['title' => 'Log History'])
     </head>
 
     <body class="">
@@ -102,14 +102,14 @@
                                                             <th>Total Time</th>
                                                             <th>Payment</th>
                                                             <th>Method</th>
-                                                           <th>Status</th>
+                                                            <th>Status</th>
                                                             <th>Comment</th>
-                                                           <th>Action</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-            
+
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -193,11 +193,12 @@
                                             <div style="margin-left: 40px;">
                                                 <br>
                                                 <label for="email"><strong>Payment : </strong></label> <br>
-                                              
-                                                <input type="text" name="payment" style="width: 80px;height:40px;" class="form-control" id="payment">
+
+                                                <input type="text" name="payment" style="width: 80px;height:40px;"
+                                                    class="form-control" id="payment">
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -216,25 +217,27 @@
                                                 <p class="" id="end"></p>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                         </div>
                                         <div class="col-sm-6">
                                             <div style="margin-left: 40px;">
-                                            <label for=""><strong>Payment Method</strong></label>
-                                            <select class="form-control" style="width: 80px;height:40px;" id="" name="paymentMethod">
-                                                <option value="Cash">Cash</option>
-                                                <option value="E-Pay">E-Pay</option>
-                                            </select>
-                                        </div>
+                                                <label for=""><strong>Payment Method</strong></label>
+                                                <select class="form-control" style="width: 80px;height:40px;"
+                                                    id="" name="paymentMethod">
+                                                    <option value="Cash">Cash</option>
+                                                    <option value="E-Pay">E-Pay</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <br>
-                                   
+
                                     <div style="text-align: center;">
-                                        <button type="button" class="btn btn-success" onclick="acceptPending()">Accept Payment</button>
+                                        <button type="button" class="btn btn-success"
+                                            onclick="acceptPending()">Accept Payment</button>
                                     </div>
                                 </form>
                             </div>
@@ -297,7 +300,8 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 mb-6">
-                                        <label for="validationTooltip01">First name <span style="color: red;">*</span></label>
+                                        <label for="validationTooltip01">First name <span
+                                                style="color: red;">*</span></label>
                                         <input type="text" class="form-control" id="firstname" name="firstname"
                                             placeholder="First name" value="" required>
                                         <div class="valid-tooltip">
@@ -313,7 +317,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-6">
-                                        <label for="validationTooltip03">Last name <span style="color: red;">*</span></label>
+                                        <label for="validationTooltip03">Last name <span
+                                                style="color: red;">*</span></label>
                                         <input type="text" class="form-control" id="lastname" name="lastname"
                                             placeholder="Last name" value="" required>
                                         <div class="valid-tooltip">
@@ -345,9 +350,10 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="validationTooltip05">Phone Number <span style="color: red;">*</span></label>
-                                        <input type="number" class="form-control" id="number" name="number" 
-                                        placeholder="Phone Number" required>
+                                        <label for="validationTooltip05">Phone Number <span
+                                                style="color: red;">*</span></label>
+                                        <input type="number" class="form-control" id="number" name="number"
+                                            placeholder="Phone Number" required>
                                         <div class="invalid-tooltip">
                                             Please provide a valid number
                                         </div>
@@ -407,53 +413,57 @@
                     document.getElementById('unext').value = ext;
                     document.getElementById('Un_customer_type').value = type;
                 }
-                function insertnewcustomer() {
-    var formData = $("form#Insertnewcus").serialize();
-    $.ajax({
-        type: "POST",
-        url: "{{ route('InsertNewCustomer') }}",
-        data: formData,
-        success: function(response) {
-            if(response.status == 'firstname'){
-             document.getElementById('firstname').style.border = '1px solid red';
-            }else if(response.status == 'lastname'){
-                document.getElementById('lastname').style.border = '1px solid red';
-            }else if(response.status == 'number'){
-                 document.getElementById('number').style.border = '1px solid red';
-            }else if(response.status == 'failed'){
-                 document.getElementById('firstname').style.border = '1px solid red';
-                  document.getElementById('lastname').style.border = '1px solid red';
-                   document.getElementById('number').style.border = '1px solid red';
-            }else if(response.status == 'exist'){
-                alertify
-  .alert("Customer Already Exists!", function(){
-    alertify.message('OK');
-  });
-            }else{
-                alertify
-                .alert("Customer Successfully Loged", function(){
-    alertify.message('OK');
-    location.reload();
-  });
-            }
 
-           
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
-}
+                function insertnewcustomer() {
+                    var formData = $("form#Insertnewcus").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('InsertNewCustomer') }}",
+                        data: formData,
+                        success: function(response) {
+                            if (response.status == 'firstname') {
+                                document.getElementById('firstname').style.border = '1px solid red';
+                            } else if (response.status == 'lastname') {
+                                document.getElementById('lastname').style.border = '1px solid red';
+                            } else if (response.status == 'number') {
+                                document.getElementById('number').style.border = '1px solid red';
+                            } else if (response.status == 'failed') {
+                                document.getElementById('firstname').style.border = '1px solid red';
+                                document.getElementById('lastname').style.border = '1px solid red';
+                                document.getElementById('number').style.border = '1px solid red';
+                            } else if (response.status == 'exist') {
+                                alertify
+                                    .alert("Customer Already Exists!", function() {
+                                        alertify.message('OK');
+                                    });
+                            } else {
+                                alertify
+                                    .alert("Customer Successfully Loged", function() {
+                                        alertify.message('OK');
+                                        location.reload();
+                                    });
+                            }
+
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
 
 
                 $(document).ready(function() {
                     CustomerlogHistory();
                     getCustomerData();
-                   
+
                 });
+
                 function CustomerlogHistory() {
                     $('#loghistory').DataTable({
-                        order: [[1, 'desc']],
+                        order: [
+                            [1, 'desc']
+                        ],
                         "destroy": "true",
                         "ajax": {
                             "url": "{{ route('CustomerlogHistory') }}",
@@ -464,7 +474,7 @@
                                 "render": function(data, type, row) {
                                     var first = row.firstname;
                                     var last = row.lastname;
-                                    return first +" "+ last;
+                                    return first + " " + last;
                                 }
                             },
                             {
@@ -472,41 +482,41 @@
                             },
                             {
                                 "data": "log_start_time"
-                                
+
                             },
                             {
                                 "data": "log_end_time"
                             },
                             {
-                                "data":null,
+                                "data": null,
                                 "render": function(data, type, row) {
                                     var start = row.log_start_time;
                                     var end = row.log_end_time;
-                                    if(end == '' || end == null){
+                                    if (end == '' || end == null) {
                                         return '';
-                                    }else{
+                                    } else {
                                         var totaltime = timeDifference(start, end);
-                                    var between = totaltime.hours + ':' + totaltime.minutes;
+                                        var between = totaltime.hours + ':' + totaltime.minutes;
                                         return between;
                                     }
-                                   
+
                                 }
                             },
                             {
                                 "data": null,
                                 "render": function(data, type, row) {
                                     var payment = row.log_transaction;
-                                    if(payment == '' || payment == null){
+                                    if (payment == '' || payment == null) {
                                         return '';
-                                    }else{
+                                    } else {
                                         var payment2 = parseFloat(payment).toFixed(2);
-                                    return payment2;
+                                        return payment2;
                                     }
-                                   
+
                                 }
                             },
                             {
-                                'data':'log_payment_method'
+                                'data': 'log_payment_method'
                             },
                             {
                                 "data": "log_status",
@@ -521,7 +531,7 @@
                                 }
                             },
                             {
-                                 "data": null,
+                                "data": null,
                                 "render": function(data, type, row) {
 
                                     // return row.log_comment;
@@ -537,12 +547,13 @@
                                             return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                              var transac = row.log_transaction; 
+                                            var transac = row.log_transaction;
                                             var parts = transac.split('-');
-                                             var payment =  parts[0];
+                                            var payment = parts[0];
                                             return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                            row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" + row.log_end_time +
-                                            "')\">Confirm</button>"; 
+                                                row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" +
+                                                row.log_end_time +
+                                                "')\">Confirm</button>";
                                         } else {
                                             return "Paid";
                                         }
@@ -552,27 +563,28 @@
                                             return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            
-                                            var transac = row.log_transaction; 
+
+                                            var transac = row.log_transaction;
                                             var parts = transac.split('-');
                                             var secondPart = parts[1];
-                                            var payment =  parts[0];
-                                            if(secondPart == 1 ){
-                                                  return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                            row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" + row.log_end_time +
-                                            "')\">Confirm</button>"; 
-                                            }else{
-                                                   return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm</button>";
+                                            var payment = parts[0];
+                                            if (secondPart == 1) {
+                                                return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
+                                                    "', '" + row.log_end_time +
+                                                    "')\">Confirm</button>";
+                                            } else {
+                                                return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
+                                                    row.log_id + ")'>Confirm</button>";
                                             }
-                                         
+
                                         } else {
                                             return "Paid";
                                         }
                                     }
                                 }
                             }
-                        ], 
+                        ],
                     });
                 }
 
@@ -607,38 +619,40 @@
                                     var start_time = row.log_start_time;
                                     var end_time = row.log_end_time;
                                     var logtype = row.logtype;
-                                    if(logtype == 1){
-                                    if (log_in === '0') {
-                                        return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
-                                            log_id + ")'>Logout</button>";
-                                    } else if (log_in === '1') {
-                                        return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                            log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
-                                            "')\">Confirm</button>"; 
-                                    } else {
-                                        return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
-                                            customer_id + ")'>Login</button>";
-                                    }}else{
+                                    if (logtype == 1) {
                                         if (log_in === '0') {
-                                        return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
-                                            log_id + ")'>Logout</button>";
-                                    } else if (log_in === '1') {
-                                            var transac = row.log_payment; 
+                                            return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
+                                                log_id + ")'>Logout</button>";
+                                        } else if (log_in === '1') {
+                                            return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                                log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
+                                                "')\">Confirm</button>";
+                                        } else {
+                                            return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
+                                                customer_id + ")'>Login</button>";
+                                        }
+                                    } else {
+                                        if (log_in === '0') {
+                                            return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
+                                                log_id + ")'>Logout</button>";
+                                        } else if (log_in === '1') {
+                                            var transac = row.log_payment;
                                             var parts = transac.split('-');
                                             var secondPart = parts[1];
-                                            var payment =  parts[0];
-                                            if(secondPart == 1 ){
-                                                  return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                            row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" + row.log_end_time +
-                                            "')\">Confirm</button>"; 
-                                            }else{
-                                                   return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm</button>";
+                                            var payment = parts[0];
+                                            if (secondPart == 1) {
+                                                return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
+                                                    "', '" + row.log_end_time +
+                                                    "')\">Confirm</button>";
+                                            } else {
+                                                return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
+                                                    row.log_id + ")'>Confirm</button>";
                                             }
-                                    } else {
-                                        return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
-                                            customer_id + ")'>Login</button>";
-                                    }
+                                        } else {
+                                            return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
+                                                customer_id + ")'>Login</button>";
+                                        }
                                     }
                                 }
                             }
@@ -654,14 +668,15 @@
                     document.getElementById('start').textContent = start;
                     document.getElementById('end').textContent = end;
                     var totaltime = timeDifference(start, end);
-                     var between = totaltime.hours + ':' + totaltime.minutes;
-                     document.getElementById('hours').textContent = between;
+                    var between = totaltime.hours + ':' + totaltime.minutes;
+                    document.getElementById('hours').textContent = between;
 
                 }
+
                 function acceptPending() {
-                   
+
                     var formData = $("form#pendingPayment").serialize();
-                  
+
                     console.log(formData);
                     $.ajax({
                         type: "POST",
@@ -671,7 +686,7 @@
                             getCustomerData();
                             CustomerlogHistory();
                             viewLog(response.data);
-                           $('#out').modal('hide');
+                            $('#out').modal('hide');
                         },
                         error: function(xhr, status, error) {
 
@@ -683,70 +698,72 @@
                 function inAndout(id) {
 
                     alertify.confirm("Are You Sure You Want To Logout This Customer?",
-  function(){
-    alertify.success('Ok');
-    document.getElementById('cuslogoutid').value = id;
-                    var formData = $("form#pendingLog").serialize();
-                    var Dataform = formData + '&id=' + id;
-                    console.log(formData);
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('LogToPending') }}",
-                        data: Dataform,
-                        success: function(response) {
-                            getCustomerData();
-                            CustomerlogHistory();
-                            viewLog(response.data);
-                              
-                        },
-                        error: function(xhr, status, error) {
+                        function() {
+                            alertify.success('Ok');
+                            document.getElementById('cuslogoutid').value = id;
+                            var formData = $("form#pendingLog").serialize();
+                            var Dataform = formData + '&id=' + id;
+                            console.log(formData);
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('LogToPending') }}",
+                                data: Dataform,
+                                success: function(response) {
+                                    getCustomerData();
+                                    CustomerlogHistory();
+                                    viewLog(response.data);
 
-                            console.error(xhr.responseText);
-                        }
-                    });
-  },
-  function(){
-    alertify.error('Cancel');
-  });
+                                },
+                                error: function(xhr, status, error) {
+
+                                    console.error(xhr.responseText);
+                                }
+                            });
+                        },
+                        function() {
+                            alertify.error('Cancel');
+                        });
 
                 }
 
                 function AccLogin(id) {
                     alertify.confirm("Are You Sure You Want To Login This Customer?",
-  function(){
-    alertify.success('Ok');
-    console.log(id);
+                        function() {
+                            alertify.success('Ok');
+                            console.log(id);
 
-                    document.getElementById('cuslogoutid').value = id;
-                    var formData = $("form#pendingLog").serialize();
-                    var Dataform = formData + '&id=' + id;
-                    console.log(formData);
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('AccLogin') }}",
-                        data: Dataform,
-                        success: function(response) {
-                            getCustomerData();
-                            CustomerlogHistory();
-                            viewLog(response.data);
+                            document.getElementById('cuslogoutid').value = id;
+                            var formData = $("form#pendingLog").serialize();
+                            var Dataform = formData + '&id=' + id;
+                            console.log(formData);
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('AccLogin') }}",
+                                data: Dataform,
+                                success: function(response) {
+                                    getCustomerData();
+                                    CustomerlogHistory();
+                                    viewLog(response.data);
 
+                                },
+                                error: function(xhr, status, error) {
+
+                                    console.error(xhr.responseText);
+                                }
+                            });
                         },
-                        error: function(xhr, status, error) {
+                        function() {
+                            alertify.error('Cancel');
+                        });
 
-                            console.error(xhr.responseText);
-                        }
-                    });
-  },
-  function(){
-    alertify.error('Cancel');
-  });
-                    
                 }
 
                 function viewLog(id) {
                     console.log(id);
                     $('#viewcustomerlog').DataTable({
-                         order: [[0, 'desc']],
+                        order: [
+                            [0, 'desc']
+                        ],
                         destroy: true,
                         "ajax": {
                             "url": "{{ route('GetCustomerlog') }}?cuslogid=" + id,
@@ -786,7 +803,7 @@
                                 }
                             },
                             {
-                                'data':'log_payment_method'
+                                'data': 'log_payment_method'
                             },
                             {
                                 "data": "log_status",
@@ -820,17 +837,18 @@
                                             return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
-                                            var transac = row.log_transaction; 
+                                            var transac = row.log_transaction;
                                             var parts = transac.split('-');
                                             var secondPart = parts[1];
-                                            var payment =  parts[0];
-                                            if(secondPart == 1 ){
-                                                  return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                            row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" + row.log_end_time +
-                                            "')\">Confirm</button>"; 
-                                            }else{
-                                                   return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                row.log_id + ")'>Confirm</button>";
+                                            var payment = parts[0];
+                                            if (secondPart == 1) {
+                                                return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
+                                                    "', '" + row.log_end_time +
+                                                    "')\">Confirm</button>";
+                                            } else {
+                                                return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
+                                                    row.log_id + ")'>Confirm</button>";
                                             }
                                         } else {
                                             return "Paid";
@@ -871,115 +889,114 @@
                     console.log(id);
 
                     alertify.confirm("Are You Sure You Want To Logout This Customer?",
-  function(){
-    alertify.success('Ok');
-    document.getElementById('cuslogoutid').value = id;
-                    var formData = $("form#pendingLog").serialize();
-                    var Dataform = formData + '&id=' + id;
-                    console.log(formData);
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('LogToPending') }}",
-                        data: Dataform,
-                        success: function(response) {
-                            getCustomerData();
-                            CustomerlogHistory();
-                            viewLog(response.data);
+                        function() {
+                            alertify.success('Ok');
+                            document.getElementById('cuslogoutid').value = id;
+                            var formData = $("form#pendingLog").serialize();
+                            var Dataform = formData + '&id=' + id;
+                            console.log(formData);
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('LogToPending') }}",
+                                data: Dataform,
+                                success: function(response) {
+                                    getCustomerData();
+                                    CustomerlogHistory();
+                                    viewLog(response.data);
 
+                                },
+                                error: function(xhr, status, error) {
+
+                                    console.error(xhr.responseText);
+                                }
+                            });
                         },
-                        error: function(xhr, status, error) {
+                        function() {
+                            alertify.error('Cancel');
+                        });
 
-                            console.error(xhr.responseText);
-                        }
-                    });
-  },
-  function(){
-    alertify.error('Cancel');
-  });
 
-                   
                 }
-                
 
-                function editComment(id){
+
+                function editComment(id) {
                     const spanName = "log_comment" + id;
                     const editSpan = document.getElementById(spanName);
                     editSpan.addEventListener("dblclick", function() {
 
                         const unedit = document.querySelectorAll('.undeditSpan');
-                        unedit.forEach( un =>{
+                        unedit.forEach(un => {
                             un.contentEditable = false;
                             un.style.border = "none";
                         });
-                       editSpan.contentEditable = true;
-                       editSpan.style.border = "1px solid black";
-                     });
-                }
-                document.addEventListener("click", function(event) {
-    const editSpans = document.querySelectorAll(".undeditSpan");
-
-    let clickedInsideEditSpan = false;
-    editSpans.forEach(editSpan => {
-        if (editSpan.contains(event.target)) {
-            clickedInsideEditSpan = true;
-        }
-    });
-
-    if (!clickedInsideEditSpan) {
-        editSpans.forEach(edit => {
-            const editId = edit.id.substring("log_comment".length);
-            document.getElementById('comment_log_id').value = editId;
-            document.getElementById('comment_log_message').value = edit.value;
-            const formData = $('form#submitComment').serialize();
-
-            $.ajax({
-                type: "POST",
-                url: "{{ route('SaveComment') }}",
-                data: formData,
-                success: function(response) {
-                  edit.style.border = "none";
-                },
-                error: function(xhr) {
-                    console.log(xhr.responseText);
-                }
-            });
-        });
-    }
-});
-
-function validatePhoneNumber(event) {
-                const phoneNumberInput = event.target;
-                let phoneNumber = phoneNumberInput.value;
-
-                phoneNumber = phoneNumber.replace(/\D/g, '');
-
-                if (phoneNumber.length > 10) {
-                    phoneNumber = phoneNumber.slice(0, 10);
-                }
-
-                if (phoneNumber.length > 0 && phoneNumber.charAt(0) !== '9') {
-                    phoneNumberInput.setCustomValidity("Please Enter Valid Phone Number.");
-                } else if (phoneNumber.length !== 10) {
-                    phoneNumberInput.setCustomValidity("Phone number must be exactly 10 digits.");
-                } else {
-                    phoneNumberInput.setCustomValidity("");
-                }
-
-                phoneNumberInput.value = phoneNumber;
-            }
-
-            document.addEventListener("DOMContentLoaded", function() {
-                const phoneInputs = document.querySelectorAll('input[placeholder="Phone Number"]');
-                if (phoneInputs.length > 0) {
-                    phoneInputs.forEach(function(phoneInput) {
-                        phoneInput.addEventListener('input', validatePhoneNumber);
-                        validatePhoneNumber({
-                            target: phoneInput
-                        });
+                        editSpan.contentEditable = true;
+                        editSpan.style.border = "1px solid black";
                     });
                 }
-            });
+                document.addEventListener("click", function(event) {
+                    const editSpans = document.querySelectorAll(".undeditSpan");
 
+                    let clickedInsideEditSpan = false;
+                    editSpans.forEach(editSpan => {
+                        if (editSpan.contains(event.target)) {
+                            clickedInsideEditSpan = true;
+                        }
+                    });
+
+                    if (!clickedInsideEditSpan) {
+                        editSpans.forEach(edit => {
+                            const editId = edit.id.substring("log_comment".length);
+                            document.getElementById('comment_log_id').value = editId;
+                            document.getElementById('comment_log_message').value = edit.value;
+                            const formData = $('form#submitComment').serialize();
+
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('SaveComment') }}",
+                                data: formData,
+                                success: function(response) {
+                                    edit.style.border = "none";
+                                },
+                                error: function(xhr) {
+                                    console.log(xhr.responseText);
+                                }
+                            });
+                        });
+                    }
+                });
+
+                function validatePhoneNumber(event) {
+                    const phoneNumberInput = event.target;
+                    let phoneNumber = phoneNumberInput.value;
+
+                    phoneNumber = phoneNumber.replace(/\D/g, '');
+
+                    if (phoneNumber.length > 10) {
+                        phoneNumber = phoneNumber.slice(0, 10);
+                    }
+
+                    if (phoneNumber.length > 0 && phoneNumber.charAt(0) !== '9') {
+                        phoneNumberInput.setCustomValidity("Please Enter Valid Phone Number.");
+                    } else if (phoneNumber.length !== 10) {
+                        phoneNumberInput.setCustomValidity("Phone number must be exactly 10 digits.");
+                    } else {
+                        phoneNumberInput.setCustomValidity("");
+                    }
+
+                    phoneNumberInput.value = phoneNumber;
+                }
+
+                document.addEventListener("DOMContentLoaded", function() {
+                    const phoneInputs = document.querySelectorAll('input[placeholder="Phone Number"]');
+                    if (phoneInputs.length > 0) {
+                        phoneInputs.forEach(function(phoneInput) {
+                            phoneInput.addEventListener('input', validatePhoneNumber);
+                            validatePhoneNumber({
+                                target: phoneInput
+                            });
+                        });
+                    }
+                });
             </script>
 
     </body>

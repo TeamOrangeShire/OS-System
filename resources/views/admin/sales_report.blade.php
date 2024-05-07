@@ -3,7 +3,7 @@
     <html lang="en">
 
     <head>
-        @include('admin.assets.header')
+        @include('admin.assets.header',['title'=>'Sales Report'])
 
     </head>
 
