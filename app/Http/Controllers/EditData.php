@@ -410,4 +410,10 @@ class EditData extends Controller
     }
     return response()->json(['status'=>'success']);
   }
+
+  public function ReadNotif(Request $req){
+    $id = $req->notif_id;
+    CustomerNotification::where('notif_id', $id)->first()->update(['notif_status'=>1]);
+    return response()->json(['status'=>'success']);
+  }
 }

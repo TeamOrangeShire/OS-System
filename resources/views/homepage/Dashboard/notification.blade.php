@@ -45,6 +45,7 @@
                     $calcTime = $pastTime[0]. " hrs, ". $calcMinutes . "mins ago";
                 }
             @endphp
+            <form id="readNotification{{ $notif->notif_id }}" method="post">@csrf <input type="hidden" name="notif_id" value="{{ $notif->notif_id }}"></form>
             <button onclick="ReadNotif({{ $notif->notif_id }})" class="list-group-item list-group-item-action {{ $notif->notif_status == 1? '' : 'active' }}" {{ $notif->notif_status == 1 ? '' : 'aria-current="true"' }}>
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">{!! $notif->notif_header !!}</h5>
@@ -57,8 +58,21 @@
          
             <script>
               function ReadNotif(notif){
-                window.location.href = `{{ route('customerViewNotification') }}?notification=${notif}`;
-
+                const formId = 'form#readNotification' + notif;
+                var formData = $(formId).serialize();
+                $.ajax({
+                   type: "POST",
+                   url: "{{ route('readNotif') }}",
+                   data: formData,
+                   success: response => {
+                      if(response.status === 'success'){
+                        window.location.href = `{{ route('customerViewNotification') }}?notification=${notif}`;
+                      }
+                   }, error: xhr =>{
+                     console.log(xhr.responseText);
+                   }
+                });
+               
               }
             </script>
 
