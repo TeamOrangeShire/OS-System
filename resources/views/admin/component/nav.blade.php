@@ -36,6 +36,10 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                 <li class="nav-item">
                     <a href="{{route('activityLog')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-list"></i></span><span class="pcoded-mtext">Activity Log</span></a>
                 </li>
+                @php
+                    $AdminAcc = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
+                @endphp
+                    @if ($AdminAcc->admin_type == 1)
                 <li class="nav-item pcoded-hasmenu">
                     <a  class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Accounts</span></a>
                     <ul class="pcoded-submenu">
@@ -43,6 +47,12 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                         <li><a href="{{route('admin_acc')}}">Admin</a></li>
                     </ul>
                 </li>
+                    @else
+                <li class="nav-item">
+                    <a href="{{route('customer_acc')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-list"></i></span><span class="pcoded-mtext">Customer Acc</span></a>
+                </li>
+                    @endif
+
                 
                 <li class="nav-item pcoded-hasmenu">
                     <a href="#!" class="nav-link "><span class="pcoded-micon">
