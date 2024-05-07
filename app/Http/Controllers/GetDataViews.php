@@ -414,7 +414,7 @@ class GetDataViews extends Controller
 public function GetWeeklyReport(Request $request) {
 
     $startDate = $request->startdate;
-    $endDate = Carbon::parse($request->enddate)->addDay(); // Add one day to include end date
+    $endDate = Carbon::parse($request->enddate)->addDay(); 
 
     $logs = CustomerLogs::join('customer_acc', 'customer_logs.customer_id', '=', 'customer_acc.customer_id')
     ->select(
