@@ -359,48 +359,7 @@ class GetDataViews extends Controller
             return response()->json(['status'=>'clear', 'time'=> 'none']);
         }
     }
-    // public function CustomerLog()
-    // {
-    //             $unregDates = CustomerLogUnregister::distinct()->pluck('un_log_date');
-    //             $regDates = CustomerLogs::distinct()->pluck('log_date');
-
-    //             $sale = [];
-    //             $u_date = [];
-    //             $u_tran = []; 
-    //             $overallDate =[];
-    //             foreach ($regDates as $date) {
-    //                 array_push($overallDate,$date); 
-    //             }
-
-    //             foreach ($unregDates as $date) {
-    //                  array_push($overallDate,$date);
-    //             }
-    //             $filterDate = array_unique($overallDate);
-
-    //             foreach($filterDate as $date){
-    //                 $reg = CustomerLogs::where('log_date', $date)->get();
-    //                 $unreg = CustomerLogUnregister::where('un_log_date', $date)->get();
-    //                 $total = 0;
-    //                 $totalTransactions = 0; 
-    //                 if($reg){
-    //                 foreach ($reg as $r) {
-    //                     $transaction = explode('-', $r->log_transaction);
-    //                     $total += $transaction[0];
-    //                     $totalTransactions++; 
-    //                 }
-    //                 }
-    //                 if($unreg){
-    //                 foreach ($unreg as $r) {
-    //                     $total += $r->un_log_transaction;
-    //                     $totalTransactions++; 
-    //                 }
-    //                 }
-    //                 array_push($sale, $total);
-    //                 array_push($u_date, $date);
-    //                 array_push($u_tran, $totalTransactions); 
-    //             }
-    //     return response()->json(['date'=>$u_date,'sale'=>$sale,'transaction'=>$u_tran]);
-    // }
+    
     public function CustomerLog()
     {
         $logs = CustomerLogs::where('log_status', 2)->get()->groupBy('log_date');
@@ -455,8 +414,7 @@ class GetDataViews extends Controller
 public function GetWeeklyReport(Request $request) {
 
     $startDate = $request->startdate;
-    $endDate = $request->enddate;
-
+    $endDate = Carbon::parse($request->enddate)->addDay(); // Add one day to include end date
 
     $logs = CustomerLogs::join('customer_acc', 'customer_logs.customer_id', '=', 'customer_acc.customer_id')
     ->select(
@@ -466,16 +424,15 @@ public function GetWeeklyReport(Request $request) {
         'customer_acc.customer_email as email',
         'customer_acc.customer_phone_num as contact'
     )
-    ->whereBetween('log_date', [$startDate, $endDate])
-    ->where('customer_logs.log_status',2)
+    ->whereBetween('customer_logs.created_at', [$startDate, $endDate])
+    ->where('customer_logs.log_status', 2)
     ->get();
 
-  
     foreach($logs as $log){
-  
-      $log->payment = explode('-',$log->log_transaction)[0];
-   
+        $log->payment = explode('-', $log->log_transaction)[0];
     }
+
     return response()->json(['data' => $logs]);
 }
+
 }

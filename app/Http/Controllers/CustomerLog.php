@@ -31,7 +31,6 @@ class CustomerLog extends Controller
     $log->update([
 
         'log_status'=> 2,
-        'log_payment_method'=>'Credit',
 
     ]);
     $cus_info = CustomerAcc::where('customer_id',$log->customer_id)->first();
@@ -46,7 +45,7 @@ class CustomerLog extends Controller
     $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
     $data->act_user_type = "Admin";
-    $data->act_action = "Admin accept payment of " . $cus_info->customer_lastname;
+    $data->act_action = "Admin accepted ".$method[0]." payment from " . $cus_info->customer_lastname;
     $data->act_header = "Accept log payment";
     $data->act_location = "customer_log";
     $data->save();
@@ -140,7 +139,7 @@ public function LogToPending(Request $request) {
           'log_status'=> 2,
          
         ]);
-        $data = new CustomerNotification;
+    $data = new CustomerNotification;
     $data->user_type ='Customer';
     $data->user_id = $logs->customer_id;
     $data->notif_header = "Payment Confirmed ";
@@ -151,6 +150,14 @@ public function LogToPending(Request $request) {
     $data->notif_table_id = $request->id;   
     $data->notif_table_pk = "log_id";
     $data->save();
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin accepted ".$request->payment." payment from " . $cusAcc->customer_lastname;
+    $data->act_header = "Accept log payment";
+    $data->act_location = "customer_log";
+    $data->save();
       }else{
         $logs->update([
           'log_payment_method'=>$request->paymentMethod,
@@ -159,6 +166,13 @@ public function LogToPending(Request $request) {
          
     
         ]);
+         $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin accepted ".$request->payment." payment from " . $cusAcc->customer_lastname;
+    $data->act_header = "Accept log payment";
+    $data->act_location = "customer_log";
+    $data->save();
       }
      
     return response()->json(['data' => $logs->customer_id]);
@@ -193,7 +207,6 @@ public function AccLogin(Request $request){
       }else if($request->number == ''){
         return response()->json(['status'=> 'number']);
       }
-     
     }elseif($acc){
       return response()->json(['status'=> 'exist']);
     }

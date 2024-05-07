@@ -267,7 +267,7 @@
                                                     <option value="Student">Student</option>
                                                     <option value="Reviewer">Reviewer</option>
                                                      <option value="Teacher">Teacher</option>
-                                                    <option value="Professional">Professional/Regular</option>
+                                                    <option value="Regular/Professional">Regular/Professional</option>
                                                 </select>
                                             </div>
                                         </div>

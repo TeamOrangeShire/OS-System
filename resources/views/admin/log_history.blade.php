@@ -424,8 +424,17 @@
                  document.getElementById('firstname').style.border = '1px solid red';
                   document.getElementById('lastname').style.border = '1px solid red';
                    document.getElementById('number').style.border = '1px solid red';
+            }else if(response.status == 'exist'){
+                alertify
+  .alert("Customer Already Exists!", function(){
+    alertify.message('OK');
+  });
             }else{
-                location.reload();
+                alertify
+                .alert("Customer Successfully Loged", function(){
+    alertify.message('OK');
+    location.reload();
+  });
             }
 
            
@@ -672,9 +681,11 @@
                 }
 
                 function inAndout(id) {
-                    console.log(id);
 
-                    document.getElementById('cuslogoutid').value = id;
+                    alertify.confirm("Are You Sure You Want To Logout This Customer?",
+  function(){
+    alertify.success('Ok');
+    document.getElementById('cuslogoutid').value = id;
                     var formData = $("form#pendingLog").serialize();
                     var Dataform = formData + '&id=' + id;
                     console.log(formData);
@@ -693,10 +704,18 @@
                             console.error(xhr.responseText);
                         }
                     });
+  },
+  function(){
+    alertify.error('Cancel');
+  });
+
                 }
 
                 function AccLogin(id) {
-                    console.log(id);
+                    alertify.confirm("Are You Sure You Want To Login This Customer?",
+  function(){
+    alertify.success('Ok');
+    console.log(id);
 
                     document.getElementById('cuslogoutid').value = id;
                     var formData = $("form#pendingLog").serialize();
@@ -717,6 +736,11 @@
                             console.error(xhr.responseText);
                         }
                     });
+  },
+  function(){
+    alertify.error('Cancel');
+  });
+                    
                 }
 
                 function viewLog(id) {
@@ -846,7 +870,10 @@
                 function Pending(id) {
                     console.log(id);
 
-                    document.getElementById('cuslogoutid').value = id;
+                    alertify.confirm("Are You Sure You Want To Logout This Customer?",
+  function(){
+    alertify.success('Ok');
+    document.getElementById('cuslogoutid').value = id;
                     var formData = $("form#pendingLog").serialize();
                     var Dataform = formData + '&id=' + id;
                     console.log(formData);
@@ -865,6 +892,12 @@
                             console.error(xhr.responseText);
                         }
                     });
+  },
+  function(){
+    alertify.error('Cancel');
+  });
+
+                   
                 }
                 
 

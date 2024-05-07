@@ -60,6 +60,7 @@
                                     <a class="nav-link  text-uppercase" id="" data-toggle="tab" href="#weekly"
                                         role="tab" aria-controls="home" aria-selected="true">Weekly/Monthly Report</a>
                                 </li>
+                              
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -157,7 +158,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <br>
                                     </form>
                                     <table id="weeklyreport" class="table table-striped" style="width:100%">
                                         <thead>
@@ -258,6 +259,8 @@
 
         <!-- Required Js -->
         <script>
+          
+
             $(document).ready(function() {
                 CustomerlogHistory();
                 getsalereport();
@@ -580,20 +583,10 @@
 
             function filterdate() {
                 var startDate = document.getElementById('startdate').value;
-                var parsedDate = new Date(startDate);
-
-                var formattedStartDate = parsedDate.getDate().toString().padStart(2, '0') + '-' +
-                    (parsedDate.getMonth() + 1).toString().padStart(2, '0') + '-' +
-                    parsedDate.getFullYear();
-
                 var endDate = document.getElementById('enddate').value;
-                var parsedEndDate = new Date(endDate);
 
-                var formattedEndDate = parsedEndDate.getDate().toString().padStart(2, '0') + '-' +
-                    (parsedEndDate.getMonth() + 1).toString().padStart(2, '0') + '-' +
-                    parsedEndDate.getFullYear();
-                console.log("Start Date:", formattedStartDate);
-                console.log("End Date:", formattedEndDate);
+                console.log("Start Date:", startDate);
+                console.log("End Date:", endDate);
 
                 $('#weeklyreport').DataTable({
                     order: [
@@ -625,8 +618,8 @@
                     },
                     "destroy": "true",
                     "ajax": {
-                        "url": "{{ route('GetWeeklyReport') }}?startdate=" + formattedStartDate + "&enddate=" +
-                            formattedEndDate,
+                        "url": "{{ route('GetWeeklyReport') }}?startdate=" + startDate + "&enddate=" +
+                        endDate,
                         "type": "GET"
                     },
                     "columns": [{
@@ -719,6 +712,8 @@
                     }
                 });
             }
+
+           
         </script>
 
     </body>

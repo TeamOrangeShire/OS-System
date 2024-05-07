@@ -205,7 +205,7 @@ class EditAcc extends Controller
     $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
     $data->act_user_type = "Admin";
-    $data->act_action = "Admin add credit of " . $customer_credit->customer_lastname ." added ".$addcredit;
+    $data->act_action = "Admin added ".$addcredit." credits to " . $customer_credit->customer_lastname .".";
     $data->act_header = "Add Credit";
     $data->act_location = "customer_acc";
     $data->save();
@@ -214,7 +214,7 @@ class EditAcc extends Controller
     $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
     $data->act_user_type = "Admin";
-    $data->act_action = "Admin deduct credit of " . $customer_credit->customer_lastname ." deduct ".$addcredit;
+    $data->act_action = "Admin deduct ".$addcredit." credit to " . $customer_credit->customer_lastname .".";
     $data->act_header = "Deduct Credit";
     $data->act_location = "customer_acc";
     $data->save();
