@@ -92,23 +92,25 @@
                             <span class="focus-input100" data-placeholder="Enter Username" ></span>
                         </div>
                         <div class="wrap-input100 validate-input" data-validate="Enter password">
-                            <span class="btn-show-pass">
-                                <i class="zmdi zmdi-eye"></i>
-                            </span>
+                          
                             <span id="password_required" style="color: red; display:none;" class="btn-show-pass">
                                 Field Required   
                              </span>
+                             <span class="btn-show-pass">
+                                <i class="zmdi zmdi-eye"></i>
+                            </span>
                             <input class="input100" type="password" onclick="CloseError('password_required')" name="password" id="password">
                             <span class="focus-input100" data-placeholder="Enter Password"></span>
                         </div>
     
                         <div class="wrap-input100 validate-input" data-validate="Enter password">
-                            <span class="btn-show-pass">
-                                <i class="zmdi zmdi-eye"></i>
-                            </span>
+                          
                             <span id="confirm_required" style="color: red; display:none" class="btn-show-pass">
                                 Field Required   
                              </span>
+                             <span class="btn-show-pass">
+                                <i class="zmdi zmdi-eye"></i>
+                            </span>
                             <input class="input100" type="password" onclick="CloseError('confirm_required')" name="confirm_password" id="confirm_password">
                             <span class="focus-input100" data-placeholder="Confirm Password"></span>
                         </div>
