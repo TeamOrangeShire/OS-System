@@ -354,10 +354,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="validationTooltip05">Phone Number <span
-                                                style="color: red;">*</span></label>
+                                        <label for="validationTooltip05">Phone Number</label>
                                         <input type="number" class="form-control" id="number" name="number"
-                                            placeholder="Phone Number" required>
+                                            placeholder="Optional" required>
                                         <div class="invalid-tooltip">
                                             Please provide a valid number
                                         </div>
