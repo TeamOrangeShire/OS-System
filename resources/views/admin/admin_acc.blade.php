@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-    @include('admin.assets.header')
+    @include('admin.assets.header',['title'=>'Admin Account'])
 </head>
 <body class="">
     <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

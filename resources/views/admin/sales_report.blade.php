@@ -3,7 +3,7 @@
     <html lang="en">
 
     <head>
-        @include('admin.assets.header')
+        @include('admin.assets.header',['title'=>'Sales Report'])
 
     </head>
 
@@ -270,9 +270,15 @@
 
             function CustomerlogHistory() {
                 $('#generalhistory').DataTable({
+                     scrollX: true,
                     order: [
-                        [0, 'desc']
+                        [10, 'desc']
                     ],
+                      columnDefs: [{
+                          target: 10,
+                                visible: false,
+                               searchable: false
+                      }],
                     layout: {
                         topStart: {
                             buttons: [{
@@ -302,9 +308,17 @@
                         "url": "{{ route('GeneralReport') }}",
                         "type": "GET"
                     },
-                    "columns": [{
-                            "data": "log_date"
-                        },
+                    "columns": [ {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    const date = row
+                                    .log_date; 
+                                    const parts = date.split('/'); 
+                                    const formattedDate =
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    return formattedDate;
+                                }
+                            },
                         {
                             "data": null,
                             "render": function(data, type, row) {
@@ -358,6 +372,9 @@
                                 return data;
                             }
                         },
+                        {
+                            "data":"created_at"
+                        }
 
                     ],
                     footerCallback: function(row, data, start, end, display) {
@@ -396,6 +413,7 @@
 
             function getsalereport() {
                 $('#salesreport').DataTable({
+                     
                     order: [
                         [0, 'desc']
                     ],
@@ -430,12 +448,17 @@
                         dataType: "json",
                         dataSrc: "logsByDate"
                     },
-                    columns: [{
-                            data: "log_date",
-                            render: function(data, type, row) {
-                                return data;
-                            }
-                        },
+                    columns: [ {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    const date = row
+                                    .log_date; 
+                                    const parts = date.split('/'); 
+                                    const formattedDate =
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    return formattedDate;
+                                }
+                            },
                         {
                             data: null,
                             render: function(data, type, row) {
@@ -490,6 +513,7 @@
 
             function viewLog(date) {
                 $('#detailsalesreport').DataTable({
+                     scrollX: true,
                     order: [
                         [1, 'desc']
                     ],
@@ -589,9 +613,15 @@
                 console.log("End Date:", endDate);
 
                 $('#weeklyreport').DataTable({
+                     scrollX: true,
                     order: [
-                        [0, 'desc']
+                        [10, 'desc']
                     ],
+                      columnDefs: [{
+                          target: 10,
+                                visible: false,
+                               searchable: false
+                      }],
                     layout: {
                         topStart: {
                             buttons: [{
@@ -622,9 +652,17 @@
                         endDate,
                         "type": "GET"
                     },
-                    "columns": [{
-                            "data": "log_date"
-                        },
+                    "columns": [ {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    const date = row
+                                    .log_date; 
+                                    const parts = date.split('/'); 
+                                    const formattedDate =
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    return formattedDate;
+                                }
+                            },
                         {
                             "data": null,
                             "render": function(data, type, row) {
@@ -678,6 +716,9 @@
                                 return data;
                             }
                         },
+                        {
+                            "data":"created_at"
+                        }
 
                     ],
                     footerCallback: function(row, data, start, end, display) {

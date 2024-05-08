@@ -97,7 +97,7 @@ public function CustomerlogHistory() {
  
   $logs = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
   select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
-  'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact')->get();
+  'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact','customer_acc.customer_middlename as middlename')->get();
 
   return response()->json(['data' => $logs]);
 }
@@ -195,20 +195,28 @@ public function AccLogin(Request $request){
 }
 
   public function InsertNewCustomer(Request $request){
+    if($request->firstname && $request->lastname && $request->middlename == '' && $request->email == '' && $request->number == ''){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->count();
+       if($acc){return response()->json(['status'=> 'exist']);}
+    }elseif ($request->firstname && $request->lastname && $request->middlename && $request->email =='' && $request->number ==''){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->where('customer_middlename', 'like', '%' . $request->middlename . '%')->count();
+      if($acc){return response()->json(['status'=> 'match']);}
+    }elseif ($request->firstname && $request->lastname && $request->middlename && $request->email && $request->number ==''){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->where('customer_middlename', 'like', '%' . $request->middlename . '%')->where('customer_email', 'like', '%' . $request->email . '%')->count();
+      if($acc){return response()->json(['status'=> 'email_match']);}
+    }elseif ($request->firstname && $request->lastname && $request->middlename && $request->email && $request->number){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->where('customer_middlename', 'like', '%' . $request->middlename . '%')->where('customer_email', 'like', '%' . $request->email . '%')->where('customer_phone_num', 'like', '%' . $request->number . '%')->count();
+      if($acc){return response()->json(['status'=> 'number_match']);}
+    }
 
-    $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->count();
-    if($request->firstname == '' || $request->lastname == '' || $request->number == '') {
-      if($request->firstname == '' && $request->lastname == '' && $request->number == ''){
+   if($request->firstname == '' || $request->lastname == '') {
+      if($request->firstname == '' && $request->lastname == ''){
          return response()->json(['status'=> 'failed']);
       }else if($request->firstname == ''){
          return response()->json(['status'=> 'firstname']);
       }else if($request->lastname == ''){
          return response()->json(['status'=> 'lastname']);
-      }else if($request->number == ''){
-        return response()->json(['status'=> 'number']);
       }
-    }elseif($acc){
-      return response()->json(['status'=> 'exist']);
     }
     else{
     $format = strtolower(str_replace(' ', '', $request->firstname));
