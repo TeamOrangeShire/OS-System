@@ -69,8 +69,9 @@
                                     <table id="customerlog" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Contact</th>
                                                 <th>Log</th>
                                                 <th>Action</th>
                                             </tr>
@@ -96,6 +97,8 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Name</th>
+                                                            <th>Email</th>
+                                                            <Th>Contact</Th>
                                                             <th>Log Date</th>
                                                             <th>Start</th>
                                                             <th>End</th>
@@ -105,6 +108,7 @@
                                                             <th>Status</th>
                                                             <th>Comment</th>
                                                             <th>Action</th>
+                                                           
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -425,13 +429,26 @@
                                 document.getElementById('firstname').style.border = '1px solid red';
                             } else if (response.status == 'lastname') {
                                 document.getElementById('lastname').style.border = '1px solid red';
-                            } else if (response.status == 'number') {
-                                document.getElementById('number').style.border = '1px solid red';
                             } else if (response.status == 'failed') {
                                 document.getElementById('firstname').style.border = '1px solid red';
                                 document.getElementById('lastname').style.border = '1px solid red';
-                                document.getElementById('number').style.border = '1px solid red';
                             } else if (response.status == 'exist') {
+                                alertify
+                                    .alert("Customer First And Last Name Already Exist! Insert Additional Information.",
+                                        function() {
+                                            alertify.message('OK');
+                                        });
+                            } else if (response.status == 'match') {
+                                alertify
+                                    .alert("Customer Already Exists!", function() {
+                                        alertify.message('OK');
+                                    });
+                            } else if (response.status == 'email_match') {
+                                alertify
+                                    .alert("Customer Already Exists!", function() {
+                                        alertify.message('OK');
+                                    });
+                            } else if (response.status == 'number_match') {
                                 alertify
                                     .alert("Customer Already Exists!", function() {
                                         alertify.message('OK');
@@ -461,9 +478,51 @@
 
                 function CustomerlogHistory() {
                     $('#loghistory').DataTable({
+                        scrollX: true,
                         order: [
-                            [1, 'desc']
+                            [12, 'desc']
                         ],
+                        columnDefs: [{
+                                target: 2,
+                                visible: false,
+
+                            },
+                            {
+                                target: 1,
+                                visible: false,
+
+                            },
+                            {
+                                target: 12,
+                                visible: false,
+                               searchable: false
+
+                            },
+                        ],
+                        layout: {
+                            topStart: {
+                                buttons: [{
+                                        extend: 'copyHtml5',
+                                        exportOptions: {
+                                            columns: [0, ':visible']
+                                        }
+                                    },
+                                    {
+                                        extend: 'excelHtml5',
+                                        exportOptions: {
+                                            columns: ':visible'
+                                        }
+                                    },
+                                    {
+                                        extend: 'pdfHtml5',
+                                        exportOptions: {
+                                            columns: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10]
+                                        }
+                                    },
+                                    'colvis'
+                                ]
+                            }
+                        },
                         "destroy": "true",
                         "ajax": {
                             "url": "{{ route('CustomerlogHistory') }}",
@@ -474,11 +533,26 @@
                                 "render": function(data, type, row) {
                                     var first = row.firstname;
                                     var last = row.lastname;
-                                    return first + " " + last;
+                                    var middle = row.middlename == null ? '' : row.middlename;
+                                    return first + " " + middle + " " + last;
                                 }
                             },
                             {
-                                "data": "log_date"
+                                "data": "email"
+                            },
+                            {
+                                "data": "contact"
+                            },
+                            {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    const date = row
+                                    .log_date; 
+                                    const parts = date.split('/'); 
+                                    const formattedDate =
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    return formattedDate;
+                                }
                             },
                             {
                                 "data": "log_start_time"
@@ -583,6 +657,9 @@
                                         }
                                     }
                                 }
+                            },
+                            {
+                                "data":"created_at"
                             }
                         ],
                     });
@@ -596,10 +673,18 @@
                             "type": "GET"
                         },
                         "columns": [{
-                                "data": "customer_firstname"
+                                "data": null,
+                                "render": function(data, row) {
+                                    const fullname = data.customer_firstname + ' ' + (data.customer_middlename ==
+                                        null ? '' : data.customer_middlename) + ' ' + data.customer_lastname;
+                                    return fullname;
+                                }
                             },
                             {
-                                "data": "customer_lastname"
+                                "data": "customer_email"
+                            },
+                            {
+                                "data": "customer_phone_num"
                             },
                             {
                                 "data": "customer_id",
@@ -769,8 +854,16 @@
                             "url": "{{ route('GetCustomerlog') }}?cuslogid=" + id,
                             "type": "GET"
                         },
-                        "columns": [{
-                                "data": "log_date"
+                        "columns": [ {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    const date = row
+                                    .log_date; 
+                                    const parts = date.split('/'); 
+                                    const formattedDate =
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    return formattedDate;
+                                }
                             },
                             {
                                 "data": "log_start_time"
