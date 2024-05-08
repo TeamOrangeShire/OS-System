@@ -365,7 +365,8 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="">User Type</label>
+                                            <label for="">User Type <span
+                                                style="color: red;">*</span></label>
                                             <select class="form-control" name="customer_type" id="">
                                                 <option value="Regular">Regular</option>
                                                 <option value="Student">Student</option>
