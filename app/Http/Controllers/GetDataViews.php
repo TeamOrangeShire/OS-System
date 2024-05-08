@@ -23,22 +23,65 @@ class GetDataViews extends Controller
                 if($customer->verification_status === 0){
                     return view('homepage.index', [
                         'customer_id'=>$userId,
-                        'status'=> 'not_verified'
+                      
                     ]);
                 }else{
                     return view('homepage.index', [
                         'customer_id'=>$userId,
-                        'status'=> 'verified'
+                        
                     ]);
                 }
                
             } else {
                 return view('homepage.index', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
             }
+
+    }
+    public function GetBlogsCookies(Request $req){
+        $userId = $req->cookie('customer_id');
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.blogs', [
+                        'customer_id'=>$userId,
+                      
+                    ]);
+                }else{
+                    return view('homepage.blogs', [
+                        'customer_id'=>$userId,
+                        
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.blogs', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
+            }
+
+    }
+    public function GetPrivacyCookies(Request $req){
+        $userId = $req->cookie('customer_id');
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.privacy', [
+                        'customer_id'=>$userId,
+                      
+                    ]);
+                }else{
+                    return view('homepage.privacy', [
+                        'customer_id'=>$userId,
+                        
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.privacy', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
+            }
         
       
     }
-
     public function GetSolutionsCookies(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
@@ -47,12 +90,12 @@ class GetDataViews extends Controller
                 if($customer->verification_status === 0){
                     return view('homepage.solutions', [
                         'customer_id'=>$userId,
-                        'status'=> 'not_verified'
+               
                     ]);
                 }else{
                     return view('homepage.solutions', [
                         'customer_id'=>$userId,
-                        'status'=> 'verified'
+                     
                     ]);
                 }
                
@@ -89,12 +132,12 @@ class GetDataViews extends Controller
                 if($customer->verification_status === 0){
                     return view('homepage.contact', [
                         'customer_id'=>$userId,
-                        'status'=> 'not_verified'
+                        
                     ]);
                 }else{
                     return view('homepage.contact', [
                         'customer_id'=>$userId,
-                        'status'=> 'verified'
+                
                     ]);
                 }
                

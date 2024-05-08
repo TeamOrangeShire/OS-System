@@ -38,6 +38,8 @@ Route::get('/get-time-for-date',[GetDataViews::class,'GetTimeForDate'] )->name('
 Route::get('/scanQrCode',[CustomerLog::class, 'Scanning'] )->name('scanQr');
 Route::get('/signup/verification',[Mailing::class, 'VerificationRoute'] )->name('verificationRoute');
 Route::get('/signup/verified', function (){ return view('homepage.verified');})->name('verified');
+Route::get('/privacy-policy', [GetDataViews::class, 'GetPrivacyCookies'])->name('privacy');
+Route::get('/blogs', [GetDataViews::class, 'GetBlogsCookies'])->name('blogsCustomer');
 
 Route::get('/download',function (){ return view('homepage.downloadapk'); } )->name('download');
 //Client Back End

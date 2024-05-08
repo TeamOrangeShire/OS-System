@@ -17,19 +17,10 @@
             <div class="navbar-nav ms-auto">
                 <a href="{{ route('home') }}" class="nav-item nav-link {{ $active === 'home'? 'active' : '' }}">Home</a>
                 <a href="{{ route('solutions') }}" class="nav-item nav-link {{ $active === 'solutions'? 'active' : '' }}">Solutions</a>
-                {{-- <div class="nav-item dropdown">
-                    <a href="{{ route('services') }}" class="nav-link dropdown-toggle  {{ $active === 'services'? 'active' : '' }}" data-bs-toggle="dropdown">Services</a>
-                    <div class="dropdown-menu rounded-0 m-0">   
-                        <a href="" class="dropdown-item">Hot Desk</a>
-                        <a href="" class="dropdown-item">Hybrid Pros</a>
-                        <a href="" class="dropdown-item">Fixed Desk</a>
-                        <a href="" class="dropdown-item">Private Rooms</a>
-                        <a href="" class="dropdown-item">Printer Services</a>
-                        <a href="" class="dropdown-item">Others</a>
-                    </div>
-                </div> --}}
+           
                 {{-- <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a> --}}
-                <a href="{{ route('download') }}" class="nav-item nav-link">Download</a>
+                <a href="{{ route('blogsCustomer') }}" class="nav-item nav-link {{ $active === 'blogs' ? 'active' : '' }}">Blogs</a>
+                <a href="{{ route('privacy') }}" class="nav-item nav-link {{ $active === 'privacy' ? 'active' : '' }}">Privacy Policy</a>
                 <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
                 <a href="{{ route('scanQr') }}" class="nav-item nav-link d-lg-none {{ $cookie_val === 'none' ? 'd-none' : ''}} ">Scan QR</a>
             @if($cookie_val === 'none')
