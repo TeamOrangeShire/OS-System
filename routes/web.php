@@ -72,6 +72,7 @@ Route::get('/customer/home/getLogInfo/',[CustomerLog::class, 'GetLogInfo'] )->na
 Route::get('/customer/home/successLogInfo/',[CustomerLog::class, 'GetLogDetails'] )->name('getLogDetails');
 Route::get('/customer/home/logintoshire/gethistory',[CustomerLog::class, 'GetHistoryData'] )->name('getHistoryData');
 Route::get('/customer/home',[GetDataViews::class, 'CustomerHome'] )->name('customerHome');
+
 //admin
 Route::get('/admin/login', function () { return view('admin.login');})->name('login');
 Route::get('/admin', function () { return view('admin.index');})->name('index');
@@ -101,6 +102,7 @@ Route::get('/admin/log_history', function () { return view('admin.log_history');
 Route::get('/admin/promos', function () { return view('admin.promos');})->name('promos');
 Route::get('/admin/SalesReports', function () { return view('admin.sales_report');})->name('salesreports');
 Route::get('/admin/activitylog', function () { return view('admin.activityLog');})->name('activityLog');
+Route::get('/admin/blogs', function () { return view('admin.blogs');})->name('blogs');
 
 Route::get('/admin/plans_subscription', function () { return view('admin.plans_s');})->name('plans_s');
 Route::get('/admin/pending_subscription', function () { return view('admin.pending_s');})->name('pending_s');
