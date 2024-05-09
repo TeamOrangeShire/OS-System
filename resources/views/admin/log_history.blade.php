@@ -816,7 +816,6 @@
                         function() {
                             alertify.success('Ok');
                             console.log(id);
-
                             document.getElementById('cuslogoutid').value = id;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + id;
