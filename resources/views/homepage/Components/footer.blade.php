@@ -63,7 +63,7 @@
                 <div class="col-md-6 text-center text-md-end">
                     <div class="footer-menu">
                         <a href="{{ route('home') }}">Home</a>
-                        <a href="{{ route('privacy') }}">Privacy Policy</a>
+                        <a href="{{ route('privacy') }}">Privacy</a>
                         <a href="{{ route('blogsCustomer') }}">Blogs</a>
                         <a href="">FQAs</a>
                     </div>

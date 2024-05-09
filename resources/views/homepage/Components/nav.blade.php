@@ -20,7 +20,6 @@
            
                 {{-- <a href="{{ route('reservation') }}" class="nav-item nav-link {{ $active === 'reservation'? 'active' : '' }}">Reservation</a> --}}
                 <a href="{{ route('blogsCustomer') }}" class="nav-item nav-link {{ $active === 'blogs' ? 'active' : '' }}">Blogs</a>
-                <a href="{{ route('privacy') }}" class="nav-item nav-link {{ $active === 'privacy' ? 'active' : '' }}">Privacy Policy</a>
                 <a href="{{ route('contact') }}" class="nav-item nav-link {{ $active === 'contact'? 'active' : '' }}">Contact</a>
                 <a href="{{ route('scanQr') }}" class="nav-item nav-link d-lg-none {{ $cookie_val === 'none' ? 'd-none' : ''}} ">Scan QR</a>
             @if($cookie_val === 'none')
