@@ -92,6 +92,7 @@ Route::get('/admin/GeneralReport', [GetDataViews::class,"GeneralReport"])->name(
 Route::get('/admin/GetWeeklyReport', [GetDataViews::class,"GetWeeklyReport"])->name('GetWeeklyReport');
 Route::get('/admin/GetMonthlyReport', [GetDataViews::class,"GetMonthlyReport"])->name('GetMonthlyReport');
 Route::get('/admin/GetBlog', [BlogData::class,"GetBlog"])->name('GetBlog');
+Route::get('/admin/GetBlogEdit', [BlogData::class,"GetBlogEdit"])->name('GetBlogEdit');
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
@@ -134,6 +135,7 @@ Route::post('/InsertNewCustomer',[CustomerLog::class,'InsertNewCustomer'] )->nam
 Route::post('/LogToPending',[CustomerLog::class,'LogToPending'] )->name('LogToPending');
 Route::post('/AccLogin',[CustomerLog::class,'AccLogin'] )->name('AccLogin');
 Route::post('/AddBlog',[BlogData::class,'AddBlog'] )->name('AddBlog');
+Route::post('/EditBlog',[BlogData::class,'EditBlog'] )->name('EditBlog');
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
