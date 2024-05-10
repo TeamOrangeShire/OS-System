@@ -42,8 +42,9 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5>Basic Alerts</h5>
-                            <button class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#out'>Button</button>
+                            <h5>Blogs</h5>
+                            <button class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#out'>Create New
+                                Blog</button>
                         </div>
                         <div class="card-body">
 
@@ -60,7 +61,7 @@
                 {{-- modal start info --}}
                 <div id="out" class="modal fade" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                         <div class="modal-content">
 
                             <div class="modal-header">
@@ -110,7 +111,7 @@
                 {{-- modal start info --}}
                 <div id="viewBlog" class="modal fade" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                         <div class="modal-content">
 
                             <div class="modal-header">
@@ -136,9 +137,13 @@
                                             </select>
                                         </div>
                                         <div class="col-md-12 mb-3">
-                                            <label for="">Blog Cover</label>
-                                            <input type="file" id="image2" name="image"
-                                                class="form-control">
+                                            <label for="">Blog Cover</label><br>
+                                            <img class="" width="50%" height="auto" alt="Card"
+                                                id="blog_image"><br>
+                                            <button type="button" class="btn btn-primary mt-3"
+                                                data-bs-toggle="modal" data-bs-target="#UpdateCoverBlog"
+                                                onclick="UpdateCover(document.getElementById('blog_id').value)">Update
+                                                Cover</button>
                                         </div>
                                     </div>
 
@@ -159,6 +164,38 @@
                     </div>
                 </div>
                 {{-- modal end info --}}
+                {{-- modal start info --}}
+                <div id="UpdateCoverBlog" class="modal fade" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Update Blog Cover</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" id="updateblogcober" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="">Blog Cover</label>
+                                            <input type="hidden" name="cover_id" id="cover_id">
+                                            <input type="file" id="coverpic" name="coverpic"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary mt-3"
+                                        onclick="UpdateBlogCover()">Display Content</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {{-- modal end info --}}
                 <!-- [ Main Content ] end -->
             </div>
         </div>
@@ -168,7 +205,7 @@
                 theme: 'snow',
                 formats: [
                     'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
-                    'list', 'indent', 'link'
+                    'list', 'indent', 'link', 'align'
                 ],
                 modules: {
                     toolbar: [
@@ -185,40 +222,54 @@
                         }, {
                             'indent': '+1'
                         }],
-
+                        [{
+                            'align': []
+                        }],
                         ['clean']
                     ]
                 }
             });
 
+
             function insertContent() {
                 const title = document.getElementById('title').value;
                 const category = document.getElementById('category').value;
                 var content = quill.root.innerHTML;
+                const pic = document.getElementById('image');
+                if (pic.files.length == 0) {
+                    alertify
+                        .alert("Warning", "Blog Cover Require", function() {
+                            alertify.message('OK');
+                        });
+                } else {
+                    var formData = new FormData();
+                    formData.append('title', title);
+                    formData.append('content', content);
+                    formData.append('category', category);
+                    formData.append('image', $('#image')[0].files[0]);
+                    formData.append('_token', '{{ csrf_token() }}');
 
-                // Create FormData object
-                var formData = new FormData();
-                formData.append('title', title);
-                formData.append('content', content);
-                formData.append('category', category);
-                formData.append('image', $('#image')[0].files[0]);
-                formData.append('_token', '{{ csrf_token() }}');
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('AddBlog') }}",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
 
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('AddBlog') }}",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        console.log(response.data);
-                        $('#blogCard').empty();
-                        GetBlog();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
+                            alertify
+                                .alert("Message", "Blog Successfully Posted", function() {
+                                    alertify.message('OK');
+                                    $('#blogCard').empty();
+                                    GetBlog();
+                                });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+
             }
 
             $(document).ready(function() {
@@ -230,31 +281,29 @@
                     type: "GET",
                     url: "{{ route('GetBlog') }}",
                     success: function(response) {
-                        // Loop through each blog entry in response.data
+
                         response.data.forEach(function(blogEntry) {
-
                             const image = "{{ asset('User/Admin/') }}/" + blogEntry.blog_picture;
-
+                            const contentLimit = blogEntry.blog_content.length <= 100 ? blogEntry
+                                .blog_content : blogEntry.blog_content.substring(0, 100) +
+                                '.....';
                             var cardDiv = $(
                                 '<div class="col-md-4 mb-3">' +
                                 '<div class="card">' +
                                 '<img class="card-img-top" src="' + image + '" alt="Card">' +
                                 '<div class="card-body">' +
                                 '<h5 class="card-title">' + blogEntry.blog_title + '</h5>' +
-                                '<p class="card-text">' + blogEntry.blog_content + '</p>' +
+                                '<p class="card-text">' + contentLimit + '</p>' +
                                 '<div class="d-flex justify-content-between">' +
-                                // Added container for buttons
                                 '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewBlog" onclick="viewBlog(' +
                                 blogEntry.blog_id + ')">Edit</button>' +
-                                '<button class="btn btn-danger">Delete</button>' +
-                                '</div>' + // Close button container
+                                '<button class="btn btn-danger" onclick="DeleteBlog(' + blogEntry
+                                .blog_id + ')">Delete</button>' +
+                                '</div>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>'
                             );
-
-
-                            // Append the newly created div to an existing element with id="blogCard"
                             $('#blogCard').append(cardDiv);
                         });
                     },
@@ -267,18 +316,18 @@
             let quill2;
 
             function viewBlog(id) {
-                console.log(id);
                 $.ajax({
                     type: "GET",
                     url: "{{ route('GetBlogEdit') }}?blog_id=" + id,
                     success: function(response) {
-                        console.log(response.data);
 
                         var responseData = response.data;
                         responseData.forEach(function(blog) {
                             document.getElementById('blog_id').value = blog.blog_id;
                             document.getElementById('title2').value = blog.blog_title;
                             document.getElementById('category2').value = blog.blog_category;
+                            document.getElementById('blog_image').src = '{{ asset('User/Admin/') }}/' + blog
+                                .blog_picture;
                             quill2 = refreshQuill(quill2);
                             quill2.root.innerHTML = '';
                             quill2.root.innerHTML = blog.blog_content;
@@ -306,7 +355,7 @@
                         theme: 'snow',
                         formats: [
                             'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
-                            'list', 'indent', 'link'
+                            'list', 'indent', 'link', 'align'
                         ],
                         modules: {
                             toolbar: [
@@ -323,6 +372,9 @@
                                 }, {
                                     'indent': '+1'
                                 }],
+                                [{
+                                    'align': []
+                                }], // This array should include align buttons
                                 ['clean']
                             ]
                         }
@@ -341,13 +393,12 @@
                 const category = document.getElementById('category2').value;
                 var content = quill2.root.innerHTML;
 
-                // Create FormData object
                 var formData = new FormData();
                 formData.append('blog_id', blog_id);
                 formData.append('title', title);
                 formData.append('content', content);
                 formData.append('category', category);
-                formData.append('image', $('#image2')[0].files[0]);
+
                 formData.append('_token', '{{ csrf_token() }}');
 
                 $.ajax({
@@ -357,14 +408,82 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        console.log(response.data);
-                        $('#blogCard').empty();
-                        GetBlog();
+                        alertify
+                                .alert("Message", "Blog Successfully Edited", function() {
+                                    alertify.message('OK');
+                                    $('#blogCard').empty();
+                                    GetBlog();
+                                });
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                     }
                 });
+            }
+
+            function DeleteBlog(id) {
+                const blog_id = id;
+                var formData = new FormData();
+                formData.append('blog_id', blog_id);
+                formData.append('_token', '{{ csrf_token() }}');
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('DeleteBlog') }}",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        alertify
+                                .alert("Message", "Blog Successfully Deleted", function() {
+                                    alertify.message('OK');
+                                    $('#blogCard').empty();
+                                    GetBlog();
+                                });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+
+            function UpdateCover(id) {
+                const blog_id = document.getElementById('cover_id').value = id;
+            }
+
+            function UpdateBlogCover() {
+                const blog_id = document.getElementById('cover_id').value;
+                const pic = document.getElementById('coverpic');
+                if (pic.files.length == 0) {
+                    alertify
+                        .alert("Warning", "Blog Cover Require", function() {
+                            alertify.message('OK');
+                        });
+                } else {
+                    var formData = new FormData();
+                    formData.append('blog_id', blog_id);
+                    formData.append('coverpic', $('#coverpic')[0].files[0]);
+                    formData.append('_token', '{{ csrf_token() }}');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('UpdateBlogCover') }}",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            alertify
+                                .alert("Message", "Blog Cover Successfully Updated ", function() {
+                                    alertify.message('OK');
+                                    $('#blogCard').empty();
+                                    GetBlog();
+                                });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
             }
         </script>
         <!-- [ Main Content ] end -->

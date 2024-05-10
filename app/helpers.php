@@ -5,6 +5,16 @@ function VerificationCodeGenerator(){
     return  mt_rand(100000, 999999);
 }
 
+function RandomId($length) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+    $charLength = strlen($characters);
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charLength - 1)];
+    }
+    return $randomString;
+}
+
 function FilterTime($time){
      $start = addSuffix(substr($time, 0,2));
      $end = addSuffix(substr($time, 3, 5));

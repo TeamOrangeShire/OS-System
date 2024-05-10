@@ -138,6 +138,8 @@ Route::post('/LogToPending',[CustomerLog::class,'LogToPending'] )->name('LogToPe
 Route::post('/AccLogin',[CustomerLog::class,'AccLogin'] )->name('AccLogin');
 Route::post('/AddBlog',[BlogData::class,'AddBlog'] )->name('AddBlog');
 Route::post('/EditBlog',[BlogData::class,'EditBlog'] )->name('EditBlog');
+Route::post('/DeleteBlog',[BlogData::class,'DeleteBlog'] )->name('DeleteBlog');
+Route::post('/UpdateBlogCover',[BlogData::class,'UpdateBlogCover'] )->name('UpdateBlogCover');
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
