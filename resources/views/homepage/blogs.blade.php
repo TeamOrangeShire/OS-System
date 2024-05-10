@@ -79,28 +79,26 @@
                     @php
                       $blogs = App\Models\Blog::all();
                     @endphp
-                    @foreach ($blogs as $blog)
+                  
                     <div class="row g-4">
+                        @foreach ($blogs as $blog)
                       <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                           <div class="property-item rounded overflow-hidden">
                               <div class="position-relative overflow-hidden">
-                                  <a href="{{ route('blogContentCustomer', ['id'=>$blog->blog_url_id]) }}"><img class="img-fluid" src="{{ asset('img/os_logo.png') }}" alt=""></a>
+                                  <a href="{{ route('blogContentCustomer', ['id'=>$blog->blog_url_id]) }}"><img class="img-fluid" src="{{ asset('User/Admin/'.$blog->blog_picture) }}" alt=""></a>
                               </div>
                               <div class="p-4 pb-0">
                                 
-                                  <a class="d-block h5 mb-2" href="{{ route('blogContentCustomer', ['id'=>$blog->blog_url_id]) }}">Golden Urban House For Sell</a>
-                                  <p>123 Street, New York, USA</p>
+                                  <a class="d-block h5 mb-2" href="{{ route('blogContentCustomer', ['id'=>$blog->blog_url_id]) }}">{{ $blog->blog_title }}</a>
+                                  {!! substr($blog->blog_content , 3, 100) . "......" !!}
+                                  <a href="{{ route('blogContentCustomer', ['id'=>$blog->blog_url_id]) }}">Learn More➡</a>
                               </div>
-                              <div class="d-flex border-top">
-                                  <small class="flex-fill text-center border-end py-2"><i class="fa fa-eye text-primary me-2"></i>100</small>
-                                  <small class="flex-fill text-center border-end py-2"><i class="fa fa-heart text-primary me-2"></i>30</small>
-                                  <small class="flex-fill text-center py-2"><i class="fa fa-message text-primary me-2"></i>22</small>
-                              </div>
+                           
                           </div>
                       </div>
-                    
+                      @endforeach
                   </div>
-                    @endforeach
+                 
                   </div>
                   <div id="tab-2" class="tab-pane fade show p-0">
                      

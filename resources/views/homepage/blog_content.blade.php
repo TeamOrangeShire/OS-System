@@ -14,7 +14,9 @@
 </style>
 
 </head>
-
+@php
+    $blogs = App\Models\Blog::where('blog_url_id', $blog_id)->first();
+@endphp
 <body style="background-color: #ffffff !important">
 
         <!-- Spinner Start -->
@@ -31,7 +33,7 @@
         <!-- Navbar End -->
 
     
-        <div class="container-fluid " style="background-image: url('{{ asset('img/os_logo.png') }}'); background-position: center; background-size:fill; background-repeat:no-repeat; ">
+        <div class="container-fluid " style="background-image: url('{{ asset('User/Admin/'. $blogs->blog_picture) }}'); background-position: center; background-size:cover; background-repeat:no-repeat; ">
             <div class="container">
                 <div class="d-flex align-items-center" style="min-height: 400px; flex-direction:column-reverse">
                    
@@ -43,9 +45,9 @@
 
         <div class="container py-4">
 
-            <h1 class="text-center my-4">Title</h1>
+            <h1 class="text-center my-4">{{ $blogs->blog_title }}</h1>
 
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            {!! $blogs->blog_content !!}
         </div>
 
 
