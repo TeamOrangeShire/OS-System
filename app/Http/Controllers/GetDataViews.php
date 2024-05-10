@@ -46,17 +46,17 @@ class GetDataViews extends Controller
                 if($customer->verification_status === 0){
                     return view('homepage.blog_content', [
                         'customer_id'=>$userId,
-                      
+                        'blog_id'=> $id
                     ]);
                 }else{
                     return view('homepage.blog_content', [
                         'customer_id'=>$userId,
-                        
+                        'blog_id'=> $id
                     ]);
                 }
                
             } else {
-                return view('homepage.blog_content', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
+                return view('homepage.blog_content', ['customer_id'=> 'none', 'status'=> 'not_log_in', 'blog_id'=> $id]);
             }
 
     }
