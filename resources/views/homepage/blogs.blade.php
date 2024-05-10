@@ -52,99 +52,61 @@
 
         <!-- Category Start -->
         <br><br><br>
-       <div class="container d-flex align-items-center justify-content-center">
-        <style>
-            .loaderss {
-  --col1: rgba(228, 19, 141, 0.925);
-  --col2: rgb(255, 179, 80);
-  font-size: 2em;
-  font-weight: 600;
-  perspective: 800px;
-  position: relative;
-}
-
-.loaderss::after,
-.loaderss::before,
-.loaderss .text::after,
-.loaderss .text::before {
-  perspective: 800px;
-  animation: anim 2s ease-in-out infinite, dotMove 10s ease-out alternate infinite, move 10s linear infinite 1s;
-  ;
-  content: '●';
-  color: var(--col1);
-  position: absolute;
-  translate: -60px 500px;
-  width: 5px;
-  height: 5px;
-}
-
-.loaderss::before {
-  animation-delay: 3s;
-  color: var(--col1);
-}
-
-.loaderss .text::before {
-  color: var(--col2);
-  animation-delay: 2s;
-}
-
-.loaderss .text::after {
-  color: var(--col2);
-}
-
-.loaderss .text {
-  animation: anim 20s linear infinite, move 10s linear infinite 1s;
-  color: transparent;
-  background-image: linear-gradient(90deg, 
-  var(--col1) 0%,
-  var(--col2) 100%);
-  background-clip: text;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  transform: skew(5deg, -5deg);
-  -webkit-background-clip: text;
-  position: relative;
-}
-
-@keyframes anim {
-  0%, 100% {
-    text-shadow: 2px 0px 2px rgba(179, 158, 158, .5);
-  }
-
-  50% {
-    background-size: 0%;
-    background-position-x: left;
-    text-shadow: 2px 10px 6px rgba(179, 158, 158, 1);
-  }
-}
-
-@keyframes move {
-  50% {
-    translate: 0px 0px;
-    rotate: x 60deg;
-    transform: skew(-5deg, 5deg);
-  }
-}
-
-@keyframes dotMove {
-  0%, 100% {
-    translate: -60px 300px;
-  }
-
-  50% {
-    translate: 160px -250px;
-    scale: .5;
-    opacity: .85;
-  }
-}
-        </style>
-        <div class="loaderss">
-            <p class="text">
-             "Blog Post" Coming Soon!!!!
-            </p>
+        <div class="container-xxl py-5">
+          <div class="container">
+              <div class="row g-0 gx-5 align-items-end">
+                  <div class="col-lg-6">
+                      <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                          <h1 class="mb-3">Orange Shire Coworking Blog Posts</h1>
+                      </div>
+                  </div>
+                  <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+                      <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
+                          <li class="nav-item me-2">
+                              <a class="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">Featured</a>
+                          </li>
+                          <li class="nav-item me-2">
+                              <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">For Sell</a>
+                          </li>
+                          <li class="nav-item me-0">
+                              <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">For Rent</a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="tab-content">
+                  <div id="tab-1" class="tab-pane fade show p-0 active">
+                      <div class="row g-4">
+                          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                              <div class="property-item rounded overflow-hidden">
+                                  <div class="position-relative overflow-hidden">
+                                      <a href="{{ route('blogContentCustomer', ['id'=>'26732874']) }}"><img class="img-fluid" src="{{ asset('img/os_logo.png') }}" alt=""></a>
+                                      <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Event</div>
+                                  </div>
+                                  <div class="p-4 pb-0">
+                                    
+                                      <a class="d-block h5 mb-2" href="{{ route('blogContentCustomer', ['id'=>'26732874']) }}">Golden Urban House For Sell</a>
+                                      <p>123 Street, New York, USA</p>
+                                  </div>
+                                  <div class="d-flex border-top">
+                                      <small class="flex-fill text-center border-end py-2"><i class="fa fa-eye text-primary me-2"></i>100</small>
+                                      <small class="flex-fill text-center border-end py-2"><i class="fa fa-heart text-primary me-2"></i>30</small>
+                                      <small class="flex-fill text-center py-2"><i class="fa fa-message text-primary me-2"></i>22</small>
+                                  </div>
+                              </div>
+                          </div>
+                        
+                      </div>
+                  </div>
+                  <div id="tab-2" class="tab-pane fade show p-0">
+                     
+                  </div>
+                  <div id="tab-3" class="tab-pane fade show p-0">
+                     
+                  </div>
+              </div>
           </div>
-       </div>
-
+      </div>
 
 
 
