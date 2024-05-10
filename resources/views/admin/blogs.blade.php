@@ -43,17 +43,17 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Blogs</h5>
-                            <button class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#out'>Create New
-                                Blog</button>
+                            <div>
+                                <button class="btn btn-primary" data-bs-toggle='modal'
+                                    data-bs-target='#makeCategory'>Create New Category</button>
+                                <button class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#out'>Create New
+                                    Blog</button>
+                            </div>
                         </div>
                         <div class="card-body">
-
                             <div class="row" id="blogCard">
 
-
-
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -81,8 +81,12 @@
                                         <div class="col-md-6 mb-3">
                                             <label for="">Category</label>
                                             <select name="category" id="category" class="form-control">
-                                                <option value="Entertainment">Entertainment</option>
-                                                <option value="Informative">Informative</option>
+                                                @php
+                                                    $category = App\Models\BlogCategory::all();
+                                                @endphp
+                                                @foreach ($category as $cat )
+                                                    <option value="{{$cat->category_name}}">{{$cat->category_name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-12 mb-3">
@@ -132,8 +136,9 @@
                                         <div class="col-md-6 mb-3">
                                             <label for="">Category</label>
                                             <select name="category" id="category2" class="form-control">
-                                                <option value="Entertainment">Entertainment</option>
-                                                <option value="Informative">Informative</option>
+                                                  @foreach ($category as $cat )
+                                                    <option value="{{$cat->category_name}}">{{$cat->category_name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-12 mb-3">
@@ -188,6 +193,37 @@
                                     </div>
                                     <button type="button" class="btn btn-primary mt-3"
                                         onclick="UpdateBlogCover()">Display Content</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {{-- modal end info --}}
+                {{-- modal start info --}}
+                <div id="makeCategory" class="modal fade" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Add New Category</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" id="formCategory" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="">Blog Category</label>
+                                            <input type="text" class="form-control" name="newcatogory"
+                                                id="newcatogory">
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary mt-3"
+                                        onclick="AddNewCategory()">Add</button>
 
                                 </form>
                             </div>
@@ -256,13 +292,26 @@
                         contentType: false,
                         processData: false,
                         success: function(response) {
-
-                            alertify
+                            if (response == "exceed") {
+                                alertify
+                                    .alert("Warning", "Image Too Large", function() {
+                                        alertify.message('OK');
+                                    });
+                            } else if (response == "invalid_type") {
+                                alertify
+                                    .alert("Warning", "Invalid Image Format", function() {
+                                        alertify.message('OK');
+                                    });
+                            }else{
+                                    alertify
                                 .alert("Message", "Blog Successfully Posted", function() {
                                     alertify.message('OK');
                                     $('#blogCard').empty();
                                     GetBlog();
+                                    $('#out').modal('hide');
                                 });
+                            }
+                        
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
@@ -283,6 +332,7 @@
                     success: function(response) {
 
                         response.data.forEach(function(blogEntry) {
+                            $('#coverphoto').attr('src', $('#coverphoto').attr('src'));
                             const image = "{{ asset('User/Admin/') }}/" + blogEntry.blog_picture;
                             const contentLimit = blogEntry.blog_content.length <= 100 ? blogEntry
                                 .blog_content : blogEntry.blog_content.substring(0, 100) +
@@ -290,7 +340,8 @@
                             var cardDiv = $(
                                 '<div class="col-md-4 mb-3">' +
                                 '<div class="card">' +
-                                '<img class="card-img-top" src="' + image + '" alt="Card">' +
+                                '<img class="card-img-top" id="coverphoto" src="' + image +
+                                '" alt="Card">' +
                                 '<div class="card-body">' +
                                 '<h5 class="card-title">' + blogEntry.blog_title + '</h5>' +
                                 '<p class="card-text">' + contentLimit + '</p>' +
@@ -374,16 +425,13 @@
                                 }],
                                 [{
                                     'align': []
-                                }], // This array should include align buttons
+                                }], 
                                 ['clean']
                             ]
                         }
                     });
-
                     return quillInstance;
                 }
-
-
                 quill2 = refreshQuill(quill2);
             }
 
@@ -391,14 +439,13 @@
                 const blog_id = document.getElementById('blog_id').value;
                 const title = document.getElementById('title2').value;
                 const category = document.getElementById('category2').value;
-                var content = quill2.root.innerHTML;
+                const content = quill2.root.innerHTML.toString();
 
                 var formData = new FormData();
                 formData.append('blog_id', blog_id);
                 formData.append('title', title);
                 formData.append('content', content);
                 formData.append('category', category);
-
                 formData.append('_token', '{{ csrf_token() }}');
 
                 $.ajax({
@@ -408,12 +455,14 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
+                        
                         alertify
-                                .alert("Message", "Blog Successfully Edited", function() {
-                                    alertify.message('OK');
-                                    $('#blogCard').empty();
-                                    GetBlog();
-                                });
+                            .alert("Message", "Blog Successfully Edited", function() {
+                                alertify.message('OK');
+                                $('#blogCard').empty();
+                                GetBlog();
+                                $('#viewBlog').modal('hide');
+                            });
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
@@ -435,11 +484,12 @@
                     processData: false,
                     success: function(response) {
                         alertify
-                                .alert("Message", "Blog Successfully Deleted", function() {
-                                    alertify.message('OK');
-                                    $('#blogCard').empty();
-                                    GetBlog();
-                                });
+                            .alert("Message", "Blog Successfully Deleted", function() {
+                                alertify.message('OK');
+                                $('#blogCard').empty();
+                                GetBlog();
+
+                            });
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
@@ -472,18 +522,59 @@
                         contentType: false,
                         processData: false,
                         success: function(response) {
-                            alertify
-                                .alert("Message", "Blog Cover Successfully Updated ", function() {
-                                    alertify.message('OK');
-                                    $('#blogCard').empty();
-                                    GetBlog();
-                                });
+                                if (response.status == "exceed") {
+                                alertify
+                                    .alert("Warning", "Image Too Large", function() {
+                                        alertify.message('OK');
+                                    });
+                            } else if (response.status == "invalid_type") {
+                                alertify
+                                    .alert("Warning", "Invalid Image Format", function() {
+                                        alertify.message('OK');
+                                    });
+                            }else{
+                            $('#blogCard').empty();
+                            GetBlog();
+                            $('#UpdateCoverBlog').modal('hide');
+                            $('#coverphoto').attr('src', $('#coverphoto').attr('src'));
+                            }
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
                         }
                     });
                 }
+            }
+
+            function AddNewCategory() {
+                var formData = $("form#formCategory").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('AddNewCategory') }}",
+                    data: formData,
+                    success: function(response) {
+                        if (response == 'exist') {
+                            alertify
+                                .alert("Message", "Category Already Exist", function() {
+                                    alertify.message('OK');
+                                    $('#blogCard').empty();
+                                    GetBlog();
+                                });
+                        } else {
+                            alertify
+                                .alert("Message", "Successfully Added New Category ", function() {
+                                    alertify.message('OK');
+                                    $('#blogCard').empty();
+                                    GetBlog();
+                                    $('#makeCategory').modal('hide');
+                                });
+                        }
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
             }
         </script>
         <!-- [ Main Content ] end -->

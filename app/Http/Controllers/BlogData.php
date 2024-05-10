@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\BlogCategory;
 
 class BlogData extends Controller
 {
@@ -20,9 +21,15 @@ class BlogData extends Controller
               }else{
                 $blog_id_final = RandomId(30);
               }
-               $request->validate([
-                    'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-               ]);
+
+              $file = $request->file('image');
+
+        if ($file->getSize() > 10485760) {
+            return response()->json([ 'exceed']);
+        }else   if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png', 'jpg'])) {
+            return response()->json(['invalid_type']);
+        }
+        else{
                $imageName = time() . '.' . $request->image->extension();
                $request->image->move(public_path('User/Admin/'), $imageName);
 
@@ -34,6 +41,7 @@ class BlogData extends Controller
                $data->blog_picture = $imageName;
                $data->save();
                return response()->json(['success']);
+          }
           }
      }
      public function GetBlog()
@@ -52,11 +60,12 @@ class BlogData extends Controller
      public function EditBlog(Request $request)
      {
           $edit = Blog::where('blog_id', $request->blog_id)->first();
+          $content = $request->content;
           $edit->update([
                'blog_title' => $request->title,
+               'blog_content' => $content,
                'blog_category' => $request->category,
-               'blog_content' => $request->content,
-             
+               
           ]);
           return response()->json(['success']);
      }
@@ -69,15 +78,36 @@ class BlogData extends Controller
      public function UpdateBlogCover(Request $request)
      {    
           $edit = Blog::where('blog_id', $request->blog_id)->first();
-         $request->validate([
-               'coverpic' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-          ]);
+           $file = $request->file('coverpic');
+
+        if ($file->getSize() > 10485760) {
+            return response()->json([ 'status'=>'exceed']);
+        }else   if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png', 'jpg'])) {
+            return response()->json(['status'=>'invalid_type']);
+        }
+        else{
+
           $imageName = explode('.',$edit->blog_picture)[0] . '.' . $request->coverpic->extension();
           $request->coverpic->move(public_path('User/Admin/'), $imageName);
-          
+
            $edit->update([
                'blog_picture' => $imageName,
           ]);
           return response()->json(['success']);
+     }
+
+     }
+     public function AddNewCategory(Request $request){
+
+                $get = BlogCategory::where('category_name', $request->newcatogory)->first();
+                if($get){
+                return response()->json(['exist']);
+                }else{
+               $data = new BlogCategory;
+               $data->category_name = $request->newcatogory;
+               $data->save();
+               return response()->json(['success']);
+                }
+              
      }
 }

@@ -140,6 +140,7 @@ Route::post('/AddBlog',[BlogData::class,'AddBlog'] )->name('AddBlog');
 Route::post('/EditBlog',[BlogData::class,'EditBlog'] )->name('EditBlog');
 Route::post('/DeleteBlog',[BlogData::class,'DeleteBlog'] )->name('DeleteBlog');
 Route::post('/UpdateBlogCover',[BlogData::class,'UpdateBlogCover'] )->name('UpdateBlogCover');
+Route::post('/AddNewCategory',[BlogData::class,'AddNewCategory'] )->name('AddNewCategory');
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');
