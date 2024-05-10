@@ -434,7 +434,7 @@
                                 document.getElementById('lastname').style.border = '1px solid red';
                             } else if (response.status == 'exist') {
                                 alertify
-                                    .alert("Customer First And Last Name Already Exist! Insert Additional Information.",
+                                    .alert("Warning","Customer First And Last Name Already Exist! Insert Additional Information.",
                                         function() {
                                             alertify.message('OK');
                                         });
