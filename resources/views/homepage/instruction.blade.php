@@ -30,9 +30,26 @@
         @include('homepage/Components/nav', ['active'=>'privacy', 'cookie_val'=>$customer_id])
 
 
-        <div class="container">
-            <h1 class="text-center">User Guide for the Orange Shire</h1>
+        <div class="container p-4" style="justify-content: center; display:flex; flex-direction:column;align-items:center" >
+            <h1 class="text-center my-4">User Guide for the Orange Shire</h1>
 
+          <div class="w-100 d-flex align-items-center overflow-auto flex-column flex-sm-row ">
+            <a data-fancybox="gallery"  href="{{ asset('img/instruction/2.png') }}">
+                <img src="{{ asset('img/instruction/2.png') }}" alt="install" class="w-100">
+            </a>
+            <img src="{{ asset('img/instruction/arrow.png') }}" alt="install" style="height: 10vh">
+            <a data-fancybox="gallery" href="{{ asset('img/instruction/3.png') }}">
+                <img src="{{ asset('img/instruction/3.png') }}" alt="install" class="w-100">
+            </a>
+            <img src="{{ asset('img/instruction/arrow.png') }}" alt="install" style="height: 10vh">
+            <a data-fancybox="gallery" href="{{ asset('img/instruction/4.png') }}">
+                <img src="{{ asset('img/instruction/4.png') }}" alt="install" class="w-100">
+            </a>
+            <img src="{{ asset('img/instruction/arrow.png') }}" alt="install" style="height: 10vh">
+            <a data-fancybox="gallery" href="{{ asset('img/instruction/6.png') }}">
+                <img src="{{ asset('img/instruction/6.png') }}" alt="install" class="w-100">
+            </a>
+          </div>
         </div>
 
 
