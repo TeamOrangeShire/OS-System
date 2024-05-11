@@ -252,9 +252,10 @@
             <div class="container">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                       <h1 class="mb-3">Download our App</h1> 
+                       <h1 class="mb-3">Download our App <span class="fs-5" style="text-decoration: underline !important; color:blue !important"><a style="color: blue !important" href="{{ route('instruction') }}"><i class="fa-regular fa-circle-question"></i> User Guide</a></span></h1> 
                         <p class="mb-3">Orange Shire is now available in android phones. Just click the button below to download or Scan our QR Code</p>
                         <a class="btn btn-primary py-2 px-4 mt-2" href="{{ route('download') }}">Download Apk <i class="fa-brands fa-android"></i></a>
+                        
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                         <div class="about-img position-relative overflow-hidden p-4 pe-0">

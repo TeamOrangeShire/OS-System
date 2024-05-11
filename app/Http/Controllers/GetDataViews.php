@@ -82,6 +82,29 @@ class GetDataViews extends Controller
             }
 
     }
+
+    public function GetInstructionCookies(Request $req){
+        $userId = $req->cookie('customer_id');
+        $customer= CustomerAcc::where('customer_id', $userId)->first();
+     
+            if ($userId) {
+                if($customer->verification_status === 0){
+                    return view('homepage.instruction', [
+                        'customer_id'=>$userId,
+                      
+                    ]);
+                }else{
+                    return view('homepage.instruction', [
+                        'customer_id'=>$userId,
+                        
+                    ]);
+                }
+               
+            } else {
+                return view('homepage.instruction', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
+            }
+
+    }
     public function GetPrivacyCookies(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();

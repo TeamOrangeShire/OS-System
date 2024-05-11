@@ -41,7 +41,7 @@ Route::get('/signup/verified', function (){ return view('homepage.verified');})-
 Route::get('/privacy-policy', [GetDataViews::class, 'GetPrivacyCookies'])->name('privacy');
 Route::get('/blogs', [GetDataViews::class, 'GetBlogsCookies'])->name('blogsCustomer');
 Route::get('/blogs/{id}', [GetDataViews::class, 'GetBlogsContentCookies'])->name('blogContentCustomer');
-
+Route::get('/orangeshire-apk/user-guide', [GetDataViews::class, 'GetInstructionCookies'])->name('instruction');
 
 Route::get('/download',function (){ return view('homepage.downloadapk'); } )->name('download');
 //Client Back End
