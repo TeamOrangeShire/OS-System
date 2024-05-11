@@ -83,7 +83,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_lastname;
                         <ul class="pro-body">
                             <li><a href="{{asset('admin/admin_profile')}}" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
                             <li><a href="{{route('admin_lockscreen')}}" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
-                            <li><a class="feather icon-log-out" href="login">Logout</a></li>
+                            <li ><a href="login" class="dropdown-item"><i class="feather icon-log-out"></i>Logout</a> </li>
                         </ul>
                     </div>
                 </div>
