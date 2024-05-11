@@ -30,11 +30,16 @@
       @php
           $admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
           $ext = $admin_name->admin_ext;
-          if ($ext === 'N/A') {
-            $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
-          }else {
-            $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname.' '.$admin_name->admin_ext;
-          }
+           $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_lastname;
+        //   $middle =$admin_name->admin_middlename;
+        //   if ($middle == '') {
+        //     $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_lastname;
+        //   }
+        //  else if ($ext === 'N/A') {
+        //     $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
+        //   }else {
+        //     $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname.' '.$admin_name->admin_ext;
+        //   }
          
          
       @endphp
@@ -82,12 +87,12 @@
                         </div>
                         <div class="row mt-2">
                             <input type="hidden" name="admin_id" value="{{$admin_name->admin_id}}" id="">
-                            <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" name="firstname" placeholder="Full Name" value="{{$admin_name->admin_firstname}}"></div>
-                            <div class="col-md-6"><label class="labels">Middle Name</label><input type="text" class="form-control" name="middlename" placeholder="Full Name" value="{{$admin_name->admin_middlename}}"></div>
+                            <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" name="firstname" placeholder="First Name" value="{{$admin_name->admin_firstname}}"></div>
+                            <div class="col-md-6"><label class="labels">Middle Name</label><input type="text" class="form-control" name="middlename" placeholder="Middle Name" value="{{$admin_name->admin_middlename}}"></div>
                             
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" name="lastname" placeholder="Full Name" value="{{$admin_name->admin_lastname}}"></div>
+                            <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" name="lastname" placeholder="Last Name" value="{{$admin_name->admin_lastname}}"></div>
                             <div class="col-md-6"> <label for="exampleInputEmail1">Ext.</label>
                                 <select class="form-control" id="exampleFormControlSelect1" name="ext">
                                     <option value="{{$admin_name->admin_ext}}">{{$admin_name->admin_ext}}</option>

@@ -1,8 +1,9 @@
 @if (session()->has('Admin_id'))
-@php
-$admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
-$fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
-@endphp
+ @php
+          $admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
+          $ext = $admin_name->admin_ext;
+           $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_lastname;
+      @endphp
 <nav class="pcoded-navbar  ">
     <div class="navbar-wrapper  ">
         <div class="navbar-content scroll-div " >
