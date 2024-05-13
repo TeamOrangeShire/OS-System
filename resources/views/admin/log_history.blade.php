@@ -109,7 +109,7 @@
                                                             <th>Comment</th>
                                                             <th>Action</th>
                                                             <th>Delete</th>
-                                                           
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -241,8 +241,8 @@
                                     <br>
 
                                     <div style="text-align: center;">
-                                        <button type="button" class="btn btn-danger"
-                                        onclick="BackToLogout()">Back To Logout</button>
+                                        <button type="button" class="btn btn-danger" onclick="BackToLogout()">Back
+                                            To Logout</button>
 
                                         <button type="button" class="btn btn-success"
                                             onclick="acceptPending()">Accept Payment</button>
@@ -369,8 +369,7 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="">User Type <span
-                                                style="color: red;">*</span></label>
+                                            <label for="">User Type <span style="color: red;">*</span></label>
                                             <select class="form-control" name="customer_type" id="">
                                                 <option value="Regular">Regular</option>
                                                 <option value="Student">Student</option>
@@ -396,38 +395,39 @@
             </div>
 
             <div id="editpaymentmodal" class="modal fade" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Payment</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="" novalidate method="POST" id="EditPaymentForm">
-                                    @csrf
-                                    <div class="row mb-4">
-                                        <div class="col-md-12 mb-6">
-                                            <label for="validationTooltip01">Payment</label>
-                                            <input type="hidden" name="editpaymentid" id="editpaymentid">
-                                            <input type="text" class="form-control" id="editpaymentamount" name="editpaymentamount"
-                                                placeholder="Payment Amount " value="" required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <button class="btn  btn-primary" type="button" 
-                                                onclick="EditPaymentLog()">Save Changes</button>
-                                        </div>
-                                    </div>
-        
-                                </form>
-                            </div>
-
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Edit Payment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
+                        <div class="modal-body">
+                            <form class="" novalidate method="POST" id="EditPaymentForm">
+                                @csrf
+                                <div class="row mb-4">
+                                    <div class="col-md-12 mb-6">
+                                        <label for="validationTooltip01">Payment</label>
+                                        <input type="hidden" name="editpaymentid" id="editpaymentid">
+                                        <input type="text" class="form-control" id="editpaymentamount"
+                                            name="editpaymentamount" placeholder="Payment Amount " value=""
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn  btn-primary" type="button"
+                                            onclick="EditPaymentLog()">Save Changes</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
                     </div>
                 </div>
+            </div>
 
             <form action="" id="pendingLog" method="post">
                 @csrf
@@ -471,13 +471,14 @@
                                 document.getElementById('lastname').style.border = '1px solid red';
                             } else if (response.status == 'exist') {
                                 alertify
-                                    .alert("Warning","Customer First And Last Name Already Exist! Insert Additional Information.",
+                                    .alert("Warning",
+                                        "Customer First And Last Name Already Exist! Insert Additional Information.",
                                         function() {
                                             alertify.message('OK');
                                         });
                             } else if (response.status == 'match') {
                                 alertify
-                                    .alert("Warning","Customer Already Exists!", function() {
+                                    .alert("Warning", "Customer Already Exists!", function() {
                                         alertify.message('OK');
                                     });
                             } else if (response.status == 'email_match') {
@@ -537,7 +538,7 @@
                             {
                                 target: 13,
                                 visible: false,
-                               searchable: false
+                                searchable: false
 
                             },
                         ],
@@ -589,10 +590,10 @@
                                 "data": null,
                                 "render": function(data, type, row) {
                                     const date = row
-                                    .log_date; 
-                                    const parts = date.split('/'); 
+                                        .log_date;
+                                    const parts = date.split('/');
                                     const formattedDate =
-                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                        `${parts[1]}/${parts[0]}/${parts[2]}`;
                                     return formattedDate;
                                 }
                             },
@@ -626,7 +627,8 @@
                                         return '';
                                     } else {
                                         var payment2 = parseFloat(payment);
-                                        return '<span data-bs-toggle="modal" data-bs-target="#editpaymentmodal" onclick="EditLogPayment(`'+row.log_id +'`,`'+payment2+'`)">'+payment2+'</span>';
+                                        return '<span data-bs-toggle="modal" data-bs-target="#editpaymentmodal" onclick="EditLogPayment(`' +
+                                row.log_id + '`,`' + payment2 + '`)">' + payment2 + '</span>';
                                     }
 
                                 }
@@ -699,96 +701,96 @@
                                 }
                             },
                             {
-                                data:null,
-                                 "render": function(data, type, row) {
-                                    return "<button class='btn btn-warning' type='button' onclick='delete_log(`"+row.log_id+"`)'>Delete</button>";
+                                data: null,
+                                "render": function(data, type, row) {
+                                    return "<button class='btn btn-warning' type='button' onclick='delete_log(`" +
+                            row.log_id + "`)'>Delete</button>";
                                 }
                             },
                             {
-                                "data":"created_at"
+                                "data": "created_at"
                             }
                         ],
                     });
                 }
-                function EditLogPayment(id,payment){ 
-                    alertify.confirm("Warning","Are You Sure You Want To Edit This Log Payment?",
-  function(){
 
-                    document.getElementById('editpaymentamount').value=payment;
-                    document.getElementById('editpaymentid').value=id;
-                },
-  function(){
-    $('#editpaymentmodal').modal('hide');
-  });
+                function EditLogPayment(id, payment) {
+                    alertify.confirm("Warning", "Are You Sure You Want To Edit This Log Payment?",
+                        function() {
+
+                            document.getElementById('editpaymentamount').value = payment;
+                            document.getElementById('editpaymentid').value = id;
+                        },
+                        function() {
+                            $('#editpaymentmodal').modal('hide');
+                        });
                 }
 
-                function EditPaymentLog(){ 
-                  
-              
-    var formData = $("form#EditPaymentForm").serialize();
+                function EditPaymentLog() {
+                    var formData = $("form#EditPaymentForm").serialize();
 
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('EditPaymentLog') }}",
-                    data: formData,
-                  
-                    success: function(response) {
-                        if(response.status=='success'){
-                              alertify
-                            .alert("Message", "Payment Successfully Updated", function() {
-                                $('#editpaymentmodal').modal('hide');
-                              CustomerlogHistory();
-                            });
-                        }else if(response.status=='empty'){
-                            alertify
-                            .alert("Warning", "Insert Payment First!", function() {
-                             
-                            });
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('EditPaymentLog') }}",
+                        data: formData,
+
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                alertify
+                                    .alert("Message", "Payment Successfully Updated", function() {
+                                        $('#editpaymentmodal').modal('hide');
+                                        CustomerlogHistory();
+                                    });
+                            } else if (response.status == 'empty') {
+                                alertify
+                                    .alert("Warning", "Insert Payment First!", function() {
+
+                                    });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
                         }
-                      
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
+                    });
 
-         
+
 
                 }
 
-                function delete_log(id){
-                    alertify.confirm("Warning","Are You Sure You Want To Delete This Log?",
-  function(){
-    alertify.success('Ok');
-    var formData = new FormData();
-                formData.append('log_id', id);
-                formData.append('_token', '{{ csrf_token() }}');
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('DeleteLog') }}",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        if(response.status=='success'){
-                              alertify
-                            .alert("Message", "Log Successfully Deleted", function() {
-                              CustomerlogHistory();
+                function delete_log(id) {
+                    alertify.confirm("Warning", "Are You Sure You Want To Delete This Log?",
+                        function() {
+                            alertify.success('Ok');
+                            var formData = new FormData();
+                            formData.append('log_id', id);
+                            formData.append('_token', '{{ csrf_token() }}');
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('DeleteLog') }}",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function(response) {
+                                    if (response.status == 'success') {
+                                        alertify
+                                            .alert("Message", "Log Successfully Deleted", function() {
+                                                CustomerlogHistory();
+                                            });
+                                    }
+
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(xhr.responseText);
+                                }
                             });
-                        }
-                      
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-  },
-  function(){
-    alertify.error('Cancel');
-    
-  });
-                
-            }
+                        },
+                        function() {
+                            alertify.error('Cancel');
+
+                        });
+
+                }
+
                 function getCustomerData() {
                     $('#customerlog').DataTable({
                         "destroy": "true",
@@ -906,25 +908,25 @@
 
                 function BackToLogout() {
 
-var formData = $("form#pendingPayment").serialize();
+                    var formData = $("form#pendingPayment").serialize();
 
-console.log(formData);
-$.ajax({
-    type: "POST",
-    url: "{{ route('BackToLogout') }}",
-    data: formData,
-    success: function(response) {
-        getCustomerData();
-        CustomerlogHistory();
-        viewLog(response.data);
-        $('#out').modal('hide');
-    },
-    error: function(xhr, status, error) {
+                    console.log(formData);
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('BackToLogout') }}",
+                        data: formData,
+                        success: function(response) {
+                            getCustomerData();
+                            CustomerlogHistory();
+                            viewLog(response.data);
+                            $('#out').modal('hide');
+                        },
+                        error: function(xhr, status, error) {
 
-        console.error(xhr.responseText);
-    }
-});
-}
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
 
                 function inAndout(id) {
 
@@ -958,7 +960,7 @@ $.ajax({
                 }
 
                 function AccLogin(id) {
-                    alertify.confirm("Confirmation","Are You Sure You Want To Login This Customer?",
+                    alertify.confirm("Confirmation", "Are You Sure You Want To Login This Customer?",
                         function() {
                             alertify.success('Ok');
                             console.log(id);
@@ -999,14 +1001,14 @@ $.ajax({
                             "url": "{{ route('GetCustomerlog') }}?cuslogid=" + id,
                             "type": "GET"
                         },
-                        "columns": [ {
+                        "columns": [{
                                 "data": null,
                                 "render": function(data, type, row) {
                                     const date = row
-                                    .log_date; 
-                                    const parts = date.split('/'); 
+                                        .log_date;
+                                    const parts = date.split('/');
                                     const formattedDate =
-                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                        `${parts[1]}/${parts[0]}/${parts[2]}`;
                                     return formattedDate;
                                 }
                             },
@@ -1126,7 +1128,7 @@ $.ajax({
                 function Pending(id) {
                     console.log(id);
 
-                    alertify.confirm("Confirmation","Are You Sure You Want To Logout This Customer?",
+                    alertify.confirm("Confirmation", "Are You Sure You Want To Logout This Customer?",
                         function() {
                             alertify.success('Ok');
                             document.getElementById('cuslogoutid').value = id;
