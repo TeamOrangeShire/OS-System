@@ -61,10 +61,6 @@ class EditAcc extends Controller
            return redirect()->back();
     }
 }
-    
-
-   
-
   }
 
   public function AdminProfile(Request $request) {
@@ -252,4 +248,20 @@ class EditAcc extends Controller
         ]);
         return redirect()->back();
     }
+    //  public function EditCustomerInfo(Request $request){
+        
+
+    //     $editProfilequery = CustomerAcc::where('customer_id', $customer_id)->first();
+    //         $editProfilequery->update([
+    //             'customer_firstname' => $customerFirstName,
+    //             'customer_middlename' => $customerMidName,
+    //             'customer_lastname' => $customerLastName,
+    //             'customer_ext' => $customerExtName,
+    //             'customer_email' => $customerEmail,
+    //             'customer_phone_num' => $customerPhoneNumber,
+    //             'customer_username'=> $username,
+    //         ]);
+    //     return response()->json(['status'=>'success']);
+        
+    // }
 }
