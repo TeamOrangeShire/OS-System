@@ -179,6 +179,18 @@ public function LogToPending(Request $request) {
     }
     
 }
+public function BackToLogout(Request $request){
+
+  $logs = CustomerLogs::where('log_id',$request->id)->first();
+  $logs->update([
+
+    'log_status'=> 0,
+    'log_end_time'=> '',
+    'log_transaction'=>'',
+
+  ]);
+
+}
  
 public function AccLogin(Request $request){
 
@@ -226,6 +238,7 @@ public function AccLogin(Request $request){
         $insertnew->customer_lastname= $request->lastname;
         $insertnew->customer_ext= $request->ext;
         $insertnew->customer_email= $request->email;
+        $insertnew->customer_type= $request->customer_type;
         $insertnew->customer_phone_num= $request->number;
         $insertnew->customer_profile_pic= 'none';
         $insertnew->customer_username = strtolower(str_replace(' ', '', $request->firstname));

@@ -241,6 +241,9 @@
                                     <br>
 
                                     <div style="text-align: center;">
+                                        <button type="button" class="btn btn-danger"
+                                        onclick="BackToLogout()">Back To Logout</button>
+
                                         <button type="button" class="btn btn-success"
                                             onclick="acceptPending()">Accept Payment</button>
                                     </div>
@@ -613,8 +616,6 @@
                             {
                                 "data": null,
                                 "render": function(data, type, row) {
-
-                                    // return row.log_comment;
                                     return `<input value="${row.log_comment === null ? '' : row.log_comment}" style="border:none;background-color:transparent" placeholder="No Comment" class="undeditSpan" id="log_comment${row.log_id}" onclick="editComment(${row.log_id})" >`;
                                 }
                             },
@@ -678,8 +679,10 @@
                 }
 
                 function delete_log(id){
-                    console.log(id);
-                var formData = new FormData();
+                    alertify.confirm("Warning","Are You Sure You Want To Delete This Log?",
+  function(){
+    alertify.success('Ok');
+    var formData = new FormData();
                 formData.append('log_id', id);
                 formData.append('_token', '{{ csrf_token() }}');
                 $.ajax({
@@ -701,10 +704,12 @@
                         console.error(xhr.responseText);
                     }
                 });
+  },
+  function(){
+    alertify.error('Cancel');
+  });
+                
             }
-                
-                
-
                 function getCustomerData() {
                     $('#customerlog').DataTable({
                         "destroy": "true",
@@ -819,6 +824,28 @@
                         }
                     });
                 }
+
+                function BackToLogout() {
+
+var formData = $("form#pendingPayment").serialize();
+
+console.log(formData);
+$.ajax({
+    type: "POST",
+    url: "{{ route('BackToLogout') }}",
+    data: formData,
+    success: function(response) {
+        getCustomerData();
+        CustomerlogHistory();
+        viewLog(response.data);
+        $('#out').modal('hide');
+    },
+    error: function(xhr, status, error) {
+
+        console.error(xhr.responseText);
+    }
+});
+}
 
                 function inAndout(id) {
 
