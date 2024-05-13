@@ -401,6 +401,22 @@ public function SaveComment(Request $req){
 
   return response()->json(['status'=>'success']);
 }
+public function DeleteLog(Request $request){
+  
+  $log = CustomerLogs::where('log_id', $request->log_id)->first();
+  $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
 
+   $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin deleted " . $cus->customer_lastname."'s log history";
+    $data->act_header = "Delete log";
+    $data->act_location = "customer_log";
+    $data->save();
+
+  $log->delete();
+
+   return response()->json(['status'=>'success']);
+}
 }
 

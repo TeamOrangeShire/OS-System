@@ -134,6 +134,7 @@ Route::post('/changeCusttype',[EditAcc::class,'changeCusttype'] )->name('changeC
 Route::post('/editType',[EditAcc::class,'editType'] )->name('editType');
 Route::post('/UpdateCustomerInfo',[EditAcc::class,'UpdateCustomerInfo'] )->name('UpdateCustomerInfo');
 Route::post('/acceptLog',[CustomerLog::class,'acceptLog'] )->name('acceptLog');
+Route::post('/DeleteLog',[CustomerLog::class,'DeleteLog'] )->name('DeleteLog');
 Route::post('/InsertNewCustomer',[CustomerLog::class,'InsertNewCustomer'] )->name('InsertNewCustomer');
 Route::post('/LogToPending',[CustomerLog::class,'LogToPending'] )->name('LogToPending');
 Route::post('/AccLogin',[CustomerLog::class,'AccLogin'] )->name('AccLogin');

@@ -108,6 +108,7 @@
                                                             <th>Status</th>
                                                             <th>Comment</th>
                                                             <th>Action</th>
+                                                            <th>Delete</th>
                                                            
                                                         </tr>
                                                     </thead>
@@ -480,7 +481,7 @@
                     $('#loghistory').DataTable({
                         scrollX: true,
                         order: [
-                            [12, 'desc']
+                            [13, 'desc']
                         ],
                         columnDefs: [{
                                 target: 2,
@@ -494,6 +495,11 @@
                             },
                             {
                                 target: 12,
+                                visible: false,
+
+                            },
+                            {
+                                target: 13,
                                 visible: false,
                                searchable: false
 
@@ -659,11 +665,45 @@
                                 }
                             },
                             {
+                                data:null,
+                                 "render": function(data, type, row) {
+                                    return "<button class='btn btn-warning' type='button' onclick='delete_log(`"+row.log_id+"`)'>Delete</button>";
+                                }
+                            },
+                            {
                                 "data":"created_at"
                             }
                         ],
                     });
                 }
+
+                function delete_log(id){
+                    console.log(id);
+                var formData = new FormData();
+                formData.append('log_id', id);
+                formData.append('_token', '{{ csrf_token() }}');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('DeleteLog') }}",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if(response.status=='success'){
+                              alertify
+                            .alert("Message", "Log Successfully Deleted", function() {
+                              CustomerlogHistory();
+                            });
+                        }
+                      
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+                
+                
 
                 function getCustomerData() {
                     $('#customerlog').DataTable({
