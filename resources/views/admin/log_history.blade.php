@@ -395,6 +395,39 @@
                 </div>
             </div>
 
+            <div id="editpaymentmodal" class="modal fade" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Payment</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="" novalidate method="POST" id="EditPaymentForm">
+                                    @csrf
+                                    <div class="row mb-4">
+                                        <div class="col-md-12 mb-6">
+                                            <label for="validationTooltip01">Payment</label>
+                                            <input type="hidden" name="editpaymentid" id="editpaymentid">
+                                            <input type="text" class="form-control" id="editpaymentamount" name="editpaymentamount"
+                                                placeholder="Payment Amount " value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button class="btn  btn-primary" type="button" 
+                                                onclick="EditPaymentLog()">Save Changes</button>
+                                        </div>
+                                    </div>
+        
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
             <form action="" id="pendingLog" method="post">
                 @csrf
@@ -592,8 +625,8 @@
                                     if (payment == '' || payment == null) {
                                         return '';
                                     } else {
-                                        var payment2 = parseFloat(payment).toFixed(2);
-                                        return payment2;
+                                        var payment2 = parseFloat(payment);
+                                        return '<span data-bs-toggle="modal" data-bs-target="#editpaymentmodal" onclick="EditLogPayment(`'+row.log_id +'`,`'+payment2+'`)">'+payment2+'</span>';
                                     }
 
                                 }
@@ -677,6 +710,51 @@
                         ],
                     });
                 }
+                function EditLogPayment(id,payment){ 
+                    alertify.confirm("Warning","Are You Sure You Want To Edit This Log Payment?",
+  function(){
+
+                    document.getElementById('editpaymentamount').value=payment;
+                    document.getElementById('editpaymentid').value=id;
+                },
+  function(){
+    $('#editpaymentmodal').modal('hide');
+  });
+                }
+
+                function EditPaymentLog(){ 
+                  
+              
+    var formData = $("form#EditPaymentForm").serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('EditPaymentLog') }}",
+                    data: formData,
+                  
+                    success: function(response) {
+                        if(response.status=='success'){
+                              alertify
+                            .alert("Message", "Payment Successfully Updated", function() {
+                                $('#editpaymentmodal').modal('hide');
+                              CustomerlogHistory();
+                            });
+                        }else if(response.status=='empty'){
+                            alertify
+                            .alert("Warning", "Insert Payment First!", function() {
+                             
+                            });
+                        }
+                      
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+
+         
+
+                }
 
                 function delete_log(id){
                     alertify.confirm("Warning","Are You Sure You Want To Delete This Log?",
@@ -707,6 +785,7 @@
   },
   function(){
     alertify.error('Cancel');
+    
   });
                 
             }

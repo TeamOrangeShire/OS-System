@@ -431,5 +431,20 @@ public function DeleteLog(Request $request){
 
    return response()->json(['status'=>'success']);
 }
+
+public function EditPaymentLog(Request $request){
+  if($request->editpaymentamount==''){
+    return response()->json(['status'=>'empty']);
+  }else{
+    $log = CustomerLogs::where('log_id', $request->editpaymentid)->first();
+    $payment = explode('-',$log->log_transaction)[1];
+    $log->update([
+       'log_transaction'=>$request->editpaymentamount.'-'.$payment,
+    ]);
+  
+    return response()->json(['status'=>'success']);
+  }
+
+}
 }
 
