@@ -349,6 +349,76 @@
             </div>
         </div>
 
+                   {{-- insert modal start --}}
+                   <div id="editcustomermodal" class="custom-modal" tabindex="-1" role="dialog"
+                   aria-labelledby="customModalTitle" aria-hidden="true">
+                   <div class="custom-modal-dialog custom-modal-fullscreen" role="document">
+                       <div class="custom-modal-content">
+                           <div class="custom-modal-header">
+                               <h5 class="custom-modal-title" id="customModalTitle">Edit Customer</h5>
+                               <button type="button" class="custom-close" data-dismiss="modal"
+                                   aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                           </div>
+                           <div class="custom-modal-body">
+   
+                               <form class="needs-validation" novalidate method="POST" id="Insertnewcus">
+                                   @csrf
+                                   <div class="row">
+                                       <div class="col-md-6 mb-6">
+                                           <label for="validationTooltip01">First name <span
+                                                   style="color: red;">*</span></label>
+                                           <input type="hidden" name="customerid" id="customerid">
+                                           <input type="text" class="form-control" id="firstname" name="firstname"
+                                               placeholder="First name" value="" required>
+                                           <div class="valid-tooltip">
+                                               Looks good!
+                                           </div>
+                                       </div>
+                                       <div class="col-md-6 mb-6">
+                                           <label for="validationTooltip03">Last name <span
+                                                   style="color: red;">*</span></label>
+                                           <input type="text" class="form-control" id="lastname" name="lastname"
+                                               placeholder="Last name" value="" required>
+                                           <div class="valid-tooltip">
+                                               Looks good!
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="row">
+                                       <div class="col-md-6 mb-3">
+                                           <label for="validationTooltip04">Email</label>
+                                           <input type="text" class="form-control" id="" name="email"
+                                               placeholder="Optional">
+                                           <div class="invalid-tooltip">
+                                               Please provide a valid email.
+                                           </div>
+                                       </div>
+                                       <div class="col-md-6 mb-3">
+                                           <label for="validationTooltip05">Phone Number</label>
+                                           <input type="number" class="form-control" id="number" name="number"
+                                               placeholder="Optional" required>
+                                           <div class="invalid-tooltip">
+                                               Please provide a valid number
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="row">
+                                       
+                                       <div class="col-md-6 ">
+   
+                                           <button class="btn  btn-primary" type="button" style="margin-top: 4%;"
+                                               onclick="editcustomerinfo()">Save Changes</button>
+   
+                                       </div>
+                                   </div>
+   
+                               </form>
+   
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
         @include('admin.assets.adminscript')
         <script>
             $(document).ready(function() {
@@ -384,15 +454,27 @@
                                     row.customer_phone_num + '\',\'' +
                                     row.customer_type + '\',\'' +
                                     row.verification_image + '\',\'' +
-                                    row.account_credits + '\')"> <i class="feather icon-info"> </i></button>';
+                                    row.account_credits + '\')"> <i class="feather icon-info"> </i></button>'+ '  ' +
+                                    
+                                    '<button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#editcustomermodal" onclick="editcustomerinfo(' +
+                                    row.customer_id + ',\'' +
+                                    row.customer_firstname + '\',\'' +
+                                    row.customer_lastname + '\',\'' +
+                                    row.customer_email + '\',\'' +
+                                    row.customer_phone_num +'\')"> <i class="feather icon-edit"> </i></button>';
                             }
                         },
-
                     ]
                 });
             }
 
-
+            function editcustomerinfo(id, firstname, lastname, email, number) {
+                document.getElementById('customerid').value = id;
+                document.getElementById('firstname').value = firstname;
+                document.getElementById('lastname').value = lastname;
+                document.getElementById('email').value = email;
+                document.getElementById('number').value = number; 
+            }
 
             function view(id, fullname, email, number, customer_type, image, credit) {
                 document.getElementById('cus_id').value = id;
