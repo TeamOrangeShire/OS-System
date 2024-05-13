@@ -440,22 +440,22 @@
                                         });
                             } else if (response.status == 'match') {
                                 alertify
-                                    .alert("Customer Already Exists!", function() {
+                                    .alert("Warning","Customer Already Exists!", function() {
                                         alertify.message('OK');
                                     });
                             } else if (response.status == 'email_match') {
                                 alertify
-                                    .alert("Customer Already Exists!", function() {
+                                    .alert("Warning", "Customer Already Exists!", function() {
                                         alertify.message('OK');
                                     });
                             } else if (response.status == 'number_match') {
                                 alertify
-                                    .alert("Customer Already Exists!", function() {
+                                    .alert("Warning", "Customer Already Exists!", function() {
                                         alertify.message('OK');
                                     });
                             } else {
                                 alertify
-                                    .alert("Customer Successfully Loged", function() {
+                                    .alert("Success", "Customer Successfully Logged", function() {
                                         alertify.message('OK');
                                         location.reload();
                                     });
@@ -782,7 +782,7 @@
 
                 function inAndout(id) {
 
-                    alertify.confirm("Are You Sure You Want To Logout This Customer?",
+                    alertify.confirm("Confirmation", "Are You Sure You Want To Logout This Customer?",
                         function() {
                             alertify.success('Ok');
                             document.getElementById('cuslogoutid').value = id;
@@ -812,7 +812,7 @@
                 }
 
                 function AccLogin(id) {
-                    alertify.confirm("Are You Sure You Want To Login This Customer?",
+                    alertify.confirm("Confirmation","Are You Sure You Want To Login This Customer?",
                         function() {
                             alertify.success('Ok');
                             console.log(id);
@@ -980,7 +980,7 @@
                 function Pending(id) {
                     console.log(id);
 
-                    alertify.confirm("Are You Sure You Want To Logout This Customer?",
+                    alertify.confirm("Confirmation","Are You Sure You Want To Logout This Customer?",
                         function() {
                             alertify.success('Ok');
                             document.getElementById('cuslogoutid').value = id;
