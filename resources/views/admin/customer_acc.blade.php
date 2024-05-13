@@ -367,16 +367,9 @@
                                        <div class="col-md-6 mb-6">
                                            <label for="validationTooltip01">First name <span
                                                    style="color: red;">*</span></label>
+                                           <input type="hidden" name="customerid" id="customerid">
                                            <input type="text" class="form-control" id="firstname" name="firstname"
                                                placeholder="First name" value="" required>
-                                           <div class="valid-tooltip">
-                                               Looks good!
-                                           </div>
-                                       </div>
-                                       <div class="col-md-6 mb-6">
-                                           <label for="validationTooltip02">Middle name</label>
-                                           <input type="text" class="form-control" id="" name="middlename"
-                                               placeholder="Optional" value="">
                                            <div class="valid-tooltip">
                                                Looks good!
                                            </div>
@@ -390,20 +383,6 @@
                                                Looks good!
                                            </div>
                                        </div>
-                                       <div class="col-md-6 mb-6">
-                                           <label for="">Ext.(Optional)</label>
-                                           <select class="form-control" id="" name="ext">
-                                               <option value="N/A">N/A</option>
-                                               <option value="Jr.">Jr.</option>
-                                               <option value="Sr.">Sr.</option>
-                                               <option value="II">II</option>
-                                               <option value="III">III</option>
-                                               <option value="IV">IV</option>
-                                               <option value="V">V</option>
-                                               <option value="Jra.">Jra.</option>
-                                               <option value="Esq.">Esq.</option>
-                                           </select>
-                                       </div>
                                    </div>
                                    <div class="row">
                                        <div class="col-md-6 mb-3">
@@ -411,7 +390,7 @@
                                            <input type="text" class="form-control" id="" name="email"
                                                placeholder="Optional">
                                            <div class="invalid-tooltip">
-                                               Please provide a valid city.
+                                               Please provide a valid email.
                                            </div>
                                        </div>
                                        <div class="col-md-6 mb-3">
@@ -424,23 +403,11 @@
                                        </div>
                                    </div>
                                    <div class="row">
-                                       <div class="col-md-6 mb-3">
-                                           <div class="form-group">
-                                               <label for="">User Type <span
-                                                   style="color: red;">*</span></label>
-                                               <select class="form-control" name="customer_type" id="">
-                                                   <option value="Regular">Regular</option>
-                                                   <option value="Student">Student</option>
-                                                   <option value="Teacher">Teacher</option>
-                                                   <option value="Reviewer">Reviewer</option>
-                                                   <option value="Professional">Professional</option>
-                                               </select>
-                                           </div>
-                                       </div>
+                                       
                                        <div class="col-md-6 ">
    
                                            <button class="btn  btn-primary" type="button" style="margin-top: 4%;"
-                                               onclick="insertnewcustomer()">Insert Log</button>
+                                               onclick="editcustomerinfo()">Save Changes</button>
    
                                        </div>
                                    </div>
@@ -489,21 +456,25 @@
                                     row.verification_image + '\',\'' +
                                     row.account_credits + '\')"> <i class="feather icon-info"> </i></button>'+ '  ' +
                                     
-                                    '<button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#editcustomermodal" onclick="view(' +
+                                    '<button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#editcustomermodal" onclick="editcustomerinfo(' +
                                     row.customer_id + ',\'' +
-                                    row.customer_firstname + ' ' + row.customer_lastname + '\',\'' +
+                                    row.customer_firstname + '\',\'' +
+                                    row.customer_lastname + '\',\'' +
                                     row.customer_email + '\',\'' +
-                                    row.customer_phone_num + '\',\'' +
-                                    row.customer_type + '\',\'' +
-                                    row.verification_image + '\',\'' +
-                                    row.account_credits + '\')"> <i class="feather icon-edit"> </i></button>';
+                                    row.customer_phone_num +'\')"> <i class="feather icon-edit"> </i></button>';
                             }
                         },
                     ]
                 });
             }
 
-
+            function editcustomerinfo(id, firstname, lastname, email, number) {
+                document.getElementById('customerid').value = id;
+                document.getElementById('firstname').value = firstname;
+                document.getElementById('lastname').value = lastname;
+                document.getElementById('email').value = email;
+                document.getElementById('number').value = number; 
+            }
 
             function view(id, fullname, email, number, customer_type, image, credit) {
                 document.getElementById('cus_id').value = id;
