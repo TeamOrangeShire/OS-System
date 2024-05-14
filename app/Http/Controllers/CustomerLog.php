@@ -316,6 +316,14 @@ public function AccLogin(Request $request){
         $insertnewlog->log_status = 1;
         $insertnewlog->log_type= 1;
         $insertnewlog->save();
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin  Accepted Daypass Of " . $request->lastname.".";
+    $data->act_header = "Customer log";
+    $data->act_location = "customer_log";
+    $data->save();
         
         return response()->json(['status'=> 'success']);
     }
@@ -538,6 +546,14 @@ public function logAsDayPass(Request $request){
         $insertnewlog->log_status = 1;
         $insertnewlog->log_type= 1;
         $insertnewlog->save();
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin  Accepted Daypass Of " . $cus->customer_lastname.".";
+    $data->act_header = "Customer log";
+    $data->act_location = "customer_log";
+    $data->save();
 
         return response()->json(['status'=> 'success']);
 }
