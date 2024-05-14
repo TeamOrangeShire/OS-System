@@ -241,7 +241,8 @@
                                     <br>
 
                                     <div style="text-align: center;">
-                                        <button type="button" class="btn btn-danger" onclick="BackToLogout()">Continue Session</button>
+                                        <button type="button" class="btn btn-danger"
+                                            onclick="BackToLogout()">Continue Session</button>
 
                                         <button type="button" class="btn btn-success"
                                             onclick="acceptPending()">Accept Payment</button>
@@ -379,12 +380,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 ">
-    <button class="btn btn-primary" type="button" style="margin-top: 5%;" onclick="insertnewcustomer()">Regular Log</button>
+                                        <button class="btn btn-primary" type="button" style="margin-top: 5%;"
+                                            onclick="insertnewcustomer()">Regular Log</button>
 
-    <button class="btn btn-success" type="button" style="margin-top: 5%;" onclick="insertnewcustomerByDayPass()">DayPass</button>
-</div>
+                                        <button class="btn btn-success" type="button" style="margin-top: 5%;"
+                                            onclick="insertnewcustomerByDayPass()">DayPass</button>
+                                    </div>
 
-                                        
+
                                 </div>
 
                             </form>
@@ -443,16 +446,18 @@
                             <form class="" novalidate method="POST" id="EditPaymentForm">
                                 @csrf
                                 <div class="row d-flex justify-content-between align-items-start">
-    <input type="hidden" name="logtypeid" id="logtypeid">
-    <div class="col-md-6 text-center">  
-        <button class="btn btn-primary" type="button" onclick="AccLogin()">Regular Log</button>
-    </div>
-    <div class="col-md-6 text-center">
-        <button class="btn btn-success" type="button" onclick="logAsDayPass()">DayPass</button>
-    </div>
-</div>
+                                    <input type="hidden" name="logtypeid" id="logtypeid">
+                                    <div class="col-md-6 text-center">
+                                        <button class="btn btn-primary" type="button" onclick="AccLogin()">Regular
+                                            Log</button>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <button class="btn btn-success" type="button"
+                                            onclick="logAsDayPass()">DayPass</button>
+                                    </div>
+                                </div>
 
-                               
+
 
                             </form>
                         </div>
@@ -878,6 +883,7 @@
 
                 function getCustomerData() {
                     $('#customerlog').DataTable({
+                         scrollX: true,
                         "destroy": "true",
                         "ajax": {
                             "url": "{{ route('GetCustomerAcc') }}",
@@ -924,8 +930,9 @@
                                                 log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
                                                 "')\">Confirm</button>";
                                         } else {
-                                            return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype("+customer_id+")'>Login</button>";
-                                        
+                                            return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
+                                                customer_id + ")'>Login</button>";
+
                                         }
                                     } else {
                                         if (log_in === '0') {
@@ -946,7 +953,8 @@
                                                     row.log_id + ")'>Confirm</button>";
                                             }
                                         } else {
-                                            return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype("+customer_id+")'>Login</button>";
+                                            return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
+                                                customer_id + ")'>Login</button>";
                                         }
                                     }
                                 }
@@ -955,8 +963,8 @@
                     });
                 }
 
-                function selectlogtype(id){
-                    document.getElementById('logtypeid').value=id;
+                function selectlogtype(id) {
+                    document.getElementById('logtypeid').value = id;
                 }
 
                 function PendingToOut(id, payment, start, end) {
@@ -1030,10 +1038,19 @@
                                 url: "{{ route('LogToPending') }}",
                                 data: Dataform,
                                 success: function(response) {
-                                    getCustomerData();
-                                    CustomerlogHistory();
-                                    viewLog(response.data);
-
+                                    if (response.data == "DayPass") {
+                                        alertify
+                                            .alert("Message",
+                                                "The customer has already exceeded 8 hours, so the plan was automatically upgraded to a DayPass.",
+                                                function() {
+                                                    getCustomerData();
+                                                    CustomerlogHistory();
+                                                });
+                                    } else {
+                                        getCustomerData();
+                                        CustomerlogHistory();
+                                        viewLog(response.data);
+                                    }
                                 },
                                 error: function(xhr, status, error) {
 
@@ -1063,7 +1080,7 @@
                                     getCustomerData();
                                     CustomerlogHistory();
                                     viewLog(response.data);
-                                     $('#SelectLogType').modal('hide');
+                                    $('#SelectLogType').modal('hide');
                                 },
                                 error: function(xhr, status, error) {
 
@@ -1093,7 +1110,7 @@
                                     getCustomerData();
                                     CustomerlogHistory();
                                     viewLog(response.data);
-                                     $('#SelectLogType').modal('hide');
+                                    $('#SelectLogType').modal('hide');
                                 },
                                 error: function(xhr, status, error) {
 
@@ -1104,12 +1121,11 @@
                         function() {
                             alertify.error('Cancel');
                         });
-
                 }
-
                 function viewLog(id) {
-                    console.log(id);
+                  
                     $('#viewcustomerlog').DataTable({
+                         scrollX: true,
                         order: [
                             [0, 'desc']
                         ],
@@ -1257,9 +1273,22 @@
                                 url: "{{ route('LogToPending') }}",
                                 data: Dataform,
                                 success: function(response) {
-                                    getCustomerData();
-                                    CustomerlogHistory();
-                                    viewLog(response.data);
+                                    if (response.data == "DayPass") {
+                                        alertify
+                                            .alert("Message",
+                                                "The customer has already exceeded 8 hours, so the plan was automatically upgraded to a DayPass.",
+                                                function() {
+                                                    getCustomerData();
+                                                    CustomerlogHistory();
+                                                    $('#viewcuslog').modal('hide');
+
+                                                });
+                                    } else {
+                                        getCustomerData();
+                                        CustomerlogHistory();
+                                        viewLog(response.data);
+                                    }
+
 
                                 },
                                 error: function(xhr, status, error) {
