@@ -40,11 +40,15 @@
 
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h5>Log History</h5>
-                            <button class="btn btn-primary float-right" data-toggle="modal"
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="col-sm-8 mt-2">Log History</h5>
+                                <button class="btn btn-primary col-auto" data-toggle="modal" data-target="#groupmodal">
+                                    Group Log</button>
+                            
+                            <button class="btn btn-primary col-auto" data-toggle="modal"
                                 data-target="#insertmodal">Insert Log</button>
                         </div>
+
                         <div class="card-body">
                             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
 
@@ -161,7 +165,6 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -254,43 +257,68 @@
                     </div>
                 </div>
                 {{-- modal end info --}}
+                <!-- [ Main Content ] end -->
+            </div>
+            </div>
 
-                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+             {{-- GROUP MODAL START --}}
+                <div class="modal fade" id="groupmodal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title h4" id="myLargeModalLabel">Log History</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                <h5 class="modal-title" id="exampleModalLabel">Group Log</h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
-                                <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="row">
-                                            <div class="card-header col-md-6">
-                                                <h5>Log history</h5>
-                                                <input type="hidden" name="" id="cus_id">
-                                            </div>
-                                            <div class="card-header col-md-6">
-                                                <h5>Customer name:</h5>
-                                                <h5 id="cus_name"></h5>
-                                            </div>
-                                        </div>
-                                        <div class="card-body table-border-style">
-                                            <div class="table-responsive">
+                                <form action="" id="LogByGroupForm" method="POST">@csrf
+                                <div id="Groupbody">
+                                     <div class="col-md-12 d-flex align-items-center">
+                                        <hr class="flex-grow-1">
+                                        <i class="fas fa-plus ml-3" onclick="AddFieldGroup()"></i>
+                                        <div class="vr ml-3"></div>
+                                         <i class="fas fa-minus ml-3" onclick="RemoveFieldGroup()"></i>
+                                         
+                                    </div>
+                                   <h4 class="text-center" id="addfieldtext">Add Field</h4>
 
-                                            </div>
+                               {{-- <div class="row">
+                                    <div class="col-md-4">
+                                    <label for="validationTooltip01">First name <span style="color: red;">*</span></label>
+                                    <input type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-4">
+                                    <label for="validationTooltip01">Last name <span style="color: red;">*</span></label>
+                                    <input type="text"  class="form-control">
+                                    </div>
+                                     <div class="col-md-4">
+                                     <div class="form-group">
+                                            <label for="">User Type <span style="color: red;">*</span></label>
+                                            <select class="form-control" name="customer_type" id="">
+                                                <option value="Regular">Regular</option>
+                                                <option value="Student">Student</option>
+                                                <option value="Teacher">Teacher</option>
+                                                <option value="Reviewer">Reviewer</option>
+                                                <option value="Professional">Professional</option>
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
+                               </div> --}}
+                               </div>
+                                   <div class="col-md-12 d-flex align-items-center">
+                                        <hr class="flex-grow-1">
+                                    </div>
+                            </div>
+                            </form>
+                            <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="SaveLogByGroup()">Save changes</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- [ Main Content ] end -->
-            </div>
-            </div>
+            {{-- end modal --}}
 
             {{-- insert modal start --}}
             <div id="insertmodal" class="custom-modal" tabindex="-1" role="dialog"
@@ -386,12 +414,8 @@
                                         <button class="btn btn-success" type="button" style="margin-top: 5%;"
                                             onclick="insertnewcustomerByDayPass()">DayPass</button>
                                     </div>
-
-
                                 </div>
-
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -481,6 +505,63 @@
             @include('admin.assets.adminscript')
             <!-- Required Js -->
             <script>
+
+var addedContentArray = [];
+var uniqueId = 1;
+
+function AddFieldGroup() {
+    document.getElementById('addfieldtext').style.display = 'none';
+    var groupBody = document.getElementById('Groupbody');
+    var container = document.createElement('div');
+    container.innerHTML = `
+        <div class="row">
+            <div class="col-md-4">
+                <label for="validationTooltip01">First name <span style="color: red;">*</span></label>
+                <input type="text" name="IndivFirstName${uniqueId}" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="validationTooltip01">Last name <span style="color: red;">*</span></label>
+                <input type="text" name="IndivLastName${uniqueId}" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="">User Type <span style="color: red;">*</span></label>
+                    <select class="form-control" name="IndivType${uniqueId}" id="">
+                        <option value="Regular">Regular</option>
+                        <option value="Student">Student</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Reviewer">Reviewer</option>
+                        <option value="Professional">Professional</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    `;
+    groupBody.appendChild(container);
+    addedContentArray.push(container);
+    uniqueId++;
+}
+
+function RemoveFieldGroup() {
+    var groupBody = document.getElementById('Groupbody');
+    if (addedContentArray.length > 0) {
+        var lastAddedContent = addedContentArray.pop();
+        groupBody.removeChild(lastAddedContent);
+    } else {
+        document.getElementById('addfieldtext').style.display = '';
+    }
+}
+
+
+function SaveLogByGroup(){
+var formData = $("form#LogByGroupForm").serialize();
+console.log(formData);
+
+
+}
+
+
+
                 function editType(id, first, mid, last, email, contact, ext, type) {
                     document.getElementById('Un_id_type').value = id;
                     document.getElementById('unfirstname').value = first;
@@ -883,7 +964,7 @@
 
                 function getCustomerData() {
                     $('#customerlog').DataTable({
-                         scrollX: true,
+                        scrollX: true,
                         "destroy": "true",
                         "ajax": {
                             "url": "{{ route('GetCustomerAcc') }}",
@@ -1122,10 +1203,11 @@
                             alertify.error('Cancel');
                         });
                 }
+
                 function viewLog(id) {
-                  
+
                     $('#viewcustomerlog').DataTable({
-                         scrollX: true,
+                        scrollX: true,
                         order: [
                             [0, 'desc']
                         ],
