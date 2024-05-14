@@ -437,7 +437,19 @@ public function EditPaymentLog(Request $request){
     return response()->json(['status'=>'empty']);
   }else{
     $log = CustomerLogs::where('log_id', $request->editpaymentid)->first();
+    $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
     $payment = explode('-',$log->log_transaction)[1];
+    $pay = explode('-',$log->log_transaction)[0];
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin  Modified " . $cus->customer_lastname."'s Payment ".$pay." To " .$request->editpaymentamount;
+    $data->act_header = "Modified log";
+    $data->act_location = "customer_log";
+    $data->save();
+
+
     $log->update([
        'log_transaction'=>$request->editpaymentamount.'-'.$payment,
     ]);
