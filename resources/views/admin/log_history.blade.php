@@ -379,11 +379,12 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 ">
+    <button class="btn btn-primary" type="button" style="margin-top: 5%;" onclick="insertnewcustomer()">Regular Log</button>
 
-                                        <button class="btn  btn-primary" type="button" style="margin-top: 4%;"
-                                            onclick="insertnewcustomer()">Insert Log</button>
+    <button class="btn btn-success" type="button" style="margin-top: 5%;" onclick="insertnewcustomerByDayPass()">DayPass</button>
+</div>
 
-                                    </div>
+                                        
                                 </div>
 
                             </form>
@@ -428,6 +429,38 @@
                 </div>
             </div>
 
+
+            <div id="SelectLogType" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Select log Type</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="" novalidate method="POST" id="EditPaymentForm">
+                                @csrf
+                                <div class="row d-flex justify-content-between align-items-start">
+    <input type="hidden" name="logtypeid" id="logtypeid">
+    <div class="col-md-6 text-center">  
+        <button class="btn btn-primary" type="button" onclick="AccLogin()">Regular Log</button>
+    </div>
+    <div class="col-md-6 text-center">
+        <button class="btn btn-success" type="button" onclick="logAsDayPass()">DayPass</button>
+    </div>
+</div>
+
+                               
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <form action="" id="pendingLog" method="post">
                 @csrf
                 <input type="hidden" name="" id="cuslogoutid">
@@ -459,6 +492,58 @@
                     $.ajax({
                         type: "POST",
                         url: "{{ route('InsertNewCustomer') }}",
+                        data: formData,
+                        success: function(response) {
+                            if (response.status == 'firstname') {
+                                document.getElementById('firstname').style.border = '1px solid red';
+                            } else if (response.status == 'lastname') {
+                                document.getElementById('lastname').style.border = '1px solid red';
+                            } else if (response.status == 'failed') {
+                                document.getElementById('firstname').style.border = '1px solid red';
+                                document.getElementById('lastname').style.border = '1px solid red';
+                            } else if (response.status == 'exist') {
+                                alertify
+                                    .alert("Warning",
+                                        "Customer First And Last Name Already Exist! Insert Additional Information.",
+                                        function() {
+                                            alertify.message('OK');
+                                        });
+                            } else if (response.status == 'match') {
+                                alertify
+                                    .alert("Warning", "Customer Already Exists!", function() {
+                                        alertify.message('OK');
+                                    });
+                            } else if (response.status == 'email_match') {
+                                alertify
+                                    .alert("Warning", "Customer Already Exists!", function() {
+                                        alertify.message('OK');
+                                    });
+                            } else if (response.status == 'number_match') {
+                                alertify
+                                    .alert("Warning", "Customer Already Exists!", function() {
+                                        alertify.message('OK');
+                                    });
+                            } else {
+                                alertify
+                                    .alert("Success", "Customer Successfully Logged", function() {
+                                        alertify.message('OK');
+                                        location.reload();
+                                    });
+                            }
+
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+
+                function insertnewcustomerByDayPass() {
+                    var formData = $("form#Insertnewcus").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('insertnewcustomerByDayPass') }}",
                         data: formData,
                         success: function(response) {
                             if (response.status == 'firstname') {
@@ -774,6 +859,7 @@
                                         alertify
                                             .alert("Message", "Log Successfully Deleted", function() {
                                                 CustomerlogHistory();
+                                                getCustomerData();
                                             });
                                     }
 
@@ -838,8 +924,8 @@
                                                 log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
                                                 "')\">Confirm</button>";
                                         } else {
-                                            return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
-                                                customer_id + ")'>Login</button>";
+                                            return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype("+customer_id+")'>Login</button>";
+                                        
                                         }
                                     } else {
                                         if (log_in === '0') {
@@ -860,14 +946,17 @@
                                                     row.log_id + ")'>Confirm</button>";
                                             }
                                         } else {
-                                            return "<button class='btn btn-success' type='button' onclick='AccLogin(" +
-                                                customer_id + ")'>Login</button>";
+                                            return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype("+customer_id+")'>Login</button>";
                                         }
                                     }
                                 }
                             }
                         ]
                     });
+                }
+
+                function selectlogtype(id){
+                    document.getElementById('logtypeid').value=id;
                 }
 
                 function PendingToOut(id, payment, start, end) {
@@ -958,14 +1047,13 @@
 
                 }
 
-                function AccLogin(id) {
+                function AccLogin() {
                     alertify.confirm("Confirmation", "Are You Sure You Want To Login This Customer?",
                         function() {
-                            alertify.success('Ok');
-                            console.log(id);
-                            document.getElementById('cuslogoutid').value = id;
+                            const logtypeid = document.getElementById('logtypeid').value;
+                            document.getElementById('cuslogoutid').value = logtypeid;
                             var formData = $("form#pendingLog").serialize();
-                            var Dataform = formData + '&id=' + id;
+                            var Dataform = formData + '&id=' + logtypeid;
                             console.log(formData);
                             $.ajax({
                                 type: "POST",
@@ -975,7 +1063,37 @@
                                     getCustomerData();
                                     CustomerlogHistory();
                                     viewLog(response.data);
+                                     $('#SelectLogType').modal('hide');
+                                },
+                                error: function(xhr, status, error) {
 
+                                    console.error(xhr.responseText);
+                                }
+                            });
+                        },
+                        function() {
+                            alertify.error('Cancel');
+                        });
+
+                }
+
+                function logAsDayPass() {
+                    alertify.confirm("Confirmation", "Are You Sure You Want To Login This Customer Using DayPass Promo?",
+                        function() {
+                            const logtypeid = document.getElementById('logtypeid').value;
+                            document.getElementById('cuslogoutid').value = logtypeid;
+                            var formData = $("form#pendingLog").serialize();
+                            var Dataform = formData + '&id=' + logtypeid;
+                            console.log(formData);
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('logAsDayPass') }}",
+                                data: Dataform,
+                                success: function(response) {
+                                    getCustomerData();
+                                    CustomerlogHistory();
+                                    viewLog(response.data);
+                                     $('#SelectLogType').modal('hide');
                                 },
                                 error: function(xhr, status, error) {
 

@@ -136,8 +136,10 @@ Route::post('/UpdateCustomerInfo',[EditAcc::class,'UpdateCustomerInfo'] )->name(
 Route::post('/acceptLog',[CustomerLog::class,'acceptLog'] )->name('acceptLog');
 Route::post('/DeleteLog',[CustomerLog::class,'DeleteLog'] )->name('DeleteLog');
 Route::post('/InsertNewCustomer',[CustomerLog::class,'InsertNewCustomer'] )->name('InsertNewCustomer');
+Route::post('/insertnewcustomerByDayPass',[CustomerLog::class,'insertnewcustomerByDayPass'] )->name('insertnewcustomerByDayPass');
 Route::post('/LogToPending',[CustomerLog::class,'LogToPending'] )->name('LogToPending');
 Route::post('/AccLogin',[CustomerLog::class,'AccLogin'] )->name('AccLogin');
+Route::post('/logAsDayPass',[CustomerLog::class,'logAsDayPass'] )->name('logAsDayPass');
 Route::post('/BackToLogout',[CustomerLog::class,'BackToLogout'] )->name('BackToLogout');
 Route::post('/EditPaymentLog',[CustomerLog::class,'EditPaymentLog'] )->name('EditPaymentLog');
 Route::post('/AddBlog',[BlogData::class,'AddBlog'] )->name('AddBlog');

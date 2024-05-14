@@ -193,8 +193,6 @@ public function BackToLogout(Request $request){
 }
  
 public function AccLogin(Request $request){
-
-
         $insertnewlog = new CustomerLogs;
         $insertnewlog->customer_id = $request->id;
         $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
@@ -254,6 +252,68 @@ public function AccLogin(Request $request){
         $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
         $insertnewlog->log_start_time = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
         $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 1;
+        $insertnewlog->save();
+        
+        return response()->json(['status'=> 'success']);
+    }
+  }
+   public function insertnewcustomerByDayPass(Request $request){
+    if($request->firstname && $request->lastname && $request->middlename == '' && $request->email == '' && $request->number == ''){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->count();
+       if($acc){return response()->json(['status'=> 'exist']);}
+    }elseif ($request->firstname && $request->lastname && $request->middlename && $request->email =='' && $request->number ==''){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->where('customer_middlename', 'like', '%' . $request->middlename . '%')->count();
+      if($acc){return response()->json(['status'=> 'match']);}
+    }elseif ($request->firstname && $request->lastname && $request->middlename && $request->email && $request->number ==''){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->where('customer_middlename', 'like', '%' . $request->middlename . '%')->where('customer_email', 'like', '%' . $request->email . '%')->count();
+      if($acc){return response()->json(['status'=> 'email_match']);}
+    }elseif ($request->firstname && $request->lastname && $request->middlename && $request->email && $request->number){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->where('customer_middlename', 'like', '%' . $request->middlename . '%')->where('customer_email', 'like', '%' . $request->email . '%')->where('customer_phone_num', 'like', '%' . $request->number . '%')->count();
+      if($acc){return response()->json(['status'=> 'number_match']);}
+    }
+
+   if($request->firstname == '' || $request->lastname == '') {
+      if($request->firstname == '' && $request->lastname == ''){
+         return response()->json(['status'=> 'failed']);
+      }else if($request->firstname == ''){
+         return response()->json(['status'=> 'firstname']);
+      }else if($request->lastname == ''){
+         return response()->json(['status'=> 'lastname']);
+      }
+    }
+    else{
+    $format = strtolower(str_replace(' ', '', $request->firstname));
+        $insertnew = new CustomerAcc;
+        $insertnew->customer_firstname= $request->firstname;
+        $insertnew->customer_middlename= $request->middlename;
+        $insertnew->customer_lastname= $request->lastname;
+        $insertnew->customer_ext= $request->ext;
+        $insertnew->customer_email= $request->email;
+        $insertnew->customer_type= $request->customer_type;
+        $insertnew->customer_phone_num= $request->number;
+        $insertnew->customer_profile_pic= 'none';
+        $insertnew->customer_username = strtolower(str_replace(' ', '', $request->firstname));
+        $insertnew->customer_password= Hash::make($format.'123');
+        $insertnew->save();
+
+        $tour = new Tour;
+        $tour->customer_id = $insertnew->customer_id;
+        $tour->save();
+      
+      $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
+      $startTimeFormatted = $startTime->format('h:i A'); // Format the start time
+      $endTime = $startTime->copy()->addHours(12)->format('h:i A');
+      $totalTime = timeDifference($startTimeFormatted, $endTime);
+      $payment = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $request->customer_type);
+
+        $insertnewlog = new CustomerLogs;
+        $insertnewlog->customer_id = $insertnew->customer_id;
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+        $insertnewlog->log_start_time = $startTimeFormatted;
+        $insertnewlog->log_end_time = $endTime;
+        $insertnewlog->log_transaction = $payment.'-0';
+        $insertnewlog->log_status = 1;
         $insertnewlog->log_type= 1;
         $insertnewlog->save();
         
@@ -457,6 +517,29 @@ public function EditPaymentLog(Request $request){
     return response()->json(['status'=>'success']);
   }
 
+}
+
+public function logAsDayPass(Request $request){
+      
+      $cus = CustomerAcc::where('customer_id',$request->id)->first();
+
+      $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
+      $startTimeFormatted = $startTime->format('h:i A'); // Format the start time
+      $endTime = $startTime->copy()->addHours(12)->format('h:i A');
+      $totalTime = timeDifference($startTimeFormatted, $endTime);
+      $payment = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $cus->customer_type);
+
+        $insertnewlog = new CustomerLogs;
+        $insertnewlog->customer_id = $request->id;
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+        $insertnewlog->log_start_time = $startTimeFormatted;
+        $insertnewlog->log_end_time = $endTime;
+        $insertnewlog->log_transaction = $payment.'-0';
+        $insertnewlog->log_status = 1;
+        $insertnewlog->log_type= 1;
+        $insertnewlog->save();
+
+        return response()->json(['status'=> 'success']);
 }
 }
 
