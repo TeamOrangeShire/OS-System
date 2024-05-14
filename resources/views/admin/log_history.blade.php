@@ -241,7 +241,7 @@
                                     <br>
 
                                     <div style="text-align: center;">
-                                        <button type="button" class="btn btn-danger" onclick="BackToLogout()">Undo Logout</button>
+                                        <button type="button" class="btn btn-danger" onclick="BackToLogout()">Continue Session</button>
 
                                         <button type="button" class="btn btn-success"
                                             onclick="acceptPending()">Accept Payment</button>
