@@ -320,7 +320,7 @@ public function AccLogin(Request $request){
     $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
     $data->act_user_type = "Admin";
-    $data->act_action = "Admin  Accepted Daypass Of " . $request->lastname.".";
+    $data->act_action = "Admin  Accepted Daypass of " . $request->lastname.".";
     $data->act_header = "Customer log";
     $data->act_location = "customer_log";
     $data->save();
@@ -550,7 +550,7 @@ public function logAsDayPass(Request $request){
     $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
     $data->act_user_type = "Admin";
-    $data->act_action = "Admin  Accepted Daypass Of " . $cus->customer_lastname.".";
+    $data->act_action = "Admin  Accepted Daypass of " . $cus->customer_lastname.".";
     $data->act_header = "Customer log";
     $data->act_location = "customer_log";
     $data->save();
