@@ -405,6 +405,17 @@
             function GetCustomerAccDetail() {
                 $('#myTable').DataTable({
                     destroy: true,
+                     order: [
+                            [4, 'desc']
+                        ],
+                       columnDefs: [{
+                                target: 4,
+                                visible: false,
+
+                            },
+                        ],
+
+
                     "ajax": {
                         "url": "{{ route('GetCustomerAccDetail') }}",
                         "type": "GET"
@@ -439,6 +450,9 @@
                                     row.customer_lastname + '\')"> <i class="feather icon-edit"> </i></button>';
                             }
                         },
+                        {
+                            data:'created_at'
+                        }
                     ]
                 });
             }
