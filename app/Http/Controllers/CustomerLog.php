@@ -106,24 +106,21 @@ public function CustomerlogHistory() {
 public function LogToPending(Request $request) {
 
     $logs = CustomerLogs::where('log_id',$request->id)->first();
-    $start = $logs->log_start_time;
     $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-        $current2 = now()->setTimezone('Asia/Hong_Kong');
-    $duration = $current2->diff($start);
-    if($duration->h >= 8 && $logs->log_status == 0){
-
+    $starTime = $logs->log_start_time;
+    $endTime = $logs->log_end_time;
     $cusAcc = CustomerAcc::where('customer_id',$logs->customer_id)->first();
     $type =$cusAcc->customer_type;
-     $start = Carbon::parse($logs->log_start_time);
-      $endTime = $start->addHours(12)->format('h:i A');
-      $totalTime = timeDifference($start, $endTime);
-      $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
- 
+    $DayPassTime = add12Hours($starTime);
+    $totalTime = timeDifference($starTime, $current);
+    $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
+    if($totalTime['hours'] >= 8 && $logs->log_status == 0){
+
        if($logs->log_type == 0){
        $logs->update([
 
           'log_status'=> 1,
-          'log_end_time'=> $endTime,
+          'log_end_time'=> $DayPassTime,
           'log_transaction'=>$paymentPass.'-0',
     
         ]);  
@@ -131,7 +128,7 @@ public function LogToPending(Request $request) {
       }else{
          $logs->update([
           'log_status'=> 1,
-          'log_end_time'=> $endTime,
+          'log_end_time'=> $DayPassTime,
           'log_transaction'=>$paymentPass.'-1',
         ]);  
          return response()->json(['data' => 'DayPass']);
@@ -140,18 +137,13 @@ public function LogToPending(Request $request) {
     }
     else{
        
-    $totalTime = timeDifference($start, $current);
-    $cusAcc = CustomerAcc::where('customer_id',$logs->customer_id)->first();
-    $type =$cusAcc->customer_type;
-    $payment = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
-   
     if($logs->log_status == 0){
       if($logs->log_type == 0){
         $logs->update([
 
           'log_status'=> 1,
           'log_end_time'=> $current,
-          'log_transaction'=>$payment.'-1',
+          'log_transaction'=>$paymentPass.'-1',
     
         ]);
         
@@ -160,7 +152,7 @@ public function LogToPending(Request $request) {
 
           'log_status'=> 1,
           'log_end_time'=> $current,
-          'log_transaction'=>$payment.'-0',
+          'log_transaction'=>$paymentPass.'-0',
     
         ]);
       }

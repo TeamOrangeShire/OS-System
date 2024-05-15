@@ -126,6 +126,19 @@ function FilterTime($time){
     return ['hours' => $hours, 'minutes' => $minutes];
 }
 
+function add12Hours($time) {
+    // Parse the time string into hours, minutes, and AM/PM
+    $parsedTime = date_create_from_format('h:i A', $time);
+
+    // Add 12 hours
+    $parsedTime->modify('+12 hours');
+
+    // Format the time in 12-hour format
+    $newTime = $parsedTime->format('h:i A');
+
+    return $newTime;
+}
+
 function parseTime($time) {
     $parts = explode(':', $time);
     $hour = (int)$parts[0];
@@ -346,4 +359,3 @@ function PaymentCalc($hoursString, $minutesString, $type){
   
   
 
-?>
