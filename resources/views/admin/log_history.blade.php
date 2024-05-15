@@ -42,9 +42,10 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <h5 class="col-sm-8 mt-2">Log History</h5>
-                                <button class="btn btn-primary col-auto" data-toggle="modal" data-target="#groupmodal">
-                                    Group Log</button>
-                            
+                            <button class="btn btn-primary col-auto" data-toggle="modal" data-target="#groupmodal"
+                                onclick="GenerateId()">
+                                Group Log</button>
+
                             <button class="btn btn-primary col-auto" data-toggle="modal"
                                 data-target="#insertmodal">Insert Log</button>
                         </div>
@@ -261,63 +262,97 @@
             </div>
             </div>
 
-             {{-- GROUP MODAL START --}}
-                <div class="modal fade" id="groupmodal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Group Log</h5>
-                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="" id="LogByGroupForm" method="POST">@csrf
-                                <div id="Groupbody">
-                                     <div class="col-md-12 d-flex align-items-center">
-                                        <hr class="flex-grow-1">
-                                        <i class="fas fa-plus ml-3" onclick="AddFieldGroup()"></i>
-                                        <div class="vr ml-3"></div>
-                                         <i class="fas fa-minus ml-3" onclick="RemoveFieldGroup()"></i>
-                                         
-                                    </div>
-                                   <h4 class="text-center" id="addfieldtext">Add Field</h4>
+            {{-- GROUP MODAL START --}}
+            <div class="modal fade" id="groupmodal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Group Log</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
 
-                               {{-- <div class="row">
-                                    <div class="col-md-4">
-                                    <label for="validationTooltip01">First name <span style="color: red;">*</span></label>
-                                    <input type="text" class="form-control">
+                            <div>
+                                <h5 class="modal-title" id="">New Customer</h5>
+                                <div class="col-md-12 d-flex align-items-center">
+                                    <hr class="flex-grow-1">
+                                    <i class="fas fa-plus ml-3" onclick="AddFieldGroup()"></i>
+                                </div>
+                                <form action="" id="LogByGroupForm" method="POST">@csrf
+                                    <div id="Groupbody">
+                                        <h4 class="text-center" id="addfieldtext">Add New Customer</h4>
+                                        <input type="text" id="groupId" name="groupId">
+
                                     </div>
-                                    <div class="col-md-4">
-                                    <label for="validationTooltip01">Last name <span style="color: red;">*</span></label>
-                                    <input type="text"  class="form-control">
-                                    </div>
-                                     <div class="col-md-4">
-                                     <div class="form-group">
-                                            <label for="">User Type <span style="color: red;">*</span></label>
-                                            <select class="form-control" name="customer_type" id="">
-                                                <option value="Regular">Regular</option>
-                                                <option value="Student">Student</option>
-                                                <option value="Teacher">Teacher</option>
-                                                <option value="Reviewer">Reviewer</option>
-                                                <option value="Professional">Professional</option>
-                                            </select>
+                                </form>
+                                <div class="col-md-12 d-flex align-items-center">
+                                    <hr class="flex-grow-1">
+                                </div>
+                                <form action="" id="LogByExistGroupForm" method="POST">
+                                    @csrf
+                                    <div id="ExistGroupbody">
+                                        <h5 class="modal-title" id="">Existing Customer</h5>
+                                        <input type="text" id="groupId2" name="groupId2">
+                                        <div class="col-md-12 d-flex align-items-center">
+                                            <hr class="flex-grow-1">
+                                            <i class="fas fa-plus ml-3" data-toggle="modal"
+                                                data-target="#existgroupmodal" onclick="GetExistGroupTable()"></i>
                                         </div>
+                                        <h4 class="text-center" id="addfieldtext2">Existing Customer</h4>
+
                                     </div>
-                               </div> --}}
-                               </div>
-                                   <div class="col-md-12 d-flex align-items-center">
-                                        <hr class="flex-grow-1">
-                                    </div>
+                                </form>
                             </div>
-                            </form>
+                            <div class="col-md-12 d-flex align-items-center">
+                                <hr class="flex-grow-1">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                aria-label="Close">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="SaveLogByGroup()">Save
+                                changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- end modal --}}
+
+            {{-- GROUP MODAL START --}}
+            <div class="modal fade" id="existgroupmodal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Existing Customer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <table id="existgroupform" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+
+                                    </tr>
+                                </tbody>
+                            </table>
                             <div class="modal-footer">
-                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="SaveLogByGroup()">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    aria-label="Close">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             {{-- end modal --}}
 
             {{-- insert modal start --}}
@@ -505,28 +540,38 @@
             @include('admin.assets.adminscript')
             <!-- Required Js -->
             <script>
+                function GenerateId1() {
+                    return Math.floor(100000 + Math.random() * 900000);
 
-var addedContentArray = [];
-var uniqueId = 1;
+                }
 
-function AddFieldGroup() {
-    document.getElementById('addfieldtext').style.display = 'none';
-    var groupBody = document.getElementById('Groupbody');
-    var container = document.createElement('div');
-    container.innerHTML = `
-        <div class="row">
+                function GenerateId() {
+                    var id = GenerateId1();
+                    document.getElementById('groupId').value = id;
+                    document.getElementById('groupId2').value = id;
+                }
+
+                var addedContentArray = [];
+                var uniqueId = 1;
+
+                function AddFieldGroup() {
+                    document.getElementById('addfieldtext').style.display = 'none';
+                    var groupBody = document.getElementById('Groupbody');
+                    var container = document.createElement('div');
+                    container.innerHTML = `
+        <div class="row" id="rowid${uniqueId}">
             <div class="col-md-4">
                 <label for="validationTooltip01">First name <span style="color: red;">*</span></label>
-                <input type="text" name="IndivFirstName${uniqueId}" class="form-control">
+                <input type="text" name="IndivFirstName[]" class="form-control">
             </div>
             <div class="col-md-4">
                 <label for="validationTooltip01">Last name <span style="color: red;">*</span></label>
-                <input type="text" name="IndivLastName${uniqueId}" class="form-control">
+                <input type="text" name="IndivLastName[]" class="form-control">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="">User Type <span style="color: red;">*</span></label>
-                    <select class="form-control" name="IndivType${uniqueId}" id="">
+                    <select class="form-control" name="IndivType[]" id="">
                         <option value="Regular">Regular</option>
                         <option value="Student">Student</option>
                         <option value="Teacher">Teacher</option>
@@ -535,30 +580,150 @@ function AddFieldGroup() {
                     </select>
                 </div>
             </div>
+            <div class="col-md-1 text-center" style= "margin-top:5%;"> 
+                <i class="fas fa-minus ml-3" onclick="RemoveFieldGroup('rowid${uniqueId}')"></i>
+            </div>
         </div>
     `;
-    groupBody.appendChild(container);
-    addedContentArray.push(container);
-    uniqueId++;
-}
+                    groupBody.appendChild(container);
+                    addedContentArray.push(container);
+                    uniqueId++;
+                }
 
-function RemoveFieldGroup() {
-    var groupBody = document.getElementById('Groupbody');
-    if (addedContentArray.length > 0) {
-        var lastAddedContent = addedContentArray.pop();
-        groupBody.removeChild(lastAddedContent);
-    } else {
-        document.getElementById('addfieldtext').style.display = '';
-    }
-}
+                function SaveLogByGroup() {
+
+                    let success = 0;
+
+                    var formData = $("form#LogByGroupForm").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('SaveLogByGroup') }}",
+                        data: formData,
+                        success: function(response) {
+                            success++;
+                             alertify
+                            .alert("Message", "Insert Customer Info First.",
+                                function() {
+                                    alertify.message('OK');
+                                });
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+
+                    var formData1 = $("form#LogByExistGroupForm").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('SaveLogByExistGroup') }}",
+                        data: formData1,
+                        success: function(response) {
+                            console.log(response.status);
+                            success++;
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                    if (success == 2) {
+                        alertify
+                            .alert("Message", "Group Successfully logged.",
+                                function() {
+                                    alertify.message('OK');
+                                });
+                    } else {
+                        alertify
+                            .alert("Message", "Group Successfully logged.",
+                                function() {
+                                    alertify.message('OK');
+                                });
+                    }
+                }
+
+                function RemoveFieldGroup(id) {
+                    var groupBody = document.getElementById(id);
+                    groupBody.remove();
+                }
+
+                function GetExistGroupTable() {
+                    $('#existgroupform').DataTable({
+                        scrollX: true,
+                        order: [
+                            [2, 'desc']
+                        ],
+                        columnDefs: [{
+                            target: 2,
+                            visible: false,
+                            searchable: false
+
+                        }, ],
+
+                        "destroy": "true",
+                        "ajax": {
+                            "url": "{{ route('GetCustomerAccDetail') }}",
+                            "type": "GET"
+                        },
+                        "columns": [{
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var first = row.customer_firstname;
+                                    var last = row.customer_lastname;
+                                    return first + " " + last;
+                                }
+                            },
+                            {
+                                "data": null,
+                                "render": function(data, type, row) {
+
+                                    return `<button class="btn btn-success" type="button" onclick="AddexistCustomerTable('` +
+                                        row.customer_id + `','` + row.customer_firstname + `','` + row
+                                        .customer_lastname + `','` + row.customer_type + `')">Add</button>`;
+                                }
+                            },
+                            {
+                                "data": "created_at"
+                            }
+                        ],
+                    });
+                }
+
+                function AddexistCustomerTable(id, first, last, type) {
+                    document.getElementById('addfieldtext2').style.display = 'none';
+                    var groupBody = document.getElementById('ExistGroupbody');
+                    var container = document.createElement('div');
+                    var existingId = document.getElementById(`rowid${id}`);
+                    if (existingId) {
+                        alertify.alert("Warning", "Customer Already Added.", function() {});
+                    } else {
+                        container.innerHTML = `
+        <div class="row" id="rowid${id}">
+            <div class="col-md-4">
+                 <input type="text" name="IndivId[]" value="${id}" class="form-control" readonly>
+                <label for="validationTooltip01">First name <span style="color: red;">*</span></label>
+                <input type="text" name="IndivFirstName[]" value="${first}" class="form-control" readonly>
+            </div>
+            <div class="col-md-4">
+                <label for="validationTooltip01">Last name <span style="color: red;">*</span></label>
+                <input type="text" name="IndivLastName[]" value="${last}" class="form-control" readonly>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="">User Type <span style="color: red;">*</span></label>
+                     <input type="text" name="IndivType[]" class="form-control" value="${type}" readonly>
+                </div>
+            </div>
+            <div class="col-md-1 text-center" style= "margin-top:5%;"> 
+                <i class="fas fa-minus ml-3" onclick="RemoveFieldGroup('rowid${id}')"></i>
+            </div>
+        </div>
+    `;
+                        groupBody.appendChild(container);
+                        addedContentArray.push(container);
+                    }
 
 
-function SaveLogByGroup(){
-var formData = $("form#LogByGroupForm").serialize();
-console.log(formData);
-
-
-}
+                }
 
 
 

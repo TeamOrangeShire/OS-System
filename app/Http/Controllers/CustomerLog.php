@@ -585,5 +585,59 @@ public function logAsDayPass(Request $request){
 
         return response()->json(['status'=> 'success']);
 }
+public function SaveLogByGroup(Request $request){
+
+  $firstname = $request->IndivFirstName;
+  $lastname = $request->IndivLastName;
+  $type = $request->IndivType;
+  $groupId = $request->groupId;
+  if($firstname==''|| $lastname == '' || $type == ''){
+  return response()->json(['status'=> 'empty']);
+  }else{
+        $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
+        $startTimeFormatted = $startTime->format('h:i A');
+        for($i=0;count($firstname)>$i;$i++){
+        $insertnew = new CustomerAcc;
+        $insertnew->customer_firstname= $firstname[$i];
+        $insertnew->customer_lastname= $lastname[$i];
+        $insertnew->customer_type= $type[$i];
+        $insertnew->customer_username = strtolower(str_replace(' ', '', $firstname[$i]));
+        $insertnew->customer_password= Hash::make($firstname[$i] .'123');
+        $insertnew->save();
+
+        $insertnewlog = new CustomerLogs;
+        $insertnewlog->customer_id = $insertnew->customer_id;
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+        $insertnewlog->log_start_time = $startTimeFormatted;
+        $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 1;
+        $insertnewlog->log_group_id= $groupId ;
+        $insertnewlog->save();
+  }
+
+  return response()->json(['status'=> 'success']);
+  }
+  
+}
+public function SaveLogByExistGroup(Request $request){
+
+  $id = $request->IndivId;
+   $groupId = $request->groupId2;
+     $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
+      $startTimeFormatted = $startTime->format('h:i A');
+  for($i=0;count($id)>$i;$i++){
+
+        $insertnewlog = new CustomerLogs;
+        $insertnewlog->customer_id = $id[$i];
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+        $insertnewlog->log_start_time = $startTimeFormatted;
+        $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 1;
+         $insertnewlog->log_group_id= $groupId ;
+        $insertnewlog->save();
+  }
+
+  return response()->json(['status'=> 'success']);
+}
 }
 
