@@ -59,6 +59,10 @@
                                         History</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#group"
+                                        role="tab" aria-controls="home" aria-selected="true">Group Log</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#home"
                                         role="tab" aria-controls="home" aria-selected="true">Customer Log</a>
                                 </li>
@@ -129,6 +133,28 @@
                                     </section>
                                     </p>
                                 </div>
+                                <div class="tab-pane fade " id="group" role="tabpanel" aria-labelledby="home-tab">
+
+                                    {{-- content --}}
+
+
+
+                                    <!-- Table with stripped rows -->
+                                    <table id="GroupTable" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Group Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    {{-- content end --}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -166,6 +192,41 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="viewgrouplog" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Group Log</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="LogoutAllId" id="LogoutAllId">
+                                <table id="viewgrouplogTable" class="table table-striped" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Full Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" onclick="LogoutAll()">Logout
+                                    All</button>
                             </div>
                         </div>
                     </div>
@@ -283,7 +344,7 @@
                                 <form action="" id="LogByGroupForm" method="POST">@csrf
                                     <div id="Groupbody">
                                         <h4 class="text-center" id="addfieldtext">Add New Customer</h4>
-                                        <input type="text" id="groupId" name="groupId">
+                                        <input type="hidden" id="groupId" name="groupId">
 
                                     </div>
                                 </form>
@@ -294,7 +355,7 @@
                                     @csrf
                                     <div id="ExistGroupbody">
                                         <h5 class="modal-title" id="">Existing Customer</h5>
-                                        <input type="text" id="groupId2" name="groupId2">
+                                        <input type="hidden" id="groupId2" name="groupId2">
                                         <div class="col-md-12 d-flex align-items-center">
                                             <hr class="flex-grow-1">
                                             <i class="fas fa-plus ml-3" data-toggle="modal"
@@ -313,8 +374,8 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                 aria-label="Close">Close</button>
-                            <button type="button" class="btn btn-primary" onclick="SaveLogByGroup()">Save
-                                changes</button>
+                            <button type="button" class="btn btn-primary" onclick="SaveLogByGroup()">LogIn
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -601,11 +662,6 @@
                         data: formData,
                         success: function(response) {
                             success++;
-                             alertify
-                            .alert("Message", "Insert Customer Info First.",
-                                function() {
-                                    alertify.message('OK');
-                                });
 
                         },
                         error: function(xhr, status, error) {
@@ -631,12 +687,14 @@
                             .alert("Message", "Group Successfully logged.",
                                 function() {
                                     alertify.message('OK');
+                                    location.reload();
                                 });
                     } else {
                         alertify
                             .alert("Message", "Group Successfully logged.",
                                 function() {
                                     alertify.message('OK');
+                                    location.reload();
                                 });
                     }
                 }
@@ -699,7 +757,7 @@
                         container.innerHTML = `
         <div class="row" id="rowid${id}">
             <div class="col-md-4">
-                 <input type="text" name="IndivId[]" value="${id}" class="form-control" readonly>
+                 <input type="hidden" name="IndivId[]" value="${id}" class="form-control" readonly>
                 <label for="validationTooltip01">First name <span style="color: red;">*</span></label>
                 <input type="text" name="IndivFirstName[]" value="${first}" class="form-control" readonly>
             </div>
@@ -846,6 +904,7 @@
                 $(document).ready(function() {
                     CustomerlogHistory();
                     getCustomerData();
+                    GetGroup();
 
                 });
 
@@ -1209,6 +1268,141 @@
                     });
                 }
 
+
+                function GetGroup() {
+                    $('#GroupTable').DataTable({
+                        order: [
+                            [3, 'desc']
+                        ],
+                        columnDefs: [{
+                            target: 3,
+                            visible: false,
+                            searchable: false
+                        }, ],
+                        scrollX: true,
+                        "destroy": "true",
+                        "ajax": {
+                            "url": "{{ route('GetGroup') }}",
+                            "type": "GET"
+                        },
+                        "columns": [{
+                                "data": "name"
+                            },
+                            {
+                                "data": "count"
+                            },
+                            {
+                                "data": "groupID",
+                                "render": function(data) {
+                                    return "<button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#viewgrouplog' type='button' onclick='viewGroupLog(" +
+                                        data + ")'>View Log</button>";
+                                }
+                            },
+                            {
+                                data: "sort"
+                            }
+                        ]
+                    });
+                }
+
+                function LogoutAll() {
+                    alertify.confirm("Alert", "Are You Sure You Want To Logout This Group?",
+                        function() {
+                            alertify.success('Ok');
+                            const id = document.getElementById('LogoutAllId').value;
+                            console.log(id);
+                            var formData = new FormData();
+                            formData.append('id', id);
+                            formData.append('_token', '{{ csrf_token() }}');
+
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('LogToPending3') }}",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function(response) {
+                                    alertify
+                                        .alert("Message", "Group Successfully Logged Out", function() {
+                                            viewGroupLog(response.data);
+                                             getCustomerData();
+                                        CustomerlogHistory();
+                                        });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(xhr.responseText);
+                                }
+                            });
+                        },
+                        function() {
+                            alertify.error('Cancel');
+                        });
+
+                }
+
+                function viewGroupLog(id) {
+                    document.getElementById('LogoutAllId').value = id;
+                    $('#viewgrouplogTable').DataTable({
+                        scrollX: true,
+                        "destroy": "true",
+                        "ajax": {
+                            "url": "{{ route('viewGroupLog') }}?id=" + id,
+                            "type": "GET"
+
+                        },
+                        "columns": [{
+                                "data": "name",
+                            },
+
+                            {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    var log_in = row.log_in;
+                                    var log_id = row.log_id;
+                                    var payment = row.log_payment;
+                                    var payment2 = parseFloat(payment).toFixed(2);
+                                    var start_time = row.log_start_time;
+                                    var end_time = row.log_end_time;
+                                    var logtype = row.logtype;
+                                    if (logtype == 1) {
+                                        if (log_in === '0') {
+                                            return "<button class='btn btn-danger' type='button' onclick='inAndout2(" +
+                                                log_id + ")'>Logout</button>";
+                                        } else if (log_in === '1') {
+                                            return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                                log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
+                                                "')\">Confirm</button>";
+                                        } else {
+                                            return "paid";
+                                        }
+                                    } else {
+                                        if (log_in === '0') {
+                                            return "<button class='btn btn-danger' type='button' onclick='inAndout2(" +
+                                                log_id + ")'>Logout</button>";
+                                        } else if (log_in === '1') {
+                                            var transac = row.log_payment;
+                                            var parts = transac.split('-');
+                                            var secondPart = parts[1];
+                                            var payment = parts[0];
+                                            if (secondPart == 1) {
+                                                return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
+                                                    "', '" + row.log_end_time +
+                                                    "')\">Confirm</button>";
+                                            } else {
+                                                return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
+                                                    row.log_id + ")'>Confirm</button>";
+                                            }
+                                        } else {
+                                            return "paid";
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                }
+
                 function selectlogtype(id) {
                     document.getElementById('logtypeid').value = id;
                 }
@@ -1226,6 +1420,7 @@
 
                 }
 
+
                 function acceptPending() {
 
                     var formData = $("form#pendingPayment").serialize();
@@ -1236,10 +1431,17 @@
                         url: "{{ route('LogToPending') }}",
                         data: formData,
                         success: function(response) {
-                            getCustomerData();
-                            CustomerlogHistory();
-                            viewLog(response.data);
-                            $('#out').modal('hide');
+                            alertify
+                                .alert("Message",
+                                    "Customer Successfully Paid.",
+                                    function() {
+                                        getCustomerData();
+                                        CustomerlogHistory();
+                                        viewLog(response.data);
+                                        $('#out').modal('hide');
+
+                                    });
+
                         },
                         error: function(xhr, status, error) {
 
@@ -1296,6 +1498,52 @@
                                         getCustomerData();
                                         CustomerlogHistory();
                                         viewLog(response.data);
+                                        $('#viewgrouplog').modal('hide');
+                                        GetGroup();
+
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+
+                                    console.error(xhr.responseText);
+                                }
+                            });
+                        },
+                        function() {
+                            alertify.error('Cancel');
+                        });
+
+                }
+
+                function inAndout2(id) {
+
+                    alertify.confirm("Confirmation", "Are You Sure You Want To Logout This Customer?",
+                        function() {
+                            alertify.success('Ok');
+                            document.getElementById('cuslogoutid').value = id;
+                            var formData = $("form#pendingLog").serialize();
+                            var Dataform = formData + '&id=' + id;
+                            console.log(formData);
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('LogToPending2') }}",
+                                data: Dataform,
+                                success: function(response) {
+                                    if (response.data == "DayPass") {
+                                        alertify
+                                            .alert("Message",
+                                                "The customer has already exceeded 8 hours, so the plan was automatically upgraded to a DayPass.",
+                                                function() {
+                                                    getCustomerData();
+                                                    CustomerlogHistory();
+                                                });
+                                    } else {
+                                        getCustomerData();
+                                        CustomerlogHistory();
+                                        console.log(response.data);
+                                        viewLog(response.data);
+                                        viewGroupLog(response.data);
+
                                     }
                                 },
                                 error: function(xhr, status, error) {
