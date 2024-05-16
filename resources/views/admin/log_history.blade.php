@@ -145,6 +145,7 @@
                                             <tr>
                                                 <th>Group Name</th>
                                                 <th>Number Of People</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -336,17 +337,17 @@
                         <div class="modal-body">
 
                             <div>
-                                 <form action="" id="LogByGroupForm" method="POST">
+                                <form action="" id="LogByGroupForm" method="POST">
                                     @csrf
-                                <div id="Groupbody">
-                                <h5 class="modal-title" id="">New Customer</h5>
-                                <input type="hidden" id="groupId" name="groupId">
-                                <div class="col-md-12 d-flex align-items-center">
-                                    <hr class="flex-grow-1">
-                                    <i class="fas fa-plus ml-3" onclick="AddFieldGroup()"></i>
-                                </div>
-                                <h4 class="text-center" id="addfieldtext">Add New Customer</h4>
-                               
+                                    <div id="Groupbody">
+                                        <h5 class="modal-title" id="">New Customer</h5>
+                                        <input type="hidden" id="groupId" name="groupId">
+                                        <div class="col-md-12 d-flex align-items-center">
+                                            <hr class="flex-grow-1">
+                                            <i class="fas fa-plus ml-3" onclick="AddFieldGroup()"></i>
+                                        </div>
+                                        <h4 class="text-center" id="addfieldtext">Add New Customer</h4>
+
 
                                     </div>
                                 </form>
@@ -356,13 +357,13 @@
                                 <form action="" id="LogByExistGroupForm" method="POST">
                                     @csrf
                                     <div id="ExistGroupbody">
-                                    <h5 class="modal-title" id="">Existing Customer</h5>
-                                    <input type="hidden" id="groupId2" name="groupId2">
-                                    <div class="col-md-12 d-flex align-items-center">
-                                    <hr class="flex-grow-1">
-                                    <i class="fas fa-plus ml-3" data-toggle="modal"
+                                        <h5 class="modal-title" id="">Existing Customer</h5>
+                                        <input type="hidden" id="groupId2" name="groupId2">
+                                        <div class="col-md-12 d-flex align-items-center">
+                                            <hr class="flex-grow-1">
+                                            <i class="fas fa-plus ml-3" data-toggle="modal"
                                                 data-target="#existgroupmodal" onclick="GetExistGroupTable()"></i>
-                                    </div>
+                                        </div>
                                         <h4 class="text-center" id="addfieldtext2">Existing Customer</h4>
 
                                     </div>
@@ -529,7 +530,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="" novalidate method="POST" id="EditPaymentForm">
+                            <form class="" novalidate method="POST" id="EditPaymentbillForm">
                                 @csrf
                                 <div class="row mb-4">
                                     <div class="col-md-12 mb-6">
@@ -553,6 +554,43 @@
                     </div>
                 </div>
             </div>
+
+            <div id="editpaymentmethodmodal" class="modal fade" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Payment Method</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="" novalidate method="POST" id="EditPaymentMethodForm">
+                            @csrf
+                            <div class="row mb-4 justify-content-center"> <!-- Added justify-content-center -->
+                                <div class="col-md-12 mb-6 text-center"> <!-- Added text-center -->
+                                    <label for="validationTooltip01">Payment Method</label>
+                                    <input type="hidden" name="editpaymenMethodtid" id="editpaymenMethodtid">
+                                    <select class="form-control"
+                                            id="EditpaymentMethod" name="EditpaymentMethod">
+                                        <option value="Cash">Cash</option>
+                                        <option value="E-Pay">E-Pay</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="btn  btn-primary" type="button"
+                                        onclick="EditPaymentLogMethod()">Save Changes</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
             <div id="SelectLogType" class="modal fade" tabindex="-1" role="dialog"
@@ -653,63 +691,99 @@
                     uniqueId++;
                 }
 
-               function SaveLogByGroup() {
-    // Define local success counters for each AJAX call
-    let successGroup = 0;
-    let successExistGroup = 0;
 
-    // Define and immediately invoke the AJAX functions
-    (function() {
-        var formData = $("form#LogByGroupForm").serialize();
-        $.ajax({
-            type: "POST",
-            url: "{{ route('SaveLogByGroup') }}",
-            data: formData,
-            success: function(response) {
-                successGroup++; // Increment success counter for group
-                checkSuccess(); // Check overall success after each request
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                checkSuccess(); // Check overall success after each request
-            }
-        });
-    })();
+                function newcusgrouplog() {
+                    var formData = $("form#LogByGroupForm").serialize();
+                    console.log(formData);
 
-    (function() {
-        var formData1 = $("form#LogByExistGroupForm").serialize();
-        $.ajax({
-            type: "POST",
-            url: "{{ route('SaveLogByExistGroup') }}",
-            data: formData1,
-            success: function(response) {
-                successExistGroup++; // Increment success counter for existing group
-                checkSuccess(); // Check overall success after each request
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                checkSuccess(); // Check overall success after each request
-            }
-        });
-    })();
+                    var saveLogByGroupURL = "{{ route('SaveLogByGroup') }}";
 
-   
+                    $.ajax({
+                        type: "POST",
+                        url: saveLogByGroupURL,
+                        data: formData,
+                        success: function(response) {
+                            console.log(response.status);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+
+                function existcusgrouplog() {
+                    var formData1 = $("form#LogByExistGroupForm").serialize();
+
+                    var saveLogByGroupURL = "{{ route('SaveLogByExistGroup') }}";
+                    $.ajax({
+                        type: "POST",
+                        url: saveLogByGroupURL,
+                        data: formData1,
+                        success: function(response) {
+                            return true;
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+
+                function SaveLogByGroup() {
+    var successCount = 0;
+    document.getElementById('roller').style.display='flex';
+
+    var formData = $("form#LogByGroupForm").serialize();
+    var saveLogByGroupURL = "{{ route('SaveLogByGroup') }}";
+
+    $.ajax({
+        type: "POST",
+        url: saveLogByGroupURL,
+        data: formData,
+        success: function(response) {
+            console.log(response.status);
+            successCount++; // Increment success count
+            checkSuccess(); // Check if both requests are successful
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+
+    var formData1 = $("form#LogByExistGroupForm").serialize();
+    var saveLogByExistGroupURL = "{{ route('SaveLogByExistGroup') }}";
+
+    $.ajax({
+        type: "POST",
+        url: saveLogByExistGroupURL,
+        data: formData1,
+        success: function(response) {
+            console.log(response.status);
+            successCount++; // Increment success count
+            checkSuccess(); // Check if both requests are successful
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+
     function checkSuccess() {
-        if (successGroup > 0 && successExistGroup > 0) {
-            alertify.alert("Message", "Group Successfully logged.", function() {
-                alertify.message('OK');
-                location.reload();
-                document.getElementById('Groupbody').innerHTML = '';
-            });
-        } else {
-            alertify.alert("Message", "Logging failed.", function() {
-                alertify.message('OK');
-                location.reload();
-                document.getElementById('Groupbody').innerHTML = '';
-            });
+        if (successCount === 2) {
+            // Both requests successful
+            alertify.success('Both requests successful');
+        } else if (successCount === 1) {
+            // Only one request successful
+            alertify.success('One request successful');
+        }
+        if (successCount === 2 || successCount === 1) {
+            document.getElementById('roller').style.display='none'; 
+            CustomerlogHistory();
+            getCustomerData();
+            GetGroup();
         }
     }
 }
+
+
 
 
                 function RemoveFieldGroup(id) {
@@ -1041,7 +1115,14 @@
                                 }
                             },
                             {
-                                'data': 'log_payment_method'
+                                'data': null,
+                                "render": function(data, type, row) {
+                                    const method = row.log_payment_method === null ? '' : row.log_payment_method;
+                                        return '<span data-bs-toggle="modal" data-bs-target="#editpaymentmethodmodal" onclick="EditLogPaymentMethod(`' +
+                                row.log_id + '`,`' + method + '`)">' +method + '</span>';
+                                    
+
+                                }
                             },
                             {
                                 "data": "log_status",
@@ -1133,8 +1214,20 @@
                         });
                 }
 
+                function EditLogPaymentMethod(id, method) {
+                    alertify.confirm("Warning", "Are You Sure You Want To Edit This Log Payment Method?",
+                        function() {
+
+                            document.getElementById('EditpaymentMethod').value = method;
+                            document.getElementById('editpaymenMethodtid').value = id;
+                        },
+                        function() {
+                            $('#editpaymentmodal').modal('hide');
+                        });
+                }
+
                 function EditPaymentLog() {
-                    var formData = $("form#EditPaymentForm").serialize();
+                    var formData = $("form#EditPaymentbillForm").serialize();
 
                     $.ajax({
                         type: "POST",
@@ -1159,9 +1252,34 @@
                             console.error(xhr.responseText);
                         }
                     });
+                }
 
+                function EditPaymentLogMethod() {
+                    var formData = $("form#EditPaymentMethodForm").serialize();
 
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('EditPaymentLogMethod') }}",
+                        data: formData,
 
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                alertify
+                                    .alert("Message", "Payment Method Successfully Updated", function() {
+                                        $('#editpaymentmodal').modal('hide');
+                                        CustomerlogHistory();
+                                    });
+                            } else if (response.status == 'empty') {
+                                alertify
+                                    .alert("Warning", "Select Payment Method First!", function() {
+
+                                    });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
                 }
 
                 function delete_log(id) {
@@ -1276,7 +1394,15 @@
                                         }
                                     }
                                 }
-                            }
+                            },
+                            {
+                                "data": null,
+                                "render": function(data ,row) {
+                                    var sortDate = row.sort;
+                                    console.log(sortDate);
+                                    return sortDate;
+                                }
+                            },
                         ]
                     });
                 }
@@ -1291,8 +1417,7 @@
                             target: 3,
                             visible: false,
                             searchable: false
-                        }, 
-                    ],
+                        }, ],
                         scrollX: true,
                         "destroy": "true",
                         "ajax": {
@@ -1313,9 +1438,9 @@
                                 }
                             },
                             {
-                                "data":"num"
+                                "data": "num"
                             }
-                            
+
                         ]
                     });
                 }
@@ -1340,8 +1465,8 @@
                                     alertify
                                         .alert("Message", "Group Successfully Logged Out", function() {
                                             viewGroupLog(response.data);
-                                             getCustomerData();
-                                        CustomerlogHistory();
+                                            getCustomerData();
+                                            CustomerlogHistory();
                                         });
                                 },
                                 error: function(xhr, status, error) {

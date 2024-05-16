@@ -56,18 +56,32 @@ class CustomerLog extends Controller
   }
 
   public function GetCustomerAcc() {
+    // Retrieve all customer accounts
     $accounts = CustomerAcc::all();
+
+    // Iterate through each account
     foreach ($accounts as $acc) {
+        // Query customer logs for log_status 0 and 1
         $customerLogs1 = CustomerLogs::where('customer_id', $acc->customer_id)
-                                     ->whereIn('log_status', [0]) // Changed to an array with one element
+                                     ->where('log_status', 0)
+                                     ->latest('created_at')
                                      ->first();
+
         $customerLogs2 = CustomerLogs::where('customer_id', $acc->customer_id)
-                                     ->whereIn('log_status', [1]) // Changed to an array with one element
+                                     ->where('log_status', 1)
+                                     ->latest('created_at')
                                      ->first();
+                                     
+       $customerLogs3 = CustomerLogs::where('customer_id', $acc->customer_id)
+                                     ->where('log_status', 2)
+                                     ->latest('created_at')
+                                     ->first();
+        // Assign log attributes based on log_status
         if ($customerLogs1) {
             $acc->log_in = "0";
             $acc->logtype = $customerLogs1->log_type;
             $acc->log_id = $customerLogs1->log_id;
+            $acc->sort = $customerLogs1->created_at;
         } elseif ($customerLogs2) {
             $acc->log_in = "1";
             $acc->logtype = $customerLogs2->log_type;
@@ -75,16 +89,22 @@ class CustomerLog extends Controller
             $acc->log_start_time = $customerLogs2->log_start_time;
             $acc->log_end_time = $customerLogs2->log_end_time;
             $acc->log_id = $customerLogs2->log_id;
-        } else {
+            $acc->sort = $customerLogs2->created_at;
+        } else if($customerLogs3){
             $acc->log_in = "2"; 
+            $acc->sort = $customerLogs3->created_at;
         }
-        unset($acc->created_at);
-        unset($acc->updated_at);
-      
+
+    
     }
+
+   
     $accounts = $accounts->toArray();
+
+    // Return JSON response
     return response()->json(['data' => $accounts]);
 }
+
 
  public function viewGroupLog(Request $request) {
     $GroupLog = CustomerLogs::where('log_group_id',$request->id)->get();
@@ -713,6 +733,32 @@ public function EditPaymentLog(Request $request){
 
 }
 
+public function EditPaymentLogMethod(Request $request){
+  if($request->EditpaymentMethod==''){
+    return response()->json(['status'=>'empty']);
+  }else{
+    $log = CustomerLogs::where('log_id', $request->editpaymenMethodtid)->first();
+    $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
+    
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin  Modified " . $cus->customer_lastname."'s Payment Mthod".$log->log_payment_method." To " .$request->EditpaymentMethod;
+    $data->act_header = "Modified log";
+    $data->act_location = "customer_log";
+    $data->save();
+
+
+    $log->update([
+       'log_payment_method'=>$request->EditpaymentMethod,
+    ]);
+  
+    return response()->json(['status'=>'success']);
+  }
+
+}
+
 public function logAsDayPass(Request $request){
       
       $cus = CustomerAcc::where('customer_id',$request->id)->first();
@@ -743,41 +789,54 @@ public function logAsDayPass(Request $request){
 
         return response()->json(['status'=> 'success']);
 }
-public function SaveLogByGroup(Request $request){
+public function SaveLogByGroup(Request $request)
+{
+    // Input validation
+    $request->validate([
+        'IndivFirstName' => 'required|array',
+        'IndivLastName' => 'required|array',
+        'IndivType' => 'required|array',
+        'groupId' => 'required',
+    ]);
 
-  $firstname = $request->IndivFirstName;
-  $lastname = $request->IndivLastName;
-  $type = $request->IndivType;
-  $groupId = $request->groupId;
-  // if($firstname==''|| $lastname == '' || $type == ''){
-  // return response()->json(['status'=> 'empty']);
-  // }else{
-        $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
-        $startTimeFormatted = $startTime->format('h:i A');
-        for($i=0;count($firstname)>$i;$i++){
-          $lower = strtolower(str_replace(' ', '', $firstname[$i]));
-        $insertnew = new CustomerAcc;
-        $insertnew->customer_firstname= $firstname[$i];
-        $insertnew->customer_lastname= $lastname[$i];
-        $insertnew->customer_type= $type[$i];
-        $insertnew->customer_username = strtolower(str_replace(' ', '', $firstname[$i]));
-        $insertnew->customer_password= Hash::make($lower[$i] .'123');
-        $insertnew->save();
+    // Retrieve request data
+    $firstNames = $request->input('IndivFirstName');
+    $lastNames = $request->input('IndivLastName');
+    $types = $request->input('IndivType');
+    $groupId = $request->input('groupId');
 
-        $insertnewlog = new CustomerLogs;
-        $insertnewlog->customer_id = $insertnew->customer_id;
-        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
-        $insertnewlog->log_start_time = $startTimeFormatted;
-        $insertnewlog->log_status = 0;
-        $insertnewlog->log_type= 1;
-        $insertnewlog->log_group_id= $groupId ;
-        $insertnewlog->save();
-  }
+    // Get current time in Asia/Hong_Kong timezone
+    $startTime = now()->setTimezone('Asia/Hong_Kong');
+    $startTimeFormatted = $startTime->format('h:i A');
 
-  return response()->json(['status'=> 'success']);
-  // }
-  
+    // Loop through each individual
+    foreach ($firstNames as $key => $firstName) {
+        // Compute lowercase username
+        $lower = strtolower(str_replace(' ', '', $firstName));
+
+        // Create new customer account
+        $customer = CustomerAcc::create([
+            'customer_firstname' => $firstName,
+            'customer_lastname' => $lastNames[$key],
+            'customer_type' => $types[$key],
+            'customer_username' => $lower,
+            'customer_password' => Hash::make($lower . '123'),
+        ]);
+
+        // Create new customer log
+        CustomerLogs::create([
+            'customer_id' => $customer->customer_id,
+            'log_date' => $startTime->format('d/m/Y'),
+            'log_start_time' => $startTimeFormatted,
+            'log_status' => 0,
+            'log_type' => 1,
+            'log_group_id' => $groupId,
+        ]);
+    }
+
+    return response()->json(['status' => 'success']);
 }
+
 public function SaveLogByExistGroup(Request $request){
 
   $id = $request->IndivId;
