@@ -270,6 +270,9 @@
 
             function CustomerlogHistory() {
                 $('#generalhistory').DataTable({
+                    scrollY: '400px',
+                    scrollCollapse: true,
+                    paging: false,
                      scrollX: true,
                     order: [
                         [10, 'desc']
@@ -413,7 +416,9 @@
 
             function getsalereport() {
                 $('#salesreport').DataTable({
-                     
+                    scrollY: '400px',
+                    scrollCollapse: true,
+                    paging: false,
                     order: [
                         [0, 'desc']
                     ],
@@ -513,6 +518,9 @@
 
             function viewLog(date) {
                 $('#detailsalesreport').DataTable({
+                    scrollY: '350px',
+                    scrollCollapse: true,
+                    paging: false,
                      scrollX: true,
                     order: [
                         [1, 'desc']
@@ -613,6 +621,9 @@
                 console.log("End Date:", endDate);
 
                 $('#weeklyreport').DataTable({
+                    scrollY: '400px',
+                    scrollCollapse: true,
+                    paging: false,
                      scrollX: true,
                     order: [
                         [10, 'desc']
