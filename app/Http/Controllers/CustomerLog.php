@@ -807,7 +807,7 @@ public function GetGroup() {
     $group = [];
     $num = 1;
     foreach ($groupedLogs as $log) {
-        $count = CustomerLogs::where('log_group_id', $log->log_group_id)->count();
+        $count = CustomerLogs::where('log_group_id', $log->log_group_id)->get()->count();
         $firstLog = CustomerLogs::where('log_group_id', $log->log_group_id)->first();
         $customer = CustomerAcc::where('customer_id', $firstLog->customer_id)->first();
         if ($customer) {

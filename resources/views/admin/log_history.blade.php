@@ -336,16 +336,17 @@
                         <div class="modal-body">
 
                             <div>
-                                 <form action="" id="LogByGroupForm" method="POST">@csrf
-                                    <div id="Groupbody">
+                                 <form action="" id="LogByGroupForm" method="POST">
+                                    @csrf
+                                <div id="Groupbody">
                                 <h5 class="modal-title" id="">New Customer</h5>
+                                <input type="hidden" id="groupId" name="groupId">
                                 <div class="col-md-12 d-flex align-items-center">
                                     <hr class="flex-grow-1">
                                     <i class="fas fa-plus ml-3" onclick="AddFieldGroup()"></i>
                                 </div>
+                                <h4 class="text-center" id="addfieldtext">Add New Customer</h4>
                                
-                                        <h4 class="text-center" id="addfieldtext">Add New Customer</h4>
-                                        <input type="hidden" id="groupId" name="groupId">
 
                                     </div>
                                 </form>
@@ -355,13 +356,13 @@
                                 <form action="" id="LogByExistGroupForm" method="POST">
                                     @csrf
                                     <div id="ExistGroupbody">
-                                        <h5 class="modal-title" id="">Existing Customer</h5>
-                                        <input type="hidden" id="groupId2" name="groupId2">
-                                        <div class="col-md-12 d-flex align-items-center">
-                                            <hr class="flex-grow-1">
-                                            <i class="fas fa-plus ml-3" data-toggle="modal"
+                                    <h5 class="modal-title" id="">Existing Customer</h5>
+                                    <input type="hidden" id="groupId2" name="groupId2">
+                                    <div class="col-md-12 d-flex align-items-center">
+                                    <hr class="flex-grow-1">
+                                    <i class="fas fa-plus ml-3" data-toggle="modal"
                                                 data-target="#existgroupmodal" onclick="GetExistGroupTable()"></i>
-                                        </div>
+                                    </div>
                                         <h4 class="text-center" id="addfieldtext2">Existing Customer</h4>
 
                                     </div>
@@ -652,55 +653,64 @@
                     uniqueId++;
                 }
 
-                function newcusgrouplog(){
-                     var formData = $("form#LogByGroupForm").serialize();
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('SaveLogByGroup') }}",
-                        data: formData,
-                        success: function(response) {
-                                return true;
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(xhr.responseText);
-                        }
-                    });
-                }
-                function existcusgrouplog(){
-                     var formData1 = $("form#LogByExistGroupForm").serialize();
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('SaveLogByExistGroup') }}",
-                        data: formData1,
-                        success: function(response) {
-                            
-                            return true;
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(xhr.responseText);
-                        }
-                    });
-                }
+               function SaveLogByGroup() {
+    // Define local success counters for each AJAX call
+    let successGroup = 0;
+    let successExistGroup = 0;
 
-                function SaveLogByGroup() {
+    // Define and immediately invoke the AJAX functions
+    (function() {
+        var formData = $("form#LogByGroupForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: "{{ route('SaveLogByGroup') }}",
+            data: formData,
+            success: function(response) {
+                successGroup++; // Increment success counter for group
+                checkSuccess(); // Check overall success after each request
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                checkSuccess(); // Check overall success after each request
+            }
+        });
+    })();
 
-                    let success = 0;
-                  if (existcusgrouplog() || newcusgrouplog()) {
-                        alertify
-                            .alert("Message", "Group Successfully logged.",
-                                function() {
-                                    alertify.message('OK');
-                                    location.reload();
-                                });
-                    } else {
-                        alertify
-                            .alert("Message", "Group Successfully logged.",
-                                function() {
-                                    alertify.message('OK');
-                                    location.reload();
-                                });
-                    }
-                }
+    (function() {
+        var formData1 = $("form#LogByExistGroupForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: "{{ route('SaveLogByExistGroup') }}",
+            data: formData1,
+            success: function(response) {
+                successExistGroup++; // Increment success counter for existing group
+                checkSuccess(); // Check overall success after each request
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                checkSuccess(); // Check overall success after each request
+            }
+        });
+    })();
+
+   
+    function checkSuccess() {
+        if (successGroup > 0 && successExistGroup > 0) {
+            alertify.alert("Message", "Group Successfully logged.", function() {
+                alertify.message('OK');
+                location.reload();
+                document.getElementById('Groupbody').innerHTML = '';
+            });
+        } else {
+            alertify.alert("Message", "Logging failed.", function() {
+                alertify.message('OK');
+                location.reload();
+                document.getElementById('Groupbody').innerHTML = '';
+            });
+        }
+    }
+}
+
 
                 function RemoveFieldGroup(id) {
                     var groupBody = document.getElementById(id);
