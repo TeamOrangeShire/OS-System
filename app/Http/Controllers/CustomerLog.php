@@ -749,9 +749,9 @@ public function SaveLogByGroup(Request $request){
   $lastname = $request->IndivLastName;
   $type = $request->IndivType;
   $groupId = $request->groupId;
-  if($firstname==''|| $lastname == '' || $type == ''){
-  return response()->json(['status'=> 'empty']);
-  }else{
+  // if($firstname==''|| $lastname == '' || $type == ''){
+  // return response()->json(['status'=> 'empty']);
+  // }else{
         $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
         $startTimeFormatted = $startTime->format('h:i A');
         for($i=0;count($firstname)>$i;$i++){
@@ -775,7 +775,7 @@ public function SaveLogByGroup(Request $request){
   }
 
   return response()->json(['status'=> 'success']);
-  }
+  // }
   
 }
 public function SaveLogByExistGroup(Request $request){
@@ -798,23 +798,31 @@ public function SaveLogByExistGroup(Request $request){
 
   return response()->json(['status'=> 'success']);
 }
-public function GetGroup(){
-$groupedLogs = CustomerLogs::where('log_group_id','!=','')->select('log_group_id','created_at')->distinct()->get();
+public function GetGroup() {
+    $groupedLogs = CustomerLogs::whereNotNull('log_group_id')
+        ->select('log_group_id')
+        ->distinct()
+        ->get();
 
-$group =[];
-foreach($groupedLogs as $log){
-  $count= CustomerLogs::where('log_group_id',$log->log_group_id)->get()->count();
-  $first= CustomerLogs::where('log_group_id',$log->log_group_id)->first();
-  $cus = CustomerAcc::where('customer_id',$first->customer_id)->first();
-  $group[]=[
-    'groupID'=>$log->log_group_id,
-    'sort'=>$log->created_at,
-    'count'=>$count,
-    'name'=>$cus->customer_firstname.' '.$cus->customer_lastname
-  ];
+    $group = [];
+    $num = 1;
+    foreach ($groupedLogs as $log) {
+        $count = CustomerLogs::where('log_group_id', $log->log_group_id)->count();
+        $firstLog = CustomerLogs::where('log_group_id', $log->log_group_id)->first();
+        $customer = CustomerAcc::where('customer_id', $firstLog->customer_id)->first();
+        if ($customer) {
+            $group[] = [
+                'num'=>$num,
+                'groupID' => $log->log_group_id,
+                'count' => $count,
+                'name' => $customer->customer_firstname . ' ' . $customer->customer_lastname
+            ];
+        }
+          $num++;
+    }
+   
+    return response()->json(['data' => $group]);
 }
-return response()->json(['data' => $group]);
 
-}
 }
 

@@ -144,7 +144,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Group Name</th>
-                                                <th>Action</th>
+                                                <th>Number Of People</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -336,13 +336,14 @@
                         <div class="modal-body">
 
                             <div>
+                                 <form action="" id="LogByGroupForm" method="POST">@csrf
+                                    <div id="Groupbody">
                                 <h5 class="modal-title" id="">New Customer</h5>
                                 <div class="col-md-12 d-flex align-items-center">
                                     <hr class="flex-grow-1">
                                     <i class="fas fa-plus ml-3" onclick="AddFieldGroup()"></i>
                                 </div>
-                                <form action="" id="LogByGroupForm" method="POST">@csrf
-                                    <div id="Groupbody">
+                               
                                         <h4 class="text-center" id="addfieldtext">Add New Customer</h4>
                                         <input type="hidden" id="groupId" name="groupId">
 
@@ -651,38 +652,40 @@
                     uniqueId++;
                 }
 
-                function SaveLogByGroup() {
-
-                    let success = 0;
-
-                    var formData = $("form#LogByGroupForm").serialize();
+                function newcusgrouplog(){
+                     var formData = $("form#LogByGroupForm").serialize();
                     $.ajax({
                         type: "POST",
                         url: "{{ route('SaveLogByGroup') }}",
                         data: formData,
                         success: function(response) {
-                            success++;
-
+                                return true;
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
                         }
                     });
-
-                    var formData1 = $("form#LogByExistGroupForm").serialize();
+                }
+                function existcusgrouplog(){
+                     var formData1 = $("form#LogByExistGroupForm").serialize();
                     $.ajax({
                         type: "POST",
                         url: "{{ route('SaveLogByExistGroup') }}",
                         data: formData1,
                         success: function(response) {
-                            console.log(response.status);
-                            success++;
+                            
+                            return true;
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
                         }
                     });
-                    if (success == 2) {
+                }
+
+                function SaveLogByGroup() {
+
+                    let success = 0;
+                  if (existcusgrouplog() || newcusgrouplog()) {
                         alertify
                             .alert("Message", "Group Successfully logged.",
                                 function() {
@@ -1278,7 +1281,8 @@
                             target: 3,
                             visible: false,
                             searchable: false
-                        }, ],
+                        }, 
+                    ],
                         scrollX: true,
                         "destroy": "true",
                         "ajax": {
@@ -1299,8 +1303,9 @@
                                 }
                             },
                             {
-                                data: "sort"
+                                "data":"num"
                             }
+                            
                         ]
                     });
                 }
