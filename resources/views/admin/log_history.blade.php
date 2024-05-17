@@ -1113,7 +1113,7 @@
                             {
                                 'data': null,
                                 "render": function(data, type, row) {
-                                    const method = row.log_payment_method === null ? '' : row.log_payment_method;
+                                    const method = row.log_payment_method === null ? 'Not Set' : row.log_payment_method;
                                         return '<span data-bs-toggle="modal" data-bs-target="#editpaymentmethodmodal" onclick="EditLogPaymentMethod(`' +
                                 row.log_id + '`,`' + method + '`)">' +method + '</span>';
                                     
