@@ -994,6 +994,9 @@
                 function CustomerlogHistory() {
                     $('#loghistory').DataTable({
                         scrollX: true,
+                        scrollY: '400px',
+                        scrollCollapse: true,
+                        paging: false,
                         order: [
                             [13, 'desc']
                         ],
@@ -1192,7 +1195,7 @@
                                 }
                             },
                             {
-                                "data": "created_at"
+                                "data": "updated_at"
                             }
                         ],
                     });
@@ -1326,6 +1329,9 @@
                             },
                         ],
                         scrollX: true,
+                         scrollY: '400px',
+                        scrollCollapse: true,
+                        paging: false,
                         "destroy": "true",
                         "ajax": {
                             "url": "{{ route('GetCustomerAcc') }}",

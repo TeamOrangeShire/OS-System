@@ -64,24 +64,24 @@ class CustomerLog extends Controller
         
         $customerLogs1 = CustomerLogs::where('customer_id', $acc->customer_id)
                                      ->where('log_status', 0)
-                                     ->latest('created_at')
+                                     ->latest('updated_at')
                                      ->first();
 
         $customerLogs2 = CustomerLogs::where('customer_id', $acc->customer_id)
                                      ->where('log_status', 1)
-                                     ->latest('created_at')
+                                     ->latest('updated_at')
                                      ->first();
                                      
        $customerLogs3 = CustomerLogs::where('customer_id', $acc->customer_id)
                                      ->where('log_status', 2)
-                                     ->latest('created_at')
+                                     ->latest('updated_at')
                                      ->first();
         // Assign log attributes based on log_status
         if ($customerLogs1) {
             $acc->log_in = "0";
             $acc->logtype = $customerLogs1->log_type;
             $acc->log_id = $customerLogs1->log_id;
-            $acc->sort = $customerLogs1->created_at;
+            $acc->sort = $customerLogs1->updated_at;
         } elseif ($customerLogs2) {
             $acc->log_in = "1";
             $acc->logtype = $customerLogs2->log_type;
@@ -89,10 +89,10 @@ class CustomerLog extends Controller
             $acc->log_start_time = $customerLogs2->log_start_time;
             $acc->log_end_time = $customerLogs2->log_end_time;
             $acc->log_id = $customerLogs2->log_id;
-            $acc->sort = $customerLogs2->created_at;
+            $acc->sort = $customerLogs2->updated_at;
         } else if($customerLogs3){
             $acc->log_in = "2"; 
-            $acc->sort = $customerLogs3->created_at;
+            $acc->sort = $customerLogs3->updated_at;
         }
 
     
