@@ -331,7 +331,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Group Log</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalCloseButton"><span
                                     aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
@@ -741,8 +741,8 @@
         data: formData,
         success: function(response) {
             console.log(response.status);
-            successCount++; // Increment success count
-            checkSuccess(); // Check if both requests are successful
+            successCount++; 
+            checkSuccess(); 
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
@@ -758,8 +758,8 @@
         data: formData1,
         success: function(response) {
             console.log(response.status);
-            successCount++; // Increment success count
-            checkSuccess(); // Check if both requests are successful
+            successCount++;
+            checkSuccess(); 
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
@@ -768,10 +768,8 @@
 
     function checkSuccess() {
         if (successCount === 2) {
-            // Both requests successful
             alertify.success('Both requests successful');
         } else if (successCount === 1) {
-            // Only one request successful
             alertify.success('One request successful');
         }
         if (successCount === 2 || successCount === 1) {
@@ -779,12 +777,10 @@
             CustomerlogHistory();
             getCustomerData();
             GetGroup();
+            document.getElementById('modalCloseButton').click();
         }
     }
 }
-
-
-
 
                 function RemoveFieldGroup(id) {
                     var groupBody = document.getElementById(id);
@@ -1319,6 +1315,16 @@
 
                 function getCustomerData() {
                     $('#customerlog').DataTable({
+                         order: [
+                            [5, 'desc']
+                        ],
+                        columnDefs: [{
+                                target: 5,
+                                visible: false,
+                                searchable: false
+
+                            },
+                        ],
                         scrollX: true,
                         "destroy": "true",
                         "ajax": {
@@ -1365,7 +1371,7 @@
                                             return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
                                                 log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
                                                 "')\">Confirm</button>";
-                                        } else {
+                                        } else if (log_in === '2'){
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
                                                 customer_id + ")'>Login</button>";
 
@@ -1388,7 +1394,7 @@
                                                 return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
                                                     row.log_id + ")'>Confirm</button>";
                                             }
-                                        } else {
+                                        } else if(log_in === '2'){
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
                                                 customer_id + ")'>Login</button>";
                                         }
@@ -1396,12 +1402,7 @@
                                 }
                             },
                             {
-                                "data": null,
-                                "render": function(data ,row) {
-                                    var sortDate = row.sort;
-                                    console.log(sortDate);
-                                    return sortDate;
-                                }
+                                "data": 'sort'
                             },
                         ]
                     });
