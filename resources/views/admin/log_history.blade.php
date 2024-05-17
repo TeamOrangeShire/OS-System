@@ -1402,7 +1402,17 @@
                                 }
                             },
                             {
-                                "data": 'sort'
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    // Check if the sort property is null and return an empty string if true
+                                    if (row.sort == null) {
+                                        return '2023-05-17 10:51:50';
+                                    } else {
+                                        // Otherwise, return the value of sort
+                                        return row.sort;
+                                    }
+                                }
+
                             },
                         ]
                     });

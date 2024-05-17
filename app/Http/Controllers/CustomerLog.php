@@ -61,7 +61,7 @@ class CustomerLog extends Controller
 
     // Iterate through each account
     foreach ($accounts as $acc) {
-        // Query customer logs for log_status 0 and 1
+        
         $customerLogs1 = CustomerLogs::where('customer_id', $acc->customer_id)
                                      ->where('log_status', 0)
                                      ->latest('created_at')
