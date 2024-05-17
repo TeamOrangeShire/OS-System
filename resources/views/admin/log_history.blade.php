@@ -1371,7 +1371,7 @@
                                             return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
                                                 log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
                                                 "')\">Confirm</button>";
-                                        } else if (log_in === '2'){
+                                        } else{
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
                                                 customer_id + ")'>Login</button>";
 
@@ -1394,7 +1394,7 @@
                                                 return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
                                                     row.log_id + ")'>Confirm</button>";
                                             }
-                                        } else if(log_in === '2'){
+                                        } else{
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
                                                 customer_id + ")'>Login</button>";
                                         }
