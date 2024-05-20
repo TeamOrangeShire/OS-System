@@ -208,7 +208,7 @@ public function LogToPending(Request $request) {
     
         ]);
       }
-    return response()->json(['data' => $logs->customer_id]);
+    return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
     }else if($logs->log_status == 1){
       if($logs->log_type == 0){
         $logs->update([

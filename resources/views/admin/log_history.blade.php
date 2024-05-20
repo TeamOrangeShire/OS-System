@@ -1147,7 +1147,7 @@
                                     if (data === 1) {
                                         var log_status = row.log_status;
                                         if (log_status === 0) {
-                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
+                                            return "<button class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#out' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
                                             var transac = row.log_transaction;
@@ -1371,7 +1371,7 @@
                                     var logtype = row.logtype;
                                     if (logtype == 1) {
                                         if (log_in === '0') {
-                                            return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
+                                            return "<button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#out'  type='button' onclick='inAndout(" +
                                                 log_id + ")'>Logout</button>";
                                         } else if (log_in === '1') {
                                             return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
@@ -1652,6 +1652,14 @@
                                                     CustomerlogHistory();
                                                 });
                                     } else {
+
+                                        var totaltime = timeDifference(response.confirm[2], response.confirm[1]);
+                                        var between = totaltime.hours + ':' + totaltime.minutes;
+                                        document.getElementById('id').value=response.confirm[0];
+                                        document.getElementById('payment').value=response.confirm[3];
+                                        document.getElementById('start').textContent=response.confirm[2];
+                                        document.getElementById('end').textContent=response.confirm[1];
+                                        document.getElementById('hours').textContent=between;
                                         getCustomerData();
                                         CustomerlogHistory();
                                         viewLog(response.data);
@@ -1936,6 +1944,15 @@
 
                                                 });
                                     } else {
+                                       const tend = response.confirm[1];
+                                        const tstart = response.confirm[2];
+                                        var totaltime = timeDifference(tstart,tend);
+                                        var between = totaltime.hours + ':' + totaltime.minutes;
+                                        document.getElementById('id').value=response.confirm[0];
+                                        document.getElementById('payment').value=response.confirm[3];
+                                        document.getElementById('start').textContent=response.confirm[2];
+                                        document.getElementById('end').textContent=response.confirm[1];
+                                        document.getElementById('hours').textContent=between;
                                         getCustomerData();
                                         CustomerlogHistory();
                                         viewLog(response.data);
