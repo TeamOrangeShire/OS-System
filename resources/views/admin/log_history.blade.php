@@ -1160,12 +1160,46 @@
                                         } else {
                                             return "Paid";
                                         }
-                                    } else if (data === 0) {
+                                    }else if (data === 2) {
+                                        var log_status = row.log_status;
+                                        if (log_status === 0) {
+                                            return "<button class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#out' onclick='Pending(" +
+                                                row.log_id + ")'>Logout</button>";
+                                        } else if (log_status === 1) {
+                                            var transac = row.log_transaction;
+                                            var parts = transac.split('-');
+                                            var payment = parts[0];
+                                            return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                                row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" +
+                                                row.log_end_time +
+                                                "')\">Confirm</button>";
+                                        } else {
+                                            return "Paid";
+                                        }
+                                    }
+                                     else if (data === 0) {
                                         var log_status = row.log_status;
                                         if (log_status === 0) {
                                             return "<button class='btn btn-danger' type='button' onclick='Pending(" +
                                                 row.log_id + ")'>Logout</button>";
                                         } else if (log_status === 1) {
+
+                                            var transac = row.log_transaction;
+                                            var parts = transac.split('-');
+                                            var secondPart = parts[1];
+                                            var payment = parts[0];
+                                            if (secondPart == 1) {
+                                                return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
+                                                    "', '" + row.log_end_time +
+                                                    "')\">Confirm</button>";
+                                            } else {
+                                                return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
+                                                    row.log_id + ")'>Confirm</button>";
+                                            }
+
+                                        }
+                                         else if (log_status === 2) {
 
                                             var transac = row.log_transaction;
                                             var parts = transac.split('-');
@@ -1854,6 +1888,17 @@
                                 "data": "log_type",
                                 "render": function(data, type, row) {
                                     if (data === 1) {
+                                        var log_status = row.log_status;
+                                        if (log_status === 0) {
+                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Logout</button>";
+                                        } else if (log_status === 1) {
+                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
+                                                row.log_id + ")'>Confirm</button>";
+                                        } else {
+                                            return "Paid";
+                                        }
+                                    }else if (data === 2) {
                                         var log_status = row.log_status;
                                         if (log_status === 0) {
                                             return "<button class='btn btn-danger' type='button' onclick='Pending(" +

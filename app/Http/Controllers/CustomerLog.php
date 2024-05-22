@@ -198,8 +198,18 @@ public function LogToPending(Request $request) {
           'log_transaction'=>$paymentPass.'-1',
     
         ]);
-         
-      }else{
+      return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
+      }else if($logs->log_type == 2){
+        $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+    
+        ]);
+      $paymentPass1 = explode('-',$logs->log_transaction)[0];
+      return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass1]]);
+      }
+      else{
         $logs->update([
 
           'log_status'=> 1,
@@ -207,8 +217,9 @@ public function LogToPending(Request $request) {
           'log_transaction'=>$paymentPass.'-0',
     
         ]);
+          return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
       }
-    return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
+  
     }else if($logs->log_status == 1){
       if($logs->log_type == 0){
         $logs->update([
@@ -517,10 +528,10 @@ public function AccLogin(Request $request){
         $insertnewlog->customer_id = $insertnew->customer_id;
         $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
         $insertnewlog->log_start_time = $startTimeFormatted;
-        $insertnewlog->log_end_time = $endTime;
+        $insertnewlog->log_end_time = null;
         $insertnewlog->log_transaction = $payment.'-0';
-        $insertnewlog->log_status = 1;
-        $insertnewlog->log_type= 1;
+        $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 2;
         $insertnewlog->save();
 
     $data = new ActivityLog;
@@ -773,10 +784,10 @@ public function logAsDayPass(Request $request){
         $insertnewlog->customer_id = $request->id;
         $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
         $insertnewlog->log_start_time = $startTimeFormatted;
-        $insertnewlog->log_end_time = $endTime;
+        $insertnewlog->log_end_time = null;
         $insertnewlog->log_transaction = $payment.'-0';
-        $insertnewlog->log_status = 1;
-        $insertnewlog->log_type= 1;
+        $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 2;
         $insertnewlog->save();
 
     $data = new ActivityLog;
