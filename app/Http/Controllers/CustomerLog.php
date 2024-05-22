@@ -198,15 +198,7 @@ public function LogToPending(Request $request) {
           'log_transaction'=>$paymentPass.'-1',
     
         ]);
-        
-      }else if(explode('-',$logs->log_transaction)[1] == 3 ){
-         $logs->update([
-
-          'log_status'=> 1,
-          'log_end_time'=> $current,
-          
-        ]);
-        $paymentPass = explode('-',$logs->log_transaction)[0];
+         
       }else{
         $logs->update([
 
@@ -525,9 +517,9 @@ public function AccLogin(Request $request){
         $insertnewlog->customer_id = $insertnew->customer_id;
         $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
         $insertnewlog->log_start_time = $startTimeFormatted;
-        $insertnewlog->log_end_time = null;
-        $insertnewlog->log_transaction = $payment.'-3';
-        $insertnewlog->log_status = 0;
+        $insertnewlog->log_end_time = $endTime;
+        $insertnewlog->log_transaction = $payment.'-0';
+        $insertnewlog->log_status = 1;
         $insertnewlog->log_type= 1;
         $insertnewlog->save();
 
@@ -781,9 +773,9 @@ public function logAsDayPass(Request $request){
         $insertnewlog->customer_id = $request->id;
         $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
         $insertnewlog->log_start_time = $startTimeFormatted;
-        $insertnewlog->log_end_time = null;
-        $insertnewlog->log_transaction = $payment.'-3';
-        $insertnewlog->log_status = 0;
+        $insertnewlog->log_end_time = $endTime;
+        $insertnewlog->log_transaction = $payment.'-0';
+        $insertnewlog->log_status = 1;
         $insertnewlog->log_type= 1;
         $insertnewlog->save();
 
