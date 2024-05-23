@@ -55,51 +55,51 @@ class CustomerLog extends Controller
     return response()->json(['data' => $cus_info->customer_id]);
   }
 
- public function GetCustomerAcc()
+  public function getCustomerAcc()
     {
         // Retrieve all customer accounts
         $accounts = CustomerAcc::all();
 
         // Iterate through each account
         foreach ($accounts as $acc) {
-            $customerLogs1 = CustomerLogs::where('customer_id', $acc->customer_id)
-                                         ->where('log_status', 0)
-                                         ->latest('updated_at')
-                                         ->first();
+            // Retrieve the latest logs of different statuses in a single query
+            $customerLogs = CustomerLogs::where('customer_id', $acc->customer_id)
+                                        ->whereIn('log_status', [0, 1, 2])
+                                        ->orderBy('updated_at', 'desc')
+                                        ->get()
+                                        ->groupBy('log_status');
 
-            $customerLogs2 = CustomerLogs::where('customer_id', $acc->customer_id)
-                                         ->where('log_status', 1)
-                                         ->latest('updated_at')
-                                         ->first();
-                                         
-            $customerLogs3 = CustomerLogs::where('customer_id', $acc->customer_id)
-                                         ->where('log_status', 2)
-                                         ->latest('updated_at')
-                                         ->first();
-            
             // Assign log attributes based on log_status
-            if ($customerLogs1) {
+            if (isset($customerLogs[0]) && $customerLogs[0]->isNotEmpty()) {
+                $log = $customerLogs[0]->first();
                 $acc->log_in = "0";
-                $acc->logtype = $customerLogs1->log_type;
-                $acc->log_id = $customerLogs1->log_id;
-                $acc->sort = $customerLogs1->updated_at;
-            } elseif ($customerLogs2) {
+                $acc->logtype = $log->log_type;
+                $acc->log_id = $log->log_id;
+                $acc->log_start_time = $log->log_start_time;
+                $acc->sort = $log->updated_at;
+            } elseif (isset($customerLogs[1]) && $customerLogs[1]->isNotEmpty()) {
+                $log = $customerLogs[1]->first();
                 $acc->log_in = "1";
-                $acc->logtype = $customerLogs2->log_type;
-                $acc->log_payment = $customerLogs2->log_transaction;
-                $acc->log_start_time = $customerLogs2->log_start_time;
-                $acc->log_end_time = $customerLogs2->log_end_time;
-                $acc->log_id = $customerLogs2->log_id;
-                $acc->sort = $customerLogs2->updated_at;
-            } elseif ($customerLogs3) {
+                $acc->logtype = $log->log_type;
+                $acc->log_payment = $log->log_transaction;
+                $acc->log_start_time = $log->log_start_time;
+                $acc->log_end_time = $log->log_end_time;
+                $acc->log_id = $log->log_id;
+                $acc->sort = $log->updated_at;
+            } elseif (isset($customerLogs[2]) && $customerLogs[2]->isNotEmpty()) {
+                $log = $customerLogs[2]->first();
                 $acc->log_in = "2";
-                $acc->sort = $customerLogs3->updated_at;
+                $acc->logtype = $log->log_type;
+                $acc->log_payment = $log->log_transaction;
+                 $acc->log_start_time = $log->log_start_time;
+                $acc->log_end_time = $log->log_end_time;
+                 $acc->log_id = $log->log_id;
+                $acc->sort = $log->updated_at;
             }
         }
 
         // Convert accounts to array and return JSON response
-        $accounts = $accounts->toArray();
-        return response()->json(['data' => $accounts]);
+        return response()->json(['data' => $accounts->toArray()]);
     }
 
 

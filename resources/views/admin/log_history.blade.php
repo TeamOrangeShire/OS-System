@@ -181,7 +181,7 @@
                                             <th>Transaction Amount</th>
                                             <th>Method</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                           
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1385,10 +1385,10 @@
                                     var customer_id = row.customer_id;
                                     var log_in = row.log_in;
                                     var log_id = row.log_id;
-                                    var payment = row.log_payment;
+                                    var payment = row.log_payment ? row.log_payment : '';
                                     var payment2 = parseFloat(payment).toFixed(2);
                                     var start_time = row.log_start_time;
-                                    var end_time = row.log_end_time;
+                                    const end_time = row.log_end_time ? row.log_end_time : '';
                                     var logtype = row.logtype;
                                     if (logtype == 1) {
                                         if (log_in === '0') {
@@ -1401,11 +1401,10 @@
                                         } else{
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
                                                 customer_id + ")'>Login</button>";
-
                                         }
                                     } else {
                                         if (log_in === '0') {
-                                            return "<button class='btn btn-danger' type='button' onclick='inAndout(" +
+                                             return "<button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#out'  type='button' onclick='inAndout(" +
                                                 log_id + ")'>Logout</button>";
                                         } else if (log_in === '1') {
                                             var transac = row.log_payment;
@@ -1418,8 +1417,10 @@
                                                     "', '" + row.log_end_time +
                                                     "')\">Confirm</button>";
                                             } else {
-                                                return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                    row.log_id + ")'>Confirm</button>";
+                                                 return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
+                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
+                                                    "', '" + row.log_end_time +
+                                                    "')\">Confirm</button>";
                                             }
                                         } else{
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
@@ -1871,57 +1872,7 @@
                                     }
                                 }
                             },
-                            {
-                                "data": "log_type",
-                                "render": function(data, type, row) {
-                                    if (data === 1) {
-                                        var log_status = row.log_status;
-                                        if (log_status === 0) {
-                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
-                                                row.log_id + ")'>Logout</button>";
-                                        } else if (log_status === 1) {
-                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
-                                                row.log_id + ")'>Confirm</button>";
-                                        } else {
-                                            return "Paid";
-                                        }
-                                    }else if (data === 2) {
-                                        var log_status = row.log_status;
-                                        if (log_status === 0) {
-                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
-                                                row.log_id + ")'>Logout</button>";
-                                        } else if (log_status === 1) {
-                                            return "<button class='btn btn-warning' type='button' onclick='Pending(" +
-                                                row.log_id + ")'>Confirm</button>";
-                                        } else {
-                                            return "Paid";
-                                        }
-                                    } else if (data === 0) {
-                                        var log_status = row.log_status;
-                                        if (log_status === 0) {
-                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
-                                                row.log_id + ")'>Logout</button>";
-                                        } else if (log_status === 1) {
-                                            var transac = row.log_transaction;
-                                            var parts = transac.split('-');
-                                            var secondPart = parts[1];
-                                            var payment = parts[0];
-                                            if (secondPart == 1) {
-                                                return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
-                                                    "', '" + row.log_end_time +
-                                                    "')\">Confirm</button>";
-                                            } else {
-                                                return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                    row.log_id + ")'>Confirm</button>";
-                                            }
-                                        } else {
-                                            return "Paid";
-                                        }
-                                    }
-                                }
-                            }
-
+                            
                         ]
                     });
                 }
