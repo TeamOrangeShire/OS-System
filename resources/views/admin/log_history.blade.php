@@ -592,6 +592,39 @@
             </div>
         </div>
 
+          <div id="editstarttime" class="modal fade " tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Login Time</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="" novalidate method="POST" id="editstarttimeform">
+                            @csrf
+                            <div class="row mb-4 justify-content-center text-center"> <!-- Added justify-content-center -->
+                                <div class="col-md-12 mb-6 justify-content-center text-center"> <!-- Added text-center -->
+                                    <label for="validationTooltip01">Start Time</label>
+                                    <input type="hidden" name="editstarttimeid" id="editstarttimeid">
+                                    <input type="time" name="logstarttime" id="logstarttime" class="form-control text-center" >
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="btn  btn-primary" type="button" data-bs-dismiss="modal"
+                                        onclick="EditStartTime()">Save Changes</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
 
             <div id="SelectLogType" class="modal fade" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -1078,7 +1111,14 @@
                                 }
                             },
                             {
-                                "data": "log_start_time"
+                                 'data': null,
+                                "render": function(data, type, row) {
+                                    const start = row.log_start_time;
+                                        return '<span data-bs-toggle="modal" data-bs-target="#editstarttime" onclick="editstarttimedata(`' +
+                                row.log_id + '`,`' + start + '`)">' +start+ '</span>';
+                                    
+
+                                }
 
                             },
                             {
@@ -1221,6 +1261,118 @@
                         ],
                     });
                 }
+                function convertTo24Hour(timeStr) {
+    // Extract the parts of the time
+    const [time, modifier] = timeStr.split(' ');
+
+    let [hours, minutes] = time.split(':');
+
+    // Convert hours to number
+    hours = parseInt(hours, 10);
+
+    // Handle the AM/PM modifier
+    if (modifier === 'PM' && hours !== 12) {
+        hours += 12;
+    }
+    if (modifier === 'AM' && hours === 12) {
+        hours = 0;
+    }
+
+    // Format hours and minutes to always be two digits
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    return `${hours}:${minutes}`;
+}
+function convertTo12HourFormat(time24) {
+    // Split the time into hours and minutes
+    const [hours, minutes] = time24.split(':');
+
+    // Determine if it's AM or PM
+    const period = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert hours to 12-hour format
+    let hours12 = parseInt(hours) % 12;
+    hours12 = hours12 === 0 ? 12 : hours12; // If hours is 0, convert it to 12
+
+    // Format the time in 12-hour format
+    const time12 = `${hours12}:${minutes} ${period}`;
+
+    return time12;
+}
+
+                function editstarttimedata(id,time){
+                    document.getElementById('editstarttimeid').value=id;
+                    document.getElementById('logstarttime').value=convertTo24Hour(time);
+                }
+
+                function EditStartTime() {
+    document.getElementById('roller').style.display='flex';
+    const timeInput = document.getElementById('logstarttime');
+    const timeInput2 = document.getElementById('logstarttime').value;
+    const time12 = convertTo12HourFormat(timeInput2);
+   
+    const timeValue = timeInput.value;
+        const [hours, minutes] = timeValue.split(':');
+        const period = parseInt(hours) < 12 ? 'AM' : 'PM';
+
+            var formData = $("form#editstarttimeform").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('EditStartTime') }}?safix="+time12,
+                        data: formData,
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                 document.getElementById('roller').style.display='none';
+                                alertify
+                                    .alert("Message",
+                                        "Log Start Time Successfully Updated",
+                                        function() {
+                                            alertify.message('OK');
+                                               CustomerlogHistory();
+                                                getCustomerData();
+                                        });
+                            }
+                        },
+                           error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+}
+
+
+                // function EditStartTime(){
+                //     const t = document.getElementById('logstarttime').value;
+                //     console.log(t);
+                    
+                //     alertify.confirm("Warning", "Are You Sure You Want To Update This Log Start Time?",
+                //         function() {
+                //             alertify.success('Ok');
+                //             var formData = $("form#editstarttimeform").serialize();
+                //     $.ajax({
+                //         type: "POST",
+                //         url: "{{ route('EditStartTime') }}",
+                //         data: formData,
+                //         success: function(response) {
+                //             if (response.status == 'success') {
+                //                 alertify
+                //                     .alert("Message",
+                //                         "Customer First And Last Name Already Exist! Insert Additional Information.",
+                //                         function() {
+                //                             alertify.message('OK');
+                //                         });
+                //             }
+                //         },
+                //            error: function(xhr, status, error) {
+                //             console.error(xhr.responseText);
+                //         }
+                //     });
+                //         },
+                //         function() {
+                //             alertify.error('Cancel');
+
+                //         });
+                // }
 
                 function EditLogPayment(id, payment) {
                     alertify.confirm("Warning", "Are You Sure You Want To Edit This Log Payment?",

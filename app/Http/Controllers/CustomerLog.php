@@ -891,5 +891,15 @@ public function GetGroup() {
     return response()->json(['data' => $group]);
 }
 
+public function EditStartTime(Request $request){
+  
+  $log = CustomerLogs::where('log_id', $request->editstarttimeid)->first();
+
+  $log->update([
+          'log_start_time'=>$request->safix,
+              ]);
+
+   return response()->json(['status'=>'success']);
+}
 }
 
