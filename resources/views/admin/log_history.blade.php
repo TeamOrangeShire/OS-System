@@ -44,7 +44,7 @@
                             <h5 class="col-sm-8 mt-2">Log History</h5>
                             <button class="btn btn-primary col-auto" data-toggle="modal" data-target="#groupmodal"
                                 onclick="GenerateId()">
-                                Group Log</button>
+                                Group Log </button>
 
                             <button class="btn btn-primary col-auto" data-toggle="modal"
                                 data-target="#insertmodal">Insert Log</button>
@@ -53,16 +53,16 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
 
-                                <li class="nav-item">
+                                <li class="nav-item" onclick="runLogHistory()"> 
                                     <a class="nav-link active text-uppercase" id="profile-tab" data-toggle="tab"
                                         href="#profile" role="tab" aria-controls="profile" aria-selected="false">Log
                                         History</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" onclick="runGroupLog()">
                                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#group"
                                         role="tab" aria-controls="home" aria-selected="true">Group Log</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" onclick="runCustomerLog()">
                                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#home"
                                         role="tab" aria-controls="home" aria-selected="true">Customer Log</a>
                                 </li>
@@ -914,11 +914,13 @@
 
                 function insertnewcustomer() {
                     var formData = $("form#Insertnewcus").serialize();
+                     document.getElementById('roller').style.display='flex';
                     $.ajax({
                         type: "POST",
                         url: "{{ route('InsertNewCustomer') }}",
                         data: formData,
                         success: function(response) {
+                             document.getElementById('roller').style.display='none';
                             if (response.status == 'firstname') {
                                 document.getElementById('firstname').style.border = '1px solid red';
                             } else if (response.status == 'lastname') {
@@ -966,11 +968,13 @@
 
                 function insertnewcustomerByDayPass() {
                     var formData = $("form#Insertnewcus").serialize();
+                     document.getElementById('roller').style.display='flex';
                     $.ajax({
                         type: "POST",
                         url: "{{ route('insertnewcustomerByDayPass') }}",
                         data: formData,
                         success: function(response) {
+                             document.getElementById('roller').style.display='none';
                             if (response.status == 'firstname') {
                                 document.getElementById('firstname').style.border = '1px solid red';
                             } else if (response.status == 'lastname') {
@@ -1019,10 +1023,37 @@
 
                 $(document).ready(function() {
                     CustomerlogHistory();
-                    getCustomerData();
-                    GetGroup();
+                    // getCustomerData();
+                    // GetGroup();
 
                 });
+                function runLogHistory(){
+                      CustomerlogHistory();
+                       if ($.fn.DataTable.isDataTable('#customerlog')) {
+                $('#customerlog').DataTable().clear().destroy();
+                }   
+                            if ($.fn.DataTable.isDataTable('#GroupTable')) {
+                $('#GroupTable').DataTable().clear().destroy();
+                }   
+                }
+                function runCustomerLog(){
+                      getCustomerData();
+                       if ($.fn.DataTable.isDataTable('#loghistory')) {
+                $('#loghistory').DataTable().clear().destroy();
+                }   
+                         if ($.fn.DataTable.isDataTable('#GroupTable')) {
+                $('#GroupTable').DataTable().clear().destroy();
+                }   
+                }
+                function runGroupLog(){
+                      GetGroup();
+                             if ($.fn.DataTable.isDataTable('#loghistory')) {
+                $('#loghistory').DataTable().clear().destroy();
+                }  
+                       if ($.fn.DataTable.isDataTable('#customerlog')) {
+                $('#customerlog').DataTable().clear().destroy();
+                }   
+                }
 
                 function CustomerlogHistory() {
                     $('#loghistory').DataTable({
@@ -1030,6 +1061,7 @@
                         scrollY: '400px',
                         scrollCollapse: true,
                         paging: false,
+                        info: false,
                         order: [
                             [13, 'desc']
                         ],
@@ -1055,30 +1087,7 @@
 
                             },
                         ],
-                        layout: {
-                            topStart: {
-                                buttons: [{
-                                        extend: 'copyHtml5',
-                                        exportOptions: {
-                                            columns: [0, ':visible']
-                                        }
-                                    },
-                                    {
-                                        extend: 'excelHtml5',
-                                        exportOptions: {
-                                            columns: ':visible'
-                                        }
-                                    },
-                                    {
-                                        extend: 'pdfHtml5',
-                                        exportOptions: {
-                                            columns: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10]
-                                        }
-                                    },
-                                    'colvis'
-                                ]
-                            }
-                        },
+                     
                         "destroy": "true",
                         "ajax": {
                             "url": "{{ route('CustomerlogHistory') }}",
@@ -1259,6 +1268,11 @@
                                 "data": "updated_at"
                             }
                         ],
+                        "drawCallback": function(settings) {
+        if (settings.aoData.length > 20) {
+            $('#loghistory tbody tr:gt(19)').hide();
+        }
+    },
                     });
                 }
                 function convertTo24Hour(timeStr) {
@@ -1472,7 +1486,7 @@ function convertTo12HourFormat(time24) {
                                         alertify
                                             .alert("Message", "Log Successfully Deleted", function() {
                                                 CustomerlogHistory();
-                                                getCustomerData();
+                                             
                                             });
                                     }
 
@@ -1544,36 +1558,18 @@ function convertTo12HourFormat(time24) {
                                     var logtype = row.logtype;
                                     if (logtype == 1) {
                                         if (log_in === '0') {
-                                            return "<button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#out'  type='button' onclick='inAndout(" +
-                                                log_id + ")'>Logout</button>";
-                                        } else if (log_in === '1') {
-                                            return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                                log_id + "', " + payment2 + ", '" + start_time + "', '" + end_time +
-                                                "')\">Confirm</button>";
+                                            return " ";
+                                        }else if (log_in === '1') {
+                                              return " ";
                                         } else{
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
                                                 customer_id + ")'>Login</button>";
                                         }
                                     } else {
                                         if (log_in === '0') {
-                                             return "<button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#out'  type='button' onclick='inAndout(" +
-                                                log_id + ")'>Logout</button>";
+                                             return " ";
                                         } else if (log_in === '1') {
-                                            var transac = row.log_payment;
-                                            var parts = transac.split('-');
-                                            var secondPart = parts[1];
-                                            var payment = parts[0];
-                                            if (secondPart == 1) {
-                                                return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
-                                                    "', '" + row.log_end_time +
-                                                    "')\">Confirm</button>";
-                                            } else {
-                                                 return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
-                                                    "', '" + row.log_end_time +
-                                                    "')\">Confirm</button>";
-                                            }
+                                            return " ";
                                         } else{
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
                                                 customer_id + ")'>Login</button>";
@@ -1645,7 +1641,7 @@ function convertTo12HourFormat(time24) {
                             var formData = new FormData();
                             formData.append('id', id);
                             formData.append('_token', '{{ csrf_token() }}');
-
+                             document.getElementById('roller').style.display='flex';
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('LogToPending3') }}",
@@ -1653,11 +1649,12 @@ function convertTo12HourFormat(time24) {
                                 contentType: false,
                                 processData: false,
                                 success: function(response) {
+                                     viewGroupLog(response.data);
+                                     document.getElementById('roller').style.display='none';
+                                     
                                     alertify
                                         .alert("Message", "Group Successfully Logged Out", function() {
-                                            viewGroupLog(response.data);
-                                            getCustomerData();
-                                            CustomerlogHistory();
+                                           
                                         });
                                 },
                                 error: function(xhr, status, error) {
@@ -1755,22 +1752,22 @@ function convertTo12HourFormat(time24) {
                 function acceptPending() {
 
                     var formData = $("form#pendingPayment").serialize();
-
+                     document.getElementById('roller').style.display='flex';
                     console.log(formData);
                     $.ajax({
                         type: "POST",
                         url: "{{ route('LogToPending') }}",
                         data: formData,
                         success: function(response) {
+                           document.getElementById('roller').style.display='none';  
                             alertify
                                 .alert("Message",
                                     "Customer Successfully Paid.",
                                     function() {
-                                        getCustomerData();
                                         CustomerlogHistory();
                                         viewLog(response.data);
                                         $('#out').modal('hide');
-
+                                         
                                     });
 
                         },
@@ -1784,14 +1781,14 @@ function convertTo12HourFormat(time24) {
                 function BackToLogout() {
 
                     var formData = $("form#pendingPayment").serialize();
-
+                     document.getElementById('roller').style.display='flex';
                     console.log(formData);
                     $.ajax({
                         type: "POST",
                         url: "{{ route('BackToLogout') }}",
                         data: formData,
                         success: function(response) {
-                            getCustomerData();
+                             document.getElementById('roller').style.display='none';
                             CustomerlogHistory();
                             viewLog(response.data);
                             $('#out').modal('hide');
@@ -1905,13 +1902,14 @@ function convertTo12HourFormat(time24) {
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + logtypeid;
                             console.log(formData);
+                             document.getElementById('roller').style.display='flex';
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('AccLogin') }}",
                                 data: Dataform,
                                 success: function(response) {
+                                     document.getElementById('roller').style.display='none';
                                     getCustomerData();
-                                    CustomerlogHistory();
                                     viewLog(response.data);
                                     $('#SelectLogType').modal('hide');
                                 },
@@ -1935,13 +1933,14 @@ function convertTo12HourFormat(time24) {
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + logtypeid;
                             console.log(formData);
+                             document.getElementById('roller').style.display='flex';
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('logAsDayPass') }}",
                                 data: Dataform,
                                 success: function(response) {
+                                     document.getElementById('roller').style.display='none';
                                     getCustomerData();
-                                    CustomerlogHistory();
                                     viewLog(response.data);
                                     $('#SelectLogType').modal('hide');
                                 },
@@ -2063,22 +2062,25 @@ function convertTo12HourFormat(time24) {
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + id;
                             console.log(formData);
+                             document.getElementById('roller').style.display='flex';
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('LogToPending') }}",
                                 data: Dataform,
                                 success: function(response) {
                                     if (response.data == "DayPass") {
+                                         document.getElementById('roller').style.display='none';
                                         alertify
                                             .alert("Message",
                                                 "The customer has already exceeded 8 hours, so the plan was automatically upgraded to a DayPass.",
                                                 function() {
-                                                    getCustomerData();
+                                                
                                                     CustomerlogHistory();
                                                     $('#viewcuslog').modal('hide');
 
                                                 });
                                     } else {
+                                         document.getElementById('roller').style.display='none';
                                        const tend = response.confirm[1];
                                         const tstart = response.confirm[2];
                                         var totaltime = timeDifference(tstart,tend);
@@ -2088,7 +2090,6 @@ function convertTo12HourFormat(time24) {
                                         document.getElementById('start').textContent=response.confirm[2];
                                         document.getElementById('end').textContent=response.confirm[1];
                                         document.getElementById('hours').textContent=between;
-                                        getCustomerData();
                                         CustomerlogHistory();
                                         viewLog(response.data);
                                     }
