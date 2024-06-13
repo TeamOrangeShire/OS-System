@@ -155,6 +155,10 @@ Route::post('/DeleteBlog',[BlogData::class,'DeleteBlog'] )->name('DeleteBlog');
 Route::post('/UpdateBlogCover',[BlogData::class,'UpdateBlogCover'] )->name('UpdateBlogCover');
 Route::post('/AddNewCategory',[BlogData::class,'AddNewCategory'] )->name('AddNewCategory');
 Route::post('/EditStartTime',[CustomerLog::class,'EditStartTime'] )->name('EditStartTime');
+Route::post('/createNotifications',[CustomerLog::class,'createNotifications'] )->name('createNotifications');
+Route::post('/updateLogsWithPayment',[CustomerLog::class,'updateLogsWithPayment'] )->name('updateLogsWithPayment');
+Route::post('/updateLogs',[CustomerLog::class,'updateLogs'] )->name('updateLogs');
+
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
 Route::post('/AddPlan', [AddData::class, 'AddPlan'])->name('AddPlan');

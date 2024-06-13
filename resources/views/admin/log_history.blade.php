@@ -727,7 +727,7 @@
 
                 function newcusgrouplog() {
                     var formData = $("form#LogByGroupForm").serialize();
-                    console.log(formData);
+                   
 
                     var saveLogByGroupURL = "{{ route('SaveLogByGroup') }}";
 
@@ -736,7 +736,7 @@
                         url: saveLogByGroupURL,
                         data: formData,
                         success: function(response) {
-                            console.log(response.status);
+                         
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
@@ -773,7 +773,7 @@
         url: saveLogByGroupURL,
         data: formData,
         success: function(response) {
-            console.log(response.status);
+           
             successCount++; 
             checkSuccess(); 
         },
@@ -790,7 +790,7 @@
         url: saveLogByExistGroupURL,
         data: formData1,
         success: function(response) {
-            console.log(response.status);
+          
             successCount++;
             checkSuccess(); 
         },
@@ -1025,8 +1025,13 @@
                     CustomerlogHistory();
                     // getCustomerData();
                     // GetGroup();
-
+                    reloadPageEvery30Minutes();
                 });
+                function reloadPageEvery30Minutes() {
+    setTimeout(function() {
+        location.reload();
+    }, 30 * 60 * 1000); // 30 minutes in milliseconds
+}
                 function runLogHistory(){
                       CustomerlogHistory();
                        if ($.fn.DataTable.isDataTable('#customerlog')) {
@@ -1056,225 +1061,140 @@
                 }
 
                 function CustomerlogHistory() {
-                    $('#loghistory').DataTable({
-                        scrollX: true,
-                        scrollY: '400px',
-                        scrollCollapse: true,
-                        paging: false,
-                        info: false,
-                        order: [
-                            [13, 'desc']
-                        ],
-                        columnDefs: [{
-                                target: 2,
-                                visible: false,
-
-                            },
-                            {
-                                target: 1,
-                                visible: false,
-
-                            },
-                            {
-                                target: 12,
-                                visible: false,
-
-                            },
-                            {
-                                target: 13,
-                                visible: false,
-                                searchable: false
-
-                            },
-                        ],
-                     
-                        "destroy": "true",
-                        "ajax": {
-                            "url": "{{ route('CustomerlogHistory') }}",
-                            "type": "GET"
-                        },
-                        "columns": [{
-                                "data": null,
-                                "render": function(data, type, row) {
-                                    var first = row.firstname;
-                                    var last = row.lastname;
-                                    var middle = row.middlename == null ? '' : row.middlename;
-                                    return first + " " + middle + " " + last;
-                                }
-                            },
-                            {
-                                "data": "email"
-                            },
-                            {
-                                "data": "contact"
-                            },
-                            {
-                                "data": null,
-                                "render": function(data, type, row) {
-                                    const date = row
-                                        .log_date;
-                                    const parts = date.split('/');
-                                    const formattedDate =
-                                        `${parts[1]}/${parts[0]}/${parts[2]}`;
-                                    return formattedDate;
-                                }
-                            },
-                            {
-                                 'data': null,
-                                "render": function(data, type, row) {
-                                    const start = row.log_start_time;
-                                        return '<span data-bs-toggle="modal" data-bs-target="#editstarttime" onclick="editstarttimedata(`' +
-                                row.log_id + '`,`' + start + '`)">' +start+ '</span>';
-                                    
-
-                                }
-
-                            },
-                            {
-                                "data": "log_end_time"
-                            },
-                            {
-                                "data": null,
-                                "render": function(data, type, row) {
-                                    var start = row.log_start_time;
-                                    var end = row.log_end_time;
-                                    if (end == '' || end == null) {
-                                        return '';
-                                    } else {
-                                        var totaltime = timeDifference(start, end);
-                                        var between = totaltime.hours + ':' + totaltime.minutes;
-                                        return between;
-                                    }
-
-                                }
-                            },
-                            {
-                                "data": null,
-                                "render": function(data, type, row) {
-                                    var payment = row.log_transaction;
-                                    if (payment == '' || payment == null) {
-                                        return '';
-                                    } else {
-                                        var payment2 = parseFloat(payment);
-                                        return '<span data-bs-toggle="modal" data-bs-target="#editpaymentmodal" onclick="EditLogPayment(`' +
-                                row.log_id + '`,`' + payment2 + '`)">' + payment2 + '</span>';
-                                    }
-
-                                }
-                            },
-                            {
-                                'data': null,
-                                "render": function(data, type, row) {
-                                    const method = row.log_payment_method === null ? 'Not Set' : row.log_payment_method;
-                                        return '<span data-bs-toggle="modal" data-bs-target="#editpaymentmethodmodal" onclick="EditLogPaymentMethod(`' +
-                                row.log_id + '`,`' + method + '`)">' +method + '</span>';
-                                    
-
-                                }
-                            },
-                            {
-                                "data": "log_status",
-                                "render": function(data, type, row) {
-                                    if (data === 0) {
-                                        return "Active";
-                                    } else if (data === 1) {
-                                        return "Pending";
-                                    } else {
-                                        return "Completed";
-                                    }
-                                }
-                            },
-                            {
-                                "data": null,
-                                "render": function(data, type, row) {
-                                    return `<input value="${row.log_comment === null ? '' : row.log_comment}" style="border:none;background-color:transparent" placeholder="No Comment" class="undeditSpan" id="log_comment${row.log_id}" onclick="editComment(${row.log_id})" >`;
-                                }
-                            },
-                            {
-                                "data": "log_type",
-                                "render": function(data, type, row) {
-                                    if (data === 1) {
-                                        var log_status = row.log_status;
-                                        if (log_status === 0) {
-                                            return "<button class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#out' onclick='Pending(" +
-                                                row.log_id + ")'>Logout</button>";
-                                        } else if (log_status === 1) {
-                                            var transac = row.log_transaction;
-                                            var parts = transac.split('-');
-                                            var payment = parts[0];
-                                            return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                                row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" +
-                                                row.log_end_time +
-                                                "')\">Confirm</button>";
-                                        } else {
-                                            return "Paid";
-                                        }
-                                    }else if (data === 2) {
-                                        var log_status = row.log_status;
-                                        if (log_status === 0) {
-                                            return "<button class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#out' onclick='Pending(" +
-                                                row.log_id + ")'>Logout</button>";
-                                        } else if (log_status === 1) {
-                                            var transac = row.log_transaction;
-                                            var parts = transac.split('-');
-                                            var payment = parts[0];
-                                            return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                                row.log_id + "', " + payment + ", '" + row.log_start_time + "', '" +
-                                                row.log_end_time +
-                                                "')\">Confirm</button>";
-                                        } else {
-                                            return "Paid";
-                                        }
-                                    }
-                                     else if (data === 0) {
-                                        var log_status = row.log_status;
-                                        if (log_status === 0) {
-                                            return "<button class='btn btn-danger' type='button' onclick='Pending(" +
-                                                row.log_id + ")'>Logout</button>";
-                                        } else if (log_status === 1) {
-
-                                            var transac = row.log_transaction;
-                                            var parts = transac.split('-');
-                                            var secondPart = parts[1];
-                                            var payment = parts[0];
-                                            if (secondPart == 1) {
-                                                return "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick=\"PendingToOut('" +
-                                                    row.log_id + "', " + payment + ", '" + row.log_start_time +
-                                                    "', '" + row.log_end_time +
-                                                    "')\">Confirm</button>";
-                                            } else {
-                                                return "<button class='btn btn-warning' type='button' onclick='acceptLog(" +
-                                                    row.log_id + ")'>Confirm</button>";
-                                            }
-
-                                        }
-                                         else if (log_status === 2) {
-                                           return "Paid";
-
-                                        } else {
-                                            return "Paid";
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                data: null,
-                                "render": function(data, type, row) {
-                                    return "<button class='btn btn-warning' type='button' onclick='delete_log(`" +
-                            row.log_id + "`)'>Delete</button>";
-                                }
-                            },
-                            {
-                                "data": "updated_at"
-                            }
-                        ],
-                        "drawCallback": function(settings) {
-        if (settings.aoData.length > 20) {
-            $('#loghistory tbody tr:gt(19)').hide();
-        }
-    },
-                    });
+    $('#loghistory').DataTable({
+        scrollX: true,
+        scrollY: '400px',
+        scrollCollapse: true,
+        paging: false,
+        info: false,
+        order: [
+            [13, 'desc']
+        ],
+        columnDefs: [
+            { targets: [1, 2, 12], visible: false },
+            { targets: 13, visible: false, searchable: false }
+        ],
+        destroy: true,
+        ajax: {
+            url: '{{ route("CustomerlogHistory") }}',
+            type: 'GET'
+        },
+        columns: [
+            {
+                data: null,
+                render: (data, type, row) => {
+                    const { firstname, lastname, middlename } = row;
+                    return `${firstname} ${middlename ? middlename : ''} ${lastname}`;
                 }
+            },
+            { data: 'email' },
+            { data: 'contact' },
+            {
+                data: null,
+                render: (data, type, row) => {
+                    const dateParts = row.log_date.split('/');
+                    return `${dateParts[1]}/${dateParts[0]}/${dateParts[2]}`;
+                }
+            },
+            {
+                data: null,
+                render: (data, type, row) => {
+                    const { log_id, log_start_time } = row;
+                    return `<span data-bs-toggle="modal" data-bs-target="#editstarttime" onclick="editstarttimedata('${log_id}', '${log_start_time}')">${log_start_time}</span>`;
+                }
+            },
+            { data: 'log_end_time' },
+            {
+                data: null,
+                render: (data, type, row) => {
+                    const { log_start_time, log_end_time } = row;
+                    if (!log_end_time) return '';
+                    const totaltime = timeDifference(log_start_time, log_end_time);
+                    return `${totaltime.hours}:${totaltime.minutes}`;
+                }
+            },
+            {
+                data: null,
+                render: (data, type, row) => {
+                    const { log_id, log_transaction } = row;
+                    if (!log_transaction) return '';
+                    const payment = parseFloat(log_transaction);
+                    return `<span data-bs-toggle="modal" data-bs-target="#editpaymentmodal" onclick="EditLogPayment('${log_id}', '${payment}')">${payment}</span>`;
+                }
+            },
+            {
+                data: null,
+                render: (data, type, row) => {
+                    const { log_id, log_payment_method } = row;
+                    const method = log_payment_method ? log_payment_method : 'Not Set';
+                    return `<span data-bs-toggle="modal" data-bs-target="#editpaymentmethodmodal" onclick="EditLogPaymentMethod('${log_id}', '${method}')">${method}</span>`;
+                }
+            },
+            {
+                data: 'log_status',
+                render: (data) => {
+                    switch (data) {
+                        case 0:
+                            return 'Active';
+                        case 1:
+                            return 'Pending';
+                        default:
+                            return 'Completed';
+                    }
+                }
+            },
+            {
+                data: null,
+                render: (data, type, row) => {
+                    const { log_id, log_comment } = row;
+                    return `<input value="${log_comment ? log_comment : ''}" style="border:none;background-color:transparent" placeholder="No Comment" class="undeditSpan" id="log_comment${log_id}" onclick="editComment(${log_id})">`;
+                }
+            },
+            {
+                data: 'log_type',
+                render: (data, type, row) => {
+                    const { log_status, log_transaction, log_id, log_start_time, log_end_time } = row;
+                    if (data === 1 || data === 2) {
+                        if (log_status === 0) {
+                            return `<button class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#out' onclick='Pending(${log_id})'>Logout</button>`;
+                        } else if (log_status === 1) {
+                            const payment = log_transaction.split('-')[0];
+                            return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
+                        } else {
+                            return 'Paid';
+                        }
+                    } else if (data === 0) {
+                        if (log_status === 0) {
+                            return `<button class='btn btn-danger' type='button' onclick='Pending(${log_id})'>Logout</button>`;
+                        } else if (log_status === 1) {
+                            const [payment, secondPart] = log_transaction.split('-');
+                            if (secondPart == 1) {
+                                return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
+                            } else {
+                                return `<button class='btn btn-warning' type='button' onclick='acceptLog(${log_id})'>Confirm</button>`;
+                            }
+                        } else {
+                            return 'Paid';
+                        }
+                    }
+                }
+            },
+            {
+                data: null,
+                render: (data, type, row) => {
+                    return `<button class='btn btn-warning' type='button' onclick='delete_log("${row.log_id}")'>Delete</button>`;
+                }
+            },
+            { data: 'updated_at' }
+        ],
+        drawCallback: (settings) => {
+            if (settings.aoData.length > 20) {
+                $('#loghistory tbody tr:gt(19)').hide();
+            }
+        }
+    });
+}
+
                 function convertTo24Hour(timeStr) {
     // Extract the parts of the time
     const [time, modifier] = timeStr.split(' ');
@@ -1322,37 +1242,32 @@ function convertTo12HourFormat(time24) {
 
                 function EditStartTime() {
     document.getElementById('roller').style.display='flex';
-    const timeInput = document.getElementById('logstarttime');
-    const timeInput2 = document.getElementById('logstarttime').value;
-    const time12 = convertTo12HourFormat(timeInput2);
-   
-    const timeValue = timeInput.value;
-        const [hours, minutes] = timeValue.split(':');
-        const period = parseInt(hours) < 12 ? 'AM' : 'PM';
+    const timeInputValue = document.getElementById('logstarttime').value;
+    const time12 = convertTo12HourFormat(timeInputValue);
+    const formData = $("form#editstarttimeform").serialize();
 
-            var formData = $("form#editstarttimeform").serialize();
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('EditStartTime') }}?safix="+time12,
-                        data: formData,
-                        success: function(response) {
-                            if (response.status == 'success') {
-                                 document.getElementById('roller').style.display='none';
-                                alertify
-                                    .alert("Message",
-                                        "Log Start Time Successfully Updated",
-                                        function() {
-                                            alertify.message('OK');
-                                               CustomerlogHistory();
-                                                getCustomerData();
-                                        });
-                            }
-                        },
-                           error: function(xhr, status, error) {
-                            console.error(xhr.responseText);
-                        }
-                    });
+    $.ajax({
+        type: "POST",
+        url: "{{ route('EditStartTime') }}?safix="+time12,
+        data: formData,
+        success: function(response) {
+            if (response.status == 'success') {
+                CustomerlogHistory();
+                document.getElementById('roller').style.display='none';
+                alertify.alert("Message", "Log Start Time Successfully Updated", function() {
+                    alertify.message('OK');
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            alertify.alert("Error", "An error occurred while updating the start time. Please try again.", function() {
+                alertify.message('OK');
+            });
+        }
+    });
 }
+
 
 
                 // function EditStartTime(){
@@ -1637,7 +1552,7 @@ function convertTo12HourFormat(time24) {
                         function() {
                             alertify.success('Ok');
                             const id = document.getElementById('LogoutAllId').value;
-                            console.log(id);
+                         
                             var formData = new FormData();
                             formData.append('id', id);
                             formData.append('_token', '{{ csrf_token() }}');
@@ -1736,8 +1651,7 @@ function convertTo12HourFormat(time24) {
                 }
 
                 function PendingToOut(id, payment, start, end) {
-                    console.log(id);
-                    console.log(payment);
+                
                     document.getElementById('id').value = id;
                     document.getElementById('payment').value = payment;
                     document.getElementById('start').textContent = start;
@@ -1753,18 +1667,19 @@ function convertTo12HourFormat(time24) {
 
                     var formData = $("form#pendingPayment").serialize();
                      document.getElementById('roller').style.display='flex';
-                    console.log(formData);
+                   
                     $.ajax({
                         type: "POST",
                         url: "{{ route('LogToPending') }}",
                         data: formData,
                         success: function(response) {
+                            CustomerlogHistory();
                            document.getElementById('roller').style.display='none';  
                             alertify
                                 .alert("Message",
                                     "Customer Successfully Paid.",
                                     function() {
-                                        CustomerlogHistory();
+                                       
                                         viewLog(response.data);
                                         $('#out').modal('hide');
                                          
@@ -1782,7 +1697,7 @@ function convertTo12HourFormat(time24) {
 
                     var formData = $("form#pendingPayment").serialize();
                      document.getElementById('roller').style.display='flex';
-                    console.log(formData);
+                 
                     $.ajax({
                         type: "POST",
                         url: "{{ route('BackToLogout') }}",
@@ -1808,7 +1723,7 @@ function convertTo12HourFormat(time24) {
                             document.getElementById('cuslogoutid').value = id;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + id;
-                            console.log(formData);
+                         
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('LogToPending') }}",
@@ -1859,7 +1774,7 @@ function convertTo12HourFormat(time24) {
                             document.getElementById('cuslogoutid').value = id;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + id;
-                            console.log(formData);
+                        
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('LogToPending2') }}",
@@ -1876,7 +1791,7 @@ function convertTo12HourFormat(time24) {
                                     } else {
                                         getCustomerData();
                                         CustomerlogHistory();
-                                        console.log(response.data);
+                                      
                                         viewLog(response.data);
                                         viewGroupLog(response.data);
 
@@ -1901,7 +1816,7 @@ function convertTo12HourFormat(time24) {
                             document.getElementById('cuslogoutid').value = logtypeid;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + logtypeid;
-                            console.log(formData);
+                         
                              document.getElementById('roller').style.display='flex';
                             $.ajax({
                                 type: "POST",
@@ -1932,7 +1847,7 @@ function convertTo12HourFormat(time24) {
                             document.getElementById('cuslogoutid').value = logtypeid;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + logtypeid;
-                            console.log(formData);
+                         
                              document.getElementById('roller').style.display='flex';
                             $.ajax({
                                 type: "POST",
@@ -2029,12 +1944,12 @@ function convertTo12HourFormat(time24) {
                 }
 
                 function acceptLog(id) {
-                    console.log(id);
+                  
 
                     document.getElementById('cuslogoutid').value = id;
                     var formData = $("form#pendingLog").serialize();
                     var Dataform = formData + '&id=' + id;
-                    console.log(formData);
+                 
                     $.ajax({
                         type: "POST",
                         url: "{{ route('acceptLog') }}",
@@ -2052,8 +1967,17 @@ function convertTo12HourFormat(time24) {
                     });
                 }
 
+                
+        //         function closeDetect() {
+        //             CustomerlogHistory();
+        // }
+
+        // // Detect when the modal is closed
+        // $('#out').on('hidden.bs.modal', function () {
+        //     closeDetect();
+        // });
                 function Pending(id) {
-                    console.log(id);
+                 
 
                     alertify.confirm("Confirmation", "Are You Sure You Want To Logout This Customer?",
                         function() {
@@ -2061,7 +1985,7 @@ function convertTo12HourFormat(time24) {
                             document.getElementById('cuslogoutid').value = id;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + id;
-                            console.log(formData);
+                          
                              document.getElementById('roller').style.display='flex';
                             $.ajax({
                                 type: "POST",
@@ -2070,17 +1994,18 @@ function convertTo12HourFormat(time24) {
                                 success: function(response) {
                                     if (response.data == "DayPass") {
                                          document.getElementById('roller').style.display='none';
+                                         CustomerlogHistory();
                                         alertify
                                             .alert("Message",
                                                 "The customer has already exceeded 8 hours, so the plan was automatically upgraded to a DayPass.",
                                                 function() {
                                                 
-                                                    CustomerlogHistory();
+                                                   
                                                     $('#viewcuslog').modal('hide');
 
                                                 });
                                     } else {
-                                         document.getElementById('roller').style.display='none';
+                                        CustomerlogHistory();
                                        const tend = response.confirm[1];
                                         const tstart = response.confirm[2];
                                         var totaltime = timeDifference(tstart,tend);
@@ -2090,8 +2015,9 @@ function convertTo12HourFormat(time24) {
                                         document.getElementById('start').textContent=response.confirm[2];
                                         document.getElementById('end').textContent=response.confirm[1];
                                         document.getElementById('hours').textContent=between;
-                                        CustomerlogHistory();
+                                        // CustomerlogHistory();
                                         viewLog(response.data);
+                                        document.getElementById('roller').style.display='none';
                                     }
 
 
