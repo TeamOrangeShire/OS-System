@@ -2067,14 +2067,15 @@ function convertTo12HourFormat(time24) {
              document.addEventListener('DOMContentLoaded',events=>{
                    document.addEventListener("keydown", function(event) {
                      if (event.key === 'Enter') {
+                         document.getElementById('roller').style.display='flex';
                  const editSpans = document.querySelectorAll(".undeditSpan");
                         editSpans.forEach(edit => {
                             const editId = edit.id.substring("log_comment".length);
                             document.getElementById('comment_log_id').value = editId;
-                            if(edit.value!==''){
+                            if(edit.value!=''){
                                      document.getElementById('comment_log_message').value = edit.value;
                             const formData = $('form#submitComment').serialize();
-                             document.getElementById('roller').style.display='flex';
+                            
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('SaveComment') }}",
