@@ -2080,14 +2080,14 @@ function convertTo12HourFormat(time24) {
                                 data: formData,
                                 success: function(response) {
                                     edit.style.border = "none";
-                                     document.getElementById('roller').style.display='none';
+                                    
                                 },
                                 error: function(xhr) {
                                     console.log(xhr.responseText);
                                 }
                             });
                         });
-                    
+                     document.getElementById('roller').style.display='none';
             }
                   
                 });
