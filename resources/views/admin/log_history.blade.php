@@ -1117,7 +1117,7 @@
                     const { log_start_time, log_end_time } = row;
                     if (!log_end_time) return '';
                     const totaltime = timeDifference(log_start_time, log_end_time);
-                    return `${totaltime.hours}:${totaltime.minutes}`;
+                    return `${totaltime.hours<=10?'0'+totaltime.hours:totaltime.hours}:${totaltime.minutes<=10?'0'+totaltime.minutes:totaltime.minutes}`;
                 }
             },
             {
@@ -1425,8 +1425,6 @@ function convertTo12HourFormat(time24) {
         }
     );
 }
-
-
                 function getCustomerData() {
                     $('#customerlog').DataTable({
                          order: [
