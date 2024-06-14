@@ -2064,8 +2064,9 @@ function convertTo12HourFormat(time24) {
                         editSpan.style.border = "1px solid black";
                     });
                 }
-                document.addEventListener("click", function(event) {
-                    const editSpans = document.querySelectorAll(".undeditSpan");
+                document.addEventListener("keypress", function(event) {
+                     if (event.key === 'Enter' || event.keyCode === 13) {
+                 const editSpans = document.querySelectorAll(".undeditSpan");
 
                     let clickedInsideEditSpan = false;
                     editSpans.forEach(editSpan => {
@@ -2094,6 +2095,8 @@ function convertTo12HourFormat(time24) {
                             });
                         });
                     }
+            }
+                  
                 });
 
                 function validatePhoneNumber(event) {
