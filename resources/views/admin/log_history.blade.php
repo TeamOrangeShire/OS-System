@@ -2064,40 +2064,40 @@ function convertTo12HourFormat(time24) {
                         editSpan.style.border = "1px solid black";
                     });
                 }
-                document.addEventListener("keypress", function(event) {
-                     if (event.key === 'Enter' || event.keyCode === 13) {
+             document.addEventListener('DOMContentLoaded',events=>{
+                   document.addEventListener("keydown", function(event) {
+                     if (event.key === 'Enter') {
+                      
                  const editSpans = document.querySelectorAll(".undeditSpan");
 
-                    let clickedInsideEditSpan = false;
-                    editSpans.forEach(editSpan => {
-                        if (editSpan.contains(event.target)) {
-                            clickedInsideEditSpan = true;
-                        }
-                    });
+                   
 
-                    if (!clickedInsideEditSpan) {
+                  
                         editSpans.forEach(edit => {
+                             
                             const editId = edit.id.substring("log_comment".length);
                             document.getElementById('comment_log_id').value = editId;
                             document.getElementById('comment_log_message').value = edit.value;
                             const formData = $('form#submitComment').serialize();
-
+                             document.getElementById('roller').style.display='flex';
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('SaveComment') }}",
                                 data: formData,
                                 success: function(response) {
                                     edit.style.border = "none";
+                                     document.getElementById('roller').style.display='none';
                                 },
                                 error: function(xhr) {
                                     console.log(xhr.responseText);
                                 }
                             });
                         });
-                    }
+                    
             }
                   
                 });
+             })
 
                 function validatePhoneNumber(event) {
                     const phoneNumberInput = event.target;
