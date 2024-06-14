@@ -2071,7 +2071,8 @@ function convertTo12HourFormat(time24) {
                         editSpans.forEach(edit => {
                             const editId = edit.id.substring("log_comment".length);
                             document.getElementById('comment_log_id').value = editId;
-                            document.getElementById('comment_log_message').value = edit.value;
+                            if(edit.value!==''){
+                                     document.getElementById('comment_log_message').value = edit.value;
                             const formData = $('form#submitComment').serialize();
                              document.getElementById('roller').style.display='flex';
                             $.ajax({
@@ -2085,7 +2086,8 @@ function convertTo12HourFormat(time24) {
                                 error: function(xhr) {
                                     console.log(xhr.responseText);
                                 }
-                            });
+                            }); 
+                            }
                         });
                      document.getElementById('roller').style.display='none';
             }
