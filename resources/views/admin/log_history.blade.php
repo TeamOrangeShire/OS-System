@@ -1194,11 +1194,11 @@
             },
             { data: 'updated_at' }
         ],
-        drawCallback: (settings) => {
-            if (settings.aoData.length > 20) {
-                $('#loghistory tbody tr:gt(19)').hide();
-            }
-        }
+        // drawCallback: (settings) => {
+        //     if (settings.aoData.length > 30) {
+        //         $('#loghistory tbody tr:gt(29)').hide();
+        //     }
+        // }
     });
 }
 
