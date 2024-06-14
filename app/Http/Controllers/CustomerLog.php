@@ -173,14 +173,14 @@ public function LogToPending(Request $request) {
           'log_transaction'=>$paymentPass.'-0',
     
         ]);  
-         return response()->json(['data' => 'DayPass']);
+         return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
       }else{
          $logs->update([
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-1',
         ]);  
-         return response()->json(['data' => 'DayPass']);
+         return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
       }
       
     }

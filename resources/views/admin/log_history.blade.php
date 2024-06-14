@@ -1074,6 +1074,13 @@
             { targets: [1, 2, 12], visible: false },
             { targets: 13, visible: false, searchable: false }
         ],
+          layout: {
+                            topStart: {
+                                buttons: [
+                                    'colvis'
+                                ]
+                            }
+                        },
         destroy: true,
         ajax: {
             url: '{{ route("CustomerlogHistory") }}',
@@ -1383,40 +1390,42 @@ function convertTo12HourFormat(time24) {
                     });
                 }
 
-                function delete_log(id) {
-                    alertify.confirm("Warning", "Are You Sure You Want To Delete This Log?",
-                        function() {
-                            alertify.success('Ok');
-                            var formData = new FormData();
-                            formData.append('log_id', id);
-                            formData.append('_token', '{{ csrf_token() }}');
-                            $.ajax({
-                                type: "POST",
-                                url: "{{ route('DeleteLog') }}",
-                                data: formData,
-                                contentType: false,
-                                processData: false,
-                                success: function(response) {
-                                    if (response.status == 'success') {
-                                        alertify
-                                            .alert("Message", "Log Successfully Deleted", function() {
-                                                CustomerlogHistory();
-                                             
-                                            });
-                                    }
+              function delete_log(id) {
+    alertify.confirm("Warning", "Are You Sure You Want To Delete This Log?",
+        function() {
+            alertify.success('Ok');
+            var formData = new FormData();
+            formData.append('log_id', id);
+            formData.append('_token', '{{ csrf_token() }}');
+            document.getElementById('roller').style.display = 'flex';
 
-                                },
-                                error: function(xhr, status, error) {
-                                    console.error(xhr.responseText);
-                                }
-                            });
-                        },
-                        function() {
-                            alertify.error('Cancel');
-
-                        });
-
+            $.ajax({
+                type: "POST",
+                url: "{{ route('DeleteLog') }}",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    document.getElementById('roller').style.display = 'none';
+                    if (response.status === 'success') {
+                        alertify.alert("Message", "Log Successfully Deleted", CustomerlogHistory);
+                    } else {
+                        alertify.error('Failed to delete log: ' + (response.message || 'Unknown error.'));
+                    }
+                },
+                error: function(xhr, status, error) {
+                    document.getElementById('roller').style.display = 'none';
+                    console.error(xhr.responseText);
+                    alertify.error('An error occurred while deleting the log.');
                 }
+            });
+        },
+        function() {
+            alertify.error('Cancel');
+        }
+    );
+}
+
 
                 function getCustomerData() {
                     $('#customerlog').DataTable({
@@ -1977,15 +1986,12 @@ function convertTo12HourFormat(time24) {
         //     closeDetect();
         // });
                 function Pending(id) {
-                 
-
                     alertify.confirm("Confirmation", "Are You Sure You Want To Logout This Customer?",
                         function() {
                             alertify.success('Ok');
                             document.getElementById('cuslogoutid').value = id;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + id;
-                          
                              document.getElementById('roller').style.display='flex';
                             $.ajax({
                                 type: "POST",
@@ -1995,14 +2001,22 @@ function convertTo12HourFormat(time24) {
                                     if (response.data == "DayPass") {
                                          document.getElementById('roller').style.display='none';
                                          CustomerlogHistory();
+                                          const tend = response.confirm[1];
+                                        const tstart = response.confirm[2];
+                                        var totaltime = timeDifference(tstart,tend);
+                                        var between = totaltime.hours + ':' + totaltime.minutes;
+                                        document.getElementById('id').value=response.confirm[0];
+                                        document.getElementById('payment').value=response.confirm[3];
+                                        document.getElementById('start').textContent=response.confirm[2];
+                                        document.getElementById('end').textContent=response.confirm[1];
+                                        document.getElementById('hours').textContent=between;
+                                        // CustomerlogHistory();
+                                        viewLog(response.data);
                                         alertify
                                             .alert("Message",
                                                 "The customer has already exceeded 8 hours, so the plan was automatically upgraded to a DayPass.",
                                                 function() {
-                                                
-                                                   
                                                     $('#viewcuslog').modal('hide');
-
                                                 });
                                     } else {
                                         CustomerlogHistory();

@@ -155,9 +155,10 @@ Route::post('/DeleteBlog',[BlogData::class,'DeleteBlog'] )->name('DeleteBlog');
 Route::post('/UpdateBlogCover',[BlogData::class,'UpdateBlogCover'] )->name('UpdateBlogCover');
 Route::post('/AddNewCategory',[BlogData::class,'AddNewCategory'] )->name('AddNewCategory');
 Route::post('/EditStartTime',[CustomerLog::class,'EditStartTime'] )->name('EditStartTime');
-Route::post('/createNotifications',[CustomerLog::class,'createNotifications'] )->name('createNotifications');
-Route::post('/updateLogsWithPayment',[CustomerLog::class,'updateLogsWithPayment'] )->name('updateLogsWithPayment');
-Route::post('/updateLogs',[CustomerLog::class,'updateLogs'] )->name('updateLogs');
+Route::post('/handleLogStatusOne',[CustomerLog::class,'handleLogStatusOne'] )->name('handleLogStatusOne');
+Route::post('/createCustomerNotification',[CustomerLog::class,'createCustomerNotification'] )->name('createCustomerNotification');
+Route::post('/createActivityLog',[CustomerLog::class,'createActivityLog'] )->name('createActivityLog');
+Route::post('/handleLogStatusZero',[CustomerLog::class,'handleLogStatusZero'] )->name('handleLogStatusZero');
 
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
