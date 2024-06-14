@@ -2067,14 +2067,8 @@ function convertTo12HourFormat(time24) {
              document.addEventListener('DOMContentLoaded',events=>{
                    document.addEventListener("keydown", function(event) {
                      if (event.key === 'Enter') {
-                      
                  const editSpans = document.querySelectorAll(".undeditSpan");
-
-                   
-
-                  
                         editSpans.forEach(edit => {
-                             
                             const editId = edit.id.substring("log_comment".length);
                             document.getElementById('comment_log_id').value = editId;
                             document.getElementById('comment_log_message').value = edit.value;
