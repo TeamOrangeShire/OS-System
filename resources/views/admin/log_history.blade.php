@@ -1117,7 +1117,7 @@
                     const { log_start_time, log_end_time } = row;
                     if (!log_end_time) return '';
                     const totaltime = timeDifference(log_start_time, log_end_time);
-                    return `${totaltime.hours<=10?'0'+totaltime.hours:totaltime.hours}:${totaltime.minutes<=10?'0'+totaltime.minutes:totaltime.minutes}`;
+                    return `${totaltime.hours<10?'0'+totaltime.hours:totaltime.hours}:${totaltime.minutes<10?'0'+totaltime.minutes:totaltime.minutes}`;
                 }
             },
             {
@@ -1202,7 +1202,7 @@
     });
 }
 
-                function convertTo24Hour(timeStr) {
+          function convertTo24Hour(timeStr) {
     // Extract the parts of the time
     const [time, modifier] = timeStr.split(' ');
 
@@ -1225,6 +1225,8 @@
 
     return `${hours}:${minutes}`;
 }
+
+// Function to convert 24-hour time format to 12-hour format
 function convertTo12HourFormat(time24) {
     // Split the time into hours and minutes
     const [hours, minutes] = time24.split(':');
@@ -1242,10 +1244,11 @@ function convertTo12HourFormat(time24) {
     return time12;
 }
 
-                function editstarttimedata(id,time){
-                    document.getElementById('editstarttimeid').value=id;
-                    document.getElementById('logstarttime').value=convertTo24Hour(time);
-                }
+// Function to edit start time data
+function editstarttimedata(id, time) {
+    document.getElementById('editstarttimeid').value = id;
+    document.getElementById('logstarttime').value = convertTo24Hour(time);
+}
 
                 function EditStartTime() {
     document.getElementById('roller').style.display='flex';
