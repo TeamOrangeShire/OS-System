@@ -105,6 +105,7 @@
                                                 <table id="loghistory" class="table table-striped" style="width:100%">
                                                     <thead>
                                                         <tr>
+                                                            <th>Mark</th>
                                                             <th>Name</th>
                                                             <th>Email</th>
                                                             <Th>Contact</Th>
@@ -1071,8 +1072,8 @@
             [13, 'desc']
         ],
         columnDefs: [
-            { targets: [1, 2, 12], visible: false },
-            { targets: 13, visible: false, searchable: false }
+            { targets: [2, 3, 13], visible: false },
+            { targets: 14, visible: false, searchable: false }
         ],
           layout: {
                             topStart: {
@@ -1087,6 +1088,14 @@
             type: 'GET'
         },
         columns: [
+             { 
+            data: null,
+            render: function (data, type, row) {
+                return '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
+            },
+            className: 'text-center' // Center align the column content
+        },
+
             {
                 data: null,
                 render: (data, type, row) => {
