@@ -106,7 +106,7 @@
     <br>
     @php
       $admin_name = App\Models\AdminAcc::where('admin_id',session('Admin_id'))->first();
-      $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'. '.$admin_name->admin_lastname;
+      $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_lastname;
     @endphp
     <div class="lock-screen-logo">
       <img src="{{ $admin_name->admin_profile_pic ? asset('User/Admin/'.$admin_name->admin_profile_pic) : asset('assets/images/os_logo.png') }}" alt="Logo">

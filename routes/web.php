@@ -97,6 +97,7 @@ Route::get('/admin/GetWeeklyReport', [GetDataViews::class,"GetWeeklyReport"])->n
 Route::get('/admin/GetMonthlyReport', [GetDataViews::class,"GetMonthlyReport"])->name('GetMonthlyReport');
 Route::get('/admin/GetBlog', [BlogData::class,"GetBlog"])->name('GetBlog');
 Route::get('/admin/GetBlogEdit', [BlogData::class,"GetBlogEdit"])->name('GetBlogEdit');
+Route::get('/admin/GetLogByMonth', [CustomerLog::class,"GetLogByMonth"])->name('GetLogByMonth');
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
@@ -129,6 +130,8 @@ Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
 Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');
 Route::post('/CreateAccount',[CreateAcc::class,'CreateAdmin'] )->name('CreateAdmin');
 Route::post('/AdminProfile', [EditAcc::class, 'AdminProfile'])->name('AdminProfile');
+Route::post('/SaveAdminPass', [EditAcc::class, 'SaveAdminPass'])->name('SaveAdminPass');
+Route::post('/disableAdmin', [EditAcc::class, 'disableAdmin'])->name('disableAdmin');
 Route::post('/EditAdmin',[EditAcc::class,'EditAdmin'] )->name('EditAdmin');
 Route::post('/addCredit',[EditAcc::class,'addCredit'] )->name('addCredit');
 Route::post('/changeType',[EditAcc::class,'changeType'] )->name('changeType');
