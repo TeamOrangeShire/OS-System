@@ -182,9 +182,9 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="8" style="text-align:right; color:green"></th>
-                                                <th style="color:#3572EF;"></th>
-                                                <th style="color: #ff5c40;"></th>
+                                                <th colspan="10" style="text-align:right;"></th>
+                                                {{-- <th style="color:#3572EF;"></th>
+                                                <th style="color: #ff5c40;"></th> --}}
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -766,9 +766,9 @@
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
 
             // Update footer
-            api.column(7).footer().innerHTML = 'Cash: ₱' + cashtotal;
-            api.column(8).footer().innerHTML = 'E-Pay: ₱' + total;
-            api.column(9).footer().innerHTML = 'Total: ₱' + pageTotal;
+            // api.column(7).footer().innerHTML =  'Total: ₱' + pageTotal +' E-Pay: ₱' + total +' Cash: ₱' + cashtotal;
+            // api.column(8).footer().innerHTML = '<span style="color:red;">'+ cashtotal +'</span>';
+            api.column(9).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ pageTotal +'</span><span style="color:#ff5c40;margin-right:2%;"> Total ₱'+ pageTotal +'</span>';
         }
 
                 });
