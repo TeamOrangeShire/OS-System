@@ -768,7 +768,7 @@
             // Update footer
             // api.column(7).footer().innerHTML =  'Total: ₱' + pageTotal +' E-Pay: ₱' + total +' Cash: ₱' + cashtotal;
             // api.column(8).footer().innerHTML = '<span style="color:red;">'+ cashtotal +'</span>';
-            api.column(9).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ pageTotal +'</span><span style="color:#ff5c40;margin-right:2%;"> Total ₱'+ pageTotal +'</span>';
+            api.column(9).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ pageTotal +'</span><span style="color:#ff5c40;margin-right:2%;"> Total: ₱'+ pageTotal +'</span>';
         }
 
                 });
