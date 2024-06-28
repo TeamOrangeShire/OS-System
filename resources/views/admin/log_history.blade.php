@@ -1119,7 +1119,9 @@
                 }
 
                 function deletemark() {
-                    var formData = new FormData();
+                    alertify.confirm("Message","Are You Sure You Want to Delete Selected Log?",
+  function(){
+   var formData = new FormData();
                     var csrfToken = '{{ csrf_token() }}';
                     $('input[name="mark1[]"]:checked').each(function() {
                         formData.append('array[]', $(this).val());
@@ -1148,10 +1150,16 @@
                             alertify.error('An error occurred while deleting the log.');
                         }
                     });
+  },
+  function(){
+    alertify.error('Cancel');
+  });
+                    
                 }
 
                 function logoutmark() {
-
+                alertify.confirm("Message","Are You Sure You Want to Logout Selected Log?",
+  function(){
                     var formData = new FormData();
                     var csrfToken = '{{ csrf_token() }}';
 
@@ -1181,9 +1189,14 @@
                             alertify.error('An error occurred while deleting the log.');
                         }
                     });
-
+},
+  function(){
+    alertify.error('Cancel');
+  });
                 }
                 function logoutmark1() {
+                                    alertify.confirm("Message","Are You Sure You Want to Logout Selected Log?",
+  function(){
                      const var_id =document.getElementById('LogoutAllId').value;
                     var formData = new FormData();
                     var csrfToken = '{{ csrf_token() }}';
@@ -1217,6 +1230,10 @@
                             alertify.error('An error occurred while deleting the log.');
                         }
                     });
+                    },
+  function(){
+    alertify.error('Cancel');
+  });
 
                 }
 
@@ -1260,10 +1277,10 @@
                                         log_status
                                     } = row;
                                     if (log_status == 0) {
-                                        return '<input type="checkbox" class="form-check-input" name="mark1[]" value="' +
+                                        return '<input type="checkbox" style="border:1px solid;" class="form-check-input" name="mark1[]" value="' +
                                             log_id + '" id="mark1" onclick="MarkData()">';
                                     } else {
-                                        return '<input type="checkbox" class="form-check-input" name="mark1[]" value="' +
+                                        return '<input type="checkbox" style="border:solid 1px;" class="form-check-input" name="mark1[]" value="' +
                                             log_id + '" id="mark2" onclick="MarkDelete()">';
                                     }
                                 },
@@ -1827,7 +1844,7 @@
                                 data: null,
                                 render: function(data, type, row) {
                                     const {log_id} = row;
-                                    return '<input type="checkbox" class="form-check-input" name="mark1[]" value="' +
+                                    return '<input type="checkbox"  style="border:1px solid;" class="form-check-input" name="mark1[]" value="' +
                                         log_id + '" id="mark3" onclick="MarkData()">';
                                 },
                                 className: 'text-center' // Center align the column content
