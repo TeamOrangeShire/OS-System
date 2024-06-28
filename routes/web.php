@@ -162,6 +162,9 @@ Route::post('/handleLogStatusOne',[CustomerLog::class,'handleLogStatusOne'] )->n
 Route::post('/createCustomerNotification',[CustomerLog::class,'createCustomerNotification'] )->name('createCustomerNotification');
 Route::post('/createActivityLog',[CustomerLog::class,'createActivityLog'] )->name('createActivityLog');
 Route::post('/handleLogStatusZero',[CustomerLog::class,'handleLogStatusZero'] )->name('handleLogStatusZero');
+Route::post('/logoutmark',[CustomerLog::class,'logoutmark'] )->name('logoutmark');
+Route::post('/deletemark',[CustomerLog::class,'deletemark'] )->name('deletemark');
+Route::post('/logoutmark1',[CustomerLog::class,'logoutmark1'] )->name('logoutmark1');
 
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');

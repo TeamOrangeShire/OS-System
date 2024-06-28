@@ -53,7 +53,7 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
 
-                                <li class="nav-item" onclick="runLogHistory()"> 
+                                <li class="nav-item" onclick="runLogHistory()">
                                     <a class="nav-link active text-uppercase" id="profile-tab" data-toggle="tab"
                                         href="#profile" role="tab" aria-controls="profile" aria-selected="false">Log
                                         History</a>
@@ -128,7 +128,17 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <div class="col-sm-12">
+                                                    <div class="d-flex justify-content-between">
+                                                        <h5 class="col-sm-8 mt-2"></h5>
+                                                        <button class="btn btn-danger col-auto" id="logoutbymark"
+                                                            style="display:none;" onclick="logoutmark()">Logout</button>
+                                                        <button class="btn btn-danger col-auto" id="deletebymark"
+                                                            style="display:none;" onclick="deletemark()">Delete</button>
 
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </section>
@@ -182,7 +192,7 @@
                                             <th>Transaction Amount</th>
                                             <th>Method</th>
                                             <th>Status</th>
-                                           
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -193,7 +203,8 @@
                                 </table>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -213,6 +224,7 @@
                                 <table id="viewgrouplogTable" class="table table-striped" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th>Mark</th>
                                             <th>Full Name</th>
                                             <th>Action</th>
                                         </tr>
@@ -227,6 +239,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-danger col-auto" id="logoutbymark1" style="display:none;" onclick="logoutmark1()">Logout</button>
                                 <button type="button" class="btn btn-danger" onclick="LogoutAll()">Logout
                                     All</button>
                             </div>
@@ -332,8 +345,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Group Log</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalCloseButton"><span
-                                    aria-hidden="true">&times;</span></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                id="modalCloseButton"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
 
@@ -557,74 +570,76 @@
             </div>
 
             <div id="editpaymentmethodmodal" class="modal fade" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Payment Method</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="" novalidate method="POST" id="EditPaymentMethodForm">
-                            @csrf
-                            <div class="row mb-4 justify-content-center"> <!-- Added justify-content-center -->
-                                <div class="col-md-12 mb-6 text-center"> <!-- Added text-center -->
-                                    <label for="validationTooltip01">Payment Method</label>
-                                    <input type="hidden" name="editpaymenMethodtid" id="editpaymenMethodtid">
-                                    <select class="form-control"
-                                            id="EditpaymentMethod" name="EditpaymentMethod">
-                                        <option value="Cash">Cash</option>
-                                        <option value="E-Pay">E-Pay</option>
-                                    </select>
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Edit Payment Method</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="" novalidate method="POST" id="EditPaymentMethodForm">
+                                @csrf
+                                <div class="row mb-4 justify-content-center"> <!-- Added justify-content-center -->
+                                    <div class="col-md-12 mb-6 text-center"> <!-- Added text-center -->
+                                        <label for="validationTooltip01">Payment Method</label>
+                                        <input type="hidden" name="editpaymenMethodtid" id="editpaymenMethodtid">
+                                        <select class="form-control" id="EditpaymentMethod" name="EditpaymentMethod">
+                                            <option value="Cash">Cash</option>
+                                            <option value="E-Pay">E-Pay</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button class="btn  btn-primary" type="button"
-                                        onclick="EditPaymentLogMethod()">Save Changes</button>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn  btn-primary" type="button"
+                                            onclick="EditPaymentLogMethod()">Save Changes</button>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </form>
+                            </form>
+                        </div>
+
                     </div>
-
                 </div>
             </div>
-        </div>
 
-          <div id="editstarttime" class="modal fade " tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Login Time</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="" novalidate method="POST" id="editstarttimeform">
-                            @csrf
-                            <div class="row mb-4 justify-content-center text-center"> <!-- Added justify-content-center -->
-                                <div class="col-md-12 mb-6 justify-content-center text-center"> <!-- Added text-center -->
-                                    <label for="validationTooltip01">Start Time</label>
-                                    <input type="hidden" name="editstarttimeid" id="editstarttimeid">
-                                    <input type="time" name="logstarttime" id="logstarttime" class="form-control text-center" >
+            <div id="editstarttime" class="modal fade " tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Edit Login Time</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="" novalidate method="POST" id="editstarttimeform">
+                                @csrf
+                                <div class="row mb-4 justify-content-center text-center">
+                                    <!-- Added justify-content-center -->
+                                    <div class="col-md-12 mb-6 justify-content-center text-center">
+                                        <!-- Added text-center -->
+                                        <label for="validationTooltip01">Start Time</label>
+                                        <input type="hidden" name="editstarttimeid" id="editstarttimeid">
+                                        <input type="time" name="logstarttime" id="logstarttime"
+                                            class="form-control text-center">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button class="btn  btn-primary" type="button" data-bs-dismiss="modal"
-                                        onclick="EditStartTime()">Save Changes</button>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn  btn-primary" type="button" data-bs-dismiss="modal"
+                                            onclick="EditStartTime()">Save Changes</button>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </form>
+                            </form>
+                        </div>
+
                     </div>
-
                 </div>
             </div>
-        </div>
 
 
             <div id="SelectLogType" class="modal fade" tabindex="-1" role="dialog"
@@ -728,7 +743,7 @@
 
                 function newcusgrouplog() {
                     var formData = $("form#LogByGroupForm").serialize();
-                   
+
 
                     var saveLogByGroupURL = "{{ route('SaveLogByGroup') }}";
 
@@ -737,7 +752,7 @@
                         url: saveLogByGroupURL,
                         data: formData,
                         success: function(response) {
-                         
+
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
@@ -763,58 +778,58 @@
                 }
 
                 function SaveLogByGroup() {
-    var successCount = 0;
-    document.getElementById('roller').style.display='flex';
+                    var successCount = 0;
+                    document.getElementById('roller').style.display = 'flex';
 
-    var formData = $("form#LogByGroupForm").serialize();
-    var saveLogByGroupURL = "{{ route('SaveLogByGroup') }}";
+                    var formData = $("form#LogByGroupForm").serialize();
+                    var saveLogByGroupURL = "{{ route('SaveLogByGroup') }}";
 
-    $.ajax({
-        type: "POST",
-        url: saveLogByGroupURL,
-        data: formData,
-        success: function(response) {
-           
-            successCount++; 
-            checkSuccess(); 
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
+                    $.ajax({
+                        type: "POST",
+                        url: saveLogByGroupURL,
+                        data: formData,
+                        success: function(response) {
 
-    var formData1 = $("form#LogByExistGroupForm").serialize();
-    var saveLogByExistGroupURL = "{{ route('SaveLogByExistGroup') }}";
+                            successCount++;
+                            checkSuccess();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
 
-    $.ajax({
-        type: "POST",
-        url: saveLogByExistGroupURL,
-        data: formData1,
-        success: function(response) {
-          
-            successCount++;
-            checkSuccess(); 
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
+                    var formData1 = $("form#LogByExistGroupForm").serialize();
+                    var saveLogByExistGroupURL = "{{ route('SaveLogByExistGroup') }}";
 
-    function checkSuccess() {
-        if (successCount === 2) {
-            alertify.success('Both requests successful');
-        } else if (successCount === 1) {
-            alertify.success('One request successful');
-        }
-        if (successCount === 2 || successCount === 1) {
-            document.getElementById('roller').style.display='none'; 
-            CustomerlogHistory();
-            getCustomerData();
-            GetGroup();
-            document.getElementById('modalCloseButton').click();
-        }
-    }
-}
+                    $.ajax({
+                        type: "POST",
+                        url: saveLogByExistGroupURL,
+                        data: formData1,
+                        success: function(response) {
+
+                            successCount++;
+                            checkSuccess();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+
+                    function checkSuccess() {
+                        if (successCount === 2) {
+                            alertify.success('Both requests successful');
+                        } else if (successCount === 1) {
+                            alertify.success('One request successful');
+                        }
+                        if (successCount === 2 || successCount === 1) {
+                            document.getElementById('roller').style.display = 'none';
+                            CustomerlogHistory();
+                            getCustomerData();
+                            GetGroup();
+                            document.getElementById('modalCloseButton').click();
+                        }
+                    }
+                }
 
                 function RemoveFieldGroup(id) {
                     var groupBody = document.getElementById(id);
@@ -915,13 +930,13 @@
 
                 function insertnewcustomer() {
                     var formData = $("form#Insertnewcus").serialize();
-                     document.getElementById('roller').style.display='flex';
+                    document.getElementById('roller').style.display = 'flex';
                     $.ajax({
                         type: "POST",
                         url: "{{ route('InsertNewCustomer') }}",
                         data: formData,
                         success: function(response) {
-                             document.getElementById('roller').style.display='none';
+                            document.getElementById('roller').style.display = 'none';
                             if (response.status == 'firstname') {
                                 document.getElementById('firstname').style.border = '1px solid red';
                             } else if (response.status == 'lastname') {
@@ -969,13 +984,13 @@
 
                 function insertnewcustomerByDayPass() {
                     var formData = $("form#Insertnewcus").serialize();
-                     document.getElementById('roller').style.display='flex';
+                    document.getElementById('roller').style.display = 'flex';
                     $.ajax({
                         type: "POST",
                         url: "{{ route('insertnewcustomerByDayPass') }}",
                         data: formData,
                         success: function(response) {
-                             document.getElementById('roller').style.display='none';
+                            document.getElementById('roller').style.display = 'none';
                             if (response.status == 'firstname') {
                                 document.getElementById('firstname').style.border = '1px solid red';
                             } else if (response.status == 'lastname') {
@@ -1028,271 +1043,465 @@
                     // GetGroup();
                     reloadPageEvery30Minutes();
                 });
+
                 function reloadPageEvery30Minutes() {
-    setTimeout(function() {
-        location.reload();
-    }, 30 * 60 * 1000); // 30 minutes in milliseconds
-}
-                function runLogHistory(){
-                      CustomerlogHistory();
-                       if ($.fn.DataTable.isDataTable('#customerlog')) {
-                $('#customerlog').DataTable().clear().destroy();
-                }   
-                            if ($.fn.DataTable.isDataTable('#GroupTable')) {
-                $('#GroupTable').DataTable().clear().destroy();
-                }   
+                    setTimeout(function() {
+                        location.reload();
+                    }, 30 * 60 * 1000); // 30 minutes in milliseconds
                 }
-                function runCustomerLog(){
-                      getCustomerData();
-                       if ($.fn.DataTable.isDataTable('#loghistory')) {
-                $('#loghistory').DataTable().clear().destroy();
-                }   
-                         if ($.fn.DataTable.isDataTable('#GroupTable')) {
-                $('#GroupTable').DataTable().clear().destroy();
-                }   
+
+                function runLogHistory() {
+                    CustomerlogHistory();
+                    if ($.fn.DataTable.isDataTable('#customerlog')) {
+                        $('#customerlog').DataTable().clear().destroy();
+                    }
+                    if ($.fn.DataTable.isDataTable('#GroupTable')) {
+                        $('#GroupTable').DataTable().clear().destroy();
+                    }
                 }
-                function runGroupLog(){
-                      GetGroup();
-                             if ($.fn.DataTable.isDataTable('#loghistory')) {
-                $('#loghistory').DataTable().clear().destroy();
-                }  
-                       if ($.fn.DataTable.isDataTable('#customerlog')) {
-                $('#customerlog').DataTable().clear().destroy();
-                }   
+
+                function runCustomerLog() {
+                    getCustomerData();
+                    if ($.fn.DataTable.isDataTable('#loghistory')) {
+                        $('#loghistory').DataTable().clear().destroy();
+                    }
+                    if ($.fn.DataTable.isDataTable('#GroupTable')) {
+                        $('#GroupTable').DataTable().clear().destroy();
+                    }
+                }
+
+                function runGroupLog() {
+                    GetGroup();
+                    if ($.fn.DataTable.isDataTable('#loghistory')) {
+                        $('#loghistory').DataTable().clear().destroy();
+                    }
+                    if ($.fn.DataTable.isDataTable('#customerlog')) {
+                        $('#customerlog').DataTable().clear().destroy();
+                    }
+                }
+
+            function MarkData() {
+            let checkboxes = document.querySelectorAll('input[name="mark1[]"]');
+            let atLeastOneChecked = false;
+
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        atLeastOneChecked = true;
+                    }
+                });
+
+                if (atLeastOneChecked) {
+                    document.getElementById('logoutbymark').style.display = 'block';
+                    document.getElementById('deletebymark').style.display = 'block';
+                    document.getElementById('logoutbymark1').style.display = 'block';
+                } else {
+                    document.getElementById('logoutbymark').style.display = 'none';
+                    document.getElementById('deletebymark').style.display = 'none';
+                       document.getElementById('logoutbymark1').style.display = 'none';
+                }
+        }
+
+                function MarkDelete() {
+                    const checkboxes = document.querySelectorAll('input[id="mark2"]');
+                    let atLeastOneChecked = false;
+
+                    checkboxes.forEach(checkbox => {
+                        if (checkbox.checked) {
+                            atLeastOneChecked = true;
+                        }
+                    });
+
+                    if (atLeastOneChecked) {
+                        document.getElementById('deletebymark').style.display = 'block';
+                    } else {
+                        document.getElementById('deletebymark').style.display = 'none';
+                    }
+                }
+
+                function deletemark() {
+                    var formData = new FormData();
+                    var csrfToken = '{{ csrf_token() }}';
+                    $('input[name="mark1[]"]:checked').each(function() {
+                        formData.append('array[]', $(this).val());
+                    });
+                    formData.append('_token', csrfToken);
+                    document.getElementById('roller').style.display = 'flex';
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('deletemark') }}",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            document.getElementById('roller').style.display = 'none';
+                            document.getElementById('logoutbymark').style.display = 'none';
+                            document.getElementById('deletebymark').style.display = 'none';
+                            if (response.status === 'success') {
+                                alertify.alert("Message", "Log Successfully Deleted", CustomerlogHistory);
+                            } else {
+                                alertify.error('Failed to delete log: ' + (response.message || 'Unknown error.'));
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            document.getElementById('roller').style.display = 'none';
+                            console.error(xhr.responseText);
+                            alertify.error('An error occurred while deleting the log.');
+                        }
+                    });
+                }
+
+                function logoutmark() {
+
+                    var formData = new FormData();
+                    var csrfToken = '{{ csrf_token() }}';
+
+                    $('input[name="mark1[]"]:checked').each(function() {
+                        formData.append('array[]', $(this).val());
+                    });
+                    formData.append('_token', csrfToken);
+                    document.getElementById('roller').style.display = 'flex';
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('logoutmark') }}",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            document.getElementById('roller').style.display = 'none';
+                            document.getElementById('logoutbymark').style.display = 'none';
+                            if (response.status === 'success') {
+                                alertify.alert("Message", "Log Successfully Logout", CustomerlogHistory);
+                            } else {
+                                alertify.error('Failed to delete log: ' + (response.message || 'Unknown error.'));
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            document.getElementById('roller').style.display = 'none';
+                            console.error(xhr.responseText);
+                            alertify.error('An error occurred while deleting the log.');
+                        }
+                    });
+
+                }
+                function logoutmark1() {
+                     const var_id =document.getElementById('LogoutAllId').value;
+                    var formData = new FormData();
+                    var csrfToken = '{{ csrf_token() }}';
+
+                    $('input[name="mark1[]"]:checked').each(function() {
+                        formData.append('array[]', $(this).val());
+                    });
+                     formData.append('group_id', var_id);
+                    formData.append('_token', csrfToken);
+                   
+                    document.getElementById('roller').style.display = 'flex';
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('logoutmark1') }}",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            document.getElementById('roller').style.display = 'none';
+                            document.getElementById('logoutbymark1').style.display = 'none';
+                              viewGroupLog(response.group_id);
+                            if (response.status === 'success') {
+                                alertify.alert("Message", "Log Successfully Logout", CustomerlogHistory);
+                            } else {
+                                alertify.error('Failed to delete log: ' + (response.message || 'Unknown error.'));
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            document.getElementById('roller').style.display = 'none';
+                            console.error(xhr.responseText);
+                            alertify.error('An error occurred while deleting the log.');
+                        }
+                    });
+
                 }
 
                 function CustomerlogHistory() {
-    $('#loghistory').DataTable({
-        scrollX: true,
-        scrollY: '400px',
-        scrollCollapse: true,
-        paging: false,
-        info: false,
-        order: [
-            [13, 'desc']
-        ],
-        columnDefs: [
-            { targets: [2, 3, 13], visible: false },
-            { targets: 14, visible: false, searchable: false }
-        ],
-          layout: {
+                    $('#loghistory').DataTable({
+                        scrollX: true,
+                        scrollY: '400px',
+                        scrollCollapse: true,
+                        paging: false,
+                        info: false,
+                        order: [
+                            [13, 'desc']
+                        ],
+                        columnDefs: [{
+                                targets: [0,2, 3, 13],
+                                visible: false
+                            },
+                            {
+                                targets: 14,
+                                visible: false,
+                                searchable: false
+                            }
+                        ],
+                        layout: {
                             topStart: {
                                 buttons: [
                                     'colvis'
                                 ]
                             }
                         },
-        destroy: true,
-        ajax: {
-            url: '{{ route("CustomerlogHistory") }}',
-            type: 'GET'
-        },
-        columns: [
-             { 
-            data: null,
-            render: function (data, type, row) {
-                return '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
-            },
-            className: 'text-center' // Center align the column content
-        },
+                        destroy: true,
+                        ajax: {
+                            url: '{{ route('CustomerlogHistory') }}',
+                            type: 'GET'
+                        },
+                        columns: [{
+                                data: null,
+                                render: function(data, type, row) {
+                                    const {
+                                        log_id,
+                                        log_status
+                                    } = row;
+                                    if (log_status == 0) {
+                                        return '<input type="checkbox" class="form-check-input" name="mark1[]" value="' +
+                                            log_id + '" id="mark1" onclick="MarkData()">';
+                                    } else {
+                                        return '<input type="checkbox" class="form-check-input" name="mark1[]" value="' +
+                                            log_id + '" id="mark2" onclick="MarkDelete()">';
+                                    }
+                                },
+                                className: 'text-center' // Center align the column content
+                            },
 
-            {
-                data: null,
-                render: (data, type, row) => {
-                    const { firstname, lastname, middlename } = row;
-                    return `${firstname} ${middlename ? middlename : ''} ${lastname}`;
-                }
-            },
-            { data: 'email' },
-            { data: 'contact' },
-            {
-                data: null,
-                render: (data, type, row) => {
-                    const dateParts = row.log_date.split('/');
-                    return `${dateParts[1]}/${dateParts[0]}/${dateParts[2]}`;
-                }
-            },
-            {
-                data: null,
-                render: (data, type, row) => {
-                    const { log_id, log_start_time } = row;
-                    return `<span data-bs-toggle="modal" data-bs-target="#editstarttime" onclick="editstarttimedata('${log_id}', '${log_start_time}')">${log_start_time}</span>`;
-                }
-            },
-            { data: 'log_end_time' },
-            {
-                data: null,
-                render: (data, type, row) => {
-                    const { log_start_time, log_end_time } = row;
-                    if (!log_end_time) return '';
-                    const totaltime = timeDifference(log_start_time, log_end_time);
-                    return `${totaltime.hours<10?'0'+totaltime.hours:totaltime.hours}:${totaltime.minutes<10?'0'+totaltime.minutes:totaltime.minutes}`;
-                }
-            },
-            {
-                data: null,
-                render: (data, type, row) => {
-                    const { log_id, log_transaction } = row;
-                    if (!log_transaction) return '';
-                    const payment = parseFloat(log_transaction);
-                    return `<span data-bs-toggle="modal" data-bs-target="#editpaymentmodal" onclick="EditLogPayment('${log_id}', '${payment}')">${payment}</span>`;
-                }
-            },
-            {
-                data: null,
-                render: (data, type, row) => {
-                    const { log_id, log_payment_method } = row;
-                    const method = log_payment_method ? log_payment_method : 'Not Set';
-                    return `<span data-bs-toggle="modal" data-bs-target="#editpaymentmethodmodal" onclick="EditLogPaymentMethod('${log_id}', '${method}')">${method}</span>`;
-                }
-            },
-            {
-                data: 'log_status',
-                render: (data) => {
-                    switch (data) {
-                        case 0:
-                            return 'Active';
-                        case 1:
-                            return 'Pending';
-                        default:
-                            return 'Completed';
-                    }
-                }
-            },
-            {
-                data: null,
-                render: (data, type, row) => {
-                    const { log_id, log_comment } = row;
-                    return `<input value="${log_comment ? log_comment : ''}" style="border:none;background-color:transparent" placeholder="No Comment" class="undeditSpan" id="log_comment${log_id}" onclick="editComment(${log_id})">`;
-                }
-            },
-            {
-                data: 'log_type',
-                render: (data, type, row) => {
-                    const { log_status, log_transaction, log_id, log_start_time, log_end_time } = row;
-                    if (data === 1 || data === 2) {
-                        if (log_status === 0) {
-                            return `<button class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#out' onclick='Pending(${log_id})'>Logout</button>`;
-                        } else if (log_status === 1) {
-                            const payment = log_transaction.split('-')[0];
-                            return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
-                        } else {
-                            return 'Paid';
-                        }
-                    } else if (data === 0) {
-                        if (log_status === 0) {
-                            return `<button class='btn btn-danger' type='button' onclick='Pending(${log_id})'>Logout</button>`;
-                        } else if (log_status === 1) {
-                            const [payment, secondPart] = log_transaction.split('-');
-                            if (secondPart == 1) {
-                                return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
-                            } else {
-                                return `<button class='btn btn-warning' type='button' onclick='acceptLog(${log_id})'>Confirm</button>`;
+                            {
+                                data: null,
+                                render: (data, type, row) => {
+                                    const {
+                                        firstname,
+                                        lastname,
+                                        middlename
+                                    } = row;
+                                    return `${firstname} ${middlename ? middlename : ''} ${lastname}`;
+                                }
+                            },
+                            {
+                                data: 'email'
+                            },
+                            {
+                                data: 'contact'
+                            },
+                            {
+                                data: null,
+                                render: (data, type, row) => {
+                                    const dateParts = row.log_date.split('/');
+                                    return `${dateParts[1]}/${dateParts[0]}/${dateParts[2]}`;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: (data, type, row) => {
+                                    const {
+                                        log_id,
+                                        log_start_time
+                                    } = row;
+                                    return `<span data-bs-toggle="modal" data-bs-target="#editstarttime" onclick="editstarttimedata('${log_id}', '${log_start_time}')">${log_start_time}</span>`;
+                                }
+                            },
+                            {
+                                data: 'log_end_time'
+                            },
+                            {
+                                data: null,
+                                render: (data, type, row) => {
+                                    const {
+                                        log_start_time,
+                                        log_end_time
+                                    } = row;
+                                    if (!log_end_time) return '';
+                                    const totaltime = timeDifference(log_start_time, log_end_time);
+                                    return `${totaltime.hours<10?'0'+totaltime.hours:totaltime.hours}:${totaltime.minutes<10?'0'+totaltime.minutes:totaltime.minutes}`;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: (data, type, row) => {
+                                    const {
+                                        log_id,
+                                        log_transaction
+                                    } = row;
+                                    if (!log_transaction) return '';
+                                    const payment = parseFloat(log_transaction);
+                                    return `<span data-bs-toggle="modal" data-bs-target="#editpaymentmodal" onclick="EditLogPayment('${log_id}', '${payment}')">${payment}</span>`;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: (data, type, row) => {
+                                    const {
+                                        log_id,
+                                        log_payment_method
+                                    } = row;
+                                    const method = log_payment_method ? log_payment_method : 'Not Set';
+                                    return `<span data-bs-toggle="modal" data-bs-target="#editpaymentmethodmodal" onclick="EditLogPaymentMethod('${log_id}', '${method}')">${method}</span>`;
+                                }
+                            },
+                            {
+                                data: 'log_status',
+                                render: (data) => {
+                                    switch (data) {
+                                        case 0:
+                                            return 'Active';
+                                        case 1:
+                                            return 'Pending';
+                                        default:
+                                            return 'Completed';
+                                    }
+                                }
+                            },
+                            {
+                                data: null,
+                                render: (data, type, row) => {
+                                    const {
+                                        log_id,
+                                        log_comment
+                                    } = row;
+                                    return `<input value="${log_comment ? log_comment : ''}" style="border:none;background-color:transparent" placeholder="No Comment" class="undeditSpan" id="log_comment${log_id}" onclick="editComment(${log_id})">`;
+                                }
+                            },
+                            {
+                                data: 'log_type',
+                                render: (data, type, row) => {
+                                    const {
+                                        log_status,
+                                        log_transaction,
+                                        log_id,
+                                        log_start_time,
+                                        log_end_time
+                                    } = row;
+                                    if (data === 1 || data === 2) {
+                                        if (log_status === 0) {
+                                            return `<button class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#out' onclick='Pending(${log_id})'>Logout</button>`;
+                                        } else if (log_status === 1) {
+                                            const payment = log_transaction.split('-')[0];
+                                            return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
+                                        } else {
+                                            return 'Paid';
+                                        }
+                                    } else if (data === 0) {
+                                        if (log_status === 0) {
+                                            return `<button class='btn btn-danger' type='button' onclick='Pending(${log_id})'>Logout</button>`;
+                                        } else if (log_status === 1) {
+                                            const [payment, secondPart] = log_transaction.split('-');
+                                            if (secondPart == 1) {
+                                                return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
+                                            } else {
+                                                return `<button class='btn btn-warning' type='button' onclick='acceptLog(${log_id})'>Confirm</button>`;
+                                            }
+                                        } else {
+                                            return 'Paid';
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                data: null,
+                                render: (data, type, row) => {
+                                    return `<button class='btn btn-warning' type='button' onclick='delete_log("${row.log_id}")'>Delete</button>`;
+                                }
+                            },
+                            {
+                                data: 'updated_at'
                             }
-                        } else {
-                            return 'Paid';
-                        }
+                        ],
+                        // drawCallback: (settings) => {
+                        //     if (settings.aoData.length > 30) {
+                        //         $('#loghistory tbody tr:gt(29)').hide();
+                        //     }
+                        // }
+                    });
+                }
+
+                function convertTo24Hour(timeStr) {
+                    // Extract the parts of the time
+                    const [time, modifier] = timeStr.split(' ');
+
+                    let [hours, minutes] = time.split(':');
+
+                    // Convert hours to number
+                    hours = parseInt(hours, 10);
+
+                    // Handle the AM/PM modifier
+                    if (modifier === 'PM' && hours !== 12) {
+                        hours += 12;
                     }
+                    if (modifier === 'AM' && hours === 12) {
+                        hours = 0;
+                    }
+
+                    // Format hours and minutes to always be two digits
+                    hours = hours < 10 ? '0' + hours : hours;
+                    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+                    return `${hours}:${minutes}`;
                 }
-            },
-            {
-                data: null,
-                render: (data, type, row) => {
-                    return `<button class='btn btn-warning' type='button' onclick='delete_log("${row.log_id}")'>Delete</button>`;
+
+                // Function to convert 24-hour time format to 12-hour format
+                function convertTo12HourFormat(time24) {
+                    // Split the time into hours and minutes
+                    const [hours, minutes] = time24.split(':');
+
+                    // Determine if it's AM or PM
+                    const period = hours >= 12 ? 'PM' : 'AM';
+
+                    // Convert hours to 12-hour format
+                    let hours12 = parseInt(hours) % 12;
+                    hours12 = hours12 === 0 ? 12 : hours12; // If hours is 0, convert it to 12
+
+                    // Format the time in 12-hour format
+                    const time12 = `${hours12}:${minutes} ${period}`;
+
+                    return time12;
                 }
-            },
-            { data: 'updated_at' }
-        ],
-        // drawCallback: (settings) => {
-        //     if (settings.aoData.length > 30) {
-        //         $('#loghistory tbody tr:gt(29)').hide();
-        //     }
-        // }
-    });
-}
 
-          function convertTo24Hour(timeStr) {
-    // Extract the parts of the time
-    const [time, modifier] = timeStr.split(' ');
-
-    let [hours, minutes] = time.split(':');
-
-    // Convert hours to number
-    hours = parseInt(hours, 10);
-
-    // Handle the AM/PM modifier
-    if (modifier === 'PM' && hours !== 12) {
-        hours += 12;
-    }
-    if (modifier === 'AM' && hours === 12) {
-        hours = 0;
-    }
-
-    // Format hours and minutes to always be two digits
-    hours = hours < 10 ? '0' + hours : hours;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-
-    return `${hours}:${minutes}`;
-}
-
-// Function to convert 24-hour time format to 12-hour format
-function convertTo12HourFormat(time24) {
-    // Split the time into hours and minutes
-    const [hours, minutes] = time24.split(':');
-
-    // Determine if it's AM or PM
-    const period = hours >= 12 ? 'PM' : 'AM';
-
-    // Convert hours to 12-hour format
-    let hours12 = parseInt(hours) % 12;
-    hours12 = hours12 === 0 ? 12 : hours12; // If hours is 0, convert it to 12
-
-    // Format the time in 12-hour format
-    const time12 = `${hours12}:${minutes} ${period}`;
-
-    return time12;
-}
-
-// Function to edit start time data
-function editstarttimedata(id, time) {
-    document.getElementById('editstarttimeid').value = id;
-    document.getElementById('logstarttime').value = convertTo24Hour(time);
-}
+                // Function to edit start time data
+                function editstarttimedata(id, time) {
+                    document.getElementById('editstarttimeid').value = id;
+                    document.getElementById('logstarttime').value = convertTo24Hour(time);
+                }
 
                 function EditStartTime() {
-    document.getElementById('roller').style.display='flex';
-    const timeInputValue = document.getElementById('logstarttime').value;
-    const time12 = convertTo12HourFormat(timeInputValue);
-    const formData = $("form#editstarttimeform").serialize();
+                    document.getElementById('roller').style.display = 'flex';
+                    const timeInputValue = document.getElementById('logstarttime').value;
+                    const time12 = convertTo12HourFormat(timeInputValue);
+                    const formData = $("form#editstarttimeform").serialize();
 
-    $.ajax({
-        type: "POST",
-        url: "{{ route('EditStartTime') }}?safix="+time12,
-        data: formData,
-        success: function(response) {
-            if (response.status == 'success') {
-                CustomerlogHistory();
-                document.getElementById('roller').style.display='none';
-                alertify.alert("Message", "Log Start Time Successfully Updated", function() {
-                    alertify.message('OK');
-                });
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-            alertify.alert("Error", "An error occurred while updating the start time. Please try again.", function() {
-                alertify.message('OK');
-            });
-        }
-    });
-}
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('EditStartTime') }}?safix=" + time12,
+                        data: formData,
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                CustomerlogHistory();
+                                document.getElementById('roller').style.display = 'none';
+                                alertify.alert("Message", "Log Start Time Successfully Updated", function() {
+                                    alertify.message('OK');
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            alertify.alert("Error",
+                                "An error occurred while updating the start time. Please try again.",
+                                function() {
+                                    alertify.message('OK');
+                                });
+                        }
+                    });
+                }
 
 
 
                 // function EditStartTime(){
                 //     const t = document.getElementById('logstarttime').value;
                 //     console.log(t);
-                    
+
                 //     alertify.confirm("Warning", "Are You Sure You Want To Update This Log Start Time?",
                 //         function() {
                 //             alertify.success('Ok');
@@ -1402,55 +1611,56 @@ function editstarttimedata(id, time) {
                     });
                 }
 
-              function delete_log(id) {
-    alertify.confirm("Warning", "Are You Sure You Want To Delete This Log?",
-        function() {
-            alertify.success('Ok');
-            var formData = new FormData();
-            formData.append('log_id', id);
-            formData.append('_token', '{{ csrf_token() }}');
-            document.getElementById('roller').style.display = 'flex';
+                function delete_log(id) {
+                    alertify.confirm("Warning", "Are You Sure You Want To Delete This Log?",
+                        function() {
+                            alertify.success('Ok');
+                            var formData = new FormData();
+                            formData.append('log_id', id);
+                            formData.append('_token', '{{ csrf_token() }}');
+                            document.getElementById('roller').style.display = 'flex';
 
-            $.ajax({
-                type: "POST",
-                url: "{{ route('DeleteLog') }}",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    document.getElementById('roller').style.display = 'none';
-                    if (response.status === 'success') {
-                        alertify.alert("Message", "Log Successfully Deleted", CustomerlogHistory);
-                    } else {
-                        alertify.error('Failed to delete log: ' + (response.message || 'Unknown error.'));
-                    }
-                },
-                error: function(xhr, status, error) {
-                    document.getElementById('roller').style.display = 'none';
-                    console.error(xhr.responseText);
-                    alertify.error('An error occurred while deleting the log.');
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('DeleteLog') }}",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function(response) {
+                                    document.getElementById('roller').style.display = 'none';
+                                    if (response.status === 'success') {
+                                        alertify.alert("Message", "Log Successfully Deleted", CustomerlogHistory);
+                                    } else {
+                                        alertify.error('Failed to delete log: ' + (response.message ||
+                                            'Unknown error.'));
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    document.getElementById('roller').style.display = 'none';
+                                    console.error(xhr.responseText);
+                                    alertify.error('An error occurred while deleting the log.');
+                                }
+                            });
+                        },
+                        function() {
+                            alertify.error('Cancel');
+                        }
+                    );
                 }
-            });
-        },
-        function() {
-            alertify.error('Cancel');
-        }
-    );
-}
+
                 function getCustomerData() {
                     $('#customerlog').DataTable({
-                         order: [
+                        order: [
                             [5, 'desc']
                         ],
                         columnDefs: [{
-                                target: 5,
-                                visible: false,
-                                searchable: false
+                            target: 5,
+                            visible: false,
+                            searchable: false
 
-                            },
-                        ],
+                        }, ],
                         scrollX: true,
-                         scrollY: '400px',
+                        scrollY: '400px',
                         scrollCollapse: true,
                         paging: false,
                         "destroy": "true",
@@ -1493,18 +1703,18 @@ function editstarttimedata(id, time) {
                                     if (logtype == 1) {
                                         if (log_in === '0') {
                                             return " ";
-                                        }else if (log_in === '1') {
-                                              return " ";
-                                        } else{
+                                        } else if (log_in === '1') {
+                                            return " ";
+                                        } else {
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
                                                 customer_id + ")'>Login</button>";
                                         }
                                     } else {
                                         if (log_in === '0') {
-                                             return " ";
+                                            return " ";
                                         } else if (log_in === '1') {
                                             return " ";
-                                        } else{
+                                        } else {
                                             return "<button class='btn btn-success' type='button' data-bs-toggle='modal' data-bs-target='#SelectLogType' onclick='selectlogtype(" +
                                                 customer_id + ")'>Login</button>";
                                         }
@@ -1571,11 +1781,12 @@ function editstarttimedata(id, time) {
                         function() {
                             alertify.success('Ok');
                             const id = document.getElementById('LogoutAllId').value;
-                         
+
                             var formData = new FormData();
+                           
                             formData.append('id', id);
                             formData.append('_token', '{{ csrf_token() }}');
-                             document.getElementById('roller').style.display='flex';
+                            document.getElementById('roller').style.display = 'flex';
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('LogToPending3') }}",
@@ -1583,12 +1794,12 @@ function editstarttimedata(id, time) {
                                 contentType: false,
                                 processData: false,
                                 success: function(response) {
-                                     viewGroupLog(response.data);
-                                     document.getElementById('roller').style.display='none';
-                                     
+                                    viewGroupLog(response.data);
+                                    document.getElementById('roller').style.display = 'none';
+
                                     alertify
                                         .alert("Message", "Group Successfully Logged Out", function() {
-                                           
+
                                         });
                                 },
                                 error: function(xhr, status, error) {
@@ -1613,9 +1824,17 @@ function editstarttimedata(id, time) {
 
                         },
                         "columns": [{
+                                data: null,
+                                render: function(data, type, row) {
+                                    const {log_id} = row;
+                                    return '<input type="checkbox" class="form-check-input" name="mark1[]" value="' +
+                                        log_id + '" id="mark3" onclick="MarkData()">';
+                                },
+                                className: 'text-center' // Center align the column content
+                            },
+                            {
                                 "data": "name",
                             },
-
                             {
                                 "data": null,
                                 "render": function(data, type, row) {
@@ -1670,7 +1889,7 @@ function editstarttimedata(id, time) {
                 }
 
                 function PendingToOut(id, payment, start, end) {
-                
+
                     document.getElementById('id').value = id;
                     document.getElementById('payment').value = payment;
                     document.getElementById('start').textContent = start;
@@ -1685,23 +1904,23 @@ function editstarttimedata(id, time) {
                 function acceptPending() {
 
                     var formData = $("form#pendingPayment").serialize();
-                     document.getElementById('roller').style.display='flex';
-                   
+                    document.getElementById('roller').style.display = 'flex';
+
                     $.ajax({
                         type: "POST",
                         url: "{{ route('LogToPending') }}",
                         data: formData,
                         success: function(response) {
                             CustomerlogHistory();
-                           document.getElementById('roller').style.display='none';  
+                            document.getElementById('roller').style.display = 'none';
                             alertify
                                 .alert("Message",
                                     "Customer Successfully Paid.",
                                     function() {
-                                       
+
                                         viewLog(response.data);
                                         $('#out').modal('hide');
-                                         
+
                                     });
 
                         },
@@ -1715,14 +1934,14 @@ function editstarttimedata(id, time) {
                 function BackToLogout() {
 
                     var formData = $("form#pendingPayment").serialize();
-                     document.getElementById('roller').style.display='flex';
-                 
+                    document.getElementById('roller').style.display = 'flex';
+
                     $.ajax({
                         type: "POST",
                         url: "{{ route('BackToLogout') }}",
                         data: formData,
                         success: function(response) {
-                             document.getElementById('roller').style.display='none';
+                            document.getElementById('roller').style.display = 'none';
                             CustomerlogHistory();
                             viewLog(response.data);
                             $('#out').modal('hide');
@@ -1742,7 +1961,7 @@ function editstarttimedata(id, time) {
                             document.getElementById('cuslogoutid').value = id;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + id;
-                         
+
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('LogToPending') }}",
@@ -1760,11 +1979,11 @@ function editstarttimedata(id, time) {
 
                                         var totaltime = timeDifference(response.confirm[2], response.confirm[1]);
                                         var between = totaltime.hours + ':' + totaltime.minutes;
-                                        document.getElementById('id').value=response.confirm[0];
-                                        document.getElementById('payment').value=response.confirm[3];
-                                        document.getElementById('start').textContent=response.confirm[2];
-                                        document.getElementById('end').textContent=response.confirm[1];
-                                        document.getElementById('hours').textContent=between;
+                                        document.getElementById('id').value = response.confirm[0];
+                                        document.getElementById('payment').value = response.confirm[3];
+                                        document.getElementById('start').textContent = response.confirm[2];
+                                        document.getElementById('end').textContent = response.confirm[1];
+                                        document.getElementById('hours').textContent = between;
                                         getCustomerData();
                                         CustomerlogHistory();
                                         viewLog(response.data);
@@ -1793,7 +2012,7 @@ function editstarttimedata(id, time) {
                             document.getElementById('cuslogoutid').value = id;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + id;
-                        
+
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('LogToPending2') }}",
@@ -1810,7 +2029,7 @@ function editstarttimedata(id, time) {
                                     } else {
                                         getCustomerData();
                                         CustomerlogHistory();
-                                      
+
                                         viewLog(response.data);
                                         viewGroupLog(response.data);
 
@@ -1835,14 +2054,14 @@ function editstarttimedata(id, time) {
                             document.getElementById('cuslogoutid').value = logtypeid;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + logtypeid;
-                         
-                             document.getElementById('roller').style.display='flex';
+
+                            document.getElementById('roller').style.display = 'flex';
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('AccLogin') }}",
                                 data: Dataform,
                                 success: function(response) {
-                                     document.getElementById('roller').style.display='none';
+                                    document.getElementById('roller').style.display = 'none';
                                     getCustomerData();
                                     viewLog(response.data);
                                     $('#SelectLogType').modal('hide');
@@ -1866,14 +2085,14 @@ function editstarttimedata(id, time) {
                             document.getElementById('cuslogoutid').value = logtypeid;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + logtypeid;
-                         
-                             document.getElementById('roller').style.display='flex';
+
+                            document.getElementById('roller').style.display = 'flex';
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('logAsDayPass') }}",
                                 data: Dataform,
                                 success: function(response) {
-                                     document.getElementById('roller').style.display='none';
+                                    document.getElementById('roller').style.display = 'none';
                                     getCustomerData();
                                     viewLog(response.data);
                                     $('#SelectLogType').modal('hide');
@@ -1957,18 +2176,18 @@ function editstarttimedata(id, time) {
                                     }
                                 }
                             },
-                            
+
                         ]
                     });
                 }
 
                 function acceptLog(id) {
-                  
+
 
                     document.getElementById('cuslogoutid').value = id;
                     var formData = $("form#pendingLog").serialize();
                     var Dataform = formData + '&id=' + id;
-                 
+
                     $.ajax({
                         type: "POST",
                         url: "{{ route('acceptLog') }}",
@@ -1986,15 +2205,15 @@ function editstarttimedata(id, time) {
                     });
                 }
 
-                
-        //         function closeDetect() {
-        //             CustomerlogHistory();
-        // }
 
-        // // Detect when the modal is closed
-        // $('#out').on('hidden.bs.modal', function () {
-        //     closeDetect();
-        // });
+                //         function closeDetect() {
+                //             CustomerlogHistory();
+                // }
+
+                // // Detect when the modal is closed
+                // $('#out').on('hidden.bs.modal', function () {
+                //     closeDetect();
+                // });
                 function Pending(id) {
                     alertify.confirm("Confirmation", "Are You Sure You Want To Logout This Customer?",
                         function() {
@@ -2002,24 +2221,24 @@ function editstarttimedata(id, time) {
                             document.getElementById('cuslogoutid').value = id;
                             var formData = $("form#pendingLog").serialize();
                             var Dataform = formData + '&id=' + id;
-                             document.getElementById('roller').style.display='flex';
+                            document.getElementById('roller').style.display = 'flex';
                             $.ajax({
                                 type: "POST",
                                 url: "{{ route('LogToPending') }}",
                                 data: Dataform,
                                 success: function(response) {
                                     if (response.data == "DayPass") {
-                                         document.getElementById('roller').style.display='none';
-                                         CustomerlogHistory();
-                                          const tend = response.confirm[1];
+                                        document.getElementById('roller').style.display = 'none';
+                                        CustomerlogHistory();
+                                        const tend = response.confirm[1];
                                         const tstart = response.confirm[2];
-                                        var totaltime = timeDifference(tstart,tend);
+                                        var totaltime = timeDifference(tstart, tend);
                                         var between = totaltime.hours + ':' + totaltime.minutes;
-                                        document.getElementById('id').value=response.confirm[0];
-                                        document.getElementById('payment').value=response.confirm[3];
-                                        document.getElementById('start').textContent=response.confirm[2];
-                                        document.getElementById('end').textContent=response.confirm[1];
-                                        document.getElementById('hours').textContent=between;
+                                        document.getElementById('id').value = response.confirm[0];
+                                        document.getElementById('payment').value = response.confirm[3];
+                                        document.getElementById('start').textContent = response.confirm[2];
+                                        document.getElementById('end').textContent = response.confirm[1];
+                                        document.getElementById('hours').textContent = between;
                                         // CustomerlogHistory();
                                         viewLog(response.data);
                                         alertify
@@ -2030,18 +2249,18 @@ function editstarttimedata(id, time) {
                                                 });
                                     } else {
                                         CustomerlogHistory();
-                                       const tend = response.confirm[1];
+                                        const tend = response.confirm[1];
                                         const tstart = response.confirm[2];
-                                        var totaltime = timeDifference(tstart,tend);
+                                        var totaltime = timeDifference(tstart, tend);
                                         var between = totaltime.hours + ':' + totaltime.minutes;
-                                        document.getElementById('id').value=response.confirm[0];
-                                        document.getElementById('payment').value=response.confirm[3];
-                                        document.getElementById('start').textContent=response.confirm[2];
-                                        document.getElementById('end').textContent=response.confirm[1];
-                                        document.getElementById('hours').textContent=between;
+                                        document.getElementById('id').value = response.confirm[0];
+                                        document.getElementById('payment').value = response.confirm[3];
+                                        document.getElementById('start').textContent = response.confirm[2];
+                                        document.getElementById('end').textContent = response.confirm[1];
+                                        document.getElementById('hours').textContent = between;
                                         // CustomerlogHistory();
                                         viewLog(response.data);
-                                        document.getElementById('roller').style.display='none';
+                                        document.getElementById('roller').style.display = 'none';
                                     }
 
 
@@ -2074,36 +2293,37 @@ function editstarttimedata(id, time) {
                         editSpan.style.border = "1px solid black";
                     });
                 }
-             document.addEventListener('DOMContentLoaded',events=>{
-                   document.addEventListener("keydown", function(event) {
-                     if (event.key === 'Enter') {
-                document.getElementById('roller').style.display='flex';
-                 const editSpans = document.querySelectorAll(".undeditSpan");
-                        editSpans.forEach(edit => {
-                            const editId = edit.id.substring("log_comment".length);
-                            document.getElementById('comment_log_id').value = editId;
-                            if(edit.value!=''){
-                            document.getElementById('comment_log_message').value = edit.value;
-                            const formData = $('form#submitComment').serialize();
-                            $.ajax({
-                                type: "POST",
-                                url: "{{ route('SaveComment') }}",
-                                data: formData,
-                                success: function(response) {
-                                    edit.style.border = "none";
-                                document.getElementById('roller').style.display='none';
-                                },
-                                error: function(xhr) {
-                                    console.log(xhr.responseText);
+                document.addEventListener('DOMContentLoaded', events => {
+                    document.addEventListener("keydown", function(event) {
+                        if (event.key === 'Enter') {
+                            document.getElementById('roller').style.display = 'flex';
+                            const editSpans = document.querySelectorAll(".undeditSpan");
+                            editSpans.forEach(edit => {
+                                const editId = edit.id.substring("log_comment".length);
+                                document.getElementById('comment_log_id').value = editId;
+                                if (edit.value != '') {
+                                    document.getElementById('comment_log_message').value = edit.value;
+                                    const formData = $('form#submitComment').serialize();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "{{ route('SaveComment') }}",
+                                        data: formData,
+                                        success: function(response) {
+                                            edit.style.border = "none";
+                                            document.getElementById('roller').style.display =
+                                                'none';
+                                        },
+                                        error: function(xhr) {
+                                            console.log(xhr.responseText);
+                                        }
+                                    });
                                 }
-                            }); 
-                            }
-                        });
-                   
-            }
-                  
-                });
-             })
+                            });
+
+                        }
+
+                    });
+                })
 
                 function validatePhoneNumber(event) {
                     const phoneNumberInput = event.target;

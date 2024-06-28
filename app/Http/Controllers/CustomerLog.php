@@ -701,7 +701,7 @@ public function DeleteLog(Request $request){
   $log = CustomerLogs::where('log_id', $request->log_id)->first();
   $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
 
-   $data = new ActivityLog;
+    $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
     $data->act_user_type = "Admin";
     $data->act_action = "Admin deleted " . $cus->customer_lastname."'s log history";
@@ -928,6 +928,68 @@ public function GetLogByMonth() {
 
     return response()->json(['data' => $formattedLogs]);
 }
+public function logoutmark(Request $request){
+
+  $array = $request->array;
+
+  foreach ($array as $log_id) {
+  $log = CustomerLogs::where('log_status',0)->where('log_id', $log_id)->first();
+  if($log){
+  $starTime = $log->log_start_time;
+  $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+  $totalTime = timeDifference($starTime, $current);
+  $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $log->customer_type);
+  $log->update([
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-1',
+        ]); 
+        
+  }
+}
+return response()->json(['status' => 'success']); 
 
 }
+public function logoutmark1(Request $request){
 
+  $array = $request->array;
+  $group = $request->group_id;
+  foreach ($array as $log_id) {
+  $log = CustomerLogs::where('log_status',0)->where('log_id', $log_id)->first();
+  if($log){
+  $starTime = $log->log_start_time;
+  $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+  $totalTime = timeDifference($starTime, $current);
+  $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $log->customer_type);
+  $log->update([
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-1',
+        ]); 
+        
+  }
+}
+return response()->json(['status' => 'success','group_id'=>$group]); 
+
+}
+public function deletemark(Request $request){
+
+  $array = $request->array;
+  foreach ($array as $log_id) {
+  $log = CustomerLogs::where('log_id', $log_id)->first();
+  if($log){
+    $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin deleted " . $cus->customer_lastname."'s log history";
+    $data->act_header = "Delete log";
+    $data->act_location = "customer_log";
+    $data->save();
+    $log->delete();
+}
+}
+return response()->json(['status' => 'success']); 
+}
+}
