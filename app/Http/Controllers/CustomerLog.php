@@ -148,7 +148,7 @@ public function CustomerlogHistory() {
   $logs = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
   select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
   'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact','customer_acc.customer_middlename as middlename')
-  ->orderBy('created_at', 'desc')->take(50)->get();
+  ->get();
 
   return response()->json(['data' => $logs]);
 }

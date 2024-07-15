@@ -1245,7 +1245,7 @@
                         paging: false,
                         info: false,
                         order: [
-                            [13, 'asc']
+                            [13, 'desc']
                         ],
                         columnDefs: [{
                                 targets: [0,2, 3, 13],
