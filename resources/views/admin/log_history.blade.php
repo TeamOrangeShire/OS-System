@@ -1242,7 +1242,8 @@
                         scrollX: true,
                         scrollY: '400px',
                         scrollCollapse: true,
-                        paging: false,
+                         paging: true, // Enable paging
+                         pageLength: 25, // Set the number of rows per page
                         info: false,
                         order: [
                             [13, 'asc']
@@ -1427,11 +1428,7 @@
                                 data: 'updated_at'
                             }
                         ],
-                        // drawCallback: (settings) => {
-                        //     if (settings.aoData.length > 30) {
-                        //         $('#loghistory tbody tr:gt(29)').hide();
-                        //     }
-                        // }
+                    
                     });
                 }
 
