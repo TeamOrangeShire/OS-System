@@ -48,6 +48,8 @@ class UpdateSubscriptionTime extends Command
                         'hp_consume_time' => $add[0].":".$add[1]
                     ]);
                 }
+
+                $this->info($add[0].":".$add[1]);
             }
 
         }

@@ -200,6 +200,7 @@ Route::get('/back/subscription/loadallcustomer', [HybridPros::class, 'CustomerLi
 Route::get('/back/subscription/loadallcustomerexist', [HybridPros::class, 'CustomerExist'])->name('HybridCustomerExist');
 Route::get('/back/subscription/customerhistory', [HybridPros::class, 'CustomerHistory'])->name('HybridCustomerHistory');
 Route::post('/back/subscription/buynewplan', [HybridPros::class, 'BuyNewPlan'])->name('HybridBuyNewPlan');
+Route::post('/back/subscription/changeplan', [HybridPros::class, 'ChangePlan'])->name('HybridChangePlan');
 Route::post('/back/subscription/searchCustomer', [HybridPros::class, 'SearchCustomer'])->name('HybridSearchCustomer');
 Route::post('/back/subscription/logging', [HybridPros::class, 'Logging'])->name('HybridLogging');
 Route::post('/back/subscription/editPlans', [HybridPros::class, 'UpdatePlans'])->name('HybridEditPlans');

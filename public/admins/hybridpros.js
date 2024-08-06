@@ -231,6 +231,8 @@ function OpenPlanEdit(id, name, start, end, time, status){
   editExpiration.textContent = end;
   editTimeRemaining.textContent = time;
 
+  document.getElementById('changePlanHistoryId').value = id;
+
   if(status == 1){
     editStatus.innerHTML = `Status: <span class="badge text-bg-success p-2">Active</span>`;
   }else{
@@ -244,6 +246,20 @@ function OpenPlanEdit(id, name, start, end, time, status){
                   </svg>`;
 }
 
+function ChangePlan(route, load, logging){
+ const roller = document.getElementById('roller');
+ roller.style.display = 'flex';
+
+ $.ajax({
+   type: "POST",
+   url: route,
+   data: $('form#changePlanForm').serialize(),
+   success: res=> {
+     console.log(res)
+   }, error: xhr => console.log(xhr.responseText)
+ });
+
+}
 function SetActivePlan(status){
   const active = document.getElementById('editStatusActive');
   const inactive = document.getElementById('editStatusInactive');

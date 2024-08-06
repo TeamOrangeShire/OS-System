@@ -199,6 +199,23 @@ class HybridPros extends Controller
        return response()->json(['status'=>'success']);
     }
 
+    public function ChangePlan(Request $req){
+       $hp = HybridProsHistory::where('hph_id', $req->hph_id)->first();
+
+       if($hp->service_id == $req->select_plan){
+        return response()->json(['status'=>'already_selected']);
+       }
+
+       $service = ServiceHP::where('service_id',$req->select_plan)->first();
+
+       $givenDate = Carbon::parse('August 2, 2024');
+       $currentDate = Carbon::now();
+
+       $differenceInDays = $currentDate->diffInDays($givenDate);
+
+       return response()->json(['status'=>$differenceInDays]);
+    }
+
     public function CustomerHistory(Request $req){
         $history = HybridProsHistory::where('hp_id', $req->id)->get();
 

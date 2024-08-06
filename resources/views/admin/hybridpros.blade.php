@@ -284,18 +284,33 @@
       </div>
 
       <div class="modal fade" id="changePlan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog ">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="staticBackdropLabel">Select New Plan</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              ...
+                <form id="changePlanForm" method="post">
+                    @csrf
+                    <input type="hidden" id="changePlanHistoryId" name="hph_id">
+                    <div class="form-group">
+                        <select class="form-control" name="select_plan"required>
+                        <option value="0" disabled selected>------Select New Plan------</option>
+                        @php
+                            $plans = App\Models\ServiceHP::where('service_disable','!=',1)->get();
+                        @endphp
+
+                        @foreach ($plans as $plan)
+                            <option value="{{$plan->service_id}}">{{$plan->service_name}}</option>
+                        @endforeach
+                        </select>
+                        <small style="display: none" id="select_plan_e" class="text-danger">Please Select a Plan</small>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Understood</button>
+              <button type="button" onclick="ChangePlan('{{ route('HybridChangePlan') }}','{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}')" class="btn btn-primary">Change Plan</button>
             </div>
           </div>
         </div>

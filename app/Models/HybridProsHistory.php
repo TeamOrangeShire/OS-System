@@ -17,6 +17,7 @@ class HybridProsHistory extends Model
         'hp_plan_expire',
         'hp_plan_expire_new',
         'hp_remaining_time',
+        'hp_consume_time',
         'hp_inuse_status',
         'hp_active_status',
         'hp_payment_status',
