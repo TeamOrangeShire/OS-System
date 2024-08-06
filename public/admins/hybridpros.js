@@ -38,7 +38,7 @@ function Customers(data, logging, load){
     data.forEach(d => {
        let active = ``;
        const timeSplit = d.remaining_time.split(':');
-     if(d.historyActive != 'none'){
+       if(d.historyActive != 'none'){
        d.historyActive.forEach(ha=>{
            active += `<tr>
            <td>${ha.act}</td>
@@ -63,7 +63,7 @@ function Customers(data, logging, load){
        <td>${d.historyPending.hp_plan_start}</td>
        <td>${d.historyPending.hp_plan_expire}</td>
        <td>${d.historyPending.hp_remaining_time}</td>
-       <td>₱${d.historyPending.price == 0 ? 'Free' : `₱${d.historyPending.price}`}</td>
+       <td>${d.historyPending.price == 0 ? 'Free' : `₱${d.historyPending.price}`}</td>
        <td><span class="badge text-bg-warning p-2"> Pending  </span></td>
        <td><button onclick="OpenPlanEdit('${d.historyPending.hph_id}','${d.historyPending.name}', '${d.historyPending.hp_plan_start}', '${d.historyPending.hp_plan_expire}', '${d.historyPending.hp_remaining_time}', '0')"
         data-bs-toggle="modal" data-bs-target="#editCustomerPlan" class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">

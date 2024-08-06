@@ -45,7 +45,7 @@ class HybridPros extends Controller
             $h->payment = $hph ? 0 : 1;
             $h->active = $hphActive ? 1 : 0;
             $h->inuse = $inUse ? 1 : 0;
-            $h->remaining_time = $hphActive->hp_remaining_time;
+            $h->remaining_time = $hphActive ? $hphActive->hp_remaining_time : '00:00';
             if($hphActive){
                 $hphActiveAll = HybridProsHistory::where('hp_id', $h->hp_id)->where('hp_active_status', 1)->get();
 

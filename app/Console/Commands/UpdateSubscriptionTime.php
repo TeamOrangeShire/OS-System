@@ -58,20 +58,24 @@ class UpdateSubscriptionTime extends Command
      * @param int $time
      * @return int
      */
-    private function CalcDeductTime($time){
-      $split = explode(':', $time);
+    private function CalcDeductTime($time) {
+        $split = explode(':', $time);
 
-      $hours = $split[0];
-      $minutes = $split[1];
+        $hours = (int)$split[0];
+        $minutes = (int)$split[1];
 
-      if($minutes - 1 < 0){
-        $finalHours = $hours - 1;
-        $finalMinutes = 60 - 1;
-      }else {
-        $finalHours = $hours;
-        $finalMinutes = $minutes - 1;
-      }
+        if ($minutes - 1 < 0) {
+            $finalHours = $hours - 1;
+            $finalMinutes = 60 - 1;
+        } else {
+            $finalHours = $hours;
+            $finalMinutes = $minutes - 1;
+        }
 
-      return [$finalHours, $finalMinutes];
+        $formattedHours = str_pad($finalHours, 2, '0', STR_PAD_LEFT);
+        $formattedMinutes = str_pad($finalMinutes, 2, '0', STR_PAD_LEFT);
+
+        return [$formattedHours, $formattedMinutes];
     }
+
 }
