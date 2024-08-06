@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('service_name', 100);
             $table->integer('service_hours');
             $table->integer('service_price');
-            $table->unsignedBigInteger('promo_id'); 
+            $table->integer('service_days');
+            $table->unsignedBigInteger('promo_id');
             $table->foreign('promo_id')->references('promo_id')->on('promos');
             $table->timestamps();
         });

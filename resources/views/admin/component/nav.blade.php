@@ -6,7 +6,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
 <nav class="pcoded-navbar  ">
     <div class="navbar-wrapper  ">
         <div class="navbar-content scroll-div " >
-            
+
             <div class="">
                 <div class="main-menu-header">
                     <img class="img-radius" src="{{ $admin_name->admin_profile_pic ? asset('User/Admin/'.$admin_name->admin_profile_pic) : asset('assets/images/os_logo.png') }}" height="40px" width="50px" alt="User-Profile-Image">
@@ -22,7 +22,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                     </ul>
                 </div>
             </div>
-            
+
             <ul class="nav pcoded-inner-navbar ">
                 <li class="nav-item pcoded-menu-caption">
                     <label>Navigation</label>
@@ -32,6 +32,10 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                 </li>
                 <li class="nav-item">
                     <a href="{{route('log_history')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-list"></i></span><span class="pcoded-mtext">Customer Log</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('hybridpros')}}" class="nav-link "><span class="pcoded-micon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="7" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    </span><span class="pcoded-mtext">Hybrid Pros</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="{{route('activityLog')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-list"></i></span><span class="pcoded-mtext">Activity Log</span></a>
@@ -53,7 +57,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                 </li>
                     @endif
 
-                
+
                 <li class="nav-item pcoded-hasmenu">
                     <a href="#!" class="nav-link "><span class="pcoded-micon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></span><span class="pcoded-mtext">Reservation</span></a>
@@ -64,12 +68,12 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                         <li><a href="{{route('completed_r')}}">Completed</a></li>
                         <li><a href="{{route('cancelled_r')}}">Cancelled</a></li>
                         <li><a href="{{route('records_r')}}">Records</a></li>
-                        
+
                     </ul>
                 </li>
 
-               
-                <li class="nav-item pcoded-hasmenu">
+
+                {{-- <li class="nav-item pcoded-hasmenu">
                     <a href="#!" class="nav-link "><span class="pcoded-micon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="7" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></span><span class="pcoded-mtext">Subsciption</span></a>
                     <ul class="pcoded-submenu">
@@ -79,9 +83,9 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
                         <li><a href="{{route('expired_s')}}">Expired</a></li>
                         <li><a href="{{route('cancelled_s')}}">Cancelled</a></li>
                         <li><a href="{{route('records_s')}}">Records</a></li>
-                        
+
                     </ul>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
                     <a href="{{route('promos')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-percent"></i></span><span class="pcoded-mtext">Promos</span></a>
@@ -97,7 +101,7 @@ $fullname = $admin_name->admin_firstname.' '.$admin_name->admin_middlename[0].'.
         </div>
     </div>
 </nav>
-@else 
+@else
 @php
     return redirect('login');
 @endphp

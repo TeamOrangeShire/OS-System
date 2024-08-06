@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-    @include('admin.assets.header')
+    @include('admin.assets.header', ['title'=>'Subscription Plans'])
 </head>
 <body class="">
     <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -21,21 +21,21 @@
 	<!-- [ Header ] start -->
   @include('admin.component.header')
 	<!-- [ Header ] end -->
-	
-	
+
+
 
 <!-- [ Main Content ] start -->
 <div class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
       <div class="row">
-       
+
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" style="position: relative;">
-                    
+
                     <h5>Subscription Plans</h5>
-                    
+
                     {{-- modal start add plan--}}
                     <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -46,7 +46,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                              
+
                                     <div class="col-md-12">
                                         <form action="" id="planexistform" method="POST" >@csrf
                                             <div class="alert alert-danger" role="alert" id="planexist" style="display:none;">
@@ -55,44 +55,44 @@
                                             <div class="form-group">
                                                 <label for="plan_name">Plan Name</label>
                                                 <input type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Name" name="service_name" required>
-                                               
+
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_hours">Hours</label>
                                                 <input type="number" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Hours" name="service_hours" required>
-                                               
+
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_price">Price</label>
                                                 <input type="number" class="form-control"  aria-describedby="emailHelp" placeholder="Plan Price" name="service_price" required>
-                                               
+
                                             </div>
                                             <div class="form-group">
                                                 <label for="plan_promo">Promo</label>
                                                 <select class="form-control"  name="service_id" required>
-                                                    
+
                                                     @php
                                                     $promo = App\Models\Promos::where('promos_disable','!=',1)->get();
                                                 @endphp
                                                 @foreach ($promo as $info)
                                                     <option value="{{$info->promo_id}}">{{$info->promo_name}} {{$info->promo_percentage}}%</option>
                                                     @endforeach
-                                                </select>                        
+                                                </select>
                                             </div>
-            
-                                           
+
+
                                             <button type="submit" onclick="planexist()" class="btn  btn-primary">Add Plan</button>
                                         </form>
                                     </div>
                                </div>
-                              
+
                             </div>
                         </div>
                     </div>
                     <button type="button" class="btn  btn-primary" style=" position: absolute;top: 10px;right: 10px;" data-toggle="modal" data-target="#exampleModalCenter">Add Plan</button>
 
                     {{-- modal end --}}
-                 
+
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
@@ -106,13 +106,13 @@
                                     <th>Promo</th>
                                     <th colspan="2">Action</th>
 
-                            
+
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
                                 $Service = App\Models\ServiceHP::all();
-                                
+
                             @endphp
                             @foreach ($Service as $view)
                                 <tr>
@@ -124,7 +124,7 @@
                                         $promo_id =$view->promo_id;
                                         $selec_promo = App\Models\Promos::where('promo_id',$promo_id)->first();
                                       $promo_name = $selec_promo->promo_name.' '.$selec_promo->promo_percentage;
-                                      
+
                                     @endphp
                                     <td>{{$promo_name}}%</td>
                                     <td>
@@ -132,25 +132,25 @@
                                             $s_status = $view->service_disable;
                                         @endphp
                                         @if ($s_status == 0)
-                                        <button type="button" class="btn btn-icon btn-success"  data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
-                                        <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#disableplan" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-slash"></i></button> 
+                                        <button type="button" class="btn btn-icon btn-success"  data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>
+                                        <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#disableplan" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-slash"></i></button>
                                         @else
-                                        <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>  
-                                        <button type="button" class="btn btn-icon btn-info" data-toggle="modal" data-target="#disableplan2" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-check-circle"></i></button> 
+                                        <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#exampleModalCenter5"  onclick="updatemodal(`{{$view->service_id}}`,`{{$view->service_name}}`,`{{$view->service_hours}}`,`{{$view->service_price}}`,`{{$view->promo_id}}`)"><i class="feather icon-edit"></i></button>
+                                        <button type="button" class="btn btn-icon btn-info" data-toggle="modal" data-target="#disableplan2" onclick="updatemodal2(`{{$view->service_id}}`)"><i class="feather icon-check-circle"></i></button>
                                         @endif
-                                          
-                                    
-                                    
+
+
+
                                     </td>
                                 </tr>
-                               
+
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
 
 
@@ -164,7 +164,7 @@
             </div>
 
             <div class="modal-body">
-          
+
                 <div class="col-md-12">
                     <form method="POST" id="editplanexistform" action="">@csrf
                         <div class="alert alert-danger" role="alert" id="editplanexist" style="display:none;">
@@ -174,17 +174,17 @@
                             <input type="hidden" name="plan_id" id="plan_id">
                             <label for="plan_name">Plan Name</label>
                             <input type="text" class="form-control" id="plan_name" name="plan_name" aria-describedby="emailHelp" placeholder="Plan Name">
-                           
+
                         </div>
                         <div class="form-group">
                             <label for="plan_hours">Hours</label>
                             <input type="number" class="form-control" id="plan_hours" name="plan_hours" aria-describedby="emailHelp" placeholder="Plan Hours">
-                           
+
                         </div>
                         <div class="form-group">
                             <label for="plan_price">Price</label>
                             <input type="number" class="form-control" id="plan_price" name="plan_price" aria-describedby="emailHelp" placeholder="Plan Price">
-                           
+
                         </div>
                         <div class="form-group">
                             <label for="plan_promo">Promo</label>
@@ -195,15 +195,15 @@
                              @foreach ($promos as $detail)
                                 <option value="{{$detail->promo_id}}">{{$detail->promo_name}} {{$detail->promo_percentage}}%</option>
                                 @endforeach
-                            </select>                        
+                            </select>
                         </div>
 
-                       
+
                         <button type="submit" onclick="editplanexist()" class="btn  btn-primary">Add Plan</button>
                     </form>
                 </div>
            </div>
-          
+
         </div>
     </div>
 </div>
@@ -221,7 +221,7 @@
             <form action="{{route('DisablePlan')}}" method="post"> @csrf
             <div class="modal-body">
                 <h6>Are You Sure You Want to Disable This Plan?</h6>
-                
+
                 <input type="hidden" value="" name="planid" id="disable_service">
 
             </div>
@@ -244,7 +244,7 @@
             <form action="{{route('EnablePlan')}}" method="post"> @csrf
             <div class="modal-body">
                 <h6>Are You Sure You Want to Enable This Plan?</h6>
-                
+
                 <input type="hidden" value="" id="enable_service" name="planid">
 
             </div>
@@ -256,7 +256,7 @@
         </div>
     </div>
 </div>
-{{-- disable modal end --}} 
+{{-- disable modal end --}}
 
 
 {{-- Enable notif end --}}
@@ -278,10 +278,10 @@
 
 <script>
     setTimeout(() =>  {
-     document.getElementById('check').style.display='none';   
+     document.getElementById('check').style.display='none';
     }, 3000);
     document.getElementById('check').addEventListener('click',function(){
-        document.getElementById('check').style.display='none';   
+        document.getElementById('check').style.display='none';
     });
 </script>
 @endif
@@ -289,7 +289,7 @@
 
 
 {{-- start disable notif --}}
-@if (session('disabled')) 
+@if (session('disabled'))
 <div class="trans">
     <div class="wrapper" id="ex">
       <div class="popup-content1">
@@ -302,13 +302,13 @@
     </div>
   <script>
     setTimeout(() =>  {
-     document.getElementById('ex').style.display='none';   
+     document.getElementById('ex').style.display='none';
     }, 3000);
     document.getElementById('ex').addEventListener('click',function(){
-        document.getElementById('ex').style.display='none';   
+        document.getElementById('ex').style.display='none';
     });
 </script>
-      
+
     @endif
     {{-- end disable notif --}}
 
@@ -330,7 +330,7 @@
             plan_hours.value=hour;
             plan_price.value=price;
             prom.value=promo_id;
-          
+
         }
         function updatemodal2(id){
             document.getElementById('disable_service').value=id;
@@ -353,9 +353,9 @@
                 document.getElementById('planexist').style.display='';
                 }else if(response.status === 'success'){
                     location.reload();
-                
+
                 }
-                }, 
+                },
                 error: function (xhr) {
 
                     console.log(xhr.responseText);
@@ -379,16 +379,16 @@
                 document.getElementById('editplanexist').style.display='';
                 }else if(response.status === 'success'){
                     location.reload();
-                
+
                 }
-                }, 
+                },
                 error: function (xhr) {
 
                     console.log(xhr.responseText);
                 }
             });
             }
-     
+
     </script>
      @include('admin.assets.adminscript')
 

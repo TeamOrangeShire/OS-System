@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\SubscriptionsData;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Login;	
+use App\Http\Controllers\Login;
 use App\Http\Controllers\CreateAcc;
 use App\Http\Controllers\EditAcc;
 use App\Http\Controllers\Mailing;
@@ -12,6 +12,7 @@ use App\Http\Controllers\GetDataViews;
 use App\Http\Controllers\Reservation;
 use App\Http\Controllers\CustomerLog;
 use App\Http\Controllers\BlogData;
+use App\Http\Controllers\HybridPros;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +112,7 @@ Route::get('/admin/activitylog', function () { return view('admin.activityLog');
 Route::get('/admin/blogs', function () { return view('admin.blogs');})->name('blogs');
 
 Route::get('/admin/plans_subscription', function () { return view('admin.plans_s');})->name('plans_s');
+Route::get('/admin/hybridpros', function () { return view('admin.hybridpros');})->name('hybridpros');
 Route::get('/admin/pending_subscription', function () { return view('admin.pending_s');})->name('pending_s');
 Route::get('/admin/active_subscription', function () { return view('admin.active_s');})->name('active_s');
 Route::get('/admin/expired_subscription', function () { return view('admin.expired_s');})->name('expired_s');
@@ -121,7 +123,7 @@ Route::get('/admin/time', function () { return view('admin.time');})->name('time
 Route::get('/admin/logout', function () { return view('admin.logout');})->name('logout');
 
 
-// Admin Controller 
+// Admin Controller
 // Admin
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
 Route::post('/Admin_lockscreen',[Login::class,'Admin_lockscreen'] )->name('Admin_lockscreen');
@@ -167,6 +169,17 @@ Route::post('/EnablePlan', [EditData::class, 'EnablePlan'])->name('EnablePlan');
 Route::post('/submitComment', [CustomerLog::class, 'SaveComment'])->name('SaveComment');
 //Subscription
 Route::post('/ConfirmSubscription', [SubscriptionsData::class, 'ConfirmSubscription'])->name('ConfirmSubscription');
+
+Route::post('/back/subscription/registercustomer', [HybridPros::class, 'RegisterCustomer'])->name('HybridRegisterCustomer');
+Route::get('/back/subscription/loadallcustomer', [HybridPros::class, 'CustomerList'])->name('HybridCustomerList');
+Route::get('/back/subscription/loadallcustomerexist', [HybridPros::class, 'CustomerExist'])->name('HybridCustomerExist');
+Route::get('/back/subscription/customerhistory', [HybridPros::class, 'CustomerHistory'])->name('HybridCustomerHistory');
+Route::post('/back/subscription/buynewplan', [HybridPros::class, 'BuyNewPlan'])->name('HybridBuyNewPlan');
+Route::post('/back/subscription/searchCustomer', [HybridPros::class, 'SearchCustomer'])->name('HybridSearchCustomer');
+Route::post('/back/subscription/logging', [HybridPros::class, 'Logging'])->name('HybridLogging');
+Route::post('/back/subscription/editPlans', [HybridPros::class, 'UpdatePlans'])->name('HybridEditPlans');
+Route::post('/back/subscription/HybridUpdateProfile', [HybridPros::class, 'UpdateProfile'])->name('HybridUpdateProfile');
+Route::post('/back/subscription/acceptPayment', [HybridPros::class, 'AcceptPayment'])->name('HybridAcceptPayment');
 Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');
 //reservation
 Route::post('/ConfirmReservation', [Reservation::class, 'ConfirmReservation'])->name('ConfirmReservation');

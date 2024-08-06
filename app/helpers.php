@@ -18,32 +18,34 @@ function RandomId($length) {
 function FilterTime($time){
      $start = addSuffix(substr($time, 0,2));
      $end = addSuffix(substr($time, 3, 5));
- 
+
     return $start . ' - ' . $end;
  }
- 
+
  function addSuffix($time){
      if($time[0]=== "0"){
           $initial = $time[1];
      } else {
           $initial = $time;
      }
- 
+
      if(intval($initial) < 12 && $initial != "0"){
           $format = $initial . ":00AM";
      } else if($initial === "0"){
           $format = "12:00AM";
      } else if(intval($initial) < 12){
-        $format = $initial . ":00AM"; 
+        $format = $initial . ":00AM";
      } else if(intval($initial) === 12){
          $format = "12:00PM";
      } else {
           $adjust = intval($initial) - 12;
           $format = $adjust . ":00PM";
      }
- 
+
      return $format;
  }
+
+ 
 
  function FirstNameFormat($string){
      $count = str_word_count($string);
@@ -84,11 +86,11 @@ function FilterTime($time){
  function TransactionId(){
      $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
      $randomString = '';
- 
+
      for ($i = 0; $i < 15; $i++) {
          $randomString .= $characters[rand(0, strlen($characters) - 1)];
      }
- 
+
      return $randomString;
  }
 
@@ -97,7 +99,7 @@ function FilterTime($time){
 
     $nowTime = Carbon::parse($now);
     $dateTime = Carbon::parse($date);
-    
+
     $diffInHours = $dateTime->diffInHours($nowTime);
     $diffInMinutes = $dateTime->diffInMinutes($nowTime);
     $diffInDays= $dateTime->diffInDays($nowTime);
@@ -135,12 +137,12 @@ function parseTime($time) {
     $totalMinutes = $hour * 60 + $minute;
 
     if ($isPM && $hour !== 12) {
-        $totalMinutes += 12 * 60; 
+        $totalMinutes += 12 * 60;
     } elseif (!$isPM && $hour === 12) {
-        $totalMinutes -= 12 * 60; 
+        $totalMinutes -= 12 * 60;
     }
 
-    return $totalMinutes * 60 * 1000; 
+    return $totalMinutes * 60 * 1000;
 }
 
 function PaymentCalc($hoursString, $minutesString, $type){
@@ -340,10 +342,10 @@ function PaymentCalc($hoursString, $minutesString, $type){
         $payment += 50;
       }
     }
-  
+
     return $payment;
   }
-  
-  
+
+
 
 ?>
