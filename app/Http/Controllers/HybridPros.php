@@ -125,15 +125,18 @@ class HybridPros extends Controller
         foreach($hp as $h){
             $hph = HybridProsHistory::where('hp_id', $h->hp_id)->where('hp_payment_status', 0)->first();
             $hphActive = HybridProsHistory::where('hp_id', $h->hp_id)->where('hp_active_status', 1)->first();
+            $inUse = HybridProsHistory::where('hp_id', $h->hp_id)->where('hp_active_status', 1)->where('hp_inuse_status', 1)->first();
             $h->payment = $hph ? 0 : 1;
             $h->active = $hphActive ? 1 : 0;
-
+            $h->inuse = $inUse ? 1 : 0;
+            $h->remaining_time = $hphActive->hp_remaining_time;
             if($hphActive){
                 $hphActiveAll = HybridProsHistory::where('hp_id', $h->hp_id)->where('hp_active_status', 1)->get();
 
                 foreach($hphActiveAll as $active){
                     $service = ServiceHP::where('service_id', $active->service_id)->first();
                     $active->act = $service->service_name;
+                    $active->price = $service->service_price;
                 }
             }else{
                 $hphActiveAll = 'none';
@@ -142,6 +145,7 @@ class HybridPros extends Controller
             if($hph){
                 $PendingServ = ServiceHP::where('service_id', $hph->service_id)->first();
                 $hph->name = $PendingServ->service_name;
+                $hph->price = $PendingServ->service_price;
                 $h->historyPending = $hph;
             }else{
                 $h->historyPending = 'none';
