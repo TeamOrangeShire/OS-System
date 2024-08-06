@@ -32,17 +32,19 @@ class UpdateSubscriptionTime extends Command
         foreach($hpros as $hp){
             $history = HybridProsHistory::where('hp_id', $hp->hp_id)->where('hp_active_status', 1)->first();
 
-            $deduct = $this->CalcDeductTime($history->hp_remaining_time);
+            if($history){
+                $deduct = $this->CalcDeductTime($history->hp_remaining_time);
 
-            if($deduct[0] == 0 && $deduct[1] == 0){
-               $history->update([
-                'hp_remaining_time' => '0:0',
-                'hp_active_status'=> 0
-               ]);
-            }else{
-                $history->update([
-                    'hp_remaining_time' => $deduct[0].':'.$deduct[1],
-                ]);
+                if($deduct[0] == 0 && $deduct[1] == 0){
+                   $history->update([
+                    'hp_remaining_time' => '0:0',
+                    'hp_active_status'=> 0
+                   ]);
+                }else{
+                    $history->update([
+                        'hp_remaining_time' => $deduct[0].':'.$deduct[1],
+                    ]);
+                }
             }
 
         }
