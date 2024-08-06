@@ -255,7 +255,13 @@ function ChangePlan(route, load, logging){
    url: route,
    data: $('form#changePlanForm').serialize(),
    success: res=> {
-     console.log(res)
+     if(res.status == 'success'){
+        roller.style.display = 'none';
+        document.getElementById('changePlanClose').click();
+        toastr.success('successfully change customer plan');
+
+        LoadCustomer(load, logging)
+     }
    }, error: xhr => console.log(xhr.responseText)
  });
 

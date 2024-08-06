@@ -345,6 +345,33 @@ function PaymentCalc($hoursString, $minutesString, $type){
     return $payment;
   }
 
+  function ReduceTimeConsume($remaining, $consume) {
+    // Parse the remaining time
+    list($remainingHours, $remainingMinutes) = explode(':', $remaining);
+    $remainingHours = (int)$remainingHours;
+    $remainingMinutes = (int)$remainingMinutes;
 
+    // Parse the consume time
+    list($consumeHours, $consumeMinutes) = explode(':', $consume);
+    $consumeHours = (int)$consumeHours;
+    $consumeMinutes = (int)$consumeMinutes;
+
+    // Convert times to minutes
+    $remainingTotalMinutes = ($remainingHours * 60) + $remainingMinutes;
+    $consumeTotalMinutes = ($consumeHours * 60) + $consumeMinutes;
+
+    // Subtract consume time from remaining time
+    $newTotalMinutes = $remainingTotalMinutes - $consumeTotalMinutes;
+
+    // Convert back to hours and minutes
+    $finalHours = intdiv($newTotalMinutes, 60);
+    $finalMinutes = $newTotalMinutes % 60;
+
+    // Format hours and minutes with leading zeros
+    $formattedHours = str_pad($finalHours, 2, '0', STR_PAD_LEFT);
+    $formattedMinutes = str_pad($finalMinutes, 2, '0', STR_PAD_LEFT);
+
+    return "$formattedHours:$formattedMinutes";
+}
 
 ?>

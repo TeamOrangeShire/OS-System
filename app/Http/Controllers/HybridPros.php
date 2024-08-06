@@ -199,22 +199,6 @@ class HybridPros extends Controller
        return response()->json(['status'=>'success']);
     }
 
-    public function ChangePlan(Request $req){
-       $hp = HybridProsHistory::where('hph_id', $req->hph_id)->first();
-
-       if($hp->service_id == $req->select_plan){
-        return response()->json(['status'=>'already_selected']);
-       }
-
-       $service = ServiceHP::where('service_id',$req->select_plan)->first();
-
-       $givenDate = Carbon::parse('August 2, 2024');
-       $currentDate = Carbon::now();
-
-       $differenceInDays = $currentDate->diffInDays($givenDate);
-
-       return response()->json(['status'=>$differenceInDays]);
-    }
 
     public function CustomerHistory(Request $req){
         $history = HybridProsHistory::where('hp_id', $req->id)->get();
@@ -226,4 +210,22 @@ class HybridPros extends Controller
         }
         return response()->json(['history'=>$history]);
     }
+
+    public function ChangePlan(Request $req){
+        $hp = HybridProsHistory::where('hph_id', $req->hph_id)->first();
+        if($hp->service_id == $req->select_plan){
+         return response()->json(['status'=>'already_selected']);
+        }
+
+        $givenDate = Carbon::parse($hp->hp_plan_start);
+        $service = ServiceHP::where('service_id',$req->select_plan)->first();
+
+        $hp->update([
+         'service_id' => $req->select_plan,
+         'hp_plan_expire' => $givenDate->addDays($service->service_days)->format('F j, Y'),
+         'hp_remaining_time'=> ReduceTimeConsume($service->service_hours. ":00", $hp->hp_consume_time )
+        ]);
+        return response()->json(['status'=>'success']);
+     }
+
 }
