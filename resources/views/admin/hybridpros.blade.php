@@ -249,7 +249,13 @@
                <form id="updatePlanForm" method="POST">
                 @csrf
                 <input type="hidden" name="hp_id" id="updateHp_id">
-                <p class="fs-6">Plan Purchased: <span id="planEditName"></span></p>
+                <p class="fs-6">Plan Purchased: <span id="planEditName"></span> <span data-bs-toggle="modal" data-bs-target="#changePlan"
+                     class="ml-4 badge text-bg-primary p-1 acc_btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+                        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+                      </svg> Change Plan
+                </span></p>
                 <p class="fs-6">Date Purchased: <span id="planPurchaseDate"></span></p>
                 <p class="fs-6">Expiration Date: <span id="planExpirationDate"></span> <span onclick="editExpDate()" class="acc_btn" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
                     <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
@@ -272,6 +278,24 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="button" onclick="SaveChangesEditPlan('{{route('HybridEditPlans')}}', '{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}')" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="changePlan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Select New Plan</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Understood</button>
             </div>
           </div>
         </div>
