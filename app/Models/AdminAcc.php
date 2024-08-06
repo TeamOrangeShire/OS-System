@@ -17,6 +17,8 @@ class AdminAcc extends Model
       'admin_ext',
       'admin_username',
       'admin_password',
-      'admin_profile_pic'
+      'admin_profile_pic',
+      'admin_type',
+      'admin_status'
     ];
 }

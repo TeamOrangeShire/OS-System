@@ -182,8 +182,9 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="9" style="text-align:right">Total:</th>
-                                                <th></th>
+                                                <th colspan="10" style="text-align:right;"></th>
+                                                {{-- <th style="color:#3572EF;"></th>
+                                                <th style="color: #ff5c40;"></th> --}}
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -270,6 +271,9 @@
 
             function CustomerlogHistory() {
                 $('#generalhistory').DataTable({
+                    scrollY: '400px',
+                    scrollCollapse: true,
+                    paging: false,
                      scrollX: true,
                     order: [
                         [10, 'desc']
@@ -413,7 +417,9 @@
 
             function getsalereport() {
                 $('#salesreport').DataTable({
-                     
+                    scrollY: '400px',
+                    scrollCollapse: true,
+                    paging: false,
                     order: [
                         [0, 'desc']
                     ],
@@ -513,6 +519,9 @@
 
             function viewLog(date) {
                 $('#detailsalesreport').DataTable({
+                    scrollY: '350px',
+                    scrollCollapse: true,
+                    paging: false,
                      scrollX: true,
                     order: [
                         [1, 'desc']
@@ -613,6 +622,9 @@
                 console.log("End Date:", endDate);
 
                 $('#weeklyreport').DataTable({
+                    scrollY: '400px',
+                    scrollCollapse: true,
+                    paging: false,
                      scrollX: true,
                     order: [
                         [10, 'desc']
@@ -721,36 +733,44 @@
                         }
 
                     ],
-                    footerCallback: function(row, data, start, end, display) {
-                        let api = this.api();
+                   "footerCallback": function(row, data, start, end, display) {
+            let api = this.api();
 
-                        // Remove the formatting to get integer data for summation
-                        let intVal = function(i) {
-                            return typeof i === 'string' ?
-                                i.replace(/[\$,]/g, '') * 1 :
-                                typeof i === 'number' ?
-                                i :
-                                0;
-                        };
+            // Remove the formatting to get integer data for summation
+            let intVal = function(i) {
+                return typeof i === 'string' ?
+                    parseFloat(i.replace(/[^\d.-]/g, '')) || 0 :
+                    typeof i === 'number' ?
+                    i :
+                    0;
+            };
 
-                        // Total over all pages
-                        total = api
-                            .column(9)
-                            .data()
-                            .reduce((a, b) => intVal(a) + intVal(b), 0);
+            // Total over current page where column 7 equals "E-Pay"
+            let total = api
+                .column(9, { page: 'current' })
+                .data()
+                .filter((value, index) => api.column(7, { page: 'current' }).data()[index] === 'E-Pay')
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
 
-                        // Total over this page
-                        pageTotal = api
-                            .column(9, {
-                                page: 'current'
-                            })
-                            .data()
-                            .reduce((a, b) => intVal(a) + intVal(b), 0);
+            // Total over current page where column 7 equals "Cash"
+            let cashtotal = api
+                .column(9, { page: 'current' })
+                .data()
+                .filter((value, index) => api.column(7, { page: 'current' }).data()[index] === 'Cash')
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
 
-                        // Update footer
-                        api.column(9).footer().innerHTML =
-                            '₱' + pageTotal;
-                    }
+            // Total over this page
+            let pageTotal = api
+                .column(9, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+            // Update footer
+            // api.column(7).footer().innerHTML =  'Total: ₱' + pageTotal +' E-Pay: ₱' + total +' Cash: ₱' + cashtotal;
+            // api.column(8).footer().innerHTML = '<span style="color:red;">'+ cashtotal +'</span>';
+            api.column(9).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ total +'</span><span style="color:#ff5c40;margin-right:2%;"> Total: ₱'+ pageTotal +'</span>';
+        }
+
                 });
             }
 

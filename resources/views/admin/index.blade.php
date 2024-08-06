@@ -66,7 +66,7 @@
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <i>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#31363f" stroke="#222831 " stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#E76F51" stroke="#222831 " stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
                                                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                                         <circle cx="9" cy="7" r="4"></circle>
                                                         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -80,7 +80,6 @@
                                                 @php
                                                     $CustomerAcc = App\Models\CustomerAcc::all();
                                                     $count = $CustomerAcc->count();
-
                                                 @endphp
                                                     {{ $count }}
                                                 </h5>
@@ -92,7 +91,7 @@
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <i> 
-                                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#31363f" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#FF6969" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">
                                                         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                                                       </svg>                                               
                                                   </i>
@@ -101,9 +100,8 @@
                                                 <h5>
                                                     
                                                 @php
-                                                    $newCustomer = App\Models\CustomerAcc::Where('created_at',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
+                                                    $newCustomer = App\Models\CustomerLogs::where('log_status',0)->get();
                                                     $newCustomercount = $newCustomer->count();
-
                                                 @endphp
                                                     {{ $newCustomercount }}
 
@@ -118,7 +116,7 @@
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <i> 
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#31363f" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#1679AB" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award">
                                                         <circle cx="12" cy="8" r="7"></circle>
                                                         <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
                                                       </svg>                                                      
@@ -127,13 +125,8 @@
                                             <div class="col-sm-8 text-md-center">
                                                 <h5>
                                                 @php
-                                                    $Customerlog = App\Models\CustomerLogs::Where('log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
-                                                    $Customerlogcount = $Customerlog->count();
-
-                                                    $unCustomerlog = App\Models\CustomerLogUnregister::Where('un_log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
-                                                    $unCustomerlogcount = $unCustomerlog->count();
-
-                                                    $logTotal = $Customerlogcount + $unCustomerlogcount;
+                                                    $countReg = App\Models\CustomerAcc::where('customer_type','!=','Student')->get();
+                                                    $logTotal = $countReg->count();   
                                                 @endphp
                                                     {{ $logTotal }}
                                                 </h5>
@@ -145,24 +138,20 @@
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <i>        
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#31363f" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open">
-                                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                                                      </svg>                                                                                                            
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#379777" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open">
+    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+</svg>
+                                                                                                  
                                                 </i>
                                             </div>
                                             <div class="col-sm-8 text-md-center">
                                                 <h5>
-                                                    @php
-                                                    $Customerlog = App\Models\CustomerLogs::Where('log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
-                                                    $Customerlogcount = $Customerlog->count();
-
-                                                    $unCustomerlog = App\Models\CustomerLogUnregister::Where('un_log_date',Carbon\Carbon::now('Asia/Hong_Kong')->format('d/m/Y'))->get();
-                                                    $unCustomerlogcount = $unCustomerlog->count();
-
-                                                    $logTotal = $Customerlogcount + $unCustomerlogcount;
+                                                  @php
+                                                    $countStud = App\Models\CustomerAcc::where('customer_type','Student')->get();
+                                                    $logTotalS = $countStud->count();   
                                                 @endphp
-                                                    {{ $logTotal }}
+                                                    {{ $logTotalS }}
                                                 </h5>
                                                 <span>students</span>
                                             </div>
@@ -358,10 +347,78 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Customer Tracking</h5>
+                                <h5>Customer Log Tracking</h5>
                             </div>
                             <div class="card-body">
-                                <div id="line-chart-1"></div>
+                               <canvas id="myLineChart" class="col-12"></canvas>
+
+  <script>
+       
+        $(document).ready(function() {
+                  GetLogByMonth();
+                });
+    function GetLogByMonth() {
+    $.ajax({
+        url: "{{ route('GetLogByMonth') }}",
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+         
+            if (response && response.data) {
+              
+                const inputData = response.data.map(log => ({
+                    month: log.month,
+                    count: log.count
+                }));
+
+               
+                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                const labels = monthNames.slice(0, 12); 
+                const data = new Array(12).fill(0);
+                inputData.forEach(item => {
+                    const monthIndex = item.month - 1; 
+                    if (monthIndex >= 0 && monthIndex < 12) {
+                        data[monthIndex] = item.count;
+                    }
+                });
+                const options = {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Yearly Line Chart'
+                        }
+                    }
+                };
+
+                const ctx = document.getElementById('myLineChart').getContext('2d');
+                const myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Customers',
+                            borderColor: 'rgb(75, 192, 192)',
+                            data: data,
+                            fill: false
+                        }]
+                    },
+                    options: options
+                });
+
+            } else {
+                console.log('No data returned or empty data array');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching data:', xhr.responseText);
+        }
+    });
+}
+</script>
                             </div>
                         </div>
                     </div>

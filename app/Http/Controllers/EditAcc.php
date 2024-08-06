@@ -61,10 +61,6 @@ class EditAcc extends Controller
            return redirect()->back();
     }
 }
-    
-
-   
-
   }
 
   public function AdminProfile(Request $request) {
@@ -251,5 +247,46 @@ class EditAcc extends Controller
 
         ]);
         return redirect()->back();
+    }
+     public function UpdateCustomerInfo(Request $request){
+        if($request->firstname == ''|| $request->lastname == ''){
+            return response()->json(['status'=>'empty']);
+        }else{
+              $editProfilequery = CustomerAcc::where('customer_id', $request->customerid)->first();
+            $editProfilequery->update([
+                'customer_firstname' => $request->firstname,
+                'customer_lastname' => $request->lastname,
+            ]);
+        return response()->json(['status'=>'success']);
+        }
+      
+    }
+    public function SaveAdminPass(Request $request){
+        if($request->adminPass =='' || $request->adminPass2==''){
+        return response()->json(['status'=>'empty']);
+        }elseif($request->adminPass != $request->adminPass2){
+        return response()->json(['status'=>'notmatch']);
+        }else{
+             $update =  AdminAcc::where('admin_id',$request->adminId)->first();
+              $update->update([
+            'admin_password' => Hash::make($request->adminPass),
+                    ]);
+        return response()->json(['status'=>'success']);
+        }
+    }
+    public function disableAdmin(Request $request){
+         $update =  AdminAcc::where('admin_id',$request->adminId)->first();
+         if($update->admin_status == 1){
+            $update->update([
+            'admin_status' => null,
+                    ]);
+            return response()->json(['status'=>'success','id'=>$request->adminId,'result'=>'disable']);
+         }else{
+            $update->update([
+            'admin_status' => 1,
+                    ]);
+            return response()->json(['status'=>'success','id'=>$request->adminId,'result'=>'enable']);
+         }
+       
     }
 }

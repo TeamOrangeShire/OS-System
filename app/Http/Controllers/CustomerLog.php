@@ -9,6 +9,8 @@ use App\Models\Tour;
 use App\Models\CustomerNotification;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Http\Controllers\DateTime;
+use App\Http\Controllers\DateInterval;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerLog extends Controller
@@ -53,38 +55,86 @@ class CustomerLog extends Controller
     return response()->json(['data' => $cus_info->customer_id]);
   }
 
-  public function GetCustomerAcc() {
-    $accounts = CustomerAcc::all();
-    foreach ($accounts as $acc) {
-        $customerLogs1 = CustomerLogs::where('customer_id', $acc->customer_id)
-                                     ->whereIn('log_status', [0]) // Changed to an array with one element
-                                     ->first();
-        $customerLogs2 = CustomerLogs::where('customer_id', $acc->customer_id)
-                                     ->whereIn('log_status', [1]) // Changed to an array with one element
-                                     ->first();
-        if ($customerLogs1) {
-            $acc->log_in = "0";
-            $acc->logtype = $customerLogs1->log_type;
-            $acc->log_id = $customerLogs1->log_id;
-        } elseif ($customerLogs2) {
-            $acc->log_in = "1";
-            $acc->logtype = $customerLogs2->log_type;
-            $acc->log_payment = $customerLogs2->log_transaction;
-            $acc->log_start_time = $customerLogs2->log_start_time;
-            $acc->log_end_time = $customerLogs2->log_end_time;
-            $acc->log_id = $customerLogs2->log_id;
-        } else {
-            $acc->log_in = "2"; 
+  public function getCustomerAcc()
+    {
+        // Retrieve all customer accounts
+        $accounts = CustomerAcc::all();
+
+        // Iterate through each account
+        foreach ($accounts as $acc) {
+            // Retrieve the latest logs of different statuses in a single query
+            $customerLogs = CustomerLogs::where('customer_id', $acc->customer_id)
+                                        ->whereIn('log_status', [0, 1, 2])
+                                        ->orderBy('updated_at', 'desc')
+                                        ->get()
+                                        ->groupBy('log_status');
+
+            // Assign log attributes based on log_status
+            if (isset($customerLogs[0]) && $customerLogs[0]->isNotEmpty()) {
+                $log = $customerLogs[0]->first();
+                $acc->log_in = "0";
+                $acc->logtype = $log->log_type;
+                $acc->log_id = $log->log_id;
+                $acc->log_start_time = $log->log_start_time;
+                $acc->sort = $log->updated_at;
+            } elseif (isset($customerLogs[1]) && $customerLogs[1]->isNotEmpty()) {
+                $log = $customerLogs[1]->first();
+                $acc->log_in = "1";
+                $acc->logtype = $log->log_type;
+                $acc->log_payment = $log->log_transaction;
+                $acc->log_start_time = $log->log_start_time;
+                $acc->log_end_time = $log->log_end_time;
+                $acc->log_id = $log->log_id;
+                $acc->sort = $log->updated_at;
+            } elseif (isset($customerLogs[2]) && $customerLogs[2]->isNotEmpty()) {
+                $log = $customerLogs[2]->first();
+                $acc->log_in = "2";
+                $acc->logtype = $log->log_type;
+                $acc->log_payment = $log->log_transaction;
+                 $acc->log_start_time = $log->log_start_time;
+                $acc->log_end_time = $log->log_end_time;
+                 $acc->log_id = $log->log_id;
+                $acc->sort = $log->updated_at;
+            }
         }
-        unset($acc->created_at);
-        unset($acc->updated_at);
-      
+
+        // Convert accounts to array and return JSON response
+        return response()->json(['data' => $accounts->toArray()]);
     }
-    $accounts = $accounts->toArray();
-    return response()->json(['data' => $accounts]);
+
+
+ public function viewGroupLog(Request $request) {
+    $GroupLog = CustomerLogs::where('log_group_id',$request->id)->get();
+    $logData=[];
+    foreach ($GroupLog as $log) {
+       $accounts = CustomerAcc::where('customer_id',$log->customer_id)->first();
+      if($log->log_status==0){
+         $logData[]=[
+         'log_in' => '0',
+         'logtype' => $log->log_type,
+         'log_id' => $log->log_id,
+         'name'=>$accounts->customer_firstname.' '.$accounts->customer_lastname
+          ];
+      }else if($log->log_status==1){
+        $logData[]=[
+          'log_in' => "1",
+          'logtype' => $log->log_type,
+          'log_payment' => $log->log_transaction,
+          'log_start_time' => $log->log_start_time,
+          'log_end_time' => $log->log_end_time,
+          'log_id' => $log->log_id,
+          'name'=>$accounts->customer_firstname.' '.$accounts->customer_lastname
+        ];
+      }else if($log->log_status==2){
+         $logData[]=[
+          'name'=>$accounts->customer_firstname.' '.$accounts->customer_lastname,
+         'log_in' => "2"
+        ];
+      }
+    }
+   
+    return response()->json(['data' => $logData]);
 }
-
-
 
 public function GetCustomerlog(Request $request) {
 
@@ -97,40 +147,76 @@ public function CustomerlogHistory() {
  
   $logs = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
   select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
-  'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact','customer_acc.customer_middlename as middlename')->get();
+  'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact','customer_acc.customer_middlename as middlename')
+  ->orderBy('updated_at', 'desc')->take(50)->get();
 
   return response()->json(['data' => $logs]);
 }
 public function LogToPending(Request $request) {
 
     $logs = CustomerLogs::where('log_id',$request->id)->first();
-    $start = $logs->log_start_time;
     $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
-    $totalTime = timeDifference($start, $current);
+    $starTime = $logs->log_start_time;
+    $endTime = $logs->log_end_time;
     $cusAcc = CustomerAcc::where('customer_id',$logs->customer_id)->first();
     $type =$cusAcc->customer_type;
-    $payment = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
-   
+    $DayPassTime = add12Hours($starTime);
+    $totalTime = timeDifference($starTime, $current);
+    $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
+    if($totalTime['hours'] >= 8 && $logs->log_status == 0){
+
+       if($logs->log_type == 0){
+       $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-0',
+    
+        ]);  
+         return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
+      }else{
+         $logs->update([
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-1',
+        ]);  
+         return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
+      }
+      
+    }
+    else{
+       
     if($logs->log_status == 0){
       if($logs->log_type == 0){
         $logs->update([
 
           'log_status'=> 1,
           'log_end_time'=> $current,
-          'log_transaction'=>$payment.'-1',
+          'log_transaction'=>$paymentPass.'-1',
     
         ]);
-        
-      }else{
+      return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
+      }else if($logs->log_type == 2){
         $logs->update([
 
           'log_status'=> 1,
           'log_end_time'=> $current,
-          'log_transaction'=>$payment.'-0',
     
         ]);
+      $paymentPass1 = explode('-',$logs->log_transaction)[0];
+      return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass1]]);
       }
-    return response()->json(['data' => $logs->customer_id]);
+      else{
+        $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-0',
+    
+        ]);
+          return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
+      }
+  
     }else if($logs->log_status == 1){
       if($logs->log_type == 0){
         $logs->update([
@@ -177,12 +263,150 @@ public function LogToPending(Request $request) {
      
     return response()->json(['data' => $logs->customer_id]);
     }
+
+    }
+   
+}
+public function LogToPending2(Request $request) {
+
+
+    $logs = CustomerLogs::where('log_id',$request->id)->first();
+    $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+    $starTime = $logs->log_start_time;
+    $endTime = $logs->log_end_time;
+    $cusAcc = CustomerAcc::where('customer_id',$logs->customer_id)->first();
+    $type =$cusAcc->customer_type;
+    $DayPassTime = add12Hours($starTime);
+    $totalTime = timeDifference($starTime, $current);
+    $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
+    if($totalTime['hours'] >= 8 && $logs->log_status == 0){
+
+       if($logs->log_type == 0){
+       $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-0',
     
+        ]);  
+         return response()->json(['data' => 'DayPass']);
+      }else{
+         $logs->update([
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-1',
+        ]);  
+         return response()->json(['data' => 'DayPass']);
+      }
+      
+    }
+    else{
+       
+    if($logs->log_status == 0){
+      if($logs->log_type == 0){
+        $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-1',
+    
+        ]);
+        
+      }else{
+        $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-0',
+    
+        ]);
+      }
+    return response()->json(['data' => $logs->log_group_id]);
+    }else if($logs->log_status == 1){
+      if($logs->log_type == 0){
+        $logs->update([
+          'log_payment_method'=>$request->paymentMethod,
+          'log_transaction'=>$request->payment.'-1',
+          'log_status'=> 2,
+         
+        ]);
+    $data = new CustomerNotification;
+    $data->user_type ='Customer';
+    $data->user_id = $logs->customer_id;
+    $data->notif_header = "Payment Confirmed ";
+    $data->notif_message = "You have successfully logged out at Orange Shire, and we have received your payment.";
+    $data->notif_status = "0";
+    $data->notif_label = "Success";
+    $data->notif_table ="customer_logs";
+    $data->notif_table_id = $request->id;   
+    $data->notif_table_pk = "log_id";
+    $data->save();
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin accepted ".$request->payment." payment from " . $cusAcc->customer_lastname;
+    $data->act_header = "Accept log payment";
+    $data->act_location = "customer_log";
+    $data->save();
+      }else{
+        $logs->update([
+          'log_payment_method'=>$request->paymentMethod,
+          'log_transaction'=>$request->payment.'-0',
+          'log_status'=> 2,
+         
+    
+        ]);
+         $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin accepted ".$request->payment." payment from " . $cusAcc->customer_lastname;
+    $data->act_header = "Accept log payment";
+    $data->act_location = "customer_log";
+    $data->save();
+      }
+     
+    return response()->json(['data' => $logs->log_group_id]);
+    }
+
+    }
+   
+}
+
+public function LogToPending3(Request $request) {
+
+  
+$LogG = CustomerLogs::where('log_group_id',$request->id)->where('log_status',0)->get();
+foreach($LogG as $log){
+$LogG2 = CustomerLogs::where('log_id',$log->log_id)->first();
+$cusAcc = CustomerAcc::where('customer_id',$LogG2->customer_id)->first();
+$current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+$totalTime = timeDifference($LogG2->log_start_time, $current);
+$paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $cusAcc->customer_type);
+
+ $LogG2->update([
+          'log_end_time'=>$current,
+          'log_transaction'=>$paymentPass.'-0',
+          'log_status'=> 1,
+         
+        ]);
+}
+    return response()->json(['data' => $request->id]);
+}
+public function BackToLogout(Request $request){
+
+  $logs = CustomerLogs::where('log_id',$request->id)->first();
+  $logs->update([
+
+    'log_status'=> 0,
+    'log_end_time'=> '',
+    'log_transaction'=>'',
+
+  ]);
+
 }
  
 public function AccLogin(Request $request){
-
-
         $insertnewlog = new CustomerLogs;
         $insertnewlog->customer_id = $request->id;
         $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
@@ -226,6 +450,7 @@ public function AccLogin(Request $request){
         $insertnew->customer_lastname= $request->lastname;
         $insertnew->customer_ext= $request->ext;
         $insertnew->customer_email= $request->email;
+        $insertnew->customer_type= $request->customer_type;
         $insertnew->customer_phone_num= $request->number;
         $insertnew->customer_profile_pic= 'none';
         $insertnew->customer_username = strtolower(str_replace(' ', '', $request->firstname));
@@ -243,6 +468,76 @@ public function AccLogin(Request $request){
         $insertnewlog->log_status = 0;
         $insertnewlog->log_type= 1;
         $insertnewlog->save();
+        
+        return response()->json(['status'=> 'success']);
+    }
+  }
+   public function insertnewcustomerByDayPass(Request $request){
+    if($request->firstname && $request->lastname && $request->middlename == '' && $request->email == '' && $request->number == ''){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->count();
+       if($acc){return response()->json(['status'=> 'exist']);}
+    }elseif ($request->firstname && $request->lastname && $request->middlename && $request->email =='' && $request->number ==''){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->where('customer_middlename', 'like', '%' . $request->middlename . '%')->count();
+      if($acc){return response()->json(['status'=> 'match']);}
+    }elseif ($request->firstname && $request->lastname && $request->middlename && $request->email && $request->number ==''){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->where('customer_middlename', 'like', '%' . $request->middlename . '%')->where('customer_email', 'like', '%' . $request->email . '%')->count();
+      if($acc){return response()->json(['status'=> 'email_match']);}
+    }elseif ($request->firstname && $request->lastname && $request->middlename && $request->email && $request->number){
+     $acc = CustomerAcc::where('customer_firstname', 'like', '%' . $request->firstname . '%')->where('customer_lastname', 'like', '%' . $request->lastname . '%')->where('customer_middlename', 'like', '%' . $request->middlename . '%')->where('customer_email', 'like', '%' . $request->email . '%')->where('customer_phone_num', 'like', '%' . $request->number . '%')->count();
+      if($acc){return response()->json(['status'=> 'number_match']);}
+    }
+
+   if($request->firstname == '' || $request->lastname == '') {
+      if($request->firstname == '' && $request->lastname == ''){
+         return response()->json(['status'=> 'failed']);
+      }else if($request->firstname == ''){
+         return response()->json(['status'=> 'firstname']);
+      }else if($request->lastname == ''){
+         return response()->json(['status'=> 'lastname']);
+      }
+    }
+    else{
+    $format = strtolower(str_replace(' ', '', $request->firstname));
+        $insertnew = new CustomerAcc;
+        $insertnew->customer_firstname= $request->firstname;
+        $insertnew->customer_middlename= $request->middlename;
+        $insertnew->customer_lastname= $request->lastname;
+        $insertnew->customer_ext= $request->ext;
+        $insertnew->customer_email= $request->email;
+        $insertnew->customer_type= $request->customer_type;
+        $insertnew->customer_phone_num= $request->number;
+        $insertnew->customer_profile_pic= 'none';
+        $insertnew->customer_username = strtolower(str_replace(' ', '', $request->firstname));
+        $insertnew->customer_password= Hash::make($format.'123');
+        $insertnew->save();
+
+        $tour = new Tour;
+        $tour->customer_id = $insertnew->customer_id;
+        $tour->save();
+      
+      $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
+      $startTimeFormatted = $startTime->format('h:i A'); // Format the start time
+      $endTime = $startTime->copy()->addHours(12)->format('h:i A');
+      $totalTime = timeDifference($startTimeFormatted, $endTime);
+      $payment = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $request->customer_type);
+
+        $insertnewlog = new CustomerLogs;
+        $insertnewlog->customer_id = $insertnew->customer_id;
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+        $insertnewlog->log_start_time = $startTimeFormatted;
+        $insertnewlog->log_end_time = null;
+        $insertnewlog->log_transaction = $payment.'-0';
+        $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 2;
+        $insertnewlog->save();
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin  Accepted Daypass of " . $request->lastname.".";
+    $data->act_header = "Customer log";
+    $data->act_location = "customer_log";
+    $data->save();
         
         return response()->json(['status'=> 'success']);
     }
@@ -401,6 +696,300 @@ public function SaveComment(Request $req){
 
   return response()->json(['status'=>'success']);
 }
+public function DeleteLog(Request $request){
+  
+  $log = CustomerLogs::where('log_id', $request->log_id)->first();
+  $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin deleted " . $cus->customer_lastname."'s log history";
+    $data->act_header = "Delete log";
+    $data->act_location = "customer_log";
+    $data->save();
+
+  $log->delete();
+
+   return response()->json(['status'=>'success']);
+}
+
+public function EditPaymentLog(Request $request){
+  if($request->editpaymentamount==''){
+    return response()->json(['status'=>'empty']);
+  }else{
+    $log = CustomerLogs::where('log_id', $request->editpaymentid)->first();
+    $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
+    $payment = explode('-',$log->log_transaction)[1];
+    $pay = explode('-',$log->log_transaction)[0];
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin  Modified " . $cus->customer_lastname."'s Payment ".$pay." To " .$request->editpaymentamount;
+    $data->act_header = "Modified log";
+    $data->act_location = "customer_log";
+    $data->save();
+
+
+    $log->update([
+       'log_transaction'=>$request->editpaymentamount.'-'.$payment,
+    ]);
+  
+    return response()->json(['status'=>'success']);
+  }
 
 }
 
+public function EditPaymentLogMethod(Request $request){
+  if($request->EditpaymentMethod==''){
+    return response()->json(['status'=>'empty']);
+  }else{
+    $log = CustomerLogs::where('log_id', $request->editpaymenMethodtid)->first();
+    $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
+    
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin  Modified " . $cus->customer_lastname."'s Payment Mthod".$log->log_payment_method." To " .$request->EditpaymentMethod;
+    $data->act_header = "Modified log";
+    $data->act_location = "customer_log";
+    $data->save();
+
+
+    $log->update([
+       'log_payment_method'=>$request->EditpaymentMethod,
+    ]);
+  
+    return response()->json(['status'=>'success']);
+  }
+
+}
+
+public function logAsDayPass(Request $request){
+      
+      $cus = CustomerAcc::where('customer_id',$request->id)->first();
+
+      $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
+      $startTimeFormatted = $startTime->format('h:i A'); // Format the start time
+      $endTime = $startTime->copy()->addHours(12)->format('h:i A');
+      $totalTime = timeDifference($startTimeFormatted, $endTime);
+      $payment = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $cus->customer_type);
+
+        $insertnewlog = new CustomerLogs;
+        $insertnewlog->customer_id = $request->id;
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+        $insertnewlog->log_start_time = $startTimeFormatted;
+        $insertnewlog->log_end_time = null;
+        $insertnewlog->log_transaction = $payment.'-0';
+        $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 2;
+        $insertnewlog->save();
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin  Accepted Daypass of " . $cus->customer_lastname.".";
+    $data->act_header = "Customer log";
+    $data->act_location = "customer_log";
+    $data->save();
+
+        return response()->json(['status'=> 'success']);
+}
+public function SaveLogByGroup(Request $request)
+{
+    // Input validation
+    $request->validate([
+        'IndivFirstName' => 'required|array',
+        'IndivLastName' => 'required|array',
+        'IndivType' => 'required|array',
+        'groupId' => 'required',
+    ]);
+
+    // Retrieve request data
+    $firstNames = $request->input('IndivFirstName');
+    $lastNames = $request->input('IndivLastName');
+    $types = $request->input('IndivType');
+    $groupId = $request->input('groupId');
+
+    // Get current time in Asia/Hong_Kong timezone
+    $startTime = now()->setTimezone('Asia/Hong_Kong');
+    $startTimeFormatted = $startTime->format('h:i A');
+
+    // Loop through each individual
+    foreach ($firstNames as $key => $firstName) {
+        // Compute lowercase username
+        $lower = strtolower(str_replace(' ', '', $firstName));
+
+        // Create new customer account
+        $customer = CustomerAcc::create([
+            'customer_firstname' => $firstName,
+            'customer_lastname' => $lastNames[$key],
+            'customer_type' => $types[$key],
+            'customer_username' => $lower,
+            'customer_password' => Hash::make($lower . '123'),
+        ]);
+
+        // Create new customer log
+        CustomerLogs::create([
+            'customer_id' => $customer->customer_id,
+            'log_date' => $startTime->format('d/m/Y'),
+            'log_start_time' => $startTimeFormatted,
+            'log_status' => 0,
+            'log_type' => 1,
+            'log_group_id' => $groupId,
+        ]);
+    }
+
+    return response()->json(['status' => 'success']);
+}
+
+public function SaveLogByExistGroup(Request $request){
+
+  $id = $request->IndivId;
+   $groupId = $request->groupId2;
+     $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
+      $startTimeFormatted = $startTime->format('h:i A');
+  for($i=0;count($id)>$i;$i++){
+
+        $insertnewlog = new CustomerLogs;
+        $insertnewlog->customer_id = $id[$i];
+        $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
+        $insertnewlog->log_start_time = $startTimeFormatted;
+        $insertnewlog->log_status = 0;
+        $insertnewlog->log_type= 1;
+         $insertnewlog->log_group_id= $groupId ;
+        $insertnewlog->save();
+  }
+
+  return response()->json(['status'=> 'success']);
+}
+public function GetGroup() {
+    $groupedLogs = CustomerLogs::whereNotNull('log_group_id')
+        ->select('log_group_id')
+        ->distinct()
+        ->get();
+
+    $group = [];
+    $num = 1;
+    foreach ($groupedLogs as $log) {
+        $count = CustomerLogs::where('log_group_id', $log->log_group_id)->get()->count();
+        $firstLog = CustomerLogs::where('log_group_id', $log->log_group_id)->first();
+        $customer = CustomerAcc::where('customer_id', $firstLog->customer_id)->first();
+        if ($customer) {
+            $group[] = [
+                'num'=>$num,
+                'groupID' => $log->log_group_id,
+                'count' => $count,
+                'name' => $customer->customer_firstname . ' ' . $customer->customer_lastname
+            ];
+        }
+          $num++;
+    }
+   
+    return response()->json(['data' => $group]);
+}
+
+public function EditStartTime(Request $request){
+  
+  $log = CustomerLogs::where('log_id', $request->editstarttimeid)->first();
+  $time = explode(':',$request->safix)[0];
+  if($time<10){
+  $log->update([
+          'log_start_time'=>'0'.$request->safix,
+              ]);
+
+   return response()->json(['status'=>'success']);
+  }else{
+     $log->update([
+          'log_start_time'=>$request->safix,
+              ]);
+
+   return response()->json(['status'=>'success']);
+  }
+
+}
+public function GetLogByMonth() {
+    $logs = CustomerLogs::selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(*) as count')
+                        ->groupBy('year', 'month')
+                        ->orderByRaw('year DESC, month DESC')
+                        ->get();
+
+    $formattedLogs = [];
+
+    foreach ($logs as $log) {
+        $formattedLogs[] = [
+            'year' => $log->year,
+            'month' => $log->month,
+            'count' => $log->count,
+        ];
+    }
+
+    return response()->json(['data' => $formattedLogs]);
+}
+public function logoutmark(Request $request){
+
+  $array = $request->array;
+
+  foreach ($array as $log_id) {
+  $log = CustomerLogs::where('log_status',0)->where('log_id', $log_id)->first();
+  if($log){
+  $starTime = $log->log_start_time;
+  $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+  $totalTime = timeDifference($starTime, $current);
+  $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $log->customer_type);
+  $log->update([
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-1',
+        ]); 
+        
+  }
+}
+return response()->json(['status' => 'success']); 
+
+}
+public function logoutmark1(Request $request){
+
+  $array = $request->array;
+  $group = $request->group_id;
+  foreach ($array as $log_id) {
+  $log = CustomerLogs::where('log_status',0)->where('log_id', $log_id)->first();
+  if($log){
+  $starTime = $log->log_start_time;
+  $current = now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
+  $totalTime = timeDifference($starTime, $current);
+  $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $log->customer_type);
+  $log->update([
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$paymentPass.'-1',
+        ]); 
+        
+  }
+}
+return response()->json(['status' => 'success','group_id'=>$group]); 
+
+}
+public function deletemark(Request $request){
+
+  $array = $request->array;
+  foreach ($array as $log_id) {
+  $log = CustomerLogs::where('log_id', $log_id)->first();
+  if($log){
+    $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
+
+    $data = new ActivityLog;
+    $data->act_user_id =session('Admin_id');
+    $data->act_user_type = "Admin";
+    $data->act_action = "Admin deleted " . $cus->customer_lastname."'s log history";
+    $data->act_header = "Delete log";
+    $data->act_location = "customer_log";
+    $data->save();
+    $log->delete();
+}
+}
+return response()->json(['status' => 'success']); 
+}
+}

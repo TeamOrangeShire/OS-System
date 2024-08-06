@@ -45,7 +45,6 @@ function FilterTime($time){
      return $format;
  }
 
- 
 
  function FirstNameFormat($string){
      $count = str_word_count($string);

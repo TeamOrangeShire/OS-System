@@ -20,5 +20,6 @@ class CustomerLogs extends Model
       'log_type',
       'log_payment_method',
       'log_comment',
+      'log_group_id',
     ];
 }

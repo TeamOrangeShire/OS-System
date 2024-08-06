@@ -22,8 +22,6 @@ class Login extends Controller
     
         Session::put('Admin_id',$Admin_info->admin_id);
         return redirect()->route('index');
-
-
     } else{
         return redirect()->back();
     }

@@ -349,6 +349,53 @@
             </div>
         </div>
 
+                   {{-- insert modal start --}}
+                   <div id="editcustomermodal" class="modal fade" tabindex="-1" role="dialog"
+                   aria-labelledby="customModalTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Update Customer Info</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                               <form class="" novalidate method="POST" id="Insertnewcus">
+                                   @csrf
+                                   <div class="row">
+                                       <div class="col-md-6 mb-6">
+                                           <label for="validationTooltip01">First name <span
+                                                   style="color: red;">*</span></label>
+                                           <input type="hidden" name="customerid" id="customerid">
+                                           <input type="text" class="form-control" id="firstname" name="firstname"
+                                               placeholder="First name" value="" required>
+                                           <div class="valid-tooltip">
+                                               Looks good!
+                                           </div>
+                                       </div>
+                                       <div class="col-md-6 mb-6">
+                                           <label for="validationTooltip03">Last name <span
+                                                   style="color: red;">*</span></label>
+                                           <input type="text" class="form-control" id="lastname" name="lastname"
+                                               placeholder="Last name" value="" required>
+                                           <div class="valid-tooltip">
+                                               Looks good!
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="row">
+                                       <div class="col-md-6 ">
+                                           <button class="btn  btn-primary" type="button" style="margin-top: 4%;"
+                                               onclick="UpdateCustomerInfo()">Save Changes</button>
+                                       </div>
+                                   </div>
+   
+                               </form>
+   
+                           </div>
+                       </div>
+                   </div>
+               </div>
         @include('admin.assets.adminscript')
         <script>
             $(document).ready(function() {
@@ -358,6 +405,17 @@
             function GetCustomerAccDetail() {
                 $('#myTable').DataTable({
                     destroy: true,
+                     order: [
+                            [4, 'desc']
+                        ],
+                       columnDefs: [{
+                                target: 4,
+                                visible: false,
+
+                            },
+                        ],
+
+
                     "ajax": {
                         "url": "{{ route('GetCustomerAccDetail') }}",
                         "type": "GET"
@@ -384,15 +442,53 @@
                                     row.customer_phone_num + '\',\'' +
                                     row.customer_type + '\',\'' +
                                     row.verification_image + '\',\'' +
-                                    row.account_credits + '\')"> <i class="feather icon-info"> </i></button>';
+                                    row.account_credits + '\')"> <i class="feather icon-info"> </i></button>'+ '  ' +
+                                    
+                                    '<button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#editcustomermodal" onclick="editcustomerinfo(' +
+                                    row.customer_id + ',\'' +
+                                    row.customer_firstname + '\',\'' +
+                                    row.customer_lastname + '\')"> <i class="feather icon-edit"> </i></button>';
                             }
                         },
-
+                        {
+                            data:'created_at'
+                        }
                     ]
                 });
             }
 
+            function editcustomerinfo(id, firstname, lastname) {
+                document.getElementById('customerid').value = id;
+                document.getElementById('firstname').value = firstname;
+                document.getElementById('lastname').value = lastname;
+              
+            }
+            function UpdateCustomerInfo(){
+                  var formData = $("form#Insertnewcus").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('UpdateCustomerInfo') }}",
+                        data: formData,
+                        success: function(response) {
+                            if(response.status == 'success'){
+                                                            alertify
+  .alert("Message","Customer Successfully Updated.", function(){
 
+  });
+  GetCustomerAccDetail();
+                            }else if(response.status == 'empty'){
+                                                              alertify
+  .alert("Message","Insert Customer Info First!.", function(){
+
+  });
+                            }
+
+                              },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+            }
 
             function view(id, fullname, email, number, customer_type, image, credit) {
                 document.getElementById('cus_id').value = id;
