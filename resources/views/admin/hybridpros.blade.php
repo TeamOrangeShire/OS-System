@@ -293,7 +293,7 @@
                 <h5>Select New Plan:</h5>
                 <div class="pl-4 mt-4">
                  <div class="form-group">
-                     <select class="form-control"  name="select_plan"required>
+                     <select class="form-control" id="bunos" onchange="DetectBunos(this)"  name="select_plan"required>
                      <option value="0" disabled selected>------Select Plan------</option>
                      @php
                          $plans = App\Models\ServiceHP::where('service_disable','!=',1)->get();
@@ -305,6 +305,27 @@
                      </select>
                      <small style="display: none" id="select_plan_e" class="text-danger">Please Select a Plan</small>
                  </div>
+
+                 <div id="freeBunos" style="display:none">
+                    <div class="form-group">
+                        <label for="bunosExpDate">Expiration Date</label>
+                        <input type="date" class="form-control" id="bunosExpDate"  aria-describedby="emailHelp" placeholder="Exp Date" name="expDate" required>
+
+                    </div>
+                    <div class="d-flex w-100 gap-4 justify-content-between">
+                        <div class="form-group w-50">
+                            <label for="bunosHours">Hours</label>
+                            <input type="number" class="form-control" id="bunosHours"  aria-describedby="emailHelp" placeholder="Hours" name="hours" required>
+
+                        </div>
+                        <div class="form-group w-50">
+                            <label for="bunosMinutes">Minutes</label>
+                            <input type="number" class="form-control" id="bunosMinutes"  aria-describedby="emailHelp" placeholder="Minutes" name="minutes" required>
+
+                        </div>
+                    </div>
+                 </div>
+
                 </div>
                </form>
             </div>

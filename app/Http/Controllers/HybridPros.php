@@ -45,12 +45,14 @@ class HybridPros extends Controller
             $h->payment = $hph ? 0 : 1;
             $h->active = $hphActive ? 1 : 0;
             $h->inuse = $inUse ? 1 : 0;
+            $h->remaining_time = $hphActive->hp_remaining_time;
             if($hphActive){
                 $hphActiveAll = HybridProsHistory::where('hp_id', $h->hp_id)->where('hp_active_status', 1)->get();
 
                 foreach($hphActiveAll as $active){
                     $service = ServiceHP::where('service_id', $active->service_id)->first();
                     $active->act = $service->service_name;
+                    $active->price = $service->service_price;
                 }
             }else{
                 $hphActiveAll = 'none';
@@ -59,6 +61,7 @@ class HybridPros extends Controller
             if($hph){
                 $PendingServ = ServiceHP::where('service_id', $hph->service_id)->first();
                 $hph->name = $PendingServ->service_name;
+                $hph->price = $PendingServ->service_price;
                 $h->historyPending = $hph;
             }else{
                 $h->historyPending = 'none';
@@ -74,17 +77,36 @@ class HybridPros extends Controller
     public function BuyNewPlan(Request $req){
         $service = ServiceHP::where('service_id', $req->select_plan)->first();
         $date = Carbon::now()->setTimezone('Asia/Hong_Kong');
-        $hph = new HybridProsHistory();
 
+        $hph = new HybridProsHistory();
         $hph->hp_id = $req->customer_id;
         $hph->service_id = $req->select_plan;
-        $hph->hp_plan_start = $date->format('F j, Y');
-        $hph->hp_plan_expire = $date->copy()->addDays($service->service_days)->format('F j, Y');
-        $hph->hp_remaining_time = $service->service_hours . ':00';
+
+
+
+        if($req->select_plan != 9){
+            $hph->hp_plan_start = $date->format('F j, Y');
+            $hph->hp_plan_expire = $date->copy()->addDays($service->service_days)->format('F j, Y');
+            $hph->hp_remaining_time = $service->service_hours . ':00';
+        }else{
+
+            $specificDate = Carbon::createFromFormat('Y-m-d', $req->expDate);
+            $currentDate = Carbon::now();
+            $differenceInDays = $currentDate->diffInDays($specificDate);
+
+            if($differenceInDays > 0){
+                $hph->hp_plan_start = $date->format('F j, Y');
+                $hph->hp_plan_expire = $date->copy()->addDays($differenceInDays + 1)->format('F j, Y');
+                $hph->hp_remaining_time = $req->hours . ':' . $req->minutes;
+                $hph->hp_active_status = 1;
+                $hph->hp_payment_status = 1;
+            }else{
+                return response()->json(['status'=>'invalid date']);
+            }
+
+        }
         $hph->hp_payment_mode = '';
-
         $hph->save();
-
         return response()->json(['status'=>'success']);
     }
 

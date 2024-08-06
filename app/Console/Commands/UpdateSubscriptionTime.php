@@ -30,7 +30,7 @@ class UpdateSubscriptionTime extends Command
         $hpros = HybridProsModel::all();
 
         foreach($hpros as $hp){
-            $history = HybridProsHistory::where('hp_id', $hp->hp_id)->where('hp_active_status', 1)->first();
+            $history = HybridProsHistory::where('hp_id', $hp->hp_id)->where('hp_active_status', 1)->where('hp_inuse_status', 1)->first();
 
             if($history){
                 $deduct = $this->CalcDeductTime($history->hp_remaining_time);

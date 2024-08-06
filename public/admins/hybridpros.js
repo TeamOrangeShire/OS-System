@@ -37,6 +37,7 @@ function Customers(data, logging, load){
 
     data.forEach(d => {
        let active = ``;
+       const timeSplit = d.remaining_time.split(':');
      if(d.historyActive != 'none'){
        d.historyActive.forEach(ha=>{
            active += `<tr>
@@ -45,6 +46,7 @@ function Customers(data, logging, load){
            <td>${ha.hp_plan_expire_new != null?
            '<s>'+ha.hp_plan_expire+'</s><br>' + ha.hp_plan_expire_new : ha.hp_plan_expire}</td>
            <td>${ha.hp_remaining_time}</td>
+           <td>${ha.price == 0 ? 'Free' :  `₱${ha.price}`}</td>
            <td><span class="badge text-bg-success p-2"> Active </span></td>
            <td><button onclick="OpenPlanEdit('${ha.hph_id}', '${ha.act}', '${ha.hp_plan_start}', '${ha.hp_plan_expire}', '${ha.hp_remaining_time}', '1')"
             data-bs-toggle="modal" data-bs-target="#editCustomerPlan" class="btn btn-outline-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
@@ -61,6 +63,7 @@ function Customers(data, logging, load){
        <td>${d.historyPending.hp_plan_start}</td>
        <td>${d.historyPending.hp_plan_expire}</td>
        <td>${d.historyPending.hp_remaining_time}</td>
+       <td>₱${d.historyPending.price == 0 ? 'Free' : `₱${d.historyPending.price}`}</td>
        <td><span class="badge text-bg-warning p-2"> Pending  </span></td>
        <td><button onclick="OpenPlanEdit('${d.historyPending.hph_id}','${d.historyPending.name}', '${d.historyPending.hp_plan_start}', '${d.historyPending.hp_plan_expire}', '${d.historyPending.hp_remaining_time}', '0')"
         data-bs-toggle="modal" data-bs-target="#editCustomerPlan" class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
@@ -70,7 +73,8 @@ function Customers(data, logging, load){
        </tr>`;
      }
 
-       // startTimer(d.hp_id);
+
+       startTimer(d.hp_id, timeSplit[0], timeSplit[1]);
       list.innerHTML += ` <div class="accordion-item" id="accordionCustomerList">
        <h2 class="accordion-header">
        <button class="accordion-button bg-${d.active === 1 ? 'success' : d.payment === 1 ? 'danger' : 'warning'}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${d.hp_id}" aria-expanded="true" aria-controls="collapse${d.hp_id}">
@@ -106,7 +110,8 @@ class="badge text-bg-${d.inuse === 1 ?  'danger' : 'primary'} p-2">${d.inuse ===
        <th>Plan</th>
        <th>Date Purchased</th>
        <th>Date Expired</th>
-       <th>Remaining Time</th>
+       <th>Remaining Time</th>\
+       <th>Price</th>
        <th>Status</th>
        <th>Action</th>
        </tr>
@@ -296,26 +301,58 @@ function editAllPlanStatus(){
    }
 }
 function BuyNewPlan(route, load, logging){
-    const roller = document.getElementById('roller');
-    roller.style.display = 'flex';
-    $.ajax({
-        type:"POST",
-        url: route,
-        data: $('form#buyNewPlanForm').serialize(),
-        success: res=> {
-          if(res.status === 'success'){
-            LoadCustomer(load, logging);
-            document.getElementById('closeBuyNewPlan').click();
-            roller.style.display = 'none';
-          }
-        }, error: xhr => console.log(xhr.responseText)
-    })
+    const detect = document.getElementById('bunos');
+
+
+    if(detect.value == 0){
+      toastr.error('Please select a plan before submitting');
+    }else if(detect.value == 9){
+        const date = document.getElementById('bunosExpDate');
+        const hours = document.getElementById('bunosHours');
+        const minutes = document.getElementById('bunosMinutes');
+
+        if(date.value == '' || hours.value == '' || minutes.value == ''){
+          toastr.error('Please Complete the information to proceed');
+        }else{
+            const roller = document.getElementById('roller');
+            roller.style.display = 'flex';
+            $.ajax({
+                type:"POST",
+                url: route,
+                data: $('form#buyNewPlanForm').serialize(),
+                success: res=> {
+                  if(res.status === 'success'){
+                    LoadCustomer(load, logging);
+                    document.getElementById('closeBuyNewPlan').click();
+                    roller.style.display = 'none';
+                  }
+                }, error: xhr => console.log(xhr.responseText)
+            });
+        }
+
+    }else{
+        const roller = document.getElementById('roller');
+        roller.style.display = 'flex';
+        $.ajax({
+            type:"POST",
+            url: route,
+            data: $('form#buyNewPlanForm').serialize(),
+            success: res=> {
+              if(res.status === 'success'){
+                LoadCustomer(load, logging);
+                document.getElementById('closeBuyNewPlan').click();
+                roller.style.display = 'none';
+              }
+            }, error: xhr => console.log(xhr.responseText)
+        })
+    }
+
 }
 
-function startTimer(timerId) {
+function startTimer(timerId, hours, minutes) {
     clearInterval(timers[timerId]?.interval);
 
-    let totalTime = (0 * 3600) + (2 * 60); // Convert to total seconds
+    let totalTime = (hours * 3600) + (minutes * 60); // Convert to total seconds
 
     timers[timerId] = { totalTime };
 
@@ -504,4 +541,10 @@ function SaveChangesEditPlan(route, load, logging){
      });
    }, ()=> console.log('cancel')
    )
+}
+
+
+function DetectBunos(select){
+const bunos = document.getElementById('freeBunos');
+bunos.style.display = select.value == 9 ? '' : 'none';
 }
