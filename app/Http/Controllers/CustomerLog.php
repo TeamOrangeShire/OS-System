@@ -25,11 +25,11 @@ class CustomerLog extends Controller
   public function acceptLog(Request $request){
 
     $id = $request->id;
-   
+
 
     $log = CustomerLogs::where('log_id',$id)->first();
     $method=explode('-',$log->log_transaction);
-   
+
     $log->update([
 
         'log_status'=> 2,
@@ -132,7 +132,7 @@ class CustomerLog extends Controller
         ];
       }
     }
-   
+
     return response()->json(['data' => $logData]);
 }
 
@@ -144,7 +144,7 @@ public function GetCustomerlog(Request $request) {
 }
 public function CustomerlogHistory() {
 
- 
+
   $logs = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
   select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
   'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact','customer_acc.customer_middlename as middlename')
@@ -160,7 +160,7 @@ public function LogToPending(Request $request) {
     $endTime = $logs->log_end_time;
     $cusAcc = CustomerAcc::where('customer_id',$logs->customer_id)->first();
     $type =$cusAcc->customer_type;
-    $DayPassTime = add12Hours($starTime);
+    // $DayPassTime = add12Hours($starTime);
     $totalTime = timeDifference($starTime, $current);
     $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
     if($totalTime['hours'] >= 8 && $logs->log_status == 0){
@@ -171,21 +171,21 @@ public function LogToPending(Request $request) {
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-0',
-    
-        ]);  
+
+        ]);
          return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
       }else{
          $logs->update([
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-1',
-        ]);  
+        ]);
          return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
       }
-      
+
     }
     else{
-       
+
     if($logs->log_status == 0){
       if($logs->log_type == 0){
         $logs->update([
@@ -193,7 +193,7 @@ public function LogToPending(Request $request) {
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-1',
-    
+
         ]);
       return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
       }else if($logs->log_type == 2){
@@ -201,7 +201,7 @@ public function LogToPending(Request $request) {
 
           'log_status'=> 1,
           'log_end_time'=> $current,
-    
+
         ]);
       $paymentPass1 = explode('-',$logs->log_transaction)[0];
       return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass1]]);
@@ -212,18 +212,18 @@ public function LogToPending(Request $request) {
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-0',
-    
+
         ]);
           return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass]]);
       }
-  
+
     }else if($logs->log_status == 1){
       if($logs->log_type == 0){
         $logs->update([
           'log_payment_method'=>$request->paymentMethod,
           'log_transaction'=>$request->payment.'-1',
           'log_status'=> 2,
-         
+
         ]);
     $data = new CustomerNotification;
     $data->user_type ='Customer';
@@ -233,7 +233,7 @@ public function LogToPending(Request $request) {
     $data->notif_status = "0";
     $data->notif_label = "Success";
     $data->notif_table ="customer_logs";
-    $data->notif_table_id = $request->id;   
+    $data->notif_table_id = $request->id;
     $data->notif_table_pk = "log_id";
     $data->save();
 
@@ -249,8 +249,8 @@ public function LogToPending(Request $request) {
           'log_payment_method'=>$request->paymentMethod,
           'log_transaction'=>$request->payment.'-0',
           'log_status'=> 2,
-         
-    
+
+
         ]);
          $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
@@ -260,12 +260,12 @@ public function LogToPending(Request $request) {
     $data->act_location = "customer_log";
     $data->save();
       }
-     
+
     return response()->json(['data' => $logs->customer_id]);
     }
 
     }
-   
+
 }
 public function LogToPending2(Request $request) {
 
@@ -276,7 +276,7 @@ public function LogToPending2(Request $request) {
     $endTime = $logs->log_end_time;
     $cusAcc = CustomerAcc::where('customer_id',$logs->customer_id)->first();
     $type =$cusAcc->customer_type;
-    $DayPassTime = add12Hours($starTime);
+    // $DayPassTime = add12Hours($starTime);
     $totalTime = timeDifference($starTime, $current);
     $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
     if($totalTime['hours'] >= 8 && $logs->log_status == 0){
@@ -287,21 +287,21 @@ public function LogToPending2(Request $request) {
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-0',
-    
-        ]);  
+
+        ]);
          return response()->json(['data' => 'DayPass']);
       }else{
          $logs->update([
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-1',
-        ]);  
+        ]);
          return response()->json(['data' => 'DayPass']);
       }
-      
+
     }
     else{
-       
+
     if($logs->log_status == 0){
       if($logs->log_type == 0){
         $logs->update([
@@ -309,16 +309,16 @@ public function LogToPending2(Request $request) {
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-1',
-    
+
         ]);
-        
+
       }else{
         $logs->update([
 
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-0',
-    
+
         ]);
       }
     return response()->json(['data' => $logs->log_group_id]);
@@ -328,7 +328,7 @@ public function LogToPending2(Request $request) {
           'log_payment_method'=>$request->paymentMethod,
           'log_transaction'=>$request->payment.'-1',
           'log_status'=> 2,
-         
+
         ]);
     $data = new CustomerNotification;
     $data->user_type ='Customer';
@@ -338,7 +338,7 @@ public function LogToPending2(Request $request) {
     $data->notif_status = "0";
     $data->notif_label = "Success";
     $data->notif_table ="customer_logs";
-    $data->notif_table_id = $request->id;   
+    $data->notif_table_id = $request->id;
     $data->notif_table_pk = "log_id";
     $data->save();
 
@@ -354,8 +354,8 @@ public function LogToPending2(Request $request) {
           'log_payment_method'=>$request->paymentMethod,
           'log_transaction'=>$request->payment.'-0',
           'log_status'=> 2,
-         
-    
+
+
         ]);
          $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
@@ -365,17 +365,17 @@ public function LogToPending2(Request $request) {
     $data->act_location = "customer_log";
     $data->save();
       }
-     
+
     return response()->json(['data' => $logs->log_group_id]);
     }
 
     }
-   
+
 }
 
 public function LogToPending3(Request $request) {
 
-  
+
 $LogG = CustomerLogs::where('log_group_id',$request->id)->where('log_status',0)->get();
 foreach($LogG as $log){
 $LogG2 = CustomerLogs::where('log_id',$log->log_id)->first();
@@ -388,7 +388,7 @@ $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $cusAcc->
           'log_end_time'=>$current,
           'log_transaction'=>$paymentPass.'-0',
           'log_status'=> 1,
-         
+
         ]);
 }
     return response()->json(['data' => $request->id]);
@@ -405,7 +405,7 @@ public function BackToLogout(Request $request){
   ]);
 
 }
- 
+
 public function AccLogin(Request $request){
         $insertnewlog = new CustomerLogs;
         $insertnewlog->customer_id = $request->id;
@@ -414,7 +414,7 @@ public function AccLogin(Request $request){
         $insertnewlog->log_status = 0;
         $insertnewlog->log_type= 1;
         $insertnewlog->save();
-        
+
         return response()->json(['status'=> 'success']);
 }
 
@@ -460,7 +460,7 @@ public function AccLogin(Request $request){
         $tour = new Tour;
         $tour->customer_id = $insertnew->customer_id;
         $tour->save();
-      
+
         $insertnewlog = new CustomerLogs;
         $insertnewlog->customer_id = $insertnew->customer_id;
         $insertnewlog->log_date = now()->setTimezone('Asia/Hong_Kong')->format('d/m/Y');
@@ -468,7 +468,7 @@ public function AccLogin(Request $request){
         $insertnewlog->log_status = 0;
         $insertnewlog->log_type= 1;
         $insertnewlog->save();
-        
+
         return response()->json(['status'=> 'success']);
     }
   }
@@ -514,7 +514,7 @@ public function AccLogin(Request $request){
         $tour = new Tour;
         $tour->customer_id = $insertnew->customer_id;
         $tour->save();
-      
+
       $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
       $startTimeFormatted = $startTime->format('h:i A'); // Format the start time
       $endTime = $startTime->copy()->addHours(12)->format('h:i A');
@@ -538,7 +538,7 @@ public function AccLogin(Request $request){
     $data->act_header = "Customer log";
     $data->act_location = "customer_log";
     $data->save();
-        
+
         return response()->json(['status'=> 'success']);
     }
   }
@@ -565,7 +565,7 @@ public function AccLogin(Request $request){
         $status = 'already_login';
         $log_id = 'none';
       }
-   
+
     }else if($QRCode === 'FLPguCIZSg9TTqO'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
       if($checkLogOut){
@@ -587,19 +587,19 @@ public function AccLogin(Request $request){
         $status = 'not_login';
         $log_id = 'none';
       }
-   
+
     }else if($QRCode === 'IuFiIJwM3AupqAK'){
       $checkLogOut = CustomerLogs::where('customer_id', $id)->where('log_status', 0)->first();
-     
+
         if($checkLogOut){
           $end = Carbon::now()->setTimezone('Asia/Hong_Kong')->format('h:i A');
           $time = timeDifference($checkLogOut->log_start_time, $end);
           $hours = $time['hours'];
           $minutes = $time['minutes'];
-          
+
           $payment = PaymentCalc($hours, $minutes, $customer->customer_type);
           $finalCredit = $customer->account_credits - $payment;
-         
+
           $transaction = $payment . "-2";
           if($finalCredit < 0){
             $status = 'not_enough';
@@ -612,8 +612,8 @@ public function AccLogin(Request $request){
               'log_transaction'=>$transaction,
               'log_payment_method'=> 'Credit',
             ]);
-           
-          
+
+
             $status = 'logout';
             $log_id = $checkLogOut->log_id;
           }
@@ -645,7 +645,7 @@ public function AccLogin(Request $request){
 
       return response()->json(['info'=>$log]);
   }
-  
+
 public function GetLogDetails(Request $req){
   $id = $req->log_id;
 
@@ -671,11 +671,11 @@ public function Scanning(Request $req){
                   'status'=> 'verified'
               ]);
           }
-         
+
       } else {
           return view('homepage.scanQr', ['user_id'=> 'none', 'status'=> 'not_log_in']);
       }
-  
+
 }
 
 public function GetHistoryData(Request $req){
@@ -697,7 +697,7 @@ public function SaveComment(Request $req){
   return response()->json(['status'=>'success']);
 }
 public function DeleteLog(Request $request){
-  
+
   $log = CustomerLogs::where('log_id', $request->log_id)->first();
   $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
 
@@ -735,7 +735,7 @@ public function EditPaymentLog(Request $request){
     $log->update([
        'log_transaction'=>$request->editpaymentamount.'-'.$payment,
     ]);
-  
+
     return response()->json(['status'=>'success']);
   }
 
@@ -747,7 +747,7 @@ public function EditPaymentLogMethod(Request $request){
   }else{
     $log = CustomerLogs::where('log_id', $request->editpaymenMethodtid)->first();
     $cus = CustomerAcc::where('customer_id',$log->customer_id)->first();
-    
+
 
     $data = new ActivityLog;
     $data->act_user_id =session('Admin_id');
@@ -761,14 +761,14 @@ public function EditPaymentLogMethod(Request $request){
     $log->update([
        'log_payment_method'=>$request->EditpaymentMethod,
     ]);
-  
+
     return response()->json(['status'=>'success']);
   }
 
 }
 
 public function logAsDayPass(Request $request){
-      
+
       $cus = CustomerAcc::where('customer_id',$request->id)->first();
 
       $startTime = Carbon::now()->setTimezone('Asia/Hong_Kong');
@@ -887,12 +887,12 @@ public function GetGroup() {
         }
           $num++;
     }
-   
+
     return response()->json(['data' => $group]);
 }
 
 public function EditStartTime(Request $request){
-  
+
   $log = CustomerLogs::where('log_id', $request->editstarttimeid)->first();
   $time = explode(':',$request->safix)[0];
   if($time<10){
@@ -943,11 +943,11 @@ public function logoutmark(Request $request){
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-1',
-        ]); 
-        
+        ]);
+
   }
 }
-return response()->json(['status' => 'success']); 
+return response()->json(['status' => 'success']);
 
 }
 public function logoutmark1(Request $request){
@@ -965,11 +965,11 @@ public function logoutmark1(Request $request){
           'log_status'=> 1,
           'log_end_time'=> $current,
           'log_transaction'=>$paymentPass.'-1',
-        ]); 
-        
+        ]);
+
   }
 }
-return response()->json(['status' => 'success','group_id'=>$group]); 
+return response()->json(['status' => 'success','group_id'=>$group]);
 
 }
 public function deletemark(Request $request){
@@ -990,6 +990,6 @@ public function deletemark(Request $request){
     $log->delete();
 }
 }
-return response()->json(['status' => 'success']); 
+return response()->json(['status' => 'success']);
 }
 }
