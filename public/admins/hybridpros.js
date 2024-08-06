@@ -74,7 +74,7 @@ function Customers(data, logging, load){
      }
 
 
-       startTimer(d.hp_id, timeSplit[0], timeSplit[1]);
+      d.inuse == 1 ? startTimer(d.hp_id, timeSplit[0], timeSplit[1]) : startTimer(d.hp_id, 0, 0);
       list.innerHTML += ` <div class="accordion-item" id="accordionCustomerList">
        <h2 class="accordion-header">
        <button class="accordion-button bg-${d.active === 1 ? 'success' : d.payment === 1 ? 'danger' : 'warning'}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${d.hp_id}" aria-expanded="true" aria-controls="collapse${d.hp_id}">
@@ -359,7 +359,7 @@ function startTimer(timerId, hours, minutes) {
     timers[timerId].interval = setInterval(() => {
         if (timers[timerId].totalTime <= 0) {
             clearInterval(timers[timerId].interval);
-            alert(`Timer ${timerId} is up!`);
+            updateDisplay(timerId, 0, 0, 0);
             return;
         }
 
