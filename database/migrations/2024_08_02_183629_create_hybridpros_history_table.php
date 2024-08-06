@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('hp_plan_expire', 100);
             $table->string('hp_plan_expire_new', 100)->nullable();
             $table->string('hp_remaining_time', 20);
+            $table->string('hp_consume_time', 100)->nullable();
             $table->integer('hp_inuse_status')->default(0);
             $table->integer('hp_active_status')->default(0);
             $table->integer('hp_payment_status')->default(0);

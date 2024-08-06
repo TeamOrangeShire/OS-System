@@ -34,15 +34,18 @@ class UpdateSubscriptionTime extends Command
 
             if($history){
                 $deduct = $this->CalcDeductTime($history->hp_remaining_time);
-
+                $add = $this->AddMinutesToTime($history->hp_consume_time, 1);
                 if($deduct[0] == 0 && $deduct[1] == 0){
                    $history->update([
-                    'hp_remaining_time' => '0:0',
-                    'hp_active_status'=> 0
+                    'hp_remaining_time' => '00:00',
+                    'hp_active_status'=> 0,
+                    'hp_consume_time' => $add[0].":".$add[1]
                    ]);
+
                 }else{
                     $history->update([
                         'hp_remaining_time' => $deduct[0].':'.$deduct[1],
+                        'hp_consume_time' => $add[0].":".$add[1]
                     ]);
                 }
             }
@@ -78,4 +81,21 @@ class UpdateSubscriptionTime extends Command
         return [$formattedHours, $formattedMinutes];
     }
 
+    private function AddMinutesToTime($time, $minutesToAdd) {
+        $split = explode(':', $time);
+
+        $hours = (int)$split[0];
+        $minutes = (int)$split[1];
+
+        // Add the minutes and handle overflow
+        $totalMinutes = $minutes + $minutesToAdd;
+        $finalHours = $hours + intdiv($totalMinutes, 60); // Integer division to calculate additional hours
+        $finalMinutes = $totalMinutes % 60; // Remainder to get the minutes part
+
+        // Format hours and minutes with leading zeros if necessary
+        $formattedHours = str_pad($finalHours, 2, '0', STR_PAD_LEFT);
+        $formattedMinutes = str_pad($finalMinutes, 2, '0', STR_PAD_LEFT);
+
+        return [$formattedHours, $formattedMinutes];
+    }
 }
