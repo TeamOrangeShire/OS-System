@@ -274,14 +274,85 @@
                    <button type="button" id="editStatusActive" onclick="SetActivePlan(1)" class="btn btn-outline-success">Active</button>
                   </div>
                </form>
+
+               <div id="viewLogs">
+
+                <h4 class="text-primary">Log Sessions</h4>
+                <table id="hybridLogHistory" class="table table-striped" style="width:100%;">
+                    <thead>
+                    <tr>
+                    <th>Log Date</th>
+                    <th>Time In</th>
+                    <th>Time Out</th>
+                    <th>Consume Time</th>
+                    <th>Remaining Time</th>
+                    <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    </table>
+               </div>
+
+                <div  id="transferPlan" style="display:none" >
+                  <div class="d-flex w-100 justify-content-between">
+                    <h4 class="text-primary">Select Other Customer to transfer plan</h4>
+                    <button type="button" id="cancelSelectionCustomer" onclick="RemoveSelect()" style="display: none" class="btn btn-primary">Cancel Selection</button>
+                  </div>
+                    <table id="transferCustomerList" class="table table-striped" style="width:100%;">
+                        <thead>
+                        <tr>
+                        <th>Customer Name</th>
+                        <th>Contact Number</th>
+                        <th>Email</th>
+                        <th>Select</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                        </table>
+                        <h4 class="text-primary mt-3">Register New Customer and transfer plan</h4>
+                        <form method="post" id="registerTransferCustomer" class="pl-4 mt-4 mb-4" >
+                            <input type="hidden" name="hph_id" id="transferCustomerHPH_ID">
+                            @csrf
+                            <div class="form-group">
+                                <label for="other_customer_name">Customer Name</label>
+                                <input oninput="RemoveSelect()" type="text" class="form-control" id="other_customer_name"  aria-describedby="emailHelp" placeholder="Customer Name" name="customername" required>
+                                <small class="text-danger" style="display:none" id="other_customer_name_e">Please Provide a name</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="other_phoneNumber">Phone Number</label>
+                                <input  oninput="RemoveSelect()" type="number" class="form-control" id="other_phoneNumber"   placeholder="Phone Number" name="phonenumber" required>
+                            </div>
+                            <div class="form-group">
+                                <label  for="other_email">Email</label>
+                                <input oninput="RemoveSelect()" type="email" class="form-control" id="other_email"  aria-describedby="emailHelp" placeholder="Email" name="email" required>
+
+                            </div>
+                           </form>
+
+                        <div class="d-flex justify-content-end w-100">
+                            <button type="button" onclick="TransferPlanCustomer('{{ route('HybridTransferPlanAdd') }}', '{{ route('HybridTransferPlanSelect') }}','{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}')" class="btn btn-success">Transfer Plan to this Customer</button>
+                        </div>
+
+                    </div>
+
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" onclick="SwitchTransferPlan(this)" class="btn btn-outline-success">Transfer Plan</button>
               <button type="button" onclick="SaveChangesEditPlan('{{route('HybridEditPlans')}}', '{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}')" class="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
       </div>
+
+      <form id="selectedOtherCustomerForm" method="post">
+        @csrf
+        <input type="hidden" name="hph_id" id="transferCustomerHPH_ID_radio">
+        <input type="hidden" name="hp_id" id="transferCustomer_id">
+      </form>
 
       <div class="modal fade" id="changePlan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog ">
@@ -434,7 +505,7 @@
                     <th>Plan</th>
                     <th>Date Purchased</th>
                     <th>Date Expired</th>
-                    <th>Remaining Time</th>
+                    <th>Transfer Status</th>
                     <th>Status</th>
                     </tr>
                     </thead>
@@ -457,10 +528,13 @@
      </form>
 
      <input type="hidden" id="customerHistoryAPI" value="{{ route('HybridCustomerHistory') }}">
+     <input type="hidden" id="customerLogHistoryAPI" value="{{ route('HybridGetLogHistory') }}">
+     <input type="hidden" id="customerGetOtherAPI" value="{{ route('HybridGetOtherCustomer') }}">
 <script>
     window.onload = () => {
         LoadCustomer('{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}');
     }
+
 </script>
 
 </body>

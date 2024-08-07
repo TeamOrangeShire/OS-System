@@ -22,5 +22,7 @@ class HybridProsHistory extends Model
         'hp_active_status',
         'hp_payment_status',
         'hp_payment_mode',
+        'hp_transfer_status',
+        'hp_transfer_from_id'
     ];
 }

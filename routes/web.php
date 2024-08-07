@@ -199,8 +199,12 @@ Route::post('/back/subscription/registercustomer', [HybridPros::class, 'Register
 Route::get('/back/subscription/loadallcustomer', [HybridPros::class, 'CustomerList'])->name('HybridCustomerList');
 Route::get('/back/subscription/loadallcustomerexist', [HybridPros::class, 'CustomerExist'])->name('HybridCustomerExist');
 Route::get('/back/subscription/customerhistory', [HybridPros::class, 'CustomerHistory'])->name('HybridCustomerHistory');
+Route::get('/back/subscription/getHistoryLog', [HybridPros::class, 'GetLogHistory'])->name('HybridGetLogHistory');
+Route::get('/back/subscription/getOtherCustomer', [HybridPros::class, 'GetOtherCustomer'])->name('HybridGetOtherCustomer');
 Route::post('/back/subscription/buynewplan', [HybridPros::class, 'BuyNewPlan'])->name('HybridBuyNewPlan');
 Route::post('/back/subscription/changeplan', [HybridPros::class, 'ChangePlan'])->name('HybridChangePlan');
+Route::post('/back/subscription/transferplanAdd', [HybridPros::class, 'TransferPlanAdd'])->name('HybridTransferPlanAdd');
+Route::post('/back/subscription/transferplanSelect', [HybridPros::class, 'TransferPlanSelect'])->name('HybridTransferPlanSelect');
 Route::post('/back/subscription/searchCustomer', [HybridPros::class, 'SearchCustomer'])->name('HybridSearchCustomer');
 Route::post('/back/subscription/logging', [HybridPros::class, 'Logging'])->name('HybridLogging');
 Route::post('/back/subscription/editPlans', [HybridPros::class, 'UpdatePlans'])->name('HybridEditPlans');

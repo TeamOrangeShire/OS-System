@@ -48,7 +48,7 @@ function Customers(data, logging, load){
            <td>${ha.hp_remaining_time}</td>
            <td>${ha.price == 0 ? 'Free' :  `₱${ha.price}`}</td>
            <td><span class="badge text-bg-success p-2"> Active </span></td>
-           <td><button onclick="OpenPlanEdit('${ha.hph_id}', '${ha.act}', '${ha.hp_plan_start}', '${ha.hp_plan_expire}', '${ha.hp_remaining_time}', '1')"
+           <td><button onclick="OpenPlanEdit('${ha.hph_id}', '${ha.act}', '${ha.hp_plan_start}', '${ha.hp_plan_expire}', '${ha.hp_remaining_time}', '1', '${d.hp_id}')"
             data-bs-toggle="modal" data-bs-target="#editCustomerPlan" class="btn btn-outline-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
   <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
   <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
@@ -79,7 +79,7 @@ function Customers(data, logging, load){
        <h2 class="accordion-header">
        <button class="accordion-button bg-${d.active === 1 ? 'success' : d.payment === 1 ? 'danger' : 'warning'}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${d.hp_id}" aria-expanded="true" aria-controls="collapse${d.hp_id}">
       <div class="d-flex w-100 justify-content-between">
-      <div> ${d.hp_customer_name} &nbsp; <span class="badge text-bg-info">${d.active === 1 ? '(Active)' : d.payment === 1 ? '(Inactive)}' : '(Pending Payment)'}</span>
+      <div> ${d.hp_customer_name} &nbsp; <span class="badge text-bg-info">${d.active === 1 ? '(Active)' : d.payment === 1 ? '(Inactive) ' : '(Pending Payment)'}</span>
       <span style="display: ${d.payment === 1 ? 'none' : ''}" data-bs-toggle="modal" onclick="AcceptUpdate('${d.hp_id}')" data-bs-target="#accept_payment" class="acc_btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
 <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
 <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
@@ -145,15 +145,24 @@ function ShowCustomerHistory(id){
                 data: res.history,
                 columns: [
 
-                    { title: "Plan", data: "plan_name" },
-                    { title: "Date Purchased", data: "hp_plan_start" },
+                    { title: "Plan", data: null,
+                        render: data => {
+                            return data.hp_transfer_status == 1 ? `<s>${data.plan_name}</s>(Transferred)` : data.hp_transfer_status == 2 ? `${data.plan_name}(Recieved)` : data.plan_name
+                        }
+                     },
+                    { title: "Date Purchased", data: null,
+                        render: data => {
+                            return data.hp_transfer_status == 1 ? `<s>${data.hp_plan_start}</s>(Transferred)` : data.hp_transfer_status == 2 ? `${data.hp_plan_start}(Recieved)` : data.hp_plan_start
+                        }
+                     },
                     { title: "Date Expired", data: null,
                         render: data=> {
                             const expiration = data.hp_plan_expire_new != null ? `<s>${data.hp_plan_expire}</s><br>${data.hp_plan_expire_new}` : data.hp_plan_expire;
-                            return expiration;
+                            const transfer =  `<s>${data.hp_plan_start}</s>(Transferred)`;
+                            return  data.hp_transfer_status == 1 ? transfer : data.hp_transfer_status == 2 ? `${expiration}(Recieved)`:  expiration;
                         }
                     },
-                    { title: "Remaining Time", data:"hp_remaining_time" },
+                    { title: "Transfer Status", data:'transfer'},
                     { title: "Status", data:null,
                         render: data=>{
                             return `${data.hp_active_status === 1 ? '<span class="badge text-bg-success p-2">Active</span>' : data.hp_payment_status === 0 ? '<span class="badge text-bg-warning p-2">Pending</span>': '<span class="badge text-bg-danger p-2">Inactive</span>'}`
@@ -163,7 +172,7 @@ function ShowCustomerHistory(id){
                 autoWidth: false
             });
         } else {
-            tableHistory.clear().rows.add(res.cust).draw();
+            tableHistory.clear().rows.add(res.history).draw();
         }
     }, error: xhr=>console.log(xhr.responseText)
    });
@@ -209,7 +218,7 @@ function SearchCustomer(route){
 const timers = {};
 
 
-function OpenPlanEdit(id, name, start, end, time, status){
+function OpenPlanEdit(id, name, start, end, time, status, customer_id){
   const editName = document.getElementById('planEditName');
   const editStart = document.getElementById('planPurchaseDate');
   const editExpiration = document.getElementById('planExpirationDate');
@@ -219,7 +228,9 @@ function OpenPlanEdit(id, name, start, end, time, status){
   const inpPlanTimeRemaining = document.getElementById('inpPlanTimeRemaining');
 
   SetActivePlan(status);
-
+  document.getElementById('transferCustomerHPH_ID').value = id;
+  document.getElementById('transferCustomerHPH_ID_radio').value = id;
+  getLogHistory(id, customer_id);
   const endDate = new Date(end);
   endDate.setDate(endDate.getDate() + 1);
   const formatEndDate = endDate.toISOString().split('T')[0];
@@ -569,4 +580,174 @@ function SaveChangesEditPlan(route, load, logging){
 function DetectBunos(select){
 const bunos = document.getElementById('freeBunos');
 bunos.style.display = select.value == 9 ? '' : 'none';
+}
+let tableHistoryLogs;
+let tableOtherCustomer;
+function getLogHistory(id, customer_id){
+ const API = document.getElementById('customerLogHistoryAPI').value;
+
+ const route = `${API}?hph_id=${id}`;
+
+
+ const customerAPI = document.getElementById('customerGetOtherAPI').value;
+
+ const getCustomer = `${customerAPI}?hp_id=${customer_id}`;
+
+ $.ajax({
+    type:"GET",
+    url:route,
+    dataType: "json",
+    success: res=> {
+        if (!$.fn.DataTable.isDataTable('#hybridLogHistory')) {
+            tableHistoryLogs = $('#hybridLogHistory').DataTable({
+                data: res.hph,
+                columns: [
+                    { title: "Log Date", data: "log_date" },
+                    { title: "Time In", data: "log_time_in" },
+                    { title: "Time Out", data: 'log_time_out',},
+                    { title: "Consume Time", data:"log_time_consume" },
+                    { title: "Remaining Time", data:"log_time_remaining"},
+                    { title: "Status", data: null,
+                        render: data => {
+                           const color = data.log_status == 1 ? 'danger' : 'primary';
+                           const text = data.log_status == 1 ? 'Logged Out' : 'Logged In';
+                           return `<span class="badge p-2 text-bg-${color}">${text}</span>`;
+                        }
+                    }
+                ],
+                autoWidth: false
+            });
+        } else {
+            tableHistoryLogs.clear().rows.add(res.hph).draw();
+        }
+    },error: xhr=> console.log(xhr.responseText)
+ });
+
+
+
+ $.ajax({
+    type:"GET",
+    url:getCustomer,
+    dataType: "json",
+    success: res=> {
+        if (!$.fn.DataTable.isDataTable('#transferCustomerList')) {
+            tableOtherCustomer = $('#transferCustomerList').DataTable({
+                data: res.customer,
+                columns: [
+                    { title: "Customer Name", data: "hp_customer_name" },
+                    { title: "Contact Number", data: "hp_phone_number" },
+                    { title: "Email", data: 'hp_email',},
+                    { title: "Select", data:null,
+                        render: data => {
+                            return `<input onclick="detectSelection()" name="selectOtherCustomer" class="form-check-input" type="radio" value="${data.hp_id}">`
+                        }
+                     },
+                ],
+                autoWidth: false
+            });
+        } else {
+            tableOtherCustomer.clear().rows.add(res.customer).draw();
+        }
+    },error: xhr=> console.log(xhr.responseText)
+ });
+}
+
+function detectSelection(){
+  const cancel = document.getElementById('cancelSelectionCustomer');
+  cancel.style.display = '';
+
+  const name = document.getElementById('other_customer_name');
+  const contact = document.getElementById('other_phoneNumber');
+  const email = document.getElementById('other_email');
+
+  name.value = '';
+  contact.value = '';
+  email.value = '';
+}
+
+
+function RemoveSelect(){
+    const radioButtons = document.getElementsByName('selectOtherCustomer');
+    for (let radio of radioButtons) {
+        if (radio.checked) {
+            radio.checked = false;
+            break;
+        }
+    }
+
+    document.getElementById('cancelSelectionCustomer').style.display = 'none';
+}
+
+function SwitchTransferPlan(btn){
+
+    const select = document.getElementById('transferPlan');
+    const log = document.getElementById('viewLogs');
+
+    if(select.style.display == 'none'){
+        select.style.display = '';
+        log.style.display = 'none';
+        btn.textContent = 'View Logs';
+    }else{
+        select.style.display = 'none';
+        log.style.display = '';
+        btn.textContent = 'Transfer Plan';
+    }
+}
+
+
+function TransferPlanCustomer(routeAdd, routeSelect, load, logging){
+    const radioButtons = document.getElementsByName('selectOtherCustomer');
+    const roller = document.getElementById('roller');
+    let selectedData = 'none';
+
+    alertify.confirm("Confirm Transfer Plan", "Are you sure about the data you inserted?",
+        ()=>{
+            for (let radio of radioButtons) {
+                if (radio.checked) {
+                    selectedData = radio.value;
+                    break;
+                }
+            }
+
+            if(selectedData == 'none'){
+               let validity = 0;
+
+               validity+= Supp.check('other_customer_name', 'other_customer_name_e');
+
+               if(validity == 1){
+                 roller.style.display = 'flex';
+
+                 $.ajax({
+                  type:"POST",
+                  url: routeAdd,
+                  data: $('form#registerTransferCustomer').serialize(),
+                  success: res=> {
+                    if(res.status == 'success'){
+                        roller.style.display = 'none';
+                        LoadCustomer(load, logging);
+                    }
+                  }, error: xhr=> console.log(xhr.responseText)
+                 });
+               }
+            }else{
+                document.getElementById('transferCustomer_id').value = selectedData;
+                roller.style.display = 'flex';
+
+                $.ajax({
+                    type:"POST",
+                    url: routeSelect,
+                    data: $('form#selectedOtherCustomerForm').serialize(),
+                    success: res=> {
+                        if(res.status == 'success'){
+                            roller.style.display = 'none';
+                            LoadCustomer(load, logging);
+                        }
+                    }, error: xhr=> console.log(xhr.responseText)
+                   });
+            }
+
+            document.getElementById('editPlanFormClose').click();
+        }, ()=> console.log('cancel')
+    )
+
 }

@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('update-subscription-time')->everyMinute();
+        $schedule->command('app:check-expiration')->everyMinute();
     }
 
     /**
