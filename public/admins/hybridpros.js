@@ -80,7 +80,7 @@ function Customers(data, logging, load){
        <button class="accordion-button bg-${d.active === 1 ? 'success' : d.payment === 1 ? 'danger' : 'warning'}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${d.hp_id}" aria-expanded="true" aria-controls="collapse${d.hp_id}">
       <div class="d-flex w-100 justify-content-between">
       <div> ${d.hp_customer_name} &nbsp; <span class="badge text-bg-info">${d.active === 1 ? '(Active)' : d.payment === 1 ? '(Inactive) ' : '(Pending Payment)'}</span>
-      <span style="display: ${d.payment === 1 ? 'none' : ''}" data-bs-toggle="modal" onclick="AcceptUpdate('${d.hp_id}')" data-bs-target="#accept_payment" class="acc_btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+      <span style="display: ${d.payment === 1 ? 'none' : ''}" data-bs-toggle="modal" onclick="AcceptUpdate('${d.hp_id}', '${d.price}', '${d.name}', '${d.expiration}')" data-bs-target="#accept_payment" class="acc_btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
 <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
 <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
 </svg> Accept Payment</span>
@@ -203,15 +203,19 @@ function HybridLogging(route, id, load, status){
     }, ()=> console.log('cancel')
   )
 }
-function SearchCustomer(route){
+function SearchCustomer(route, load, logging){
    $.ajax({
     type:"POST",
     url:route,
     data: $('form#searchCustomer').serialize(),
     success: res=> {
+      if(res.hp.length == 0){
+        alertify.set('notifier', 'position', 'top-right')
+        alertify.error('No Data Found');
+      }else{
       const data = res.hp;
-
-      Customers(data);
+      Customers(data, load, logging);
+      }
     }, error: xhr => console.log(xhr.responseText)
    })
 }
@@ -414,8 +418,16 @@ function resetTimer(timerId) {
     updateDisplay(timerId, 0, 0, 0);
 }
 
-function AcceptUpdate(id){
+function AcceptUpdate(id, payment, name, expired){
  document.getElementById('hp_id').value = id;
+
+ const ammount = document.getElementById('acceptAmmount');
+ const plan = document.getElementById('acceptPlanPurchased');
+ const expiration = document.getElementById('acceptExpirationDate');
+
+ ammount.textContent = payment;
+ plan.textContent = name;
+ expiration.textContent = expired
 }
 
 function AcceptPayment(route, load, logging){
@@ -750,4 +762,17 @@ function TransferPlanCustomer(routeAdd, routeSelect, load, logging){
         }, ()=> console.log('cancel')
     )
 
+}
+
+function ClearInputs(ids){
+
+    ids.forEach(i => {
+       const input = document.getElementById(i);
+       input.value = '';
+    });
+
+    const select = document.getElementById('select_plan');
+    if(select){
+        select.value = 0;
+    }
 }

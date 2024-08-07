@@ -88,7 +88,7 @@
                   </svg></button>
             </form>
             <button type="button" class="btn  btn-primary"  data-toggle="modal" data-target="#exampleModalCenter">See All Plans</button>
-            <button type="button" class="btn  btn-primary"  data-toggle="modal" data-target="#registerCustomer">Register Customer</button>
+            <button type="button" class="btn  btn-primary" onclick="ClearInputs(['customer_name', 'phoneNumber', 'email'])" data-toggle="modal" data-target="#registerCustomer">Register Customer</button>
         </div>
        </div>
       <div class="row">
@@ -134,7 +134,7 @@
                             @csrf
                             <div class="d-flex w-100 justify-content-between">
                                 <h5>Customer Information: </h5>
-                                <button type="button" onclick="CustomerExist('{{ route('HybridCustomerExist') }}')" id="btnExist" class="btn btn-success">Select Existing Customer</button>
+                                <button type="button" onclick="CustomerExist('{{ route('HybridCustomerExist') }}','{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}')" id="btnExist" class="btn btn-success">Select Existing Customer</button>
                                 <button type="button" onclick="CustomerNew()" id="btnNew" style="display: none" class="btn btn-success">Insert New</button>
                             </div>
                            <div class="pl-4 mt-4 mb-4" id="insertnewcustomer">
@@ -181,7 +181,7 @@
                                 @endphp
 
                                 @foreach ($plans as $plan)
-                                    <option value="{{$plan->service_id}}">{{$plan->service_name}}</option>
+                                    <option value="{{$plan->service_id}}">{{$plan->service_name}} (₱{{ $plan->service_price }})</option>
                                 @endforeach
                                 </select>
                                 <small style="display: none" id="select_plan_e" class="text-danger">Please Select a Plan</small>
@@ -482,6 +482,9 @@
                         </div>
                     </div>
                 </form>
+                <p>Plan Purchase:  <span id="acceptPlanPurchased"></span></p>
+                <p>Ammount:  <span id="acceptAmmount"></span></p>
+                <p>Expiration Date:  <span id="acceptExpirationDate"></span></p>
             </div>
             <div class="modal-footer">
               <button type="button" onclick="AcceptPayment('{{ route('HybridAcceptPayment') }}', '{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}')" class="btn btn-primary">Confirm</button>

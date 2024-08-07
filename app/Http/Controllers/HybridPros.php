@@ -49,6 +49,7 @@ class HybridPros extends Controller
 
         foreach($hp as $h){
             $hph = HybridProsHistory::where('hp_id', $h->hp_id)->where('hp_payment_status', 0)->first();
+
             $hphActive = HybridProsHistory::where('hp_id', $h->hp_id)->where('hp_active_status', 1)->first();
             $inUse = HybridProsHistory::where('hp_id', $h->hp_id)->where('hp_active_status', 1)->where('hp_inuse_status', 1)->first();
             $h->payment = $hph ? 0 : 1;
@@ -72,9 +73,13 @@ class HybridPros extends Controller
                 $hph->name = $PendingServ->service_name;
                 $hph->price = $PendingServ->service_price;
                 $h->historyPending = $hph;
+                $h->price = $PendingServ->service_price;
+                $h->name = $PendingServ->service_name;
+                $h->expiration = $hph->hp_plan_expire_new != null ? $hph->hp_plan_expire_new : $hph->hp_plan_expire;
             }else{
                 $h->historyPending = 'none';
             }
+
 
             $h->historyActive = $hphActiveAll;
 
