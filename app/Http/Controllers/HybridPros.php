@@ -26,10 +26,22 @@ class HybridPros extends Controller
         $hp->hp_email = empty($req->email) ? '' : $req->email;
         $hp->save();
 
+        switch($service->service_days){
+            case '30':
+                $expiration =  $date->copy()->addMonth()->format('F j, Y');
+                break;
+            case '60':
+                $expiration = $date->copy()->addMonths(2)->format('F j, Y');
+                break;
+            default:
+                $expiration =  $date->copy()->addDays($service->service_days)->format('F j, Y');
+                break;
+        }
+
         $hph->hp_id = $hp->hp_id;
         $hph->service_id = $req->select_plan;
         $hph->hp_plan_start = $date->format('F j, Y');
-        $hph->hp_plan_expire = $date->copy()->addDays($service->service_days)->format('F j, Y');
+        $hph->hp_plan_expire = $expiration;
         $hph->hp_remaining_time = $service->service_hours == 99999 ? 'Unlimited' : $service->service_hours . ':00';
         $hph->hp_payment_mode = '';
         $hph->save();
@@ -96,11 +108,21 @@ class HybridPros extends Controller
         $hph->hp_id = $req->customer_id;
         $hph->service_id = $req->select_plan;
 
-
+        switch($service->service_days){
+            case '30':
+                $expiration =  $date->copy()->addMonth()->format('F j, Y');
+                break;
+            case '60':
+                $expiration = $date->copy()->addMonths(2)->format('F j, Y');
+                break;
+            default:
+                $expiration =  $date->copy()->addDays($service->service_days)->format('F j, Y');
+                break;
+        }
 
         if($req->select_plan != 9){
             $hph->hp_plan_start = $date->format('F j, Y');
-            $hph->hp_plan_expire = $date->copy()->addDays($service->service_days)->format('F j, Y');
+            $hph->hp_plan_expire = $expiration;
             $hph->hp_remaining_time = $service->service_hours == 99999 ? 'Unlimited' : $service->service_hours . ":00";
         }else{
 
