@@ -40,12 +40,18 @@ function Customers(data, logging, load){
        const timeSplit = d.remaining_time.split(':');
        if(d.historyActive != 'none'){
        d.historyActive.forEach(ha=>{
+
+        const timeSplit =  ha.hp_remaining_time.split(':');
+       let timeUnli = 'Unlimited'
+       if(timeSplit[0] < 160 ){
+         timeUnli = ha.hp_remaining_time;
+       }
            active += `<tr>
            <td>${ha.act}</td>
            <td>${ha.hp_plan_start}</td>
            <td>${ha.hp_plan_expire_new != null?
            '<s>'+ha.hp_plan_expire+'</s><br>' + ha.hp_plan_expire_new : ha.hp_plan_expire}</td>
-           <td>${ha.hp_remaining_time}</td>
+           <td>${timeUnli}</td>
            <td>${ha.hp_consume_time}</td>
            <td>${ha.price == 0 ? 'Free' :  `₱${ha.price}`}</td>
            <td><span class="badge text-bg-success p-2"> Active </span></td>
@@ -59,11 +65,17 @@ function Customers(data, logging, load){
 
      }
      if(d.historyPending != 'none'){
+       const timeSplit =  d.historyPending.hp_remaining_time.split(':');
+       let timeUnli = 'Unlimited'
+       if(timeSplit[0] < 160 ){
+         timeUnli = d.historyPending.hp_remaining_time;
+       }
+
        active += `<tr>
        <td>${d.historyPending.name}</td>
        <td>${d.historyPending.hp_plan_start}</td>
        <td>${d.historyPending.hp_plan_expire}</td>
-       <td>${d.historyPending.hp_remaining_time}</td>
+       <td>${timeUnli}</td>
        <td>${d.history.hp_consume_time}</td>
        <td>${d.historyPending.price == 0 ? 'Free' : `₱${d.historyPending.price}`}</td>
        <td><span class="badge text-bg-warning p-2"> Pending  </span></td>

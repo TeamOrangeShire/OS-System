@@ -42,7 +42,7 @@ class HybridPros extends Controller
         $hph->service_id = $req->select_plan;
         $hph->hp_plan_start = $date->format('F j, Y');
         $hph->hp_plan_expire = $expiration;
-        $hph->hp_remaining_time = $service->service_hours == 99999 ? 'Unlimited' : $service->service_hours . ':00';
+        $hph->hp_remaining_time = $service->service_hours . ':00';
         $hph->hp_payment_mode = '';
         $hph->save();
 
@@ -123,7 +123,7 @@ class HybridPros extends Controller
         if($req->select_plan != 9){
             $hph->hp_plan_start = $date->format('F j, Y');
             $hph->hp_plan_expire = $expiration;
-            $hph->hp_remaining_time = $service->service_hours == 99999 ? 'Unlimited' : $service->service_hours . ":00";
+            $hph->hp_remaining_time = $service->service_hours . ":00";
         }else{
 
             $specificDate = Carbon::createFromFormat('Y-m-d', $req->expDate);
@@ -324,7 +324,7 @@ class HybridPros extends Controller
         $hp->update([
          'service_id' => $req->select_plan,
          'hp_plan_expire' => $givenDate->addDays($service->service_days)->format('F j, Y'),
-         'hp_remaining_time'=>$service->service_hours == 99999 ? 'Unlimited' :  ReduceTimeConsume($service->service_hours. ":00", $hp->hp_consume_time )
+         'hp_remaining_time'=>  ReduceTimeConsume($service->service_hours. ":00", $hp->hp_consume_time )
         ]);
 
         $header = 'Change Plan';
