@@ -43,6 +43,7 @@ class HybridPros extends Controller
         $hph->hp_plan_start = $date->format('F j, Y');
         $hph->hp_plan_expire = $expiration;
         $hph->hp_remaining_time = $service->service_hours . ':00';
+        $hph->hp_consume_time ='00:00';
         $hph->hp_payment_mode = '';
         $hph->save();
 
@@ -134,6 +135,7 @@ class HybridPros extends Controller
                 $hph->hp_plan_start = $date->format('F j, Y');
                 $hph->hp_plan_expire = $date->copy()->addDays($differenceInDays + 1)->format('F j, Y');
                 $hph->hp_remaining_time =  $req->hours . ':' . $req->minutes;
+                $hph->hp_consume_time ='00:00';
                 $hph->hp_active_status = 1;
                 $hph->hp_payment_status = 1;
             }else{

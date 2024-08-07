@@ -76,7 +76,7 @@ function Customers(data, logging, load){
        <td>${d.historyPending.hp_plan_start}</td>
        <td>${d.historyPending.hp_plan_expire}</td>
        <td>${timeUnli}</td>
-       <td>${d.history.hp_consume_time}</td>
+       <td>${d.historyPending.hp_consume_time}</td>
        <td>${d.historyPending.price == 0 ? 'Free' : `₱${d.historyPending.price}`}</td>
        <td><span class="badge text-bg-warning p-2"> Pending  </span></td>
        <td><button onclick="OpenPlanEdit('${d.historyPending.hph_id}','${d.historyPending.name}', '${d.historyPending.hp_plan_start}', '${d.historyPending.hp_plan_expire}', '${d.historyPending.hp_remaining_time}', '0')"
