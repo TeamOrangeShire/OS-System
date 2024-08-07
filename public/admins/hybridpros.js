@@ -1,5 +1,5 @@
 function RegisterCustomer(route, load, logging){
-    let validity = 0;dddd
+    let validity = 0;
 
     validity += Supp.check('customer_name', 'customer_name_e');
     validity += Supp.check('select_plan', 'select_plan_e');
