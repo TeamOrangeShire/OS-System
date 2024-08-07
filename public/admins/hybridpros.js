@@ -1,5 +1,5 @@
 function RegisterCustomer(route, load, logging){
-    let validity = 0;
+    let validity = 0;dddd
 
     validity += Supp.check('customer_name', 'customer_name_e');
     validity += Supp.check('select_plan', 'select_plan_e');
@@ -46,6 +46,7 @@ function Customers(data, logging, load){
            <td>${ha.hp_plan_expire_new != null?
            '<s>'+ha.hp_plan_expire+'</s><br>' + ha.hp_plan_expire_new : ha.hp_plan_expire}</td>
            <td>${ha.hp_remaining_time}</td>
+           <td>${ha.hp_consume_time}</td>
            <td>${ha.price == 0 ? 'Free' :  `₱${ha.price}`}</td>
            <td><span class="badge text-bg-success p-2"> Active </span></td>
            <td><button onclick="OpenPlanEdit('${ha.hph_id}', '${ha.act}', '${ha.hp_plan_start}', '${ha.hp_plan_expire}', '${ha.hp_remaining_time}', '1', '${d.hp_id}')"
@@ -63,6 +64,7 @@ function Customers(data, logging, load){
        <td>${d.historyPending.hp_plan_start}</td>
        <td>${d.historyPending.hp_plan_expire}</td>
        <td>${d.historyPending.hp_remaining_time}</td>
+       <td>${d.history.hp_consume_time}</td>
        <td>${d.historyPending.price == 0 ? 'Free' : `₱${d.historyPending.price}`}</td>
        <td><span class="badge text-bg-warning p-2"> Pending  </span></td>
        <td><button onclick="OpenPlanEdit('${d.historyPending.hph_id}','${d.historyPending.name}', '${d.historyPending.hp_plan_start}', '${d.historyPending.hp_plan_expire}', '${d.historyPending.hp_remaining_time}', '0')"
@@ -110,7 +112,8 @@ class="badge text-bg-${d.inuse === 1 ?  'danger' : 'primary'} p-2">${d.inuse ===
        <th>Plan</th>
        <th>Date Purchased</th>
        <th>Date Expired</th>
-       <th>Remaining Time</th>\
+       <th>Remaining Time</th>
+       <th>Consume Time</th>
        <th>Price</th>
        <th>Status</th>
        <th>Action</th>
