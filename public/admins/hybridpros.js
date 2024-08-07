@@ -178,6 +178,7 @@ function ShowCustomerHistory(id){
                         }
                     },
                     { title: "Transfer Status", data:'transfer'},
+                    { title: "Payment Method", data:'hp_payment_mode'},
                     { title: "Status", data:null,
                         render: data=>{
                             return `${data.hp_active_status === 1 ? '<span class="badge text-bg-success p-2">Active</span>' : data.hp_payment_status === 0 ? '<span class="badge text-bg-warning p-2">Pending</span>': '<span class="badge text-bg-danger p-2">Inactive</span>'}`

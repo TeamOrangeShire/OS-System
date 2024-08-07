@@ -498,7 +498,7 @@
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Accept Payment</h1>
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Plan History</h1>
               <button id="closeAcceptBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -509,6 +509,7 @@
                     <th>Date Purchased</th>
                     <th>Date Expired</th>
                     <th>Transfer Status</th>
+                    <th>Payment Method</th>
                     <th>Status</th>
                     </tr>
                     </thead>

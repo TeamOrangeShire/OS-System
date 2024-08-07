@@ -125,6 +125,7 @@ class HybridPros extends Controller
             $hph->hp_plan_start = $date->format('F j, Y');
             $hph->hp_plan_expire = $expiration;
             $hph->hp_remaining_time = $service->service_hours . ":00";
+            $hph->hp_consume_time ='00:00';
         }else{
 
             $specificDate = Carbon::createFromFormat('Y-m-d', $req->expDate);
@@ -319,7 +320,7 @@ class HybridPros extends Controller
         if($hp->service_id == $req->select_plan){
          return response()->json(['status'=>'already_selected']);
         }
-        $customer = HybridProsModel::where('hp_id',$req->hp_id)->first();
+        $customer = HybridProsModel::where('hp_id',$hp->hp_id)->first();
         $givenDate = Carbon::parse($hp->hp_plan_start);
         $service = ServiceHP::where('service_id',$req->select_plan)->first();
 
