@@ -95,6 +95,9 @@
                 <li class="nav-item">
                     <a href="{{route('salesreports')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-printer"></i></span><span class="pcoded-mtext">Sales Report</span></a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('hybridpros_sales')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-bar-chart"></i></span><span class="pcoded-mtext">Hybrid Pros Sales</span></a>
+                </li>
                  <li class="nav-item">
                     <a href="{{route('blogs')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-book"></i></span><span class="pcoded-mtext">Blogs</span></a>
                 </li>

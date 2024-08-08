@@ -111,6 +111,7 @@ Route::get('/admin/admin_profile', function () { return view('admin.admin_profil
 Route::get('/admin/log_history', function () { return view('admin.log_history');})->name('log_history');
 Route::get('/admin/promos', function () { return view('admin.promos');})->name('promos');
 Route::get('/admin/SalesReports', function () { return view('admin.sales_report');})->name('salesreports');
+Route::get('/admin/hybridpros/salesreport', function () { return view('admin.hybridpros_sale');})->name('hybridpros_sales');
 Route::get('/admin/activitylog', function () { return view('admin.activityLog');})->name('activityLog');
 Route::get('/admin/blogs', function () { return view('admin.blogs');})->name('blogs');
 
@@ -205,7 +206,10 @@ Route::post('/back/subscription/buynewplan', [HybridPros::class, 'BuyNewPlan'])-
 Route::post('/back/subscription/changeplan', [HybridPros::class, 'ChangePlan'])->name('HybridChangePlan');
 Route::post('/back/subscription/transferplanAdd', [HybridPros::class, 'TransferPlanAdd'])->name('HybridTransferPlanAdd');
 Route::post('/back/subscription/transferplanSelect', [HybridPros::class, 'TransferPlanSelect'])->name('HybridTransferPlanSelect');
+Route::post('/back/subscription/removecustomer', [HybridPros::class, 'RemoveCustomer'])->name('HybridRemoveCustomer');
+Route::post('/back/subscription/removeplan', [HybridPros::class, 'RemovePlan'])->name('HybridRemovePlan');
 Route::post('/back/subscription/searchCustomer', [HybridPros::class, 'SearchCustomer'])->name('HybridSearchCustomer');
+Route::get('/back/subscription/loadsalesreport', [HybridPros::class, 'LoadSalesReport'])->name('HybridSalesReport');
 Route::post('/back/subscription/logging', [HybridPros::class, 'Logging'])->name('HybridLogging');
 Route::post('/back/subscription/editPlans', [HybridPros::class, 'UpdatePlans'])->name('HybridEditPlans');
 Route::post('/back/subscription/HybridUpdateProfile', [HybridPros::class, 'UpdateProfile'])->name('HybridUpdateProfile');

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\HybridProsModel;
 use App\Models\ServiceHP;
 use App\Services\AdminLog;
+use App\Services\HybridReport;
 use Carbon\Carbon;
 
 class HybridPros extends Controller
@@ -423,5 +424,53 @@ class HybridPros extends Controller
           $logs->save();
 
           return response()->json(['status'=> 'success']);
+     }
+
+
+     public function RemoveCustomer(Request $req){
+
+        $history = HybridProsHistory::where('hp_id', $req->hp_id)->get();
+
+        foreach($history as $hist){
+           $logs = HybridHistoryLogs::where('hph_id', $hist->hph_id)->get();
+
+           foreach($logs as $l){
+            $l->delete();
+           }
+
+           $hist->delete();
+        }
+
+        HybridProsModel::where('hp_id', $req->hp_id)->first()->delete();
+
+        return response()->json(['status'=> 'success']);
+     }
+
+     public function RemovePlan(Request $req){
+        $logs = HybridHistoryLogs::where('hph_id', $req->hph_id)->get();
+
+        foreach($logs as $l){
+        $l->delete();
+        }
+        HybridProsHistory::where('hph_id', $req->hph_id)->first()->delete();
+
+        return response()->json(['status'=>'success']);
+     }
+
+     public function LoadSalesReport(Request $req){
+        $report = new HybridReport();
+        switch($req->filter){
+            case 'daily':
+                $history = $report->getDaily();
+                break;
+            case 'monthly':
+                $history = $report->getMonthly($req->month, $req->year);
+                break;
+            case 'yearly':
+                $history = $report->getYearly($req->year);
+                break;
+        }
+
+        return response()->json(['history'=>$history, 'today'=>Carbon::today()]);
      }
 }
