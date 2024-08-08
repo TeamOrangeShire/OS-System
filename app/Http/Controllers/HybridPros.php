@@ -472,8 +472,53 @@ class HybridPros extends Controller
             case 'yearly':
                 $history = $report->getYearly($req->year);
                 break;
+            case 'weekly':
+                $weekdata = explode('-', $req->week);
+                $startWeek = Carbon::createFromFormat('F j, Y', $weekdata[0])->format('Y-m-d');
+                $endWeek = Carbon::createFromFormat('F j, Y', $weekdata[1])->format('Y-m-d');
+
+                $history = $report->getWeekly($startWeek, $endWeek);
+                break;
         }
 
         return response()->json(['history'=>$history, 'today'=>Carbon::today()]);
      }
+
+     public function LoadWeeks(Request $req){
+       // Fetch all records
+    $records = HybridProsHistory::all();
+
+    // Check if records exist
+    if ($records->isEmpty()) {
+        return response()->json(['error' => 'No records found'], 404);
+    }
+
+    // Get the earliest and latest created_at dates
+    $firstDate = $records->min('created_at');
+    $lastDate = $records->max('created_at');
+
+    // Initialize an array to hold weeks and their associated dates
+    $weeks = [];
+
+    // Generate weeks between first and last dates
+    $start = Carbon::parse($firstDate)->startOfWeek();
+    $end = Carbon::parse($lastDate)->endOfWeek();
+
+    while ($start->lte($end)) {
+        $weekStart = $start->copy();
+        $weekEnd = $start->copy()->endOfWeek();
+
+        // Add week information with associated start and end dates
+        $weeks[] = [
+            'week' => $start->format('Y-W'), // Format as 'Year-WeekNumber'
+            'start_date' => $weekStart->format('F j, Y'), // Start date of the week
+            'end_date' => $weekEnd->subDay()->format('F j, Y'), // End date of the week
+        ];
+
+        $start->addWeek();
+    }
+        // Return the weeks as a JSON response
+        return response()->json($weeks);
+     }
 }
+

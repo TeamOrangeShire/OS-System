@@ -210,6 +210,7 @@ Route::post('/back/subscription/removecustomer', [HybridPros::class, 'RemoveCust
 Route::post('/back/subscription/removeplan', [HybridPros::class, 'RemovePlan'])->name('HybridRemovePlan');
 Route::post('/back/subscription/searchCustomer', [HybridPros::class, 'SearchCustomer'])->name('HybridSearchCustomer');
 Route::get('/back/subscription/loadsalesreport', [HybridPros::class, 'LoadSalesReport'])->name('HybridSalesReport');
+Route::get('/back/subscription/HybridLoadWeeks', [HybridPros::class, 'LoadWeeks'])->name('HybridLoadWeeks');
 Route::post('/back/subscription/logging', [HybridPros::class, 'Logging'])->name('HybridLogging');
 Route::post('/back/subscription/editPlans', [HybridPros::class, 'UpdatePlans'])->name('HybridEditPlans');
 Route::post('/back/subscription/HybridUpdateProfile', [HybridPros::class, 'UpdateProfile'])->name('HybridUpdateProfile');

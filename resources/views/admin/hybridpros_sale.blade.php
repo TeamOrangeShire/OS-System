@@ -37,6 +37,7 @@
 
         <div class="d-flex justify-content-end gap-4 mb-4">
             <button id="dailyButton" onclick="LoadSalesReport('daily', '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary filterBTN"> <i class="feather icon-bar-chart"></i> Daily</button>
+            <button  onclick="LoadSalesReport('weekly', '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary filterBTN"> <i class="feather icon-bar-chart-2"></i> Weekly </button>
             <button onclick="LoadSalesReport('monthly', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary filterBTN"> <i class="feather icon-calendar"></i> Monthly</button>
             <button onclick="LoadSalesReport('yearly', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary filterBTN"> <i class="feather icon-pie-chart"></i> Yearly</button>
         </div>
@@ -65,6 +66,12 @@
             <button onclick="SelectYearReport('2029', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary year">2029</button>
          </div>
 
+         <div id="selectDivWeeks" class=" mb-4" style="display: none">
+            <label for="selectWeeks">Select Weeks</label>
+            <select onchange="SelectWeeklyReport('{{ route('HybridSalesReport') }}',this)" name="" id="selectWeeks" class="form-select">
+            </select>
+        </div>
+
         <table id="salesreport" class="table table-dark table-hover">
            <thead>
               <th>Plan</th>
@@ -90,6 +97,7 @@
     <script>
         window.onload = () => {
            LoadSalesReport(null, '{{ route('HybridSalesReport') }}', null)
+           LoadAvailableWeeks('{{ route('HybridLoadWeeks') }}')
         }
     </script>
 

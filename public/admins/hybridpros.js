@@ -888,6 +888,7 @@ function LoadSalesReport(filter, route, button) {
 
     const selectMonth = document.getElementById('selectMonth');
     const selectYear = document.getElementById('selectYear');
+    const selectWeek = document.getElementById('selectDivWeeks');
 
     const today = new Date();
     const currentMonth = today.getMonth();
@@ -911,21 +912,33 @@ function LoadSalesReport(filter, route, button) {
         }
     }
     let API = '';
+    let valid = false;
     switch (filter) {
         case 'daily':
             API = `${route}?filter=daily&month=${currentMonth + 1}&year=${currentYear}`;
             selectMonth.style.display = 'none';
             selectYear.style.display = 'none';
+            valid = true;
             break;
         case 'monthly':
             API = `${route}?filter=monthly&month=${currentMonth + 1}&year=${currentYear}`;
             selectMonth.style.display = 'flex';
             selectYear.style.display = 'flex';
+            valid = true;
             break;
         case 'yearly':
             API = `${route}?filter=yearly&month=${currentMonth + 1}&year=${currentYear}`;
             selectMonth.style.display = 'none';
             selectYear.style.display = 'flex';
+            valid = true;
+            break;
+        case "weekly":
+            const week = document.getElementById('selectWeeks');
+            selectWeek.style.display = '';
+            selectMonth.style.display = 'none';
+            selectYear.style.display = 'none';
+            valid = week.value != 0 ? true : false;
+            API = `${route}?filter=weekly&week=${week.value}`;
             break;
         default:
             API = `${route}?filter=daily`;
@@ -934,6 +947,7 @@ function LoadSalesReport(filter, route, button) {
             selectYear.style.display = 'none';
             daily.className = '';
             daily.classList.add('btn', 'btn-primary', 'filterBTN');
+            valid = true;
             break
     }
 
@@ -943,7 +957,9 @@ function LoadSalesReport(filter, route, button) {
         button.classList.add('btn', 'btn-primary', 'filterBTN');
     }
 
-    LoadReport(API);
+    if(valid){
+        LoadReport(API);
+    }
 }
 
 
@@ -1045,4 +1061,26 @@ function LoadReport(API) {
             }
         }, error: xhr => console.log(xhr.responseText)
     });
+}
+
+
+function LoadAvailableWeeks(route){
+
+    $.ajax({
+        type:"GET",
+        url: route,
+        dataType: "json",
+        success: res => {
+            const weeks = document.getElementById('selectWeeks');
+            weeks.innerHTML = '<option value="0" selected disabled>-----Please Select Week-----</option>';
+            res.forEach(e=>{
+                weeks.innerHTML += `<option value="${e.start_date}-${e.end_date}-${e.week}">${e.start_date} - ${e.end_date}</option>`;
+            })
+        },error: xhr => console.log(xhr.responseText)
+    })
+}
+
+function SelectWeeklyReport(route, select){
+   const API = `${route}?filter=weekly&week=${select.value}`;
+   LoadReport(API);
 }

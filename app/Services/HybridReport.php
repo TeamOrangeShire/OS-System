@@ -36,6 +36,18 @@ class HybridReport {
     return $sale;
   }
 
+  public function getWeekly($weekStart, $weekEnd)
+  {
+      $start = Carbon::parse($weekStart)->startOfDay();
+      $end = Carbon::parse($weekEnd)->endOfDay();
+
+      $sale = HybridProsHistory::whereBetween('created_at', [$start, $end])
+                               ->where('hp_payment_status', 1)
+                               ->get();
+      $this->FilterData($sale);
+      return $sale;
+  }
+
   private function FilterData($sale){
     foreach($sale as $s){
         $service = ServiceHP::where('service_id', $s->service_id)->first();
