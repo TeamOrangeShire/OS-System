@@ -281,7 +281,7 @@ class HybridPros extends Controller
        $formattedStartDate = $startDate->format('F j, Y');
        $hp->update([
         'hp_plan_start' => $formattedStartDate,
-        'hp_plan_expire_new'=> $formattedDate,
+        'hp_plan_expire_new'=> $formattedDate === $hp->hp_plan_expire ? null : $formattedDate,
         'hp_remaining_time'=>$req->timeRemaining,
         'hp_active_status'=>$req->active_status
        ]);
