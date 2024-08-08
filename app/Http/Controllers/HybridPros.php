@@ -274,10 +274,13 @@ class HybridPros extends Controller
     public function UpdatePlans(Request $req){
        $hp = HybridProsHistory::where('hph_id', $req->hp_id)->first();
        $date = new \DateTime($req->expirationDate);
-       $customer = HybridProsModel::where('hp_id',$req->hp_id)->first();
+       $startDate = new \DateTime($req->inpPlanPurchaseDate);
+       $customer = HybridProsModel::where('hp_id',$hp->hp_id)->first();
        // Format the date to "F j, Y" which will be "October 18, 2024"
        $formattedDate = $date->format('F j, Y');
+       $formattedStartDate = $startDate->format('F j, Y');
        $hp->update([
+        'hp_plan_start' => $formattedStartDate,
         'hp_plan_expire_new'=> $formattedDate,
         'hp_remaining_time'=>$req->timeRemaining,
         'hp_active_status'=>$req->active_status
