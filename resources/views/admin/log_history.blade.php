@@ -255,7 +255,7 @@
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalCenterTitle">Customer Info</h5>
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Customer Payment</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -2249,7 +2249,7 @@
                                         var totaltime = timeDifference(tstart, tend);
                                         var between = totaltime.hours + ':' + totaltime.minutes;
                                         document.getElementById('id').value = response.confirm[0];
-                                        document.getElementById('payment').value = response.confirm[3];
+                                        document.getElementById('payment').value = parseFloat(response.confirm[3]).toFixed(2);
                                         document.getElementById('start').textContent = response.confirm[2];
                                         document.getElementById('end').textContent = response.confirm[1];
                                         document.getElementById('hours').textContent = between;

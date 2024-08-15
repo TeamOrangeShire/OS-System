@@ -163,7 +163,60 @@ public function LogToPending(Request $request) {
     // $DayPassTime = add12Hours($starTime);
     $totalTime = timeDifference($starTime, $current);
     $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
-    if($totalTime['hours'] >= 8 && $logs->log_status == 0){
+    $limit = 12;
+    $excessTime = max(0, $totalTime['hours'] - $limit);
+    $exceed_Value = 33.34*$excessTime;
+    $total = $paymentPass+$exceed_Value;
+    $exceed_Value = number_format($exceed_Value, 2); 
+    if($totalTime['hours'] > 12 && $logs->log_status == 0){
+
+      if($logs->log_type == 0 ){
+        if($type == 'Regular'){
+        
+        $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$total.'-0',
+
+        ]);
+         return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$total]]);
+        }
+        else{
+        $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$total.'-0',
+
+        ]);
+         return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$total]]);
+        }
+      }else{
+         if($type == 'Regular'){
+        $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$total.'-1',
+
+        ]);
+         return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$total]]);
+        }
+        else{
+        $logs->update([
+
+          'log_status'=> 1,
+          'log_end_time'=> $current,
+          'log_transaction'=>$total.'-1',
+
+        ]);
+         return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$total]]);
+        }
+      }
+
+    }
+    elseif($totalTime['hours'] >= 8 && $logs->log_status == 0){
 
        if($logs->log_type == 0){
        $logs->update([
