@@ -213,6 +213,7 @@ Route::get('/back/subscription/loadsalesreport', [HybridPros::class, 'LoadSalesR
 Route::get('/back/subscription/HybridLoadWeeks', [HybridPros::class, 'LoadWeeks'])->name('HybridLoadWeeks');
 Route::post('/back/subscription/logging', [HybridPros::class, 'Logging'])->name('HybridLogging');
 Route::post('/back/subscription/editPlans', [HybridPros::class, 'UpdatePlans'])->name('HybridEditPlans');
+Route::post('/back/subscription/updateHistorLog', [HybridPros::class, 'UpdateHistoryLog'])->name('HybridUpdateHistoryLog');
 Route::post('/back/subscription/HybridUpdateProfile', [HybridPros::class, 'UpdateProfile'])->name('HybridUpdateProfile');
 Route::post('/back/subscription/acceptPayment', [HybridPros::class, 'AcceptPayment'])->name('HybridAcceptPayment');
 Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');

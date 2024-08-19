@@ -520,5 +520,34 @@ class HybridPros extends Controller
         // Return the weeks as a JSON response
         return response()->json($weeks);
      }
+
+
+     public function UpdateHistoryLog(Request $req){
+        $log = HybridHistoryLogs::where('log_id', $req->log_id)->first();
+        if($req->Date){
+            $date = new \DateTime($req->Date);
+            $formattedDate = $date->format('F j, Y');
+            $log->update(['log_date'=>$formattedDate]);
+        }
+
+        if($req->Time_In){
+         
+            $timeIn = Carbon::createFromFormat('H:i', $req->Time_In);
+            $timeInFinal = $timeIn->format('g:i A');
+            $diff = $log->log_time_out != '' ? timeDifference($timeInFinal, $log->log_time_out) : 'none';
+            // if($diff != 'none'){
+
+            // }
+            $log->update(['log_time_in'=>$timeInFinal]);
+        }
+
+        if($req->Time_Out){
+            $timeOut = Carbon::createFromFormat('H:i', $req->Time_Out);
+            $timeOutFinal =$timeOut->format('g:i A');
+            $log->update(['log_time_out'=>$timeOutFinal]);
+        }
+
+        return response()->json(['status'=> 'success']);
+     }
 }
 
