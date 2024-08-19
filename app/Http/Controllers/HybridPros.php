@@ -472,6 +472,9 @@ class HybridPros extends Controller
             case 'yearly':
                 $history = $report->getYearly($req->year);
                 break;
+            case 'dailybydate':
+                $history = $report->getByDate($req->date);
+                break;
             case 'weekly':
                 $weekdata = explode('-', $req->week);
                 $startWeek = Carbon::createFromFormat('F j, Y', $weekdata[0])->format('Y-m-d');
@@ -531,7 +534,7 @@ class HybridPros extends Controller
         }
 
         if($req->Time_In){
-         
+
             $timeIn = Carbon::createFromFormat('H:i', $req->Time_In);
             $timeInFinal = $timeIn->format('g:i A');
             $diff = $log->log_time_out != '' ? timeDifference($timeInFinal, $log->log_time_out) : 'none';

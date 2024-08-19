@@ -72,6 +72,18 @@
             </select>
         </div>
 
+        <div class="w-100 mb-4" style="display: " id="selectDate">
+            <label for="end">Select Date</label>
+            <div class="input-group">
+                <input type="date" class="form-control" id="dateSelect"
+                    name="dateSelect">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button"
+                    onclick="LoadSalesReport('dailydate', '{{ route('HybridSalesReport') }}', this)" >Show Report</button>
+                </div>
+            </div>
+        </div>
+
         <table id="salesreport" class="table table-dark table-hover">
            <thead>
               <th>Plan</th>

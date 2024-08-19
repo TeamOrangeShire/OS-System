@@ -36,6 +36,18 @@ class HybridReport {
     return $sale;
   }
 
+  public function getByDate($date)
+  {
+      // Ensure $date is a Carbon instance
+      $date = Carbon::parse($date)->startOfDay();
+
+      $sale = HybridProsHistory::whereDate('created_at', $date)
+                               ->where('hp_payment_status', 1)
+                               ->get();
+
+      $this->FilterData($sale);
+      return $sale;
+  }
   public function getWeekly($weekStart, $weekEnd)
   {
       $start = Carbon::parse($weekStart)->startOfDay();

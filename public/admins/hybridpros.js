@@ -889,7 +889,9 @@ function LoadSalesReport(filter, route, button) {
     const selectMonth = document.getElementById('selectMonth');
     const selectYear = document.getElementById('selectYear');
     const selectWeek = document.getElementById('selectDivWeeks');
+    const selectDate = document.getElementById('selectDate');
 
+    const dateSelect = document.getElementById('dateSelect').value;
     const today = new Date();
     const currentMonth = today.getMonth();
     const currentYear = today.getFullYear();
@@ -918,18 +920,24 @@ function LoadSalesReport(filter, route, button) {
             API = `${route}?filter=daily&month=${currentMonth + 1}&year=${currentYear}`;
             selectMonth.style.display = 'none';
             selectYear.style.display = 'none';
+            selectWeek.style.display = 'none';
+            selectDate.style.display = '';
             valid = true;
             break;
         case 'monthly':
             API = `${route}?filter=monthly&month=${currentMonth + 1}&year=${currentYear}`;
             selectMonth.style.display = 'flex';
             selectYear.style.display = 'flex';
+            selectWeek.style.display = 'none';
+            selectDate.style.display = 'none';
             valid = true;
             break;
         case 'yearly':
             API = `${route}?filter=yearly&month=${currentMonth + 1}&year=${currentYear}`;
             selectMonth.style.display = 'none';
             selectYear.style.display = 'flex';
+            selectWeek.style.display = 'none';
+            selectDate.style.display = 'none';
             valid = true;
             break;
         case "weekly":
@@ -937,8 +945,17 @@ function LoadSalesReport(filter, route, button) {
             selectWeek.style.display = '';
             selectMonth.style.display = 'none';
             selectYear.style.display = 'none';
+            selectDate.style.display = 'none';
             valid = week.value != 0 ? true : false;
             API = `${route}?filter=weekly&week=${week.value}`;
+            break;
+        case 'dailydate':
+            API = `${route}?filter=dailybydate&date=${dateSelect}`;
+            selectMonth.style.display = 'none';
+            selectYear.style.display = 'none';
+            selectWeek.style.display = 'none';
+            selectDate.style.display = '';
+            valid = true;
             break;
         default:
             API = `${route}?filter=daily`;
@@ -946,6 +963,7 @@ function LoadSalesReport(filter, route, button) {
             selectMonth.style.display = 'none';
             selectYear.style.display = 'none';
             daily.className = '';
+            selectWeek.style.display = 'none';
             daily.classList.add('btn', 'btn-primary', 'filterBTN');
             valid = true;
             break
