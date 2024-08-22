@@ -163,16 +163,16 @@ public function LogToPending(Request $request) {
     // $DayPassTime = add12Hours($starTime);
     $totalTime = timeDifference($starTime, $current);
     $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $type);
-    $limit = 12;
-    $excessTime = max(0, $totalTime['hours'] - $limit);
-    $exceed_Value = 33.34*$excessTime;
-    $total = $paymentPass+$exceed_Value;
-    $exceed_Value = number_format($exceed_Value, 2);
+
     if($totalTime['hours'] > 12 && $logs->log_status == 0){
 
       if($logs->log_type == 0 ){
         if($type == 'Regular'){
-
+            $limit = 12;
+            $excessTime = max(0, $totalTime['hours'] - $limit);
+            $exceed_Value = 33.34*$excessTime;
+            $total = $paymentPass+$exceed_Value;
+            $exceed_Value = number_format($exceed_Value, 2);
         $logs->update([
 
           'log_status'=> 1,
@@ -183,6 +183,11 @@ public function LogToPending(Request $request) {
          return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$total]]);
         }
         else{
+            $limit = 12;
+            $excessTime = max(0, $totalTime['hours'] - $limit);
+            $exceed_Value = 26.67*$excessTime;
+            $total = $paymentPass+$exceed_Value;
+            $exceed_Value = number_format($exceed_Value, 2);
         $logs->update([
 
           'log_status'=> 1,
@@ -194,6 +199,11 @@ public function LogToPending(Request $request) {
         }
       }else{
          if($type == 'Regular'){
+            $limit = 12;
+            $excessTime = max(0, $totalTime['hours'] - $limit);
+            $exceed_Value = 33.34*$excessTime;
+            $total = $paymentPass+$exceed_Value;
+            $exceed_Value = number_format($exceed_Value, 2);
         $logs->update([
 
           'log_status'=> 1,
@@ -204,6 +214,11 @@ public function LogToPending(Request $request) {
          return response()->json(['data' => 'DayPass','confirm'=>[$request->id,$current,$starTime,$total]]);
         }
         else{
+            $limit = 12;
+            $excessTime = max(0, $totalTime['hours'] - $limit);
+            $exceed_Value = 26.67*$excessTime;
+            $total = $paymentPass+$exceed_Value;
+            $exceed_Value = number_format($exceed_Value, 2);
         $logs->update([
 
           'log_status'=> 1,
