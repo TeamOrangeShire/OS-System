@@ -148,7 +148,7 @@ public function CustomerlogHistory() {
   $logs = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
   select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
   'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact','customer_acc.customer_middlename as middlename')
-  ->orderBy('updated_at', 'desc')->take(50)->get();
+  ->orderBy('updated_at', 'desc')->take(100)->get();
 
   return response()->json(['data' => $logs]);
 }
@@ -167,12 +167,12 @@ public function LogToPending(Request $request) {
     $excessTime = max(0, $totalTime['hours'] - $limit);
     $exceed_Value = 33.34*$excessTime;
     $total = $paymentPass+$exceed_Value;
-    $exceed_Value = number_format($exceed_Value, 2); 
+    $exceed_Value = number_format($exceed_Value, 2);
     if($totalTime['hours'] > 12 && $logs->log_status == 0){
 
       if($logs->log_type == 0 ){
         if($type == 'Regular'){
-        
+
         $logs->update([
 
           'log_status'=> 1,
