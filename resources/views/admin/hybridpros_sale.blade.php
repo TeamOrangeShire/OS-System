@@ -89,6 +89,7 @@
               <th>Plan</th>
               <th>Customer</th>
               <th>Date Purchased/Expired</th>
+              <th>Payment Method</th>
               <th>Status</th>
               <th>Amount</th>
            </thead>

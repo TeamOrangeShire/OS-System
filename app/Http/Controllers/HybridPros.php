@@ -99,6 +99,8 @@ class HybridPros extends Controller
 
 
         }
+
+
         return response()->json(['hp'=>$hp]);
     }
 
@@ -224,7 +226,7 @@ class HybridPros extends Controller
            $mess = 'Logged in';
             $log = new HybridHistoryLogs();
             $log->hph_id = $history->hph_id;
-            $log->log_date = $date->addDays(1)->format('F j, Y');
+            $log->log_date = $date->format('F j, Y');
             $log->log_time_in =  $date->format('h:i A');
             $log->log_time_out = '';
             $log->log_time_consume = '';

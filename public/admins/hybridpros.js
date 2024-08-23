@@ -1052,6 +1052,7 @@ function LoadReport(API) {
                                 return `${data.hp_plan_start} / ${expiration}`;
                             }
                         },
+                        {title:"Payment Status", data: "hp_payment_mode"},
                         {
                             title: "Status", data: null,
                             render: data => {
