@@ -250,7 +250,7 @@ class HybridPros extends Controller
         $location = 'hybridpros_history';
         $logs= new AdminLog($header, $message, $location);
         $logs->save();
-        return response()->json(['status'=> 'success']);
+        return response()->json(['status'=> 'success','mess'=> $mess]);
     }
     public function CustomerExist(){
         $cust = CustomerAcc::all();

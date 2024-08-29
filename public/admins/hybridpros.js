@@ -230,7 +230,11 @@ function HybridLogging(route, id, load, status) {
                     if (res.status === 'success') {
                         roller.style.display = 'none';
                         LoadCustomer(load, route);
+                        if(res.mess === 'Logged in'){
                         toastr.success('Logged in Successfully');
+                        }else{
+                            toastr.error('Logged Out Successfully');
+                        }
                     }
                 }, error: xhr => console.log(xhr.responseText)
             });
