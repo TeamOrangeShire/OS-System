@@ -30,7 +30,7 @@ class CheckExpiration extends Command
         $customer = HybridProsModel::all();
         $date = Carbon::now()->setTimezone('Asia/Hong_Kong');
 
-        $now = $date->copy()->addDays(2)->format('F j, Y');
+        $now = $date->copy()->addDay()->format('F j, Y');
         foreach($customer as $cust){
           $history = HybridProsHistory::where('hp_id', $cust->hp_id)->get();
 

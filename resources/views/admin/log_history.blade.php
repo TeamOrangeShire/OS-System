@@ -730,7 +730,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-1 text-center" style= "margin-top:5%;"> 
+            <div class="col-md-1 text-center" style= "margin-top:5%;">
                 <i class="fas fa-minus ml-3" onclick="RemoveFieldGroup('rowid${uniqueId}')"></i>
             </div>
         </div>
@@ -903,7 +903,7 @@
                      <input type="text" name="IndivType[]" class="form-control" value="${type}" readonly>
                 </div>
             </div>
-            <div class="col-md-1 text-center" style= "margin-top:5%;"> 
+            <div class="col-md-1 text-center" style= "margin-top:5%;">
                 <i class="fas fa-minus ml-3" onclick="RemoveFieldGroup('rowid${id}')"></i>
             </div>
         </div>
@@ -1154,7 +1154,7 @@
   function(){
     alertify.error('Cancel');
   });
-                    
+
                 }
 
                 function logoutmark() {
@@ -1206,7 +1206,7 @@
                     });
                      formData.append('group_id', var_id);
                     formData.append('_token', csrfToken);
-                   
+
                     document.getElementById('roller').style.display = 'flex';
                     $.ajax({
                         type: "POST",
@@ -1428,7 +1428,7 @@
                                 data: 'updated_at'
                             }
                         ],
-                    
+
                     });
                 }
 
@@ -1797,7 +1797,7 @@
                             const id = document.getElementById('LogoutAllId').value;
 
                             var formData = new FormData();
-                           
+
                             formData.append('id', id);
                             formData.append('_token', '{{ csrf_token() }}');
                             document.getElementById('roller').style.display = 'flex';
@@ -2318,6 +2318,7 @@
                                 if (edit.value != '') {
                                     document.getElementById('comment_log_message').value = edit.value;
                                     const formData = $('form#submitComment').serialize();
+                                    console.log(formData);
                                     $.ajax({
                                         type: "POST",
                                         url: "{{ route('SaveComment') }}",
