@@ -29,26 +29,26 @@ class CheckExpiration extends Command
     {
         $customer = HybridProsModel::all();
         $date = Carbon::now()->setTimezone('Asia/Hong_Kong');
-
-        $now = $date->copy()->addDay()->format('F j, Y');
         foreach($customer as $cust){
           $history = HybridProsHistory::where('hp_id', $cust->hp_id)->get();
 
           foreach($history as $hist){
 
-            if($hist->hp_plan_expire_new == null){
-                if($hist->hp_plan_expire == $now){
+            if ($hist->hp_plan_expire_new == null) {
+                $expireDate = Carbon::parse($hist->hp_plan_expire)->addDay(); // add one day to the expiration date
+                if ($date->gte($expireDate)) {
                     $hist->update([
-                      'hp_active_status'=> 0
+                        'hp_active_status' => 0
                     ]);
-                    $this->info('Deactivated ID: '. $hist->hph_id);
+                    $this->info('Deactivated ID: ' . $hist->hph_id);
                 }
-            }else{
-                if($hist->hp_plan_expire_new == $now){
+            } else {
+                $expireDate = Carbon::parse($hist->hp_plan_expire_new)->addDay(); // add one day to the expiration date
+                if ($date->gte($expireDate)) {
                     $hist->update([
-                        'hp_active_status'=> 0
+                        'hp_active_status' => 0
                     ]);
-                    $this->info('Deactivated ID: '. $hist->hph_id);
+                    $this->info('Deactivated ID: ' . $hist->hph_id);
                 }
             }
           }

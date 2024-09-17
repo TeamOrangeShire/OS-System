@@ -25,4 +25,9 @@ class HybridProsHistory extends Model
         'hp_transfer_status',
         'hp_transfer_from_id'
     ];
+
+    protected $casts = [
+        'hp_plan_expire' => 'date',
+        'hp_plan_expire_new'=> 'date',
+    ];
 }
