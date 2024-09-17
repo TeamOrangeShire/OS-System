@@ -45,14 +45,23 @@ const Supp =
     }, convertTo24Hour: time12h => {
         const [time, modifier] = time12h.split(' ');
         let [hours, minutes] = time.split(':');
-    
+
         if (modifier === 'PM' && hours !== '12') {
             hours = parseInt(hours, 10) + 12;
         }
         if (modifier === 'AM' && hours === '12') {
             hours = 0;
         }
-    
+
         return `${String(hours).padStart(2, '0')}:${minutes}`;
+    }, parseDate: (dateString) => {
+        const date = new Date(dateString);
+        const formatter = new Intl.DateTimeFormat('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+        });
+
+        return formatter.format(date);
     }
 }

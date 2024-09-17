@@ -50,7 +50,7 @@ function Customers(data, logging, load) {
            <td>${ha.act}</td>
            <td>${ha.hp_plan_start}</td>
            <td>${ha.hp_plan_expire_new != null ?
-                        '<s>' + ha.hp_plan_expire + '</s><br>' + ha.hp_plan_expire_new : ha.hp_plan_expire}</td>
+                        '<s>' + Supp.parseDate(ha.hp_plan_expire) + '</s><br>' + Supp.parseDate(ha.hp_plan_expire_new) : Supp.parseDate(ha.hp_plan_expire)}</td>
            <td>${timeUnli}</td>
            <td>${ha.hp_consume_time}</td>
            <td>${ha.price == 0 ? 'Free' : `₱${ha.price}`}</td>
@@ -79,7 +79,7 @@ function Customers(data, logging, load) {
             active += `<tr>
        <td>${d.historyPending.name}</td>
        <td>${d.historyPending.hp_plan_start}</td>
-       <td>${d.historyPending.hp_plan_expire}</td>
+       <td>${Supp.parseDate(d.historyPending.hp_plan_expire)}</td>
        <td>${timeUnli}</td>
        <td>${d.historyPending.hp_consume_time}</td>
        <td>${d.historyPending.price == 0 ? 'Free' : `₱${d.historyPending.price}`}</td>
