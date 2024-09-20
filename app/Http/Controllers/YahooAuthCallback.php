@@ -32,8 +32,6 @@ class YahooAuthCallback extends Controller
 
         if ($response->successful()) {
             $tokenData = $response->json();
-            // You can now use the access token and fetch user info
-
             return redirect()->away("http://localhost:51012/CRM/GetYahooToken?access_token=" . $tokenData->access_token . "&refresh_token=". $tokenData->refresh_token);
         } else {
             // Return the actual error message from the response
