@@ -32,7 +32,7 @@ class YahooAuthCallback extends Controller
 
         if ($response->successful()) {
             $tokenData = $response->json();
-            return redirect()->away("http://localhost:51012/CRM/GetYahooToken?access_token=" . $tokenData->access_token . "&refresh_token=". $tokenData->refresh_token);
+            return redirect()->away("http://localhost:51012/CRM/GetYahooToken?access_token=" . $tokenData['access_token'] . "&refresh_token=". $tokenData['refresh_token']);
         } else {
             // Return the actual error message from the response
             $errorMessage = $response->json('error_description', 'Failed to exchange code for token.');
