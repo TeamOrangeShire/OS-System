@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class YahooAuhCallback extends Controller
+class YahooAuthCallback extends Controller
 {
     public function handleCallback(Request $request)
     {
@@ -19,7 +19,7 @@ class YahooAuhCallback extends Controller
         // Your Yahoo API credentials
         $clientId = env('YAHOO_CLIENT_ID');
         $clientSecret = env('YAHOO_CLIENT_SECRET');
-        $redirectUri = env('YAHOO_REDIRECT_URI'); 
+        $redirectUri = env('YAHOO_REDIRECT_URI');
 
         // Step to exchange the authorization code for an access token
         $response = Http::asForm()->post('https://api.login.yahoo.com/oauth2/get_token', [
@@ -35,7 +35,9 @@ class YahooAuhCallback extends Controller
             // You can now use the access token and fetch user info
             return response()->json(['success' => true, 'token_data' => $tokenData]);
         } else {
-            return response()->json(['success' => false, 'message' => 'Failed to exchange code for token.']);
+            // Return the actual error message from the response
+            $errorMessage = $response->json('error_description', 'Failed to exchange code for token.');
+            return response()->json(['success' => false, 'message' => $errorMessage]);
         }
     }
 }
