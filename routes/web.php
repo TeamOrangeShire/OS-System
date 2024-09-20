@@ -13,7 +13,7 @@ use App\Http\Controllers\Reservation;
 use App\Http\Controllers\CustomerLog;
 use App\Http\Controllers\BlogData;
 use App\Http\Controllers\HybridPros;
-use App\Http\Controllers\YahooAuhCallback;
+use App\Http\Controllers\YahooAuthCallback;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +25,7 @@ use App\Http\Controllers\YahooAuhCallback;
 |
 */
 //Yahoo Callback
-Route::get('/akruals/auth/yahoocallback', [YahooAuhCallback::class, 'handleCallback']);
+Route::get('/akruals/auth/yahoocallback', [YahooAuthCallback::class, 'handleCallback']);
 //HomePage
 Route::get('/', [GetDataViews::class, 'GetHomeCookies'])->name('home');
 Route::get('/contactus', [GetDataViews::class, 'GetContactCookies'])->name('contact');
