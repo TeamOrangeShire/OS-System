@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    @include('admin.assets.header')
+    @include('admin.assets.header',['title' => 'Reservation'])
 </head>
 <body class="">
     <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -50,42 +50,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                $Reservation = App\Models\Reservations::where('res_status',0)->get();
-                            @endphp
-                            @foreach ($Reservation as $res)
-                                
-                            <tr>
-                               
-                                <td>@php
-                                    $cus_id = $res->customer_id;
-                                    
-                                    $cus_info = App\Models\CustomerAcc::where('customer_id',$cus_id)->first();
-                                    $full_name = $cus_info->customer_firstname.' '.$cus_info->customer_lastname;
-                                    $time = $res->res_start.'-'.$res->res_end;
-                                @endphp
-                                {{$full_name}} </td>
-                                <td>{{$cus_info->customer_email}}</td>
-                                <td>{{$cus_info->customer_phone_num}}</td>
-                                <td>@php
-                                    $rprice_id = $res->rprice_id;
-                                    $rprice_info = App\Models\RoomPricing::where('rprice_id',$rprice_id)->first();
-                                    $room_id = $rprice_info->room_id;
-                                    $room_info = App\Models\Rooms::where('room_id',$room_id)->first();
-                                    $room_name = $room_info->room_number;
-                                    $timeplace = FilterTime($time);
-                                @endphp
-                                {{$room_name}}
-                                 </td>
-                                <td>{{$res->res_date}}</td>
-                                <td>{{$timeplace}}</td>
-                               
-                                <td> 
-                                    <button type="button" class="btn btn-icon btn-success" data-toggle="modal" data-target="#confirmmodal"  onclick="confirmres(`{{$res->res_id}}`,'{{$full_name}}','{{$timeplace}}','{{$room_name}}','{{$res->res_date}}')"><i class="feather icon-check-circle"></i></button>  
-                                    <button type="button" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#declinemodal" onclick="decline(`{{$res->res_id}}`)"><i class="feather icon-x-circle"></i></button>   </td>
-                                     </tr>
-
-                            @endforeach
+                              
                             </tbody>
                         </table>
                     </div>
