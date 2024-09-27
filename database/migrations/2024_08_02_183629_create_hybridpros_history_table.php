@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('hp_payment_mode',50);
             $table->integer('hp_transfer_status')->default(0);
             $table->integer('hp_transfer_from_id')->nullable();
+            $table->integer('payment_edit')->nullable();
             $table->timestamps();
         });
     }
