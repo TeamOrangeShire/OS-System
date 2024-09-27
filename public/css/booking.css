@@ -1,0 +1,5 @@
+.disabled-date {
+    pointer-events: none; /* Disable clicks */
+    opacity: 0.5; /* Make past dates look disabled */
+    cursor: not-allowed;
+}
