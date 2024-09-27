@@ -6,12 +6,12 @@
         <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
 
         <style>
-  
+
             .page-header {
               background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.295)), url(../img/pheader1.jpg), no-repeat center center;
               background-size: co;
             }
-            
+
             </style>
 
     </head>
@@ -31,18 +31,18 @@
         @include('homepage/Components/nav', ['active' => 'reservation' , 'cookie_val'=>$customer_id])
         <!-- Navbar End -->
 
-        
+
             <!-- Header Start -->
             <div class="container-fluid page-header">
                 <div class="container">
                     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-                        <h3 class="display-4 text-uppercase" style="color: #ffff;">Reservation</h3> 
+                        <h3 class="display-4 text-uppercase" style="color: #ffff;">Reservation</h3>
                         <div class="d-inline-flex text-black">
-                            <p class="m-0 text-uppercase" style="font-weight: bold;"><a class="text-white" href="">Home</a></p> 
+                            <p class="m-0 text-uppercase" style="font-weight: bold;"><a class="text-white" href="">Home</a></p>
                             <i class="fa fa-angle-double-right pt-1 px-3" style="font-weight: bold; color: #01a101;"></i>
-                            <p class="m-0 text-uppercase" style="font-weight: bold; color: black;"> <a class="text-white" href=""> Pages </a></p> 
+                            <p class="m-0 text-uppercase" style="font-weight: bold; color: black;"> <a class="text-white" href=""> Pages </a></p>
                             <i class="fa fa-angle-double-right pt-1 px-3" style="font-weight: bold; color: #01a101;"></i>
-                            <p class="m-0 text-uppercase" style="font-weight: bold; color: #ff5c40;">Reservation</p> 
+                            <p class="m-0 text-uppercase" style="font-weight: bold; color: #ff5c40;">Reservation</p>
                         </div>
                     </div>
                 </div>
@@ -57,14 +57,14 @@
                     <h1 class="mb-3" id="calendar">See Our Reservation Calendar</h1>
                     <p>Explore our reservation calendar to plan your next productive session at Orange Shire. Click to see availability and secure your preferred time slot.</p>
                 </div>
-                <div id="calendars"></div>   
+                <div id="calendars"></div>
               <div class="container" style="width: 100%; display:flex; justify-content:center">
-                <a class="btn btn-primary py-3 px-5 mt-3" href="{{route('book')}}"><i class="fa-solid fa-calendar-days"></i> Book Reservation</a>
+                <a class="btn btn-primary py-3 px-5 mt-3" href="{{route('book')}}"><i class="fa-solid fa-calendar-days"></i> Reserve a room</a>
               </div>
             </div>
         </div>
         <!-- Testimonial End -->
-        
+
 
         <!-- Footer Start -->
         @include('homepage/Components/footer')
@@ -87,9 +87,9 @@
     <script src="calendar/js/evo-calendar.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-        
+
 $(document).ready(function() {
-    $('#calendars').evoCalendar({   
+    $('#calendars').evoCalendar({
         theme:"Orange Coral",
         calendarEvents: [
       {
@@ -107,7 +107,7 @@ $(document).ready(function() {
         type: "event",
         color: "#63d867" // Event custom color (optional)
       }
-    ]   
+    ]
     });
 });
     </script>
