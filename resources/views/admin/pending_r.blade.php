@@ -3,6 +3,9 @@
 <html lang="en">
 
 <head>
+    
+   <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
     @include('admin.assets.header',['title' => 'Reservation'])
 </head>
 <body class="">
@@ -27,7 +30,14 @@
 <div class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
-      
+      <div class="row">
+                    <div class="col-12">
+                        
+                        <div id="calendar"></div>
+
+                    </div>
+                </div>
+                <br>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -201,6 +211,8 @@
 
 
 @include('admin.assets.adminscript')
+<script src="{{ asset('calendar/js/evo-calendar.min.js') }}"></script>
+<script src="{{ asset('admins/adminreservation.js') }}"></script>
 
 
 
