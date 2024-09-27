@@ -64,10 +64,18 @@ class HybridReport {
     foreach($sale as $s){
         $service = ServiceHP::where('service_id', $s->service_id)->first();
         $customer = HybridProsModel::where('hp_id', $s->hp_id)->first();
+        $history = HybridProsHistory::where('hp_id', $s->hp_id)->first();
 
         $s->customer_name = $customer->hp_customer_name;
         $s->service_name = $service->service_name;
-        $s->ammount = $service->service_price;
+
+        if($history->payment_edit == null){
+            $ammount = $service->service_price;
+        }else{
+            $ammount = $history->payment_edit;
+        }
+
+        $s->ammount = $ammount;
       }
   }
 

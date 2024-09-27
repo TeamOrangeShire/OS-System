@@ -46,6 +46,13 @@ function Customers(data, logging, load) {
                 if (timeSplit[0] < 160) {
                     timeUnli = ha.hp_remaining_time;
                 }
+                let parsePrice = '';
+                if(ha.payment_edit == null){
+                   parsePrice = ha.price == 0 ? 'Free' : `₱${ha.price}`
+                }else{
+                    parsePrice = ha.payment_edit;
+                }
+
                 active += `<tr>
            <td>${ha.act}</td>
            <td>${ha.hp_plan_start}</td>
@@ -53,7 +60,7 @@ function Customers(data, logging, load) {
                         '<s>' + Supp.parseDate(ha.hp_plan_expire) + '</s><br>' + Supp.parseDate(ha.hp_plan_expire_new) : Supp.parseDate(ha.hp_plan_expire)}</td>
            <td>${timeUnli}</td>
            <td>${ha.hp_consume_time}</td>
-           <td>${ha.price == 0 ? 'Free' : `₱${ha.price}`}</td>
+           <td>${parsePrice}</td>
            <td><span class="badge text-bg-success p-2"> Active </span></td>
            <td><button onclick="OpenPlanEdit('${ha.hph_id}', '${ha.act}', '${ha.hp_plan_start}', '${ha.hp_plan_expire}', '${ha.hp_remaining_time}', '1', '${d.hp_id}')"
             data-bs-toggle="modal" data-bs-target="#editCustomerPlan" class="btn btn-outline-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
@@ -230,9 +237,9 @@ function HybridLogging(route, id, load, status) {
                     if (res.status === 'success') {
                         roller.style.display = 'none';
                         LoadCustomer(load, route);
-                        if(res.mess === 'Logged in'){
-                        toastr.success('Logged in Successfully');
-                        }else{
+                        if (res.mess === 'Logged in') {
+                            toastr.success('Logged in Successfully');
+                        } else {
                             toastr.error('Logged Out Successfully');
                         }
                     }
@@ -468,7 +475,7 @@ function AcceptUpdate(id, payment, name, expired) {
     const plan = document.getElementById('acceptPlanPurchased');
     const expiration = document.getElementById('acceptExpirationDate');
 
-    ammount.textContent = payment;
+    ammount.value = payment;
     plan.textContent = name;
     expiration.textContent = expired
 }
@@ -979,7 +986,7 @@ function LoadSalesReport(filter, route, button) {
         button.classList.add('btn', 'btn-primary', 'filterBTN');
     }
 
-    if(valid){
+    if (valid) {
         LoadReport(API);
     }
 }
@@ -1056,7 +1063,7 @@ function LoadReport(API) {
                                 return `${data.hp_plan_start} / ${expiration}`;
                             }
                         },
-                        {title:"Payment Status", data: "hp_payment_mode"},
+                        { title: "Payment Status", data: "hp_payment_mode" },
                         {
                             title: "Status", data: null,
                             render: data => {
@@ -1075,7 +1082,7 @@ function LoadReport(API) {
                             return parseFloat(a) + parseFloat(b.ammount);
                         }, 0);
                         // Update the footer with the total amount
-                        document.getElementById('total-amount').textContent= '₱' + totalAmount;
+                        document.getElementById('total-amount').textContent = '₱' + totalAmount;
                     }
 
                 });
@@ -1087,23 +1094,23 @@ function LoadReport(API) {
 }
 
 
-function LoadAvailableWeeks(route){
+function LoadAvailableWeeks(route) {
 
     $.ajax({
-        type:"GET",
+        type: "GET",
         url: route,
         dataType: "json",
         success: res => {
             const weeks = document.getElementById('selectWeeks');
             weeks.innerHTML = '<option value="0" selected disabled>-----Please Select Week-----</option>';
-            res.forEach(e=>{
+            res.forEach(e => {
                 weeks.innerHTML += `<option value="${e.start_date}-${e.end_date}-${e.week}">${e.start_date} - ${e.end_date}</option>`;
             })
-        },error: xhr => console.log(xhr.responseText)
+        }, error: xhr => console.log(xhr.responseText)
     })
 }
 
-function SelectWeeklyReport(route, select){
-   const API = `${route}?filter=weekly&week=${select.value}`;
-   LoadReport(API);
+function SelectWeeklyReport(route, select) {
+    const API = `${route}?filter=weekly&week=${select.value}`;
+    LoadReport(API);
 }

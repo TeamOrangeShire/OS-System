@@ -163,6 +163,7 @@ class HybridPros extends Controller
        $hp = HybridProsHistory::where('hp_id', $req->id)->where('hp_payment_status',0)->first();
        $customer = HybridProsModel::where('hp_id', $req->id)->first();
        $hp->update([
+         'payment_edit' => $req->acceptAmmount,
          'hp_payment_status' => 1,
          'hp_payment_mode'=> $req->mode,
          'hp_active_status'=> 1
