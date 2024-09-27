@@ -9,6 +9,7 @@ use App\Models\Reservations;
 use App\Models\CustomerAcc;
 use App\Models\RoomPricing;
 use App\Models\RoomRate;
+use App\Models\Rooms;
 
 class Reservation extends Controller
 {
@@ -100,5 +101,9 @@ class Reservation extends Controller
           
       ]);
       return redirect()->back();
+    }
+    public function getRoomData(Request $req){
+      $room = Rooms::select('room_id','room_number')->get();
+    return response()->json(['data'=>$room,'status' => 'success']);
     }
 }

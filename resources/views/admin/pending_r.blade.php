@@ -7,6 +7,40 @@
    <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
     <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
     @include('admin.assets.header',['title' => 'Reservation'])
+    <style>
+        .tag-input {
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+}
+
+.tag {
+    background-color: #e9ecef;
+    color: #495057;
+    border-radius: 0.2rem;
+    padding: 0.4rem 0.75rem;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.tag .remove-tag {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #dc3545;
+}
+input[type="text"] {
+    border: none;
+    flex-grow: 1;
+    padding: 5px;
+    outline: none;
+}
+
+input[type="text"]::placeholder {
+    color: #999;
+}
+    </style>
 </head>
 <body class="">
     <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

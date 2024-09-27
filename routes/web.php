@@ -102,6 +102,10 @@ Route::get('/admin/GetBlog', [BlogData::class,"GetBlog"])->name('GetBlog');
 Route::get('/admin/GetBlogEdit', [BlogData::class,"GetBlogEdit"])->name('GetBlogEdit');
 Route::get('/admin/GetLogByMonth', [CustomerLog::class,"GetLogByMonth"])->name('GetLogByMonth');
 
+Route::get('/admin/getRoomData', [Reservation::class, 'getRoomData'])->name('getRoomData');
+
+
+
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');
 Route::get('/admin/confirmed_reservation', function () { return view('admin.confirmed_r');})->name('confirmed_r');
