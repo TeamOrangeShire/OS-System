@@ -485,10 +485,14 @@
                             </label>
                         </div>
                     </div>
+                    <p>Plan Purchase:  <span id="acceptPlanPurchased"></span></p>
+                    <p>Expiration Date:  <span id="acceptExpirationDate"></span></p>
+                    <div class="form-group">
+                        <label for="acceptAmmount">Ammount</label>
+                        <input type="text" class="form-control" id="acceptAmmount" name="acceptAmmount" placeholder="Ammount">
+                    </div>
                 </form>
-                <p>Plan Purchase:  <span id="acceptPlanPurchased"></span></p>
-                <p>Ammount:  <span id="acceptAmmount"></span></p>
-                <p>Expiration Date:  <span id="acceptExpirationDate"></span></p>
+
             </div>
             <div class="modal-footer">
               <button type="button" onclick="AcceptPayment('{{ route('HybridAcceptPayment') }}', '{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}')" class="btn btn-primary">Confirm</button>
