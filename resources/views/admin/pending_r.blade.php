@@ -40,9 +40,6 @@ input[type="text"] {
 input[type="text"]::placeholder {
     color: #999;
 }
-#calendar .evo-calendar-sidebar {
-    display: none;
-}
     </style>
 </head>
 <body class="">
@@ -125,7 +122,7 @@ input[type="text"]::placeholder {
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="exampleInputEmail1">Customer Name</label>
+                                            <label for="customer_name">Customer Name</label>
                                             <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Cutomer Name">
                                         </div>
                                         <div class="col-md-6">
@@ -172,10 +169,22 @@ input[type="text"]::placeholder {
                                     </div>
                                     </div>
                                     <div class="form-group">
-                                    <label for="exampleInputEmail1">Rooms</label>
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                    <label for="">Rooms</label>
                                     <select class="form-control" id="roomList"  name="room_id">
                                     
                                     </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                    <label for="">Pax</label>
+                                    <input type="number" name="customer_pax" class="form-control">
+                                    </div>
+                                    <div class="col-md-3">
+                                    <label for="">Bill</label>
+                                    <input type="number" name="customer_bill" class="form-control">
+                                    </div>
+                                    </div>
                                     </div>
                                 <button type="button" class="btn btn-secondary col-12" onclick="dynamicFuction('addEventForm', `{{route('reservationData')}}`,'add')">Submit</button>
                             </form>
