@@ -40,6 +40,9 @@ input[type="text"] {
 input[type="text"]::placeholder {
     color: #999;
 }
+#calendar .evo-calendar-sidebar {
+    display: none;
+}
     </style>
 </head>
 <body class="">
@@ -106,143 +109,83 @@ input[type="text"]::placeholder {
     </div>
 </div>
 
-{{-- modal start info --}}
-<div id="infomodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Reservation Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-
-            <div class="row">
-
-                <div class="col-sm-6">
-                    <div style="margin-left: 40px;">
-                        <br>
-                        <label for="customer_name"> <strong>Customer Name: </strong> </label> <br>
-                        <p class="" name="cname"> try </p> 
-                        <label for="email"><strong>Email:</strong></label> <br>
-                        <p class="" name="cemail"> try </p> 
-                        <label for="phone"><strong>Phone Number:</strong></label> <br>
-                        <p class="" name="cnum"> try </p> 
-                    </div>
-
-                </div>
-
-                <div class="col-sm-6">
-                    <div style="margin-left: 40px;">
-                        <br>
-                        <label for="customer_name"> <strong>Reservation Details: </strong> </label> <br>
-                        <p class="" name="cname"> try </p> 
-                        <label for="email"><strong>Reservation Time::</strong></label> <br>
-                        <p class="" name="cemail"> try </p> 
-                        <label for="phone"><strong>Notes:</strong></label> <br>
-                        <p class="" name="cnum"> try </p> 
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="modal-body">
-          
-                <div class="col-md-12">
-
-                   
-                    
-                </div>
-           </div>
-          
-        </div>
-    </div>
-</div>
-{{-- modal end info--}}
-
-
-{{-- confirm modal start --}}
-<div id="confirmmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <form action="{{route('ConfirmReservation')}}" method="POST">
-                @csrf
-          
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Confirm Reservation?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                    <input type="hidden" name="r_id" id="r_id" style="border: none;">
-                    <p>Name: <input type="text" name="CusName" id="CusName" style="border: none;"></p>
-                    <p>Date: <input type="text" name="" id="Rdate" style="border: none;"></p>
-                    <p>Time: <input type="text" name="" id="Rtime" style="border: none;"></p>
-                    <p>Room: <input type="text" name="" id="Rroom" style="border: none;"></p>
-
-                    <div style="text-align: center;">
-                        <button type="submit" class="btn btn-primary" >Yes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+{{-- modal start --}}
+<div id="addEvent" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Add Reservation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" id="addEventForm">
+                                @csrf
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="exampleInputEmail1">Customer Name</label>
+                                            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Cutomer Name">
+                                        </div>
+                                        <div class="col-md-6">
+                                             <label for="exampleInputnumber1">Contact No.</label>
+                                             <input type="Number" class="form-control" id="exampleInputnumber1" name="customer_num" aria-describedby="emailHelp" placeholder="Enter Number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1"  name="customer_email" aria-describedby="emailHelp" placeholder="Enter email">
+                                </div>
+                                <div class="form-group">
+                                <label for="exampleInputEmail1">Guest Email(optional):</label>
+                                <div class="tag-input" id="mail">
+                                    <input type="text" class="form-control" id="emailInput" name="emailInput" placeholder="Enter email and press Enter">
+                                    <input type="text" name="multipleEmail" id="multipleEmail" hidden>
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                    <label for="datepicker">Start Date:</label>
+                                    <input type="date" class="form-control" id="datepicker" placeholder="Select a date" name="start_date" data-date-val="${formattedDate}"> <!-- Use formattedDate -->
+                                    <small id="dateError" class="form-text text-danger" style="display: none;"></small>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <label for="datepicker">Start Time:</label>
+                                    <input type="time" class="form-control" id="" name="start_time" placeholder="Select a date">
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                    <label for="datepicker">End Date:</label>
+                                    <input type="date" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date"> <!-- Use formattedDate -->
+                                    <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <label for="datepicker">End Time:</label>
+                                    <input type="time" class="form-control" id="" name="end_time">
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Rooms</label>
+                                    <select class="form-control" id="roomList"  name="room_id">
+                                    
+                                    </select>
+                                    </div>
+                                <button type="button" class="btn btn-secondary col-12" onclick="dynamicFuction('addEventForm', `{{route('reservationData')}}`,'add')">Submit</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </form>
-        </div>
-    </div>
-</div>
-
-{{-- confirm modal end --}}
-
-{{-- modal start decline --}}
-
-<div id="declinemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Decline Reservation?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-
-            <div class="modal-body">
-          <form action="{{route('DeclineReservation')}}" method="post">
-            @csrf
-                <div class="col-md-12">
-                    <div class="form-group" style="text-align: center;">   
-                        <label style="font-size: 17px; font-weight: bold;" for="reason_promo">Reason</label>
-                        <input type="hidden" id="res_id" name="res_id">
-                        <select class="form-control" id="reasonlist" name="reasonlist">
-                            <option value="Unpaid">Unpaid</option>
-                            <option value="Customer Didn't Show">Customer Didn't Show Up</option>
-                            <option value="Customer Cancelled">Customer Cancelled</option>
-                        </select>                        
-                    </div>
-                <div style="text-align: center;">
-                    <button type="submit" class="btn btn-primary" onclick="confirmDisable()">Yes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cancel()">No</button>
-                </div>
-                
-            </div>
-        </form>
-           </div>
-          
-        </div>
-    </div>
-</div>
 {{-- modal end --}}
 
 <!-- [ Main Content ] end -->
-    <script>
-           function confirmres(id,name,time,room,date){
-            document.getElementById('r_id').value=id;
-            document.getElementById('CusName').value=name;
-            document.getElementById('Rtime').value=time;
-            document.getElementById('Rroom').value=room;
-            document.getElementById('Rdate').value=date;
-          
-        }
-        function decline(id){
-            document.getElementById('res_id').value=id;
-        }
-    </script>
-
 
 @include('admin.assets.adminscript')
 <script src="{{ asset('calendar/js/evo-calendar.min.js') }}"></script>

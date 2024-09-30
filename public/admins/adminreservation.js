@@ -1,25 +1,59 @@
 $(document).ready(function () {
-    $("#calendar").evoCalendar({
-        theme: "Orange Coral", // Optional: default theme is "Midnight Blue"
-        language: "en", // Optional: default language is English
-        calendarEvents: [
-            {
-                id: "bHay68s", // Event's ID (required)
-                name: "New Year", // Event name (required)
-                date: "September/15/2024", // Event date (required)
-                type: "holiday", // Event type (required)
-            },
-            {
-                id: "dsadasdzxc",
-                name: "Vacation Leave",
-                badge: "02/13 - 02/15", // Event badge (optional)
-                date: ["September/1/2024", "September/15/2024"], // Date range
-                description: `<h1>hello</h1>`, // Event description (optional)
-                type: "event",
-                color: "#63d867", // Event custom color (optional)
-            },
-        ], // Initialize with no events
+
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+            // Ensure response.data is an array
+            if (Array.isArray(response.data)) {
+                const getStatusColor = color => {
+                    switch (color) {
+                        case '0':
+                            return '#ff8050';
+                        case '1':
+                            return '#63d867';
+                        case '2':
+                            return '#08f69c';
+                        case '3':
+                            return '#f60808';
+                        case '4':
+                            return '#f65f08';
+                    }
+                }
+                const calendarEvents = response.data.map((event, index) => ({
+                    id: `event${index + 1}`, // Generate a unique ID for each event
+                    name: event.c_name, // Name of the person
+                    description: `Reservation for ${event.c_name}`, // Custom description
+                    date: [`"${event.start_date}"`, `"${event.end_date}"`], // Date range
+                    type: 'reservation', // Custom type
+                    color: getStatusColor(event.status)
+                }));
+
+                // Initialize the Evo Calendar with the events
+                $("#calendar").evoCalendar({
+                    theme: "Orange Coral", // Optional: default theme is "Midnight Blue"
+                    language: "en", // Optional: default language is English
+                    showSidebar: false,
+                    calendarEvents: calendarEvents, // Use the dynamically generated events
+                });
+            } else {
+                console.error("Data is not an array:", response.data);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        },
     });
+
+    $('#calendar').on('selectEvent', function (event, activeEvent) {
+        // activeEvent contains details about the selected event
+        console.log('Selected Event:', activeEvent);
+
+
+    });
+
     $("#calendar").on("selectDate", function (event, newDate, oldDate) {
         const [month, day, year] = newDate.split("/");
         const formattedDate = `${year}-${month.padStart(2, "0")}-${day.padStart(
@@ -39,61 +73,9 @@ $(document).ready(function () {
                     "<p>This date is in the past. Please select a future date.</p>";
             } else {
                 // Render the form if the date is today or in the future
-                eventEmpty.innerHTML = `
-          <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Customer Name</label>
-            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Cutomer Name">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          </div>
-          <div class="form-group">
-          <label for="exampleInputEmail1">Guest Email(optional):</label>
-          <div class="tag-input">
-            <input type="text" class="form-control" id="emailInput" placeholder="Enter email and press Enter">
-            </div>
-            </div>
-          <div class="form-group">
-            <label for="">Contact No.</label>
-            <input type="Number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Num....">
-          </div>
-          <div class="form-group">
-            <div class="row">
-            <div class="col-md-6">
-            <label for="datepicker">Start Date:</label>
-            <input type="date" class="form-control" id="datepicker" placeholder="Select a date" data-date-val="${formattedDate}"> <!-- Use formattedDate -->
-            <small id="dateError" class="form-text text-danger" style="display: none;"></small>
-            </div>
-            <div class="col-md-6">
-            <label for="datepicker">Start Time:</label>
-            <input type="time" class="form-control" id="" placeholder="Select a date">
-            </div>
-            </div>
-            </div>
-            <div class="form-group">
-            <div class="row">
-            <div class="col-md-6">
-            <label for="datepicker">End Date:</label>
-            <input type="date" class="form-control" id="datepicker2" placeholder="Select a date"> <!-- Use formattedDate -->
-            <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
-             </div>
-            <div class="col-md-6">
-            <label for="datepicker">End Time:</label>
-            <input type="time" class="form-control" id="">
-            </div>
-            </div>
-            </div>
-            <div class="form-group">
-            <label for="exampleInputEmail1">Rooms</label>
-            <select class="form-control" id="roomList">
-            
-            </select>
-            </div>
-           <button type="submit" class="btn btn-secondary col-12">Submit</button>
-        </form>
-        `;
+                $('#addEvent').modal('show');
+                console.log(formattedDate)
+                document.getElementById('datepicker').value = formattedDate;
                 $.ajax({
                     url: "/admin/getRoomData", // URL of the PHP script
                     method: "GET", // or 'POST'
@@ -171,27 +153,6 @@ $(document).ready(function () {
                     }
                 });
 
-                document.getElementById("datepicker2").addEventListener("change", function () {
-                        const selectedDate = new Date(this.value); // Get the selected date
-                        const currentDate = new Date(); // Get the current date
-
-                        // Set current date to midnight (00:00:00) to avoid time discrepancies
-                        currentDate.setHours(0, 0, 0, 0);
-
-                        if (selectedDate < currentDate) {
-                            // If the selected date is in the past
-                            document.getElementById(
-                                "dateError2"
-                            ).style.display = "block";
-                            this.value = ""; // Clear the invalid selection
-                        } else {
-                            // Hide the error message if the date is valid
-                            document.getElementById(
-                                "dateError2"
-                            ).style.display = "none";
-                        }
-                    });
-
                 const emailInput = document.getElementById("emailInput");
                 const tagInputDiv = document.querySelector(".tag-input");
 
@@ -222,7 +183,8 @@ $(document).ready(function () {
                     if (event.key === "Enter") {
                         event.preventDefault();
                         const email = emailInput.value.trim();
-
+                        const multi = document.getElementById('multipleEmail');
+                        multi.value+=email+','
                         if (email !== "") {
                             createTag(email);
                             emailInput.value = ""; // Clear input after creating the tag
@@ -233,3 +195,28 @@ $(document).ready(function () {
         }
     });
 });
+
+
+function dynamicFuction(formId, routeUrl,process) {
+    // Show the loader
+    document.getElementById('roller').style.display = 'flex';
+
+    // Serialize the form data
+    var formData = $("form#" + formId).serialize();
+
+    // Send the AJAX request
+    $.ajax({
+        type: "POST",
+        url: routeUrl+"?process="+process,
+        data: formData,
+        success: function (response) {
+
+        document.getElementById('roller').style.display = 'none';
+           
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            // You can also add custom error handling here if needed
+        }
+    });
+}

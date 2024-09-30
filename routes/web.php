@@ -103,7 +103,8 @@ Route::get('/admin/GetBlogEdit', [BlogData::class,"GetBlogEdit"])->name('GetBlog
 Route::get('/admin/GetLogByMonth', [CustomerLog::class,"GetLogByMonth"])->name('GetLogByMonth');
 
 Route::get('/admin/getRoomData', [Reservation::class, 'getRoomData'])->name('getRoomData');
-
+Route::get('/admin/getReservation', [Reservation::class, 'getReservation'])->name('getReservation');
+Route::post('/admin/reservationData', [Reservation::class, 'reservationData'])->name('reservationData');
 
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
