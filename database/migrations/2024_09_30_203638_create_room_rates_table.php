@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('room_pricing', function (Blueprint $table) {
-            $table->id('rprice_id');
+        Schema::create('room_rates', function (Blueprint $table) {
+            $table->id('rp_id');
             $table->unsignedBigInteger('room_id');
             $table->foreign('room_id')->references('room_id')->on('rooms');
-            $table->integer('room_rates');
-            $table->integer('room_price');
-            $table->unsignedBigInteger('promo_id');
-            $table->foreign('promo_id')->references('promo_id')->on('promos');
+            $table->string('rp_rate_description');
+            $table->string('rp_price');
+            $table->integer('rp_disable')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('room_pricing');
+        Schema::dropIfExists('room_rates');
     }
 };

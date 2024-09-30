@@ -51,8 +51,6 @@ Route::get('/download',function (){ return view('homepage.downloadapk'); } )->na
 Route::post('/customerverification',[Mailing::class,'CreateAccGoogleVerification'] )->name('customer_verification');
 Route::post('/customer-create-account',[CreateAcc::class,'CreateCustomerAcc'] )->name('customer_create_account');
 Route::post('/customer-login',[Login::class,'LoginCustomer'] )->name('custom_log');
-Route::post('/reserve-date',[Reservation::class,'SelectDate'] )->name('submitDateBook');
-Route::post('/saveReservation',[Reservation::class,'SaveReservation'] )->name('saveReservation');
 Route::post('/customer-change-pass',[EditAcc::class,'EditCustomerPassword'] )->name('editPassword');
 Route::post('/customer-profile-update',[EditAcc::class,'EditCustomerProfile'] )->name('editProfile');
 Route::post('/customer-profile-update-picture',[EditAcc::class,'UpdateCustomerProfilePic'] )->name('customerUpdatePic');
@@ -105,6 +103,7 @@ Route::get('/admin/GetLogByMonth', [CustomerLog::class,"GetLogByMonth"])->name('
 Route::get('/admin/getRoomData', [Reservation::class, 'getRoomData'])->name('getRoomData');
 Route::get('/admin/getReservation', [Reservation::class, 'getReservation'])->name('getReservation');
 Route::post('/admin/reservationData', [Reservation::class, 'reservationData'])->name('reservationData');
+
 
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
@@ -224,6 +223,7 @@ Route::post('/back/subscription/updateHistorLog', [HybridPros::class, 'UpdateHis
 Route::post('/back/subscription/HybridUpdateProfile', [HybridPros::class, 'UpdateProfile'])->name('HybridUpdateProfile');
 Route::post('/back/subscription/acceptPayment', [HybridPros::class, 'AcceptPayment'])->name('HybridAcceptPayment');
 Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');
+
+
 //reservation
-Route::post('/ConfirmReservation', [Reservation::class, 'ConfirmReservation'])->name('ConfirmReservation');
-Route::post('/DeclineReservation', [Reservation::class, 'DeclineReservation'])->name('DeclineReservation');
+Route::get('/user/reservation/getrooms', [Reservation::class, 'getRooms']);

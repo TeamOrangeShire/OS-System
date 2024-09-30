@@ -7,17 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Reservations;
 use App\Models\CustomerAcc;
-use App\Models\RoomPricing;
-use App\Models\RoomRate;
+use App\Models\RoomRates;
 use App\Models\Rooms;
 use Carbon\Carbon;
 
 class Reservation extends Controller
 {
+
     
     public function getRoomData(Request $req){
       $room = Rooms::select('room_id','room_number')->where('room_id', '!=', 0)->get();
     return response()->json(['data'=>$room,'status' => 'success']);
+    }
+    public function getRooms(){
+        $rooms = Rooms::where('rooms_disable', 0)->get();
+        $rates = RoomRates::where('rp_disable', 0)->get();
+        return response()->json(['success'=> true, 'rooms'=> $rooms, 'rates'=> $rates]);
+
     }
     public function getReservation(Request $request){
       $data = Reservations::all();
