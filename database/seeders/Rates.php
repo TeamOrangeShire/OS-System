@@ -48,6 +48,16 @@ class Rates extends Seeder
                 ['Daily (12 Hours)', '3800'],
                 ['Weekly', '7500'],
                 ['Monthly', '23000'],
+            ],
+            '0'=> [
+                ['Hourly(Educational Sector)', '50'],
+                ['3 Hours(Educational Sector)', '140'],
+                ['6 Hours(Educational Sector)', '240'],
+                ['Day Pass(Educational Sector)', '320'],
+                ['Hourly', '80'],
+                ['3 Hours', '200'],
+                ['6 Hours', '300'],
+                ['Day Pass', '400'],
             ]
         ];
 

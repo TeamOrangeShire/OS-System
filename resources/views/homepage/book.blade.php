@@ -73,48 +73,84 @@
                 <div class="col-12 col-md-4">
                     <h3> Details</h3>
 
-                    <p> <i class="fa-regular fa-clock"></i> Time</p>
-                    <p><i class="fa-solid fa-calendar-check"></i> Date</p>
+                    <p> <i class="fa-regular fa-clock"></i> Time: <span id="selectedTimeModal"></span></p>
+                    <p><i class="fa-solid fa-calendar-check"></i> Date: <span id="selectedDateModal"></span></p>
                     <br>
                     <h5>Reminders</h5>
                     <p> <i class="fa fa-info"></i> Please ensure all details are correct before submitting your reservation. Choose whether you're reserving an office room or a hot desk. Select the date, time, and duration of your booking. Don’t forget to provide your contact information, and if applicable, include any specific room preferences or special requests. Double-check your details to avoid any mistakes. Once everything is complete, click the submit button to confirm your reservation. </p>
                 </div>
 
-                <div class="col-12 col-md-8">
+                <form class="col-12 col-md-8">
                     <h3> Fill up form </h3>
                     <div class="d-flex flex-column gap-1">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
-                            <label for="name">Your Name</label>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required placeholder="eg Jose Rizal">
                         </div>
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
-                            <label for="name">Email</label>
+                        <div class="form-group mt-2">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required placeholder="eg youremail@domain.com">
                         </div>
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
-                            <label for="name">Contact</label>
+                        <div class="form-group mt-2">
+                            <label for="contact">Contact</label>
+                            <input type="number" class="form-control" id="contact" name="contact" required placeholder="eg 09XXXXXXXX">
                         </div>
-                        <div class="d-flex w-100 justify-content-end">
-                            <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Add Guest Emails</button>
+                        <div class="d-flex w-100 justify-content-end" id="addGuestBtnDiv">
+                            <button id="addGuestBtn" type="button" class="btn btn-primary rounded-pill" >Guest Email/s(Optional)</button>
                         </div>
+                        <div class="mb-3 mt-3 d-none form-group" id="addGuestDiv">
+                            <label for="addGuestInput" class="form-label">Notify up to 13 emails for the reservation</label>
+                            <textarea class="form-control" id="addGuestInput" name="guestemails" rows="3"></textarea>
+                            <small>Please use comman(,) or spaces to seperate emails</small>
+                          </div>
+
+                          <div class="mb-3 mt-2 form-group">
+                            <label for="addGuestInput" class="form-label">Do you have some request in your reservation?</label>
+                            <textarea class="form-control" name="request" rows="3"></textarea>
+                          </div>
 
                         <div class="form-group">
                             <label for="selectReserve">What do you want to reserve?</label>
-                            <select class="form-select" aria-label="What do you want to reserve?" id="selectReserve">
+                            <select class="form-select" name="reserveType" aria-label="What do you want to reserve?" id="selectReserve">
                                 <option selected disabled>-----Reserve-----</option>
-                                <option value="1">Hotdesk</option>
-                                <option value="2">Room</option>
-                                <option value="3">Three</option>
                             </select>
                         </div>
+
+                        <div class="form-group mt-2 d-none" id="selectPaxDiv">
+                            <label for="selectPax">Pax</label>
+                            <select name="pax" class="form-select" aria-label="How Many People?" id="selectPax">
+
+                            </select>
+                        </div>
+
+
+                        <div class="form-group mt-2 d-none" id="selectRoomRatesDiv">
+                            <label for="selectPax"> Meeting Room Rates </label>
+                            <select name="rates" class="form-select" aria-label="RoomRates" id="selectRoomRates">
+
+                            </select>
+                        </div>
+
+
+                        <div class="form-group mt-2 d-none" id="hotdeskDiv">
+                            <label for="selectHotdesk">Hotdesk Plans</label>
+                            <select name="hotdesk" class="form-select" aria-label="How Many People?" id="selectHotdesk">
+
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-2 d-none" id="selectEndDateDiv">
+                            <label for="selectEndDate"> Reservation End Date </label>
+                            <input name="endDates" type="date" class="form-control" id="selectEndDate">
+                        </div>
+
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
+          <button type="button" class="btn btn-primary">Submit Reservation</button>
         </div>
       </div>
     </div>

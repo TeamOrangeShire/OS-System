@@ -1,6 +1,8 @@
 const today = new Date();
 today.setHours(0, 0, 0, 0);
-
+let roomDetails;
+let rateList;
+let selectedDateGlobal;
 $(document).ready(function() {
     $('#calendars').evoCalendar({
         theme: "Orange Coral",
@@ -25,6 +27,23 @@ $(document).ready(function() {
         'eventListToggler': false,
     });
     disablePastDates(today);
+
+
+    $.ajax({
+        type: "GET",
+        url: "/user/reservation/getrooms",
+        dataType: "json",
+        success: res=> {
+            const select = document.getElementById('selectReserve');
+
+            res.rooms.forEach(data => {
+                select.innerHTML += `<option value="${data.room_id}">${data.room_number != 0? 'Meeting Room ' + data.room_number : 'Hotdesk'}</option>`
+            });
+
+            roomDetails = res.rooms;
+            rateList = res.rates;
+        }, error: xhr=> console.log(xhr.responseText)
+    })
 });
 
 $('#calendars').on('selectDate', function(event, newDate) {
@@ -37,7 +56,7 @@ $('#calendars').on('selectDate', function(event, newDate) {
     const dayOfWeek = selectedDate.getDay();
 
     let reserveButton = '';
-    console.log(dayOfWeek);
+
     switch(dayOfWeek){
         case 1:
             reserveButton = AddReservationButtons(1);
@@ -61,6 +80,7 @@ $('#calendars').on('selectDate', function(event, newDate) {
             console.log("invalid date")
             break;
     }
+    selectedDateGlobal = newDate;
 
     const div = document.getElementById('reservationButtons');
     div.scrollTop = 0;
@@ -182,7 +202,7 @@ function AddReservationButtons(num){
     const add = (delay, data) => {
         return `<div onclick="selectReservationTime(this)" class="w-100 d-flex p-1 gap-1">
             <button class="btn btn-primary w-100 wow fadeInLeft select" data-wow-delay="${delay}s">${data}</button>
-            <button class="btn btn-info d-none nextBtn" data-bs-toggle="modal" data-bs-target="#reserveModal" style="width:0%;">Proceed</button>
+            <button onclick="openReserveModal('${data}')" class="btn btn-info d-none nextBtn" data-bs-toggle="modal" data-bs-target="#reserveModal" style="width:0%;">Proceed</button>
         </div>`
    }
 
@@ -233,4 +253,72 @@ function selectReservationTime(element){
 
     element.children[1].classList.remove('d-none');
     element.children[1].style.width = "50%";
+}
+
+document.getElementById('selectReserve').addEventListener('change', ()=> {
+    const selectReserve = document.getElementById('selectReserve');
+    const selectPaxDiv = document.getElementById('selectPaxDiv');
+    const hotdeskDiv = document.getElementById('hotdeskDiv');
+    const selectHotdesk = document.getElementById('selectHotdesk');
+    const selectRoomRatesDiv = document.getElementById('selectRoomRatesDiv');
+    const selectRoomRates = document.getElementById('selectRoomRates');
+    const selectEndDateDiv = document.getElementById('selectEndDateDiv');
+    if(selectReserve.value != 0){
+        selectPaxDiv.classList.remove('d-none');
+        hotdeskDiv.classList.add('d-none');
+
+        const selectedRoom = roomDetails.filter( x => x.room_id == selectReserve.value);
+        const selectPax = document.getElementById('selectPax');
+        selectPax.innerHTML = '';
+        for(let i = 0; i < +selectedRoom[0].room_capacity; i++){
+            selectPax.innerHTML += `<option>${i+1}</option>`;
+        }
+
+        selectRoomRatesDiv.classList.remove('d-none');
+        const roomRates = rateList.filter(x => x.room_id == selectReserve.value);
+        selectRoomRates.innerHTML = '';
+        roomRates.forEach(data=> {
+            selectRoomRates.innerHTML += `<option value="${data.rp_id}">${data.rp_rate_description} (₱${data.rp_price})</option>`
+        });
+    }else{
+        hotdeskDiv.classList.remove('d-none');
+        selectPaxDiv.classList.add('d-none');
+        selectRoomRatesDiv.classList.add('d-none');
+        selectEndDateDiv.classList.add('d-none');
+        const hotdeskRates = rateList.filter(x => x.room_id == 0);
+        selectHotdesk.innerHTML = '<option value="0">Open Time</option>';
+
+        hotdeskRates.forEach(data=> {
+            selectHotdesk.innerHTML += `<option value="${data.rp_id}">${data.rp_rate_description}</option>`;
+        });
+
+    }
+
+});
+
+document.getElementById('addGuestBtn').addEventListener('click', ()=> {
+    const addGuestBtnDiv = document.getElementById('addGuestBtnDiv');
+    const addGuestDiv = document.getElementById('addGuestDiv');
+
+    addGuestBtnDiv.classList.add('d-none');
+    addGuestDiv.classList.remove('d-none');
+});
+
+
+document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
+    const selectedRate = rateList.filter(x => x.rp_id == e.target.value);
+    const selectEndDateDiv = document.getElementById('selectEndDateDiv');
+    if(selectedRate[0].rp_rate_description == 'Daily (12 Hours)' || selectedRate[0].rp_rate_description == 'Weekly' || selectedRate[0].rp_rate_description == 'Monthly' ){
+        selectEndDateDiv.classList.remove('d-none');
+    }else{
+        selectEndDateDiv.classList.add('d-none');
+    }
+});
+
+function openReserveModal(time){
+    const selectedTimeModal = document.getElementById('selectedTimeModal');
+    const selectDateModal = document.getElementById('selectedDateModal');
+
+    selectDateModal.textContent = selectedDateGlobal;
+    selectedTimeModal.textContent = time;
 }
