@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use App\Models\Reservations;
-use App\Models\CustomerAcc;
 use App\Models\RoomRates;
 use App\Models\Rooms;
 use Carbon\Carbon;
@@ -14,7 +12,7 @@ use Carbon\Carbon;
 class Reservation extends Controller
 {
 
-    
+
     public function getRoomData(Request $req){
       $room = Rooms::select('room_id','room_number')->where('room_id', '!=', 0)->get();
     return response()->json(['data'=>$room,'status' => 'success']);
@@ -42,9 +40,25 @@ class Reservation extends Controller
       $data->billing = $request->email;
       $data->pax = $request->email;
       $data->status = '1';
-      $data->date_approved = Carbon::today(); 
+      $data->date_approved = Carbon::today();
       $data->save();
       return response()->json(['status' => 'success']);
       }
+    }
+
+    public function SubmitReservationCustomer(Request $req){
+        $reserve = new Reservations();
+
+        $reserve->c_name = $req->name;
+        $reserve->c_email = $req->email;
+        $reserve->phone_num = $req->contact;
+        $reserve->c_guest_emails = $req->guestemails;
+        $reserve->request = $req->request;
+        $reserve->room_id = $req->reserveType;
+        $reserve->pax = $req->reserveType != 0 ? $req->pax : $req->paxhotdesk;
+        $reserve->rate_id = $req->rates;
+        $reserve->end_date = $req->endDate;
+        $reserve->start_date = $req->startDate;
+        $reserve->start_time = $req->startTime;
     }
 }
