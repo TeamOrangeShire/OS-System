@@ -355,5 +355,6 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
                 document.getElementById('closeReservation').click();
             }
         }, error: xhr=> console.log(xhr.responseText)
-    })
+    });
 });
+
