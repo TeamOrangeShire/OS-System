@@ -94,46 +94,7 @@ $(document).ready(function () {
 
 if (name) {
     let timeHTML = `
-        <style>
-            /* Hide the next button by default */
-            .next-btn {
-                display: none; /* Initially hidden */
-                font-size: 1rem; /* Adjust font size */
-                padding: 1rem; /* Adjust padding */
-                transition: all 0.3s ease; /* Smooth transition */
-                width: 100%; /* Make it full width */
-                margin-left: 10px; /* Space between buttons */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add shadow */
-            }
-
-            /* Show the next button when clicking the time button */
-            .time-btn.active + .next-btn {
-                display: inline-block; /* Show next button */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add shadow */
-            }
-
-            /* Style for the time buttons */
-            .time-btn {
-                font-size: 1rem; /* Adjust font size */
-                padding: 1rem; /* Adjust padding */
-                transition: all 0.3s ease; /* Smooth transition */
-                width: 100%; /* Make it full width */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add shadow */
-            }
-
-            /* For proper layout and positioning */
-            .time-btn-wrapper {
-                display: flex; /* Use flexbox for horizontal layout */
-                width: 100%; /* Ensure wrapper is full width */
-                align-items: center; /* Align items vertically center */
-            }
-
-            .col-6 {
-                transition: all 0.4s ease; /* Smooth transition */
-            }
-        </style>
-        <div id="time-buttons" class="d-flex flex-column justify-content-start align-items-center m-2" style="height: 100vh;">
-    `;
+        `;
 
     // Array of 12AM to 11PM times
     const times = [
@@ -144,54 +105,15 @@ if (name) {
     // Generate buttons for each time with next button
     times.forEach(time => {
         timeHTML += `
-            <div class="time-btn-wrapper my-2 col-12">
-                <button type="button" class="btn btn-primary time-btn">${time}</button>
-                <button type="button" class="btn btn-secondary next-btn" data-toggle="modal" data-target="#addEvent">Next</button>
+            <div class="w-100 p-2 d-flex gap-2">
+                <button type="button" class="w-100 btn btn-primary time-btn" onclick="selectTime(this)">${time}</button>
+                <button type="button" class="w-50 btn btn-secondary d-none next-btn" onclick="viewForm()">Next</button>
             </div>
         `;
     });
 
-    timeHTML += `</div>`; // Closing the container div
-
     // Inject the generated HTML into the element
-    name.innerHTML = timeHTML;
-
-    // Add click event listener to each time button
-    const timeButtons = document.querySelectorAll('.time-btn');
-
-    timeButtons.forEach(btn => {
-                btn.addEventListener('click', function () {
-                    const parent = this.parentElement;
-                    const nextBtn = this.nextElementSibling;
-
-                    // Check if the button is already active
-                    if (this.classList.contains('active')) {
-                        // Remove active class and reset the button
-                        this.classList.remove('active');
-                        parent.classList.remove('col-6'); // Reset column class
-                        parent.classList.add('col-12'); // Reset to col-12
-                        nextBtn.style.display = 'none'; // Hide the next button
-                    } else {
-                        // Remove active class and reset all buttons
-                        timeButtons.forEach(b => {
-                            b.classList.remove('active');
-                            const parent = b.parentElement;
-                            parent.classList.remove('col-6'); // Reset column class
-                            parent.classList.add('col-12'); // Reset to col-12
-                            const nextBtn = b.nextElementSibling;
-                            if (nextBtn) nextBtn.style.display = 'none'; // Hide the next button
-                        });
-
-                        // Add active class to the clicked button
-                        this.classList.add('active');
-                        parent.classList.remove('col-12'); // Change to col-12
-                        parent.classList.add('col-6'); // Change to col-6
-
-                        // Show the next button beside the time button
-                        nextBtn.style.display = 'inline-block'; // Show next button
-                    }
-                });
-            });
+    name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
 }
 
 
@@ -337,7 +259,32 @@ if (name) {
         }
     });
 });
+function selectTime(element) {
+   
+const timeBtns = document.querySelectorAll('.time-btn');
 
+    timeBtns.forEach((btn) => {
+        if (btn.classList.contains('w-50')) {
+            const nextSibling = btn.nextElementSibling;
+            
+            btn.classList.remove('w-50');
+            btn.classList.add('w-100');
+
+            if (nextSibling) {  // Ensure nextElementSibling exists
+                nextSibling.classList.add('d-none');
+            }
+        }
+    });
+
+    element.classList.remove('w-100');
+    element.classList.add('w-50');
+    const next = element.nextElementSibling;
+    next.classList.remove('d-none')
+    
+}
+function viewForm(){
+    $('#addEvent').modal('show');
+}
 
 function dynamicFuction(formId, routeUrl, process) {
     // Show the loader

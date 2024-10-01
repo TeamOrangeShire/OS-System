@@ -40,6 +40,10 @@ input[type="text"] {
 input[type="text"]::placeholder {
     color: #999;
 }
+.time-btn,.next-btn{
+    transition: width 0.3s  ease-in-out;
+}
+
     </style>
 </head>
 <body class="">
