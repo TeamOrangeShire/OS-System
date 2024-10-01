@@ -46,20 +46,44 @@ class Reservation extends Controller
       }
     }
 
-    public function SubmitReservationCustomer(Request $req){
+    public function SubmitReservationCustomer(Request $req)
+    {
         $reserve = new Reservations();
 
+        // Ensure startTime is in 'h:i A' format
+        $rateDetails = RoomRates::where('rp_id', $req->rates)->first();
+
+        // Determine end time based on rate description
+        $startTime = Carbon::createFromFormat('h:i A', $req->startTime);
+        switch ($rateDetails->rate_description) {
+            case "Hourly":
+                $endTime = $startTime->copy()->addHour();
+                break;
+            case "4 Hours":
+                $endTime = $startTime->copy()->addHours(4);
+                break;
+            default:
+                $endTime = $startTime; // Ensure endTime is a Carbon instance
+                break;
+        }
+
+        // Assign reservation details
         $reserve->c_name = $req->name;
         $reserve->c_email = $req->email;
         $reserve->phone_num = $req->contact;
         $reserve->c_guest_emails = $req->guestemails;
         $reserve->request = $req->request;
-        $reserve->room_id = $req->reserveType;
-        $reserve->pax = $req->reserveType != 0 ? $req->pax : $req->paxhotdesk;
-        $reserve->rate_id = $req->rates;
-        $reserve->end_date = $req->endDate;
-        $reserve->start_date = $req->startDate;
-        $reserve->start_time = $req->startTime;
-        
+        $reserve->room_id = (int) $req->reserveType;
+        $reserve->pax = (int) $req->reserveType != 0 ? $req->pax : $req->paxhotdesk;
+        $reserve->rate_id = (int) $req->rates;
+        $reserve->start_date = Carbon::parse($req->startDate)->format('Y-m-d');
+        $reserve->end_date = Carbon::parse($req->endDate)->format('Y-m-d');
+        $reserve->start_time = $startTime->format('H:i:s');
+        $reserve->end_time = $endTime->format('H:i:s');
+
+        $reserve->save();
+
+        return response()->json(['success'=> true]);
     }
+
 }
