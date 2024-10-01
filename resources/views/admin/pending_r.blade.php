@@ -43,6 +43,16 @@ input[type="text"]::placeholder {
 .time-btn,.next-btn{
     transition: width 0.3s  ease-in-out;
 }
+.time-btn:hover{
+    background-color:#fcfcfc;
+    color:#495057;
+    border-color: #999;
+}
+.time-btn{
+    border-color: #999;
+    background-color:#f53b23
+}
+
 
     </style>
 </head>
