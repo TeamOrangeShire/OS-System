@@ -288,24 +288,24 @@ function viewForm(){
 
 function dynamicFuction(formId, routeUrl, process) {
     // Show the loader
-    document.getElementById('roller').style.display = 'flex';
+    // document.getElementById('roller').style.display = 'flex';
 
-    // Serialize the form data
-    var formData = $("form#" + formId).serialize();
+    // // Serialize the form data
+    // var formData = $("form#" + formId).serialize();
 
-    // Send the AJAX request
-    $.ajax({
-        type: "POST",
-        url: routeUrl + "?process=" + process,
-        data: formData,
-        success: function (response) {
+    // // Send the AJAX request
+    // $.ajax({
+    //     type: "POST",
+    //     url: routeUrl + "?process=" + process,
+    //     data: formData,
+    //     success: function (response) {
 
-            document.getElementById('roller').style.display = 'none';
+    //         document.getElementById('roller').style.display = 'none';
 
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-            // You can also add custom error handling here if needed
-        }
-    });
+    //     },
+    //     error: function (xhr, status, error) {
+    //         console.error(xhr.responseText);
+    //         // You can also add custom error handling here if needed
+    //     }
+    // });
 }

@@ -127,7 +127,7 @@ input[type="text"]::placeholder {
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="customer_name">Customer Name</label>
-                                            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Cutomer Name">
+                                            <input type="text" class="form-control border" id="customer_name" name="customer_name" placeholder="Enter Cutomer Name">
                                         </div>
                                         <div class="col-md-6">
                                              <label for="exampleInputnumber1">Contact No.</label>
@@ -142,7 +142,7 @@ input[type="text"]::placeholder {
                                 <div class="form-group">
                                 <label for="exampleInputEmail1">Guest Email(optional):</label>
                                 <div class="tag-input" id="mail">
-                                    <input type="text" class="form-control" id="emailInput" name="emailInput" placeholder="Enter email and press Enter">
+                                    <input type="text" class="form-control border" id="emailInput" name="emailInput" placeholder="Enter email and press Enter">
                                     <input type="text" name="multipleEmail" id="multipleEmail" hidden>
                                 </div>
                                 </div>
