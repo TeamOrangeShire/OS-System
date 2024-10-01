@@ -36,7 +36,12 @@ $(document).ready(function () {
                     language: "en", // Optional: default language is English
                     showSidebar: false,
                     calendarEvents: calendarEvents, // Use the dynamically generated events
+                    
                 });
+                disableSundays()
+                $('#calendar').on('selectMonth', function() {
+                disableSundays(); // Call the function again when month changes
+            });
             } else {
                 console.error("Data is not an array:", response.data);
             }
@@ -46,10 +51,23 @@ $(document).ready(function () {
             $("#result").html("<p>Error: " + error + "</p>");
         },
     });
-    
+
+    function disableSundays() {
+    // Find all Sundays in the calendar
+    $('.day').each(function() {
+        var date = new Date($(this).attr('data-date-val'));
+        if (date.getDay() === 0) { // 0 means Sunday in JavaScript's getDay()
+            $(this).css({
+                'pointer-events': 'none',  // Disable clicking on Sundays
+                'background-color': '#f5f5f5',  // Optional: grey out Sundays
+                'color': '#ccc'  // Optional: Change text color to indicate it's disabled
+            });
+        }
+    });
+}
+
     $('#calendar').on('selectEvent', function (event, activeEvent) {
         // activeEvent contains details about the selected event
-        console.log('Selected Event:', activeEvent);
         const eventList = document.getElementsByClassName("event-list")[0];
 
         if (eventList) {
@@ -73,9 +91,14 @@ $(document).ready(function () {
     });
 
     $("#calendar").on("selectDate", function (event, newDate, oldDate) {
-       
+        let satVal = 'false';
+        var satdate = new Date(newDate); // Convert selected date string to a Date object
+        if (satdate.getDay() === 6) { // 6 represents Saturday in getDay()
+            satVal = 'true';
+        }
+
         const [month, day, year] = newDate.split("/");
-        const formattedDate = `${year}-${month.padStart(2, "0")}-${day.padStart(2,"0")}`; // "2024-09-17"
+        const formattedDate = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`; // "2024-09-17"
         // Create a Date object for the clicked date
         const clickedDate = new Date(year, month - 1, day); // month is 0-indexed in JavaScript
         const currentDate = new Date(); // Get the current date
@@ -92,58 +115,165 @@ $(document).ready(function () {
                 // $('#addEvent').modal('show');
                 const name = document.getElementsByClassName("event-list")[0];
 
-if (name) {
-    let timeHTML = `
-        `;
+                if (name) {
+                  let timeHTML = ''; 
 
-    // Array of 12AM to 11PM times
-    const times = [
-        "1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12PM",
-        "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM", "12AM"
+// Declare the times array outside the condition block
+let times = [];
+
+// Array of times, you can customize this based on your needs
+if (satVal === 'true') {
+    // Times for Saturday
+    times = [
+        "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM","01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM",
+        "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", "12:00 AM","01:00 AM", "02:00 AM", "03:00 AM"
     ];
-
-    // Generate buttons for each time with next button
-    times.forEach(time => {
-        timeHTML += `
-            <div class="w-100 p-2 d-flex gap-2">
-                <button type="button" class="w-100 btn btn-primary time-btn" onclick="selectTime(this)">${time}</button>
-                <button type="button" class="w-50 btn btn-secondary d-none next-btn" onclick="viewForm()">Next</button>
-            </div>
-        `;
-    });
-
-    // Inject the generated HTML into the element
-    name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
+} else {
+    // Times for other days
+    times = [
+        "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM","01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM",
+        "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", "12:00 AM","01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM", "06:00 AM"
+    ];
 }
 
+// Generate buttons for each time with the next button
+times.forEach(time => {
+    timeHTML += `
+        <div class="w-100 p-2 d-flex gap-2">
+            <button type="button" class="w-100 btn btn-primary time-btn" onclick="selectTime(this)">${time}</button>
+            <button type="button" class="w-50 btn btn-secondary d-none next-btn" onclick="viewForm('${newDate}','${time}')">Next</button>
+        </div>
+    `;
+});
 
+// Inject the generated HTML into the element
+name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
+                }
                 document.getElementById('datepicker').value = formattedDate;
                 $.ajax({
                     url: "/admin/getRoomData", // URL of the PHP script
                     method: "GET", // or 'POST'
                     dataType: "json", // Expecting a JSON response
                     success: function (data) {
-                        const response = data.data;
+                        
+                        const response = data.room;
+                        const roomRate = data.rate;
                         const select = document.getElementById("roomList");
-                        let options = "";
+                        let options = `<option value="">---Reserve---</option>`;
 
                         response.forEach((element) => {
-                            options += `<option value="${element.room_id}">${element.room_number}</option>`;
-                        }); // Handle success
+                            if (element.room_id == 0) {
+                                options += `<option value="${element.room_id}">Hotdesk</option>`;
+                            } else {
+                                options += `<option value="${element.room_id}">Room ${element.room_number}</option>`;
+                            }
+                        });
+
                         select.innerHTML = options;
-                    },
-                    error: function (xhr, status, error) {
-                        $("#result").html("<p>Error: " + error + "</p>");
-                    },
-                });
 
-                // Set the value of the date input to the formatted date
-                const dateInput = eventEmpty.querySelector("#datepicker");
-                if (dateInput) {
-                    dateInput.value = formattedDate; // Assign the formatted date value+
-                }
+                        function selectReserve(selectElement) {
+                            const selectedValue = selectElement.value;
+                            const container = document.getElementById("reserveContainer");
+                            if (selectedValue == "") {
+                                container.innerHTML = "";
+                            }
+                            else if (selectedValue == '0') {
+                                // Get the container to hold the input field
+                                let result = `
+    <div class="col-md-6">
+        <label for="customer_number">Number of Customer</label>
+        <input type="number" class="form-control" value="1" name="customer_number" id="customer_number">
+    </div> 
+    `;
 
-                document.getElementById('datepicker').addEventListener('change', function () {
+                                result += `
+    <div class="col-md-6">
+        <label for="customer_bill">Select Rate Plan</label>
+        <select class="form-control" id="customer_bill" name="customer_bill">
+    `;
+
+                                result += `<option value="0">Open Time</option>`;
+                                roomRate.forEach((rate) => {
+                                    if (rate.room_id == 0) {
+                                        result += `<option value="${rate.rp_id}">${rate.rp_rate_description}</option>`;  // Add each option to the result
+                                    }
+                                });
+
+                                result += `
+        </select>
+    </div>
+    `;
+                                container.innerHTML = result;
+                            } else {
+                                let result = `
+    <div class="col-md-6">
+        <label for="customer_number">Number of Customers</label>
+        <select class="form-control" id="customer_number" name="customer_number">
+`;
+
+                                // Add customer number options based on selected room capacity
+                                response.forEach((room) => {
+                                    if (selectedValue == room.room_id) {
+                                        const capacity = parseInt(room.room_capacity, 10);
+                                        for (let i = 1; i <= capacity; i++) {
+                                            result += `<option value="${i}">${i}</option>`;
+                                        }
+                                    }
+                                });
+
+                                result += `
+        </select>
+    </div>
+`;
+
+                                result += `
+    <div class="col-md-6">
+        <label for="customer_bill">Room Rate</label>
+        <select class="form-control" id="customer_bill" name="customer_bill">
+`;
+
+                                // Add room rate options based on the selected room
+                                roomRate.forEach((rate) => {
+                                    if (rate.room_id == selectedValue) {
+                                        result += `<option value="${rate.rp_id}">${rate.rp_rate_description} ₱${rate.rp_price}</option>`;
+                                    }
+                                });
+
+                                result += `
+        </select>
+    </div>
+`;
+
+                                // Inject the generated HTML into the container
+                                container.innerHTML = result;
+
+                                // Attach change event listener to the 'customer_bill' select element
+                                const validate = document.getElementById("customer_bill");
+
+                                if (validate) {
+                                    validate.addEventListener('change', function () {
+                                        const selectedValue = validate.value;
+
+                                        // Loop through roomRate and check the rate description
+                                        roomRate.forEach((rate) => {
+                                            if (rate.rp_id == selectedValue) {
+                                                const rateDescription = rate.rp_rate_description;
+
+                                                if (rateDescription.includes("Daily") || rateDescription.includes("Weekly") || rateDescription.includes("Monthly")) {
+                                                    // Append the 'End Date' field dynamically
+                                                    const endDateField = `
+                        <div class="col-md-12" id="endDateField">
+                            <label for="datepicker2">End Date:</label>
+                            <input type="date" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date"> <!-- Use formattedDate -->
+                            <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
+                        </div>
+                    `;
+
+                                                    // Use insertAdjacentHTML instead of innerHTML to avoid overwriting the container's existing content
+                                                    if (!document.getElementById('endDateField')) {
+                                                        container.insertAdjacentHTML('beforeend', endDateField);
+                                                    }
+                                                    document.getElementById('datepicker2').addEventListener('change', function () {
                     const selectedDate = new Date(this.value);  // Get the selected date
                     const currentDate = new Date(); // Get the current date
 
@@ -151,7 +281,7 @@ if (name) {
                     currentDate.setHours(0, 0, 0, 0);
 
                     const dayOfWeek = selectedDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
-                    const errorMessage = document.getElementById('dateError');
+                    const errorMessage = document.getElementById('dateError2');
 
                     if (selectedDate < currentDate) {
                         // If the selected date is in the past
@@ -168,8 +298,39 @@ if (name) {
                         errorMessage.style.display = 'none';
                     }
                 });
+                                                } else {
+                                                    // Remove the 'End Date' field if it exists
+                                                    const existingEndDateField = document.getElementById('endDateField');
+                                                    if (existingEndDateField) {
+                                                        existingEndDateField.remove();
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+                        }
+                        // Add an event listener to the select element instead of using onchange in HTML
+                        select.addEventListener('change', function () {
+                            selectReserve(this);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        $("#result").html("<p>Error: " + error + "</p>");
+                    },
+                });
 
-                document.getElementById('datepicker2').addEventListener('change', function () {
+
+
+
+                // Set the value of the date input to the formatted date
+                const dateInput = eventEmpty.querySelector("#datepicker");
+                if (dateInput) {
+                    dateInput.value = formattedDate; // Assign the formatted date value+
+                }
+
+                document.getElementById('datepicker').addEventListener('change', function () {
                     const selectedDate = new Date(this.value);  // Get the selected date
                     const currentDate = new Date(); // Get the current date
 
@@ -177,7 +338,7 @@ if (name) {
                     currentDate.setHours(0, 0, 0, 0);
 
                     const dayOfWeek = selectedDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
-                    const errorMessage = document.getElementById('dateError2');
+                    const errorMessage = document.getElementById('dateError');
 
                     if (selectedDate < currentDate) {
                         // If the selected date is in the past
@@ -236,12 +397,12 @@ if (name) {
                     }
                 });
             }
-        }else{
-             const eventList = document.getElementsByClassName("event-list")[0];
+        } else {
+            const eventList = document.getElementsByClassName("event-list")[0];
 
-        if (eventList) {
-            // Create the event HTML
-            const eventHTML = `
+            if (eventList) {
+                // Create the event HTML
+                const eventHTML = `
                 <div class="event-container" role="button" data-event-index="event990">
                     <div class="event-icon">
                         <div class="event-bullet-reservation" style="background-color:#63d867"></div>
@@ -253,20 +414,20 @@ if (name) {
                 </div>
             `;
 
-            // Set the innerHTML of the event list
-            eventList.innerHTML += eventHTML;
-        }
+                // Set the innerHTML of the event list
+                eventList.innerHTML += eventHTML;
+            }
         }
     });
 });
 function selectTime(element) {
-   
-const timeBtns = document.querySelectorAll('.time-btn');
+
+    const timeBtns = document.querySelectorAll('.time-btn');
 
     timeBtns.forEach((btn) => {
         if (btn.classList.contains('w-50')) {
             const nextSibling = btn.nextElementSibling;
-            
+
             btn.classList.remove('w-50');
             btn.classList.add('w-100');
 
@@ -280,10 +441,50 @@ const timeBtns = document.querySelectorAll('.time-btn');
     element.classList.add('w-50');
     const next = element.nextElementSibling;
     next.classList.remove('d-none')
-    
+
 }
-function viewForm(){
+function viewForm(date, time) {
     $('#addEvent').modal('show');
+
+    // Reformat the date from MM/DD/YYYY to Month/DD/YYYY
+    const [month, day, year] = date.split('/');
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June", "July",
+        "August", "September", "October", "November", "December"
+    ];
+
+    // Convert the month number to month name
+    const formattedDate = `${monthNames[parseInt(month) - 1]} ${day}, ${year}`;
+
+    // Set the formatted date and time in the form labels
+    document.getElementById('formTimeLabel').textContent = time;
+    document.getElementById('formDateLabel').textContent = formattedDate;
+
+    // Select the input element for the time
+    const timeInput = document.getElementById('start_time');
+
+    // Call setTime function to set the time in the input
+    setTime(timeInput, time);
+}
+
+function setTime(inputElement, time12h) {
+    // Convert 12-hour format (01:00 AM) to 24-hour format (HH:MM)
+    const [time, modifier] = time12h.split(' ');  // Split time and AM/PM
+    let [hours, minutes] = time.split(':');  // Split hours and minutes
+
+    if (modifier === 'PM' && hours !== '12') {
+        hours = String(parseInt(hours) + 12);  // Convert PM times to 24-hour format
+    }
+    if (modifier === 'AM' && hours === '12') {
+        hours = '00';  // Special case for 12 AM (midnight)
+    }
+
+    // Ensure hours and minutes are always 2 digits
+    hours = hours.padStart(2, '0');
+    minutes = minutes.padStart(2, '0');
+
+    // Set the value to the input type="time"
+    inputElement.value = `${hours}:${minutes}`;
 }
 
 function dynamicFuction(formId, routeUrl, process) {

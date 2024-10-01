@@ -14,8 +14,10 @@ class Reservation extends Controller
 
 
     public function getRoomData(Request $req){
-      $room = Rooms::select('room_id','room_number')->where('room_id', '!=', 0)->get();
-    return response()->json(['data'=>$room,'status' => 'success']);
+      $room = Rooms::select('room_id','room_number', 'room_capacity')->get();
+      $roomRate = RoomRates ::select('rp_id', 'room_id', 'rp_rate_description','rp_price')->get();
+
+    return response()->json(['room'=>$room, 'rate'=>$roomRate,'status' => 'success']);
     }
     public function getRooms(){
         $rooms = Rooms::where('rooms_disable', 0)->get();

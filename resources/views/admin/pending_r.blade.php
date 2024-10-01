@@ -113,7 +113,7 @@ input[type="text"]::placeholder {
 {{-- modal start --}}
 <div id="addEvent" class="modal fade" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalCenterTitle">Add Reservation</h5>
@@ -121,13 +121,23 @@ input[type="text"]::placeholder {
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" id="addEventForm">
+                            <div class="row">
+                                <div class="col-3 border-right">
+                                    <h4>Reservation Details</h4>
+                                    <span><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 12l3 -2" /><path d="M12 7v5" /></svg>
+                                    Time <span id="formTimeLabel"></span>
+                                    </span><br>
+                                    <span><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-due"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                                    Date <span id="formDateLabel"></span></span>
+                                </div>
+                                <div class="col-9">
+                                <form method="POST" id="addEventForm">
                                 @csrf
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="customer_name">Customer Name</label>
-                                            <input type="text" class="form-control border" id="customer_name" name="customer_name" placeholder="Enter Cutomer Name">
+                                            <input type="text" class="form-control border" id="customer_name" name="customer_name" placeholder="Enter Customer Name">
                                         </div>
                                         <div class="col-md-6">
                                              <label for="exampleInputnumber1">Contact No.</label>
@@ -140,13 +150,32 @@ input[type="text"]::placeholder {
                                     <input type="email" class="form-control" id="exampleInputEmail1"  name="customer_email" aria-describedby="emailHelp" placeholder="Enter email">
                                 </div>
                                 <div class="form-group">
-                                <label for="exampleInputEmail1">Guest Email(optional):</label>
+                                <label for="exampleInputEmail1">Guest Email(optional)</label>
                                 <div class="tag-input" id="mail">
                                     <input type="text" class="form-control border" id="emailInput" name="emailInput" placeholder="Enter email and press Enter">
                                     <input type="text" name="multipleEmail" id="multipleEmail" hidden>
                                 </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="customer_request">Any customer request upon Reservation?</label>
+                                    <textarea name="customer_request" id="customer_request" class="form-control" cols="30" rows="2"></textarea>
+                                </div>    
+                                <div class="form-group">
+                                    <div class="row">
+                                    <div class="col-md-4">
+                                    <label for="">Rooms</label>
+                                    <select class="form-control" id="roomList"  name="room_id">
+                                    
+                                    </select>
+                                    </div>
+                                    <div class="col-md-8" >
+                                      <div class="row" id="reserveContainer">
+                                        
+                                      </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                <div class="form-group" hidden>
                                     <div class="row">
                                     <div class="col-md-6">
                                     <label for="datepicker">Start Date:</label>
@@ -155,43 +184,14 @@ input[type="text"]::placeholder {
                                     </div>
                                     <div class="col-md-6">
                                     <label for="datepicker">Start Time:</label>
-                                    <input type="time" class="form-control" id="" name="start_time" placeholder="Select a date">
-                                    </div>
-                                    </div>
-                                    </div>
-                                    <div class="form-group">
-                                    <div class="row">
-                                    <div class="col-md-6">
-                                    <label for="datepicker">End Date:</label>
-                                    <input type="date" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date"> <!-- Use formattedDate -->
-                                    <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
-                                    </div>
-                                    <div class="col-md-6">
-                                    <label for="datepicker">End Time:</label>
-                                    <input type="time" class="form-control" id="" name="end_time">
-                                    </div>
-                                    </div>
-                                    </div>
-                                    <div class="form-group">
-                                    <div class="row">
-                                    <div class="col-md-6">
-                                    <label for="">Rooms</label>
-                                    <select class="form-control" id="roomList"  name="room_id">
-                                    
-                                    </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                    <label for="">Pax</label>
-                                    <input type="number" name="customer_pax" class="form-control">
-                                    </div>
-                                    <div class="col-md-3">
-                                    <label for="">Bill</label>
-                                    <input type="number" name="customer_bill" class="form-control">
+                                    <input type="time" class="form-control" id="start_time" name="start_time" placeholder="Select a date">
                                     </div>
                                     </div>
                                     </div>
                                 <button type="button" class="btn btn-secondary col-12" onclick="dynamicFuction('addEventForm', `{{route('reservationData')}}`,'add')">Submit</button>
                             </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
