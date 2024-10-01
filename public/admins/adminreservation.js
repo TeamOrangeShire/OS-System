@@ -288,6 +288,7 @@ function viewForm(){
 
 function dynamicFuction(formId, routeUrl, process) {
     // Show the loader
+    // hello
     // document.getElementById('roller').style.display = 'flex';
 
     // // Serialize the form data
