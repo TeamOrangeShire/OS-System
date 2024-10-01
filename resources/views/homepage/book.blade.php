@@ -66,7 +66,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="staticBackdropLabel">Complete Reservation</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" id="closeReservation" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="row w-100">
@@ -80,7 +80,11 @@
                     <p> <i class="fa fa-info"></i> Please ensure all details are correct before submitting your reservation. Choose whether you're reserving an office room or a hot desk. Select the date, time, and duration of your booking. Don’t forget to provide your contact information, and if applicable, include any specific room preferences or special requests. Double-check your details to avoid any mistakes. Once everything is complete, click the submit button to confirm your reservation. </p>
                 </div>
 
-                <form class="col-12 col-md-8">
+                <form id="submitReservationForm" class="col-12 col-md-8">
+                    @csrf
+                    <input type="hidden" id="startDateReservation" name="startDate">
+                    <input type="hidden" id="startTimeReservation" name="startTime">
+                    <input type="hidden" name="endTime" id="endTimeReservation">
                     <h3> Fill up form </h3>
                     <div class="d-flex flex-column gap-1">
                         <div class="form-group">
@@ -111,18 +115,21 @@
 
                         <div class="form-group">
                             <label for="selectReserve">What do you want to reserve?</label>
-                            <select class="form-select" name="reserveType" aria-label="What do you want to reserve?" id="selectReserve">
-                                <option selected disabled>-----Reserve-----</option>
+                            <select required class="form-select" name="reserveType" aria-label="What do you want to reserve?" id="selectReserve">
+                                <option value="" selected disabled>-----Reserve-----</option>
                             </select>
                         </div>
 
                         <div class="form-group mt-2 d-none" id="selectPaxDiv">
-                            <label for="selectPax">Pax</label>
+                            <label for="selectPax">How many people are in your group?</label>
                             <select name="pax" class="form-select" aria-label="How Many People?" id="selectPax">
-
                             </select>
-                        </div>
 
+                        </div>
+                        <div class="form-group mt-2 d-none" id="selectPaxHotdeskDiv">
+                            <label for="selectPax">How many people are in your group?</label>
+                            <input name="paxhotdesk" value="1" type="number" class="form-control"  id="selectPaxHotdesk">
+                        </div>
 
                         <div class="form-group mt-2 d-none" id="selectRoomRatesDiv">
                             <label for="selectPax"> Meeting Room Rates </label>
@@ -150,16 +157,13 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Submit Reservation</button>
+            <button type="button" id="submitReservation" class="btn btn-primary d-flex align-items-center gap-2">Submit Reservation</button>
         </div>
       </div>
     </div>
   </div>
         @include('homepage/Components/footer')
-        <!-- Footer End -->
 
-
-        <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 

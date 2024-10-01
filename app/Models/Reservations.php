@@ -24,6 +24,8 @@ class Reservations extends Model
       'reason',
       'billing',
       'pax',
+      'request',
+      'rate_id',
       'date_cancelled',
       'date_approved'
     ];

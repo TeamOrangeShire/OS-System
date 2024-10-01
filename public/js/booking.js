@@ -263,10 +263,13 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
     const selectRoomRatesDiv = document.getElementById('selectRoomRatesDiv');
     const selectRoomRates = document.getElementById('selectRoomRates');
     const selectEndDateDiv = document.getElementById('selectEndDateDiv');
+
+    const selectPaxHotdeskDiv = document.getElementById('selectPaxHotdeskDiv');
+
     if(selectReserve.value != 0){
         selectPaxDiv.classList.remove('d-none');
         hotdeskDiv.classList.add('d-none');
-
+        selectPaxHotdeskDiv.classList.add('d-none');
         const selectedRoom = roomDetails.filter( x => x.room_id == selectReserve.value);
         const selectPax = document.getElementById('selectPax');
         selectPax.innerHTML = '';
@@ -285,6 +288,7 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
         selectPaxDiv.classList.add('d-none');
         selectRoomRatesDiv.classList.add('d-none');
         selectEndDateDiv.classList.add('d-none');
+        selectPaxHotdeskDiv.classList.remove('d-none');
         const hotdeskRates = rateList.filter(x => x.room_id == 0);
         selectHotdesk.innerHTML = '<option value="0">Open Time</option>';
 
@@ -321,4 +325,35 @@ function openReserveModal(time){
 
     selectDateModal.textContent = selectedDateGlobal;
     selectedTimeModal.textContent = time;
+
+    document.getElementById('startDateReservation').value = selectedDateGlobal;
+    document.getElementById('startTimeReservation').value = time;
 }
+
+document.getElementById('submitReservation').addEventListener('click', e => {
+    const form = document.getElementById('submitReservationForm');
+
+    if (form.checkValidity()) {
+        form.requestSubmit();
+        e.target.innerHTML = '<div class="loaderSubmit"></div> Submitting Please Wait...';
+    } else {
+        form.reportValidity();
+    }
+});
+
+document.getElementById('submitReservationForm').addEventListener('submit', e => {
+    e.preventDefault();
+
+    $.ajax({
+        type:"POST",
+        url: '/user/reservation/submitreservation',
+        data: $('#submitReservationForm').serialize(),
+        success: res => {
+            if(res.success){
+                document.getElementById('submitReservation').innerHTML = 'Submit Reservation';
+                e.target.reset();
+                document.getElementById('closeReservation').click();
+            }
+        }, error: xhr=> console.log(xhr.responseText)
+    })
+});
