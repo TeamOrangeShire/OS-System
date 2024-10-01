@@ -326,7 +326,7 @@ if (name) {
                     </div>
                     <div class="event-info">
                         <p class="event-title">Add</p>
-                        <p class="event-desc">------------------------</p>
+                        <p class="event-desc">-----------------------------------</p>
                     </div>
                 </div>
             `;
