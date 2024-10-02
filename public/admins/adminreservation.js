@@ -253,7 +253,7 @@ $(document).ready(function () {
                     const eventHTML = `
         <div class="event-header" style="display: flex; justify-content: space-between; align-items: center;">
     <p style="margin: 0; font-size: 30px; font-weight: 600;">${formattedDate}</p>
-    <button class="btn btn-primary time-btn" onclick="displayTimeHTML()">Add New</button>
+    <button class="btn btn-primary time-btn" onclick="displayTimeHTML()"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-clock"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.5 21h-4.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h10" /><path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M18 16.5v1.5l.5 .5" /></svg> Add New</button>
 </div>
 
     `;
@@ -657,28 +657,30 @@ function setTime(inputElement, time12h) {
 function dynamicFuction(formId, routeUrl, process) {
     // Show the loader
     // hello
-    const check = document.getElementById('start_time').value
-    console.log(check)
-    // document.getElementById('roller').style.display = 'flex';
+    // const check = document.getElementById('datepicker2').value
+    // console.log(check)
+    document.getElementById('roller').style.display = 'flex';
 
-    // // Serialize the form data
-    // var formData = $("form#" + formId).serialize();
+    // Serialize the form data
+    var formData = $("form#" + formId).serialize();
 
-    // // Send the AJAX request
-    // $.ajax({
-    //     type: "POST",
-    //     url: routeUrl + "?process=" + process,
-    //     data: formData,
-    //     success: function (response) {
-    //         console.log(response)
-    //         document.getElementById('roller').style.display = 'none';
-    //         if (response.status == 'error') {
-    //             alertify.alert("Error", response.message);
-    //         }
-    //     },
-    //     error: function (xhr, status, error) {
-    //         console.error(xhr.responseText);
-    //         // You can also add custom error handling here if needed
-    //     }
-    // });
+    // Send the AJAX request
+    $.ajax({
+        type: "POST",
+        url: routeUrl + "?process=" + process,
+        data: formData,
+        success: function (response) {
+            console.log(response)
+            document.getElementById('roller').style.display = 'none';
+            if (response.status == 'error') {
+                alertify.alert("Error", response.message);
+            }else if (response.status == 'success') {
+                alertify.alert("success", response.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            // You can also add custom error handling here if needed
+        }
+    });
 }

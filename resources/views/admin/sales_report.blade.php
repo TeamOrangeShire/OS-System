@@ -160,6 +160,8 @@
                                         </div>
                                         <br>
                                     </form>
+                                    <button id="filterCashButton" class="btn btn-success">Show Cash Payments</button>
+                                    <button id="filterE-PayButton" class="btn btn-primary">Show GCash Payments</button>
                                     <table id="weeklyreport" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>
@@ -773,8 +775,14 @@
 
                 });
             }
-
-           
+        $('#filterCashButton').click(function() {
+    var table = $('#weeklyreport').DataTable();
+    table.column(7).search('^Cash$', true, false).draw(); // Filter for "Cash" in column 7
+});    
+        $('#filterE-PayButton').click(function() {
+    var table = $('#weeklyreport').DataTable();
+    table.column(7).search('^E-Pay$', true, false).draw(); // Filter for "Cash" in column 7
+});               
         </script>
 
     </body>
