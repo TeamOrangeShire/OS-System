@@ -1,3 +1,4 @@
+let newDate3 = '';
 $(document).ready(function () {
 
     $.ajax({
@@ -36,12 +37,12 @@ $(document).ready(function () {
                     language: "en", // Optional: default language is English
                     showSidebar: false,
                     calendarEvents: calendarEvents, // Use the dynamically generated events
-                    
+
                 });
                 disableSundays()
-                $('#calendar').on('selectMonth', function() {
-                disableSundays(); // Call the function again when month changes
-            });
+                $('#calendar').on('selectMonth', function () {
+                    disableSundays(); // Call the function again when month changes
+                });
             } else {
                 console.error("Data is not an array:", response.data);
             }
@@ -53,18 +54,18 @@ $(document).ready(function () {
     });
 
     function disableSundays() {
-    // Find all Sundays in the calendar
-    $('.day').each(function() {
-        var date = new Date($(this).attr('data-date-val'));
-        if (date.getDay() === 0) { // 0 means Sunday in JavaScript's getDay()
-            $(this).css({
-                'pointer-events': 'none',  // Disable clicking on Sundays
-                'background-color': '#f5f5f5',  // Optional: grey out Sundays
-                'color': '#ccc'  // Optional: Change text color to indicate it's disabled
-            });
-        }
-    });
-}
+        // Find all Sundays in the calendar
+        $('.day').each(function () {
+            var date = new Date($(this).attr('data-date-val'));
+            if (date.getDay() === 0) { // 0 means Sunday in JavaScript's getDay()
+                $(this).css({
+                    'pointer-events': 'none',  // Disable clicking on Sundays
+                    'background-color': '#f5f5f5',  // Optional: grey out Sundays
+                    'color': '#ccc'  // Optional: Change text color to indicate it's disabled
+                });
+            }
+        });
+    }
 
     $('#calendar').on('selectEvent', function (event, activeEvent) {
         // activeEvent contains details about the selected event
@@ -91,6 +92,7 @@ $(document).ready(function () {
     });
 
     $("#calendar").on("selectDate", function (event, newDate, oldDate) {
+        newDate3 = newDate;
         let satVal = 'false';
         var satdate = new Date(newDate); // Convert selected date string to a Date object
         if (satdate.getDay() === 6) { // 6 represents Saturday in getDay()
@@ -105,7 +107,9 @@ $(document).ready(function () {
         currentDate.setHours(0, 0, 0, 0); // Set to midnight
         // Check if clickedDate is less than currentDate
         const eventEmpty = document.querySelector(".event-empty");
+        let con = true;
         if (eventEmpty) {
+            con = false;
             if (clickedDate < currentDate) {
                 // If clicked date is in the past, do not render the form
                 eventEmpty.innerHTML =
@@ -116,38 +120,38 @@ $(document).ready(function () {
                 const name = document.getElementsByClassName("event-list")[0];
 
                 if (name) {
-                  let timeHTML = ''; 
+                    let timeHTML = '';
 
-// Declare the times array outside the condition block
-let times = [];
+                    // Declare the times array outside the condition block
+                    let times = [];
 
-// Array of times, you can customize this based on your needs
-if (satVal === 'true') {
-    // Times for Saturday
-    times = [
-        "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM","01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM",
-        "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", "12:00 AM","01:00 AM", "02:00 AM", "03:00 AM"
-    ];
-} else {
-    // Times for other days
-    times = [
-        "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM","01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM",
-        "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", "12:00 AM","01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM", "06:00 AM"
-    ];
-}
+                    // Array of times, you can customize this based on your needs
+                    if (satVal === 'true') {
+                        // Times for Saturday
+                        times = [
+                            "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM",
+                            "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", "12:00 AM", "01:00 AM", "02:00 AM", "03:00 AM"
+                        ];
+                    } else {
+                        // Times for other days
+                        times = [
+                            "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM",
+                            "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", "12:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM", "06:00 AM"
+                        ];
+                    }
 
-// Generate buttons for each time with the next button
-times.forEach(time => {
-    timeHTML += `
+                    // Generate buttons for each time with the next button
+                    times.forEach(time => {
+                        timeHTML += `
         <div class="w-100 p-2 d-flex gap-2">
             <button type="button" class="w-100 btn btn-primary time-btn" onclick="selectTime(this)">${time}</button>
             <button type="button" class="w-50 btn btn-secondary d-none next-btn" onclick="viewForm('${newDate}','${time}')">Next</button>
         </div>
     `;
-});
+                    });
 
-// Inject the generated HTML into the element
-name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
+                    // Inject the generated HTML into the element
+                    name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
                 }
                 document.getElementById('datepicker').value = formattedDate;
                 $.ajax({
@@ -155,7 +159,7 @@ name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
                     method: "GET", // or 'POST'
                     dataType: "json", // Expecting a JSON response
                     success: function (data) {
-                        
+
                         const response = data.room;
                         const roomRate = data.rate;
                         const select = document.getElementById("roomList");
@@ -274,30 +278,30 @@ name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
                                                         container.insertAdjacentHTML('beforeend', endDateField);
                                                     }
                                                     document.getElementById('datepicker2').addEventListener('change', function () {
-                    const selectedDate = new Date(this.value);  // Get the selected date
-                    const currentDate = new Date(); // Get the current date
+                                                        const selectedDate = new Date(this.value);  // Get the selected date
+                                                        const currentDate = new Date(); // Get the current date
 
-                    // Set current date to midnight (00:00:00) to avoid time discrepancies
-                    currentDate.setHours(0, 0, 0, 0);
+                                                        // Set current date to midnight (00:00:00) to avoid time discrepancies
+                                                        currentDate.setHours(0, 0, 0, 0);
 
-                    const dayOfWeek = selectedDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
-                    const errorMessage = document.getElementById('dateError2');
+                                                        const dayOfWeek = selectedDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
+                                                        const errorMessage = document.getElementById('dateError2');
 
-                    if (selectedDate < currentDate) {
-                        // If the selected date is in the past
-                        errorMessage.style.display = 'block';
-                        errorMessage.textContent = 'You cannot select a past date!';
-                        this.value = '';  // Clear the invalid selection
-                    } else if (dayOfWeek === 0) {
-                        // If the selected date is a Sunday
-                        errorMessage.style.display = 'block';
-                        errorMessage.textContent = 'You cannot select a Sunday!';
-                        this.value = '';  // Clear the invalid selection
-                    } else {
-                        // Hide the error message if the date is valid
-                        errorMessage.style.display = 'none';
-                    }
-                });
+                                                        if (selectedDate < currentDate) {
+                                                            // If the selected date is in the past
+                                                            errorMessage.style.display = 'block';
+                                                            errorMessage.textContent = 'You cannot select a past date!';
+                                                            this.value = '';  // Clear the invalid selection
+                                                        } else if (dayOfWeek === 0) {
+                                                            // If the selected date is a Sunday
+                                                            errorMessage.style.display = 'block';
+                                                            errorMessage.textContent = 'You cannot select a Sunday!';
+                                                            this.value = '';  // Clear the invalid selection
+                                                        } else {
+                                                            // Hide the error message if the date is valid
+                                                            errorMessage.style.display = 'none';
+                                                        }
+                                                    });
                                                 } else {
                                                     // Remove the 'End Date' field if it exists
                                                     const existingEndDateField = document.getElementById('endDateField');
@@ -401,25 +405,75 @@ name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
             const eventList = document.getElementsByClassName("event-list")[0];
 
             if (eventList) {
-                // Create the event HTML
-                const eventHTML = `
-                <div class="event-container" role="button" data-event-index="event990">
-                    <div class="event-icon">
-                        <div class="event-bullet-reservation" style="background-color:#63d867"></div>
-                    </div>
-                    <div class="event-info">
-                        <p class="event-title">Add</p>
-                        <p class="event-desc">-----------------------------------</p>
-                    </div>
-                </div>
-            `;
+                // Remove any existing events before adding a new one
+                const existingEvent = eventList.querySelector('.event-container[data-event-index="event990"]');
+                if (existingEvent) {
+                    existingEvent.remove(); // Remove the previous event
+                }
+                const eventList2 = document.querySelector('.event-list');
 
-                // Set the innerHTML of the event list
-                eventList.innerHTML += eventHTML;
+                if (eventList2 && eventList2.querySelector('.w-100')) {
+
+                } else {
+                    const eventHTML = `
+        <div class="event-container" role="button" data-event-index="event990">
+            <div class="event-icon">
+                <div class="event-bullet-reservation" style="background-color:#63d867"></div>
+            </div>
+            <div class="event-info" onclick="displayTimeHTML()">
+                <p class="event-title">Add</p>
+                <p class="event-desc">-----------------------------------</p>
+            </div>
+        </div>
+    `;
+
+                    // Append the new event HTML
+                    eventList.innerHTML += eventHTML;
+                }
             }
+
         }
     });
 });
+function displayTimeHTML() {
+    let satVal = 'false';
+    console.log(newDate3)
+    const selectedDate = newDate3;  // Assuming the datepicker exists
+    const dateObject = new Date(selectedDate);
+
+    if (dateObject.getDay() === 6) { // 6 represents Saturday
+        satVal = 'true';
+    }
+
+    const times = (satVal === 'true') ?
+        [
+            "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM",
+            "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", "12:00 AM", "01:00 AM", "02:00 AM", "03:00 AM"
+        ] :
+        [
+            "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM",
+            "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", "12:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM", "06:00 AM"
+        ];
+
+    let timeHTML = '';
+
+    // Generate HTML for time buttons
+    times.forEach(time => {
+        timeHTML += `
+            <div class="w-100 p-2 d-flex gap-2">
+                <button type="button" class="w-100 btn btn-primary time-btn" onclick="selectTime(this)">${time}</button>
+                <button type="button" class="w-50 btn btn-secondary d-none next-btn" onclick="viewForm('${selectedDate}','${time}')">Next</button>
+            </div>
+        `;
+    });
+
+    // Inject the timeHTML into the appropriate container
+    const name = document.getElementsByClassName("event-list")[0];
+    if (name) {
+        name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
+    }
+}
+
 function selectTime(element) {
 
     const timeBtns = document.querySelectorAll('.time-btn');
