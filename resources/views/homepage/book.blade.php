@@ -6,6 +6,7 @@
     <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
     <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="/css/booking.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 </head>
 <style>
     .select{
@@ -110,7 +111,7 @@
 
                           <div class="mb-3 mt-2 form-group">
                             <label for="addGuestInput" class="form-label">Do you have some request in your reservation?</label>
-                            <textarea class="form-control" name="request" rows="3"></textarea>
+                            <textarea class="form-control" name="reservationRequest" rows="3"></textarea>
                           </div>
 
                         <div class="form-group">
@@ -168,6 +169,7 @@
     </div>
 
     <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('lib/wow/wow.min.js') }}"></script>

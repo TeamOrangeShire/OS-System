@@ -353,6 +353,31 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
                 document.getElementById('submitReservation').innerHTML = 'Submit Reservation';
                 e.target.reset();
                 document.getElementById('closeReservation').click();
+                document.getElementById('addGuestBtnDiv').classList.remove('d-none');
+                document.getElementById('addGuestDiv').classList.add('d-none');
+                document.getElementById('selectPaxHotdeskDiv').classList.add('d-none');
+                document.getElementById('selectPaxDiv').classList.add('d-none');
+                document.getElementById('selectRoomRatesDiv').classList.add('d-none');
+                document.getElementById('hotdeskDiv').classList.add('d-none');
+                document.getElementById('selectEndDateDiv').classList.add('d-none');
+
+                toastr["success"]("Reservation Submitted wait for the email for the response.")
+
+                const selectBtn = document.querySelectorAll('.select');
+
+                selectBtn.forEach(data => {
+                    const classList = Array.from(data.classList);
+
+                    if(classList.includes('w-50')){
+                        data.classList.remove('w-50');
+                        data.classList.add('w-100');
+
+                        const next = data.nextElementSibling;
+
+                        next.classList.add('d-none');
+
+                    }
+                });
             }
         }, error: xhr=> console.log(xhr.responseText)
     })
