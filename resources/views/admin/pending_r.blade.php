@@ -52,8 +52,6 @@ input[type="text"]::placeholder {
     border-color: #999;
     background-color:#f53b23
 }
-
-
     </style>
 </head>
 <body class="">
