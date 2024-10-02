@@ -8,6 +8,9 @@ use App\Models\Reservations;
 use App\Models\RoomRates;
 use App\Models\Rooms;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReservationResponse;
+use Exception;
 
 class Reservation extends Controller
 {
@@ -52,38 +55,59 @@ class Reservation extends Controller
 
         // Ensure startTime is in 'h:i A' format
         $rateDetails = RoomRates::where('rp_id', $req->rates)->first();
-
-        // Determine end time based on rate description
         $startTime = Carbon::createFromFormat('h:i A', $req->startTime);
-        switch ($rateDetails->rate_description) {
-            case "Hourly":
-                $endTime = $startTime->copy()->addHour();
-                break;
-            case "4 Hours":
-                $endTime = $startTime->copy()->addHours(4);
-                break;
-            default:
-                $endTime = $startTime; // Ensure endTime is a Carbon instance
-                break;
+        if($rateDetails){
+                    // Determine end time based on rate description
+
+            switch ($rateDetails->rate_description) {
+                case "Hourly":
+                    $endTime = $startTime->copy()->addHour();
+                    break;
+                case "4 Hours":
+                    $endTime = $startTime->copy()->addHours(4);
+                    break;
+                default:
+                    $endTime = $startTime; // Ensure endTime is a Carbon instance
+                    break;
+            }
+
+        }else{
+            $endTime = "";
         }
 
-        // Assign reservation details
         $reserve->c_name = $req->name;
         $reserve->c_email = $req->email;
         $reserve->phone_num = $req->contact;
         $reserve->c_guest_emails = $req->guestemails;
-        $reserve->request = $req->request;
+        $reserve->request = $req->reservationRequest;
         $reserve->room_id = (int) $req->reserveType;
         $reserve->pax = (int) $req->reserveType != 0 ? $req->pax : $req->paxhotdesk;
         $reserve->rate_id = (int) $req->rates;
         $reserve->start_date = Carbon::parse($req->startDate)->format('Y-m-d');
         $reserve->end_date = Carbon::parse($req->endDate)->format('Y-m-d');
         $reserve->start_time = $startTime->format('H:i:s');
-        $reserve->end_time = $endTime->format('H:i:s');
-
+        $reserve->end_time = $endTime == "" ? "" : $endTime->format('H:i:s');
+        $reserve->status = 0;
         $reserve->save();
+
+        Mail::to($req->email)->send(new ReservationResponse());
+
+        if($req->guestemails != ""){
+            $emails = explode(',', $req->guestemails);
+
+            array_pop($emails);
+
+            foreach($emails as $em){
+                $cleanEmail = str_replace(' ', '', $em);
+                try{
+                    Mail::to($cleanEmail)->send(new ReservationResponse());
+                }catch(Exception $ex){
+                   // Ignore
+                }
+            }
+        }
+
 
         return response()->json(['success'=> true]);
     }
-
 }

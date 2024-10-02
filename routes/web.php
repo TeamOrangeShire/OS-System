@@ -228,3 +228,4 @@ Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPend
 //reservation
 Route::get('/user/reservation/getrooms', [Reservation::class, 'getRooms']);
 Route::post('/user/reservation/submitreservation', [Reservation::class, 'SubmitReservationCustomer']);
+Route::get('/user/reservation/getreservation', [Reservation::class, 'getReservation']);

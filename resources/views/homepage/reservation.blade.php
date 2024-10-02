@@ -78,39 +78,15 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/lib/wow/wow.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <!-- Template Javascript -->
-    <script src="calendar/js/evo-calendar.min.js"></script>
-    <script src="js/main.js"></script>
-    <script>
-
-$(document).ready(function() {
-    $('#calendars').evoCalendar({
-        theme:"Orange Coral",
-        calendarEvents: [
-      {
-        id: 'bHay68s', // Event's ID (required)
-        name: "New Year", // Event name (required)
-        date: "January/1/2020", // Event date (required)
-        type: "holiday", // Event type (required)
-        everyYear: true // Same event every year (optional)
-      },
-      {
-        name: "Vacation Leave",
-        badge: "02/13 - 02/15", // Event badge (optional)
-        date: ["February/13/2020", "February/15/2020"], // Date range
-        description: "Vacation leave for 3 days.", // Event description (optional)
-        type: "event",
-        color: "#63d867" // Event custom color (optional)
-      }
-    ]
-    });
-});
-    </script>
+    <script src="/calendar/js/evo-calendar.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/reservation.js"></script>
 </body>
 
 </html>
