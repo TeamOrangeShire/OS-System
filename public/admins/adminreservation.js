@@ -68,26 +68,27 @@ $(document).ready(function () {
     }
 
     $('#calendar').on('selectEvent', function (event, activeEvent) {
+        console.log('here')
         // activeEvent contains details about the selected event
-        const eventList = document.getElementsByClassName("event-list")[0];
+        // const eventList = document.getElementsByClassName("event-list")[0];
 
-        if (eventList) {
-            // Create the event HTML
-            const eventHTML = `
-                <div class="event-container" role="button" data-event-index="event990">
-                    <div class="event-icon">
-                        <div class="event-bullet-reservation" style="background-color:#63d867"></div>
-                    </div>
-                    <div class="event-info">
-                        <p class="event-title">Jpuabs</p>
-                        <p class="event-desc">Reservation for Ubas</p>
-                    </div>
-                </div>
-            `;
+        // if (eventList) {
+        //     // Create the event HTML
+        //     const eventHTML = `
+        //         <div class="event-container" role="button" data-event-index="event990">
+        //             <div class="event-icon">
+        //                 <div class="event-bullet-reservation" style="background-color:#63d867"></div>
+        //             </div>
+        //             <div class="event-info">
+        //                 <p class="event-title">Jpuabs</p>
+        //                 <p class="event-desc">Reservation for Ubas</p>
+        //             </div>
+        //         </div>
+        //     `;
 
-            // Set the innerHTML of the event list
-            eventList.innerHTML = eventHTML;
-        }
+        //     // Set the innerHTML of the event list
+        //     eventList.innerHTML = eventHTML;
+        // }
 
     });
 
@@ -154,180 +155,7 @@ $(document).ready(function () {
                     name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
                 }
                 document.getElementById('datepicker').value = formattedDate;
-                $.ajax({
-                    url: "/admin/getRoomData", // URL of the PHP script
-                    method: "GET", // or 'POST'
-                    dataType: "json", // Expecting a JSON response
-                    success: function (data) {
-
-                        const response = data.room;
-                        const roomRate = data.rate;
-                        const select = document.getElementById("roomList");
-                        let options = `<option value="">---Reserve---</option>`;
-
-                        response.forEach((element) => {
-                            if (element.room_id == 0) {
-                                options += `<option value="${element.room_id}">Hotdesk</option>`;
-                            } else {
-                                options += `<option value="${element.room_id}">Room ${element.room_number}</option>`;
-                            }
-                        });
-
-                        select.innerHTML = options;
-
-                        function selectReserve(selectElement) {
-                            const selectedValue = selectElement.value;
-                            const container = document.getElementById("reserveContainer");
-                            if (selectedValue == "") {
-                                container.innerHTML = "";
-                            }
-                            else if (selectedValue == '0') {
-                                // Get the container to hold the input field
-                                let result = `
-    <div class="col-md-6">
-        <label for="customer_number">Number of Customer</label>
-        <input type="number" class="form-control" value="1" name="customer_number" id="customer_number">
-    </div> 
-    `;
-
-                                result += `
-    <div class="col-md-6">
-        <label for="customer_bill">Select Rate Plan</label>
-        <select class="form-control" id="customer_bill" name="customer_bill">
-    `;
-
-                                result += `<option value="0">Open Time</option>`;
-                                roomRate.forEach((rate) => {
-                                    if (rate.room_id == 0) {
-                                        result += `<option value="${rate.rp_id}">${rate.rp_rate_description}</option>`;  // Add each option to the result
-                                    }
-                                });
-
-                                result += `
-        </select>
-    </div>
-    `;
-                                container.innerHTML = result;
-                            } else {
-                                let result = `
-    <div class="col-md-6">
-        <label for="customer_number">Number of Customers</label>
-        <select class="form-control" id="customer_number" name="customer_number">
-`;
-
-                                // Add customer number options based on selected room capacity
-                                response.forEach((room) => {
-                                    if (selectedValue == room.room_id) {
-                                        const capacity = parseInt(room.room_capacity, 10);
-                                        for (let i = 1; i <= capacity; i++) {
-                                            result += `<option value="${i}">${i}</option>`;
-                                        }
-                                    }
-                                });
-
-                                result += `
-        </select>
-    </div>
-`;
-
-                                result += `
-    <div class="col-md-6">
-        <label for="customer_bill">Room Rate</label>
-        <select class="form-control" id="customer_bill" name="customer_bill">
-`;
-
-                                // Add room rate options based on the selected room
-                                roomRate.forEach((rate) => {
-                                    if (rate.room_id == selectedValue) {
-                                        result += `<option value="${rate.rp_id}">${rate.rp_rate_description} ₱${rate.rp_price}</option>`;
-                                    }
-                                });
-
-                                result += `
-        </select>
-    </div>
-`;
-
-                                // Inject the generated HTML into the container
-                                container.innerHTML = result;
-
-                                // Attach change event listener to the 'customer_bill' select element
-                                const validate = document.getElementById("customer_bill");
-
-                                if (validate) {
-                                    validate.addEventListener('change', function () {
-                                        const selectedValue = validate.value;
-
-                                        // Loop through roomRate and check the rate description
-                                        roomRate.forEach((rate) => {
-                                            if (rate.rp_id == selectedValue) {
-                                                const rateDescription = rate.rp_rate_description;
-
-                                                if (rateDescription.includes("Daily") || rateDescription.includes("Weekly") || rateDescription.includes("Monthly")) {
-                                                    // Append the 'End Date' field dynamically
-                                                    const endDateField = `
-                        <div class="col-md-12" id="endDateField">
-                            <label for="datepicker2">End Date:</label>
-                            <input type="date" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date"> <!-- Use formattedDate -->
-                            <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
-                        </div>
-                    `;
-
-                                                    // Use insertAdjacentHTML instead of innerHTML to avoid overwriting the container's existing content
-                                                    if (!document.getElementById('endDateField')) {
-                                                        container.insertAdjacentHTML('beforeend', endDateField);
-                                                    }
-                                                    document.getElementById('datepicker2').addEventListener('change', function () {
-                                                        const selectedDate = new Date(this.value);  // Get the selected date
-                                                        const currentDate = new Date(); // Get the current date
-
-                                                        // Set current date to midnight (00:00:00) to avoid time discrepancies
-                                                        currentDate.setHours(0, 0, 0, 0);
-
-                                                        const dayOfWeek = selectedDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
-                                                        const errorMessage = document.getElementById('dateError2');
-
-                                                        if (selectedDate < currentDate) {
-                                                            // If the selected date is in the past
-                                                            errorMessage.style.display = 'block';
-                                                            errorMessage.textContent = 'You cannot select a past date!';
-                                                            this.value = '';  // Clear the invalid selection
-                                                        } else if (dayOfWeek === 0) {
-                                                            // If the selected date is a Sunday
-                                                            errorMessage.style.display = 'block';
-                                                            errorMessage.textContent = 'You cannot select a Sunday!';
-                                                            this.value = '';  // Clear the invalid selection
-                                                        } else {
-                                                            // Hide the error message if the date is valid
-                                                            errorMessage.style.display = 'none';
-                                                        }
-                                                    });
-                                                } else {
-                                                    // Remove the 'End Date' field if it exists
-                                                    const existingEndDateField = document.getElementById('endDateField');
-                                                    if (existingEndDateField) {
-                                                        existingEndDateField.remove();
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    });
-                                }
-                            }
-                        }
-                        // Add an event listener to the select element instead of using onchange in HTML
-                        select.addEventListener('change', function () {
-                            selectReserve(this);
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        $("#result").html("<p>Error: " + error + "</p>");
-                    },
-                });
-
-
-
-
+                getResData()
                 // Set the value of the date input to the formatted date
                 const dateInput = eventEmpty.querySelector("#datepicker");
                 if (dateInput) {
@@ -402,45 +230,325 @@ $(document).ready(function () {
                 });
             }
         } else {
-            const eventList = document.getElementsByClassName("event-list")[0];
+            const eventList = document.getElementsByClassName("event-header")[0];
 
             if (eventList) {
-                // Remove any existing events before adding a new one
-                const existingEvent = eventList.querySelector('.event-container[data-event-index="event990"]');
-                if (existingEvent) {
-                    existingEvent.remove(); // Remove the previous event
-                }
+               
                 const eventList2 = document.querySelector('.event-list');
 
                 if (eventList2 && eventList2.querySelector('.w-100')) {
 
                 } else {
+
+                    const [month, day, year] = newDate.split('/');
+                    const monthNames = [
+                        "January", "February", "March", "April", "May", "June", "July",
+                        "August", "September", "October", "November", "December"
+                    ];
+
+                    // Convert the month number to month name and remove the leading zero from the day
+                    const formattedDate = `${monthNames[parseInt(month) - 1]}${parseInt(day)}, ${year}`;
+
+
                     const eventHTML = `
-        <div class="event-container" role="button" data-event-index="event990">
-            <div class="event-icon">
-                <div class="event-bullet-reservation" style="background-color:#63d867"></div>
-            </div>
-            <div class="event-info" onclick="displayTimeHTML()">
-                <p class="event-title">Add</p>
-                <p class="event-desc">-----------------------------------</p>
-            </div>
-        </div>
+        <div class="event-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <p style="margin: 0; font-size: 30px; font-weight: 600;">${formattedDate}</p>
+    <button class="btn btn-primary time-btn" onclick="displayTimeHTML()">Add New</button>
+</div>
+
     `;
 
                     // Append the new event HTML
-                    eventList.innerHTML += eventHTML;
+                    eventList.innerHTML = eventHTML;
                 }
             }
 
         }
     });
 });
+function getResData() {
+    // Select the event-header element
+    const eventHeader = document.querySelector('.event-header');
+
+    // Check if there is a button with class 'btn' inside the event-header
+    const button = eventHeader.querySelector('button.btn');
+
+    if (button) {
+        // If the button exists, remove it
+        button.remove();
+    }
+
+    $.ajax({
+        url: "/admin/getRoomData", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (data) {
+            const response = data.room;
+            const roomRate = data.rate;
+            const select = document.getElementById("roomList");
+            let options = `<option value="">---Reserve---</option>`;
+
+            response.forEach((element) => {
+                if (element.room_id == 0) {
+                    options += `<option value="${element.room_id}">Hotdesk</option>`;
+                } else {
+                    options += `<option value="${element.room_id}">Room ${element.room_number}</option>`;
+                }
+            });
+
+            select.innerHTML = options;
+
+            function selectReserve(selectElement) {
+                const selectedValue = selectElement.value;
+                const container = document.getElementById("reserveContainer");
+                if (selectedValue == "") {
+                    container.innerHTML = "";
+                }
+                else if (selectedValue == '0') {
+                    // Get the container to hold the input field
+                    let result = `
+    <div class="col-md-6">
+        <label for="customer_number">Number of Customer</label>
+        <input type="number" class="form-control" value="1" name="customer_count" id="customer_count">
+    </div> 
+    `;
+
+                    result += `
+    <div class="col-md-6">
+        <label for="customer_bill">Select Rate Plan</label>
+        <select class="form-control" id="customer_bill" name="customer_bill">
+    `;
+
+                    result += `<option value="0">Open Time</option>`;
+                    roomRate.forEach((rate) => {
+                        if (rate.room_id == 0) {
+                            result += `<option value="${rate.rp_id}">${rate.rp_rate_description}</option>`;  // Add each option to the result
+                        }
+                    });
+
+                    result += `
+        </select>
+    </div>
+    `;
+                    container.innerHTML = result;
+                } else {
+                    let result = `
+    <div class="col-md-6">
+        <label for="customer_number">Number of Customers</label>
+        <select class="form-control" id="customer_count" name="customer_count">
+`;
+
+                    // Add customer number options based on selected room capacity
+                    response.forEach((room) => {
+                        if (selectedValue == room.room_id) {
+                            const capacity = parseInt(room.room_capacity, 10);
+                            for (let i = 1; i <= capacity; i++) {
+                                result += `<option value="${i}">${i}</option>`;
+                            }
+                        }
+                    });
+
+                    result += `
+        </select>
+    </div>
+`;
+
+                    result += `
+    <div class="col-md-6">
+        <label for="customer_bill">Room Rate</label>
+        <select class="form-control" id="customer_bill" name="customer_bill">
+`;
+
+                    // Add room rate options based on the selected room
+                    roomRate.forEach((rate) => {
+                        if (rate.room_id == selectedValue) {
+                            result += `<option value="${rate.rp_id}">${rate.rp_rate_description} ₱${rate.rp_price}</option>`;
+                        }
+                    });
+
+                    result += `
+        </select>
+    </div>
+`;
+
+                    // Inject the generated HTML into the container
+                    container.innerHTML = result;
+
+                    // Attach change event listener to the 'customer_bill' select element
+                    const validate = document.getElementById("customer_bill");
+
+                    if (validate) {
+                        validate.addEventListener('change', function () {
+                            const selectedValue = validate.value;
+                            const existingEndDateField = document.getElementById('endDateField');
+    if (existingEndDateField) {
+        existingEndDateField.remove();
+    }
+                            // Loop through roomRate and check the rate description
+                            roomRate.forEach((rate) => {
+                                if (rate.rp_id == selectedValue) {
+                                    const rateDescription = rate.rp_rate_description;
+
+                                    if (rateDescription.includes("Daily") || rateDescription.includes("Weekly") || rateDescription.includes("Monthly")) {
+                                        // Append the 'End Date' field dynamically
+                                        let endDateField = "";
+                                        if(rateDescription.includes("Daily")){
+                                            console.log('here')
+                                         endDateField = `
+                        <div class="col-md-12" id="endDateField">
+    <label for="datepicker2">End Date:</label>
+    <input type="date" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date" onchange="validateDays(this)">
+    <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
+</div>
+
+                    `;
+                                        }else if(rateDescription.includes("Weekly")){
+                                                           endDateField = `
+                        <div class="col-md-12" id="endDateField">
+    <label for="datepicker2">End Date:</label>
+    <input type="week" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date" onchange="validateWeek()">
+    <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
+</div>
+
+                    `;
+                                        }else if(rateDescription.includes("Monthly")){
+                                            endDateField =`
+                                            <div class="col-md-12" id="endDateField">
+    <label for="datepicker2">End Date:</label>
+    <input type="month" class="form-control" id="datepicker2" name="end_date" placeholder="Select a month" onchange="validateMonth()">
+    <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
+</div>
+
+                                            `;
+                                        }
+                                        // Use insertAdjacentHTML instead of innerHTML to avoid overwriting the container's existing content
+                                        if (!document.getElementById('endDateField')) {
+                                            container.insertAdjacentHTML('beforeend', endDateField);
+                                        }
+                                    } else {
+                                        // Remove the 'End Date' field if it exists
+                                        const existingEndDateField = document.getElementById('endDateField');
+                                        if (existingEndDateField) {
+                                            existingEndDateField.remove();
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    }
+                }
+            }
+            // Add an event listener to the select element instead of using onchange in HTML
+            select.addEventListener('change', function () {
+                selectReserve(this);
+            });
+        },
+        error: function (xhr, status, error) {
+            $("#result").html("<p>Error: " + error + "</p>");
+        },
+    });
+}
+function validateDays(inputElement) {
+    const selectedDate = new Date(inputElement.value);  // Get the selected date from the input element
+    const currentDate = new Date(); // Get the current date
+
+    // Set current date to midnight (00:00:00) to avoid time discrepancies
+    currentDate.setHours(0, 0, 0, 0);
+
+    const dayOfWeek = selectedDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
+    const errorMessage = document.getElementById('dateError2');
+
+    if (selectedDate < currentDate) {
+        // If the selected date is in the past
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'You cannot select a past date!';
+        inputElement.value = '';  // Clear the invalid selection
+    } else if (dayOfWeek === 0) {
+        // If the selected date is a Sunday
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'You cannot select a Sunday!';
+        inputElement.value = '';  // Clear the invalid selection
+    } else {
+        // Hide the error message if the date is valid
+        errorMessage.style.display = 'none';
+    }
+}
+
+function validateMonth() {
+    const monthInput = document.getElementById('datepicker2');
+    const selectedMonth = monthInput.value; // Format: YYYY-MM
+
+    // Get the current month and year
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1; // Months are 0-based
+
+    // Split the selected month into year and month
+    const [selectedYear, selectedMonthValue] = selectedMonth.split('-').map(Number);
+
+    // Validate the selected month
+    if (selectedYear < currentYear || (selectedYear === currentYear && selectedMonthValue < currentMonth)) {
+        const dateError = document.getElementById('dateError2');
+        dateError.textContent = "Please select a future month.";
+        dateError.style.display = 'block';
+        monthInput.value = ''; // Clear the input
+    } else {
+        // Clear any previous error message
+        const dateError = document.getElementById('dateError2');
+        dateError.style.display = 'none';
+    }
+}
+
+function validateWeek() {
+    const weekInput = document.getElementById('datepicker2');
+    const errorMessage = document.getElementById('dateError2');
+
+    // Get the selected week value
+    const selectedWeek = weekInput.value;
+    
+    if (!selectedWeek) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Please select a week.';
+        return;
+    }
+
+    // Get the current date and week
+    const currentDate = new Date();
+    const currentWeekNumber = getISOWeek(currentDate);
+    const currentYear = currentDate.getFullYear();
+
+    // Parse the selected week (format: YYYY-Www)
+    const [selectedYear, selectedWeekNumber] = selectedWeek.split('-W').map(Number);
+
+    // Check if the selected week is in the past
+    if (selectedYear < currentYear || (selectedYear === currentYear && selectedWeekNumber < currentWeekNumber)) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'You cannot select a past week.';
+        weekInput.value = ''; // Clear the input
+    } else {
+        errorMessage.style.display = 'none'; // Hide error message
+        console.log('Selected week is valid.'); // Log a message or perform further actions here
+    }
+}
+
+// Function to calculate the ISO week number
+function getISOWeek(date) {
+    const target = new Date(date);
+    const dayNr = (date.getDay() + 6) % 7;
+    target.setDate(target.getDate() - dayNr + 3);
+    const firstThursday = target.valueOf();
+    target.setMonth(0, 1);
+    if (target.getDay() !== 4) {
+        target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+    }
+    return 1 + Math.ceil((firstThursday - target) / 604800000);
+}
+
 function displayTimeHTML() {
+    getResData()
     let satVal = 'false';
-    console.log(newDate3)
     const selectedDate = newDate3;  // Assuming the datepicker exists
     const dateObject = new Date(selectedDate);
-
     if (dateObject.getDay() === 6) { // 6 represents Saturday
         satVal = 'true';
     }
@@ -498,6 +606,7 @@ function selectTime(element) {
 
 }
 function viewForm(date, time) {
+    console.log(date)
     $('#addEvent').modal('show');
 
     // Reformat the date from MM/DD/YYYY to Month/DD/YYYY
@@ -509,7 +618,7 @@ function viewForm(date, time) {
 
     // Convert the month number to month name
     const formattedDate = `${monthNames[parseInt(month) - 1]} ${day}, ${year}`;
-
+    console.log(formattedDate)
     // Set the formatted date and time in the form labels
     document.getElementById('formTimeLabel').textContent = time;
     document.getElementById('formDateLabel').textContent = formattedDate;
@@ -519,6 +628,10 @@ function viewForm(date, time) {
 
     // Call setTime function to set the time in the input
     setTime(timeInput, time);
+    const dateInput = document.getElementById("datepicker");
+    if (dateInput) {
+        dateInput.value = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`; // Proper format for input type="date"
+    }
 }
 
 function setTime(inputElement, time12h) {
@@ -544,6 +657,8 @@ function setTime(inputElement, time12h) {
 function dynamicFuction(formId, routeUrl, process) {
     // Show the loader
     // hello
+    const check = document.getElementById('start_time').value
+    console.log(check)
     // document.getElementById('roller').style.display = 'flex';
 
     // // Serialize the form data
@@ -555,9 +670,11 @@ function dynamicFuction(formId, routeUrl, process) {
     //     url: routeUrl + "?process=" + process,
     //     data: formData,
     //     success: function (response) {
-
+    //         console.log(response)
     //         document.getElementById('roller').style.display = 'none';
-
+    //         if (response.status == 'error') {
+    //             alertify.alert("Error", response.message);
+    //         }
     //     },
     //     error: function (xhr, status, error) {
     //         console.error(xhr.responseText);
