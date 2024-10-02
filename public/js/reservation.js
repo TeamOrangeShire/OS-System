@@ -33,7 +33,6 @@ $(document).ready(function() {
         }, error: xhr=> console.log(xhr.responseText)
     })
 
-
 });
 
 function formatDate(dateString, type = 'render') {
@@ -55,3 +54,4 @@ function formatDate(dateString, type = 'render') {
         return `${monthName} ${parseInt(day, 10)}, ${year}`;
    }
 }
+

@@ -15,12 +15,10 @@ use Exception;
 class Reservation extends Controller
 {
 
-
   public function getRoomData(Request $req)
   {
     $room = Rooms::select('room_id', 'room_number', 'room_capacity')->get();
     $roomRate = RoomRates::select('rp_id', 'room_id', 'rp_rate_description', 'rp_price')->get();
-
     return response()->json(['room' => $room, 'rate' => $roomRate, 'status' => 'success']);
   }
   public function getRooms()
@@ -92,8 +90,6 @@ class Reservation extends Controller
         }
       }
     }
-
-
     return response()->json(['success' => true]);
   }
   public function submitAdminReservation(Request $request)
@@ -107,13 +103,15 @@ class Reservation extends Controller
         }
       }
       $rate = RoomRates::where('rp_id', $request->customer_bill)->first();
+
+
       if ($rate->rp_rate_description == 'Hourly') {
         $startDate = $request->start_date;  // Example start date
         $start = $request->start_time;  // Example start time, e.g., "23:30"
         $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
 
         $endTime = $startTime->copy()->addHour(); // Add 1 hour to the start time
-        $endDate = Carbon::createFromFormat('m/d/Y', $startDate); // Parse the start date
+        $endDate = Carbon::createFromFormat('Y-m-d', $startDate); // Parse the start date
 
         // Check if the end time exceeds midnight
         if ($endTime->format('H:i') < $startTime->format('H:i')) {
@@ -122,14 +120,13 @@ class Reservation extends Controller
         }
 
         $end = $endTime->format('H:i'); // Format the end time
-        $endDateFormatted = $endDate->format('m/d/Y'); // Format the end date
+        $endDateFormatted = $endDate->format('Y-m-d'); // Format the end date
       } else if ($rate->rp_rate_description == '4 Hours') {
         $startDate = $request->start_date;  // Example start date
         $start = $request->start_time;  // Example start time, e.g., "16:00"
         $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
-
         $endTime = $startTime->copy()->addHours(4); // Add 4 hours to the start time
-        $endDate = Carbon::createFromFormat('m/d/Y', $startDate); // Parse the start date
+        $endDate = Carbon::createFromFormat('Y-m-d', $startDate); // Parse the start date
 
         // Check if the end time exceeds midnight
         if ($endTime->format('H:i') < $startTime->format('H:i')) {
@@ -138,24 +135,62 @@ class Reservation extends Controller
         }
 
         $end = $endTime->format('H:i'); // Format the end time
-        $endDateFormatted = $endDate->format('m/d/Y'); // Format the end date
+        $endDateFormatted = $endDate->format('Y-m-d'); // Format the end date
       } else if ($rate->rp_rate_description == 'Daily (12 Hours)') {
         $startDate = $request->start_date;
         $start = $request->start_time;
-        $startTime = Carbon::createFromFormat('H:i', $start); // Parse the start time using Carbon
-        $endTime = $startTime->addHours(12); // Add 12 hours to the start time
+        $end = $request->start_time;
+        $endDateFormatted = $request->end_date;
+      } else if ($rate->rp_rate_description == 'Weekly') {
+        $startDate = $request->start_date; // e.g., '2024-10-03' (3rd October 2024)
+        $endDate = $request->end_date;     // e.g., '2024-W43' (ISO week)
 
-        // If the end time exceeds or equals 24:00, adjust the date
-        if ($endTime->format('H:i') >= '24:00') {
-          $endTime->subHours(24); // Subtract 24 hours to keep the time within a 24-hour range
-          $endDate = Carbon::createFromFormat('m/d/Y', $startDate)->addDay(); // Increment the date by one day
-        } else {
-          $endDate = Carbon::createFromFormat('m/d/Y', $startDate); // Keep the same date
+        // Convert $startDate to a Carbon instance
+        $startCarbon = Carbon::createFromFormat('Y-m-d', $startDate);
+
+        // Extract the year and week number from the endDate
+        list($year, $week) = explode('-W', $endDate);
+
+        // Get the first day of the specified ISO week
+        $endWeekStart = Carbon::now()->setISODate($year, $week, 1); // Monday of the week
+
+        // Calculate the number of weeks between the start date and the desired end week
+        $weeksDiff = $startCarbon->diffInWeeks($endWeekStart);
+
+        // Calculate the specific end date by adding the difference in weeks
+        $specificEndDate = $startCarbon->copy()->addWeeks($weeksDiff);
+
+        // Check if the specific end date is within the same week as the desired week
+        $endDateCarbon = $endWeekStart->copy()->addDays(6); // Get the last day (Sunday) of the desired week
+
+        // Ensure the specific end date does not exceed the desired end week
+        if ($specificEndDate->greaterThan($endDateCarbon)) {
+          $specificEndDate = $endDateCarbon; // Set it to the end of the specified week
         }
 
-        // Format the results
-        $end = $endTime->format('H:i');
-        $endDateFormatted = $endDate->format('m/d/Y');
+        // Add 7 days to the final end date
+        $specificEndDate->addDays(7); // Add 7 days to the specific end date
+        $end = $request->start_time;
+        // Format the end date
+        $endDateFormatted = $specificEndDate->format('Y-m-d'); // Format the end date
+      } else if ($rate->rp_rate_description == 'Monthly') {
+        $startDate = $request->start_date; // Format: Y-m-d
+        $endDate = $request->end_date; // Format: Y-m (e.g., '2024-11')
+
+        // Convert the start date to a Carbon instance
+        $start = Carbon::createFromFormat('Y-m-d', $startDate);
+
+        // Parse the endDate to get the year and month
+        list($year, $month) = explode('-', $endDate);
+
+        // Get the day from the start date
+        $day = $start->day;
+
+        // Set the end date to the same day of the specified month
+        $endDate = Carbon::createFromDate($year, $month, $day);
+
+        $end = $request->start_time;
+        $endDateFormatted = $endDate->format('Y-m-d'); // Format the end date
       }
 
       $reserve = new Reservations();
@@ -168,12 +203,13 @@ class Reservation extends Controller
       $reserve->pax = $request->customer_count;
       $reserve->rate_id = $request->customer_bill;
       $reserve->start_date = $request->start_date;
-      $reserve->end_date = $request->start_date;
+      $reserve->end_date = $endDateFormatted;
       $reserve->start_time = $request->start_time;
-      $reserve->end_time = $request->start_time;
+      $reserve->end_time = $end;
       $reserve->date_approved =  Carbon::now();
       $reserve->status = 1;
       $reserve->save();
+      return response()->json(['status' => 'success', 'message' => "$end and $endDateFormatted"]);
     }
 
     return response()->json(['status' => 'success']);

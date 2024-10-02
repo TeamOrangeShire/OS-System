@@ -3,6 +3,41 @@ today.setHours(0, 0, 0, 0);
 let roomDetails;
 let rateList;
 let selectedDateGlobal;
+
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-bottom-full-width",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+
+  const monthList = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+];
+
+
 $(document).ready(function() {
     $('#calendars').evoCalendar({
         theme: "Orange Coral",
@@ -43,8 +78,84 @@ $(document).ready(function() {
             roomDetails = res.rooms;
             rateList = res.rates;
         }, error: xhr=> console.log(xhr.responseText)
-    })
+    });
+
+
+    const currentYear = new Date().getFullYear();
+    const weeks = getWeeksInYear(currentYear);
+
+    const weeklySelect = document.getElementById('selectEndDateWeekly');
+    const todayWeek = new Date();
+
+    weeks.forEach(d => {
+        // Parse the end date of the week to a Date object for comparison
+        const endDate = new Date(d.end);
+
+        // Disable if the end date of the week is in the past
+        if (endDate < todayWeek) {
+            weeklySelect.innerHTML += `<option value="${d.end}" disabled>${formatDate(d.start)} - ${formatDate(d.end)} (Week ${d.week}) Past</option>`;
+        } else {
+            weeklySelect.innerHTML += `<option value="${d.end}">${formatDate(d.start)} - ${formatDate(d.end)} (Week ${d.week})</option>`;
+        }
+    });
+
+
+    const months = document.getElementById('selectEndDateMonthly');
+
+
+
+    const currentMonth = new Date().getMonth();
+
+    monthList.forEach((m, index) => {
+
+        if (index <= currentMonth) {
+            months.innerHTML += `<option value="${m}" disabled>${m}(Passed Month)</option>`;
+        } else {
+            months.innerHTML += `<option value="${m}">${m}</option>`;
+        }
+    });
+
+    months.innerHTML += `<option value="other">${currentYear + 1} Months</option>`;
+
+    const dateToday = new Date().toISOString().split('T')[0];
+
+    document.getElementById('selectEndDate').setAttribute('min', dateToday);
+
 });
+
+
+function getWeeksInYear(year) {
+    const weeks = [];
+    let startDate = new Date(year, 0, 1); // January 1st of the given year
+
+    // Adjust startDate to the first Sunday of the year
+    while (startDate.getDay() !== 0) {
+        startDate.setDate(startDate.getDate() + 1);
+    }
+
+    let weekNumber = 1;
+    while (startDate.getFullYear() === year) {
+        let endDate = new Date(startDate); // Copy startDate
+        endDate.setDate(endDate.getDate() + 6); // End of the week (Saturday)
+
+        // Ensure the endDate does not exceed the current year
+        if (endDate.getFullYear() !== year) {
+            endDate = new Date(year, 11, 31); // Set to December 31st
+        }
+
+        weeks.push({
+            week: weekNumber,
+            start: startDate.toLocaleDateString(), // Format as MM/DD/YYYY
+            end: endDate.toLocaleDateString()
+        });
+
+        // Move to the next week
+        startDate.setDate(startDate.getDate() + 7);
+        weekNumber++;
+    }
+
+    return weeks;
+}
 
 $('#calendars').on('selectDate', function(event, newDate) {
     disablePastDates(today);
@@ -262,9 +373,21 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
     const selectHotdesk = document.getElementById('selectHotdesk');
     const selectRoomRatesDiv = document.getElementById('selectRoomRatesDiv');
     const selectRoomRates = document.getElementById('selectRoomRates');
-    const selectEndDateDiv = document.getElementById('selectEndDateDiv');
 
     const selectPaxHotdeskDiv = document.getElementById('selectPaxHotdeskDiv');
+
+
+    const selectEndDateDiv = document.getElementById('selectEndDateDiv');
+    const selectEndTimeDiv = document.getElementById('selectEndTimeDiv');
+    const selectEndDateMonthlyDiv = document.getElementById('selectEndDateMonthlyDiv');
+    const selectEndDateWeeklyDiv = document.getElementById('selectEndDateWeeklyDiv');
+
+
+    const selectEndDate = document.getElementById('selectEndDate');
+    const selectEndDateWeekly = document.getElementById('selectEndDateWeekly');
+    const selectEndDateMonthly = document.getElementById('selectEndDateMonthly');
+    const selectEndTime = document.getElementById('selectEndTime');
+
 
     if(selectReserve.value != 0){
         selectPaxDiv.classList.remove('d-none');
@@ -276,8 +399,12 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
         for(let i = 0; i < +selectedRoom[0].room_capacity; i++){
             selectPax.innerHTML += `<option>${i+1}</option>`;
         }
-
+        selectEndTime.disabled = false;
+        selectEndTimeDiv.classList.remove('d-none');
         selectRoomRatesDiv.classList.remove('d-none');
+        selectEndDateWeeklyDiv.classList.add('d-none');
+        selectEndDateMonthlyDiv.classList.add('d-none');
+        selectEndDateDiv.classList.add('d-none');
         const roomRates = rateList.filter(x => x.room_id == selectReserve.value);
         selectRoomRates.innerHTML = '';
         roomRates.forEach(data=> {
@@ -291,6 +418,14 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
         selectPaxHotdeskDiv.classList.remove('d-none');
         const hotdeskRates = rateList.filter(x => x.room_id == 0);
         selectHotdesk.innerHTML = '<option value="0">Open Time</option>';
+        selectEndTimeDiv.classList.add('d-none');
+        selectEndDateWeeklyDiv.classList.add('d-none');
+        selectEndDateMonthlyDiv.classList.add('d-none');
+
+        selectEndDate.disabled = true;
+        selectEndDateMonthly.disabled = true;
+        selectEndDateWeekly.disabled = true;
+        selectEndTime.disabled = true;
 
         hotdeskRates.forEach(data=> {
             selectHotdesk.innerHTML += `<option value="${data.rp_id}">${data.rp_rate_description}</option>`;
@@ -312,11 +447,53 @@ document.getElementById('addGuestBtn').addEventListener('click', ()=> {
 document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
     const selectedRate = rateList.filter(x => x.rp_id == e.target.value);
     const selectEndDateDiv = document.getElementById('selectEndDateDiv');
-    if(selectedRate[0].rp_rate_description == 'Daily (12 Hours)' || selectedRate[0].rp_rate_description == 'Weekly' || selectedRate[0].rp_rate_description == 'Monthly' ){
-        selectEndDateDiv.classList.remove('d-none');
-    }else{
-        selectEndDateDiv.classList.add('d-none');
+    const selectEndDateWeeklyDiv = document.getElementById('selectEndDateWeeklyDiv');
+    const selectEndDateMonthlyDiv = document.getElementById('selectEndDateMonthlyDiv');
+    const selectEndTimeDiv = document.getElementById('selectEndTimeDiv');
+
+    const selectEndDate = document.getElementById('selectEndDate');
+    const selectEndDateWeekly = document.getElementById('selectEndDateWeekly');
+    const selectEndDateMonthly = document.getElementById('selectEndDateMonthly');
+    const selectEndTime = document.getElementById('selectEndTime');
+
+    const hide = (element, input) => {
+        if(!element.classList.contains('d-none')){
+            element.classList.add('d-none');
+        }
+        input.disabled = true;
     }
+
+    hide(selectEndDateDiv, selectEndDate);
+    hide(selectEndDateWeeklyDiv, selectEndDateWeekly);
+    hide(selectEndDateMonthlyDiv, selectEndDateMonthly);
+    hide(selectEndTimeDiv, selectEndTime);
+    const endDateType = document.getElementById('endDateType');
+    switch(selectedRate[0].rp_rate_description){
+        case "Daily (12 Hours)":
+            selectEndDateDiv.classList.remove('d-none');
+            selectEndDate.disabled = false;
+            endDateType.value = "Daily";
+            break;
+        case "Weekly":
+            selectEndDateWeeklyDiv.classList.remove('d-none');
+            selectEndDateWeekly.disabled = false;
+            endDateType.value = "Weekly";
+            break;
+        case "Monthly":
+            selectEndDateMonthlyDiv.classList.remove('d-none');
+            selectEndDateMonthly.disabled = false;
+            endDateType.value = "Monthly";
+            break;
+        case "Hourly":
+            selectEndTimeDiv.classList.remove('d-none');
+            selectEndTime.disabled = false;
+            endDateType.value = "Hourly";
+            break;
+        default:
+            endDateType.value = "4 Hours";
+            break;
+    }
+
 });
 
 function openReserveModal(time){
@@ -381,4 +558,83 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
             }
         }, error: xhr=> console.log(xhr.responseText)
     })
+});
+
+
+
+
+function formatDate(dateString) {
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    // Split the input string by the hyphen to get year, month, and day
+    const [month, day, year] = dateString.split('/');
+
+    // Convert the month to the full month name
+    const monthName = months[parseInt(month, 10) - 1];
+
+    // Return the formatted date in "Month/day/year" format
+
+        return `${monthName} ${parseInt(day, 10)}, ${year}`;
+
+}
+
+document.getElementById('selectEndTime').addEventListener('change', e => {
+    const now = new Date();
+
+    // Get the current time plus one hour
+    const currentTime = new Date(now.getTime() + 60 * 60 * 1000); // Add 1 hour to current time
+
+    // Get the selected time from the input
+    const selectedTime = e.target.value;
+
+    if (selectedTime === "") {
+        alert("Please select a time.");
+        return;
+    }
+
+    // Create a date object for the selected time, keeping the same date as the current date
+    const [selectedHours, selectedMinutes] = selectedTime.split(':');
+    const selectedDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), selectedHours, selectedMinutes);
+
+    // Compare selected time with the current time (plus 1 hour)
+    if (selectedDate < currentTime) {
+        toastr["error"]("Invalid Time! The selected time must be at least one hour ahead of the current time.");
+    }
+});
+
+document.getElementById('selectEndDateMonthly').addEventListener('change', e=> {
+    const months = document.getElementById('selectEndDateMonthly');
+    if(e.target.value === "other"){
+        months.innerHTML = '';
+        const nextYear = new Date().getFullYear() + 1;
+        const currentYear = new Date().getFullYear();
+        monthList.forEach(data => {
+            months.innerHTML += `<option value="${data}-${nextYear}">${data} (${nextYear})</option>`
+        });
+
+        months.innerHTML += `<option value="back">Back to ${currentYear}</option>`
+    }else if(e.target.value === 'back'){
+        months.innerHTML = '';
+
+        const currentMonth = new Date().getMonth();
+
+        monthList.forEach((m, index) => {
+
+        if (index <= currentMonth) {
+            months.innerHTML += `<option value="${m}" disabled>${m}(Passed Month)</option>`;
+        } else {
+            months.innerHTML += `<option value="${m}">${m}</option>`;
+        }
+        });
+        const nextYear = new Date().getFullYear() + 1;
+        months.innerHTML += `<option value="other">${nextYear} Months</option>`
+    }
+});
+
+document.getElementById('selectEndDateWeekly').addEventListener('change', e => {
+
+
 });

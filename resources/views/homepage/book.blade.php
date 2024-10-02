@@ -85,7 +85,7 @@
                     @csrf
                     <input type="hidden" id="startDateReservation" name="startDate">
                     <input type="hidden" id="startTimeReservation" name="startTime">
-                    <input type="hidden" name="endTime" id="endTimeReservation">
+                    <input type="hidden" name="endDateType" id="endDateType">
                     <h3> Fill up form </h3>
                     <div class="d-flex flex-column gap-1">
                         <div class="form-group">
@@ -150,6 +150,25 @@
                         <div class="form-group mt-2 d-none" id="selectEndDateDiv">
                             <label for="selectEndDate"> Reservation End Date </label>
                             <input name="endDates" type="date" class="form-control" id="selectEndDate">
+                        </div>
+
+                        <div class="form-group mt-2 d-none" id="selectEndDateWeeklyDiv">
+                            <label for="selectEndDateWeekly"> Reservation End Date </label>
+                            <select name="endDates" id="selectEndDateWeekly" class="form-select">
+
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-2 d-none" id="selectEndDateMonthlyDiv">
+                            <label for="selectEndDateMonthly"> Reservation End Date </label>
+                            <select name="endDates" id="selectEndDateMonthly" class="form-select">
+
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-2 d-none" id="selectEndTimeDiv">
+                            <label for="selectEndTime"> Reservation End Time </label>
+                            <input name="endDates" type="time" class="form-control" id="selectEndTime">
                         </div>
 
                     </div>
