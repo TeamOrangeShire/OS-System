@@ -55,41 +55,52 @@ class Reservation extends Controller
     public function SubmitReservationCustomer(Request $req)
     {
         $reserve = new Reservations();
+        $endTime = "";
+        switch($req->endDateType){
+            case "Daily":
+                $endDate = $req->endDates;
+                break;
+            case "Weekly":
+                $endDate = $req->endDates;
+                break;
+            case "Monthly":
 
-        // Ensure startTime is in 'h:i A' format
-        $rateDetails = RoomRates::where('rp_id', $req->rates)->first();
-        $startTime = Carbon::createFromFormat('h:i A', $req->startTime);
-        if($rateDetails){
-                    // Determine end time based on rate description
+                $nextYear = false;
+                $month = $req->endDates;
+                if(str_contains($req->endDates, "-")){
+                    $month = explode('-', $req->endDates)[0];
+                    $nextYear= true;
+                }
 
-            switch ($rateDetails->rate_description) {
-                case "Hourly":
-                    $endTime = $startTime->copy()->addHour();
-                    break;
-                case "4 Hours":
-                    $endTime = $startTime->copy()->addHours(4);
-                    break;
-                default:
-                    $endTime = $startTime; // Ensure endTime is a Carbon instance
-                    break;
-            }
+                $date = Carbon::createFromFormat('m/d/Y', $req->startDate);
+                $newDate = $date->month(Carbon::parse($month)->month);
 
-        }else{
-            $endTime = "";
+                if($nextYear){
+                   $newDate->addYear();
+                }
+
+                $formattedDate = $newDate->format('m/d/Y');
+                $endDate = $formattedDate;
+                break;
+            case "Hourly":
+                $endDate = $req->startDate;
+                $endTime = $req->endDates;
+                break;
+            default:
+                break;
         }
-
         $reserve->c_name = $req->name;
         $reserve->c_email = $req->email;
         $reserve->phone_num = $req->contact;
         $reserve->c_guest_emails = $req->guestemails;
         $reserve->request = $req->reservationRequest;
-        $reserve->room_id = (int) $req->reserveType;
-        $reserve->pax = (int) $req->reserveType != 0 ? $req->pax : $req->paxhotdesk;
-        $reserve->rate_id = (int) $req->rates;
-        $reserve->start_date = Carbon::parse($req->startDate)->format('Y-m-d');
-        $reserve->end_date = Carbon::parse($req->endDate)->format('Y-m-d');
-        $reserve->start_time = $startTime->format('H:i:s');
-        $reserve->end_time = $endTime == "" ? "" : $endTime->format('H:i:s');
+        $reserve->end_date = $endDate;
+        $reserve->start_date = $req->startDate;
+        $reserve->start_time = $req->startTime;
+        $reserve->end_time = $endTime;
+        $reserve->room_id = $req->reserveType;
+        $reserve->pax = $req->reserveType == 0 ? $req->paxhotdesk : $req->pax;
+        $reserve->rate_id = $req->rates;
         $reserve->status = 0;
         $reserve->save();
 

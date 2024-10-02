@@ -85,6 +85,7 @@
                     @csrf
                     <input type="hidden" id="startDateReservation" name="startDate">
                     <input type="hidden" id="startTimeReservation" name="startTime">
+                    <input type="hidden" name="endDateType" id="endDateType">
                     <h3> Fill up form </h3>
                     <div class="d-flex flex-column gap-1">
                         <div class="form-group">

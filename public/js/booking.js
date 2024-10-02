@@ -385,7 +385,7 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
 
     const selectEndDate = document.getElementById('selectEndDate');
     const selectEndDateWeekly = document.getElementById('selectEndDateWeekly');
-    const selectEndDateMonthly = document.getElementById('selectEndDateMonthyly');
+    const selectEndDateMonthly = document.getElementById('selectEndDateMonthly');
     const selectEndTime = document.getElementById('selectEndTime');
 
 
@@ -402,6 +402,9 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
         selectEndTime.disabled = false;
         selectEndTimeDiv.classList.remove('d-none');
         selectRoomRatesDiv.classList.remove('d-none');
+        selectEndDateWeeklyDiv.classList.add('d-none');
+        selectEndDateMonthlyDiv.classList.add('d-none');
+        selectEndDateDiv.classList.add('d-none');
         const roomRates = rateList.filter(x => x.room_id == selectReserve.value);
         selectRoomRates.innerHTML = '';
         roomRates.forEach(data=> {
@@ -464,23 +467,30 @@ document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
     hide(selectEndDateWeeklyDiv, selectEndDateWeekly);
     hide(selectEndDateMonthlyDiv, selectEndDateMonthly);
     hide(selectEndTimeDiv, selectEndTime);
-
+    const endDateType = document.getElementById('endDateType');
     switch(selectedRate[0].rp_rate_description){
         case "Daily (12 Hours)":
             selectEndDateDiv.classList.remove('d-none');
             selectEndDate.disabled = false;
+            endDateType.value = "Daily";
             break;
         case "Weekly":
             selectEndDateWeeklyDiv.classList.remove('d-none');
             selectEndDateWeekly.disabled = false;
+            endDateType.value = "Weekly";
             break;
         case "Monthly":
             selectEndDateMonthlyDiv.classList.remove('d-none');
             selectEndDateMonthly.disabled = false;
+            endDateType.value = "Monthly";
             break;
         case "Hourly":
             selectEndTimeDiv.classList.remove('d-none');
             selectEndTime.disabled = false;
+            endDateType.value = "Hourly";
+            break;
+        default:
+            endDateType.value = "4 Hours";
             break;
     }
 
@@ -602,7 +612,7 @@ document.getElementById('selectEndDateMonthly').addEventListener('change', e=> {
         const nextYear = new Date().getFullYear() + 1;
         const currentYear = new Date().getFullYear();
         monthList.forEach(data => {
-            months.innerHTML += `<option>${data} (${nextYear})</option>`
+            months.innerHTML += `<option value="${data}-${nextYear}">${data} (${nextYear})</option>`
         });
 
         months.innerHTML += `<option value="back">Back to ${currentYear}</option>`
