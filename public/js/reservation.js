@@ -10,7 +10,7 @@ $(document).ready(function() {
             res.data.forEach( data => {
 
                 const reservation = {};
-                if(data.room_id!=0){
+                if(data.room_id!=0 && data.status != 0){
                     reservation.id = data.r_id;
                     reservation.name = `Meeting Room ${data.room_number}`;
                     reservation.date = data.start_date == data.end_date ? formatDate(data.start_date) : [formatDate(data.start_date), formatDate(data.end_date)];
@@ -23,10 +23,7 @@ $(document).ready(function() {
 
 
              });
-
-
-             console.log(reservationData);
-
+             
              $('#calendars').evoCalendar({
                 theme:"Orange Coral",
                 calendarEvents: reservationData
