@@ -27,6 +27,7 @@ class Reservations extends Model
       'request',
       'rate_id',
       'date_cancelled',
-      'date_approved'
+      'date_approved',
+      'transaction_id'
     ];
 }
