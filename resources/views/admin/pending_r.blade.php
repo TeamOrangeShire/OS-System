@@ -183,7 +183,7 @@ input[type="text"]::placeholder {
                                     </div>
                                     </div>
                                     </div>
-                                <div class="form-group" hidden>
+                                <div class="form-group" >
                                     <div class="row">
                                     <div class="col-md-6">
                                     <label for="datepicker">Start Date:</label>

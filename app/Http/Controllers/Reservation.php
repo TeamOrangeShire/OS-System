@@ -156,9 +156,8 @@ class Reservation extends Controller
           return response()->json(['status' => 'error', 'message' => "$key Please fill in all fields"]); // Return an error response
         }
       }
+
       $rate = RoomRates::where('rp_id', $request->customer_bill)->first();
-
-
       if ($rate->rp_rate_description == 'Hourly') {
         $startDate = $request->start_date;  // Example start date
         $start = $request->start_time;  // Example start time, e.g., "23:30"
@@ -247,6 +246,12 @@ class Reservation extends Controller
         $endDateFormatted = $endDate->format('Y-m-d'); // Format the end date
       }
 
+      $checkReserve = Reservations::where('room_id', $request->room_id)->where('status', '1')->first();
+      if ($endDateFormatted < $request->start_date) {
+        return response()->json(['status' => 'error', 'message' => 'Invalid Date: End date cannot be earlier than start date']);
+      }else if ($checkReserve) {
+        return response()->json(['status' => 'error', 'message' => "Room Already Reserved"]);
+      }
       $reserve = new Reservations();
       $reserve->c_name = $request->customer_name;
       $reserve->c_email = $request->customer_email;
