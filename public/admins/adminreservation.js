@@ -1,6 +1,5 @@
 let newDate3 = '';
 $(document).ready(function () {
-
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -21,27 +20,31 @@ $(document).ready(function () {
                         case '4':
                             return '#f65f08';
                     }
-                }
-                const calendarEvents = response.data.map((event, index) => ({
+                };
+
+                // Filter the data to include only events with status = 1
+                const filteredData = response.data.filter(event => event.status === '1');
+                // Generate the calendar events from the filtered data
+                const calendarEvents = filteredData.map((event, index) => ({
                     id: `event${index + 1}`, // Generate a unique ID for each event
-                    name: event.c_name, // Name of the person
+                    name: `Room ${event.room_number}`, // Name of the person
                     description: `Reservation for ${event.c_name}`, // Custom description
                     date: [`"${event.start_date}"`, `"${event.end_date}"`], // Date range
                     type: 'reservation', // Custom type
                     color: getStatusColor(event.status)
                 }));
 
-                // Initialize the Evo Calendar with the events
+                // Initialize the Evo Calendar with the filtered events
                 $("#calendar").evoCalendar({
                     theme: "Orange Coral", // Optional: default theme is "Midnight Blue"
                     language: "en", // Optional: default language is English
                     showSidebar: false,
                     calendarEvents: calendarEvents, // Use the dynamically generated events
-
                 });
-                disableSundays()
+
+                disableSundays();
                 $('#calendar').on('selectMonth', function () {
-                    disableSundays(); // Call the function again when month changes
+                    disableSundays(); // Call the function again when the month changes
                 });
             } else {
                 console.error("Data is not an array:", response.data);
@@ -52,6 +55,7 @@ $(document).ready(function () {
             $("#result").html("<p>Error: " + error + "</p>");
         },
     });
+
 
     function disableSundays() {
         // Find all Sundays in the calendar
@@ -233,7 +237,7 @@ $(document).ready(function () {
             const eventList = document.getElementsByClassName("event-header")[0];
 
             if (eventList) {
-               
+
                 const eventList2 = document.querySelector('.event-list');
 
                 if (eventList2 && eventList2.querySelector('.w-100')) {
@@ -381,9 +385,9 @@ function getResData() {
                         validate.addEventListener('change', function () {
                             const selectedValue = validate.value;
                             const existingEndDateField = document.getElementById('endDateField');
-    if (existingEndDateField) {
-        existingEndDateField.remove();
-    }
+                            if (existingEndDateField) {
+                                existingEndDateField.remove();
+                            }
                             // Loop through roomRate and check the rate description
                             roomRate.forEach((rate) => {
                                 if (rate.rp_id == selectedValue) {
@@ -392,9 +396,9 @@ function getResData() {
                                     if (rateDescription.includes("Daily") || rateDescription.includes("Weekly") || rateDescription.includes("Monthly")) {
                                         // Append the 'End Date' field dynamically
                                         let endDateField = "";
-                                        if(rateDescription.includes("Daily")){
+                                        if (rateDescription.includes("Daily")) {
                                             console.log('here')
-                                         endDateField = `
+                                            endDateField = `
                         <div class="col-md-12" id="endDateField">
     <label for="datepicker2">End Date:</label>
     <input type="date" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date" onchange="validateDays(this)">
@@ -402,8 +406,8 @@ function getResData() {
 </div>
 
                     `;
-                                        }else if(rateDescription.includes("Weekly")){
-                                                           endDateField = `
+                                        } else if (rateDescription.includes("Weekly")) {
+                                            endDateField = `
                         <div class="col-md-12" id="endDateField">
     <label for="datepicker2">End Date:</label>
     <input type="week" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date" onchange="validateWeek()">
@@ -411,8 +415,8 @@ function getResData() {
 </div>
 
                     `;
-                                        }else if(rateDescription.includes("Monthly")){
-                                            endDateField =`
+                                        } else if (rateDescription.includes("Monthly")) {
+                                            endDateField = `
                                             <div class="col-md-12" id="endDateField">
     <label for="datepicker2">End Date:</label>
     <input type="month" class="form-control" id="datepicker2" name="end_date" placeholder="Select a month" onchange="validateMonth()">
@@ -505,7 +509,7 @@ function validateWeek() {
 
     // Get the selected week value
     const selectedWeek = weekInput.value;
-    
+
     if (!selectedWeek) {
         errorMessage.style.display = 'block';
         errorMessage.textContent = 'Please select a week.';
@@ -674,7 +678,7 @@ function dynamicFuction(formId, routeUrl, process) {
             document.getElementById('roller').style.display = 'none';
             if (response.status == 'error') {
                 alertify.alert("Error", response.message);
-            }else if (response.status == 'success') {
+            } else if (response.status == 'success') {
                 alertify.alert("success", response.message);
             }
         },
@@ -684,3 +688,161 @@ function dynamicFuction(formId, routeUrl, process) {
         }
     });
 }
+function convertTo12HourFormat(time24) {
+    // Split the time into hours and minutes
+    let [hours, minutes] = time24.split(':');
+
+    // Convert hours from string to number
+    hours = parseInt(hours, 10);
+
+    // Determine AM or PM suffix
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert 24-hour time to 12-hour format
+    hours = hours % 12 || 12; // If hour is 0, change it to 12
+
+    // Return the formatted time with AM/PM
+    return `${hours}:${minutes} ${ampm}`;
+}
+function getCurrentDate() {
+    const today = new Date(); // Get the current date
+    const year = today.getFullYear(); // Get the full year (YYYY)
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Get the month (MM), adding 1 because months are 0-indexed
+    const day = String(today.getDate()).padStart(2, '0'); // Get the day (DD)
+    
+    return `${year}-${month}-${day}`; // Return formatted date
+}
+function getPendingReservation() {
+    if ($.fn.DataTable.isDataTable('#customerlog')) {
+        $('#customerlog').DataTable().clear().destroy();
+    }
+    if ($.fn.DataTable.isDataTable('#GroupTable')) {
+        $('#GroupTable').DataTable().clear().destroy();
+    }
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+            const pendingReservations = response.data.filter(event => event.status === '0');
+            $('#pendingDataTable').DataTable({
+                destroy: true,
+                data: pendingReservations,
+                columns: [
+                    { data: 'c_name' },
+                    { data: 'c_email' },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            const {
+                                room_number,
+                            } = row;
+                            return `Room ${room_number} `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            const {
+                                start_date,
+                                start_time,
+                            } = row;
+                            return `${start_date} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(start_time)} `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            const {
+                                end_date,
+                                end_time,
+                            } = row;
+                            return `${end_date} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(end_time)} `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}',${row.room_id},'${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
+                        }
+                    }
+                ]
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        },
+    });
+}
+function viewReservation(id,room_id,room, start_date, end_date, start_time, end_time) {
+    $('#viewReservation').modal('show');
+    document.getElementById('cardTitle').textContent='Room '+room;
+    document.getElementById('startDatelabel').textContent=start_date;
+    document.getElementById('endDatelabel').textContent=end_date;
+    document.getElementById('startTimelabel').textContent=convertTo12HourFormat(start_time);
+    document.getElementById('endTimelabel').textContent=convertTo12HourFormat(end_time);
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+            const activeReservations = response.data.filter(event => event.status === '1');
+
+            // Convert the provided start and end times to Date objects for comparison
+            const newStartDate = new Date(start_date);
+            const newEndDate = new Date(end_date);
+
+            let conflict = false;
+            
+            // Loop through active reservations to check for date conflicts
+            if(start_date<getCurrentDate()){
+                    conflict = true;
+            }else{
+                activeReservations.forEach(reservation => {
+                const existingStartDate = new Date(reservation.start_date);
+                const existingEndDate = new Date(reservation.end_date);
+                
+                // Check if the new reservation overlaps with an existing reservation
+                if (
+                    (newStartDate <= existingEndDate && newEndDate >= existingStartDate && reservation.room_id==room_id)||(newStartDate == existingStartDate && newEndDate == existingEndDate && reservation.room_id==room_id)
+                ) {
+                    conflict = true;
+                    console.log(`Conflict found with reservation ID: ${reservation.r_id}`);
+                }
+            });
+            }
+            const card = document.getElementById('reserveCard');
+            if (conflict) {
+                console.log("Reservation conflict detected!");
+                if (card) {
+                    card.style.backgroundColor = "#f97a6e";
+                    card.style.border = "1.5px solid red"; // This sets the border width, style, and color
+                    card.style.borderRadius = "6px";
+                } else {
+                    
+                    console.error("Element with id 'reserveCard' not found");
+                }
+            } else {
+                if (card) {
+                    card.style.backgroundColor = "";
+                    card.style.border = ""; // This sets the border width, style, and color
+                    card.style.borderRadius = "";
+                } else {
+                    
+                    console.error("Element with id 'reserveCard' not found");
+                }
+                console.log("No conflict, reservation can proceed.");
+                // Proceed with other actions if no conflict
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        },
+    });
+}
+
+$(document).ready(function () {
+    getPendingReservation()
+});

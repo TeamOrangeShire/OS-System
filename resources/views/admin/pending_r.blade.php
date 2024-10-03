@@ -84,35 +84,129 @@ input[type="text"]::placeholder {
                     </div>
                 </div>
                 <br>
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Pending Reservations </h5>
-                </div>
-                <div class="card-body table-border-style">
-                    <div class="table-responsive">
-                        <table class="table datatable"  style="text-align: center">
-                            <thead>
-                                <tr>
-                               
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone Number</th>
-                                    <th>Room No.</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th colspan="2"> Action</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                              
-                            </tbody>
-                        </table>
+
+       <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+
+                                <li class="nav-item" onclick="getPendingReservation()">
+                                    <a class="nav-link active text-uppercase" id="profile-tab" data-toggle="tab"
+                                        href="#pendingTable" role="tab" aria-controls="profile" aria-selected="false">Pending</a>
+                                </li>
+                                <li class="nav-item" onclick="">
+                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#activeTable"
+                                        role="tab" aria-controls="home" aria-selected="true">Active</a>
+                                </li>
+                                <li class="nav-item" onclick="">
+                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#completedTable"
+                                        role="tab" aria-controls="home" aria-selected="true">Completed</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade  show active" id="pendingTable" role="tabpanel" aria-labelledby="home-tab">
+                                    {{-- content --}}
+                                    <!-- Table with stripped rows -->
+                                    <table id="pendingDataTable" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Room</th>
+                                                <th>Start</th>
+                                                <th>End</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                    {{-- content end --}}
+                                </div>
+                                <div class="tab-pane fade" id="activeTable" role="tabpanel"
+                                    aria-labelledby="profile-tab">
+                                    <p class="mb-0">
+                                    <section class="section">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <!-- Table with stripped rows -->
+                                                <table id="loghistory" class="table table-striped" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Mark</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <Th>Contact</Th>
+                                                            <th>Log Date</th>
+                                                            <th>Start</th>
+                                                            <th>End</th>
+                                                            <th>Total Time</th>
+                                                            <th>Payment</th>
+                                                            <th>Method</th>
+                                                            <th>Status</th>
+                                                            <th>Comment</th>
+                                                            <th>Action</th>
+                                                            <th>Delete</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-sm-12">
+                                                    <div class="d-flex justify-content-between">
+                                                        <h5 class="col-sm-8 mt-2"></h5>
+                                                        <button class="btn btn-danger col-auto" id="logoutbymark"
+                                                            style="display:none;" onclick="logoutmark()">Logout</button>
+                                                        <button class="btn btn-danger col-auto" id="deletebymark"
+                                                            style="display:none;" onclick="deletemark()">Delete</button>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    </p>
+                                </div>
+                                <div class="tab-pane fade " id="completedTable" role="tabpanel" aria-labelledby="home-tab">
+
+                                    {{-- content --}}
+
+
+
+                                    <!-- Table with stripped rows -->
+                                    <table id="GroupTable" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Group Name</th>
+                                                <th>Number Of People</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    {{-- content end --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+
+
        
         <!-- [ Main Content ] end -->
     </div>
@@ -205,7 +299,35 @@ input[type="text"]::placeholder {
                 </div>
             </div>
 {{-- modal end --}}
-
+<div id="viewReservation" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Reservation Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row p-2" id="reserveCard">
+                                <div class="col-12 text-center mb-4"><h1 id="cardTitle"></h1></div>
+                                <div class="col-6">
+                                     <h6 id="startDatelabel">Example</h6>
+                                </div>
+                                <div class="col-6">
+                                    <h6 id="endDatelabel">Example</h6>
+                                </div>
+                                <div class="col-6">
+                                     <h6 id="startTimelabel">Example</h6>
+                                </div>
+                                <div class="col-6">
+                                    <h6 id="endTimelabel">Example</h6>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+</div>
 <!-- [ Main Content ] end -->
 
 @include('admin.assets.adminscript')
