@@ -272,4 +272,24 @@ class Reservation extends Controller
 
     return response()->json(['status' => 'success']);
   }
+
+  public function checkRoomAvailability(Request $req){
+    $reservation = Reservations::where('status', 1)->get();
+
+    $rooms = [];
+    foreach($reservation as $reserve){
+        $start = Carbon::createFromFormat('Y-m-d', $reserve->start_date);
+        $end = Carbon::createFromFormat('Y-m-d', $reserve->end_date);
+        $check = Carbon::createFromFormat('m/d/Y', $req->date);
+
+        $isBetween = $check->between($start, $end);
+
+        if($isBetween){
+            array_push($rooms, $reserve->room_id);
+        }
+    }
+
+    return response()->json(['status'=> true, 'rooms'=> $rooms]);
+
+  }
 }

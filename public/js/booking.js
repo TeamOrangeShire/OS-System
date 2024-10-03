@@ -586,14 +586,15 @@ function openReserveModal(time){
     document.getElementById('startDateReservation').value = selectedDateGlobal;
     document.getElementById('startTimeReservation').value = time;
 
+
     $.ajax({
         type: "GET",
-        url: `/user/reservation/checkroomavailability?room_id=${selectDateModal}`,
+        url: `/user/reservation/checkroomavailability?date=${selectedDateGlobal}`,
         dataType:"json",
         success: res=> {
             console.log(res);
         }, error: xhr=> console.log(xhr.responseText)
-    })
+    });
 }
 
 document.getElementById('submitReservation').addEventListener('click', e => {
