@@ -18,9 +18,12 @@ class ReservationResponse extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    private $transaction;
+    private $id;
+    public function __construct($transaction, $id)
     {
-        //
+        $this->transaction = $transaction;
+        $this->id = $id;
     }
 
     /**
@@ -40,6 +43,7 @@ class ReservationResponse extends Mailable
     {
         return new Content(
             view: 'mail.reservation',
+            with: ['transaction'=> $this->transaction, 'id'=> $this->id]
         );
     }
 

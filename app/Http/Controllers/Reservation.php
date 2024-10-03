@@ -109,7 +109,12 @@ class Reservation extends Controller
             break;
       }
 
+    $generateTransaction = RandomId(10);
+    $checkTransact = Reservations::where('transaction_id', $generateTransaction)->first();
 
+    while($checkTransact){
+        $generateTransaction = RandomId(10);
+    }
 
     $reserve->c_name = $req->name;
     $reserve->c_email = $req->email;
@@ -124,9 +129,10 @@ class Reservation extends Controller
     $reserve->start_time = convertTo24HourFormat($req->startTime);
     $reserve->end_time = $endTime;
     $reserve->status = 0;
+    $reserve->transaction_id = $generateTransaction;
     $reserve->save();
 
-    Mail::to($req->email)->send(new ReservationResponse());
+    Mail::to($req->email)->send(new ReservationResponse($generateTransaction, $reserve->r_id));
 
     if ($req->guestemails != "") {
       $emails = explode(',', $req->guestemails);
@@ -292,4 +298,18 @@ class Reservation extends Controller
     return response()->json(['status'=> true, 'rooms'=> $rooms]);
 
   }
+
+  public function cancelReservation(Request $req){
+    $reserve = Reservations::where('r_id', $req->id)->first();
+
+    if($reserve){
+
+        $reserve->update([
+            'status'=> 3
+        ]);
+    }
+
+    return view('mail.cancelledreservation');
+  }
+
 }

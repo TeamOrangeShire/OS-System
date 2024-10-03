@@ -117,8 +117,6 @@ $(document).ready(function () {
 
     const months = document.getElementById('selectEndDateMonthly');
 
-
-
     const currentMonth = new Date().getMonth();
 
     monthList.forEach((m, index) => {

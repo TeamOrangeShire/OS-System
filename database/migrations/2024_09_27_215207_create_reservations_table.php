@@ -31,6 +31,7 @@ return new class extends Migration
             $table->integer('rate_id')->nullable();
             $table->string('date_cancelled')->nullable();
             $table->string('date_approved')->nullable();
+            $table->string('transaction_id')->nullable();
             $table->timestamps();
         });
     }
