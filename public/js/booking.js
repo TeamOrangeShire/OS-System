@@ -20,9 +20,9 @@ toastr.options = {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
-  }
+}
 
-  const monthList = [
+const monthList = [
     'January',
     'February',
     'March',
@@ -38,62 +38,61 @@ toastr.options = {
 ];
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 
 
     let reservationData = [];
     $.ajax({
-        type:"GET",
-        url:"/admin/getReservation",
+        type: "GET",
+        url: "/admin/getReservation",
         dataType: "json",
-        success: res=> {
+        success: res => {
 
-            res.data.forEach( data => {
+            res.data.forEach(data => {
 
                 const reservation = {};
-                if(data.room_id!=0 && data.status != 0){
+                if (data.room_id != 0 && data.status != 0) {
                     reservation.id = data.r_id;
                     reservation.name = `Meeting Room ${data.room_number}`;
                     reservation.date = data.start_date == data.end_date ? formatDateCal(data.start_date) : [formatDateCal(data.start_date), formatDateCal(data.end_date)];
                     reservation.type = "holiday";
-                    reservation.description = data.start_date == data.end_date ? `${formatDateCal(data.start_date, 'display')} (Occupied)` :  `${formatDateCal(data.start_date, 'display')} - ${formatDate(data.end_date, 'display')} (Occupied)`
+                    reservation.description = data.start_date == data.end_date ? `${formatDateCal(data.start_date, 'display')} (Occupied)` : `${formatDateCal(data.start_date, 'display')} - ${formatDate(data.end_date, 'display')} (Occupied)`
                     reservation.color = getRoomColor(data.room_number);
 
                     reservationData.push(reservation);
                 }
 
 
-             });
+            });
 
-             $('#calendars').evoCalendar({
-                theme:"Orange Coral",
+            $('#calendars').evoCalendar({
+                theme: "Orange Coral",
                 calendarEvents: reservationData,
                 'eventDisplayDefault': false,
                 'eventListToggler': false,
             });
+            disablePastDates(today);
 
-
-        }, error: xhr=> console.log(xhr.responseText)
+        }, error: xhr => console.log(xhr.responseText)
     })
 
 
-    disablePastDates(today);
 
 
     $.ajax({
         type: "GET",
         url: "/user/reservation/getrooms",
         dataType: "json",
-        success: res=> {
+        success: res => {
             const select = document.getElementById('selectReserve');
-
+            select.innerHTML = '<option value="" selected disabled>-----Reserve-----</option>';
             res.rooms.forEach(data => {
-                select.innerHTML += `<option value="${data.room_id}">${data.room_number != 0? 'Meeting Room ' + data.room_number : 'Hotdesk'}</option>`
+                select.innerHTML += `<option value="${data.room_id}">${data.room_number != 0 ? 'Meeting Room ' + data.room_number : 'Hotdesk'}</option>`
             });
 
             roomDetails = res.rooms;
             rateList = res.rates;
-        }, error: xhr=> console.log(xhr.responseText)
+        }, error: xhr => console.log(xhr.responseText)
     });
 
 
@@ -139,8 +138,8 @@ $(document).ready(function() {
 
 });
 
-function getRoomColor(num){
-    switch(+num){
+function getRoomColor(num) {
+    switch (+num) {
         case 1:
             return '#FF4500';
         case 2:
@@ -169,11 +168,11 @@ function formatDateCal(dateString, type = 'render') {
     const monthName = months[parseInt(month, 10) - 1];
 
     // Return the formatted date in "Month/day/year" format
-   if(type == 'render'){
+    if (type == 'render') {
         return `${monthName}/${parseInt(day, 10)}/${year}`;
-   }else{
+    } else {
         return `${monthName} ${parseInt(day, 10)}, ${year}`;
-   }
+    }
 }
 
 function getWeeksInYear(year) {
@@ -209,7 +208,7 @@ function getWeeksInYear(year) {
     return weeks;
 }
 
-$('#calendars').on('selectDate', function(event, newDate) {
+$('#calendars').on('selectDate', function (event, newDate) {
     disablePastDates(today);
     // Parse the selected date string into a Date object
     const [month, day, year] = newDate.split("/").map(Number);
@@ -220,24 +219,24 @@ $('#calendars').on('selectDate', function(event, newDate) {
 
     let reserveButton = '';
 
-    switch(dayOfWeek){
+    switch (dayOfWeek) {
         case 1:
-            reserveButton = AddReservationButtons(1);
+            reserveButton = AddReservationButtons(1, newDate);
             break;
         case 2:
-            reserveButton = AddReservationButtons(2);
+            reserveButton = AddReservationButtons(2, newDate);
             break;
         case 3:
-            reserveButton = AddReservationButtons(3);
+            reserveButton = AddReservationButtons(3, newDate);
             break;
         case 4:
-            reserveButton = AddReservationButtons(4);
+            reserveButton = AddReservationButtons(4, newDate);
             break;
         case 5:
-            reserveButton = AddReservationButtons(5);
+            reserveButton = AddReservationButtons(5, newDate);
             break;
         case 6:
-            reserveButton = AddReservationButtons(6);
+            reserveButton = AddReservationButtons(6, newDate);
             break;
         default:
             console.log("invalid date")
@@ -252,11 +251,11 @@ $('#calendars').on('selectDate', function(event, newDate) {
 });
 
 
-$('#calendars').on('selectMonth', function() {
+$('#calendars').on('selectMonth', function () {
     disablePastDates(today);
 });
 
-$('#calendars').on('selectYear', function() {
+$('#calendars').on('selectYear', function () {
     setTimeout(() => {
         disablePastDates(today);
     }, 100);
@@ -265,7 +264,7 @@ $('#calendars').on('selectYear', function() {
 // Function to disable past dates and Sundays by adding a custom class
 function disablePastDates(today) {
 
-    $('#calendars .day').each(function() {
+    $('#calendars .day').each(function () {
         const dayDate = new Date($(this).attr('data-date-val'));
         dayDate.setHours(0, 0, 0, 0);
 
@@ -275,116 +274,182 @@ function disablePastDates(today) {
             $(this).off('click'); // Disable click event for these dates
         } else {
             $(this).removeClass('disabled-date'); // Ensure enabled dates are not disabled
-            $(this).on('click', function() {
+            $(this).on('click', function () {
             });
         }
     });
 }
 
 
-function AddReservationButtons(num){
+function AddReservationButtons(num, date) {
 
     let buttons = '';
 
     const mondayTime = [
-        '08:00 AM',
-        '09:00 AM',
-        '10:00 AM',
-        '11:00 AM',
-        '12:00 PM',
-        '01:00 PM',
-        '02:00 PM',
-        '03:00 PM',
-        '04:00 PM',
-        '05:00 PM',
-        '06:00 PM',
-        '07:00 PM',
-        '08:00 PM',
-        '09:00 PM',
-        '10:00 PM',
-        '11:00 PM',
-        '12:00 AM',
+        ['08:00 AM', false],
+        ['09:00 AM', false],
+        ['10:00 AM', false],
+        ['11:00 AM', false],
+        ['12:00 PM', false],
+        ['01:00 PM', false],
+        ['02:00 PM', false],
+        ['03:00 PM', false],
+        ['04:00 PM', false],
+        ['05:00 PM', false],
+        ['06:00 PM', false],
+        ['07:00 PM', false],
+        ['08:00 PM', false],
+        ['09:00 PM', false],
+        ['10:00 PM', false],
+        ['11:00 PM', false],
+        ['12:00 AM', false],
     ];
 
     const nonMondayTime = [
-        '01:00 AM',
-        '02:00 AM',
-        '03:00 AM',
-        '04:00 AM',
-        '05:00 AM',
-        '06:00 AM',
-        '07:00 AM',
-        '08:00 AM',
-        '09:00 AM',
-        '10:00 AM',
-        '11:00 AM',
-        '12:00 PM',
-        '01:00 PM',
-        '02:00 PM',
-        '03:00 PM',
-        '04:00 PM',
-        '05:00 PM',
-        '06:00 PM',
-        '07:00 PM',
-        '08:00 PM',
-        '09:00 PM',
-        '10:00 PM',
-        '11:00 PM',
-        '12:00 AM',
+        ['01:00 AM', false],
+        ['02:00 AM', false],
+        ['03:00 AM', false],
+        ['04:00 AM', false],
+        ['05:00 AM', false],
+        ['06:00 AM', false],
+        ['07:00 AM', false],
+        ['08:00 AM', false],
+        ['09:00 AM', false],
+        ['10:00 AM', false],
+        ['11:00 AM', false],
+        ['12:00 PM', false],
+        ['01:00 PM', false],
+        ['02:00 PM', false],
+        ['03:00 PM', false],
+        ['04:00 PM', false],
+        ['05:00 PM', false],
+        ['06:00 PM', false],
+        ['07:00 PM', false],
+        ['08:00 PM', false],
+        ['09:00 PM', false],
+        ['10:00 PM', false],
+        ['11:00 PM', false],
+        ['12:00 AM', false],
     ];
 
-    const saturdayTime= [
-        '01:00 AM',
-        '02:00 AM',
-        '03:00 AM',
-        '04:00 AM',
-        '05:00 AM',
-        '06:00 AM',
-        '07:00 AM',
-        '08:00 AM',
-        '09:00 AM',
-        '10:00 AM',
-        '11:00 AM',
-        '12:00 PM',
-        '01:00 PM',
-        '02:00 PM',
-        '03:00 PM',
-        '04:00 PM',
-        '05:00 PM',
-        '06:00 PM',
-        '07:00 PM',
-        '08:00 PM',
-        '09:00 PM',
-        '10:00 PM',
-        '11:00 PM',
-        '12:00 AM',
-        '01:00 AM',
-        '02:00 AM',
-        '03:00 AM',
+    const saturdayTime = [
+        ['01:00 AM', false],
+        ['02:00 AM', false],
+        ['03:00 AM', false],
+        ['04:00 AM', false],
+        ['05:00 AM', false],
+        ['06:00 AM', false],
+        ['07:00 AM', false],
+        ['08:00 AM', false],
+        ['09:00 AM', false],
+        ['10:00 AM', false],
+        ['11:00 AM', false],
+        ['12:00 PM', false],
+        ['01:00 PM', false],
+        ['02:00 PM', false],
+        ['03:00 PM', false],
+        ['04:00 PM', false],
+        ['05:00 PM', false],
+        ['06:00 PM', false],
+        ['07:00 PM', false],
+        ['08:00 PM', false],
+        ['09:00 PM', false],
+        ['10:00 PM', false],
+        ['11:00 PM', false],
+        ['12:00 AM', false],
+        ['01:00 AM', false],
+        ['02:00 AM', false],
+        ['03:00 AM', false],
     ];
+
+    const current = new Date();
+    const currentTime = current.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+        timeZone: 'Asia/Manila'  // Set timezone to the Philippines
+    });
+
+    const currentDate = current.toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+        timeZone: 'Asia/Manila'
+    });
+
+    const getPastHours = (currentTime) => {
+        // Parse the given time (current time)
+        const time = new Date(`01/01/1970 ${currentTime}`);
+
+        const pastHours = [];
+        let currentHour = time.getHours();
+
+        // Add the current hour and past hours in AM/PM format to the array
+        for (let hour = 1; hour <= currentHour + 1; hour++) {
+            let hourFormatted = (hour > 12) ? (hour - 12).toString() : hour.toString();  // Convert to 12-hour format
+            let period = (hour >= 12) ? 'PM' : 'AM';
+
+            // Handle special case for midnight and noon
+            if (hour === 0) hourFormatted = '12';  // Midnight
+            if (hour === 12) period = 'PM';        // Noon
+
+            // Add leading zero for single-digit hours
+            hourFormatted = hourFormatted.padStart(2, '0');
+
+            pastHours.push(`${hourFormatted}:00 ${period}`);
+        }
+
+        return pastHours;
+    };
+
+
+
+
     const add = (delay, data) => {
         return `<div onclick="selectReservationTime(this)" class="w-100 d-flex p-1 gap-1">
-            <button class="btn btn-primary w-100 wow fadeInLeft select" data-wow-delay="${delay}s">${data}</button>
-            <button onclick="openReserveModal('${data}')" class="btn btn-info d-none nextBtn" data-bs-toggle="modal" data-bs-target="#reserveModal" style="width:0%;">Proceed</button>
+            <button ${data[1] ? 'disabled' : ''} class="btn btn-primary w-100 wow fadeInLeft select" data-wow-delay="${delay}s">${data[0]}</button>
+            <button onclick="openReserveModal('${data[0]}')" class="btn btn-info d-none nextBtn" data-bs-toggle="modal" data-bs-target="#reserveModal" style="width:0%;">Proceed</button>
         </div>`
-   }
+    }
+
+    const disableTime = (timeList, disabledTimeList) => {
+       return timeList.map(data => {
+            if(disabledTimeList.includes(data[0])){
+                data[1] = true;
+            }
+
+            return data;
+        });
+    }
 
     let delay = 0.01;
-    if(num == 1){
+    if (num == 1) {
 
-        mondayTime.forEach( data => {
+        if(currentDate == date){
+           disableTime(mondayTime, getPastHours(currentTime));
+        }
+
+        mondayTime.forEach(data => {
             buttons += add(delay, data);
         });
     }
 
-    if(num == 2 || num == 3 || num == 4 || num == 5){
-        nonMondayTime.forEach( data => {
+    if (num == 2 || num == 3 || num == 4 || num == 5) {
+        if(currentDate == date){
+            disableTime(nonMondayTime, getPastHours(currentTime));
+        }
+
+        nonMondayTime.forEach(data => {
             buttons += add(delay, data);
         });
     }
 
-    if(num == 6){
-        saturdayTime.forEach( data => {
+    if (num == 6) {
+        if(currentDate == date){
+            disableTime(saturdayTime, getPastHours(currentTime));
+        }
+
+        saturdayTime.forEach(data => {
             buttons += add(delay, data);
 
         });
@@ -395,20 +460,20 @@ function AddReservationButtons(num){
 }
 
 
-function selectReservationTime(element){
+function selectReservationTime(element) {
 
     const allSelect = document.querySelectorAll('.select');
 
-    allSelect.forEach(data=> {
-       const classList = data.classList;
-       const array = Array.from(classList);
+    allSelect.forEach(data => {
+        const classList = data.classList;
+        const array = Array.from(classList);
 
-       if(array.includes('w-50')){
-        data.nextElementSibling.classList.add('d-none');
-        data.nextElementSibling.style.width ="0";
-        data.classList.add('w-100');
-        data.classList.remove('w-50');
-       }
+        if (array.includes('w-50')) {
+            data.nextElementSibling.classList.add('d-none');
+            data.nextElementSibling.style.width = "0";
+            data.classList.add('w-100');
+            data.classList.remove('w-50');
+        }
     });
 
     element.children[0].classList.remove('w-100');
@@ -418,7 +483,7 @@ function selectReservationTime(element){
     element.children[1].style.width = "50%";
 }
 
-document.getElementById('selectReserve').addEventListener('change', ()=> {
+document.getElementById('selectReserve').addEventListener('change', () => {
     const selectReserve = document.getElementById('selectReserve');
     const selectPaxDiv = document.getElementById('selectPaxDiv');
     const hotdeskDiv = document.getElementById('hotdeskDiv');
@@ -443,18 +508,18 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
     const endDateType = document.getElementById('endDateType');
 
     document.getElementById('hotdeskEndTimeDiv').classList.add('d-none');
-    if(selectReserve.value != 0){
+    if (selectReserve.value != 0) {
 
         document.getElementById('submitReservation').disabled = true;
 
         selectPaxDiv.classList.remove('d-none');
         hotdeskDiv.classList.add('d-none');
         selectPaxHotdeskDiv.classList.add('d-none');
-        const selectedRoom = roomDetails.filter( x => x.room_id == selectReserve.value);
+        const selectedRoom = roomDetails.filter(x => x.room_id == selectReserve.value);
         const selectPax = document.getElementById('selectPax');
         selectPax.innerHTML = '';
-        for(let i = 0; i < +selectedRoom[0].room_capacity; i++){
-            selectPax.innerHTML += `<option>${i+1}</option>`;
+        for (let i = 0; i < +selectedRoom[0].room_capacity; i++) {
+            selectPax.innerHTML += `<option>${i + 1}</option>`;
         }
         selectEndTime.disabled = false;
         selectEndTimeDiv.classList.remove('d-none');
@@ -464,12 +529,12 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
         selectEndDateDiv.classList.add('d-none');
         const roomRates = rateList.filter(x => x.room_id == selectReserve.value);
         selectRoomRates.innerHTML = '';
-        roomRates.forEach(data=> {
+        roomRates.forEach(data => {
             selectRoomRates.innerHTML += `<option value="${data.rp_id}">${data.rp_rate_description} (₱${data.rp_price})</option>`
         });
 
         endDateType.value = "Hourly";
-    }else{
+    } else {
 
         document.getElementById('submitReservation').disabled = false;
 
@@ -491,7 +556,7 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
         selectEndDateWeekly.disabled = true;
         selectEndTime.disabled = true;
 
-        hotdeskRates.forEach(data=> {
+        hotdeskRates.forEach(data => {
             selectHotdesk.innerHTML += `<option value="${data.rp_id}">${data.rp_rate_description}</option>`;
         });
 
@@ -499,7 +564,7 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
 
 });
 
-document.getElementById('addGuestBtn').addEventListener('click', ()=> {
+document.getElementById('addGuestBtn').addEventListener('click', () => {
     const addGuestBtnDiv = document.getElementById('addGuestBtnDiv');
     const addGuestDiv = document.getElementById('addGuestDiv');
 
@@ -508,7 +573,7 @@ document.getElementById('addGuestBtn').addEventListener('click', ()=> {
 });
 
 
-document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
+document.getElementById('selectRoomRates').addEventListener('change', (e) => {
     const selectedRate = rateList.filter(x => x.rp_id == e.target.value);
     const selectEndDateDiv = document.getElementById('selectEndDateDiv');
     const selectEndDateWeeklyDiv = document.getElementById('selectEndDateWeeklyDiv');
@@ -521,7 +586,7 @@ document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
     const selectEndTime = document.getElementById('selectEndTime');
 
     const hide = (element, input) => {
-        if(!element.classList.contains('d-none')){
+        if (!element.classList.contains('d-none')) {
             element.classList.add('d-none');
         }
         input.disabled = true;
@@ -532,14 +597,14 @@ document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
     hide(selectEndDateMonthlyDiv, selectEndDateMonthly);
     hide(selectEndTimeDiv, selectEndTime);
     const endDateType = document.getElementById('endDateType');
-    switch(selectedRate[0].rp_rate_description){
+    switch (selectedRate[0].rp_rate_description) {
         case "Daily (12 Hours)":
             selectEndDateDiv.classList.remove('d-none');
             selectEndDate.disabled = false;
             endDateType.value = "Daily";
-            if(document.getElementById('selectEndDate').value == ''){
+            if (document.getElementById('selectEndDate').value == '') {
                 submit.disabled = true;
-            }else{
+            } else {
                 submit.disabled = false;
             }
 
@@ -561,9 +626,9 @@ document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
             selectEndTime.disabled = false;
             endDateType.value = "Hourly";
 
-            if(document.getElementById('selectEndTime').value != ""){
+            if (document.getElementById('selectEndTime').value != "") {
                 submit.disabled = false;
-            }else{
+            } else {
                 submit.disabled = true;
             }
 
@@ -576,7 +641,7 @@ document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
 
 });
 
-function openReserveModal(time){
+function openReserveModal(time) {
     const selectedTimeModal = document.getElementById('selectedTimeModal');
     const selectDateModal = document.getElementById('selectedDateModal');
 
@@ -586,14 +651,27 @@ function openReserveModal(time){
     document.getElementById('startDateReservation').value = selectedDateGlobal;
     document.getElementById('startTimeReservation').value = time;
 
-
+    const selectReserve = document.getElementById('selectReserve');
+    selectReserve.innerHTML = '<option value="" selected disabled>-----Reserve-----</option>';
+    roomDetails.forEach(data => {
+        selectReserve.innerHTML += `<option value="${data.room_id}">${data.room_number != 0 ? 'Meeting Room ' + data.room_number : 'Hotdesk'}</option>`
+    });
     $.ajax({
         type: "GET",
         url: `/user/reservation/checkroomavailability?date=${selectedDateGlobal}`,
-        dataType:"json",
-        success: res=> {
-            console.log(res);
-        }, error: xhr=> console.log(xhr.responseText)
+        dataType: "json",
+        success: res => {
+
+           res.rooms.forEach(d => {
+
+            for (let i = 0; i < selectReserve.options.length; i++) {
+                if (selectReserve.options[i].value == d) {
+                    selectReserve.options[i].disabled = true;
+                    selectReserve.options[i].textContent += '(Not Available)'
+                }
+            }
+           })
+        }, error: xhr => console.log(xhr.responseText)
     });
 }
 
@@ -612,11 +690,11 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
     e.preventDefault();
 
     $.ajax({
-        type:"POST",
+        type: "POST",
         url: '/user/reservation/submitreservation',
         data: $('#submitReservationForm').serialize(),
         success: res => {
-            if(res.success){
+            if (res.success) {
                 document.getElementById('submitReservation').innerHTML = 'Submit Reservation';
                 e.target.reset();
                 document.getElementById('closeReservation').click();
@@ -638,7 +716,7 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
                 selectBtn.forEach(data => {
                     const classList = Array.from(data.classList);
 
-                    if(classList.includes('w-50')){
+                    if (classList.includes('w-50')) {
                         data.classList.remove('w-50');
                         data.classList.add('w-100');
 
@@ -649,7 +727,7 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
                     }
                 });
             }
-        }, error: xhr=> console.log(xhr.responseText)
+        }, error: xhr => console.log(xhr.responseText)
     })
 });
 
@@ -670,7 +748,7 @@ function formatDate(dateString) {
 
     // Return the formatted date in "Month/day/year" format
 
-        return `${monthName} ${parseInt(day, 10)}, ${year}`;
+    return `${monthName} ${parseInt(day, 10)}, ${year}`;
 
 }
 
@@ -717,9 +795,9 @@ document.getElementById('selectEndTime').addEventListener('change', e => {
 
 
 
-document.getElementById('selectEndDateMonthly').addEventListener('change', e=> {
+document.getElementById('selectEndDateMonthly').addEventListener('change', e => {
     const months = document.getElementById('selectEndDateMonthly');
-    if(e.target.value === "other"){
+    if (e.target.value === "other") {
         months.innerHTML = '';
         const nextYear = new Date().getFullYear() + 1;
         const currentYear = new Date().getFullYear();
@@ -728,18 +806,18 @@ document.getElementById('selectEndDateMonthly').addEventListener('change', e=> {
         });
 
         months.innerHTML += `<option value="back">Back to ${currentYear}</option>`
-    }else if(e.target.value === 'back'){
+    } else if (e.target.value === 'back') {
         months.innerHTML = '';
 
         const currentMonth = new Date().getMonth();
 
         monthList.forEach((m, index) => {
 
-        if (index <= currentMonth) {
-            months.innerHTML += `<option value="${m}" disabled>${m}(Passed Month)</option>`;
-        } else {
-            months.innerHTML += `<option value="${m}">${m}</option>`;
-        }
+            if (index <= currentMonth) {
+                months.innerHTML += `<option value="${m}" disabled>${m}(Passed Month)</option>`;
+            } else {
+                months.innerHTML += `<option value="${m}">${m}</option>`;
+            }
         });
         const nextYear = new Date().getFullYear() + 1;
         months.innerHTML += `<option value="other">${nextYear} Months</option>`
@@ -747,7 +825,7 @@ document.getElementById('selectEndDateMonthly').addEventListener('change', e=> {
 });
 
 
-document.getElementById('selectHotdesk').addEventListener('change', e=> {
+document.getElementById('selectHotdesk').addEventListener('change', e => {
     document.getElementById('submitReservation').disabled = false;
     const hotdesk = document.getElementById('hotdeskEndTime');
     const hotdeskError = document.getElementById('errorHotdeskEndTime');
@@ -755,22 +833,22 @@ document.getElementById('selectHotdesk').addEventListener('change', e=> {
     hotdesk.classList.remove('border', 'border-danger');
     hotdeskError.classList.add('d-none');
 
-    if(e.target.options[e.target.selectedIndex].text.includes("Hourly")){
+    if (e.target.options[e.target.selectedIndex].text.includes("Hourly")) {
         document.getElementById('hotdeskEndTimeDiv').classList.remove('d-none');
-    }else{
+    } else {
         document.getElementById('hotdeskEndTimeDiv').classList.add('d-none');
     }
 });
 
 
-document.getElementById('hotdeskEndTime').addEventListener('input', e=> {
+document.getElementById('hotdeskEndTime').addEventListener('input', e => {
     const hotdeskEndTime = document.getElementById('hotdeskEndTime');
     const hotdeskError = document.getElementById('errorHotdeskEndTime');
-    if(e.target.value > 16){
+    if (e.target.value > 16) {
         hotdeskEndTime.classList.add('border', 'border-danger');
         hotdeskError.classList.remove('d-none');
         document.getElementById('submitReservation').disabled = true;
-    }else{
+    } else {
         hotdeskEndTime.classList.remove('border', 'border-danger');
         hotdeskError.classList.add('d-none');
         document.getElementById('submitReservation').disabled = false;
