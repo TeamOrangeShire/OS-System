@@ -102,7 +102,7 @@ Route::get('/admin/GetLogByMonth', [CustomerLog::class,"GetLogByMonth"])->name('
 
 Route::get('/admin/getRoomData', [Reservation::class, 'getRoomData'])->name('getRoomData');
 Route::get('/admin/getReservation', [Reservation::class, 'getReservation'])->name('getReservation');
-Route::post('/admin/reservationData', [Reservation::class, 'reservationData'])->name('reservationData');
+Route::post('/admin/submitAdminReservation', [Reservation::class, 'submitAdminReservation'])->name('submitAdminReservation');
 
 
 

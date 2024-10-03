@@ -196,7 +196,7 @@ input[type="text"]::placeholder {
                                     </div>
                                     </div>
                                     </div>
-                                <button type="button" class="btn btn-secondary col-12" onclick="dynamicFuction('addEventForm', `{{route('reservationData')}}`,'add')">Submit</button>
+                                <button type="button" class="btn btn-secondary col-12" onclick="dynamicFuction('addEventForm', `{{route('submitAdminReservation')}}`,'add')">Submit</button>
                             </form>
                                 </div>
                             </div>
