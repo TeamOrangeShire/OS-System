@@ -496,11 +496,13 @@ document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
             selectEndDateWeeklyDiv.classList.remove('d-none');
             selectEndDateWeekly.disabled = false;
             endDateType.value = "Weekly";
+            submit.disabled = false;
             break;
         case "Monthly":
             selectEndDateMonthlyDiv.classList.remove('d-none');
             selectEndDateMonthly.disabled = false;
             endDateType.value = "Monthly";
+            submit.disabled = false;
             break;
         case "Hourly":
             selectEndTimeDiv.classList.remove('d-none');

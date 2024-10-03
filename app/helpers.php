@@ -382,7 +382,6 @@ function convertTo12Hour($time) {
     return date("g:i A", $timestamp);
 }
 
-
 function addHoursToTimeAndAdjustDate($startTime, $date, $hoursToAdd) {
     // Parse the date (e.g., "10/03/2024") and time (e.g., "11:00 PM") together
     $dateTime = Carbon::createFromFormat('m/d/Y h:i A', $date . ' ' . $startTime);

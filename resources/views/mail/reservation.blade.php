@@ -104,7 +104,7 @@
 <tbody>
 <tr>
 <td>
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-repeat: no-repeat; background-position: center top; color: #000000; background-image: url('/mailassets/blue-glow_3.jpg'); width: 600px; margin: 0 auto;" width="600">
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-repeat: no-repeat; background-position: center top; color: #000000; background-image: url('{{ asset('mailassets/blue-glow_3.jpg') }}'); width: 600px; margin: 0 auto;" width="600">
 <tbody>
 <tr>
 <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
@@ -112,7 +112,7 @@
 <tr>
 <td class="pad" style="padding-bottom:35px;padding-left:30px;padding-right:30px;padding-top:35px;width:100%;">
 <div align="center" class="alignment" style="line-height:10px">
-<div style="max-width: 150px;"><img alt="Books Plus" height="auto" src="/mailassets/os_logo.png" style="display: block; height: auto; border: 0; width: 100%;" title="Books Plus" width="150"/></div>
+<div style="max-width: 150px;"><img alt="Books Plus" height="auto" src="{{ asset('mailassets/os_logo.png') }}" style="display: block; height: auto; border: 0; width: 100%;" title="Books Plus" width="150"/></div>
 </div>
 </td>
 </tr>
@@ -148,7 +148,7 @@
 </tr>
 </tbody>
 </table>
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ff7d14; background-image: url('/mailassets/orange-gradient-wide.png'); background-repeat: no-repeat;" width="100%">
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ff7d14; background-image: url('{{ asset('mailassets/orange-gradient-wide.png') }}'); background-repeat: no-repeat;" width="100%">
 <tbody>
 <tr>
 <td>
@@ -222,7 +222,7 @@
 <tr>
 <td class="pad" style="padding-bottom:35px;padding-top:10px;width:100%;">
 <div align="center" class="alignment" style="line-height:10px">
-<div style="max-width: 541px;"><img height="auto" src="/mailassets/divider.png" style="display: block; height: auto; border: 0; width: 100%;" width="541"/></div>
+<div style="max-width: 541px;"><img height="auto" src="{{ asset('mailassets/divider.png') }}" style="display: block; height: auto; border: 0; width: 100%;" width="541"/></div>
 </div>
 </td>
 </tr>
@@ -242,9 +242,9 @@
 <div align="center" class="alignment">
 <table border="0" cellpadding="0" cellspacing="0" class="social-table" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;" width="138px">
 <tr>
-<td style="padding:0 7px 0 7px;"><a href="https://www.facebook.com/people/Orange-Shire-Coworking/61554372145450/" target="_blank"><img alt="Facebook" height="auto" src="/mailassets/facebook2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32"/></a></td>
-<td style="padding:0 7px 0 7px;"><a href="https://www.instagram.com/orangeshire/?igsh=MzRlODBiNWFlZA%3D%3D" target="_blank"><img alt="Instagram" height="auto" src="/mailassets/instagram2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32"/></a></td>
-<td style="padding:0 7px 0 7px;"><a href="tel:+63966 065 8143" target="_blank"><img alt="Phone Number" height="auto" src="/mailassets/reshot-icon-phone-XZTUCW7SFA.svg" style="display: block; height: auto; border: 0;" title="Phone Number" width="32"/></a></td>
+<td style="padding:0 7px 0 7px;"><a href="https://www.facebook.com/people/Orange-Shire-Coworking/61554372145450/" target="_blank"><img alt="Facebook" height="auto" src="{{ asset('mailassets/facebook2x.png') }}" style="display: block; height: auto; border: 0;" title="Facebook" width="32"/></a></td>
+<td style="padding:0 7px 0 7px;"><a href="https://www.instagram.com/orangeshire/?igsh=MzRlODBiNWFlZA%3D%3D" target="_blank"><img alt="Instagram" height="auto" src="{{ asset('mailassets/instagram2x.png') }}" style="display: block; height: auto; border: 0;" title="Instagram" width="32"/></a></td>
+<td style="padding:0 7px 0 7px;"><a href="tel:+63966 065 8143" target="_blank"><img alt="Phone Number" height="auto" src="{{ asset('mailassets/reshot-icon-phone-XZTUCW7SFA.svg') }}" style="display: block; height: auto; border: 0;" title="Phone Number" width="32"/></a></td>
 </tr>
 </table>
 </div>
@@ -271,7 +271,7 @@
 <tr>
 <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
 <div align="center" class="alignment" style="line-height:10px">
-<div class="fullWidth" style="max-width: 600px;"><img height="auto" src="/mailassets/bottom-rounded.png" style="display: block; height: auto; border: 0; width: 100%;" width="600"/></div>
+<div class="fullWidth" style="max-width: 600px;"><img height="auto" src="{{ asset('mailassets/bottom-rounded.png') }}" style="display: block; height: auto; border: 0; width: 100%;" width="600"/></div>
 </div>
 </td>
 </tr>

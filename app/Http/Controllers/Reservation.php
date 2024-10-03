@@ -42,11 +42,11 @@ class Reservation extends Controller
       $endDate = "";
       switch($req->endDateType){
           case "Daily":
-              $endDate = $req->endDates;
+              $endDate = convertToDateFormatReservation($req->endDates);
               $endTime = convertTo24HourFormat($req->startTime);
               break;
           case "Weekly":
-              $endDate = $req->endDates;
+              $endDate = convertToDateFormatReservation($req->endDates);
               $endTime = convertTo24HourFormat($req->startTime);
               break;
           case "Monthly":
@@ -66,19 +66,51 @@ class Reservation extends Controller
               }
 
               $formattedDate = $newDate->format('m/d/Y');
-              $endDate = $formattedDate;
+              $endDate = convertToDateFormatReservation($formattedDate);
               $endTime =  convertTo24HourFormat($req->startTime);
               break;
           case "Hourly":
-              $endDate = $req->startDate;
-              $endTime =  convertTo24HourFormat($req->startTime);
+              $endDate = convertToDateFormatReservation($req->startDate);
+              $endTime = $req->endDates;
               break;
-          default:
+          case "4 Hours":
               $parseData = addHoursToTimeAndAdjustDate($req->startTime, $req->startDate, 4);
               $endTime =  convertTo24HourFormat($parseData['updatedTime']);
-              $endDate = $parseData['updatedDate'];
+              $endDate = convertToDateFormatReservation($parseData['updatedDate']);
               break;
+        default:
+            $endDate = convertToDateFormatReservation($req->startDate);
+            if($req->hotdesk != 0){
+                $ratesData = RoomRates::where('rp_id', $req->hotdesk)->first();
+
+                $expRate = explode(' ', $ratesData->rp_rate_description);
+
+                switch($expRate[0]){
+                    case "3":
+                        $time = addHoursToTimeAndAdjustDate($req->startTime, $req->startDate, 3);
+                        break;
+                    case "6":
+                        $time = addHoursToTimeAndAdjustDate($req->startTime, $req->startDate, 6);
+                        break;
+                    case "Day":
+                        $time = addHoursToTimeAndAdjustDate($req->startTime, $req->startDate, 8);
+                        break;
+                    default:
+                        $time = addHoursToTimeAndAdjustDate($req->startTime, $req->startDate, (int)$req->hotdeskEndtime);
+                        break;
+                }
+
+                $endTime = convertTo24HourFormat($time['updatedTime']);
+                $endDate = convertToDateFormatReservation($time['updatedDate']);
+            }else{
+                $endTime = "";
+                $endDate = convertToDateFormatReservation($req->startDate);
+            }
+            break;
       }
+
+
+
     $reserve->c_name = $req->name;
     $reserve->c_email = $req->email;
     $reserve->phone_num = $req->contact;
@@ -86,7 +118,7 @@ class Reservation extends Controller
     $reserve->request = $req->reservationRequest;
     $reserve->room_id = $req->reserveType;
     $reserve->pax = $req->reserveType != 0 ? $req->pax : $req->paxhotdesk;
-    $reserve->rate_id = (int) $req->rates;
+    $reserve->rate_id = $req->reserveType != 0 ?  $req->rates :  $req->hotdesk;
     $reserve->start_date = convertToDateFormatReservation($req->startDate);
     $reserve->end_date = $endDate;
     $reserve->start_time = convertTo24HourFormat($req->startTime);
