@@ -1,75 +1,7 @@
 let newDate3 = '';
 $(document).ready(function () {
-    $.ajax({
-        url: "/admin/getReservation", // URL of the PHP script
-        method: "GET", // or 'POST'
-        dataType: "json", // Expecting a JSON response
-        success: function (response) {
-            // Ensure response.data is an array
-            if (Array.isArray(response.data)) {
-                const getStatusColor = color => {
-                    switch (color) {
-                        case '0':
-                            return '#ff8050';
-                        case '1':
-                            return '#63d867';
-                        case '2':
-                            return '#08f69c';
-                        case '3':
-                            return '#f60808';
-                        case '4':
-                            return '#f65f08';
-                    }
-                };
+    loadCalendar()
 
-                // Filter the data to include only events with status = 1
-                const filteredData = response.data.filter(event => event.status === '1');
-                // Generate the calendar events from the filtered data
-                const calendarEvents = filteredData.map((event, index) => ({
-                    id: `event${index + 1}`, // Generate a unique ID for each event
-                    name: `Room ${event.room_number}`, // Name of the person
-                    description: `Reservation for ${event.c_name}`, // Custom description
-                    date: [`"${event.start_date}"`, `"${event.end_date}"`], // Date range
-                    type: 'reservation', // Custom type
-                    color: getStatusColor(event.status)
-                }));
-
-                // Initialize the Evo Calendar with the filtered events
-                $("#calendar").evoCalendar({
-                    theme: "Orange Coral", // Optional: default theme is "Midnight Blue"
-                    language: "en", // Optional: default language is English
-                    showSidebar: false,
-                    calendarEvents: calendarEvents, // Use the dynamically generated events
-                });
-
-                disableSundays();
-                $('#calendar').on('selectMonth', function () {
-                    disableSundays(); // Call the function again when the month changes
-                });
-            } else {
-                console.error("Data is not an array:", response.data);
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error("AJAX Error:", error); // Log any errors
-            $("#result").html("<p>Error: " + error + "</p>");
-        },
-    });
-
-
-    function disableSundays() {
-        // Find all Sundays in the calendar
-        $('.day').each(function () {
-            var date = new Date($(this).attr('data-date-val'));
-            if (date.getDay() === 0) { // 0 means Sunday in JavaScript's getDay()
-                $(this).css({
-                    'pointer-events': 'none',  // Disable clicking on Sundays
-                    'background-color': '#f5f5f5',  // Optional: grey out Sundays
-                    'color': '#ccc'  // Optional: Change text color to indicate it's disabled
-                });
-            }
-        });
-    }
 
     $('#calendar').on('selectEvent', function (event, activeEvent) {
         console.log('here')
@@ -270,6 +202,90 @@ $(document).ready(function () {
         }
     });
 });
+function loadCalendar() {
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+            // Ensure response.data is an array
+            if (Array.isArray(response.data)) {
+                const getStatusColor = color => {
+                    switch (color) {
+                        case '0':
+                            return '#ff8050'; // Pending
+                        case '1':
+                            return '#63d867'; // Approved
+                        case '2':
+                            return '#08f69c'; // Completed
+                        case '3':
+                            return '#f60808'; // Cancelled
+                        case '4':
+                            return '#f65f08'; // Rescheduled
+                    }
+                };
+
+                // Filter the data to include only events with status = 1 (approved) and valid room
+                const filteredData = response.data.filter(event => event.status === '1' && event.room_id != '0');
+
+                // Generate the calendar events from the filtered data
+                const calendarEvents = filteredData.map((event, index) => ({
+                    id: `event${index + 1}`, // Generate a unique ID for each event
+                    name: `Room ${event.room_number}`, // Name the event with room number
+                    description: `Reservation for ${event.c_name}`, // Custom description
+                    date: [`"${event.start_date}"`, `"${event.end_date}"`],
+                    type: 'reservation', // Custom type for the event
+                    color: getStatusColor(event.status) // Get color based on status
+                }));
+                // **Force Destroy** the existing calendar
+                try {
+                    $('#calendar').evoCalendar('destroy');
+                } catch (e) {
+                    
+                }
+
+                // Initialize the Evo Calendar with the filtered events
+                $("#calendar").evoCalendar({
+                    theme: "Orange Coral", // Optional: default theme is "Midnight Blue"
+                    language: "en", // Optional: default language is English
+                    showSidebar: false,
+                    calendarEvents: calendarEvents, // Use the dynamically generated events
+                });
+
+                // Disable Sundays function (if you have this function defined)
+                disableSundays();
+
+                // Add event listener for month change (optional)
+                $('#calendar').on('selectMonth', function () {
+                    disableSundays(); // Call disableSundays when the month changes
+                });
+            } else {
+                console.error("Data is not an array:", response.data);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        }
+    });
+}
+
+    
+
+
+    function disableSundays() {
+        // Find all Sundays in the calendar
+        $('.day').each(function () {
+            var date = new Date($(this).attr('data-date-val'));
+            if (date.getDay() === 0) { // 0 means Sunday in JavaScript's getDay()
+                $(this).css({
+                    'pointer-events': 'none',  // Disable clicking on Sundays
+                    'background-color': '#f5f5f5',  // Optional: grey out Sundays
+                    'color': '#ccc'  // Optional: Change text color to indicate it's disabled
+                });
+            }
+        });
+    }
 function getResData() {
     // Select the event-header element
     const eventHeader = document.querySelector('.event-header');
@@ -397,7 +413,6 @@ function getResData() {
                                         // Append the 'End Date' field dynamically
                                         let endDateField = "";
                                         if (rateDescription.includes("Daily")) {
-                                            console.log('here')
                                             endDateField = `
                         <div class="col-md-12" id="endDateField">
     <label for="datepicker2">End Date:</label>
@@ -531,7 +546,7 @@ function validateWeek() {
         weekInput.value = ''; // Clear the input
     } else {
         errorMessage.style.display = 'none'; // Hide error message
-        console.log('Selected week is valid.'); // Log a message or perform further actions here
+       
     }
 }
 
@@ -610,7 +625,6 @@ function selectTime(element) {
 
 }
 function viewForm(date, time) {
-    console.log(date)
     $('#addEvent').modal('show');
 
     // Reformat the date from MM/DD/YYYY to Month/DD/YYYY
@@ -622,7 +636,7 @@ function viewForm(date, time) {
 
     // Convert the month number to month name
     const formattedDate = `${monthNames[parseInt(month) - 1]} ${day}, ${year}`;
-    console.log(formattedDate)
+
     // Set the formatted date and time in the form labels
     document.getElementById('formTimeLabel').textContent = time;
     document.getElementById('formDateLabel').textContent = formattedDate;
@@ -674,11 +688,15 @@ function dynamicFuction(formId, routeUrl, process) {
         url: routeUrl + "?process=" + process,
         data: formData,
         success: function (response) {
-            console.log(response)
             document.getElementById('roller').style.display = 'none';
             if (response.status == 'error') {
                 alertify.alert("Error", response.message);
             } else if (response.status == 'success') {
+                
+                if (response.reload && typeof window[response.reload] === 'function') {
+                        window[response.reload](); // Safe dynamic function call
+                    }
+                    $('#'+response.modal).modal('hide');
                 alertify.alert("success", response.message);
             }
         },
@@ -713,12 +731,13 @@ function getCurrentDate() {
     return `${year}-${month}-${day}`; // Return formatted date
 }
 function getPendingReservation() {
-    if ($.fn.DataTable.isDataTable('#customerlog')) {
-        $('#customerlog').DataTable().clear().destroy();
+    if ($.fn.DataTable.isDataTable('#activeDataTable')) {
+        $('#activeDataTable').DataTable().clear().destroy();
     }
     if ($.fn.DataTable.isDataTable('#GroupTable')) {
         $('#GroupTable').DataTable().clear().destroy();
     }
+    loadCalendar()
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -763,7 +782,7 @@ function getPendingReservation() {
                     {
                         data: null,
                         render: (data, type, row) => {
-                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}',${row.room_id},'${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
+                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
                         }
                     }
                 ]
@@ -775,8 +794,75 @@ function getPendingReservation() {
         },
     });
 }
-function viewReservation(id,room_id,room, start_date, end_date, start_time, end_time) {
+function getActiveReservation() {
+    if ($.fn.DataTable.isDataTable('#pendingDataTable')) {
+        $('#pendingDataTable').DataTable().clear().destroy();
+    }
+    if ($.fn.DataTable.isDataTable('#GroupTable')) {
+        $('#GroupTable').DataTable().clear().destroy();
+    }
+    loadCalendar()
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+            const pendingReservations = response.data.filter(event => event.status === '1');
+            $('#activeDataTable').DataTable({
+                destroy: true,
+                data: pendingReservations,
+                columns: [
+                    { data: 'c_name' },
+                    { data: 'c_email' },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            const {
+                                room_number,
+                            } = row;
+                            return `Room ${room_number} `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            const {
+                                start_date,
+                                start_time,
+                            } = row;
+                            return `${start_date} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(start_time)} `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            const {
+                                end_date,
+                                end_time,
+                            } = row;
+                            return `${end_date} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(end_time)} `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
+                        }
+                    }
+                ]
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        },
+    });
+}
+function viewReservation(id,room_id,room,start_date, end_date, start_time, end_time,c_name,email) {
     $('#viewReservation').modal('show');
+    document.getElementById('r_id').value=id;
+    document.getElementById('namelabel').textContent=c_name;
+    document.getElementById('emaillabel').textContent=email;
     document.getElementById('cardTitle').textContent='Room '+room;
     document.getElementById('startDatelabel').textContent=start_date;
     document.getElementById('endDatelabel').textContent=end_date;
@@ -808,17 +894,17 @@ function viewReservation(id,room_id,room, start_date, end_date, start_time, end_
                     (newStartDate <= existingEndDate && newEndDate >= existingStartDate && reservation.room_id==room_id)||(newStartDate == existingStartDate && newEndDate == existingEndDate && reservation.room_id==room_id)
                 ) {
                     conflict = true;
-                    console.log(`Conflict found with reservation ID: ${reservation.r_id}`);
                 }
             });
             }
             const card = document.getElementById('reserveCard');
             if (conflict) {
-                console.log("Reservation conflict detected!");
                 if (card) {
                     card.style.backgroundColor = "#f97a6e";
                     card.style.border = "1.5px solid red"; // This sets the border width, style, and color
                     card.style.borderRadius = "6px";
+                    document.getElementById('innerCard2').style.display="";
+                    document.getElementById('innerCard1').style.display="none";
                 } else {
                     
                     console.error("Element with id 'reserveCard' not found");
@@ -828,11 +914,12 @@ function viewReservation(id,room_id,room, start_date, end_date, start_time, end_
                     card.style.backgroundColor = "";
                     card.style.border = ""; // This sets the border width, style, and color
                     card.style.borderRadius = "";
+                    document.getElementById('innerCard2').style.display="none";
+                    document.getElementById('innerCard1').style.display="";
                 } else {
                     
                     console.error("Element with id 'reserveCard' not found");
                 }
-                console.log("No conflict, reservation can proceed.");
                 // Proceed with other actions if no conflict
             }
         },
@@ -842,7 +929,12 @@ function viewReservation(id,room_id,room, start_date, end_date, start_time, end_
         },
     });
 }
-
+function cancelReservation(){
+    $('#viewReservation').modal('hide');
+    $('#viewCancelReservation').modal('show');
+   const r_id = document.getElementById('r_id').value;
+   document.getElementById('c_r_id').value = r_id;
+}
 $(document).ready(function () {
     getPendingReservation()
 });

@@ -95,7 +95,7 @@ input[type="text"]::placeholder {
                                     <a class="nav-link active text-uppercase" id="profile-tab" data-toggle="tab"
                                         href="#pendingTable" role="tab" aria-controls="profile" aria-selected="false">Pending</a>
                                 </li>
-                                <li class="nav-item" onclick="">
+                                <li class="nav-item" onclick="getActiveReservation()">
                                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#activeTable"
                                         role="tab" aria-controls="home" aria-selected="true">Active</a>
                                 </li>
@@ -136,24 +136,15 @@ input[type="text"]::placeholder {
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <!-- Table with stripped rows -->
-                                                <table id="loghistory" class="table table-striped" style="width:100%">
+                                                <table id="activeDataTable" class="table table-striped" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>Mark</th>
-                                                            <th>Name</th>
+                                                            <th>Full Name</th>
                                                             <th>Email</th>
-                                                            <Th>Contact</Th>
-                                                            <th>Log Date</th>
+                                                            <th>Room</th>
                                                             <th>Start</th>
                                                             <th>End</th>
-                                                            <th>Total Time</th>
-                                                            <th>Payment</th>
-                                                            <th>Method</th>
-                                                            <th>Status</th>
-                                                            <th>Comment</th>
                                                             <th>Action</th>
-                                                            <th>Delete</th>
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -277,7 +268,7 @@ input[type="text"]::placeholder {
                                     </div>
                                     </div>
                                     </div>
-                                <div class="form-group" >
+                                <div class="form-group" hidden>
                                     <div class="row">
                                     <div class="col-md-6">
                                     <label for="datepicker">Start Date:</label>
@@ -301,7 +292,7 @@ input[type="text"]::placeholder {
 {{-- modal end --}}
 <div id="viewReservation" class="modal fade" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-dialog modal-lg modal-dialog-centered " role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalCenterTitle">Reservation Details</h5>
@@ -309,25 +300,72 @@ input[type="text"]::placeholder {
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <form action="" id="acceptReserveForm" method="POST">
+                                @csrf
+                                <input type="text" name="r_id" id="r_id" hidden>
                             <div class="row p-2" id="reserveCard">
                                 <div class="col-12 text-center mb-4"><h1 id="cardTitle"></h1></div>
                                 <div class="col-6">
-                                     <h6 id="startDatelabel">Example</h6>
+                                     Customer Name: <h6 id="namelabel"></h6>
                                 </div>
                                 <div class="col-6">
-                                    <h6 id="endDatelabel">Example</h6>
+                                     Customer Email: <h6 id="emaillabel"></h6>
                                 </div>
                                 <div class="col-6">
-                                     <h6 id="startTimelabel">Example</h6>
+                                     Start Date: <h6 id="startDatelabel"></h6>
                                 </div>
                                 <div class="col-6">
-                                    <h6 id="endTimelabel">Example</h6>
+                                   End Date: <h6 id="endDatelabel"></h6>
+                                </div>
+                                <div class="col-6">
+                                    Start Time: <h6 id="startTimelabel"></h6>
+                                </div>
+                                <div class="col-6">
+                                    End Time: <h6 id="endTimelabel"></h6>
+                                </div>
+                                <br>
+                                <br>
+                                <div id="innerCard1" class="row" style="display: none">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-success" onclick="dynamicFuction('acceptReserveForm','{{route('submitAdminReservation')}}','accept')">Accept</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-danger">Cancel</button>
+                                    </div>
+                                </div>
+                                <div id="innerCard2" class="row" style="display: none">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-warning">Reschedule</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-danger" onclick="cancelReservation()">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
+                            </form>
                          </div>
                     </div>
                 </div>
 </div>
+{{-- end modal --}}
+{{-- start modal --}}
+<div id="viewCancelReservation" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Cancel Reservation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" name="c_r_id" id="c_r_id" class="form-control">
+                            <label for="">Reason  for cancellation</label>
+                            <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+</div>   
 <!-- [ Main Content ] end -->
 
 @include('admin.assets.adminscript')

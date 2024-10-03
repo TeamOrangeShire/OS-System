@@ -12,9 +12,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
         $schedule->command('update-subscription-time')->everyMinute();
         $schedule->command('app:check-expiration')->everyMinute();
+        $schedule->call(function () {
+            $reservations = \App\Models\Reservations::where('status', '1')->get();
+            foreach ($reservations as $reservation) {
+                if (now()->greaterThan(\Carbon\Carbon::parse($reservation->end_date))) {
+                    $reservation->status = '2';
+                    $reservation->save();
+                }
+            }
+        })->everyMinute(); 
     }
 
     /**
