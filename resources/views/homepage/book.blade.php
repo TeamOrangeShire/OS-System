@@ -147,6 +147,12 @@
                             </select>
                         </div>
 
+                        <div class="form-group mt-2 d-none" id="hotdeskEndTimeDiv">
+                            <label for="selectHotdesk">How Many Hours will you spend?</label>
+                            <input type="number" id="hotdeskEndTime" name="hotdeskEndtime" value="1">
+                            <small id="errorHotdeskEndTime" class="text-danger d-none">Time is too long please choose from 1 - 16 </small>
+                        </div>
+
                         <div class="form-group mt-2 d-none" id="selectEndDateDiv">
                             <label for="selectEndDate"> Reservation End Date </label>
                             <input name="endDates" type="date" class="form-control" id="selectEndDate">
@@ -154,21 +160,21 @@
 
                         <div class="form-group mt-2 d-none" id="selectEndDateWeeklyDiv">
                             <label for="selectEndDateWeekly"> Reservation End Date </label>
-                            <select name="endDates" id="selectEndDateWeekly" class="form-select">
+                            <select  name="endDates" id="selectEndDateWeekly" class="form-select">
 
                             </select>
                         </div>
 
                         <div class="form-group mt-2 d-none" id="selectEndDateMonthlyDiv">
                             <label for="selectEndDateMonthly"> Reservation End Date </label>
-                            <select name="endDates" id="selectEndDateMonthly" class="form-select">
+                            <select  name="endDates" id="selectEndDateMonthly" class="form-select">
 
                             </select>
                         </div>
 
                         <div class="form-group mt-2 d-none" id="selectEndTimeDiv">
                             <label for="selectEndTime"> Reservation End Time </label>
-                            <input name="endDates" type="time" class="form-control" id="selectEndTime">
+                            <input  name="endDates" type="time" class="form-control" id="selectEndTime">
                         </div>
 
                     </div>

@@ -374,4 +374,55 @@ function PaymentCalc($hoursString, $minutesString, $type){
     return "$formattedHours:$formattedMinutes";
 }
 
+function convertTo12Hour($time) {
+    // Convert the 24-hour format to a timestamp
+    $timestamp = strtotime($time);
+
+    // Format the timestamp into 12-hour format with AM/PM
+    return date("g:i A", $timestamp);
+}
+
+
+function addHoursToTimeAndAdjustDate($startTime, $date, $hoursToAdd) {
+    // Parse the date (e.g., "10/03/2024") and time (e.g., "11:00 PM") together
+    $dateTime = Carbon::createFromFormat('m/d/Y h:i A', $date . ' ' . $startTime);
+
+    // Add the specified number of hours (e.g., 4 hours)
+    $dateTime->addHours($hoursToAdd);
+
+    // Return the updated time and date in the required formats
+    return [
+        'updatedTime' => $dateTime->format('h:i A'), // Updated time (e.g., "03:00 AM")
+        'updatedDate' => $dateTime->format('m/d/Y')  // Updated date (if day changes, e.g., "10/04/2024")
+    ];
+}
+
+
+function convertToDateFormatReservation($dateString)
+{
+    // Check if the date string is already in YYYY-MM-DD format
+    if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $dateString)) {
+        return $dateString; // Return the string as is
+    }
+
+    try {
+        // Try to parse the date using Carbon
+        $date = Carbon::parse($dateString);
+
+        // Return the date in YYYY-MM-DD format
+        return $date->format('Y-m-d');
+    } catch (\Exception $e) {
+        // Return null or handle the error if the date string is invalid
+        return null;
+    }
+}
+
+function convertTo24HourFormat($timeString)
+{
+    // Use the DateTime class to parse the 12-hour time format
+    $dateTime = DateTime::createFromFormat('h:i A', $timeString);
+
+    // Return the time in 24-hour format (HH:mm)
+    return $dateTime ? $dateTime->format('H:i') : null;
+}
 ?>

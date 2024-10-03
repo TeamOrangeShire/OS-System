@@ -56,12 +56,15 @@ class Reservation extends Controller
     {
         $reserve = new Reservations();
         $endTime = "";
+        $endDate = "";
         switch($req->endDateType){
             case "Daily":
                 $endDate = $req->endDates;
+                $endTime = convertTo24HourFormat($req->startTime);
                 break;
             case "Weekly":
                 $endDate = $req->endDates;
+                $endTime = convertTo24HourFormat($req->startTime);
                 break;
             case "Monthly":
 
@@ -81,22 +84,27 @@ class Reservation extends Controller
 
                 $formattedDate = $newDate->format('m/d/Y');
                 $endDate = $formattedDate;
+                $endTime =  convertTo24HourFormat($req->startTime);
                 break;
             case "Hourly":
                 $endDate = $req->startDate;
-                $endTime = $req->endDates;
+                $endTime =  convertTo24HourFormat($req->startTime);
                 break;
             default:
+                $parseData = addHoursToTimeAndAdjustDate($req->startTime, $req->startDate, 4);
+                $endTime =  convertTo24HourFormat($parseData['updatedTime']);
+                $endDate = $parseData['updatedDate'];
                 break;
         }
+
         $reserve->c_name = $req->name;
         $reserve->c_email = $req->email;
         $reserve->phone_num = $req->contact;
         $reserve->c_guest_emails = $req->guestemails;
         $reserve->request = $req->reservationRequest;
-        $reserve->end_date = $endDate;
-        $reserve->start_date = $req->startDate;
-        $reserve->start_time = $req->startTime;
+        $reserve->end_date = convertToDateFormatReservation($endDate);
+        $reserve->start_date = convertToDateFormatReservation($req->startDate);
+        $reserve->start_time = convertTo24HourFormat($req->startTime);
         $reserve->end_time = $endTime;
         $reserve->room_id = $req->reserveType;
         $reserve->pax = $req->reserveType == 0 ? $req->paxhotdesk : $req->pax;
@@ -104,7 +112,11 @@ class Reservation extends Controller
         $reserve->status = 0;
         $reserve->save();
 
-        Mail::to($req->email)->send(new ReservationResponse());
+        try{
+            Mail::to($req->email)->send(new ReservationResponse());
+        }catch(Exception $ex){
+            //IGNORE
+        }
 
         if($req->guestemails != ""){
             $emails = explode(',', $req->guestemails);

@@ -388,8 +388,13 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
     const selectEndDateMonthly = document.getElementById('selectEndDateMonthly');
     const selectEndTime = document.getElementById('selectEndTime');
 
+    const endDateType = document.getElementById('endDateType');
 
+    document.getElementById('hotdeskEndTimeDiv').classList.add('d-none');
     if(selectReserve.value != 0){
+
+        document.getElementById('submitReservation').disabled = true;
+
         selectPaxDiv.classList.remove('d-none');
         hotdeskDiv.classList.add('d-none');
         selectPaxHotdeskDiv.classList.add('d-none');
@@ -410,7 +415,12 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
         roomRates.forEach(data=> {
             selectRoomRates.innerHTML += `<option value="${data.rp_id}">${data.rp_rate_description} (₱${data.rp_price})</option>`
         });
+
+        endDateType.value = "Hourly";
     }else{
+
+        document.getElementById('submitReservation').disabled = false;
+
         hotdeskDiv.classList.remove('d-none');
         selectPaxDiv.classList.add('d-none');
         selectRoomRatesDiv.classList.add('d-none');
@@ -421,6 +431,8 @@ document.getElementById('selectReserve').addEventListener('change', ()=> {
         selectEndTimeDiv.classList.add('d-none');
         selectEndDateWeeklyDiv.classList.add('d-none');
         selectEndDateMonthlyDiv.classList.add('d-none');
+
+        endDateType.value = "Hotdesk";
 
         selectEndDate.disabled = true;
         selectEndDateMonthly.disabled = true;
@@ -462,7 +474,7 @@ document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
         }
         input.disabled = true;
     }
-
+    const submit = document.getElementById('submitReservation');
     hide(selectEndDateDiv, selectEndDate);
     hide(selectEndDateWeeklyDiv, selectEndDateWeekly);
     hide(selectEndDateMonthlyDiv, selectEndDateMonthly);
@@ -473,6 +485,12 @@ document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
             selectEndDateDiv.classList.remove('d-none');
             selectEndDate.disabled = false;
             endDateType.value = "Daily";
+            if(document.getElementById('selectEndDate').value == ''){
+                submit.disabled = true;
+            }else{
+                submit.disabled = false;
+            }
+
             break;
         case "Weekly":
             selectEndDateWeeklyDiv.classList.remove('d-none');
@@ -488,9 +506,17 @@ document.getElementById('selectRoomRates').addEventListener('change', (e)=> {
             selectEndTimeDiv.classList.remove('d-none');
             selectEndTime.disabled = false;
             endDateType.value = "Hourly";
+
+            if(document.getElementById('selectEndTime').value != ""){
+                submit.disabled = false;
+            }else{
+                submit.disabled = true;
+            }
+
             break;
         default:
             endDateType.value = "4 Hours";
+            submit.disabled = false;
             break;
     }
 
@@ -537,7 +563,10 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
                 document.getElementById('selectRoomRatesDiv').classList.add('d-none');
                 document.getElementById('hotdeskDiv').classList.add('d-none');
                 document.getElementById('selectEndDateDiv').classList.add('d-none');
-
+                document.getElementById('selectEndTimeDiv').classList.add('d-none');
+                document.getElementById('selectEndDateWeeklyDiv').classList.add('d-none');
+                document.getElementById('selectEndDateMonthlyDiv').classList.add('d-none');
+                document.getElementById('hotdeskEndTimeDiv').classList.add('d-none');
                 toastr["success"]("Reservation Submitted wait for the email for the response.")
 
                 const selectBtn = document.querySelectorAll('.select');
@@ -582,28 +611,47 @@ function formatDate(dateString) {
 }
 
 document.getElementById('selectEndTime').addEventListener('change', e => {
+    const timeSelect = document.getElementById('selectedTimeModal').textContent.trim(); // 12-hour format (e.g., "04:00 AM")
+    const selectedTime = e.target.value; // 24-hour format (e.g., "05:00")
+
+    // Function to convert 12-hour time format (e.g., "04:00 AM") to 24-hour time
+    const convertTo24Hour = (timeStr) => {
+        const [time, modifier] = timeStr.split(' ');
+        let [hours, minutes] = time.split(':');
+
+        if (modifier === 'AM' && hours === '12') {
+            hours = '00'; // Handle 12 AM as 00 in 24-hour format
+        } else if (modifier === 'PM' && hours !== '12') {
+            hours = parseInt(hours, 10) + 12; // Handle PM conversion
+        }
+
+        return `${hours.padStart(2, '0')}:${minutes}`; // Return in 24-hour format
+    };
+
+    // Convert the `timeSelect` (e.g., "04:00 AM") to 24-hour format
+    const convertedTime = convertTo24Hour(timeSelect);
+
+    // Create a date object for `timeSelect`
     const now = new Date();
+    const [selectedHoursInput, selectedMinutesInput] = selectedTime.split(':'); // Input time (e.g., "05:00")
+    const [selectedHoursModal, selectedMinutesModal] = convertedTime.split(':'); // Converted time from `textContent`
 
-    // Get the current time plus one hour
-    const currentTime = new Date(now.getTime() + 60 * 60 * 1000); // Add 1 hour to current time
+    const inputTimeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), selectedHoursInput, selectedMinutesInput);
+    const modalTimeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), selectedHoursModal, selectedMinutesModal);
 
-    // Get the selected time from the input
-    const selectedTime = e.target.value;
+    // Get the modal time plus 1 hour
+    const modalTimePlusOneHour = new Date(modalTimeDate.getTime() + (1 * 60 * 60 * 1000)); // Adds 1 hour to `timeSelect` modal time
 
-    if (selectedTime === "") {
-        alert("Please select a time.");
-        return;
-    }
-
-    // Create a date object for the selected time, keeping the same date as the current date
-    const [selectedHours, selectedMinutes] = selectedTime.split(':');
-    const selectedDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), selectedHours, selectedMinutes);
-
-    // Compare selected time with the current time (plus 1 hour)
-    if (selectedDate < currentTime) {
-        toastr["error"]("Invalid Time! The selected time must be at least one hour ahead of the current time.");
+    // Compare `selectedTime` (input time) with the `timeSelect` + 1 hour (from the modal)
+    if (inputTimeDate < modalTimePlusOneHour) {
+        toastr["error"]("Invalid Time! The selected time must be at least one hour ahead of the selected reservation time.");
+        document.getElementById('submitReservation').disabled = true;
+    } else {
+        document.getElementById('submitReservation').disabled = false;
     }
 });
+
+
 
 document.getElementById('selectEndDateMonthly').addEventListener('change', e=> {
     const months = document.getElementById('selectEndDateMonthly');
@@ -634,7 +682,36 @@ document.getElementById('selectEndDateMonthly').addEventListener('change', e=> {
     }
 });
 
-document.getElementById('selectEndDateWeekly').addEventListener('change', e => {
 
+document.getElementById('selectHotdesk').addEventListener('change', e=> {
+    document.getElementById('submitReservation').disabled = false;
+    const hotdesk = document.getElementById('hotdeskEndTime');
+    const hotdeskError = document.getElementById('errorHotdeskEndTime');
+    hotdesk.value = 1;
+    hotdesk.classList.remove('border', 'border-danger');
+    hotdeskError.classList.add('d-none');
 
+    if(e.target.options[e.target.selectedIndex].text.includes("Hourly")){
+        document.getElementById('hotdeskEndTimeDiv').classList.remove('d-none');
+    }else{
+        document.getElementById('hotdeskEndTimeDiv').classList.add('d-none');
+    }
 });
+
+
+document.getElementById('hotdeskEndTime').addEventListener('input', e=> {
+    const hotdeskEndTime = document.getElementById('hotdeskEndTime');
+    const hotdeskError = document.getElementById('errorHotdeskEndTime');
+    if(e.target.value > 16){
+        hotdeskEndTime.classList.add('border', 'border-danger');
+        hotdeskError.classList.remove('d-none');
+        document.getElementById('submitReservation').disabled = true;
+    }else{
+        hotdeskEndTime.classList.remove('border', 'border-danger');
+        hotdeskError.classList.add('d-none');
+        document.getElementById('submitReservation').disabled = false;
+    }
+});
+
+
+document.getElementById('selectEndDate').addEventListener('change', () => document.getElementById('submitReservation').disabled = false);
