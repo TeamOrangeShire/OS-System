@@ -39,28 +39,44 @@ toastr.options = {
 
 
 $(document).ready(function() {
-    $('#calendars').evoCalendar({
-        theme: "Orange Coral",
-        calendarEvents: [
-            {
-                id: 'bHay68s',
-                name: "New Year",
-                date: "September/29/2024",
-                type: "holiday",
-                everyYear: true
-            },
-            {
-                name: "Vacation Leave",
-                badge: "02/13 - 02/15",
-                date: ["September/1/2024", "September/15/2024"],
-                description: "Vacation leave for 3 days.",
-                type: "event",
-                color: "#63d867"
-            }
-        ],
-        'eventDisplayDefault': false,
-        'eventListToggler': false,
-    });
+
+
+    let reservationData = [];
+    $.ajax({
+        type:"GET",
+        url:"/admin/getReservation",
+        dataType: "json",
+        success: res=> {
+
+            res.data.forEach( data => {
+
+                const reservation = {};
+                if(data.room_id!=0 && data.status != 0){
+                    reservation.id = data.r_id;
+                    reservation.name = `Meeting Room ${data.room_number}`;
+                    reservation.date = data.start_date == data.end_date ? formatDateCal(data.start_date) : [formatDateCal(data.start_date), formatDateCal(data.end_date)];
+                    reservation.type = "holiday";
+                    reservation.description = data.start_date == data.end_date ? `${formatDateCal(data.start_date, 'display')} (Occupied)` :  `${formatDateCal(data.start_date, 'display')} - ${formatDate(data.end_date, 'display')} (Occupied)`
+                    reservation.color = getRoomColor(data.room_number);
+
+                    reservationData.push(reservation);
+                }
+
+
+             });
+
+             $('#calendars').evoCalendar({
+                theme:"Orange Coral",
+                calendarEvents: reservationData,
+                'eventDisplayDefault': false,
+                'eventListToggler': false,
+            });
+
+
+        }, error: xhr=> console.log(xhr.responseText)
+    })
+
+
     disablePastDates(today);
 
 
@@ -123,6 +139,42 @@ $(document).ready(function() {
 
 });
 
+function getRoomColor(num){
+    switch(+num){
+        case 1:
+            return '#FF4500';
+        case 2:
+            return '#32CD32';
+        case 3:
+            return '#1E90FF';
+        case 4:
+            return '#FFD700';
+        case 5:
+            return '#FF1493';
+    }
+}
+
+
+
+function formatDateCal(dateString, type = 'render') {
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    // Split the input string by the hyphen to get year, month, and day
+    const [year, month, day] = dateString.split('-');
+
+    // Convert the month to the full month name
+    const monthName = months[parseInt(month, 10) - 1];
+
+    // Return the formatted date in "Month/day/year" format
+   if(type == 'render'){
+        return `${monthName}/${parseInt(day, 10)}/${year}`;
+   }else{
+        return `${monthName} ${parseInt(day, 10)}, ${year}`;
+   }
+}
 
 function getWeeksInYear(year) {
     const weeks = [];
@@ -533,6 +585,15 @@ function openReserveModal(time){
 
     document.getElementById('startDateReservation').value = selectedDateGlobal;
     document.getElementById('startTimeReservation').value = time;
+
+    $.ajax({
+        type: "GET",
+        url: `/user/reservation/checkroomavailability?room_id=${selectDateModal}`,
+        dataType:"json",
+        success: res=> {
+            console.log(res);
+        }, error: xhr=> console.log(xhr.responseText)
+    })
 }
 
 document.getElementById('submitReservation').addEventListener('click', e => {
