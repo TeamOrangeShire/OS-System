@@ -156,7 +156,6 @@ class Reservation extends Controller
           return response()->json(['status' => 'error', 'message' => "$key Please fill in all fields"]); // Return an error response
         }
       }
-
       $rate = RoomRates::where('rp_id', $request->customer_bill)->first();
       if ($rate->rp_rate_description == 'Hourly') {
         $startDate = $request->start_date;  // Example start date
