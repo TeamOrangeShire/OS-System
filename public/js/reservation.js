@@ -7,22 +7,25 @@ $(document).ready(function() {
         url:"/admin/getReservation",
         dataType: "json",
         success: res=> {
-            console.log(res);
             res.data.forEach( data => {
 
                 const reservation = {};
                 if(data.room_id!=0){
                     reservation.id = data.r_id;
                     reservation.name = `Meeting Room ${data.room_number}`;
-                    reservation.date = formatDate(data.start_date);
+                    reservation.date = data.start_date == data.end_date ? formatDate(data.start_date) : [formatDate(data.start_date), formatDate(data.end_date)];
                     reservation.type = "holiday";
-                    reservation.description = `${formatDate(data.start_date, 'display')} - ${formatDate(data.end_date, 'display')}`
-                    reservation.color = '#63d867';
+                    reservation.description = data.start_date == data.end_date ? `${formatDate(data.start_date, 'display')} (Occupied)` :  `${formatDate(data.start_date, 'display')} - ${formatDate(data.end_date, 'display')} (Occupied)`
+                    reservation.color = getRoomColor(data.room_number);
 
                     reservationData.push(reservation);
                 }
 
+
              });
+
+
+             console.log(reservationData);
 
              $('#calendars').evoCalendar({
                 theme:"Orange Coral",
@@ -34,6 +37,23 @@ $(document).ready(function() {
     })
 
 });
+
+function getRoomColor(num){
+    switch(+num){
+        case 1:
+            return '#FF4500';
+        case 2:
+            return '#32CD32';
+        case 3:
+            return '#1E90FF';
+        case 4:
+            return '#FFD700';
+        case 5:
+            return '#FF1493';
+    }
+}
+
+
 
 function formatDate(dateString, type = 'render') {
     const months = [
