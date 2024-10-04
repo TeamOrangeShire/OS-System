@@ -666,7 +666,6 @@ function getLogHistory(id, customer_id) {
         url: route,
         dataType: "json",
         success: res => {
-            console.log(res);
             $.fn.dataTable.moment('MMMM D, YYYY');
             $.fn.dataTable.moment('hh:mm A');
             if (!$.fn.DataTable.isDataTable('#hybridLogHistory')) {

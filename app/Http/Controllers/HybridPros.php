@@ -612,46 +612,56 @@ class HybridPros extends Controller
      public function AddHybridProsLog(Request $req){
         $logs = new HybridHistoryLogs();
 
-        $time = timeDifference($req->timeIn, $req->timeOut);
+        $consumeTime = "";
+        $totalRemainingTime = "";
+        if(!empty($req->timeOut)){
+            $time = timeDifference($req->timeIn, $req->timeOut);
+            $consumeTime = $time['hours']. ":". $time ['minutes'];
+            $history = HybridProsHistory::where('hph_id', $req->hph_id)->first();
 
-        $history = HybridProsHistory::where('hph_id', $req->hph_id)->first();
+            $remainingTime = explode(':', $history->hp_remaining_time);
 
-        $remainingTime = explode(':', $history->hp_remaining_time);
+            $remainingHours = $remainingTime[0] - $time['hours'];
+            $remainingMinutes = $remainingTime[1] - $time['minutes'];
 
-        $remainingHours = $remainingTime[0] - $time['hours'];
-        $remainingMinutes = $remainingTime[1] - $time['minutes'];
+            if($remainingMinutes < 0){
+                $remainingMinutes += 60;
+                $remainingHours -= 1;
+            }
 
-        if($remainingMinutes < 0){
-            $remainingMinutes += 60;
-            $remainingHours -= 1;
+            if($remainingHours < 0){
+                $remainingHours = 0;
+                $remainingMinutes = 0;
+            }
+
+            $totalRemainingTime = $remainingHours . ":" . $remainingMinutes;
+
+
+            $hpConsumeTime = explode(':', $history->hp_consume_time);
+            $hpConsumeHours = $hpConsumeTime[0] + $time['hours'];
+            $hpConsumeMinutes = $hpConsumeTime[1] + $time['minutes'];
+
+            if($hpConsumeMinutes > 60){
+                $hpConsumeHours += 1;
+                $hpConsumeMinutes -= 60;
+            }
+
+            $history->update([
+                'hp_remaining_time' => $remainingHours . ":" . $remainingMinutes,
+                'hp_consume_time' => $hpConsumeHours . ":" . $hpConsumeMinutes,
+            ]);
         }
 
-        if($remainingHours < 0){
-            $remainingHours = 0;
-            $remainingMinutes = 0;
-        }
+
+
 
         $logs->hph_id = $req->hph_id;
         $logs->log_date = Carbon::createFromFormat('Y-m-d', $req->date)->format('F j, Y');
         $logs->log_time_in = Carbon::createFromFormat('H:i', $req->timeIn)->format('h:i A');
         $logs->log_time_out = empty($req->timeOut) ? " " : Carbon::createFromFormat('H:i', $req->timeOut)->format('h:i A');
-        $logs->log_time_consume = $time['hours']. ":". $time ['minutes'];
-        $logs->log_time_remaining = $remainingHours . ":" . $remainingMinutes;
+        $logs->log_time_consume = $consumeTime;
+        $logs->log_time_remaining = $totalRemainingTime;
         $logs->log_status = empty($req->timeOut) ? 0 : 1;
-
-        $hpConsumeTime = explode(':', $history->hp_consume_time);
-        $hpConsumeHours = $hpConsumeTime[0] + $time['hours'];
-        $hpConsumeMinutes = $hpConsumeTime[1] + $time['minutes'];
-
-        if($hpConsumeMinutes > 60){
-            $hpConsumeHours += 1;
-            $hpConsumeMinutes -= 60;
-        }
-
-        $history->update([
-            'hp_remaining_time' => $remainingHours . ":" . $remainingMinutes,
-            'hp_consume_time' => $hpConsumeHours . ":" . $hpConsumeMinutes,
-        ]);
 
         $logs->save();
 
