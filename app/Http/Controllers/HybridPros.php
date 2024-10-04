@@ -587,13 +587,23 @@ class HybridPros extends Controller
         $hpRemHours = $historyTimeRemaining[0] - $getConsumeTimeDifference[0];
         $hpRemMinutes = $historyTimeRemaining[1] - $getConsumeTimeDifference[1];
 
+        $hpConsumeTime = explode(':', $history->hp_consume_time);
+        $hpConsumeHours = $hpConsumeTime[0] + $time['hours'];
+        $hpConsumeMinutes = $hpConsumeTime[0] + $time['minutes'];
+
+        if($hpConsumeMinutes > 60){
+            $hpConsumeHours += 1;
+            $hpConsumeMinutes -= 60;
+        }
+
         if($hpRemMinutes < 0){
             $hpRemMinutes += 60;
             $hpRemHours -= 1;
         }
 
         $history->update([
-            'hp_remaining_time' => $hpRemHours . ":" . $hpRemMinutes
+            'hp_remaining_time' => $hpRemHours . ":" . $hpRemMinutes,
+            'hp_consume_time' => $hpConsumeHours . ":" . $hpConsumeMinutes
         ]);
 
         return response()->json(['success'=> true]);
@@ -628,6 +638,20 @@ class HybridPros extends Controller
         $logs->log_time_consume = $time['hours']. ":". $time ['minutes'];
         $logs->log_time_remaining = $remainingHours . ":" . $remainingMinutes;
         $logs->log_status = empty($req->timeOut) ? 0 : 1;
+
+        $hpConsumeTime = explode(':', $history->hp_consume_time);
+        $hpConsumeHours = $hpConsumeTime[0] + $time['hours'];
+        $hpConsumeMinutes = $hpConsumeTime[1] + $time['minutes'];
+
+        if($hpConsumeMinutes > 60){
+            $hpConsumeHours += 1;
+            $hpConsumeMinutes -= 60;
+        }
+
+        $history->update([
+            'hp_remaining_time' => $remainingHours . ":" . $remainingMinutes,
+            'hp_consume_time' => $hpConsumeHours . ":" . $hpConsumeMinutes,
+        ]);
 
         $logs->save();
 
