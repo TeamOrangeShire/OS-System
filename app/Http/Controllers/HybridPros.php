@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CustomerAcc;
+use App\Models\CustomerLogs;
 use App\Models\HybridHistoryLogs;
 use App\Models\HybridProsHistory;
 use Illuminate\Http\Request;
@@ -346,7 +347,7 @@ class HybridPros extends Controller
      }
 
      public function GetLogHistory(Request $req){
-        $hph = HybridHistoryLogs::where('hph_id', $req->hph_id)->orderBy('created_at', 'desc')->get();
+        $hph = HybridHistoryLogs::where('hph_id', $req->hph_id)->orderBy("created_at", "desc")->get();
 
         return response()->json(['hph'=>$hph]);
      }
@@ -532,7 +533,7 @@ class HybridPros extends Controller
         $logs = HybridHistoryLogs::where('log_id', $req->id)->first();
 
         $allLogs = HybridHistoryLogs::where('hph_id', $logs->hph_id)
-        ->orderBy('created_at', 'asc')
+        ->orderBy("created_at", "asc")
         ->get();
 
         $start = false;
@@ -586,13 +587,23 @@ class HybridPros extends Controller
         $hpRemHours = $historyTimeRemaining[0] - $getConsumeTimeDifference[0];
         $hpRemMinutes = $historyTimeRemaining[1] - $getConsumeTimeDifference[1];
 
+        $hpConsumeTime = explode(':', $history->hp_consume_time);
+        $hpConsumeHours = $hpConsumeTime[0] + $time['hours'];
+        $hpConsumeMinutes = $hpConsumeTime[0] + $time['minutes'];
+
+        if($hpConsumeMinutes > 60){
+            $hpConsumeHours += 1;
+            $hpConsumeMinutes -= 60;
+        }
+
         if($hpRemMinutes < 0){
             $hpRemMinutes += 60;
             $hpRemHours -= 1;
         }
 
         $history->update([
-            'hp_remaining_time' => $hpRemHours . ":" . $hpRemMinutes
+            'hp_remaining_time' => $hpRemHours . ":" . $hpRemMinutes,
+            'hp_consume_time' => $hpConsumeHours . ":" . $hpConsumeMinutes
         ]);
 
         return response()->json(['success'=> true]);
@@ -601,26 +612,55 @@ class HybridPros extends Controller
      public function AddHybridProsLog(Request $req){
         $logs = new HybridHistoryLogs();
 
-        $time = timeDifference($req->timeIn, $req->timeOut);
+        $consumeTime = "";
+        $totalRemainingTime = "";
+        if(!empty($req->timeOut)){
+            $time = timeDifference($req->timeIn, $req->timeOut);
+            $consumeTime = $time['hours']. ":". $time ['minutes'];
+            $history = HybridProsHistory::where('hph_id', $req->hph_id)->first();
 
-        $history = HybridProsHistory::where('hph_id', $req->hph_id)->first();
+            $remainingTime = explode(':', $history->hp_remaining_time);
 
-        $remainingTime = explode(':', $history->hp_remaining_time);
+            $remainingHours = $remainingTime[0] - $time['hours'];
+            $remainingMinutes = $remainingTime[1] - $time['minutes'];
 
-        $remainingHours = $remainingTime[0] - $time['hours'];
-        $remainingMinutes = $remainingTime[1] - $time['minutes'];
+            if($remainingMinutes < 0){
+                $remainingMinutes += 60;
+                $remainingHours -= 1;
+            }
 
-        if($remainingMinutes < 0){
-            $remainingMinutes += 60;
-            $remainingHours -= 1;
+            if($remainingHours < 0){
+                $remainingHours = 0;
+                $remainingMinutes = 0;
+            }
+
+            $totalRemainingTime = $remainingHours . ":" . $remainingMinutes;
+
+
+            $hpConsumeTime = explode(':', $history->hp_consume_time);
+            $hpConsumeHours = $hpConsumeTime[0] + $time['hours'];
+            $hpConsumeMinutes = $hpConsumeTime[1] + $time['minutes'];
+
+            if($hpConsumeMinutes > 60){
+                $hpConsumeHours += 1;
+                $hpConsumeMinutes -= 60;
+            }
+
+            $history->update([
+                'hp_remaining_time' => $remainingHours . ":" . $remainingMinutes,
+                'hp_consume_time' => $hpConsumeHours . ":" . $hpConsumeMinutes,
+            ]);
         }
 
+
+
+
         $logs->hph_id = $req->hph_id;
-        $logs->log_date = $req->date;
-        $logs->log_time_in = $req->timeIn;
-        $logs->log_time_out = empty($req->timeOut) ? " " : $req->timeOut;
-        $logs->log_time_consume = $time['hours']. ":". $time ['minutes'];
-        $logs->log_time_remaining = $remainingHours . ":" . $remainingMinutes;
+        $logs->log_date = Carbon::createFromFormat('Y-m-d', $req->date)->format('F j, Y');
+        $logs->log_time_in = Carbon::createFromFormat('H:i', $req->timeIn)->format('h:i A');
+        $logs->log_time_out = empty($req->timeOut) ? " " : Carbon::createFromFormat('H:i', $req->timeOut)->format('h:i A');
+        $logs->log_time_consume = $consumeTime;
+        $logs->log_time_remaining = $totalRemainingTime;
         $logs->log_status = empty($req->timeOut) ? 0 : 1;
 
         $logs->save();
