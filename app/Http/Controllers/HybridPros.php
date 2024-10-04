@@ -533,7 +533,7 @@ class HybridPros extends Controller
         $logs = HybridHistoryLogs::where('log_id', $req->id)->first();
 
         $allLogs = HybridHistoryLogs::where('hph_id', $logs->hph_id)
-        ->orderBy('created_at', 'desc')
+        ->orderBy("created_at", "asc")
         ->get();
 
         $start = false;

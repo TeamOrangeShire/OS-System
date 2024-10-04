@@ -668,11 +668,12 @@ function getLogHistory(id, customer_id) {
         success: res => {
             console.log(res);
             $.fn.dataTable.moment('MMMM D, YYYY');
+            $.fn.dataTable.moment('hh:mm A');
             if (!$.fn.DataTable.isDataTable('#hybridLogHistory')) {
 
                 tableHistoryLogs = $('#hybridLogHistory').DataTable({
                     data: res.hph,
-                    order: [[0, 'desc']],
+                    order: [[0, 'desc'], [1, 'desc']],
                     columns: [
                         { title: "Log Date", data: "log_date" },
                         { title: "Time In", data: "log_time_in" },
