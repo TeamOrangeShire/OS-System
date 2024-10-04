@@ -222,6 +222,7 @@ Route::post('/back/subscription/editPlans', [HybridPros::class, 'UpdatePlans'])-
 Route::post('/back/subscription/updateHistorLog', [HybridPros::class, 'UpdateHistoryLog'])->name('HybridUpdateHistoryLog');
 Route::post('/back/subscription/HybridUpdateProfile', [HybridPros::class, 'UpdateProfile'])->name('HybridUpdateProfile');
 Route::post('/back/subscription/acceptPayment', [HybridPros::class, 'AcceptPayment'])->name('HybridAcceptPayment');
+Route::post('/back/subscription/savehybridlogschanges', [HybridPros::class, 'SaveHybridLogsChanges']);
 Route::post('/CancelPendingSubscription', [SubscriptionsData::class, 'CancelPendingSubscription'])->name('CancelPendingSubscription');
 
 

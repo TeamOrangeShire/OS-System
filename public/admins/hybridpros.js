@@ -652,6 +652,9 @@ function getLogHistory(id, customer_id) {
 
     const route = `${API}?hph_id=${id}`;
 
+    const div = document.getElementById('editHybridLogsDiv');
+
+    div.classList.add('d-none');
 
     const customerAPI = document.getElementById('customerGetOtherAPI').value;
 
@@ -676,7 +679,8 @@ function getLogHistory(id, customer_id) {
                             render: data => {
                                 const color = data.log_status == 1 ? 'danger' : 'primary';
                                 const text = data.log_status == 1 ? 'Logged Out' : 'Logged In';
-                                return `<span class="badge p-2 text-bg-${color}">${text}</span>`;
+                                return `<span class="badge p-2 text-bg-${color}">${text}</span>
+                                <a href="#" style="text-decoration:underline" onclick="editHybridLogs('${data.log_date}', '${data.log_time_in}', '${data.log_time_out}', '${data.log_id}')">Edit</a>`;
                             }
                         }
                     ],
@@ -717,6 +721,102 @@ function getLogHistory(id, customer_id) {
         }, error: xhr => console.log(xhr.responseText)
     });
 }
+
+
+function editHybridLogs(date, timeIn, timeOut, id){
+    const div = document.getElementById('editHybridLogsDiv');
+
+    div.classList.remove('d-none');
+
+    const dateInp = document.getElementById('editHybridLogsDate');
+    const timeInInp = document.getElementById('editHybridLogsTimeIn');
+    const timeOutInp = document.getElementById('editHybridLogsTimeOut');
+
+    const dateObject = new Date(date);
+
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const day = String(dateObject.getDate()).padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    dateInp.value = formattedDate;
+
+    const convertTimeFormat = time => {
+        const timeParts = time.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        let hours = parseInt(timeParts[1], 10);
+        const minutes = timeParts[2];
+        const ampm = timeParts[3].toUpperCase();
+
+        if (ampm === "PM" && hours < 12) hours += 12;
+        if (ampm === "AM" && hours === 12) hours = 0;
+
+        const formattedTime = `${String(hours).padStart(2, '0')}:${minutes}`;
+
+        return formattedTime;
+
+    }
+
+    timeInInp.value = convertTimeFormat(timeIn);
+    timeOutInp.value = convertTimeFormat(timeOut);
+
+    const formId = document.getElementById('editHybridprosLogsID');
+    const formDate = document.getElementById('editHybridprosLogsDate');
+    const formTimeOut = document.getElementById('editHybridprosLogsTimeOut');
+    const formTimeIn = document.getElementById('editHybridprosLogsTimeIn');
+
+    formId.value = id;
+    formDate.value = formattedDate;
+    formTimeOut.value = convertTimeFormat(timeOut);
+    formTimeIn.value = convertTimeFormat(timeIn);
+}
+
+function updateHybridLogsInput(element, target){
+    const input = document.getElementById(target);
+
+    input.value = element.value;
+}
+
+
+document.getElementById('saveChangesUpdateHybridprosLogs').addEventListener('click', ()=> {
+
+    document.getElementById('editHybridprosLogsForms').requestSubmit();
+});
+
+const updateHybridLogsForm = document.getElementById('editHybridprosLogsForms');
+
+if(updateHybridLogsForm){
+    updateHybridLogsForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const roller = document.getElementById('roller');
+        alertify.confirm("Update Hybrid Logs", "Are you sure do you want to save this changes?",
+            ()=> {
+                roller.style.display = 'flex';
+
+                $.ajax({
+                    type: "POST",
+                    url: "/back/subscription/savehybridlogschanges",
+                    data: $('#editHybridprosLogsForms').serialize(),
+                    success: res => {
+                        if(res.success){
+                            roller.style.display = 'none';
+                            toastr['success']("Logs Successfully Updated");
+
+                            document.getElementById('editPlanFormClose').click();
+                        }
+                    }, error: xhr=> console.log(xhr.responseText)
+                });
+            }, ()=> console.log('cancel')
+        )
+    });
+}
+
+document.getElementById('closeEditHybridLogsBtn').addEventListener('click', ()=> {
+    const div = document.getElementById('editHybridLogsDiv');
+
+    div.classList.add('d-none');
+})
 
 function detectSelection() {
     const cancel = document.getElementById('cancelSelectionCustomer');

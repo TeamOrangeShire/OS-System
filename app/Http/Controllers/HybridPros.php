@@ -346,7 +346,7 @@ class HybridPros extends Controller
      }
 
      public function GetLogHistory(Request $req){
-        $hph = HybridHistoryLogs::where('hph_id', $req->hph_id)->get();
+        $hph = HybridHistoryLogs::where('hph_id', $req->hph_id)->orderBy('created_at', 'desc')->get();
 
         return response()->json(['hph'=>$hph]);
      }
@@ -528,32 +528,74 @@ class HybridPros extends Controller
      }
 
 
-     public function UpdateHistoryLog(Request $req){
-        $log = HybridHistoryLogs::where('log_id', $req->log_id)->first();
-        if($req->Date){
-            $date = new \DateTime($req->Date);
-            $formattedDate = $date->format('F j, Y');
-            $log->update(['log_date'=>$formattedDate]);
+     public function SaveHybridLogsChanges(Request $req){
+        $logs = HybridHistoryLogs::where('log_id', $req->id)->first();
+
+        $allLogs = HybridHistoryLogs::where('hph_id', $logs->hph_id)
+        ->orderBy('created_at', 'asc')
+        ->get();
+
+        $start = false;
+
+        $time = timeDifference($req->time_in, $req->time_out);
+
+        $currentConsumeTime = explode(':',$logs->log_time_consume);
+        $currentRemainingTime = explode(':',$logs->log_time_remaining);
+
+        $getConsumeTimeDifference = [$currentConsumeTime[0] - $time['hours'], $currentConsumeTime[1] - $time['minutes']];
+        $getRemainingTimeDifference = [$currentRemainingTime[0] + $getConsumeTimeDifference[0], $currentRemainingTime[1] + $getConsumeTimeDifference[1]];
+
+        if($getRemainingTimeDifference[1] < 0){
+            $getRemainingTimeDifference[1] += 60;
+            $getRemainingTimeDifference[0] -= 1;
         }
 
-        if($req->Time_In){
+        $logs->update([
+            'log_date'=> Carbon::createFromFormat('Y-m-d', $req->date)->format('F j, Y'),
+            'log_time_in'=> Carbon::createFromFormat('H:i', $req->time_in)->format('h:i A'),
+            'log_time_out'=> Carbon::createFromFormat('H:i', $req->time_out)->format('h:i A'),
+            'log_time_consume' => $time['hours']. ":". $time['minutes'],
+            'log_time_remaining' => $getRemainingTimeDifference[0]. ":". $getRemainingTimeDifference[1],
+        ]);
 
-            $timeIn = Carbon::createFromFormat('H:i', $req->Time_In);
-            $timeInFinal = $timeIn->format('g:i A');
-            $diff = $log->log_time_out != '' ? timeDifference($timeInFinal, $log->log_time_out) : 'none';
-            // if($diff != 'none'){
+        foreach ($allLogs as $all){
+            if($all->log_id == $logs->log_id){
+                $start = true;
+            }
 
-            // }
-            $log->update(['log_time_in'=>$timeInFinal]);
+            if($start){
+                if($all->log_id != $logs->log_id){
+                    $updateOtherLogs = HybridHistoryLogs::where('log_id', $all->log_id)->first();
+                    $timeRemaining = explode(':', $updateOtherLogs->log_time_remaining);
+                    $remHours = $timeRemaining[0] + $getConsumeTimeDifference[0];
+                    $remMinutes = $timeRemaining[1] + $getConsumeTimeDifference[1];
+                    if($remMinutes < 0 ){
+                        $remMinutes += 60;
+                        $remHours -= 1;
+                    }
+
+                    $updateOtherLogs->update([
+                        'log_time_remaining'=> $remHours. ":" . $remMinutes
+                    ]);
+                }
+            }
         }
 
-        if($req->Time_Out){
-            $timeOut = Carbon::createFromFormat('H:i', $req->Time_Out);
-            $timeOutFinal =$timeOut->format('g:i A');
-            $log->update(['log_time_out'=>$timeOutFinal]);
+        $history = HybridProsHistory::where('hph_id', $logs->hph_id)->first();
+        $historyTimeRemaining = explode(':', $history->hp_remaining_time);
+        $hpRemHours = $historyTimeRemaining[0] - $getConsumeTimeDifference[0];
+        $hpRemMinutes = $historyTimeRemaining[1] - $getConsumeTimeDifference[1];
+
+        if($hpRemMinutes < 0){
+            $hpRemMinutes += 60;
+            $hpRemHours -= 1;
         }
 
-        return response()->json(['status'=> 'success']);
+        $history->update([
+            'hp_remaining_time' => $hpRemHours . ":" . $hpRemMinutes
+        ]);
+
+        return response()->json(['success'=> true]);
      }
 }
 

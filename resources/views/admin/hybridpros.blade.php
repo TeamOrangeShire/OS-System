@@ -246,9 +246,10 @@
               <button type="button" id="editPlanFormClose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               <form id="updatePlanForm" method="POST">
+               <form id="updatePlanForm" method="POST" class="row">
                 @csrf
-                <input type="hidden" name="hp_id" id="updateHp_id">
+                <div class="col-6">
+                    <input type="hidden" name="hp_id" id="updateHp_id">
                 <p class="fs-6">Plan Purchased: <span id="planEditName"></span> <span data-bs-toggle="modal" data-bs-target="#changePlan"
                      class="ml-4 badge text-bg-primary p-1 acc_btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
@@ -277,6 +278,26 @@
                    <button type="button" id="editStatusInactive" onclick="SetActivePlan(0)" class="btn btn-outline-danger">Inactive</button>
                    <button type="button" id="editStatusActive" onclick="SetActivePlan(1)" class="btn btn-outline-success">Active</button>
                   </div>
+                </div>
+                <div class="col-6 border p-2 rounded d-none" id="editHybridLogsDiv">
+                    <div class="d-flex justify-content-between w-100 mb-2"> <h5>Edit HybridPros Login Logs</h5> <button id="closeEditHybridLogsBtn" type="button" class="btn-close"></button> </div>
+                    <div class="form-group">
+                        <label for="editHybridLogsDate">Log Date</label>
+                        <input type="date" onchange="updateHybridLogsInput(this, 'editHybridprosLogsDate')" class="form-control" id="editHybridLogsDate" >
+                    </div>
+                    <div class="form-group">
+                        <label for="editHybridLogsTimeIn">Time In</label>
+                        <input onchange="updateHybridLogsInput(this, 'editHybridprosLogsTimeIn')" type="time" class="form-control" id="editHybridLogsTimeIn" >
+                    </div>
+                    <div class="form-group">
+                        <label for="editHybridLogsTimeOut">Time Out</label>
+                        <input onchange="updateHybridLogsInput(this, 'editHybridprosLogsTimeOut')" type="time" class="form-control" id="editHybridLogsTimeOut"  >
+                    </div>
+
+                    <div class="d-flex justify-content-end p-1 w-100">
+                        <button id="saveChangesUpdateHybridprosLogs" type="button" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
                </form>
 
                <div id="viewLogs">
@@ -531,6 +552,17 @@
           </div>
         </div>
       </div>
+
+
+     <form method="POST" id="editHybridprosLogsForms">
+        @csrf
+        <input type="hidden" id="editHybridprosLogsID" name="id">
+        <input type="hidden" id="editHybridprosLogsDate" name="date">
+        <input type="hidden" id="editHybridprosLogsTimeIn" name="time_in">
+        <input type="hidden" id="editHybridprosLogsTimeOut" name="time_out">
+     </form>
+
+
      @include('admin.assets.adminscript')
 
      <form id="logging" method="post">
@@ -551,6 +583,7 @@
         @csrf
         <input type="hidden" id="removeCustomerHP_ID" name="hp_id">
      </form>
+
 
      <form method="POST" id="RemovePlanForm">
         @csrf
