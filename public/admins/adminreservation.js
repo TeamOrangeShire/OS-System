@@ -933,6 +933,12 @@ function cancelReservation(){
     $('#viewReservation').modal('hide');
     $('#viewCancelReservation').modal('show');
    const r_id = document.getElementById('r_id').value;
+  const name = document.getElementById('namelabel').textContent
+  const email = document.getElementById('emaillabel').textContent
+  const room =  document.getElementById('cardTitle').textContent
+  document.getElementById('cancel_cardTitle').textContent = room
+    document.getElementById('cancel_namelabel').value = name
+    document.getElementById('cancel_emaillabel').value = email
    document.getElementById('c_r_id').value = r_id;
 }
 $(document).ready(function () {

@@ -359,9 +359,28 @@ input[type="text"]::placeholder {
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <input type="text" name="c_r_id" id="c_r_id" class="form-control">
-                            <label for="">Reason  for cancellation</label>
-                            <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+                            <form action="" id="cancelationForm" method="POST">
+                                @csrf
+                            <input type="text" name="c_r_id" id="c_r_id" class="form-control" hidden>
+                            <div class="row">
+                                  <div class="col-12 text-center mb-4"><h1 id="cancel_cardTitle"></h1></div>
+                                 <div class="col-6">
+                                     Customer Name:
+                                     <input type="text" class="form-control" id="cancel_namelabel" name="cancel_namelabel" readonly>
+                                </div>
+                                <div class="col-6">
+                                     Customer Email:
+                                     <input type="text" class="form-control" id="cancel_emaillabel" name="cancel_emaillabel" readonly>
+                                </div>
+                                <br>
+                                <label for="" class="mt-2">Reason  for cancellation</label>
+                                <textarea name="cancelReason" id="" cols="20" rows="10" class="form-control"></textarea>
+                            </div>
+                            </form>
+                        </div>
+                         <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="dynamicFuction('cancelationForm','{{route('submitAdminReservation')}}','cancel')">Submit</button>
                         </div>
                     </div>
                 </div>
