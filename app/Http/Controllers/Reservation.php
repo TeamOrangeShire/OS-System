@@ -10,7 +10,6 @@ use App\Models\Rooms;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReservationResponse;
-use App\Models\HybridHistoryLogs;
 use Exception;
 
 class Reservation extends Controller
@@ -448,10 +447,5 @@ class Reservation extends Controller
     return view('mail.cancelledreservation');
   }
 
-  public function AddHybridProsLog(Request $req){
-    $logs = new HybridHistoryLogs();
 
-    $logs->log_date = $req->date;
-    $logs->log_timeIn = $req->timeIn;
-  }
 }

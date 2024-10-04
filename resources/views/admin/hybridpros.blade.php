@@ -314,7 +314,7 @@
                     <div class="form-group">
                         <label for="addHybridLogsTimeOut">Time Out</label>
                         <input onchange="updateHybridLogsInput(this, 'addHybridprosLogsTimeOut')" type="time" class="form-control" id="addHybridLogsTimeOut"  >
-                        <small  id="addHybridLogsTimeOutE" class="text-danger d-none">This Field is Required</small>
+
                     </div>
 
                     <div class="d-flex justify-content-end p-1 w-100">
@@ -590,6 +590,7 @@
      </form>
      <form id="addHybridProsLogsForm" method="POST">
         @csrf
+        <input type="hidden" id="addHybridProsLogId" name="hph_id">
         <input type="hidden" id="addHybridprosLogsDate" name="date">
         <input type="hidden" id="addHybridprosLogsTimeIn" name="timeIn">
         <input type="hidden" id="addHybridprosLogsTimeOut" name="timeOut">

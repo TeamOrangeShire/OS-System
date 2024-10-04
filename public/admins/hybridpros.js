@@ -285,6 +285,7 @@ function OpenPlanEdit(id, name, start, end, time, status, customer_id) {
     startDate.setDate(startDate.getDate() + 1);
     endDate.setDate(endDate.getDate() + 1);
 
+    document.getElementById('addHybridProsLogId').value = id;
     const formatEndDate = endDate.toISOString().split('T')[0];
     const formatStartDate = startDate.toISOString().split('T')[0];
     inpEditExpiration.value = formatEndDate;
@@ -1242,19 +1243,16 @@ document.getElementById('closeAddHybridLogsBtn').addEventListener('click', ()=> 
 document.getElementById('addHybridProsLogsBtn').addEventListener('click', () => {
     const addDate = document.getElementById('addHybridLogsDate');
     const addTimeIn = document.getElementById('addHybridLogsTimeIn');
-    const addTimeOut = document.getElementById('addHybridLogsTimeOut');
 
     const errorDate = document.getElementById('addHybridLogsDateE');
     const errorTimeIn = document.getElementById('addHybridLogsTimeInE');
-    const errorTimeOut = document.getElementById('addHybridLogsTimeOutE');
 
     let validity = 0;
 
     validity += checkInput(addDate, errorDate);
     validity += checkInput(addTimeIn, errorTimeIn);
-    validity += checkInput(addTimeOut, errorDate);
 
-    if(validity == 3){
+    if(validity == 2){
         document.getElementById('addHybridProsLogsForm').requestSubmit();
     }
 });
