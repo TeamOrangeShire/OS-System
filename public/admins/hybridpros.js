@@ -666,9 +666,13 @@ function getLogHistory(id, customer_id) {
         url: route,
         dataType: "json",
         success: res => {
+            console.log(res);
+            $.fn.dataTable.moment('MMMM D, YYYY');
             if (!$.fn.DataTable.isDataTable('#hybridLogHistory')) {
+
                 tableHistoryLogs = $('#hybridLogHistory').DataTable({
                     data: res.hph,
+                    order: [[0, 'desc']],
                     columns: [
                         { title: "Log Date", data: "log_date" },
                         { title: "Time In", data: "log_time_in" },
@@ -1273,6 +1277,8 @@ document.getElementById('addHybridProsLogsForm').addEventListener('submit', e =>
                 roller.style.display = 'none';
                 toastr['success']("Hybrid Pros Log Successfully Added");
                 document.getElementById('editPlanFormClose').click();
+                document.getElementById('openHybridProsAddLogBtn').classList.remove('d-none');
+                document.getElementById('addHybridLogDiv').classList.add('d-none');
             }
         }, error: xhr=> console.log(xhr.responseText)
     })

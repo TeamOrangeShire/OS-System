@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CustomerAcc;
+use App\Models\CustomerLogs;
 use App\Models\HybridHistoryLogs;
 use App\Models\HybridProsHistory;
 use Illuminate\Http\Request;
@@ -346,7 +347,7 @@ class HybridPros extends Controller
      }
 
      public function GetLogHistory(Request $req){
-        $hph = HybridHistoryLogs::where('hph_id', $req->hph_id)->orderBy('created_at', 'desc')->get();
+        $hph = HybridHistoryLogs::where('hph_id', $req->hph_id)->orderBy("created_at", "desc")->get();
 
         return response()->json(['hph'=>$hph]);
      }
@@ -532,7 +533,7 @@ class HybridPros extends Controller
         $logs = HybridHistoryLogs::where('log_id', $req->id)->first();
 
         $allLogs = HybridHistoryLogs::where('hph_id', $logs->hph_id)
-        ->orderBy('created_at', 'asc')
+        ->orderBy('created_at', 'desc')
         ->get();
 
         $start = false;
@@ -615,10 +616,15 @@ class HybridPros extends Controller
             $remainingHours -= 1;
         }
 
+        if($remainingHours < 0){
+            $remainingHours = 0;
+            $remainingMinutes = 0;
+        }
+
         $logs->hph_id = $req->hph_id;
-        $logs->log_date = $req->date;
-        $logs->log_time_in = $req->timeIn;
-        $logs->log_time_out = empty($req->timeOut) ? " " : $req->timeOut;
+        $logs->log_date = Carbon::createFromFormat('Y-m-d', $req->date)->format('F j, Y');
+        $logs->log_time_in = Carbon::createFromFormat('H:i', $req->timeIn)->format('h:i A');
+        $logs->log_time_out = empty($req->timeOut) ? " " : Carbon::createFromFormat('H:i', $req->timeOut)->format('h:i A');
         $logs->log_time_consume = $time['hours']. ":". $time ['minutes'];
         $logs->log_time_remaining = $remainingHours . ":" . $remainingMinutes;
         $logs->log_status = empty($req->timeOut) ? 0 : 1;
