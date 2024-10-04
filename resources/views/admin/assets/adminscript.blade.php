@@ -32,5 +32,5 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.colVis.min.js"></script>
 
 <script type="text/javascript" src="{{ asset('admins/helper.js') }}"></script>
-<script type="text/javascript" src="{{ asset('admins/hybridpros.js') }}"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

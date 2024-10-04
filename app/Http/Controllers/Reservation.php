@@ -10,6 +10,7 @@ use App\Models\Rooms;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReservationResponse;
+use App\Models\HybridHistoryLogs;
 use Exception;
 
 class Reservation extends Controller
@@ -142,7 +143,7 @@ class Reservation extends Controller
       foreach ($emails as $em) {
         $cleanEmail = str_replace(' ', '', $em);
         try {
-          Mail::to($cleanEmail)->send(new ReservationResponse());
+          Mail::to($cleanEmail)->send(new ReservationResponse($generateTransaction, $reserve->r_id));
         } catch (Exception $ex) {
           // Ignore
         }
@@ -376,7 +377,7 @@ class Reservation extends Controller
         $end = '';
         $endDateFormatted = $request->start_date; // Format the end date
       }
-      
+
 
       $checkReserve = Reservations::where('room_id', $request->room_id)->where('status', '1')->where('room_id','!=','0')->first();
       if ($endDateFormatted < $request->start_date) {
@@ -407,7 +408,7 @@ class Reservation extends Controller
       $reserve->save();
       return response()->json(['status' => 'success', 'message' => "Success" ,'reload'=> 'getPendingReservation','modal'=> 'viewReservation']);
     }else if($request->process == 'cancel'){
-      
+
       return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewReservation']);
     }
 
@@ -447,4 +448,10 @@ class Reservation extends Controller
     return view('mail.cancelledreservation');
   }
 
+  public function AddHybridProsLog(Request $req){
+    $logs = new HybridHistoryLogs();
+
+    $logs->log_date = $req->date;
+    $logs->log_timeIn = $req->timeIn;
+  }
 }
