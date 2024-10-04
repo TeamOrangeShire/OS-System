@@ -285,6 +285,7 @@ function OpenPlanEdit(id, name, start, end, time, status, customer_id) {
     startDate.setDate(startDate.getDate() + 1);
     endDate.setDate(endDate.getDate() + 1);
 
+    document.getElementById('addHybridProsLogId').value = id;
     const formatEndDate = endDate.toISOString().split('T')[0];
     const formatStartDate = startDate.toISOString().split('T')[0];
     inpEditExpiration.value = formatEndDate;
@@ -725,9 +726,10 @@ function getLogHistory(id, customer_id) {
 
 function editHybridLogs(date, timeIn, timeOut, id){
     const div = document.getElementById('editHybridLogsDiv');
-
+    const add = document.getElementById('addHybridLogDiv');
+    add.classList.add('d-none');
     div.classList.remove('d-none');
-
+    document.getElementById('openHybridProsAddLogBtn').classList.add('d-none');
     const dateInp = document.getElementById('editHybridLogsDate');
     const timeInInp = document.getElementById('editHybridLogsTimeIn');
     const timeOutInp = document.getElementById('editHybridLogsTimeOut');
@@ -815,6 +817,7 @@ if(updateHybridLogsForm){
 document.getElementById('closeEditHybridLogsBtn').addEventListener('click', ()=> {
     const div = document.getElementById('editHybridLogsDiv');
 
+    document.getElementById('openHybridProsAddLogBtn').classList.remove('d-none');
     div.classList.add('d-none');
 })
 
@@ -1213,4 +1216,78 @@ function LoadAvailableWeeks(route) {
 function SelectWeeklyReport(route, select) {
     const API = `${route}?filter=weekly&week=${select.value}`;
     LoadReport(API);
+}
+
+document.getElementById('openHybridProsAddLogBtn').addEventListener('click', e => {
+    const edit = document.getElementById('editHybridLogsDiv');
+    const add = document.getElementById('addHybridLogDiv');
+
+    add.classList.remove('d-none');
+    edit.classList.add('d-none');
+
+    document.getElementById('openHybridProsAddLogBtn').classList.add('d-none');
+
+});
+
+document.getElementById('closeAddHybridLogsBtn').addEventListener('click', ()=> {
+    const edit = document.getElementById('editHybridLogsDiv');
+    const add = document.getElementById('addHybridLogDiv');
+
+    add.classList.add('d-none');
+    edit.classList.add('d-none');
+
+    document.getElementById('openHybridProsAddLogBtn').classList.remove('d-none');
+});
+
+
+document.getElementById('addHybridProsLogsBtn').addEventListener('click', () => {
+    const addDate = document.getElementById('addHybridLogsDate');
+    const addTimeIn = document.getElementById('addHybridLogsTimeIn');
+
+    const errorDate = document.getElementById('addHybridLogsDateE');
+    const errorTimeIn = document.getElementById('addHybridLogsTimeInE');
+
+    let validity = 0;
+
+    validity += checkInput(addDate, errorDate);
+    validity += checkInput(addTimeIn, errorTimeIn);
+
+    if(validity == 2){
+        document.getElementById('addHybridProsLogsForm').requestSubmit();
+    }
+});
+
+document.getElementById('addHybridProsLogsForm').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const roller = document.getElementById('roller');
+
+    roller.style.display = 'flex';
+
+    $.ajax({
+        type: "POST",
+        url: "/back/subscription/addhybridproslog",
+        data: $('#addHybridProsLogsForm').serialize(),
+        success: res=> {
+            if(res.success){
+                roller.style.display = 'none';
+                toastr['success']("Hybrid Pros Log Successfully Added");
+                document.getElementById('editPlanFormClose').click();
+            }
+        }, error: xhr=> console.log(xhr.responseText)
+    })
+});
+
+
+function checkInput(input, message){
+    if(input.value == ""){
+        input.classList.add('border', 'border-danger');
+        message.classList.remove('d-none');
+        return 0;
+    }
+
+    input.classList.remove('border', 'border-danger');
+    message.classList.add('d-none');
+
+    return 1;
 }

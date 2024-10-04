@@ -597,5 +597,35 @@ class HybridPros extends Controller
 
         return response()->json(['success'=> true]);
      }
+
+     public function AddHybridProsLog(Request $req){
+        $logs = new HybridHistoryLogs();
+
+        $time = timeDifference($req->timeIn, $req->timeOut);
+
+        $history = HybridProsHistory::where('hph_id', $req->hph_id)->first();
+
+        $remainingTime = explode(':', $history->hp_remaining_time);
+
+        $remainingHours = $remainingTime[0] - $time['hours'];
+        $remainingMinutes = $remainingTime[1] - $time['minutes'];
+
+        if($remainingMinutes < 0){
+            $remainingMinutes += 60;
+            $remainingHours -= 1;
+        }
+
+        $logs->hph_id = $req->hph_id;
+        $logs->log_date = $req->date;
+        $logs->log_time_in = $req->timeIn;
+        $logs->log_time_out = empty($req->timeOut) ? " " : $req->timeOut;
+        $logs->log_time_consume = $time['hours']. ":". $time ['minutes'];
+        $logs->log_time_remaining = $remainingHours . ":" . $remainingMinutes;
+        $logs->log_status = empty($req->timeOut) ? 0 : 1;
+
+        $logs->save();
+
+        return response()->json(['success'=> true]);
+      }
 }
 

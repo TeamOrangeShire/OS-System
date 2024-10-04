@@ -298,11 +298,38 @@
                         <button id="saveChangesUpdateHybridprosLogs" type="button" class="btn btn-primary">Save Changes</button>
                     </div>
                 </div>
+
+                <div class="col-6 border p-2 rounded d-none" id="addHybridLogDiv">
+                    <div class="d-flex justify-content-between w-100 mb-2"> <h5>Add HybridPros Login Logs</h5> <button id="closeAddHybridLogsBtn" type="button" class="btn-close"></button> </div>
+                    <div class="form-group">
+                        <label for="addHybridLogsDate">Log Date</label>
+                        <input type="date" onchange="updateHybridLogsInput(this, 'addHybridprosLogsDate')" class="form-control" id="addHybridLogsDate" >
+                        <small id="addHybridLogsDateE" class="text-danger d-none">This Field is Required</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="addHybridLogsTimeIn">Time In</label>
+                        <input onchange="updateHybridLogsInput(this, 'addHybridprosLogsTimeIn')" type="time" class="form-control" id="addHybridLogsTimeIn" >
+                        <small  id="addHybridLogsTimeInE" class="text-danger d-none">This Field is Required</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="addHybridLogsTimeOut">Time Out</label>
+                        <input onchange="updateHybridLogsInput(this, 'addHybridprosLogsTimeOut')" type="time" class="form-control" id="addHybridLogsTimeOut"  >
+
+                    </div>
+
+                    <div class="d-flex justify-content-end p-1 w-100">
+                        <button id="addHybridProsLogsBtn" type="button" class="btn btn-primary">Add Logs</button>
+                    </div>
+                </div>
+
                </form>
 
                <div id="viewLogs">
 
-                <h4 class="text-primary">Log Sessions</h4>
+                <div class="w-100 d-flex justify-content-between">
+                    <h4 class="text-primary">Log Sessions</h4>
+                    <button id="openHybridProsAddLogBtn" class="btn btn-primary">Add Logs</button>
+                </div>
                 <table id="hybridLogHistory" class="table table-striped" style="width:100%;">
                     <thead>
                     <tr>
@@ -561,7 +588,13 @@
         <input type="hidden" id="editHybridprosLogsTimeIn" name="time_in">
         <input type="hidden" id="editHybridprosLogsTimeOut" name="time_out">
      </form>
-
+     <form id="addHybridProsLogsForm" method="POST">
+        @csrf
+        <input type="hidden" id="addHybridProsLogId" name="hph_id">
+        <input type="hidden" id="addHybridprosLogsDate" name="date">
+        <input type="hidden" id="addHybridprosLogsTimeIn" name="timeIn">
+        <input type="hidden" id="addHybridprosLogsTimeOut" name="timeOut">
+     </form>
 
      @include('admin.assets.adminscript')
 
@@ -589,6 +622,7 @@
         @csrf
         <input type="hidden" id="removePlanHPH_ID" name="hph_id">
      </form>
+     <script type="text/javascript" src="{{ asset('admins/hybridpros.js') }}"></script>
 <script>
     window.onload = () => {
         LoadCustomer('{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}');

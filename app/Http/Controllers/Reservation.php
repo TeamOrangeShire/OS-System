@@ -142,7 +142,7 @@ class Reservation extends Controller
       foreach ($emails as $em) {
         $cleanEmail = str_replace(' ', '', $em);
         try {
-          Mail::to($cleanEmail)->send(new ReservationResponse());
+          Mail::to($cleanEmail)->send(new ReservationResponse($generateTransaction, $reserve->r_id));
         } catch (Exception $ex) {
           // Ignore
         }
@@ -376,7 +376,7 @@ class Reservation extends Controller
         $end = '';
         $endDateFormatted = $request->start_date; // Format the end date
       }
-      
+
 
       $checkReserve = Reservations::where('room_id', $request->room_id)->where('status', '1')->where('room_id','!=','0')->first();
       if ($endDateFormatted < $request->start_date) {
@@ -407,7 +407,6 @@ class Reservation extends Controller
       $reserve->save();
       return response()->json(['status' => 'success', 'message' => "Success" ,'reload'=> 'getPendingReservation','modal'=> 'viewReservation']);
     }else if($request->process == 'cancel'){
-
       $input = $request->all(); // Get all input fields
       foreach ($input as $key => $value) {
         if (empty($value)) {
@@ -460,5 +459,6 @@ class Reservation extends Controller
 
     return view('mail.cancelledreservation');
   }
+
 
 }
