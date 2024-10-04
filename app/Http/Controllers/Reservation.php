@@ -400,7 +400,7 @@ class Reservation extends Controller
       $reserve->date_approved =  Carbon::now();
       $reserve->status = 1;
       $reserve->save();
-      return response()->json(['status' => 'success', 'message' => "$end and $endDateFormatted"]);
+      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'addEvent']);
     }else if($request->process == 'accept'){
       $reserve = Reservations::where('r_id',$request->r_id)->first();
       $reserve->status = "1";
@@ -422,6 +422,10 @@ class Reservation extends Controller
       $reserve->save();
 
       return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
+    }else if($request->process == 'resched'){
+      
+      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
+    
     }
 
     return response()->json(['status' => 'success']);

@@ -52,6 +52,26 @@ input[type="text"]::placeholder {
     border-color: #999;
     background-color:#f53b23
 }
+/* Highlight the week row when hovering */
+.ui-datepicker-calendar tr:hover {
+    background-color: #e3f2fd; /* Light blue hover effect */
+}
+
+/* Custom style for the selected week (you can add a class on the selected week in JS) */
+.selected-week {
+    background-color: #ffeb3b !important; /* Yellow background for selected week */
+}
+.ui-datepicker .disabled a {
+    background-color: #f4cccc !important; /* Light red for disabled dates */
+    color: #888 !important; /* Gray out text */
+    pointer-events: none; /* Disable clicking */
+    opacity: 0.7;
+}
+.ui-datepicker .ui-state-active {
+    background-color: #3bff3b !important; /* Yellow background for selected week */
+}
+
+
     </style>
 </head>
 <body class="">
@@ -330,12 +350,12 @@ input[type="text"]::placeholder {
                                         <button type="button" class="btn btn-success" onclick="dynamicFuction('acceptReserveForm','{{route('submitAdminReservation')}}','accept')">Accept</button>
                                     </div>
                                     <div class="col-6">
-                                        <button type="button" class="btn btn-danger">Cancel</button>
+                                        <button type="button" class="btn btn-danger" onclick="cancelReservation()">Cancel</button>
                                     </div>
                                 </div>
                                 <div id="innerCard2" class="row" style="display: none">
                                     <div class="col-6">
-                                        <button type="button" class="btn btn-warning">Reschedule</button>
+                                        <button type="button" class="btn btn-warning" onclick="reschedReserve()">Reschedule</button>
                                     </div>
                                     <div class="col-6">
                                         <button type="button" class="btn btn-danger" onclick="cancelReservation()">Cancel</button>
@@ -381,6 +401,65 @@ input[type="text"]::placeholder {
                          <div class="modal-footer">
                             <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary" onclick="dynamicFuction('cancelationForm','{{route('submitAdminReservation')}}','cancel')">Submit</button>
+                        </div>
+                    </div>
+                </div>
+</div>   
+{{-- end modal --}}
+{{-- start modal --}}
+<div id="viewReschedReservation" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Reschedule Reservation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                         <form action="" id="reschedForm" method="POST">
+                                @csrf
+                            <input type="text" name="c_r_id" id="c_r_id" class="form-control" hidden>
+                            <div class="row">
+                                  <div class="col-12 text-center mb-4"><h1 id="resched_cardTitle"></h1></div>
+                                 <div class="col-6 mb-1">
+                                     Customer Name:
+                                     <input type="text" class="form-control" id="resched_namelabel" name="resched_namelabel" readonly>
+                                </div>
+                                <div class="col-6 mb-1">
+                                     Customer Email:
+                                     <input type="text" class="form-control" id="resched_emaillabel" name="resched_emaillabel" readonly>
+                                </div>
+                                <div class="col-12 mb-1">
+                                    Select Room:
+                                    <select id="roomSelect" class="form-control">
+                                    <option value="">Select Room</option> <!-- Default option -->
+                                    </select>
+                                </div>
+                                <div class="col-12 mb-1">
+                                    Select Rate:
+                                    <select id="rateSelect" class="form-control" >
+                                    <option value="">Select Rate</option> <!-- Default option -->
+                                    </select>
+                                </div>
+                                <div id="reschedField"></div>
+                                <div class="col-6 mb-1">
+                                    Select Start Date:
+                                     <input type="text" id="reschedDate" class="form-control" placeholder="Select Start Date">
+                                </div>
+                                <div class="col-6 mb-1">
+                                    Select End Date:
+                                     <input type="text" id="reschedDate2" class="form-control" placeholder="Select End Date">
+                                </div>
+                                <br>
+                                <label for="" class="mt-2">Reason  for cancellation</label>
+                                <textarea name="reschedReason" id="" cols="20" rows="5" class="form-control"></textarea>
+                            </div>
+                            </form>
+                        </div>
+                         <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="reschedBtn" onclick="dynamicFuction('reschedForm','{{route('submitAdminReservation')}}','resched')">Submit</button>
                         </div>
                     </div>
                 </div>
