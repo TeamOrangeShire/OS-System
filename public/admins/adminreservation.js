@@ -90,39 +90,39 @@ $(document).ready(function () {
                     // Inject the generated HTML into the element
                     name.innerHTML = `<div class="w-100">${timeHTML}</div>`;
                 }
-                document.getElementById('datepicker').value = formattedDate;
+                // document.getElementById('preselect').value = formattedDate;
                 getResData()
                 // Set the value of the date input to the formatted date
-                const dateInput = eventEmpty.querySelector("#datepicker");
-                if (dateInput) {
-                    dateInput.value = formattedDate; // Assign the formatted date value+
-                }
+                // const dateInput = eventEmpty.querySelector("#datepicker");
+                // if (dateInput) {
+                //     dateInput.value = formattedDate; // Assign the formatted date value+
+                // }
 
-                document.getElementById('datepicker').addEventListener('change', function () {
-                    const selectedDate = new Date(this.value);  // Get the selected date
-                    const currentDate = new Date(); // Get the current date
+                // document.getElementById('datepicker').addEventListener('change', function () {
+                //     const selectedDate = new Date(this.value);  // Get the selected date
+                //     const currentDate = new Date(); // Get the current date
 
-                    // Set current date to midnight (00:00:00) to avoid time discrepancies
-                    currentDate.setHours(0, 0, 0, 0);
+                //     // Set current date to midnight (00:00:00) to avoid time discrepancies
+                //     currentDate.setHours(0, 0, 0, 0);
 
-                    const dayOfWeek = selectedDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
-                    const errorMessage = document.getElementById('dateError');
+                //     const dayOfWeek = selectedDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
+                //     const errorMessage = document.getElementById('dateError');
 
-                    if (selectedDate < currentDate) {
-                        // If the selected date is in the past
-                        errorMessage.style.display = 'block';
-                        errorMessage.textContent = 'You cannot select a past date!';
-                        this.value = '';  // Clear the invalid selection
-                    } else if (dayOfWeek === 0) {
-                        // If the selected date is a Sunday
-                        errorMessage.style.display = 'block';
-                        errorMessage.textContent = 'You cannot select a Sunday!';
-                        this.value = '';  // Clear the invalid selection
-                    } else {
-                        // Hide the error message if the date is valid
-                        errorMessage.style.display = 'none';
-                    }
-                });
+                //     if (selectedDate < currentDate) {
+                //         // If the selected date is in the past
+                //         errorMessage.style.display = 'block';
+                //         errorMessage.textContent = 'You cannot select a past date!';
+                //         this.value = '';  // Clear the invalid selection
+                //     } else if (dayOfWeek === 0) {
+                //         // If the selected date is a Sunday
+                //         errorMessage.style.display = 'block';
+                //         errorMessage.textContent = 'You cannot select a Sunday!';
+                //         this.value = '';  // Clear the invalid selection
+                //     } else {
+                //         // Hide the error message if the date is valid
+                //         errorMessage.style.display = 'none';
+                //     }
+                // });
 
                 const emailInput = document.getElementById("emailInput");
                 const tagInputDiv = document.querySelector(".tag-input");
@@ -327,6 +327,7 @@ function getResData() {
                 }
                 else if (selectedValue == '0') {
                     // Get the container to hold the input field
+                   document.getElementById('dateSelected2').value = document.getElementById('preselect').value
                     let result = `
     <div class="col-md-6">
         <label for="customer_number">Number of Customer</label>
@@ -378,8 +379,8 @@ function getResData() {
     <div class="col-md-6">
         <label for="customer_bill">Room Rate</label>
         <select class="form-control" id="customer_bill" name="customer_bill">
+        <option value="">Select Room Rate</option>
 `;
-
                     // Add room rate options based on the selected room
                     roomRate.forEach((rate) => {
                         if (rate.room_id == selectedValue) {
@@ -409,48 +410,24 @@ function getResData() {
                             roomRate.forEach((rate) => {
                                 if (rate.rp_id == selectedValue) {
                                     const rateDescription = rate.rp_rate_description;
-
+                                    const preselect = document.getElementById('preselect').value
                                     if (rateDescription.includes("Daily") || rateDescription.includes("Weekly") || rateDescription.includes("Monthly")) {
                                         // Append the 'End Date' field dynamically
                                         let endDateField = "";
                                         if (rateDescription.includes("Daily")) {
-                                            endDateField = `
-                        <div class="col-md-12" id="endDateField">
-    <label for="datepicker2">End Date:</label>
-    <input type="date" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date" onchange="validateDays(this)">
-    <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
-</div>
-
-                    `;
+                                            addcheckRoomSchedByDay(preselect)
                                         } else if (rateDescription.includes("Weekly")) {
-                                            endDateField = `
-                        <div class="col-md-12" id="endDateField">
-    <label for="datepicker2">End Date:</label>
-    <input type="week" class="form-control" id="datepicker2" name="end_date" placeholder="Select a date" onchange="validateWeek()">
-    <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
-</div>
-
-                    `;
+                                            addcheckRoomSchedByWeek(preselect)
                                         } else if (rateDescription.includes("Monthly")) {
-                                            endDateField = `
-                                            <div class="col-md-12" id="endDateField">
-    <label for="datepicker2">End Date:</label>
-    <input type="month" class="form-control" id="datepicker2" name="end_date" placeholder="Select a month" onchange="validateMonth()">
-    <small id="dateError2" class="form-text text-danger" style="display: none;"></small>
-</div>
-
-                                            `;
+                                            addcheckRoomSchedByMonths(preselect)
                                         }
-                                        // Use insertAdjacentHTML instead of innerHTML to avoid overwriting the container's existing content
-                                        if (!document.getElementById('endDateField')) {
-                                            container.insertAdjacentHTML('beforeend', endDateField);
-                                        }
+                                        // // Use insertAdjacentHTML instead of innerHTML to avoid overwriting the container's existing content
+                                        // if (!document.getElementById('endDateField')) {
+                                        //     container.insertAdjacentHTML('beforeend', endDateField);
+                                        // }
                                     } else {
                                         // Remove the 'End Date' field if it exists
-                                        const existingEndDateField = document.getElementById('endDateField');
-                                        if (existingEndDateField) {
-                                            existingEndDateField.remove();
-                                        }
+                                        addcheckRoomSchedByHour(preselect)
                                     }
                                 }
                             });
@@ -627,7 +604,8 @@ function selectTime(element) {
 }
 function viewForm(date, time) {
     $('#addEvent').modal('show');
-
+    document.getElementById('preselect').value=date
+    document.getElementById('dateSelected').value=date
     // Reformat the date from MM/DD/YYYY to Month/DD/YYYY
     const [month, day, year] = date.split('/');
     const monthNames = [
@@ -677,7 +655,7 @@ function dynamicFuction(formId, routeUrl, process) {
     stopInterval()
     // Show the loader
     // hello
-    // const check = document.getElementById('reschedDate').value
+    // const check = document.getElementById('dateSelected').value
     // console.log('here')
     // console.log(check)
     document.getElementById('roller').style.display = 'flex';
@@ -1449,6 +1427,445 @@ function checkRoomSchedByMonths() {
     });
 }
 
+
+function addcheckRoomSchedByHour(preselect) {
+    stopInterval()
+    const roomNumber = parseInt(document.getElementById('roomList').value, 10);
+    document.getElementById('dateSelected').value = '';
+    document.getElementById('dateSelected2').value = '';
+
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+            // Filter to get only active reservations for the specified room
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const disabledDates = []; // Array to hold disabled dates
+
+            // Process active reservations to populate the disabledDates array
+            if (activeReservations.length > 0) {
+                activeReservations.forEach(reservation => {
+                    const startDate = new Date(reservation.start_date);
+                    const endDate = new Date(reservation.end_date);
+
+                    // Push dates into the disabledDates array
+                    let currentDate = startDate;
+                    while (currentDate <= endDate) {
+                        disabledDates.push($.datepicker.formatDate('yy-mm-dd', currentDate));
+                        currentDate.setDate(currentDate.getDate() + 1);
+                    }
+                });
+            }
+
+
+            // Destroy any existing datepicker instances
+            $("#dateSelected").datepicker("destroy");
+            $("#dateSelected2").datepicker("destroy");
+            $("#dateSelected").val(preselect);
+            $("#dateSelected2").val(preselect);
+            // Initialize the start datepicker
+            $("#dateSelected").datepicker({
+                beforeShowDay: function (date) {
+                    const string = $.datepicker.formatDate('yy-mm-dd', date);
+                    return [disabledDates.indexOf(string) === -1, '']; // Disable dates in the array
+                },
+                minDate: 0, // Disable past dates
+                onSelect: function (dateText) {
+                    // When a start date is selected, set the same value for the end date
+                    $("#dateSelected2").val(dateText); // Set the end date to the same value as the start date
+                    $("#dateSelected2").prop('disabled', true);
+                }
+            });
+
+            // Initialize the end datepicker
+            $("#dateSelected2").datepicker({
+                beforeShowDay: function (date) {
+                    const string = $.datepicker.formatDate('yy-mm-dd', date);
+                    return [disabledDates.indexOf(string) === -1, '']; // Disable dates in the array
+                },
+                minDate: 0 // Disable past dates
+            });
+            $("#dateSelected2").prop('disabled', true);
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        }
+    });
+}
+
+function addcheckRoomSchedByDay(preselect) {
+    stopInterval()
+    const roomNumber = parseInt(document.getElementById('roomList').value, 10);
+
+    // Clear the date fields
+    document.getElementById('dateSelected').value = '';
+    document.getElementById('dateSelected2').value = '';
+
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+            $("#dateSelected2").prop('disabled', false);
+            // Filter to get only active reservations for the specified room
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const disabledDates = []; // Array to hold disabled dates
+
+            // Process active reservations to populate the disabledDates array
+            if (activeReservations.length > 0) {
+                activeReservations.forEach(reservation => {
+                    const startDate = new Date(reservation.start_date);
+                    const endDate = new Date(reservation.end_date);
+
+                    // Push dates into the disabledDates array
+                    let currentDate = startDate;
+                    while (currentDate <= endDate) {
+                        disabledDates.push($.datepicker.formatDate('yy-mm-dd', currentDate));
+                        currentDate.setDate(currentDate.getDate() + 1);
+                    }
+                });
+            }
+            const dateString = preselect;
+            const newDate = new Date(dateString);
+            const convertedDate = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+            console.log(convertedDate);
+            // Destroy any existing datepicker instances
+            $("#dateSelected").datepicker("destroy");
+            $("#dateSelected2").datepicker("destroy");
+            $("#dateSelected").val(convertedDate);
+            $("#dateSelected2").val(convertedDate);
+            // Initialize the start datepicker
+            $("#dateSelected").datepicker({
+                beforeShowDay: function (date) {
+                    const string = $.datepicker.formatDate('yy-mm-dd', date);
+                    return [disabledDates.indexOf(string) === -1, '']; // Disable conflicting dates
+                },
+                minDate: 0, // Disable past dates
+                onSelect: function (dateText) {
+                    console.log(dateText)
+                    const selectedDate = new Date(dateText);
+                    let isConflict = false;
+
+                    // Check for conflicts in the disabledDates array
+                    disabledDates.forEach(disabledDate => {
+                        const disabled = new Date(disabledDate);
+                        if (selectedDate.getTime() === disabled.getTime()) {
+                            isConflict = true;
+                        }
+                    });
+
+                    if (isConflict) {
+                        $("#dateSelected").val(''); // Reset the start date input
+                        $("#dateSelected2").val(''); // Reset the end date input
+                        $("#dateSelected2").prop('disabled', true); // Disable the end date input
+                    } else {
+                        // No conflict: Set the same value for the end date
+                        $("#dateSelected2").val(dateText);
+                        $("#dateSelected2").prop('disabled', false);
+                    }
+                }
+            });
+
+            // Initialize the end datepicker
+            $("#dateSelected2").datepicker({
+                beforeShowDay: function (date) {
+                    const string = $.datepicker.formatDate('yy-mm-dd', date);
+                    return [disabledDates.indexOf(string) === -1, '']; // Disable conflicting dates
+                },
+                minDate: 0 // Disable past dates
+            });
+
+            // Variable to track if the alert has been shown
+            let alertShown = false;
+            intervalId = setInterval(() => {
+                // Get the start and end dates from input fields
+                const startDateStr = document.getElementById('dateSelected');
+                const endDateStr = document.getElementById('dateSelected2');
+                const input1 = startDateStr.value;
+                const input2 = endDateStr.value;
+
+                // Convert start and end dates to 'YYYY-MM-DD' format
+                const parts = input1.split('/');
+                const parts2 = input2.split('/');
+                const formattedStartDate = `${parts[2]}-${parts[0]}-${parts[1]}`;
+                const formattedEndDate = `${parts2[2]}-${parts2[0]}-${parts2[1]}`;
+
+                function checkDateConflict(startDate, endDate, dateArray) {
+                    // Convert the start and end dates to Date objects
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+
+                    // Loop through the array of dates
+                    for (let i = 0; i < dateArray.length; i++) {
+                        const currentArrayDate = new Date(dateArray[i]);
+
+                        // Check if the current date in the array is within the start and end range
+                        if (currentArrayDate >= start && currentArrayDate <= end) {
+                            return true;  // Conflict found
+                        }
+                    }
+
+                    return false;  // No conflict found
+                }
+                const isConflict = checkDateConflict(formattedStartDate, formattedEndDate, disabledDates);
+                if (isConflict) {
+                    if (!alertShown) { // Show alert only if not shown before
+                        alertify
+                            .alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
+                                alertify.message('OK');
+                            });
+                        alertShown = true; // Set the flag to true
+                    }
+                    document.getElementById('addSched').disabled = true;
+                    $("#dateSelected2").css("border", "2px solid red");
+                } else {
+                    // Reset the alert shown flag when there's no conflict
+                    alertShown = false; // Allow alert to show again if necessary
+                    document.getElementById('addSched').disabled = false;
+                    $("#dateSelected2").css("border", "");
+                }
+            }, 1000);
+
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        }
+    });
+}
+
+function addcheckRoomSchedByWeek(preselect) {
+    stopInterval()
+    const roomNumber = parseInt(document.getElementById('roomList').value, 10);
+
+    // Clear the date fields
+    document.getElementById('dateSelected').value = '';
+    document.getElementById('dateSelected2').value = '';
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+
+            // Filter to get only active reservations for the specified room
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+
+            // Get an array of date ranges to disable (reserved dates)
+            const disabledDates = [];
+
+            // If there are active reservations, process them
+            if (activeReservations.length > 0) {
+                activeReservations.forEach(reservation => {
+                    const startDate = new Date(reservation.start_date);
+                    const endDate = new Date(reservation.end_date);
+
+                    // Push dates into the disabledDates array
+                    let currentDate = startDate;
+                    while (currentDate <= endDate) {
+                        disabledDates.push($.datepicker.formatDate('mm/dd/yy', currentDate));
+                        currentDate.setDate(currentDate.getDate() + 1);
+                    }
+                });
+            }
+            const dateString = preselect;
+            const newDate = new Date(dateString);
+            const convertedDate = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+
+            $("#dateSelected").datepicker("destroy");
+            $("#dateSelected").val(convertedDate);
+            // Initialize the datepicker to disable conflicting dates and allow week selection
+            $("#dateSelected").datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                firstDay: 0,  // Week starts on Sunday (0 = Sunday, 1 = Monday)
+                dateFormat: 'mm/dd/yy',
+                minDate: 0, // Disable past dates
+                beforeShowDay: function (date) {
+                    const dateString = $.datepicker.formatDate('mm/dd/yy', date);
+
+                    // Disable dates if they are in the disabledDates array
+                    const isDisabled = disabledDates.indexOf(dateString) !== -1;
+
+                    return [!isDisabled, isDisabled ? "disabled" : ""];
+                },
+                onSelect: function (selectedDate) {
+                    processSelectedDate(selectedDate);  // Separate logic into a function to call later
+                }
+            });
+
+            // Set the value of the date input field programmatically
+            $("#dateSelected").val(convertedDate);
+
+            // Trigger the datepicker's setDate method programmatically
+            $("#dateSelected").datepicker("setDate", convertedDate);
+
+            // Manually trigger the onSelect logic
+            processSelectedDate(convertedDate);
+
+            function processSelectedDate(selectedDate) {
+                let date = new Date(selectedDate);
+
+                // Use the selected date as the starting point of the week
+                let startOfWeek = new Date(date);  // The selected date is the start of the week
+                let endOfWeek = new Date(startOfWeek);
+                endOfWeek.setDate(startOfWeek.getDate() + 6); // End of week (7 days later)
+
+                // Format the start and end date
+                let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfWeek);
+                let formattedEndDate = $.datepicker.formatDate('mm/dd/yy', endOfWeek);
+
+                // Check for conflicts within the week
+                let hasConflict = false;
+                for (let d = startOfWeek; d <= endOfWeek; d.setDate(d.getDate() + 1)) {
+                    const weekDateString = $.datepicker.formatDate('mm/dd/yy', d);
+                    if (disabledDates.indexOf(weekDateString) !== -1) {
+                        hasConflict = true;
+                        break;
+                    }
+                }
+
+                if (hasConflict) {
+                    alertify
+                        .alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
+                            alertify.message('OK');
+                            $("#addEventForm").trigger("reset");
+                             $('#addEvent').modal('hide');
+                        });
+                    $("#dateSelected2").css("border", "2px solid red");
+                    document.getElementById('addSched').disabled = true;
+                } else {
+                    $("#dateSelected2").css("border", "");
+                    $("#dateSelected").val(formattedStartDate);
+                    $("#dateSelected2").val(formattedEndDate);
+                    document.getElementById('addSched').disabled = false;
+                }
+            }
+            $("#dateSelected2").prop('disabled', true);
+
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        }
+    });
+}
+
+function addcheckRoomSchedByMonths(preselect) {
+    stopInterval()
+    const roomNumber = parseInt(document.getElementById('roomList').value, 10);
+    document.getElementById('dateSelected').value = ''
+    document.getElementById('dateSelected2').value = ''
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+
+            // Filter to get only active reservations for the specified room
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+
+            // Get an array of date ranges to disable (reserved dates)
+            const disabledDates = [];
+
+            // If there are active reservations, process them
+            if (activeReservations.length > 0) {
+                activeReservations.forEach(reservation => {
+                    const startDate = new Date(reservation.start_date);
+                    const endDate = new Date(reservation.end_date);
+
+                    // Push dates into the disabledDates array
+                    let currentDate = startDate;
+                    while (currentDate <= endDate) {
+                        disabledDates.push($.datepicker.formatDate('mm/dd/yy', currentDate));
+                        currentDate.setDate(currentDate.getDate() + 1);
+                    }
+                });
+            }
+            $("#dateSelected").datepicker("destroy");
+            // Initialize the datepicker to select by month but display days
+           $("#dateSelected").datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    dateFormat: 'mm/dd/yy', // Format to select month and day
+    minDate: 0, // Disable past dates
+    beforeShow: function (input, inst) {
+        $(inst.dpDiv).addClass('monthpicker'); // Add a class for styling if needed
+    },
+    onClose: function (dateText, inst) {
+        const selectedDate = $(this).datepicker("getDate");
+        if (selectedDate) {
+            const selectedDay = selectedDate.getDate();
+            const selectedMonth = selectedDate.getMonth();
+            const selectedYear = selectedDate.getFullYear();
+
+            const startOfSelection = new Date(selectedYear, selectedMonth, selectedDay);
+            const endOfSelection = new Date(startOfSelection); // Copy start date
+            endOfSelection.setDate(startOfSelection.getDate() + 29); // Extend for 29 days
+
+            // Format the start and end date
+            let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfSelection);
+            let formattedEndDate = $.datepicker.formatDate('mm/dd/yy', endOfSelection);
+
+            // Check for conflicts within the selection period
+            let hasConflict = false;
+            for (let d = startOfSelection; d <= endOfSelection; d.setDate(d.getDate() + 1)) {
+                const monthDateString = $.datepicker.formatDate('mm/dd/yy', d);
+                if (disabledDates.indexOf(monthDateString) !== -1) {
+                    hasConflict = true;
+                    break;
+                }
+            }
+
+            if (hasConflict) {
+                alertify.alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
+                    alertify.message('OK');
+                     $("#addEventForm").trigger("reset");
+                             $('#addEvent').modal('hide');
+                });
+                $("#dateSelected2").css("border", "2px solid red");
+                document.getElementById('addSched').disabled = true;
+            } else {
+                $("#dateSelected2").css("border", "");
+                $("#dateSelected").val(formattedStartDate); // Set the start date
+                $("#dateSelected2").val(formattedEndDate); // Set the end date
+                document.getElementById('addSched').disabled = false;
+            }
+        }
+    },
+    beforeShowDay: function (date) {
+        const dateString = $.datepicker.formatDate('mm/dd/yy', date);
+
+        // Disable dates if they are in the disabledDates array
+        const isDisabled = disabledDates.indexOf(dateString) !== -1;
+
+        return [!isDisabled, isDisabled ? "disabled" : ""];
+    },
+});
+
+// Function to initialize and set the value of the datepicker
+function initializeDatePickerAndSetValue(convertedDate) {
+    // Set the value of the date input field programmatically
+    $("#dateSelected").val(convertedDate);
+
+    // Trigger the datepicker's setDate method programmatically
+    $("#dateSelected").datepicker("setDate", convertedDate);
+
+    // Manually trigger the onClose logic
+    const inst = $("#dateSelected").data("datepicker");
+    $("#dateSelected").datepicker("option", "onClose").call($("#dateSelected")[0], convertedDate, inst);
+}
+    initializeDatePickerAndSetValue(preselect)
+            $("#reschedDate2").prop('disabled', true);
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        }
+    });
+}
 $(document).ready(function () {
     getPendingReservation()
 });

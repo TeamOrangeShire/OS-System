@@ -290,9 +290,10 @@ input[type="text"]::placeholder {
                                     </div>
                                 <div class="form-group" hidden>
                                     <div class="row">
+                                    <input type="text" name="preselect" id="preselect">
                                     <div class="col-md-6">
                                     <label for="datepicker">Start Date:</label>
-                                    <input type="date" class="form-control" id="datepicker" placeholder="Select a date" name="start_date" data-date-val="${formattedDate}"> <!-- Use formattedDate -->
+                                    <input type="text" class="form-control border" id="dateSelected" placeholder="Select a date" name="dateSelected"> <!-- Use formattedDate -->
                                     <small id="dateError" class="form-text text-danger" style="display: none;"></small>
                                     </div>
                                     <div class="col-md-6">
@@ -301,7 +302,11 @@ input[type="text"]::placeholder {
                                     </div>
                                     </div>
                                     </div>
-                                <button type="button" class="btn btn-secondary col-12" onclick="dynamicFuction('addEventForm', `{{route('submitAdminReservation')}}`,'add')">Submit</button>
+                                    <div class="col-12 mb-4">
+                                    <label for="">End Date</label>
+                                    <input type="text" id="dateSelected2" name="dateSelected2" class="form-control" placeholder="Select End Date">
+                                    </div>
+                                <button type="button" class="btn btn-secondary col-12" id="addSched" onclick="dynamicFuction('addEventForm', `{{route('submitAdminReservation')}}`,'add')">Submit</button>
                             </form>
                                 </div>
                             </div>
