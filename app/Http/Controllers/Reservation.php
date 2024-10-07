@@ -339,12 +339,12 @@ class Reservation extends Controller
       $reserve->date_approved =  Carbon::now();
       $reserve->status = 1;
       $reserve->save();
-      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'addEvent']);
+      return response()->json(['status' => 'success', 'message' => "Room Successfully reserved", 'reload' => 'getPendingReservation', 'modal' => 'addEvent']);
     }else if($request->process == 'accept'){
       $reserve = Reservations::where('r_id',$request->r_id)->first();
       $reserve->status = "1";
       $reserve->save();
-      return response()->json(['status' => 'success', 'message' => "Success" ,'reload'=> 'getPendingReservation','modal'=> 'viewReservation']);
+      return response()->json(['status' => 'success', 'message' => "Room Successfully reserved" ,'reload'=> 'getPendingReservation','modal'=> 'viewReservation']);
     }else if($request->process == 'cancel'){
       $input = $request->all(); // Get all input fields
       foreach ($input as $key => $value) {
@@ -360,7 +360,7 @@ class Reservation extends Controller
       $reserve->reason = $request->cancelReason;
       $reserve->save();
 
-      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
+      return response()->json(['status' => 'success', 'message' => "Reservation canceled successfully", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
     }else if($request->process == 'resched'){
 
       if($request->re_r_id==''||$request->roomSelect==''||$request->rateSelect==''||$request->reschedDate==''||$request->reschedDate2==''||$request->reschedReason==''){
@@ -376,7 +376,7 @@ class Reservation extends Controller
       $reSched->status = 1;
       $reSched->reason = $request->reschedReason;
       $reSched->save();
-      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewReschedReservation']);
+      return response()->json(['status' => 'success', 'message' => "Reservation successfully rescheduled", 'reload' => 'getPendingReservation', 'modal' => 'viewReschedReservation']);
 
     }
 

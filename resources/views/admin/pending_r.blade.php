@@ -288,7 +288,7 @@ input[type="text"]::placeholder {
                                     </div>
                                     </div>
                                     </div>
-                                <div class="form-group" hidden>
+                                    <div class="form-group" hidden>
                                     <div class="row">
                                     <input type="text" name="preselect" id="preselect">
                                     <div class="col-md-6">

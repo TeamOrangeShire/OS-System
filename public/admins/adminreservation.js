@@ -217,16 +217,18 @@ function loadCalendar() {
                         case '1':
                             return '#63d867'; // Approved
                         case '2':
-                            return '#08f69c'; // Completed
+                            return '#50C878'; // Active
                         case '3':
-                            return '#f60808'; // Cancelled
+                            return '#08f69c'; // Completed
                         case '4':
+                            return '#f60808'; // Cancelled
+                        case '5':
                             return '#f65f08'; // Rescheduled
                     }
                 };
 
                 // Filter the data to include only events with status = 1 (approved) and valid room
-                const filteredData = response.data.filter(event => event.status === '1' && event.room_id != '0');
+                const filteredData = response.data.filter(event => event.status === '2' && event.room_id != '0');
 
                 // Generate the calendar events from the filtered data
                 const calendarEvents = filteredData.map((event, index) => ({
@@ -307,6 +309,11 @@ function getResData() {
             const response = data.room;
             const roomRate = data.rate;
             const select = document.getElementById("roomList");
+            console.log('h1')
+            if (select && select.value === "") {
+                const container = document.getElementById("reserveContainer");
+                container.innerHTML = "";
+            }
             let options = `<option value="">---Reserve---</option>`;
 
             response.forEach((element) => {
@@ -1610,7 +1617,7 @@ function addcheckRoomSchedByDay(preselect) {
                     return false;  // No conflict found
                 }
                 const isConflict = checkDateConflict(formattedStartDate, formattedEndDate, disabledDates);
-                if (isConflict) {
+                if ((isConflict)||(formattedStartDate>formattedEndDate)) {
                     if (!alertShown) { // Show alert only if not shown before
                         alertify
                             .alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
@@ -1730,6 +1737,7 @@ function addcheckRoomSchedByWeek(preselect) {
                     alertify
                         .alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
                             alertify.message('OK');
+                            getResData()
                             $("#addEventForm").trigger("reset");
                              $('#addEvent').modal('hide');
                         });
@@ -1822,6 +1830,7 @@ function addcheckRoomSchedByMonths(preselect) {
             if (hasConflict) {
                 alertify.alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
                     alertify.message('OK');
+                    getResData()
                      $("#addEventForm").trigger("reset");
                              $('#addEvent').modal('hide');
                 });
