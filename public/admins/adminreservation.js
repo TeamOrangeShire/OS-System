@@ -287,7 +287,7 @@ function disableSundays() {
     });
 }
 function getResData() {
-     stopInterval()
+    stopInterval()
     // Select the event-header element
     const eventHeader = document.querySelector('.event-header');
 
@@ -680,34 +680,34 @@ function dynamicFuction(formId, routeUrl, process) {
     // const check = document.getElementById('reschedDate').value
     // console.log('here')
     // console.log(check)
-    // document.getElementById('roller').style.display = 'flex';
+    document.getElementById('roller').style.display = 'flex';
 
-    // // Serialize the form data
-    // var formData = $("form#" + formId).serialize();
+    // Serialize the form data
+    var formData = $("form#" + formId).serialize();
 
-    // // Send the AJAX request
-    // $.ajax({
-    //     type: "POST",
-    //     url: routeUrl + "?process=" + process,
-    //     data: formData,
-    //     success: function (response) {
-    //         document.getElementById('roller').style.display = 'none';
-    //         if (response.status == 'error') {
-    //             alertify.alert("Error", response.message);
-    //         } else if (response.status == 'success') {
+    // Send the AJAX request
+    $.ajax({
+        type: "POST",
+        url: routeUrl + "?process=" + process,
+        data: formData,
+        success: function (response) {
+            document.getElementById('roller').style.display = 'none';
+            if (response.status == 'error') {
+                alertify.alert("Error", response.message);
+            } else if (response.status == 'success') {
 
-    //             if (response.reload && typeof window[response.reload] === 'function') {
-    //                 window[response.reload](); // Safe dynamic function call
-    //             }
-    //             $('#' + response.modal).modal('hide');
-    //             alertify.alert("success", response.message);
-    //         }
-    //     },
-    //     error: function (xhr, status, error) {
-    //         console.error(xhr.responseText);
-    //         // You can also add custom error handling here if needed
-    //     }
-    // });
+                if (response.reload && typeof window[response.reload] === 'function') {
+                    window[response.reload](); // Safe dynamic function call
+                }
+                $('#' + response.modal).modal('hide');
+                alertify.alert("success", response.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            // You can also add custom error handling here if needed
+        }
+    });
 }
 function convertTo12HourFormat(time24) {
     // Split the time into hours and minutes
@@ -810,7 +810,6 @@ function getActiveReservation() {
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
-            console.log(response);
             const pendingReservations = response.data.filter(event => event.status == 2);
             $('#activeDataTable').DataTable({
                 destroy: true,
@@ -867,13 +866,13 @@ function getActiveReservation() {
         },
     });
 }
-function viewReservation(id, room_id, room, start_date, end_date, start_time, end_time, c_name, email,number,price,desc) {
+function viewReservation(id, room_id, room, start_date, end_date, start_time, end_time, c_name, email, number, price, desc) {
     $('#viewReservation').modal('show');
     document.getElementById('r_id').value = id;
     document.getElementById('namelabel').textContent = c_name;
     document.getElementById('emaillabel').textContent = email;
     document.getElementById('cardTitle').textContent = 'Room ' + room;
-    document.getElementById('roomrateLabel').textContent =desc +' '+ '₱'+price;
+    document.getElementById('roomrateLabel').textContent = desc + ' ' + '₱' + price;
     document.getElementById('numberLabel').textContent = number;
     document.getElementById('startDatelabel').textContent = start_date;
     document.getElementById('endDatelabel').textContent = end_date;
@@ -942,7 +941,7 @@ function viewReservation(id, room_id, room, start_date, end_date, start_time, en
     });
 }
 function cancelReservation() {
-     stopInterval()
+    stopInterval()
     $('#viewReservation').modal('hide');
     $('#viewCancelReservation').modal('show');
     const r_id = document.getElementById('r_id').value;
@@ -955,15 +954,17 @@ function cancelReservation() {
     document.getElementById('c_r_id').value = r_id;
 }
 function reschedReserve() {
-     stopInterval()
+    stopInterval()
     $('#viewReservation').modal('hide');
     $('#viewReschedReservation').modal('show');
-    document.getElementById('c_r_id').value = document.getElementById('r_id').value;
+    document.getElementById('reschedBtn').disabled = true;
+    const r_id = document.getElementById('r_id').value;
+    document.getElementById('re_r_id').value = r_id;
     document.getElementById('resched_namelabel').value = document.getElementById('namelabel').textContent
     document.getElementById('resched_emaillabel').value = document.getElementById('emaillabel').textContent
     document.getElementById('resched_cardTitle').textContent = document.getElementById('cardTitle').textContent
-     document.getElementById('resched_number').value = document.getElementById('numberLabel').textContent
-      document.getElementById('resched_rate').value = document.getElementById('roomrateLabel').textContent
+    document.getElementById('resched_number').value = document.getElementById('numberLabel').textContent
+    document.getElementById('resched_rate').value = document.getElementById('roomrateLabel').textContent
     $.ajax({
         url: "/admin/getRoomData", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -983,45 +984,45 @@ function reschedReserve() {
                 }
             });
             function roomRateSelect(elem) {
-                rateSelect.innerHTML =``;
-                if(elem.value==''){
-                    rateSelect.innerHTML =`<option value="">Select Room First</option>`;
-                }else{
+                rateSelect.innerHTML = ``;
+                if (elem.value == '') {
+                    rateSelect.innerHTML = `<option value="">Select Room First</option>`;
+                } else {
                     const filteredRates = response.rate.filter(event => event.room_id == elem.value);
-                    rateSelect.innerHTML =`<option value="">Select Rate</option>`;
-                filteredRates.forEach(event => {
-                    const option = document.createElement("option");
-                    option.value = event.rp_id; // Set value to room number
-                    option.textContent = `${event.rp_rate_description} (Price: ₱${event.rp_price})`; // Set the display text with capacity
-                    rateSelect.appendChild(option);
-                });
+                    rateSelect.innerHTML = `<option value="">Select Rate</option>`;
+                    filteredRates.forEach(event => {
+                        const option = document.createElement("option");
+                        option.value = event.rp_id; // Set value to room number
+                        option.textContent = `${event.rp_rate_description} (Price: ₱${event.rp_price})`; // Set the display text with capacity
+                        rateSelect.appendChild(option);
+                    });
                 }
             }
             const container = document.getElementById("reschedField");
-             rateSelect.addEventListener('change', function () {
-                            const selectedValue = rateSelect.value;
-                            // Loop through roomRate and check the rate description
-                            response.rate.forEach((rate) => {
-                                if (rate.rp_id == selectedValue) {
+            rateSelect.addEventListener('change', function () {
+                const selectedValue = rateSelect.value;
+                // Loop through roomRate and check the rate description
+                response.rate.forEach((rate) => {
+                    if (rate.rp_id == selectedValue) {
 
-                                    const rateDescription = rate.rp_rate_description;
-                                    if (rateDescription.includes("Daily") || rateDescription.includes("Weekly") || rateDescription.includes("Monthly")) {
-                                        // Append the 'End Date' field dynamically
-                                        let endDateField = "";
-                                        if (rateDescription.includes("Daily")) {
-                                            checkRoomSchedByDay()
-                                           } else if (rateDescription.includes("Weekly")) {
-                                            checkRoomSchedByWeek()
-                                         } else if (rateDescription.includes("Monthly")) {
-                                            checkRoomSchedByMonths()
-                                        }
+                        const rateDescription = rate.rp_rate_description;
+                        if (rateDescription.includes("Daily") || rateDescription.includes("Weekly") || rateDescription.includes("Monthly")) {
+                            // Append the 'End Date' field dynamically
+                            let endDateField = "";
+                            if (rateDescription.includes("Daily")) {
+                                checkRoomSchedByDay()
+                            } else if (rateDescription.includes("Weekly")) {
+                                checkRoomSchedByWeek()
+                            } else if (rateDescription.includes("Monthly")) {
+                                checkRoomSchedByMonths()
+                            }
 
-                                    } else {
-                                     checkRoomSchedByHour()
-                                    }
-                                }
-                            });
-                        });
+                        } else {
+                            checkRoomSchedByHour()
+                        }
+                    }
+                });
+            });
 
             roomSelect.addEventListener('change', function () {
                 roomRateSelect(this);
@@ -1034,7 +1035,7 @@ function reschedReserve() {
     });
 }
 function checkRoomSchedByHour() {
-     stopInterval()
+    stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
 
     // Clear the date fields
@@ -1065,6 +1066,7 @@ function checkRoomSchedByHour() {
                 });
             }
 
+            document.getElementById('reschedBtn').disabled = false;
             // Destroy any existing datepicker instances
             $("#reschedDate").datepicker("destroy");
             $("#reschedDate2").datepicker("destroy");
@@ -1076,7 +1078,7 @@ function checkRoomSchedByHour() {
                     return [disabledDates.indexOf(string) === -1, '']; // Disable dates in the array
                 },
                 minDate: 0, // Disable past dates
-                onSelect: function(dateText) {
+                onSelect: function (dateText) {
                     // When a start date is selected, set the same value for the end date
                     $("#reschedDate2").val(dateText); // Set the end date to the same value as the start date
                     $("#reschedDate2").prop('disabled', true);
@@ -1100,9 +1102,9 @@ function checkRoomSchedByHour() {
 }
 let intervalId;
 function checkRoomSchedByDay() {
-     stopInterval()
+    stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
-    
+
     // Clear the date fields
     document.getElementById('reschedDate').value = '';
     document.getElementById('reschedDate2').value = '';
@@ -1142,7 +1144,7 @@ function checkRoomSchedByDay() {
                     return [disabledDates.indexOf(string) === -1, '']; // Disable conflicting dates
                 },
                 minDate: 0, // Disable past dates
-                onSelect: function(dateText) {
+                onSelect: function (dateText) {
                     const selectedDate = new Date(dateText);
                     let isConflict = false;
 
@@ -1155,7 +1157,6 @@ function checkRoomSchedByDay() {
                     });
 
                     if (isConflict) {
-                        alert('Conflict detected! Please choose a different start date.');
                         $("#reschedDate").val(''); // Reset the start date input
                         $("#reschedDate2").val(''); // Reset the end date input
                         $("#reschedDate2").prop('disabled', true); // Disable the end date input
@@ -1176,38 +1177,53 @@ function checkRoomSchedByDay() {
                 minDate: 0 // Disable past dates
             });
 
-  intervalId = setInterval(() => {
-    // Get the start and end dates from input fields
-    const startDateStr = document.getElementById('reschedDate')
-    const endDateStr = document.getElementById('reschedDate2')
-    const input1 =startDateStr.value
-    const input2 =endDateStr.value
-    // Convert start and end dates to 'YYYY-MM-DD' format
-    const parts = input1.split('/'); 
-    const parts2 = input2.split('/');
-    
-    const formattedStartDate = `${parts[2]}-${parts[0]}-${parts[1]}`;
-    const formattedEndDate = `${parts2[2]}-${parts2[0]}-${parts2[1]}`;
+            // Variable to track if the alert has been shown
+            let alertShown = false;
 
-    // Ensure the array is sorted (though it looks like it already is)
-    const sortedDisabledDates = [...disabledDates].sort();
+            intervalId = setInterval(() => {
+                // Get the start and end dates from input fields
+                const startDateStr = document.getElementById('reschedDate');
+                const endDateStr = document.getElementById('reschedDate2');
+                const input1 = startDateStr.value;
+                const input2 = endDateStr.value;
 
-    // Get the first and last date from the sorted array
-    const earliestDisabledDate = sortedDisabledDates[0];
-    const latestDisabledDate = sortedDisabledDates[sortedDisabledDates.length - 1];
-    // Check if the start and end dates conflict with the disabled dates range
-    const isStartConflict = formattedStartDate < earliestDisabledDate;
-    const isEndConflict = formattedEndDate > latestDisabledDate;
-    const checkvalid =  formattedStartDate > formattedEndDate;
-    if (isStartConflict && isEndConflict|| checkvalid) {
-        document.getElementById('reschedBtn').disabled = true;
-       // Example: Adding red border to #reschedDate2
-        $("#reschedDate2").css("border", "2px solid red");
-    } else {
-        document.getElementById('reschedBtn').disabled = false;
-        $("#reschedDate2").css("border", "");
-    }
-}, 1000);
+                // Convert start and end dates to 'YYYY-MM-DD' format
+                const parts = input1.split('/');
+                const parts2 = input2.split('/');
+                const formattedStartDate = `${parts[2]}-${parts[0]}-${parts[1]}`;
+                const formattedEndDate = `${parts2[2]}-${parts2[0]}-${parts2[1]}`;
+
+                // Ensure the array is sorted
+                const sortedDisabledDates = [...disabledDates].sort();
+
+                // Get the first and last date from the sorted array
+                const earliestDisabledDate = sortedDisabledDates[0];
+                const latestDisabledDate = sortedDisabledDates[sortedDisabledDates.length - 1];
+
+                // Check for conflicts
+                const isStartConflict = formattedStartDate < earliestDisabledDate;
+                const isEndConflict = formattedEndDate > latestDisabledDate;
+                const checkvalid = formattedStartDate > formattedEndDate;
+
+                // If there's a conflict and the alert hasn't been shown yet
+                if ((isStartConflict && isEndConflict) || checkvalid) {
+                    if (!alertShown) { // Show alert only if not shown before
+                        alertify
+                            .alert('Date Conflict', "Please Select Valid Date", function () {
+                                alertify.message('OK');
+                            });
+                        alertShown = true; // Set the flag to true
+                    }
+                    document.getElementById('reschedBtn').disabled = true;
+                    $("#reschedDate2").css("border", "2px solid red");
+                } else {
+                    // Reset the alert shown flag when there's no conflict
+                    alertShown = false; // Allow alert to show again if necessary
+                    document.getElementById('reschedBtn').disabled = false;
+                    $("#reschedDate2").css("border", "");
+                }
+            }, 1000);
+
         },
         error: function (xhr, status, error) {
             console.error("AJAX Error:", error); // Log any errors
@@ -1223,10 +1239,10 @@ function stopInterval() {
 }
 
 function checkRoomSchedByWeek() {
-     stopInterval()
+    stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
-    document.getElementById('reschedDate').value=''
-    document.getElementById('reschedDate2').value=''
+    document.getElementById('reschedDate').value = ''
+    document.getElementById('reschedDate2').value = ''
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -1292,10 +1308,14 @@ function checkRoomSchedByWeek() {
                     }
 
                     if (hasConflict) {
+                        alertify
+                            .alert('Date Conflict', "Please Select Valid Date", function () {
+                                alertify.message('OK');
+                            });
                         $("#reschedDate2").css("border", "2px solid red");
                         document.getElementById('reschedBtn').disabled = true;
                     } else {
-                         $("#reschedDate2").css("border", "");
+                        $("#reschedDate2").css("border", "");
                         $("#reschedDate").val(formattedStartDate);
                         $("#reschedDate2").val(formattedEndDate);
                         document.getElementById('reschedBtn').disabled = false;
@@ -1312,10 +1332,10 @@ function checkRoomSchedByWeek() {
     });
 }
 function checkRoomSchedByMonths() {
-     stopInterval()
+    stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
-    document.getElementById('reschedDate').value=''
-    document.getElementById('reschedDate2').value=''
+    document.getElementById('reschedDate').value = ''
+    document.getElementById('reschedDate2').value = ''
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -1350,10 +1370,10 @@ function checkRoomSchedByMonths() {
                 showButtonPanel: true,
                 dateFormat: 'mm/dd/yy',  // Format to select month and day
                 minDate: 0, // Disable past dates
-                beforeShow: function(input, inst) {
+                beforeShow: function (input, inst) {
                     $(inst.dpDiv).addClass('monthpicker'); // Add a class for styling if needed
                 },
-                onClose: function(dateText, inst) {
+                onClose: function (dateText, inst) {
                     const selectedDate = $(this).datepicker("getDate");
                     if (selectedDate) {
                         const selectedDay = selectedDate.getDate();
@@ -1379,8 +1399,12 @@ function checkRoomSchedByMonths() {
                         }
 
                         if (hasConflict) {
+                            alertify
+                                .alert('Date Conflict', "Please Select Valid Date", function () {
+                                    alertify.message('OK');
+                                });
                             $("#reschedDate2").css("border", "2px solid red");
-                             document.getElementById('reschedBtn').disabled = true;
+                            document.getElementById('reschedBtn').disabled = true;
                         } else {
                             $("#reschedDate2").css("border", "");
                             $("#reschedDate").val(formattedStartDate); // Set the start date

@@ -392,7 +392,13 @@ class Reservation extends Controller
       $checkReserve = Reservations::where('room_id', $request->room_id)->where('status', '1')->where('room_id','!=','0')->first();
       if ($endDateFormatted < $request->start_date) {
         return response()->json(['status' => 'error', 'message' => 'Invalid Date: End date cannot be earlier than start date']);
-      }else if ($checkReserve) {
+      }else if
+      (
+        ($request->start_date < $checkReserve->end_date) && // Requested start date is before the existing end date
+        ($endDateFormatted > $checkReserve->start_date)|| 
+        ($request->start_date === $checkReserve->start_date)
+        && ($endDateFormatted === $checkReserve->end_date) // Requested end date is after the existing start date
+      ) {
         return response()->json(['status' => 'error', 'message' => "Room Already Reserved"]);
       }
       $reserve = new Reservations();
@@ -435,7 +441,20 @@ class Reservation extends Controller
       return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
     }else if($request->process == 'resched'){
 
-      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
+      if($request->re_r_id==''||$request->roomSelect==''||$request->rateSelect==''||$request->reschedDate==''||$request->reschedDate2==''||$request->reschedReason==''){
+        return response()->json(['status' => 'error', 'message' => "Please fill-up all required fields", 'reload' => 'getPendingReservation']);
+      }
+      $reSched = Reservations::where('r_id', $request->re_r_id)->first();
+      $formattedDateStart = Carbon::createFromFormat('m/d/Y', $request->reschedDate)->format('Y-m-d');
+      $formattedDateEnd = Carbon::createFromFormat('m/d/Y', $request->reschedDate2)->format('Y-m-d');
+      $reSched->start_date = $formattedDateStart;
+      $reSched->end_date = $formattedDateEnd;
+      $reSched->room_id = $request->roomSelect;
+      $reSched->rate_id = $request->rateSelect;
+      $reSched->status = 1;
+      $reSched->reason = $request->reschedReason;
+      $reSched->save();
+      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewReschedReservation']);
 
     }
 

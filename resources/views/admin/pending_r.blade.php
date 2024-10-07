@@ -425,7 +425,7 @@ input[type="text"]::placeholder {
                         <div class="modal-body">
                          <form action="" id="reschedForm" method="POST">
                                 @csrf
-                            <input type="text" name="c_r_id" id="c_r_id" class="form-control" hidden>
+                            <input type="text" name="re_r_id" id="re_r_id" class="form-control" hidden>
                             <div class="row">
                                   <div class="col-12 text-center mb-4"><h1 id="resched_cardTitle"></h1></div>
                                 <div class="col-6 mb-1">
@@ -446,24 +446,24 @@ input[type="text"]::placeholder {
                                 </div>
                                 <div class="col-12 mb-1">
                                     Select Room:
-                                    <select id="roomSelect" class="form-control">
+                                    <select id="roomSelect" class="form-control" name="roomSelect">
                                     <option value="">Select Room</option> <!-- Default option -->
                                     </select>
                                 </div>
                                 <div class="col-12 mb-1">
                                     Select Rate:
-                                    <select id="rateSelect" class="form-control" >
+                                    <select id="rateSelect" name="rateSelect" class="form-control" >
                                     <option value="">Select Rate</option> <!-- Default option -->
                                     </select>
                                 </div>
                                 <div id="reschedField"></div>
                                 <div class="col-6 mb-1">
                                     Select Start Date:
-                                     <input type="text" id="reschedDate" class="form-control" placeholder="Select Start Date">
+                                     <input type="text" id="reschedDate" name="reschedDate" class="form-control" placeholder="Select Start Date">
                                 </div>
                                 <div class="col-6 mb-1">
                                     Select End Date:
-                                     <input type="text" id="reschedDate2" class="form-control" placeholder="Select End Date">
+                                     <input type="text" id="reschedDate2" name="reschedDate2" class="form-control" placeholder="Select End Date">
                                 </div>
                                 <br>
                                 <label for="" class="mt-2">Reason  for cancellation</label>
