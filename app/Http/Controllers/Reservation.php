@@ -29,9 +29,20 @@ class Reservation extends Controller
   }
   public function getReservation(Request $request)
   {
-    $data = Reservations::join('rooms', 'reservations.room_id', '=', 'rooms.room_id')
-    ->join('room_rates', 'room_rates.room_id', '=', 'rooms.room_id')
-    ->get();
+    $data = Reservations::all();
+
+    foreach($data as $d){
+        $room = Rooms::where('room_id', $d->room_id)->first();
+        $rates = RoomRates::where('room_id', $d->room_id)->first();
+
+        foreach($room->toArray() as $rKey => $rValue){
+            $d->$rKey = $rValue;
+        }
+
+        foreach($rates->toArray() as $rateKey => $rateValue){
+            $d->$rateKey = $rateValue;
+        }
+    }
 
     return response()->json(['data' => $data, 'status' => 'success']);
   }
@@ -423,9 +434,9 @@ class Reservation extends Controller
 
       return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
     }else if($request->process == 'resched'){
-      
+
       return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
-    
+
     }
 
     return response()->json(['status' => 'success']);

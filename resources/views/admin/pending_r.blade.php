@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    
+
    <link href="{{ asset('calendar/css/evo-calendar.min.css') }}" rel="stylesheet">
     <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
     @include('admin.assets.header',['title' => 'Reservation'])
@@ -89,8 +89,8 @@ input[type="text"]::placeholder {
 	<!-- [ Header ] start -->
   @include('admin.component.header')
 	<!-- [ Header ] end -->
-	
-	
+
+
 
 <!-- [ Main Content ] start -->
 <div class="pcoded-main-container">
@@ -98,7 +98,7 @@ input[type="text"]::placeholder {
         <!-- [ Main Content start ] start -->
       <div class="row">
                     <div class="col-12">
-                        
+
                         <div id="calendar"></div>
 
                     </div>
@@ -218,7 +218,7 @@ input[type="text"]::placeholder {
                 </div>
 
 
-       
+
         <!-- [ Main Content ] end -->
     </div>
 </div>
@@ -272,18 +272,18 @@ input[type="text"]::placeholder {
                                 <div class="form-group">
                                     <label for="customer_request">Any customer request upon Reservation?</label>
                                     <textarea name="customer_request" id="customer_request" class="form-control" cols="30" rows="2"></textarea>
-                                </div>    
+                                </div>
                                 <div class="form-group">
                                     <div class="row">
                                     <div class="col-md-4">
                                     <label for="">Rooms</label>
                                     <select class="form-control" id="roomList"  name="room_id">
-                                    
+
                                     </select>
                                     </div>
                                     <div class="col-md-8" >
                                       <div class="row" id="reserveContainer">
-                                        
+
                                       </div>
                                     </div>
                                     </div>
@@ -410,7 +410,7 @@ input[type="text"]::placeholder {
                         </div>
                     </div>
                 </div>
-</div>   
+</div>
 {{-- end modal --}}
 {{-- start modal --}}
 <div id="viewReschedReservation" class="modal fade" tabindex="-1" role="dialog"
@@ -477,13 +477,43 @@ input[type="text"]::placeholder {
                         </div>
                     </div>
                 </div>
-</div>   
+</div>
+
+
+<div class="modal fade" id="cancelActiveReservation" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Cancel Reservation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-mute">This reservation is currently active are you sure do you want to cancel it?</p>
+
+          <div class="form-group">
+            <label for="cancelReasonSelect">Select Prebuilt Reasons</label>
+            <select name="" class="form-select" id="">
+                <option value="">----Select ------</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger">Understood</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 <!-- [ Main Content ] end -->
 
 @include('admin.assets.adminscript')
 <script src="{{ asset('calendar/js/evo-calendar.min.js') }}"></script>
 <script src="{{ asset('admins/adminreservation.js') }}"></script>
-
+<script src="/admins/reservation.js"></script>
 
 
 </body>

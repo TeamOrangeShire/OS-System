@@ -331,7 +331,7 @@ function getResData() {
     <div class="col-md-6">
         <label for="customer_number">Number of Customer</label>
         <input type="number" class="form-control" value="1" name="customer_count" id="customer_count">
-    </div> 
+    </div>
     `;
 
                     result += `
@@ -810,7 +810,8 @@ function getActiveReservation() {
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
-            const pendingReservations = response.data.filter(event => event.status === '1');
+            console.log(response);
+            const pendingReservations = response.data.filter(event => event.status == 2);
             $('#activeDataTable').DataTable({
                 destroy: true,
                 data: pendingReservations,
@@ -849,7 +850,12 @@ function getActiveReservation() {
                     {
                         data: null,
                         render: (data, type, row) => {
-                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}','${row.phone_num}','${row.rp_price}','${row.rp_rate_description}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
+                            return `<div class="d-flex justify-content-center gap-2 align-items-center">
+                                    <button data-toggle="modal" data-target="#cancelActiveReservation" type="button" class="btn btn-danger"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
+                                    <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"/>
+                                    </svg></button>
+                                    <button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}','${row.phone_num}','${row.rp_price}','${row.rp_rate_description}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>
+                                    </div>`
                         }
                     }
                 ]
@@ -997,7 +1003,7 @@ function reschedReserve() {
                             // Loop through roomRate and check the rate description
                             response.rate.forEach((rate) => {
                                 if (rate.rp_id == selectedValue) {
-                                 
+
                                     const rateDescription = rate.rp_rate_description;
                                     if (rateDescription.includes("Daily") || rateDescription.includes("Weekly") || rateDescription.includes("Monthly")) {
                                         // Append the 'End Date' field dynamically
@@ -1009,7 +1015,7 @@ function reschedReserve() {
                                          } else if (rateDescription.includes("Monthly")) {
                                             checkRoomSchedByMonths()
                                         }
-                                       
+
                                     } else {
                                      checkRoomSchedByHour()
                                     }
@@ -1030,7 +1036,7 @@ function reschedReserve() {
 function checkRoomSchedByHour() {
      stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
-    
+
     // Clear the date fields
     document.getElementById('reschedDate').value = '';
     document.getElementById('reschedDate2').value = '';
@@ -1229,7 +1235,7 @@ function checkRoomSchedByWeek() {
 
             // Filter to get only active reservations for the specified room
             const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
-            
+
             // Get an array of date ranges to disable (reserved dates)
             const disabledDates = [];
 
@@ -1257,7 +1263,7 @@ function checkRoomSchedByWeek() {
                 minDate: 0, // Disable past dates
                 beforeShowDay: function (date) {
                     const dateString = $.datepicker.formatDate('mm/dd/yy', date);
-                    
+
                     // Disable dates if they are in the disabledDates array
                     const isDisabled = disabledDates.indexOf(dateString) !== -1;
 
@@ -1318,7 +1324,7 @@ function checkRoomSchedByMonths() {
 
             // Filter to get only active reservations for the specified room
             const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
-            
+
             // Get an array of date ranges to disable (reserved dates)
             const disabledDates = [];
 
@@ -1385,7 +1391,7 @@ function checkRoomSchedByMonths() {
                 },
                 beforeShowDay: function (date) {
                     const dateString = $.datepicker.formatDate('mm/dd/yy', date);
-                    
+
                     // Disable dates if they are in the disabledDates array
                     const isDisabled = disabledDates.indexOf(dateString) !== -1;
 
