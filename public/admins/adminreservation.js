@@ -29,6 +29,10 @@ $(document).ready(function () {
     });
 
     $("#calendar").on("selectDate", function (event, newDate, oldDate) {
+        var element = document.getElementById("toAdd");
+        if (element) {
+            element.remove();
+        }
         newDate3 = newDate;
         let satVal = 'false';
         var satdate = new Date(newDate); // Convert selected date string to a Date object
@@ -167,7 +171,6 @@ $(document).ready(function () {
             }
         } else {
             const eventList = document.getElementsByClassName("event-header")[0];
-
             if (eventList) {
 
                 const eventList2 = document.querySelector('.event-list');
@@ -175,27 +178,35 @@ $(document).ready(function () {
                 if (eventList2 && eventList2.querySelector('.w-100')) {
 
                 } else {
-
+                    
                     const [month, day, year] = newDate.split('/');
                     const monthNames = [
                         "January", "February", "March", "April", "May", "June", "July",
                         "August", "September", "October", "November", "December"
                     ];
 
+                    console.log(newDate)
                     // Convert the month number to month name and remove the leading zero from the day
                     const formattedDate = `${monthNames[parseInt(month) - 1]}${parseInt(day)}, ${year}`;
+                    const currentDate = new Date();
+                    const currentDate2 = `${String(currentDate.getMonth() + 1).padStart(2, '0')}/${String(currentDate.getDate()).padStart(2, '0')}/${currentDate.getFullYear()}`;
 
-
-                    const eventHTML = `
+                    if (currentDate2 <= newDate) {
+                        const eventHTML = `
         <div class="event-header" style="display: flex; justify-content: space-between; align-items: center;">
     <p style="margin: 0; font-size: 30px; font-weight: 600;">${formattedDate}</p>
-    <button class="btn btn-primary time-btn" onclick="displayTimeHTML()"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-clock"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.5 21h-4.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h10" /><path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M18 16.5v1.5l.5 .5" /></svg> Add New</button>
+    <button class="btn btn-primary time-btn" id="toAdd" onclick="displayTimeHTML()"><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-clock"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.5 21h-4.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h10" /><path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M18 16.5v1.5l.5 .5" /></svg> Add New</button>
 </div>
-
     `;
 
-                    // Append the new event HTML
-                    eventList.innerHTML = eventHTML;
+                        // Append the new event HTML
+                        eventList.innerHTML = eventHTML;
+                    }else{
+                        const eventHTML = `<div class="event-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <p style="margin: 0; font-size: 30px; font-weight: 600;">${formattedDate}</p></div>`;
+                         eventList.innerHTML = eventHTML;
+                    }
+
                 }
             }
 
@@ -334,7 +345,7 @@ function getResData() {
                 }
                 else if (selectedValue == '0') {
                     // Get the container to hold the input field
-                   document.getElementById('dateSelected2').value = document.getElementById('preselect').value
+                    document.getElementById('dateSelected2').value = document.getElementById('preselect').value
                     let result = `
     <div class="col-md-6">
         <label for="customer_number">Number of Customer</label>
@@ -611,8 +622,8 @@ function selectTime(element) {
 }
 function viewForm(date, time) {
     $('#addEvent').modal('show');
-    document.getElementById('preselect').value=date
-    document.getElementById('dateSelected').value=date
+    document.getElementById('preselect').value = date
+    document.getElementById('dateSelected').value = date
     // Reformat the date from MM/DD/YYYY to Month/DD/YYYY
     const [month, day, year] = date.split('/');
     const monthNames = [
@@ -1617,7 +1628,7 @@ function addcheckRoomSchedByDay(preselect) {
                     return false;  // No conflict found
                 }
                 const isConflict = checkDateConflict(formattedStartDate, formattedEndDate, disabledDates);
-                if ((isConflict)||(formattedStartDate>formattedEndDate)) {
+                if ((isConflict) || (formattedStartDate > formattedEndDate)) {
                     if (!alertShown) { // Show alert only if not shown before
                         alertify
                             .alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
@@ -1739,7 +1750,7 @@ function addcheckRoomSchedByWeek(preselect) {
                             alertify.message('OK');
                             getResData()
                             $("#addEventForm").trigger("reset");
-                             $('#addEvent').modal('hide');
+                            $('#addEvent').modal('hide');
                         });
                     $("#dateSelected2").css("border", "2px solid red");
                     document.getElementById('addSched').disabled = true;
@@ -1793,80 +1804,80 @@ function addcheckRoomSchedByMonths(preselect) {
             }
             $("#dateSelected").datepicker("destroy");
             // Initialize the datepicker to select by month but display days
-           $("#dateSelected").datepicker({
-    changeMonth: true,
-    changeYear: true,
-    showButtonPanel: true,
-    dateFormat: 'mm/dd/yy', // Format to select month and day
-    minDate: 0, // Disable past dates
-    beforeShow: function (input, inst) {
-        $(inst.dpDiv).addClass('monthpicker'); // Add a class for styling if needed
-    },
-    onClose: function (dateText, inst) {
-        const selectedDate = $(this).datepicker("getDate");
-        if (selectedDate) {
-            const selectedDay = selectedDate.getDate();
-            const selectedMonth = selectedDate.getMonth();
-            const selectedYear = selectedDate.getFullYear();
+            $("#dateSelected").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: 'mm/dd/yy', // Format to select month and day
+                minDate: 0, // Disable past dates
+                beforeShow: function (input, inst) {
+                    $(inst.dpDiv).addClass('monthpicker'); // Add a class for styling if needed
+                },
+                onClose: function (dateText, inst) {
+                    const selectedDate = $(this).datepicker("getDate");
+                    if (selectedDate) {
+                        const selectedDay = selectedDate.getDate();
+                        const selectedMonth = selectedDate.getMonth();
+                        const selectedYear = selectedDate.getFullYear();
 
-            const startOfSelection = new Date(selectedYear, selectedMonth, selectedDay);
-            const endOfSelection = new Date(startOfSelection); // Copy start date
-            endOfSelection.setDate(startOfSelection.getDate() + 29); // Extend for 29 days
+                        const startOfSelection = new Date(selectedYear, selectedMonth, selectedDay);
+                        const endOfSelection = new Date(startOfSelection); // Copy start date
+                        endOfSelection.setDate(startOfSelection.getDate() + 29); // Extend for 29 days
 
-            // Format the start and end date
-            let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfSelection);
-            let formattedEndDate = $.datepicker.formatDate('mm/dd/yy', endOfSelection);
+                        // Format the start and end date
+                        let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfSelection);
+                        let formattedEndDate = $.datepicker.formatDate('mm/dd/yy', endOfSelection);
 
-            // Check for conflicts within the selection period
-            let hasConflict = false;
-            for (let d = startOfSelection; d <= endOfSelection; d.setDate(d.getDate() + 1)) {
-                const monthDateString = $.datepicker.formatDate('mm/dd/yy', d);
-                if (disabledDates.indexOf(monthDateString) !== -1) {
-                    hasConflict = true;
-                    break;
-                }
+                        // Check for conflicts within the selection period
+                        let hasConflict = false;
+                        for (let d = startOfSelection; d <= endOfSelection; d.setDate(d.getDate() + 1)) {
+                            const monthDateString = $.datepicker.formatDate('mm/dd/yy', d);
+                            if (disabledDates.indexOf(monthDateString) !== -1) {
+                                hasConflict = true;
+                                break;
+                            }
+                        }
+
+                        if (hasConflict) {
+                            alertify.alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
+                                alertify.message('OK');
+                                getResData()
+                                $("#addEventForm").trigger("reset");
+                                $('#addEvent').modal('hide');
+                            });
+                            $("#dateSelected2").css("border", "2px solid red");
+                            document.getElementById('addSched').disabled = true;
+                        } else {
+                            $("#dateSelected2").css("border", "");
+                            $("#dateSelected").val(formattedStartDate); // Set the start date
+                            $("#dateSelected2").val(formattedEndDate); // Set the end date
+                            document.getElementById('addSched').disabled = false;
+                        }
+                    }
+                },
+                beforeShowDay: function (date) {
+                    const dateString = $.datepicker.formatDate('mm/dd/yy', date);
+
+                    // Disable dates if they are in the disabledDates array
+                    const isDisabled = disabledDates.indexOf(dateString) !== -1;
+
+                    return [!isDisabled, isDisabled ? "disabled" : ""];
+                },
+            });
+
+            // Function to initialize and set the value of the datepicker
+            function initializeDatePickerAndSetValue(convertedDate) {
+                // Set the value of the date input field programmatically
+                $("#dateSelected").val(convertedDate);
+
+                // Trigger the datepicker's setDate method programmatically
+                $("#dateSelected").datepicker("setDate", convertedDate);
+
+                // Manually trigger the onClose logic
+                const inst = $("#dateSelected").data("datepicker");
+                $("#dateSelected").datepicker("option", "onClose").call($("#dateSelected")[0], convertedDate, inst);
             }
-
-            if (hasConflict) {
-                alertify.alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
-                    alertify.message('OK');
-                    getResData()
-                     $("#addEventForm").trigger("reset");
-                             $('#addEvent').modal('hide');
-                });
-                $("#dateSelected2").css("border", "2px solid red");
-                document.getElementById('addSched').disabled = true;
-            } else {
-                $("#dateSelected2").css("border", "");
-                $("#dateSelected").val(formattedStartDate); // Set the start date
-                $("#dateSelected2").val(formattedEndDate); // Set the end date
-                document.getElementById('addSched').disabled = false;
-            }
-        }
-    },
-    beforeShowDay: function (date) {
-        const dateString = $.datepicker.formatDate('mm/dd/yy', date);
-
-        // Disable dates if they are in the disabledDates array
-        const isDisabled = disabledDates.indexOf(dateString) !== -1;
-
-        return [!isDisabled, isDisabled ? "disabled" : ""];
-    },
-});
-
-// Function to initialize and set the value of the datepicker
-function initializeDatePickerAndSetValue(convertedDate) {
-    // Set the value of the date input field programmatically
-    $("#dateSelected").val(convertedDate);
-
-    // Trigger the datepicker's setDate method programmatically
-    $("#dateSelected").datepicker("setDate", convertedDate);
-
-    // Manually trigger the onClose logic
-    const inst = $("#dateSelected").data("datepicker");
-    $("#dateSelected").datepicker("option", "onClose").call($("#dateSelected")[0], convertedDate, inst);
-}
-    initializeDatePickerAndSetValue(preselect)
+            initializeDatePickerAndSetValue(preselect)
             $("#reschedDate2").prop('disabled', true);
         },
         error: function (xhr, status, error) {
