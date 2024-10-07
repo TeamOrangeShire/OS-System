@@ -809,7 +809,6 @@ function getActiveReservation() {
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
-            console.log(response);
             const pendingReservations = response.data.filter(event => event.status == 2);
             $('#activeDataTable').DataTable({
                 destroy: true,
