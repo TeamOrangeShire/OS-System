@@ -287,6 +287,7 @@ function disableSundays() {
     });
 }
 function getResData() {
+     stopInterval()
     // Select the event-header element
     const eventHeader = document.querySelector('.event-header');
 
@@ -673,39 +674,40 @@ function setTime(inputElement, time12h) {
 }
 
 function dynamicFuction(formId, routeUrl, process) {
+    stopInterval()
     // Show the loader
     // hello
     // const check = document.getElementById('reschedDate').value
     // console.log('here')
     // console.log(check)
-    document.getElementById('roller').style.display = 'flex';
+    // document.getElementById('roller').style.display = 'flex';
 
-    // Serialize the form data
-    var formData = $("form#" + formId).serialize();
+    // // Serialize the form data
+    // var formData = $("form#" + formId).serialize();
 
-    // Send the AJAX request
-    $.ajax({
-        type: "POST",
-        url: routeUrl + "?process=" + process,
-        data: formData,
-        success: function (response) {
-            document.getElementById('roller').style.display = 'none';
-            if (response.status == 'error') {
-                alertify.alert("Error", response.message);
-            } else if (response.status == 'success') {
+    // // Send the AJAX request
+    // $.ajax({
+    //     type: "POST",
+    //     url: routeUrl + "?process=" + process,
+    //     data: formData,
+    //     success: function (response) {
+    //         document.getElementById('roller').style.display = 'none';
+    //         if (response.status == 'error') {
+    //             alertify.alert("Error", response.message);
+    //         } else if (response.status == 'success') {
 
-                if (response.reload && typeof window[response.reload] === 'function') {
-                    window[response.reload](); // Safe dynamic function call
-                }
-                $('#' + response.modal).modal('hide');
-                alertify.alert("success", response.message);
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-            // You can also add custom error handling here if needed
-        }
-    });
+    //             if (response.reload && typeof window[response.reload] === 'function') {
+    //                 window[response.reload](); // Safe dynamic function call
+    //             }
+    //             $('#' + response.modal).modal('hide');
+    //             alertify.alert("success", response.message);
+    //         }
+    //     },
+    //     error: function (xhr, status, error) {
+    //         console.error(xhr.responseText);
+    //         // You can also add custom error handling here if needed
+    //     }
+    // });
 }
 function convertTo12HourFormat(time24) {
     // Split the time into hours and minutes
@@ -745,7 +747,6 @@ function getPendingReservation() {
         dataType: "json", // Expecting a JSON response
         success: function (response) {
             const pendingReservations = response.data.filter(event => event.status === '0');
-            console.log(pendingReservations)
             $('#pendingDataTable').DataTable({
                 destroy: true,
                 data: pendingReservations,
@@ -940,6 +941,7 @@ function viewReservation(id, room_id, room, start_date, end_date, start_time, en
     });
 }
 function cancelReservation() {
+     stopInterval()
     $('#viewReservation').modal('hide');
     $('#viewCancelReservation').modal('show');
     const r_id = document.getElementById('r_id').value;
@@ -952,6 +954,7 @@ function cancelReservation() {
     document.getElementById('c_r_id').value = r_id;
 }
 function reschedReserve() {
+     stopInterval()
     $('#viewReservation').modal('hide');
     $('#viewReschedReservation').modal('show');
     document.getElementById('c_r_id').value = document.getElementById('r_id').value;
@@ -1030,6 +1033,7 @@ function reschedReserve() {
     });
 }
 function checkRoomSchedByHour() {
+     stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
 
     // Clear the date fields
@@ -1074,6 +1078,7 @@ function checkRoomSchedByHour() {
                 onSelect: function(dateText) {
                     // When a start date is selected, set the same value for the end date
                     $("#reschedDate2").val(dateText); // Set the end date to the same value as the start date
+                    $("#reschedDate2").prop('disabled', true);
                 }
             });
 
@@ -1092,23 +1097,25 @@ function checkRoomSchedByHour() {
         }
     });
 }
-
+let intervalId;
 function checkRoomSchedByDay() {
+     stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
-     document.getElementById('reschedDate').value=''
-    document.getElementById('reschedDate2').value=''
+    
+    // Clear the date fields
+    document.getElementById('reschedDate').value = '';
+    document.getElementById('reschedDate2').value = '';
+
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
-
             // Filter to get only active reservations for the specified room
             const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
-            // Get an array of date ranges to disable
-            const disabledDates = [];
+            const disabledDates = []; // Array to hold disabled dates
 
-            // If there are active reservations, process them
+            // Process active reservations to populate the disabledDates array
             if (activeReservations.length > 0) {
                 activeReservations.forEach(reservation => {
                     const startDate = new Date(reservation.start_date);
@@ -1122,32 +1129,100 @@ function checkRoomSchedByDay() {
                     }
                 });
             }
+
+            // Destroy any existing datepicker instances
             $("#reschedDate").datepicker("destroy");
-            // Initialize the datepicker
+            $("#reschedDate2").datepicker("destroy");
+
+            // Initialize the start datepicker
             $("#reschedDate").datepicker({
                 beforeShowDay: function (date) {
                     const string = $.datepicker.formatDate('yy-mm-dd', date);
-                    return [disabledDates.indexOf(string) === -1, '']; // Disable dates in the array
+                    return [disabledDates.indexOf(string) === -1, '']; // Disable conflicting dates
                 },
-                minDate: 0 // Disable past dates
+                minDate: 0, // Disable past dates
+                onSelect: function(dateText) {
+                    const selectedDate = new Date(dateText);
+                    let isConflict = false;
+
+                    // Check for conflicts in the disabledDates array
+                    disabledDates.forEach(disabledDate => {
+                        const disabled = new Date(disabledDate);
+                        if (selectedDate.getTime() === disabled.getTime()) {
+                            isConflict = true;
+                        }
+                    });
+
+                    if (isConflict) {
+                        alert('Conflict detected! Please choose a different start date.');
+                        $("#reschedDate").val(''); // Reset the start date input
+                        $("#reschedDate2").val(''); // Reset the end date input
+                        $("#reschedDate2").prop('disabled', true); // Disable the end date input
+                    } else {
+                        // No conflict: Set the same value for the end date
+                        $("#reschedDate2").val(dateText);
+                        $("#reschedDate2").prop('disabled', false);
+                    }
+                }
             });
-            $("#reschedDate2").datepicker("destroy");
-            // Initialize the datepicker
+
+            // Initialize the end datepicker
             $("#reschedDate2").datepicker({
                 beforeShowDay: function (date) {
                     const string = $.datepicker.formatDate('yy-mm-dd', date);
-                    return [disabledDates.indexOf(string) === -1, '']; // Disable dates in the array
+                    return [disabledDates.indexOf(string) === -1, '']; // Disable conflicting dates
                 },
                 minDate: 0 // Disable past dates
             });
+
+  intervalId = setInterval(() => {
+    // Get the start and end dates from input fields
+    const startDateStr = document.getElementById('reschedDate')
+    const endDateStr = document.getElementById('reschedDate2')
+    const input1 =startDateStr.value
+    const input2 =endDateStr.value
+    // Convert start and end dates to 'YYYY-MM-DD' format
+    const parts = input1.split('/'); 
+    const parts2 = input2.split('/');
+    
+    const formattedStartDate = `${parts[2]}-${parts[0]}-${parts[1]}`;
+    const formattedEndDate = `${parts2[2]}-${parts2[0]}-${parts2[1]}`;
+
+    // Ensure the array is sorted (though it looks like it already is)
+    const sortedDisabledDates = [...disabledDates].sort();
+
+    // Get the first and last date from the sorted array
+    const earliestDisabledDate = sortedDisabledDates[0];
+    const latestDisabledDate = sortedDisabledDates[sortedDisabledDates.length - 1];
+    // Check if the start and end dates conflict with the disabled dates range
+    const isStartConflict = formattedStartDate < earliestDisabledDate;
+    const isEndConflict = formattedEndDate > latestDisabledDate;
+    const checkvalid =  formattedStartDate > formattedEndDate;
+    if (isStartConflict && isEndConflict|| checkvalid) {
+        document.getElementById('reschedBtn').disabled = true;
+       // Example: Adding red border to #reschedDate2
+        $("#reschedDate2").css("border", "2px solid red");
+    } else {
+        document.getElementById('reschedBtn').disabled = false;
+        $("#reschedDate2").css("border", "");
+    }
+}, 1000);
         },
         error: function (xhr, status, error) {
             console.error("AJAX Error:", error); // Log any errors
             $("#result").html("<p>Error: " + error + "</p>");
-        },
+        }
     });
 }
+
+function stopInterval() {
+    if (intervalId) {
+        clearInterval(intervalId);
+    }
+}
+
 function checkRoomSchedByWeek() {
+     stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
     document.getElementById('reschedDate').value=''
     document.getElementById('reschedDate2').value=''
@@ -1216,15 +1291,18 @@ function checkRoomSchedByWeek() {
                     }
 
                     if (hasConflict) {
-                        alert(`Conflict! Some dates in the week from ${formattedStartDate} to ${formattedEndDate} are reserved.`);
+                        $("#reschedDate2").css("border", "2px solid red");
                         document.getElementById('reschedBtn').disabled = true;
                     } else {
+                         $("#reschedDate2").css("border", "");
                         $("#reschedDate").val(formattedStartDate);
                         $("#reschedDate2").val(formattedEndDate);
                         document.getElementById('reschedBtn').disabled = false;
                     }
                 }
             });
+            $("#reschedDate2").prop('disabled', true);
+
         },
         error: function (xhr, status, error) {
             console.error("AJAX Error:", error); // Log any errors
@@ -1233,6 +1311,7 @@ function checkRoomSchedByWeek() {
     });
 }
 function checkRoomSchedByMonths() {
+     stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
     document.getElementById('reschedDate').value=''
     document.getElementById('reschedDate2').value=''
@@ -1299,9 +1378,10 @@ function checkRoomSchedByMonths() {
                         }
 
                         if (hasConflict) {
-                            alert(`Conflict! Some dates from ${formattedStartDate} to ${formattedEndDate} are reserved.`);
-                            document.getElementById('reschedBtn').disabled = true;
+                            $("#reschedDate2").css("border", "2px solid red");
+                             document.getElementById('reschedBtn').disabled = true;
                         } else {
+                            $("#reschedDate2").css("border", "");
                             $("#reschedDate").val(formattedStartDate); // Set the start date
                             $("#reschedDate2").val(formattedEndDate); // Set the end date
                             document.getElementById('reschedBtn').disabled = false;
@@ -1317,6 +1397,7 @@ function checkRoomSchedByMonths() {
                     return [!isDisabled, isDisabled ? "disabled" : ""];
                 },
             });
+            $("#reschedDate2").prop('disabled', true);
         },
         error: function (xhr, status, error) {
             console.error("AJAX Error:", error); // Log any errors
