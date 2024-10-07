@@ -1192,20 +1192,39 @@ function checkRoomSchedByDay() {
                 const formattedStartDate = `${parts[2]}-${parts[0]}-${parts[1]}`;
                 const formattedEndDate = `${parts2[2]}-${parts2[0]}-${parts2[1]}`;
 
-                // Ensure the array is sorted
-                const sortedDisabledDates = [...disabledDates].sort();
+                // // Ensure the array is sorted
+                // const sortedDisabledDates = [...disabledDates].sort();
 
-                // Get the first and last date from the sorted array
-                const earliestDisabledDate = sortedDisabledDates[0];
-                const latestDisabledDate = sortedDisabledDates[sortedDisabledDates.length - 1];
+                // // Get the first and last date from the sorted array
+                // const earliestDisabledDate = sortedDisabledDates[0];
+                // const latestDisabledDate = sortedDisabledDates[sortedDisabledDates.length - 1];
 
-                // Check for conflicts
-                const isStartConflict = formattedStartDate < earliestDisabledDate;
-                const isEndConflict = formattedEndDate > latestDisabledDate;
-                const checkvalid = formattedStartDate > formattedEndDate;
+                // // Check for conflicts
+                // const isStartConflict = formattedStartDate < earliestDisabledDate;
+                // const isEndConflict = formattedEndDate > latestDisabledDate;
+                // const checkvalid = formattedStartDate > formattedEndDate;
 
-                // If there's a conflict and the alert hasn't been shown yet
-                if ((isStartConflict && isEndConflict) || checkvalid) {
+                // // If there's a conflict and the alert hasn't been shown yet
+
+                function checkDateConflict(startDate, endDate, dateArray) {
+                    // Convert the start and end dates to Date objects
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+
+                    // Loop through the array of dates
+                    for (let i = 0; i < dateArray.length; i++) {
+                        const currentArrayDate = new Date(dateArray[i]);
+
+                        // Check if the current date in the array is within the start and end range
+                        if (currentArrayDate >= start && currentArrayDate <= end) {
+                            return true;  // Conflict found
+                        }
+                    }
+
+                    return false;  // No conflict found
+                }
+                const isConflict = checkDateConflict(formattedStartDate, formattedEndDate, disabledDates);
+                if (isConflict) {
                     if (!alertShown) { // Show alert only if not shown before
                         alertify
                             .alert('Date Conflict', "Please Select Valid Date", function () {
