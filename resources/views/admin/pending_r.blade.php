@@ -494,19 +494,22 @@ input[type="text"]::placeholder {
 
           <div class="form-group">
             <label for="cancelReasonSelect">Select Prebuilt Reasons</label>
-            <select name="" class="form-select" id="">
-                <option value="">----Select ------</option>
+            <select name="" class="form-select" id="selectActiveCancellationReason">
+
             </select>
           </div>
-
+          <form id="confirmCancellationActive">
+            @csrf
+            <input type="hidden" id="reservationIdActiveCancellation" name="id">
           <div class="form-group">
-            <label for="exampleFormControlTextarea1">Cancellation Reason</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="cancellationReasonActive">Cancellation Reason</label>
+            <textarea class="form-control" id="cancellationReasonActive" name="reason" required rows="3"></textarea>
           </div>
+        </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger">Understood</button>
+          <button type="button" id="submitReservationActiveCancellation" class="btn btn-danger">Submit</button>
         </div>
       </div>
     </div>
