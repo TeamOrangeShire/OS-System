@@ -415,19 +415,16 @@ class Reservation extends Controller
   }
 
   public function checkRoomAvailability(Request $req){
-    $reservation = Reservations::where('status', 1)->get();
+
+    $date = Carbon::parse($req->date);
+    $reservation = Reservations::where(function ($query) use ($date) {
+        $query->where('start_date', '<=', $date)
+              ->where('end_date', '>=', $date)->where('status', 1)->where('status', 2);
+    })->get();
 
     $rooms = [];
     foreach($reservation as $reserve){
-        $start = Carbon::createFromFormat('Y-m-d', $reserve->start_date);
-        $end = Carbon::createFromFormat('Y-m-d', $reserve->end_date);
-        $check = Carbon::createFromFormat('m/d/Y', $req->date);
-
-        $isBetween = $check->between($start, $end);
-
-        if($isBetween){
-            array_push($rooms, $reserve->room_id);
-        }
+        array_push($rooms, $reserve->room_id);
     }
 
     return response()->json(['status'=> true, 'rooms'=> $rooms]);
@@ -447,5 +444,44 @@ class Reservation extends Controller
     return view('mail.cancelledreservation');
   }
 
+  public function CheckBookingStatus(Request $req){
+    $date = Carbon::parse($req->date);
+     $reservation = Reservations::where(function ($query) use ($date) {
+        $query->where('start_date', '<=', $date)
+              ->where('end_date', '>=', $date)->where('status', 1)->where('status', 2);
+    })->get();
 
+    $roomId = [];
+    foreach($reservation as $reserve){
+        $roomId[] = $reserve->room_id;
+    }
+
+    $filterRoomId = array_unique($roomId);
+
+    $rooms = Rooms::where('room_id', '!=', 0)->get();
+
+    $status = "Available";
+    $i = 0;
+    foreach($rooms as $room){
+        if(in_array($room->room_id, $filterRoomId)){
+            $i++;
+        }
+    }
+
+    if($i == $rooms->count()){
+        $status = "Fully Booked";
+    }
+
+    $customQuery = Rooms::query();
+    $customQuery->where('room_id', '!=', 0);
+
+    foreach($filterRoomId as $rId){
+        $customQuery->where("room_id", '!=', $rId);
+    }
+
+    $checkAvailableRooms = $customQuery->get();
+
+
+    return response()->json(['status' => $status, 'room_taken'=> $filterRoomId, 'available_room'=> $checkAvailableRooms]);
+  }
 }
