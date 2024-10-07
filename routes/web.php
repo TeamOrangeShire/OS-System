@@ -233,3 +233,4 @@ Route::post('/user/reservation/submitreservation', [Reservation::class, 'SubmitR
 Route::get('/user/reservation/getreservation', [Reservation::class, 'getReservation']);
 Route::get('/user/reservation/checkroomavailability', [Reservation::class, 'checkRoomAvailability']);
 Route::get('/customer/reservation/cancelreservation', [Reservation::class, 'cancelReservation'])->name('cancelReservation');
+Route::get('/customer/reservation/checkbookingstatus', [Reservation::class, 'CheckBookingStatus']);

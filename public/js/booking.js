@@ -165,7 +165,7 @@ function formatDateCal(dateString, type = 'render') {
     // Convert the month to the full month name
     const monthName = months[parseInt(month, 10) - 1];
 
-    // Return the formatted date in "Month/day/year" format
+    // Return the  ted date in "Month/day/year" format
     if (type == 'render') {
         return `${monthName}/${parseInt(day, 10)}/${year}`;
     } else {
@@ -206,7 +206,7 @@ function getWeeksInYear(year) {
     return weeks;
 }
 
-$('#calendars').on('selectDate', function (event, newDate) {
+$('#calendars').on('selectDate', async function (event, newDate) {
     disablePastDates(today);
     // Parse the selected date string into a Date object
     const [month, day, year] = newDate.split("/").map(Number);
@@ -215,37 +215,59 @@ $('#calendars').on('selectDate', function (event, newDate) {
     // Get the day of the week for the selected date (0 = Sunday, 6 = Saturday)
     const dayOfWeek = selectedDate.getDay();
 
-    let reserveButton = '';
+    const parseRequestDate = date => {
+        const [month, day, year] = date.split('/');
+        const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
-    switch (dayOfWeek) {
-        case 1:
-            reserveButton = AddReservationButtons(1, newDate);
-            break;
-        case 2:
-            reserveButton = AddReservationButtons(2, newDate);
-            break;
-        case 3:
-            reserveButton = AddReservationButtons(3, newDate);
-            break;
-        case 4:
-            reserveButton = AddReservationButtons(4, newDate);
-            break;
-        case 5:
-            reserveButton = AddReservationButtons(5, newDate);
-            break;
-        case 6:
-            reserveButton = AddReservationButtons(6, newDate);
-            break;
-        default:
-            console.log("invalid date")
-            break;
+        return formattedDate;
     }
-    selectedDateGlobal = newDate;
+    const dateForRequest = parseRequestDate(newDate);
 
+    const checkBookingStatus = await fetch(`/customer/reservation/checkbookingstatus?date=${dateForRequest}`);
+
+    const bookingStatus = await checkBookingStatus.json();
+    console.log(bookingStatus);
     const div = document.getElementById('reservationButtons');
-    div.scrollTop = 0;
-    div.innerHTML = '';
-    div.innerHTML = reserveButton;
+
+    if(bookingStatus.status == "Available"){
+        let reserveButton = '';
+
+        switch (dayOfWeek) {
+            case 1:
+                reserveButton = AddReservationButtons(1, newDate);
+                break;
+            case 2:
+                reserveButton = AddReservationButtons(2, newDate);
+                break;
+            case 3:
+                reserveButton = AddReservationButtons(3, newDate);
+                break;
+            case 4:
+                reserveButton = AddReservationButtons(4, newDate);
+                break;
+            case 5:
+                reserveButton = AddReservationButtons(5, newDate);
+                break;
+            case 6:
+                reserveButton = AddReservationButtons(6, newDate);
+                break;
+            default:
+                console.log("invalid date")
+                break;
+        }
+        selectedDateGlobal = newDate;
+
+
+        div.scrollTop = 0;
+        div.innerHTML = '';
+        div.innerHTML = reserveButton;
+    }else{
+        div.innerHTML = `<div class="d-flex align-items-center flex-column justify-content-center">
+            <h4>No Available Rooms For This date</h4>
+            <small>But you can still reserve a hotdesk</small>
+            <button class="btn btn-primary">Reserve Hotdesk</button>
+        </div>`
+    }
 });
 
 
@@ -284,80 +306,80 @@ function AddReservationButtons(num, date) {
     let buttons = '';
 
     const mondayTime = [
-        ['08:00 AM', false],
-        ['09:00 AM', false],
-        ['10:00 AM', false],
-        ['11:00 AM', false],
-        ['12:00 PM', false],
-        ['01:00 PM', false],
-        ['02:00 PM', false],
-        ['03:00 PM', false],
-        ['04:00 PM', false],
-        ['05:00 PM', false],
-        ['06:00 PM', false],
-        ['07:00 PM', false],
-        ['08:00 PM', false],
-        ['09:00 PM', false],
-        ['10:00 PM', false],
-        ['11:00 PM', false],
-        ['12:00 AM', false],
+        ['08:00 AM', true],
+        ['09:00 AM', true],
+        ['10:00 AM', true],
+        ['11:00 AM', true],
+        ['12:00 PM', true],
+        ['01:00 PM', true],
+        ['02:00 PM', true],
+        ['03:00 PM', true],
+        ['04:00 PM', true],
+        ['05:00 PM', true],
+        ['06:00 PM', true],
+        ['07:00 PM', true],
+        ['08:00 PM', true],
+        ['09:00 PM', true],
+        ['10:00 PM', true],
+        ['11:00 PM', true],
+        ['12:00 AM', true],
     ];
 
     const nonMondayTime = [
-        ['01:00 AM', false],
-        ['02:00 AM', false],
-        ['03:00 AM', false],
-        ['04:00 AM', false],
-        ['05:00 AM', false],
-        ['06:00 AM', false],
-        ['07:00 AM', false],
-        ['08:00 AM', false],
-        ['09:00 AM', false],
-        ['10:00 AM', false],
-        ['11:00 AM', false],
-        ['12:00 PM', false],
-        ['01:00 PM', false],
-        ['02:00 PM', false],
-        ['03:00 PM', false],
-        ['04:00 PM', false],
-        ['05:00 PM', false],
-        ['06:00 PM', false],
-        ['07:00 PM', false],
-        ['08:00 PM', false],
-        ['09:00 PM', false],
-        ['10:00 PM', false],
-        ['11:00 PM', false],
-        ['12:00 AM', false],
+        ['01:00 AM', true],
+        ['02:00 AM', true],
+        ['03:00 AM', true],
+        ['04:00 AM', true],
+        ['05:00 AM', true],
+        ['06:00 AM', true],
+        ['07:00 AM', true],
+        ['08:00 AM', true],
+        ['09:00 AM', true],
+        ['10:00 AM', true],
+        ['11:00 AM', true],
+        ['12:00 PM', true],
+        ['01:00 PM', true],
+        ['02:00 PM', true],
+        ['03:00 PM', true],
+        ['04:00 PM', true],
+        ['05:00 PM', true],
+        ['06:00 PM', true],
+        ['07:00 PM', true],
+        ['08:00 PM', true],
+        ['09:00 PM', true],
+        ['10:00 PM', true],
+        ['11:00 PM', true],
+        ['12:00 AM', true],
     ];
 
     const saturdayTime = [
-        ['01:00 AM', false],
-        ['02:00 AM', false],
-        ['03:00 AM', false],
-        ['04:00 AM', false],
-        ['05:00 AM', false],
-        ['06:00 AM', false],
-        ['07:00 AM', false],
-        ['08:00 AM', false],
-        ['09:00 AM', false],
-        ['10:00 AM', false],
-        ['11:00 AM', false],
-        ['12:00 PM', false],
-        ['01:00 PM', false],
-        ['02:00 PM', false],
-        ['03:00 PM', false],
-        ['04:00 PM', false],
-        ['05:00 PM', false],
-        ['06:00 PM', false],
-        ['07:00 PM', false],
-        ['08:00 PM', false],
-        ['09:00 PM', false],
-        ['10:00 PM', false],
-        ['11:00 PM', false],
-        ['12:00 AM', false],
-        ['01:00 AM', false],
-        ['02:00 AM', false],
-        ['03:00 AM', false],
+        ['01:00 AM', true],
+        ['02:00 AM', true],
+        ['03:00 AM', true],
+        ['04:00 AM', true],
+        ['05:00 AM', true],
+        ['06:00 AM', true],
+        ['07:00 AM', true],
+        ['08:00 AM', true],
+        ['09:00 AM', true],
+        ['10:00 AM', true],
+        ['11:00 AM', true],
+        ['12:00 PM', true],
+        ['01:00 PM', true],
+        ['02:00 PM', true],
+        ['03:00 PM', true],
+        ['04:00 PM', true],
+        ['05:00 PM', true],
+        ['06:00 PM', true],
+        ['07:00 PM', true],
+        ['08:00 PM', true],
+        ['09:00 PM', true],
+        ['10:00 PM', true],
+        ['11:00 PM', true],
+        ['12:00 AM', true],
+        ['01:00 AM', true],
+        ['02:00 AM', true],
+        ['03:00 AM', true],
     ];
 
     const current = new Date();
@@ -412,12 +434,16 @@ function AddReservationButtons(num, date) {
 
     const disableTime = (timeList, disabledTimeList) => {
        return timeList.map(data => {
-            if(disabledTimeList.includes(data[0])){
-                data[1] = true;
+            if(!disabledTimeList.includes(data[0])){
+                data[1] = false;
             }
 
             return data;
         });
+    }
+
+    const checkBookingStatus = (timeList) =>{
+        return timeList.map(data => data[1] = false);
     }
 
     let delay = 0.01;
@@ -425,6 +451,8 @@ function AddReservationButtons(num, date) {
 
         if(currentDate == date){
            disableTime(mondayTime, getPastHours(currentTime));
+        }else{
+            checkBookingStatus(mondayTime);
         }
 
         mondayTime.forEach(data => {
@@ -435,7 +463,10 @@ function AddReservationButtons(num, date) {
     if (num == 2 || num == 3 || num == 4 || num == 5) {
         if(currentDate == date){
             disableTime(nonMondayTime, getPastHours(currentTime));
+        }else{
+            checkBookingStatus(nonMondayTime);
         }
+
 
         nonMondayTime.forEach(data => {
             buttons += add(delay, data);
@@ -445,11 +476,12 @@ function AddReservationButtons(num, date) {
     if (num == 6) {
         if(currentDate == date){
             disableTime(saturdayTime, getPastHours(currentTime));
+        }else{
+            checkBookingStatus(saturdayTime);
         }
 
         saturdayTime.forEach(data => {
             buttons += add(delay, data);
-
         });
     }
 
@@ -460,25 +492,29 @@ function AddReservationButtons(num, date) {
 
 function selectReservationTime(element) {
 
-    const allSelect = document.querySelectorAll('.select');
+    if(!element.children[0].disabled){
+        const allSelect = document.querySelectorAll('.select');
 
-    allSelect.forEach(data => {
-        const classList = data.classList;
-        const array = Array.from(classList);
+        allSelect.forEach(data => {
+            const classList = data.classList;
+            const array = Array.from(classList);
 
-        if (array.includes('w-50')) {
-            data.nextElementSibling.classList.add('d-none');
-            data.nextElementSibling.style.width = "0";
-            data.classList.add('w-100');
-            data.classList.remove('w-50');
-        }
-    });
+            if (array.includes('w-50')) {
+                data.nextElementSibling.classList.add('d-none');
+                data.nextElementSibling.style.width = "0";
+                data.classList.add('w-100');
+                data.classList.remove('w-50');
+            }
+        });
 
-    element.children[0].classList.remove('w-100');
-    element.children[0].classList.add('w-50');
+        element.children[0].classList.remove('w-100');
+        element.children[0].classList.add('w-50');
 
-    element.children[1].classList.remove('d-none');
-    element.children[1].style.width = "50%";
+        element.children[1].classList.remove('d-none');
+        element.children[1].style.width = "50%";
+    }
+
+
 }
 
 document.getElementById('selectReserve').addEventListener('change', () => {
