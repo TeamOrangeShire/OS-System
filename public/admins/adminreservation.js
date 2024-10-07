@@ -953,6 +953,8 @@ function reschedReserve() {
     document.getElementById('resched_namelabel').value = document.getElementById('namelabel').textContent
     document.getElementById('resched_emaillabel').value = document.getElementById('emaillabel').textContent
     document.getElementById('resched_cardTitle').textContent = document.getElementById('cardTitle').textContent
+     document.getElementById('resched_number').value = document.getElementById('numberLabel').textContent
+      document.getElementById('resched_rate').value = document.getElementById('roomrateLabel').textContent
     $.ajax({
         url: "/admin/getRoomData", // URL of the PHP script
         method: "GET", // or 'POST'

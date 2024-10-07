@@ -428,13 +428,21 @@ input[type="text"]::placeholder {
                             <input type="text" name="c_r_id" id="c_r_id" class="form-control" hidden>
                             <div class="row">
                                   <div class="col-12 text-center mb-4"><h1 id="resched_cardTitle"></h1></div>
-                                 <div class="col-6 mb-1">
+                                <div class="col-6 mb-1">
                                      Customer Name:
                                      <input type="text" class="form-control" id="resched_namelabel" name="resched_namelabel" readonly>
                                 </div>
                                 <div class="col-6 mb-1">
                                      Customer Email:
                                      <input type="text" class="form-control" id="resched_emaillabel" name="resched_emaillabel" readonly>
+                                </div>
+                                <div class="col-6 mb-1">
+                                     Customer Number:
+                                     <input type="text" class="form-control" id="resched_number" name="resched_number" readonly>
+                                </div>
+                                <div class="col-6 mb-1">
+                                    Previous Selected Rate:
+                                     <input type="text" class="form-control" id="resched_rate" name="resched_rate" readonly>
                                 </div>
                                 <div class="col-12 mb-1">
                                     Select Room:
