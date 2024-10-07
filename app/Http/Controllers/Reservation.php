@@ -159,7 +159,7 @@ class Reservation extends Controller
       $input = $request->except('end_date', 'multipleEmail', 'customer_request', 'emailInput', 'room_id', 'customer_bill');
       foreach ($input as $key => $value) {
         if (empty($value)) {
-          return response()->json(['status' => 'error', 'message' => "$key Please fill in all fields"]); // Return an error response
+          return response()->json(['status' => 'error', 'message' => " Please fill in all fields"]); // Return an error response
         }
       }
       $rate = RoomRates::where('rp_id', $request->customer_bill)->first();
@@ -400,15 +400,32 @@ class Reservation extends Controller
       $reserve->date_approved =  Carbon::now();
       $reserve->status = 1;
       $reserve->save();
-      return response()->json(['status' => 'success', 'message' => "$end and $endDateFormatted"]);
+      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'addEvent']);
     }else if($request->process == 'accept'){
       $reserve = Reservations::where('r_id',$request->r_id)->first();
       $reserve->status = "1";
       $reserve->save();
       return response()->json(['status' => 'success', 'message' => "Success" ,'reload'=> 'getPendingReservation','modal'=> 'viewReservation']);
     }else if($request->process == 'cancel'){
+      $input = $request->all(); // Get all input fields
+      foreach ($input as $key => $value) {
+        if (empty($value)) {
+          return response()->json([
+            'status' => 'error',
+            'message' => "Please fill in all fields"
+          ]); // Return error response
+        }
+      }
+      $reserve = Reservations::where('r_id',$request->c_r_id)->first();
+      $reserve->status ='4';
+      $reserve->reason = $request->cancelReason;
+      $reserve->save();
 
-      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewReservation']);
+      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
+    }else if($request->process == 'resched'){
+      
+      return response()->json(['status' => 'success', 'message' => "Success", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
+    
     }
 
     return response()->json(['status' => 'success']);
