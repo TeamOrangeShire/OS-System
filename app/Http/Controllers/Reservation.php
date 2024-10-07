@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reservations;
-use App\Models\RoomRates;
+use App\Models\CancellationReasons;
 use App\Models\Rooms;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReservationResponse;
 use Exception;
+use App\Models\RoomRates;
 
 class Reservation extends Controller
 {
@@ -530,5 +531,21 @@ class Reservation extends Controller
 
 
     return response()->json(['status' => $status, 'room_taken'=> $filterRoomId, 'available_room'=> $checkAvailableRooms]);
+  }
+  public function getCancellationReason(){
+    $cancel = CancellationReasons::all();
+
+    return response()->json(['data'=> $cancel]);
+  }
+
+  public function CancelReservationActive(Request $req){
+    $reservation = Reservations::where('r_id', $req->id)->first();
+
+    $reservation->update([
+        'status'=> 4,
+        'reason'=> $req->reason
+    ]);
+
+    return response()->json(['status'=>'success']);
   }
 }
