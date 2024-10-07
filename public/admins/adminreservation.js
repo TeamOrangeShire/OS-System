@@ -745,6 +745,7 @@ function getPendingReservation() {
         dataType: "json", // Expecting a JSON response
         success: function (response) {
             const pendingReservations = response.data.filter(event => event.status === '0');
+            console.log(pendingReservations)
             $('#pendingDataTable').DataTable({
                 destroy: true,
                 data: pendingReservations,
@@ -783,7 +784,7 @@ function getPendingReservation() {
                     {
                         data: null,
                         render: (data, type, row) => {
-                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
+                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}','${row.phone_num}','${row.rp_price}','${row.rp_rate_description}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
                         }
                     }
                 ]
@@ -847,7 +848,7 @@ function getActiveReservation() {
                     {
                         data: null,
                         render: (data, type, row) => {
-                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
+                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}','${row.phone_num}','${row.rp_price}','${row.rp_rate_description}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
                         }
                     }
                 ]
@@ -859,16 +860,19 @@ function getActiveReservation() {
         },
     });
 }
-function viewReservation(id, room_id, room, start_date, end_date, start_time, end_time, c_name, email) {
+function viewReservation(id, room_id, room, start_date, end_date, start_time, end_time, c_name, email,number,price,desc) {
     $('#viewReservation').modal('show');
     document.getElementById('r_id').value = id;
     document.getElementById('namelabel').textContent = c_name;
     document.getElementById('emaillabel').textContent = email;
     document.getElementById('cardTitle').textContent = 'Room ' + room;
+    document.getElementById('roomrateLabel').textContent =desc +' '+ '₱'+price;
+    document.getElementById('numberLabel').textContent = number;
     document.getElementById('startDatelabel').textContent = start_date;
     document.getElementById('endDatelabel').textContent = end_date;
     document.getElementById('startTimelabel').textContent = convertTo12HourFormat(start_time);
     document.getElementById('endTimelabel').textContent = convertTo12HourFormat(end_time);
+
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -954,7 +958,6 @@ function reschedReserve() {
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
-            console.log(response);
             const roomSelect = document.getElementById("roomSelect");
             const rateSelect = document.getElementById("rateSelect");
             // Clear previous options
@@ -993,7 +996,6 @@ function reschedReserve() {
                                     const rateDescription = rate.rp_rate_description;
                                     if (rateDescription.includes("Daily") || rateDescription.includes("Weekly") || rateDescription.includes("Monthly")) {
                                         // Append the 'End Date' field dynamically
-                                        console.log('here2')
                                         let endDateField = "";
                                         if (rateDescription.includes("Daily")) {
                                             checkRoomSchedByDay()

@@ -29,12 +29,12 @@ class Reservation extends Controller
   }
   public function getReservation(Request $request)
   {
-    $data = Reservations::join('rooms', 'reservations.room_id', '=', 'rooms.room_id')->get();
+    $data = Reservations::join('rooms', 'reservations.room_id', '=', 'rooms.room_id')
+    ->join('room_rates', 'room_rates.room_id', '=', 'rooms.room_id')
+    ->get();
 
     return response()->json(['data' => $data, 'status' => 'success']);
   }
-
-
   public function SubmitReservationCustomer(Request $req)
   {
       $reserve = new Reservations();
