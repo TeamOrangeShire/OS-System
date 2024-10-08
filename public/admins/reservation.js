@@ -20,8 +20,7 @@ function loadCancellationReason() {
 
             select.innerHTML += ` <optgroup label="Reasons Management">
                                         <option value="addReason">+Add Reason</option>
-                                        <option value="addReason">-Delete Reasons</option>
-                                        <option value="addReason">~Edit Reasons</option>
+                                        <option value="deleteReason">-Delete Reasons</option>
                                         <optgroup>`;
         }
     })
@@ -30,7 +29,20 @@ function loadCancellationReason() {
 
 document.getElementById('selectActiveCancellationReason').addEventListener('change', e => {
     const textArea = document.getElementById('cancellationReasonActive');
-    textArea.value = e.target.value;
+    const reasonHeader = document.getElementById('reasonHeaderDiv');
+    const reasonStatus = document.getElementById('reasonStatus');
+    const reasonNote = document.getElementById('reasonNote');
+    if(e.target.value == "addReason"){
+        reasonHeader.classList.remove('d-none');
+        textArea.value ='';
+        reasonStatus.value = 'add';
+        reasonNote.classList.remove('d-none');
+    }else{
+        reasonHeader.classList.add('d-none');
+        textArea.value = e.target.value;
+        reasonStatus.value = 'none';
+        reasonNote.classList.add('d-none')
+    }
 });
 
 

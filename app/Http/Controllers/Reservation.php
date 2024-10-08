@@ -463,6 +463,14 @@ class Reservation extends Controller
   public function CancelReservationActive(Request $req){
     $reservation = Reservations::where('r_id', $req->id)->first();
 
+    if($req->reason_status == 'add'){
+        $cancel = new CancellationReasons();
+        $cancel->reason_header = $req->reason_header;
+        $cancel->reason_message = $req->reason;
+        $cancel->reason_type = 'Cancel';
+        $cancel->save();
+    }
+
     $reservation->update([
         'status'=> 4,
         'reason'=> $req->reason
@@ -484,7 +492,7 @@ class Reservation extends Controller
   }
 
   public function getCancelledDenied(){
-    $reserve = Reservations::join('rooms', 'rooms.room_id', '=', 'reservations.room_id')->where('status', 4)->where('status', 5)->get();
+    $reserve = Reservations::join('rooms', 'rooms.room_id', '=', 'reservations.room_id')->where('status', 4)->orWhere('status', 5)->get();
 
     return response()->json(['data'=> $reserve]);
   }

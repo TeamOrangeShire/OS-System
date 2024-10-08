@@ -529,10 +529,16 @@ input[type="text"]::placeholder {
           <form id="confirmCancellationActive">
             @csrf
             <input type="hidden" id="reservationIdActiveCancellation" name="id">
+            <input type="hidden" id="reasonStatus" name="reason_status">
+            <div class="form-group d-none" id="reasonHeaderDiv">
+                <label for="addReasonHeader">Reason Header/Title</label>
+                <input type="text" class="form-control border" name="reason_header" id="addReasonHeader">
+            </div>
           <div class="form-group">
             <label for="cancellationReasonActive">Cancellation Reason</label>
             <textarea class="form-control" id="cancellationReasonActive" name="reason" required rows="3"></textarea>
           </div>
+          <small class="d-none" id="reasonNote">Note! if you chose to add a new custom built reason this cancellation process will still be processed after clicking the submit</small>
         </form>
         </div>
         <div class="modal-footer">
