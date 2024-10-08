@@ -10,6 +10,7 @@ use App\Models\Rooms;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReservationResponse;
+use App\Mail\CancelReservationActive;
 use Exception;
 use App\Models\RoomRates;
 
@@ -527,6 +528,12 @@ class Reservation extends Controller
         'reason'=> $req->reason
     ]);
 
+   try{
+        Mail::to($reservation->c_email)->send(new CancelReservationActive($reservation->c_name, $req->reason));
+   }catch(Exception $err){
+        //Ignore
+   }
+   
     return response()->json(['status'=>'success']);
   }
 }
