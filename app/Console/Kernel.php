@@ -4,7 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use Carbon\Carbon;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -16,9 +16,17 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:check-expiration')->everyMinute();
         // set active
         $schedule->call(function () {
+            $current_time = Carbon::now()->format('H:i'); // Get the current time in 'H:i' format
+
             $reservations = \App\Models\Reservations::where('status', '1')->get();
             foreach ($reservations as $reservation) {
-                if (now()->greaterThanOrEqualTo(\Carbon\Carbon::parse($reservation->start_date))) {
+                // Check if the current date is greater than or equal to the reservation start date
+                if (
+                    now()->greaterThanOrEqualTo(Carbon::parse($reservation->start_date))
+                    && $current_time > $reservation->start_time
+                    )
+                {
+                    // If both date and time conditions are met, update the reservation status
                     $reservation->status = '2';
                     $reservation->save();
                 }
@@ -26,12 +34,17 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
         //set complete
         $schedule->call(function () {
+            $current_time = Carbon::now()->format('H:i');
             $reservations = \App\Models\Reservations::where('status', '2')->get();
             foreach ($reservations as $reservation) {
-                if (now()->greaterThanOrEqualTo(\Carbon\Carbon::parse($reservation->end_date))) {
-                    $reservation->status = '3';
-                    $reservation->save();
-                }
+                if (
+                    now()->greaterThanOrEqualTo(Carbon::parse($reservation->end_date))
+                    && $current_time>$reservation->end_time
+                    ) 
+                    {
+                        $reservation->status = '3';
+                        $reservation->save();
+                    }
             }
         })->everyMinute(); 
     }

@@ -357,7 +357,7 @@ class Reservation extends Controller
         }
       }
       $reserve = Reservations::where('r_id',$request->c_r_id)->first();
-      $reserve->status ='4';
+      $reserve->status ='5';
       $reserve->reason = $request->cancelReason;
       $reserve->save();
 

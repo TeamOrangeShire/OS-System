@@ -472,7 +472,7 @@ input[type="text"]::placeholder {
                                      <input type="text" id="reschedDate2" name="reschedDate2" class="form-control" placeholder="Select End Date">
                                 </div>
                                 <br>
-                                <label for="" class="mt-2">Reason  for cancellation</label>
+                                <label for="" class="mt-2">Reason  for rescheduling</label>
                                 <textarea name="reschedReason" id="" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             </form>
