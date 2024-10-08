@@ -11,9 +11,13 @@
               background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.295)), url(../img/pheader1.jpg), no-repeat center center;
               background-size: co;
             }
-
+            .legend-point {
+                      display: inline-block;
+                      width: 10px; /* Adjust the size as needed */
+                      height: 10px; /* Adjust the size as needed */
+                      border-radius: 50%; /* Makes it a circle */
+                    }
             </style>
-
     </head>
 
 <body style="background-color: #ffffff !important">
@@ -50,13 +54,37 @@
             <!-- Header End -->
 
 
-        <!-- Testimonial Start -->
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3" id="calendar">See Our Reservation Calendar</h1>
                     <p>Explore our reservation calendar to plan your next productive session at Orange Shire. Click to see availability and secure your preferred time slot.</p>
                 </div>
+                <h6>Legends (Rooms that are/is Occupied on a specific date)</h6>
+                <div class="w-100 d-flex justify-content-between mb-3 p-4 bg-white rounded shadow-sm">
+
+                    <div class="d-flex align-items-center">
+                        <span class="legend-point" style="background-color: #FF4500;"></span>
+                        <span class="ms-2">Meeting Room 1</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <span class="legend-point" style="background-color: #32CD32;"></span>
+                        <span class="ms-2">Meeting Room 2</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <span class="legend-point" style="background-color: #1E90FF;"></span>
+                        <span class="ms-2">Meeting Room 3</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <span class="legend-point" style="background-color: #FFD700;"></span>
+                        <span class="ms-2">Meeting Room 4</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <span class="legend-point" style="background-color: #FF1493;"></span>
+                        <span class="ms-2">Meeting Room 5</span>
+                      </div>
+                </div>
+
                 <div id="calendars"></div>
               <div class="container" style="width: 100%; display:flex; justify-content:center">
                 <a class="btn btn-primary py-3 px-5 mt-3" href="{{route('book')}}"><i class="fa-solid fa-calendar-days"></i> Reserve a room</a>
