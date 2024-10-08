@@ -185,7 +185,6 @@ $(document).ready(function () {
                         "August", "September", "October", "November", "December"
                     ];
 
-                    console.log(newDate)
                     // Convert the month number to month name and remove the leading zero from the day
                     const formattedDate = `${monthNames[parseInt(month) - 1]}${parseInt(day)}, ${year}`;
                     const currentDate = new Date();
@@ -320,7 +319,6 @@ function getResData() {
             const response = data.room;
             const roomRate = data.rate;
             const select = document.getElementById("roomList");
-            console.log('h1')
             if (select && select.value === "") {
                 const container = document.getElementById("reserveContainer");
                 container.innerHTML = "";
@@ -880,8 +878,7 @@ function viewReservation(id, room_id, room, start_date, end_date, start_time, en
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
-            const activeReservations = response.data.filter(event => event.status === '1');
-
+            const activeReservations = response.data.filter(event => event.status === '1' || event.status === '2');
             // Convert the provided start and end times to Date objects for comparison
             const newStartDate = new Date(start_date);
             const newEndDate = new Date(end_date);
@@ -1022,6 +1019,8 @@ function reschedReserve() {
 
             roomSelect.addEventListener('change', function () {
                 roomRateSelect(this);
+                 document.getElementById('reschedDate').value = '';
+                 document.getElementById('reschedDate2').value = '';
             });
         },
         error: function (xhr, status, error) {
@@ -1044,7 +1043,7 @@ function checkRoomSchedByHour() {
         dataType: "json", // Expecting a JSON response
         success: function (response) {
             // Filter to get only active reservations for the specified room
-            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber||event.status === '2' && event.room_number === roomNumber);
             const disabledDates = []; // Array to hold disabled dates
 
             // Process active reservations to populate the disabledDates array
@@ -1111,7 +1110,7 @@ function checkRoomSchedByDay() {
         dataType: "json", // Expecting a JSON response
         success: function (response) {
             // Filter to get only active reservations for the specified room
-            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
             const disabledDates = []; // Array to hold disabled dates
 
             // Process active reservations to populate the disabledDates array
@@ -1264,7 +1263,7 @@ function checkRoomSchedByWeek() {
         success: function (response) {
 
             // Filter to get only active reservations for the specified room
-            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
 
             // Get an array of date ranges to disable (reserved dates)
             const disabledDates = [];
@@ -1357,7 +1356,7 @@ function checkRoomSchedByMonths() {
         success: function (response) {
 
             // Filter to get only active reservations for the specified room
-            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
 
             // Get an array of date ranges to disable (reserved dates)
             const disabledDates = [];
@@ -1458,7 +1457,7 @@ function addcheckRoomSchedByHour(preselect) {
         dataType: "json", // Expecting a JSON response
         success: function (response) {
             // Filter to get only active reservations for the specified room
-            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
             const disabledDates = []; // Array to hold disabled dates
 
             // Process active reservations to populate the disabledDates array
@@ -1528,7 +1527,7 @@ function addcheckRoomSchedByDay(preselect) {
         success: function (response) {
             $("#dateSelected2").prop('disabled', false);
             // Filter to get only active reservations for the specified room
-            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
             const disabledDates = []; // Array to hold disabled dates
 
             // Process active reservations to populate the disabledDates array
@@ -1548,7 +1547,7 @@ function addcheckRoomSchedByDay(preselect) {
             const dateString = preselect;
             const newDate = new Date(dateString);
             const convertedDate = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
-            console.log(convertedDate);
+        
             // Destroy any existing datepicker instances
             $("#dateSelected").datepicker("destroy");
             $("#dateSelected2").datepicker("destroy");
@@ -1562,7 +1561,6 @@ function addcheckRoomSchedByDay(preselect) {
                 },
                 minDate: 0, // Disable past dates
                 onSelect: function (dateText) {
-                    console.log(dateText)
                     const selectedDate = new Date(dateText);
                     let isConflict = false;
 
@@ -1668,7 +1666,7 @@ function addcheckRoomSchedByWeek(preselect) {
         success: function (response) {
 
             // Filter to get only active reservations for the specified room
-            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
 
             // Get an array of date ranges to disable (reserved dates)
             const disabledDates = [];
@@ -1783,7 +1781,7 @@ function addcheckRoomSchedByMonths(preselect) {
         success: function (response) {
 
             // Filter to get only active reservations for the specified room
-            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber);
+            const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
 
             // Get an array of date ranges to disable (reserved dates)
             const disabledDates = [];
