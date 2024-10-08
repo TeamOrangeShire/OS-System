@@ -125,7 +125,7 @@
                                                                 <div align="center" class="alignment"
                                                                     style="line-height:10px">
                                                                     <div style="max-width: 238px;"><img height="auto"
-                                                                            src="/mailassets/CancelActiveReservation/Your_paragraph_text-removebg-preview.png"
+                                                                            src="{{ asset('/mailassets/CancelActiveReservation/Your_paragraph_text-removebg-preview.png') }}"
                                                                             style="display: block; height: auto; border: 0; width: 100%;"
                                                                             width="238" /></div>
                                                                 </div>
@@ -166,7 +166,7 @@
                                                                     style="line-height:10px">
                                                                     <div style="max-width: 91px;"><img
                                                                             alt="Sad Face Icon" height="auto"
-                                                                            src="/mailassets/CancelActiveReservation/sad-icon.png"
+                                                                            src="{{ asset('/mailassets/CancelActiveReservation/sad-icon.png') }}"
                                                                             style="display: block; height: auto; border: 0; width: 100%;"
                                                                             title="Sad Face Icon" width="91" />
                                                                     </div>
@@ -302,7 +302,7 @@
                                                                     style="line-height:10px">
                                                                     <div style="max-width: 198px;"><img
                                                                             alt="Yourlogo Light" height="auto"
-                                                                            src="/mailassets/CancelActiveReservation/Your_paragraph_text-removebg-preview.png"
+                                                                            src="{{ asset('/mailassets/CancelActiveReservation/Your_paragraph_text-removebg-preview.png') }}"
                                                                             style="display: block; height: auto; border: 0; width: 100%;"
                                                                             title="Yourlogo Light" width="198" />
                                                                     </div>
@@ -327,7 +327,7 @@
                                                                                     href="https://www.facebook.com/people/Orange-Shire-Coworking/61554372145450/"
                                                                                     target="_blank"><img
                                                                                         alt="Facebook" height="auto"
-                                                                                        src="/mailassets/CancelActiveReservation/facebook2x.png"
+                                                                                        src="{{ asset('/mailassets/CancelActiveReservation/facebook2x.png') }}"
                                                                                         style="display: block; height: auto; border: 0;"
                                                                                         title="Facebook"
                                                                                         width="32" /></a></td>
@@ -335,7 +335,7 @@
                                                                                     href="https://www.instagram.com/orangeshire?igsh=MzRlODBiNWFlZA=="
                                                                                     target="_blank"><img
                                                                                         alt="Instagram" height="auto"
-                                                                                        src="/mailassets/CancelActiveReservation/instagram2x.png"
+                                                                                        src="{{ asset('/mailassets/CancelActiveReservation/instagram2x.png') }}"
                                                                                         style="display: block; height: auto; border: 0;"
                                                                                         title="Instagram"
                                                                                         width="32" /></a></td>
@@ -343,7 +343,7 @@
                                                                                     href="https://orangeshire.com/"
                                                                                     target="_blank"><img
                                                                                         alt="Web Site" height="auto"
-                                                                                        src="/mailassets/CancelActiveReservation/website2x.png"
+                                                                                        src="{{ asset('/mailassets/CancelActiveReservation/website2x.png') }}"
                                                                                         style="display: block; height: auto; border: 0;"
                                                                                         title="Web Site"
                                                                                         width="32" /></a></td>
