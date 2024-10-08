@@ -1,6 +1,7 @@
 window.onload = () => {
     loadCancellationReason();
     loadCompletDataTable();
+    loadCancelledDenied();
 }
 
 function loadCancellationReason() {
@@ -121,7 +122,7 @@ function loadCancelledDenied(){
         url: "/admin/reservation/getcancelleddeniedreservation",
         dataType: "json",
         success: res=> {
-            if($.fn.DataTable.isDataTable('#cancelledDeniedDataTable')){
+            if(!$.fn.DataTable.isDataTable('#cancelledDeniedDataTable')){
                 cancelledDeniedDatatable = $('#cancelledDeniedDataTable').DataTable({
                     data: res.data,
                     columns: [
@@ -134,11 +135,27 @@ function loadCancelledDenied(){
                         },
                         {title: "Start", data: null,
                             render: data=> {
-                                return `${Supp.parseDate(data.start_date)}`
+                                return `${Supp.parseDate(data.start_date)} | ${convertTo12HourFormat(data.start_time)}`
+                            }
+                        },
+                        {title: "End", data: null,
+                            render: data=> {
+                                return `${Supp.parseDate(data.end_date)} | ${convertTo12HourFormat(data.end_time)}`
+                            }
+                        },
+                        {title: "Status", data: null,
+                            render: data=> {
+                                if(data.status == 4){
+                                    return 'Cancelled'
+                                }else{
+                                    return 'Declined'
+                                }
                             }
                         }
                     ]
-                })
+                });
+            }else{
+                cancelledDeniedDatatable.clear().rows.add(res.data).draw();
             }
         }, error: xhr=> console.log(xhr.responseText)
     });

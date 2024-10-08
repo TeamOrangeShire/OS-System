@@ -484,7 +484,7 @@ class Reservation extends Controller
   }
 
   public function getCancelledDenied(){
-    $reserve = Reservations::join('rooms', 'rooms.room_id', '=', 'reservations.room_id')->where('status', 4)->where('status', 3)->get();
+    $reserve = Reservations::join('rooms', 'rooms.room_id', '=', 'reservations.room_id')->where('status', 4)->where('status', 5)->get();
 
     return response()->json(['data'=> $reserve]);
   }

@@ -123,6 +123,10 @@ input[type="text"]::placeholder {
                                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#completedTable"
                                         role="tab" aria-controls="home" aria-selected="true">Completed</a>
                                 </li>
+                                <li class="nav-item" onclick="">
+                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#deniedCancelledTab"
+                                        role="tab" aria-controls="home" aria-selected="true">Declined/Cancelled</a>
+                                </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade  show active" id="pendingTable" role="tabpanel" aria-labelledby="home-tab">
@@ -191,10 +195,6 @@ input[type="text"]::placeholder {
                                 </div>
                                 <div class="tab-pane fade " id="completedTable" role="tabpanel" aria-labelledby="home-tab">
 
-                                    {{-- content --}}
-
-
-
                                     <!-- Table with stripped rows -->
                                     <table id="completeDataTable" class="table table-striped" style="width:100%">
                                         <thead>
@@ -213,6 +213,28 @@ input[type="text"]::placeholder {
                                     </table>
                                     {{-- content end --}}
                                 </div>
+
+                                <div class="tab-pane fade " id="deniedCancelledTab" role="tabpanel" aria-labelledby="home-tab">
+
+                                    <!-- Table with stripped rows -->
+                                    <table id="cancelledDeniedDataTable" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Room</th>
+                                                <th>Start</th>
+                                                <th>End</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                    {{-- content end --}}
+                                </div>
+
                             </div>
                         </div>
                     </div>
