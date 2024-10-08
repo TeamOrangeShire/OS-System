@@ -246,7 +246,7 @@ function loadCalendar() {
                     name: `Room ${event.room_number}`, // Name the event with room number
                     description: `Reservation for ${event.c_name} <br> <span style="color:#57de84">${event.start_date} to ${event.end_date}</span>`, // Custom description
                     date: [`"${event.start_date}"`, `"${event.end_date}"`],
-                    type: 'reservation', // Custom type for the event
+                    type: `${event.status=='1'?'reservation':'event'}`, // Custom type for the event
                     color: getStatusColor(event.status) // Get color based on status
                 }));
                 // **Force Destroy** the existing calendar
@@ -731,9 +731,6 @@ function getPendingReservation() {
     if ($.fn.DataTable.isDataTable('#activeDataTable')) {
         $('#activeDataTable').DataTable().clear().destroy();
     }
-    if ($.fn.DataTable.isDataTable('#completeDataTable')) {
-        $('#completeDataTable').DataTable().clear().destroy();
-    }
     loadCalendar()
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
@@ -760,10 +757,9 @@ function getPendingReservation() {
                         data: null,
                         render: (data, type, row) => {
                             const {
-                                start_date,
                                 start_time,
                             } = row;
-                            return `${start_date} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(start_time)} `;
+                            return `${Supp.parseDate(row.start_date)} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(start_time)} `;
                         }
                     },
                     {
@@ -773,7 +769,7 @@ function getPendingReservation() {
                                 end_date,
                                 end_time,
                             } = row;
-                            return `${end_date} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(end_time)} `;
+                            return `${Supp.parseDate(row.end_date)} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(end_time)} `;
                         }
                     },
                     {
@@ -791,12 +787,75 @@ function getPendingReservation() {
         },
     });
 }
-function getActiveReservation() {
+function getApprovedReservation() {
     if ($.fn.DataTable.isDataTable('#pendingDataTable')) {
         $('#pendingDataTable').DataTable().clear().destroy();
     }
-    if ($.fn.DataTable.isDataTable('#completeDataTable')) {
-        $('#completeDataTable').DataTable().clear().destroy();
+    loadCalendar()
+    $.ajax({
+        url: "/admin/getReservation", // URL of the PHP script
+        method: "GET", // or 'POST'
+        dataType: "json", // Expecting a JSON response
+        success: function (response) {
+            const pendingReservations = response.data.filter(event => event.status == 1);
+            $('#approvedDataTable').DataTable({
+                destroy: true,
+                data: pendingReservations,
+                columns: [
+                    { data: 'c_name' },
+                    { data: 'c_email' },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            const {
+                                room_number,
+                            } = row;
+                            return `Room ${room_number} `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            const {
+                                start_date,
+                                start_time,
+                            } = row;
+                            return `${Supp.parseDate(row.start_date)} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(start_time)} `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            const {
+                                end_date,
+                                end_time,
+                            } = row;
+                            return `${Supp.parseDate(row.end_date)} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(end_time)} `;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: (data, type, row) => {
+                            return `<div class="d-flex justify-content-center gap-2 align-items-center">
+                                    <button data-toggle="modal" data-target="#cancelActiveReservation" onclick="cancelReservationActive('${data.r_id}')" type="button" class="btn btn-danger"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
+                                    <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"/>
+                                    </svg></button>`
+                                    // <button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}','${row.phone_num}','${row.rp_price}','${row.rp_rate_description}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>
+                                    // </div>`
+                        }
+                    }
+                ]
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", error); // Log any errors
+            $("#result").html("<p>Error: " + error + "</p>");
+        },
+    });
+}
+function getActiveReservation() {
+    if ($.fn.DataTable.isDataTable('#pendingDataTable')) {
+        $('#pendingDataTable').DataTable().clear().destroy();
     }
     loadCalendar()
     $.ajax({
@@ -827,7 +886,7 @@ function getActiveReservation() {
                                 start_date,
                                 start_time,
                             } = row;
-                            return `${start_date} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(start_time)} `;
+                            return `${Supp.parseDate(row.start_date)} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(start_time)} `;
                         }
                     },
                     {
@@ -837,7 +896,7 @@ function getActiveReservation() {
                                 end_date,
                                 end_time,
                             } = row;
-                            return `${end_date} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(end_time)} `;
+                            return `${Supp.parseDate(row.end_date)} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(end_time)} `;
                         }
                     },
                     {
@@ -1077,7 +1136,7 @@ function checkRoomSchedByHour() {
                 onSelect: function (dateText) {
                     // When a start date is selected, set the same value for the end date
                     $("#reschedDate2").val(dateText); // Set the end date to the same value as the start date
-                    $("#reschedDate2").prop('disabled', true);
+                    $("#reschedDate2").css("pointer-events", "none");
                 }
             });
 
@@ -1155,11 +1214,11 @@ function checkRoomSchedByDay() {
                     if (isConflict) {
                         $("#reschedDate").val(''); // Reset the start date input
                         $("#reschedDate2").val(''); // Reset the end date input
-                        $("#reschedDate2").prop('disabled', true); // Disable the end date input
+                       $("#reschedDate2").css("pointer-events", "none");
                     } else {
                         // No conflict: Set the same value for the end date
                         $("#reschedDate2").val(dateText);
-                        $("#reschedDate2").prop('disabled', false);
+                        $("#reschedDate2").css("pointer-events", "");
                     }
                 }
             });
@@ -1336,7 +1395,7 @@ function checkRoomSchedByWeek() {
                     }
                 }
             });
-            $("#reschedDate2").prop('disabled', true);
+            $("#reschedDate2").css("pointer-events", "none");
 
         },
         error: function (xhr, status, error) {
@@ -1436,7 +1495,7 @@ function checkRoomSchedByMonths() {
                     return [!isDisabled, isDisabled ? "disabled" : ""];
                 },
             });
-            $("#reschedDate2").prop('disabled', true);
+           $("#reschedDate2").css("pointer-events", "none");
         },
         error: function (xhr, status, error) {
             console.error("AJAX Error:", error); // Log any errors
@@ -1877,7 +1936,7 @@ function addcheckRoomSchedByMonths(preselect) {
                 $("#dateSelected").datepicker("option", "onClose").call($("#dateSelected")[0], convertedDate, inst);
             }
             initializeDatePickerAndSetValue(preselect)
-            $("#reschedDate2").prop('disabled', true);
+           $("#reschedDate2").css("pointer-events", "none");
         },
         error: function (xhr, status, error) {
             console.error("AJAX Error:", error); // Log any errors

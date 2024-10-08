@@ -84,13 +84,13 @@ function loadCompletDataTable() {
                         {
                             title: "Start", data: null,
                             render: data => {
-                                return `${data.start_date} | ${data.start_time}`
+                                return `${Supp.parseDate(data.start_date)} | ${convertTo12HourFormat(data.start_time)}`
                             }
                         },
                         {
                             title: "End", data: null,
                             render: data => {
-                                return `${data.end_date} | ${data.end_time}`
+                                return `${Supp.parseDate(data.end_date)} | ${convertTo12HourFormat(data.start_time)}`
                             }
                         },
                         {

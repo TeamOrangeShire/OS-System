@@ -71,7 +71,6 @@ input[type="text"]::placeholder {
     background-color: #3bff3b !important; /* Yellow background for selected week */
 }
 
-
     </style>
 </head>
 <body class="">
@@ -115,6 +114,10 @@ input[type="text"]::placeholder {
                                     <a class="nav-link active text-uppercase" id="profile-tab" data-toggle="tab"
                                         href="#pendingTable" role="tab" aria-controls="profile" aria-selected="false">Pending</a>
                                 </li>
+                                <li class="nav-item" onclick="getApprovedReservation()">
+                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#approvedTable"
+                                        role="tab" aria-controls="home" aria-selected="true">Approved</a>
+                                </li>
                                 <li class="nav-item" onclick="getActiveReservation()">
                                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#activeTable"
                                         role="tab" aria-controls="home" aria-selected="true">Active</a>
@@ -149,6 +152,35 @@ input[type="text"]::placeholder {
 
                                     {{-- content end --}}
                                 </div>
+                                <div class="tab-pane fade" id="approvedTable" role="tabpanel"
+                                    aria-labelledby="profile-tab">
+                                    <p class="mb-0">
+                                    <section class="section">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <!-- Table with stripped rows -->
+                                                <table id="approvedDataTable" class="table table-striped" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Full Name</th>
+                                                            <th>Email</th>
+                                                            <th>Room</th>
+                                                            <th>Start</th>
+                                                            <th>End</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    </p>
+                                </div>
                                 <div class="tab-pane fade" id="activeTable" role="tabpanel"
                                     aria-labelledby="profile-tab">
                                     <p class="mb-0">
@@ -173,17 +205,6 @@ input[type="text"]::placeholder {
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <div class="col-sm-12">
-                                                    <div class="d-flex justify-content-between">
-                                                        <h5 class="col-sm-8 mt-2"></h5>
-                                                        <button class="btn btn-danger col-auto" id="logoutbymark"
-                                                            style="display:none;" onclick="logoutmark()">Logout</button>
-                                                        <button class="btn btn-danger col-auto" id="deletebymark"
-                                                            style="display:none;" onclick="deletemark()">Delete</button>
-
-                                                    </div>
-
-                                                </div>
                                             </div>
                                         </div>
                                     </section>
