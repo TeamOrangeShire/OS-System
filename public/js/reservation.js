@@ -14,7 +14,7 @@ $(document).ready(function() {
                     reservation.id = data.r_id;
                     reservation.name = `Meeting Room ${data.room_number}`;
                     reservation.date = data.start_date == data.end_date ? formatDate(data.start_date) : [formatDate(data.start_date), formatDate(data.end_date)];
-                    reservation.type = "holiday";
+                    reservation.type = `MeetingRoom${data.room_number}`;
                     reservation.description = data.start_date == data.end_date ? `${formatDate(data.start_date, 'display')} (Occupied)` :  `${formatDate(data.start_date, 'display')} - ${formatDate(data.end_date, 'display')} (Occupied)`
                     reservation.color = getRoomColor(data.room_number);
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 
              });
-             
+
              $('#calendars').evoCalendar({
                 theme:"Orange Coral",
                 calendarEvents: reservationData

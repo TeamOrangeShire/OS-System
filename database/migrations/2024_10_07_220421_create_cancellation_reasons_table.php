@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('reason_id');
             $table->string('reason_header');
             $table->string('reason_message');
+            $table->string('reason_type')->nullable();
             $table->timestamps();
         });
     }
