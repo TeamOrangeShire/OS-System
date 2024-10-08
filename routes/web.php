@@ -106,6 +106,7 @@ Route::post('/admin/submitAdminReservation', [Reservation::class, 'submitAdminRe
 Route::get('/admin/reservation/getcancellationreason', [Reservation::class, 'getCancellationReason']);
 Route::post('/admin/reservation/cancelreservationactive', [Reservation::class, 'CancelReservationActive']);
 Route::get('/admin/reservation/completetable', [Reservation::class, 'getCompleteReservation']);
+Route::get('/admin/reservation/getcancelleddeniedreservation', [Reservation::class, 'getCancelledDenied']);
 
 Route::get('/admin/rooms_reservation', function () { return view('admin.rooms_r');})->name('rooms_r');
 Route::get('/admin/pending_reservation', function () { return view('admin.pending_r');})->name('pending_r');

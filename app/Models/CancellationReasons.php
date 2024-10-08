@@ -13,5 +13,6 @@ class CancellationReasons extends Model
     protected $fillable = [
         'reason_header',
         'reason_message',
+        'reason_type'
     ];
 }

@@ -455,7 +455,7 @@ class Reservation extends Controller
     return response()->json(['status' => $status, 'room_taken'=> $filterRoomId, 'available_room'=> $checkAvailableRooms]);
   }
   public function getCancellationReason(){
-    $cancel = CancellationReasons::all();
+    $cancel = CancellationReasons::where('reason_type', 'Cancel')->get();
 
     return response()->json(['data'=> $cancel]);
   }
@@ -481,5 +481,11 @@ class Reservation extends Controller
     $reservation = Reservations::join('rooms', 'rooms.room_id', '=', 'reservations.room_id')->where('status', 3)->get();
 
     return response()->json(['data'=> $reservation]);
+  }
+
+  public function getCancelledDenied(){
+    $reserve = Reservations::join('rooms', 'rooms.room_id', '=', 'reservations.room_id')->where('status', 4)->where('status', 3)->get();
+
+    return response()->json(['data'=> $reserve]);
   }
 }

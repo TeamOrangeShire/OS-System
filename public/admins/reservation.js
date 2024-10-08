@@ -113,3 +113,33 @@ function loadCompletDataTable() {
         }, error: xhr => console.log(xhr.responseText)
     })
 }
+
+let cancelledDeniedDatatable;
+function loadCancelledDenied(){
+    $.ajax({
+        type:"GET",
+        url: "/admin/reservation/getcancelleddeniedreservation",
+        dataType: "json",
+        success: res=> {
+            if($.fn.DataTable.isDataTable('#cancelledDeniedDataTable')){
+                cancelledDeniedDatatable = $('#cancelledDeniedDataTable').DataTable({
+                    data: res.data,
+                    columns: [
+                        {title: "Full Name", data: "c_name"},
+                        {title: "Email", data: "c_email"},
+                        {title: "Room", data: null,
+                            render: data=> {
+                                return `Room ${data.room_number}`
+                            }
+                        },
+                        {title: "Start", data: null,
+                            render: data=> {
+                                return `${Supp.parseDate(data.start_date)}`
+                            }
+                        }
+                    ]
+                })
+            }
+        }, error: xhr=> console.log(xhr.responseText)
+    });
+}
