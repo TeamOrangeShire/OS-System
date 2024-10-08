@@ -196,18 +196,19 @@ input[type="text"]::placeholder {
 
 
                                     <!-- Table with stripped rows -->
-                                    <table id="GroupTable" class="table table-striped" style="width:100%">
+                                    <table id="completeDataTable" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Group Name</th>
-                                                <th>Number Of People</th>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Room</th>
+                                                <th>Start</th>
+                                                <th>End</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
 
-                                            </tr>
                                         </tbody>
                                     </table>
                                     {{-- content end --}}
