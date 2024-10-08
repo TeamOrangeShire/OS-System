@@ -473,7 +473,13 @@ class Reservation extends Controller
    }catch(Exception $err){
         //Ignore
    }
-   
+
     return response()->json(['status'=>'success']);
+  }
+
+  public function getCompleteReservation(){
+    $reservation = Reservations::join('rooms', 'rooms.room_id', '=', 'reservations.room_id')->where('status', 3)->get();
+
+    return response()->json(['data'=> $reservation]);
   }
 }
