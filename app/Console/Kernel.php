@@ -14,11 +14,22 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('update-subscription-time')->everyMinute();
         $schedule->command('app:check-expiration')->everyMinute();
+        // set active
         $schedule->call(function () {
             $reservations = \App\Models\Reservations::where('status', '1')->get();
             foreach ($reservations as $reservation) {
-                if (now()->greaterThan(\Carbon\Carbon::parse($reservation->end_date))) {
+                if (now()->greaterThanOrEqualTo(\Carbon\Carbon::parse($reservation->start_date))) {
                     $reservation->status = '2';
+                    $reservation->save();
+                }
+            }
+        })->everyMinute();
+        //set complete
+        $schedule->call(function () {
+            $reservations = \App\Models\Reservations::where('status', '2')->get();
+            foreach ($reservations as $reservation) {
+                if (now()->greaterThanOrEqualTo(\Carbon\Carbon::parse($reservation->end_date))) {
+                    $reservation->status = '3';
                     $reservation->save();
                 }
             }

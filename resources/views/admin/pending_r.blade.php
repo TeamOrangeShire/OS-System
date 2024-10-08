@@ -288,11 +288,12 @@ input[type="text"]::placeholder {
                                     </div>
                                     </div>
                                     </div>
-                                <div class="form-group" hidden>
+                                    <div class="form-group" hidden>
                                     <div class="row">
+                                    <input type="text" name="preselect" id="preselect">
                                     <div class="col-md-6">
                                     <label for="datepicker">Start Date:</label>
-                                    <input type="date" class="form-control" id="datepicker" placeholder="Select a date" name="start_date" data-date-val="${formattedDate}"> <!-- Use formattedDate -->
+                                    <input type="text" class="form-control border" id="dateSelected" placeholder="Select a date" name="dateSelected"> <!-- Use formattedDate -->
                                     <small id="dateError" class="form-text text-danger" style="display: none;"></small>
                                     </div>
                                     <div class="col-md-6">
@@ -301,7 +302,11 @@ input[type="text"]::placeholder {
                                     </div>
                                     </div>
                                     </div>
-                                <button type="button" class="btn btn-secondary col-12" onclick="dynamicFuction('addEventForm', `{{route('submitAdminReservation')}}`,'add')">Submit</button>
+                                    <div class="col-12 mb-4">
+                                    <label for="">End Date</label>
+                                    <input type="text" id="dateSelected2" name="dateSelected2" class="form-control" placeholder="Select End Date">
+                                    </div>
+                                <button type="button" class="btn btn-secondary col-12" id="addSched" onclick="dynamicFuction('addEventForm', `{{route('submitAdminReservation')}}`,'add')">Submit</button>
                             </form>
                                 </div>
                             </div>
@@ -425,7 +430,7 @@ input[type="text"]::placeholder {
                         <div class="modal-body">
                          <form action="" id="reschedForm" method="POST">
                                 @csrf
-                            <input type="text" name="c_r_id" id="c_r_id" class="form-control" hidden>
+                            <input type="text" name="re_r_id" id="re_r_id" class="form-control" hidden>
                             <div class="row">
                                   <div class="col-12 text-center mb-4"><h1 id="resched_cardTitle"></h1></div>
                                 <div class="col-6 mb-1">
@@ -446,24 +451,24 @@ input[type="text"]::placeholder {
                                 </div>
                                 <div class="col-12 mb-1">
                                     Select Room:
-                                    <select id="roomSelect" class="form-control">
+                                    <select id="roomSelect" class="form-control" name="roomSelect">
                                     <option value="">Select Room</option> <!-- Default option -->
                                     </select>
                                 </div>
                                 <div class="col-12 mb-1">
                                     Select Rate:
-                                    <select id="rateSelect" class="form-control" >
+                                    <select id="rateSelect" name="rateSelect" class="form-control" >
                                     <option value="">Select Rate</option> <!-- Default option -->
                                     </select>
                                 </div>
                                 <div id="reschedField"></div>
                                 <div class="col-6 mb-1">
                                     Select Start Date:
-                                     <input type="text" id="reschedDate" class="form-control" placeholder="Select Start Date">
+                                     <input type="text" id="reschedDate" name="reschedDate" class="form-control" placeholder="Select Start Date">
                                 </div>
                                 <div class="col-6 mb-1">
                                     Select End Date:
-                                     <input type="text" id="reschedDate2" class="form-control" placeholder="Select End Date">
+                                     <input type="text" id="reschedDate2" name="reschedDate2" class="form-control" placeholder="Select End Date">
                                 </div>
                                 <br>
                                 <label for="" class="mt-2">Reason  for cancellation</label>
