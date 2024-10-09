@@ -13,6 +13,7 @@ use App\Mail\ReservationResponse;
 use App\Mail\CancelReservationActive;
 use Exception;
 use App\Models\RoomRates;
+use App\Mail\AdminMail;
 
 class Reservation extends Controller
 {
@@ -360,6 +361,14 @@ class Reservation extends Controller
       $reserve->status ='5';
       $reserve->reason = $request->cancelReason;
       $reserve->save();
+
+      try
+      {
+        Mail::to($reserve->c_email)->send(new AdminMail($request->cancelReason));
+      }
+      catch(Exception $x){
+
+      }
 
       return response()->json(['status' => 'success', 'message' => "Reservation canceled successfully", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
     }else if($request->process == 'resched'){

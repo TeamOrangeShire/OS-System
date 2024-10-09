@@ -134,7 +134,6 @@ Route::get('/admin/blank', function () { return view('admin.blank');})->name('bl
 Route::get('/admin/time', function () { return view('admin.time');})->name('time');
 Route::get('/admin/logout', function () { return view('admin.logout');})->name('logout');
 
-
 // Admin Controller
 // Admin
 Route::post('/Admin_login',[Login::class,'Admin_login'] )->name('Admin_login');
