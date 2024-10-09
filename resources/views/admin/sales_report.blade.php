@@ -138,8 +138,15 @@
                                 </div>
 
                                 <div class="tab-pane fade " id="weekly" role="tabpanel" aria-labelledby="">
+                                    <div class="col-12 d-flex justify-content-center gap-2 align-items-center">
+                                        <div class="col-6 d-flex justify-content-center">
+                                            <button id="filterCashButton" class="btn btn-success">Show Cash Payments</button>
+                                        </div>
+                                        <div class="col-6 d-flex justify-content-center">
+                                            <button id="filterE-PayButton" class="btn btn-primary">Show GCash Payments</button>
+                                        </div>
+                                    </div>
                                     <form action="" id="filter">@csrf
-
                                         <div class="form-row">
                                             <div class="col">
                                                 <label for="startdate">Start Date</label>
@@ -160,8 +167,6 @@
                                         </div>
                                         <br>
                                     </form>
-                                    <button id="filterCashButton" class="btn btn-success">Show Cash Payments</button>
-                                    <button id="filterE-PayButton" class="btn btn-primary">Show GCash Payments</button>
                                     <table id="weeklyreport" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>

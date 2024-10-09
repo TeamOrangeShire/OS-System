@@ -13,6 +13,7 @@ use App\Mail\ReservationResponse;
 use App\Mail\CancelReservationActive;
 use Exception;
 use App\Models\RoomRates;
+use App\Mail\AdminMail;
 
 class Reservation extends Controller
 {
@@ -323,6 +324,11 @@ class Reservation extends Controller
         $end = '';
         $endDateFormatted = $request->dateSelected; // Format the end date
       }
+      $transacID = RandomId(10);
+      $checkingId = Reservations::where('transaction_id', $transacID)->first();
+      while($checkingId){
+        $transacID = RandomId(10);
+      }
 
       $reserve = new Reservations();
       $reserve->c_name = $request->customer_name;
@@ -338,6 +344,7 @@ class Reservation extends Controller
       $reserve->start_time = $request->start_time;
       $reserve->end_time = $end;
       $reserve->date_approved =  Carbon::now();
+      $reserve->transaction = $transacID;
       $reserve->status = 1;
       $reserve->save();
       return response()->json(['status' => 'success', 'message' => "Room Successfully reserved", 'reload' => 'getPendingReservation', 'modal' => 'addEvent']);
@@ -360,6 +367,14 @@ class Reservation extends Controller
       $reserve->status ='5';
       $reserve->reason = $request->cancelReason;
       $reserve->save();
+
+      try
+      {
+        Mail::to($reserve->c_email)->send(new AdminMail($request->cancelReason));
+      }
+      catch(Exception $x){
+
+      }
 
       return response()->json(['status' => 'success', 'message' => "Reservation canceled successfully", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
     }else if($request->process == 'resched'){

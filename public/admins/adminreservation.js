@@ -211,6 +211,7 @@ $(document).ready(function () {
 
         }
     });
+     $('[data-toggle="tooltip"]').tooltip();
 });
 function loadCalendar() {
     $.ajax({
@@ -225,9 +226,9 @@ function loadCalendar() {
                         case '0':
                             return '#ff8050'; // Pending
                         case '1':
-                            return '#0cf2d4'; // Approved
+                            return '#ff5c40'; // Approved
                         case '2':
-                            return '#0cf259'; // Active
+                            return '#50C878'; // Active
                         case '3':
                             return '#08f69c'; // Completed
                         case '4':
@@ -244,7 +245,7 @@ function loadCalendar() {
                 const calendarEvents = filteredData.map((event, index) => ({
                     id: `event${index + 1}`, // Generate a unique ID for each event
                     name: `Room ${event.room_number}`, // Name the event with room number
-                    description: `Reservation for ${event.c_name} <br> <span style="color:#57de84">${event.start_date} to ${event.end_date}</span>`, // Custom description
+                    description: `Reservation for ${event.c_name} <br> <span style="color:#ff5c40">${event.start_date} to ${event.end_date}</span>`, // Custom description
                     date: [`"${event.start_date}"`, `"${event.end_date}"`],
                     type: `${event.status=='1'?'reservation':'event'}`, // Custom type for the event
                     color: getStatusColor(event.status) // Get color based on status
@@ -266,11 +267,17 @@ function loadCalendar() {
 
                 // Disable Sundays function (if you have this function defined)
                 disableSundays();
+                // var elements = document.getElementsByClassName('calendar-inner')[0];
+                // elements.innerHTML += `
+                
+                // `;
 
                 // Add event listener for month change (optional)
                 $('#calendar').on('selectMonth', function () {
                     disableSundays(); // Call disableSundays when the month changes
+                    
                 });
+                
             } else {
                 console.error("Data is not an array:", response.data);
             }
@@ -281,8 +288,6 @@ function loadCalendar() {
         }
     });
 }
-
-
 
 
 function disableSundays() {
@@ -1282,7 +1287,7 @@ function checkRoomSchedByDay() {
                 if (isConflict) {
                     if (!alertShown) { // Show alert only if not shown before
                         alertify
-                            .alert('Date Conflict', "Please Select Valid Date", function () {
+                            .alert('Date Conflict', "There's a conflict with the selected date, Please select another date", function () {
                                 alertify.message('OK');
                             });
                         alertShown = true; // Set the flag to true
@@ -1571,13 +1576,29 @@ function addcheckRoomSchedByHour(preselect) {
         }
     });
 }
+function formatDate22(dateString) {
+    // Split the date string into components
+    const parts = dateString.split('-');
+
+    // Ensure the date has exactly 3 parts (year, month, day)
+    if (parts.length !== 3) {
+        throw new Error('Invalid date format. Expected format: YYYY-MM-DD');
+    }
+
+    const [year, month, day] = parts;
+
+    // Pad the day with leading zero if it's a single digit
+    const formattedDay = day ? day.padStart(2, '0') : '00'; // Ensure day is defined
+
+    // Join the components back into the desired format
+    return `${year}-${month}-${formattedDay}`;
+}
 
 function addcheckRoomSchedByDay(preselect) {
     stopInterval()
     const roomNumber = parseInt(document.getElementById('roomList').value, 10);
 
     // Clear the date fields
-    document.getElementById('dateSelected').value = '';
     document.getElementById('dateSelected2').value = '';
 
     $.ajax({
@@ -1589,7 +1610,7 @@ function addcheckRoomSchedByDay(preselect) {
             // Filter to get only active reservations for the specified room
             const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
             const disabledDates = []; // Array to hold disabled dates
-
+            console.log(activeReservations)
             // Process active reservations to populate the disabledDates array
             if (activeReservations.length > 0) {
                 activeReservations.forEach(reservation => {
@@ -1607,12 +1628,12 @@ function addcheckRoomSchedByDay(preselect) {
             const dateString = preselect;
             const newDate = new Date(dateString);
             const convertedDate = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
-        
+            const dragon = document.getElementById('dateSelected').value;
             // Destroy any existing datepicker instances
             $("#dateSelected").datepicker("destroy");
             $("#dateSelected2").datepicker("destroy");
-            $("#dateSelected").val(convertedDate);
-            $("#dateSelected2").val(convertedDate);
+            $("#dateSelected").val(dragon);
+            $("#dateSelected2").val(dragon);
             // Initialize the start datepicker
             $("#dateSelected").datepicker({
                 beforeShowDay: function (date) {
@@ -1652,7 +1673,7 @@ function addcheckRoomSchedByDay(preselect) {
                 },
                 minDate: 0 // Disable past dates
             });
-
+            
             // Variable to track if the alert has been shown
             let alertShown = false;
             intervalId = setInterval(() => {
@@ -1685,6 +1706,9 @@ function addcheckRoomSchedByDay(preselect) {
 
                     return false;  // No conflict found
                 }
+            //     console.log(disabledDates)
+            // console.log(formattedStartDate)
+            // console.log(formattedEndDate)
                 const isConflict = checkDateConflict(formattedStartDate, formattedEndDate, disabledDates);
                 if ((isConflict) || (formattedStartDate > formattedEndDate)) {
                     if (!alertShown) { // Show alert only if not shown before
@@ -1943,6 +1967,10 @@ function addcheckRoomSchedByMonths(preselect) {
             $("#result").html("<p>Error: " + error + "</p>");
         }
     });
+}
+function selectAReason(){
+    console.log('here')
+    document.getElementById('reschedReason').value = document.getElementById('selectReason').value;
 }
 $(document).ready(function () {
     getPendingReservation()

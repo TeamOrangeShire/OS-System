@@ -9,17 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class adminEmail extends Mailable
+class AdminMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public $message;
-    public function __construct($message)
+    public $reason;
+    public function __construct($reason)
     {
-        $this->message=$message;
+        $this->reason = $reason;
     }
 
     /**
@@ -39,7 +39,7 @@ class adminEmail extends Mailable
     {
         return new Content(
             view: 'mail.adminEmail',
-            with:['message'=>$this->message]
+            with: ['reason' => $this->reason]
         );
     }
 
