@@ -66,6 +66,10 @@
                                     <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#home"
                                         role="tab" aria-controls="home" aria-selected="true">Customer Log</a>
                                 </li>
+                                <li class="nav-item" onclick="reserveData()">
+                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#reservationTable"
+                                        role="tab" aria-controls="home" aria-selected="true">Reservation</a>
+                                </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -166,6 +170,35 @@
                                         </tbody>
                                     </table>
                                     {{-- content end --}}
+                                </div>
+                                <div class="tab-pane fade" id="reservationTable" role="tabpanel"
+                                    aria-labelledby="profile-tab">
+                                    <p class="mb-0">
+                                    <section class="section">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <!-- Table with stripped rows -->
+                                                <table id="reservationDataTable" class="table table-striped" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Full Name</th>
+                                                            <th>Email</th>
+                                                            <th>Room</th>
+                                                            <th>Start</th>
+                                                            <th>End</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -2376,6 +2409,7 @@
 
     </body>
 
+    <script src="{{ asset('admins/admincustomerlog.js') }}"></script>
     </html>
 @else
     @php

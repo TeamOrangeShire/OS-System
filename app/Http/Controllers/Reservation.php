@@ -329,7 +329,12 @@ class Reservation extends Controller
       while($checkingId){
         $transacID = RandomId(10);
       }
-
+      
+      if($rate){
+        $status='1';
+      }else{
+        $status="0";
+      }
       $reserve = new Reservations();
       $reserve->c_name = $request->customer_name;
       $reserve->c_email = $request->customer_email;
@@ -344,8 +349,8 @@ class Reservation extends Controller
       $reserve->start_time = $request->start_time;
       $reserve->end_time = $end;
       $reserve->date_approved =  Carbon::now();
-      $reserve->transaction = $transacID;
-      $reserve->status = 1;
+      $reserve->transaction_id = $transacID;
+      $reserve->status = $status;
       $reserve->save();
       return response()->json(['status' => 'success', 'message' => "Room Successfully reserved", 'reload' => 'getPendingReservation', 'modal' => 'addEvent']);
     }else if($request->process == 'accept'){
