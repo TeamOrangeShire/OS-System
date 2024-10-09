@@ -7,10 +7,11 @@ $(document).ready(function() {
         url:"/admin/getReservation",
         dataType: "json",
         success: res=> {
-            res.data.forEach( data => {
 
+            const active = res.data.filter(x => x.status == 2 || x.status == 1);
+            active.forEach( data => {
                 const reservation = {};
-                if(data.room_id!=0 && data.status != 0){
+                if(data.room_id!=0){
                     reservation.id = data.r_id;
                     reservation.name = `Meeting Room ${data.room_number}`;
                     reservation.date = data.start_date == data.end_date ? formatDate(data.start_date) : [formatDate(data.start_date), formatDate(data.end_date)];
