@@ -70,7 +70,18 @@ input[type="text"]::placeholder {
 .ui-datepicker .ui-state-active {
     background-color: #3bff3b !important; /* Yellow background for selected week */
 }
-
+     .green-box {
+            width: 50px;
+            height: 15px;
+            border: solid lightgrey 1px;
+            background-color:#50C878;
+        }
+             .blue-box {
+            width: 50px;
+            height: 15px;
+            border: solid lightgrey 1px;
+            background-color: #ff5c40;
+        }
     </style>
 </head>
 <body class="">
@@ -96,12 +107,21 @@ input[type="text"]::placeholder {
     <div class="pcoded-content">
         <!-- [ Main Content start ] start -->
       <div class="row">
-                    <div class="col-12">
-
+                <div class="col-12">
+                <div class="row col-12 d-flex justify-content-center gap-2 align-items-center mb-2">
+                <div class="col-md-4 d-flex justify-content-center gap-2 align-items-center" >
+                <div class="blue-box" data-toggle="tooltip" data-placement="top" title="Scheduled but not yet started"></div>
+                <span data-toggle="tooltip" data-placement="top" title="Scheduled but not yet started">Approved</span>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center gap-2 align-items-center">
+                <div class="green-box" data-toggle="tooltip" data-placement="top" title="Active reservation"></div>
+                <span data-toggle="tooltip" data-placement="top" title="Active reservation">Active</span>
+                </div>
+                </div>
                         <div id="calendar"></div>
 
-                    </div>
                 </div>
+      </div>
                 <br>
 
 
@@ -514,9 +534,21 @@ input[type="text"]::placeholder {
                                     Select End Date:
                                      <input type="text" id="reschedDate2" name="reschedDate2" class="form-control" placeholder="Select End Date">
                                 </div>
+                                <div class="col-12 mb-1">
+                                    Select Reason(Optional):
+                                    <select class="form-control" name="" id="selectReason" onchange="selectAReason()">
+                                        <option value="">Select Reason</option>
+                                        @php
+                                            $reasons = App\Models\CancellationReasons::all();
+                                        @endphp
+                                        @foreach ($reasons as $reason)
+                                            <option value="{{ $reason->reason_message }}">{{ $reason->reason_header }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <br>
                                 <label for="" class="mt-2">Reason  for rescheduling</label>
-                                <textarea name="reschedReason" id="" cols="20" rows="5" class="form-control"></textarea>
+                                <textarea name="reschedReason" id="reschedReason" id="" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             </form>
                         </div>
