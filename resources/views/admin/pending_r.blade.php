@@ -135,20 +135,25 @@ input[type="text"]::placeholder {
                                         href="#pendingTable" role="tab" aria-controls="profile" aria-selected="false">Pending</a>
                                 </li>
                                 <li class="nav-item" onclick="getApprovedReservation()">
-                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#approvedTable"
-                                        role="tab" aria-controls="home" aria-selected="true">Approved</a>
+                                    <a class="nav-link  text-uppercase" id="approved-tab" data-toggle="tab" href="#approvedTable"
+                                        role="tab" aria-controls="approved" aria-selected="true">Approved</a>
                                 </li>
                                 <li class="nav-item" onclick="getActiveReservation()">
-                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#activeTable"
-                                        role="tab" aria-controls="home" aria-selected="true">Active</a>
+                                    <a class="nav-link  text-uppercase" id="active-tab" data-toggle="tab" href="#activeTable"
+                                        role="tab" aria-controls="active" aria-selected="true">Active</a>
                                 </li>
                                 <li class="nav-item" onclick="">
-                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#completedTable"
-                                        role="tab" aria-controls="home" aria-selected="true">Completed</a>
+                                    <a class="nav-link  text-uppercase" id="complete-tab" data-toggle="tab" href="#completedTable"
+                                        role="tab" aria-controls="complete" aria-selected="true">Completed</a>
                                 </li>
                                 <li class="nav-item" onclick="">
-                                    <a class="nav-link  text-uppercase" id="home-tab" data-toggle="tab" href="#deniedCancelledTab"
-                                        role="tab" aria-controls="home" aria-selected="true">Declined/Cancelled</a>
+                                    <a class="nav-link  text-uppercase" id="denied-tab" data-toggle="tab" href="#deniedCancelledTab"
+                                        role="tab" aria-controls="denied" aria-selected="true">Declined/Cancelled</a>
+                                </li>
+
+                                <li class="nav-item" onclick="">
+                                    <a class="nav-link  text-uppercase" id="hotdesk-tab" data-toggle="tab" href="#hotdeskTab"
+                                        role="tab" aria-controls="hotdesk" aria-selected="true">Hotdesk</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -275,6 +280,28 @@ input[type="text"]::placeholder {
                                     </table>
                                     {{-- content end --}}
                                 </div>
+
+
+
+                                <div class="tab-pane fade " id="hotdeskTab" role="tabpanel" aria-labelledby="home-tab">
+
+                                    <!-- Table with stripped rows -->
+                                    <table id="hotdeskTable" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Plan</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                    {{-- content end --}}
+                                </div>
+
 
                             </div>
                         </div>
