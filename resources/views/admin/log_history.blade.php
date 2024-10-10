@@ -110,6 +110,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Mark</th>
+                                                            <th>Action</th>
                                                             <th>Name</th>
                                                             <th>Email</th>
                                                             <Th>Contact</Th>
@@ -121,9 +122,7 @@
                                                             <th>Method</th>
                                                             <th>Status</th>
                                                             <th>Comment</th>
-                                                            <th>Action</th>
                                                             <th>Delete</th>
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -178,15 +177,15 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <!-- Table with stripped rows -->
-                                                <table id="reservationDataTable" class="table table-striped" style="width:100%">
+                                                <table id="reservationDataTable" class="table table-striped text-center" style="width:100%">
                                                     <thead>
                                                         <tr>
+                                                            <th>Action</th>
+                                                            <th>Reservation ID</th>
                                                             <th>Full Name</th>
                                                             <th>Email</th>
-                                                            <th>Room</th>
                                                             <th>Start</th>
                                                             <th>End</th>
-                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1282,7 +1281,7 @@
                             [13, 'asc']
                         ],
                         columnDefs: [{
-                                targets: [0,2, 3, 13],
+                                targets: [0,3, 4, 13],
                                 visible: false
                             },
                             {
@@ -1303,7 +1302,8 @@
                             url: '{{ route('CustomerlogHistory') }}',
                             type: 'GET'
                         },
-                        columns: [{
+                        columns: [
+                            {
                                 data: null,
                                 render: function(data, type, row) {
                                     const {
@@ -1320,7 +1320,41 @@
                                 },
                                 className: 'text-center' // Center align the column content
                             },
-
+                             {
+                                data: 'log_type',
+                                render: (data, type, row) => {
+                                    const {
+                                        log_status,
+                                        log_transaction,
+                                        log_id,
+                                        log_start_time,
+                                        log_end_time
+                                    } = row;
+                                    if (data === 1 || data === 2) {
+                                        if (log_status === 0) {
+                                            return `<button class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#out' onclick='Pending(${log_id})'>Logout</button>`;
+                                        } else if (log_status === 1) {
+                                            const payment = log_transaction.split('-')[0];
+                                            return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
+                                        } else {
+                                            return 'Paid';
+                                        }
+                                    } else if (data === 0) {
+                                        if (log_status === 0) {
+                                            return `<button class='btn btn-danger' type='button' onclick='Pending(${log_id})'>Logout</button>`;
+                                        } else if (log_status === 1) {
+                                            const [payment, secondPart] = log_transaction.split('-');
+                                            if (secondPart == 1) {
+                                                return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
+                                            } else {
+                                                return `<button class='btn btn-warning' type='button' onclick='acceptLog(${log_id})'>Confirm</button>`;
+                                            }
+                                        } else {
+                                            return 'Paid';
+                                        }
+                                    }
+                                }
+                            },
                             {
                                 data: null,
                                 render: (data, type, row) => {
@@ -1329,7 +1363,7 @@
                                         lastname,
                                         middlename
                                     } = row;
-                                    return `${firstname} ${middlename ? middlename : ''} ${lastname}`;
+                                    return `${firstname} ${middlename ? middlename : ''} ${lastname? lastname:''}`;
                                 }
                             },
                             {
@@ -1416,41 +1450,7 @@
                                     return `<input value="${log_comment ? log_comment : ''}" style="border:none;background-color:transparent" placeholder="No Comment" class="undeditSpan" id="log_comment${log_id}" onclick="editComment(${log_id})">`;
                                 }
                             },
-                            {
-                                data: 'log_type',
-                                render: (data, type, row) => {
-                                    const {
-                                        log_status,
-                                        log_transaction,
-                                        log_id,
-                                        log_start_time,
-                                        log_end_time
-                                    } = row;
-                                    if (data === 1 || data === 2) {
-                                        if (log_status === 0) {
-                                            return `<button class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#out' onclick='Pending(${log_id})'>Logout</button>`;
-                                        } else if (log_status === 1) {
-                                            const payment = log_transaction.split('-')[0];
-                                            return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
-                                        } else {
-                                            return 'Paid';
-                                        }
-                                    } else if (data === 0) {
-                                        if (log_status === 0) {
-                                            return `<button class='btn btn-danger' type='button' onclick='Pending(${log_id})'>Logout</button>`;
-                                        } else if (log_status === 1) {
-                                            const [payment, secondPart] = log_transaction.split('-');
-                                            if (secondPart == 1) {
-                                                return `<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#out' type='button' onclick="PendingToOut('${log_id}', ${payment}, '${log_start_time}', '${log_end_time}')">Confirm</button>`;
-                                            } else {
-                                                return `<button class='btn btn-warning' type='button' onclick='acceptLog(${log_id})'>Confirm</button>`;
-                                            }
-                                        } else {
-                                            return 'Paid';
-                                        }
-                                    }
-                                }
-                            },
+                           
                             {
                                 data: null,
                                 render: (data, type, row) => {
@@ -1719,7 +1719,8 @@
                                 "data": null,
                                 "render": function(data, row) {
                                     const fullname = data.customer_firstname + ' ' + (data.customer_middlename ==
-                                        null ? '' : data.customer_middlename) + ' ' + data.customer_lastname;
+                                        null ? '' : data.customer_middlename) + ' ' + (data.customer_lastname ==
+                                        null ? '':data.customer_lastname);
                                     return fullname;
                                 }
                             },

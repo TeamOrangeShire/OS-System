@@ -6,6 +6,8 @@ use App\Models\ActivityLog;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerAcc;
 use App\Models\Tour;
+use App\Models\Reservations;
+use App\Models\RoomRates;
 use App\Models\CustomerNotification;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -511,7 +513,7 @@ public function AccLogin(Request $request){
       }
     }
     else{
-    $format = strtolower(str_replace(' ', '', $request->firstname));
+        $format = strtolower(str_replace(' ', '', $request->firstname));
         $insertnew = new CustomerAcc;
         $insertnew->customer_firstname= $request->firstname;
         $insertnew->customer_middlename= $request->middlename;
@@ -1059,5 +1061,49 @@ public function deletemark(Request $request){
 }
 }
 return response()->json(['status' => 'success']);
+}
+public function logReservation(Request $request){
+    $reserve = Reservations::where('r_id',$request->r_id)->first();
+    $rate = RoomRates::where('rp_id',$reserve->rate_id)->first();
+    $reserve->status=3;
+    $reserve->save();
+
+    $format = strtolower(str_replace(' ', '', $reserve->c_name));
+    $insertnew = new CustomerAcc;
+    $insertnew->customer_firstname = $reserve->c_name;
+    $insertnew->customer_type = $request->customer_type;
+    $insertnew->customer_phone_num = $reserve->phone_num;
+    $insertnew->customer_profile_pic = 'none';
+    $insertnew->customer_username = strtolower(str_replace(' ', '', $reserve->c_name));
+    $insertnew->customer_password = Hash::make($format . '123');
+    $insertnew->save();
+
+    // $tour = new Tour;
+    // $tour->customer_id = $insertnew->customer_id;
+    // $tour->save();
+
+    $formattedStartTime = Carbon::createFromFormat('H:i', $reserve->start_time)->format('h:i A');
+   
+    $formattedDate = Carbon::createFromFormat('Y-m-d', $reserve->start_date)->format('m/d/Y');
+
+    $insertnewlog = new CustomerLogs;
+    $insertnewlog->customer_id = $insertnew->customer_id;
+    $insertnewlog->log_date = $formattedDate;
+    $insertnewlog->log_start_time = $formattedStartTime;
+    if($rate){
+      $formattedEndTime = Carbon::createFromFormat('H:i', $reserve->end_time)->format('h:i A');
+      $totalTime = timeDifference($formattedStartTime, $formattedEndTime);
+      $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $request->customer_type);
+      $insertnewlog->log_transaction = $paymentPass . '-0';
+      $insertnewlog->log_type=2;
+    }else{
+      $insertnewlog->log_type = 1;
+    }
+    $insertnewlog->log_status = 0;
+    $insertnewlog->save();
+
+
+
+    return response()->json(['status' => 'success','message'=> 'Customer successfully log','reload'=> 'reserveData']);
 }
 }

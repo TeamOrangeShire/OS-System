@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $current_time = Carbon::now()->format('H:i'); // Get the current time in 'H:i' format
 
-            $reservations = \App\Models\Reservations::where('status', '1')->get();
+            $reservations = \App\Models\Reservations::where('status', '1')->where('room_id' ,'!=','0')->get();
             foreach ($reservations as $reservation) {
                 // Check if the current date is greater than or equal to the reservation start date
                 if (
@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
         //set complete
         $schedule->call(function () {
             $current_time = Carbon::now()->format('H:i');
-            $reservations = \App\Models\Reservations::where('status', '2')->get();
+            $reservations = \App\Models\Reservations::where('status', '2')->where('room_id', '!=', '0')->get();
             foreach ($reservations as $reservation) {
                 if (
                     now()->greaterThanOrEqualTo(Carbon::parse($reservation->end_date))

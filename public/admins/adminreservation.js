@@ -1,7 +1,46 @@
 let newDate3 = '';
 $(document).ready(function () {
     loadCalendar()
+    const emailInput = document.getElementById("emailInput");
+                const tagInputDiv = document.querySelector(".tag-input");
 
+                // Function to create a new tag
+                function createTag(email) {
+                    // Create the tag container
+                    const tag = document.createElement("div");
+                    tag.classList.add("tag");
+                    tag.textContent = email;
+
+                    // Create the remove button
+                    const removeButton = document.createElement("span");
+                    removeButton.textContent = "×";
+                    removeButton.classList.add("remove-tag");
+                    removeButton.onclick = function () {
+                        tagInputDiv.removeChild(tag);
+                        const multi = document.getElementById('multipleEmail');
+                        multi.value = multi.value.split(',').filter(item => item.trim() !== email).join(', ').trim();
+                    };
+
+                    // Append the remove button to the tag
+                    tag.appendChild(removeButton);
+
+                    // Insert the tag before the input field
+                    tagInputDiv.insertBefore(tag, emailInput);
+                }
+
+                // Event listener for the input field to create tags on Enter
+                emailInput.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        const email = emailInput.value.trim();
+                        const multi = document.getElementById('multipleEmail');
+                        multi.value += email + ','
+                        if (email !== "") {
+                            createTag(email);
+                            emailInput.value = ""; // Clear input after creating the tag
+                        }
+                    }
+                });
 
     $('#calendar').on('selectEvent', function (event, activeEvent) {
         console.log('here')
@@ -128,46 +167,7 @@ $(document).ready(function () {
                 //     }
                 // });
 
-                const emailInput = document.getElementById("emailInput");
-                const tagInputDiv = document.querySelector(".tag-input");
-
-                // Function to create a new tag
-                function createTag(email) {
-                    // Create the tag container
-                    const tag = document.createElement("div");
-                    tag.classList.add("tag");
-                    tag.textContent = email;
-
-                    // Create the remove button
-                    const removeButton = document.createElement("span");
-                    removeButton.textContent = "×";
-                    removeButton.classList.add("remove-tag");
-                    removeButton.onclick = function () {
-                        tagInputDiv.removeChild(tag);
-                        const multi = document.getElementById('multipleEmail');
-                        multi.value = multi.value.split(',').filter(item => item.trim() !== email).join(', ').trim();
-                    };
-
-                    // Append the remove button to the tag
-                    tag.appendChild(removeButton);
-
-                    // Insert the tag before the input field
-                    tagInputDiv.insertBefore(tag, emailInput);
-                }
-
-                // Event listener for the input field to create tags on Enter
-                emailInput.addEventListener("keydown", function (event) {
-                    if (event.key === "Enter") {
-                        event.preventDefault();
-                        const email = emailInput.value.trim();
-                        const multi = document.getElementById('multipleEmail');
-                        multi.value += email + ','
-                        if (email !== "") {
-                            createTag(email);
-                            emailInput.value = ""; // Clear input after creating the tag
-                        }
-                    }
-                });
+                
             }
         } else {
             const eventList = document.getElementsByClassName("event-header")[0];
