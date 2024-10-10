@@ -2,6 +2,7 @@ window.onload = () => {
     loadCancellationReason();
     loadCompletDataTable();
     loadCancelledDenied();
+    loadHotdesk();
 }
 
 function loadCancellationReason() {
@@ -171,4 +172,9 @@ function loadCancelledDenied(){
             }
         }, error: xhr=> console.log(xhr.responseText)
     });
+}
+
+
+function loadHotdesk(){
+    $.ajax()
 }
