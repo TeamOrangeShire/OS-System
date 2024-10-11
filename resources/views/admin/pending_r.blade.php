@@ -345,7 +345,7 @@ input[type="text"]::placeholder {
                                         </div>
                                         <div class="col-md-6">
                                              <label for="exampleInputnumber1">Contact No.</label>
-                                             <input type="Number" class="form-control" id="exampleInputnumber1" name="customer_num" aria-describedby="emailHelp" placeholder="Enter Number">
+                                             <input type="Number"  class="form-control" id="exampleInputnumber1" name="customer_num" aria-describedby="emailHelp" placeholder="Enter Number" maxlength="11">
                                         </div>
                                     </div>
                                 </div>

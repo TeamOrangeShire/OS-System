@@ -182,13 +182,14 @@ class Reservation extends Controller
           $start = $request->start_time;  // Example start time, e.g., "23:30"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHour(); // Add 1 hour to the start time
-          $endDateFormatted = $request->dateSelected2->format('Y-m-d'); // Format the end date
+          $end = $endTime->format('H:i'); // Format the end time
+          $endDateFormatted = Carbon::createFromFormat('m/d/Y', $request->dateSelected2)->format('Y-m-d');
         } else if ($rate->rp_rate_description == '4 Hours') {
           $start = $request->start_time;  // Example start time, e.g., "16:00"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHours(4); // Add 4 hours to the start time
           $end = $endTime->format('H:i'); // Format the end time
-          $endDateFormatted = $request->dateSelected2->format('Y-m-d'); // Format the end date
+          $endDateFormatted = Carbon::createFromFormat('m/d/Y', $request->dateSelected2)->format('Y-m-d');
         } else if ($rate->rp_rate_description == 'Daily (12 Hours)') {
           $end = $request->start_time;
           $endDateFormatted = Carbon::createFromFormat('m/d/Y', $request->dateSelected2)->format('Y-m-d');

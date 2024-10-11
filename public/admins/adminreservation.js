@@ -625,6 +625,9 @@ function selectTime(element) {
 }
 function viewForm(date, time) {
     $('#addEvent').modal('show');
+    const mustbeEmpty = document.getElementById('reserveContainer')
+    mustbeEmpty.innerHTML = '';
+     document.getElementById("addEventForm").reset();
     document.getElementById('preselect').value = date
     document.getElementById('dateSelected').value = date
     // Reformat the date from MM/DD/YYYY to Month/DD/YYYY
@@ -676,9 +679,9 @@ function dynamicFuction(formId, routeUrl, process) {
     stopInterval()
     // Show the loader
     // hello
-    // const check = document.getElementById('dateSelected').value
+    const check = document.getElementById('dateSelected2').value
     // console.log('here')
-    // console.log(check)
+    console.log(check)
     document.getElementById('roller').style.display = 'flex';
 
     // Serialize the form data
@@ -1556,7 +1559,7 @@ function addcheckRoomSchedByHour(preselect) {
                 onSelect: function (dateText) {
                     // When a start date is selected, set the same value for the end date
                     $("#dateSelected2").val(dateText); // Set the end date to the same value as the start date
-                    $("#dateSelected2").prop('disabled', true);
+                   $("#dateSelected2").css("pointer-events", "none");
                 }
             });
 
@@ -1568,7 +1571,7 @@ function addcheckRoomSchedByHour(preselect) {
                 },
                 minDate: 0 // Disable past dates
             });
-            $("#dateSelected2").prop('disabled', true);
+            $("#dateSelected2").css("pointer-events", "none");
         },
         error: function (xhr, status, error) {
             console.error("AJAX Error:", error); // Log any errors
@@ -1606,7 +1609,7 @@ function addcheckRoomSchedByDay(preselect) {
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
-            $("#dateSelected2").prop('disabled', false);
+            $("#dateSelected2").css("pointer-events", "");
             // Filter to get only active reservations for the specified room
             const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
             const disabledDates = []; // Array to hold disabled dates
@@ -1656,11 +1659,11 @@ function addcheckRoomSchedByDay(preselect) {
                     if (isConflict) {
                         $("#dateSelected").val(''); // Reset the start date input
                         $("#dateSelected2").val(''); // Reset the end date input
-                        $("#dateSelected2").prop('disabled', true); // Disable the end date input
+                        $("#dateSelected2").css("pointer-events", "none"); // Disable the end date input
                     } else {
                         // No conflict: Set the same value for the end date
                         $("#dateSelected2").val(dateText);
-                        $("#dateSelected2").prop('disabled', false);
+                        $("#dateSelected2").css("pointer-events", "");
                     }
                 }
             });
@@ -1843,7 +1846,7 @@ function addcheckRoomSchedByWeek(preselect) {
                     document.getElementById('addSched').disabled = false;
                 }
             }
-            $("#dateSelected2").prop('disabled', true);
+            $("#reschedDate2").css("pointer-events", "none");
 
         },
         error: function (xhr, status, error) {
