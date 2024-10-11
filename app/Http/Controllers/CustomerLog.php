@@ -1106,4 +1106,11 @@ public function logReservation(Request $request){
 
     return response()->json(['status' => 'success','message'=> 'Customer successfully log','reload'=> 'reserveData']);
 }
+public function logCancelReservation(Request $request){
+    $reserve = Reservations::where('r_id', $request->r_id)->first();
+    $reserve->reason = $request->cancellationReason;
+    $reserve->status = 4;
+    $reserve->save();
+    return response()->json(['status' => 'success', 'message' => 'Reservation successfully canceled', 'reload' => 'reserveData']);
+}
 }

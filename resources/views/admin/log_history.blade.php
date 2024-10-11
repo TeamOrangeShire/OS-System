@@ -106,7 +106,7 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <!-- Table with stripped rows -->
-                                                <table id="loghistory" class="table table-striped" style="width:100%">
+                                                <table id="loghistory" class="table table-striped text-center" style="width:100%">
                                                     <thead>
                                                         <tr>
                                                             <th>Mark</th>
@@ -1280,7 +1280,8 @@
                         order: [
                             [13, 'asc']
                         ],
-                        columnDefs: [{
+                        columnDefs: [
+                            {
                                 targets: [0,3, 4, 13],
                                 visible: false
                             },
@@ -1288,6 +1289,10 @@
                                 targets: 14,
                                 visible: false,
                                 searchable: false
+                            },
+                            { 
+                            className: "text-center", 
+                            targets: "_all"  // Applies to all columns
                             }
                         ],
                         layout: {
@@ -1705,7 +1710,12 @@
                             visible: false,
                             searchable: false
 
-                        }, ],
+                        },
+                        { 
+                className: "text-center", 
+                targets: "_all"  // Applies to all columns
+                }
+                     ],
                         scrollX: true,
                         scrollY: '400px',
                         scrollCollapse: true,

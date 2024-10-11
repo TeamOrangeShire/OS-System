@@ -176,6 +176,7 @@ Route::post('/logoutmark',[CustomerLog::class,'logoutmark'] )->name('logoutmark'
 Route::post('/deletemark',[CustomerLog::class,'deletemark'] )->name('deletemark');
 Route::post('/logoutmark1',[CustomerLog::class,'logoutmark1'] )->name('logoutmark1');
 Route::post('/logReservation', [CustomerLog::class, 'logReservation'])->name('logReservation');
+Route::post('/logCancelReservation', [CustomerLog::class, 'logCancelReservation'])->name('logCancelReservation');
 
 // AddData
 Route::post('/AddPromo', [AddData::class, 'AddPromo'])->name('AddPromo');
