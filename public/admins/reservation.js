@@ -92,7 +92,7 @@ function loadCompletDataTable() {
                         {
                             title: "Room", data: null,
                             render: data => {
-                                return `Room ${data.room_number}`
+                                return `${data.room_number==0?'HotDesk':'Room' +data.room_number}`
                             }
                         },
                         {

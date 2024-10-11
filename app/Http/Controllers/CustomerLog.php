@@ -1078,9 +1078,9 @@ public function logReservation(Request $request){
     $insertnew->customer_password = Hash::make($format . '123');
     $insertnew->save();
 
-    // $tour = new Tour;
-    // $tour->customer_id = $insertnew->customer_id;
-    // $tour->save();
+    $tour = new Tour;
+    $tour->customer_id = $insertnew->customer_id;
+    $tour->save();
 
     $formattedStartTime = Carbon::createFromFormat('H:i', $reserve->start_time)->format('h:i A');
    
