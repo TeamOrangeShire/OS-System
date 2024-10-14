@@ -47,18 +47,16 @@ $(document).ready(function () {
         url: "/admin/getReservation",
         dataType: "json",
         success: res => {
-
-            res.data.forEach(data => {
-
+            const reservationDatas =  res.data.filter(x => x.status == 1 || x.status == 2);
+           reservationDatas.forEach(data => {
                 const reservation = {};
                 if (data.room_id != 0 && data.status != 0) {
-                    reservation.id = data.r_id;
+                    reservation.id = `Reservation${data.r_id}`;
                     reservation.name = `Meeting Room ${data.room_number}`;
                     reservation.date = data.start_date == data.end_date ? formatDateCal(data.start_date) : [formatDateCal(data.start_date), formatDateCal(data.end_date)];
-                    reservation.type = "holiday";
-                    reservation.description = data.start_date == data.end_date ? `${formatDateCal(data.start_date, 'display')} (Occupied)` : `${formatDateCal(data.start_date, 'display')} - ${formatDate(data.end_date, 'display')} (Occupied)`
+                    reservation.type = `MeetingRoom${data.room_number}`;
+                    reservation.description = data.start_date == data.end_date ? `${formatDateCal(data.start_date, 'display')} (Occupied)` : `${formatDateCal(data.start_date, 'display')} - ${formatDateCal(data.end_date, 'display')} (Occupied)`
                     reservation.color = getRoomColor(data.room_number);
-
                     reservationData.push(reservation);
                 }
 
@@ -71,13 +69,12 @@ $(document).ready(function () {
                 'eventDisplayDefault': false,
                 'eventListToggler': false,
             });
-            disablePastDates(today);
-
         }, error: xhr => console.log(xhr.responseText)
     })
 
-
-
+    setTimeout(()=>{
+        disablePastDates(today)
+    }, 1000);
 
     $.ajax({
         type: "GET",
@@ -130,9 +127,6 @@ $(document).ready(function () {
 
     months.innerHTML += `<option value="other">${currentYear + 1} Months</option>`;
 
-    const dateToday = new Date().toISOString().split('T')[0];
-
-    document.getElementById('selectEndDate').setAttribute('min', dateToday);
 
 });
 
@@ -226,7 +220,7 @@ $('#calendars').on('selectDate', async function (event, newDate) {
     const checkBookingStatus = await fetch(`/customer/reservation/checkbookingstatus?date=${dateForRequest}`);
 
     const bookingStatus = await checkBookingStatus.json();
-    console.log(bookingStatus);
+
     const div = document.getElementById('reservationButtons');
 
     if(bookingStatus.status == "Available"){
@@ -428,7 +422,7 @@ function AddReservationButtons(num, date) {
     const add = (delay, data) => {
         return `<div onclick="selectReservationTime(this)" class="w-100 d-flex p-1 gap-1">
             <button ${data[1] ? 'disabled' : ''} class="btn btn-primary w-100 wow fadeInLeft select" data-wow-delay="${delay}s">${data[0]}</button>
-            <button onclick="openReserveModal('${data[0]}')" class="btn btn-info d-none nextBtn" data-bs-toggle="modal" data-bs-target="#reserveModal" style="width:0%;">Proceed</button>
+            <button onclick="openReserveModal('${data[0]}')" class="btn btn-info d-none nextBtn" data-bs-toggle="modal" data-bs-target="#reserveModal" style="width:0%;">Start with this time</button>
         </div>`
     }
 
@@ -682,6 +676,14 @@ function openReserveModal(time) {
     selectDateModal.textContent = selectedDateGlobal;
     selectedTimeModal.textContent = time;
 
+
+    const convertToDateInputFormat = (dateString) => {
+        const [month, day, year] = dateString.split('/');
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    }
+    const minDate = convertToDateInputFormat(selectedDateGlobal);
+    document.getElementById('selectEndDate').setAttribute('min', minDate);
+
     document.getElementById('startDateReservation').value = selectedDateGlobal;
     document.getElementById('startTimeReservation').value = time;
 
@@ -713,8 +715,58 @@ document.getElementById('submitReservation').addEventListener('click', e => {
     const form = document.getElementById('submitReservationForm');
 
     if (form.checkValidity()) {
-        form.requestSubmit();
-        e.target.innerHTML = '<div class="loaderSubmit"></div> Submitting Please Wait...';
+
+        let validity = 0;
+
+        const email = document.getElementById('email');
+        const emailE = document.getElementById('email_e');
+        const contact = document.getElementById('contact');
+        const contactE = document.getElementById('contact_e');
+
+
+        if(isValidEmail(email.value)){
+            validity++;
+            emailE.classList.add('d-none');
+            email.classList.remove('border', 'border-danger');
+        }else{
+            emailE.classList.remove('d-none');
+            email.classList.add('border', 'border-danger');
+        }
+
+        if(contact.value.length == 11){
+            validity++;
+            contactE.classList.add('d-none');
+            contact.classList.remove('border', 'border-danger');
+        }else{
+            contactE.classList.remove('d-none');
+            contact.classList.add('border', 'border-danger');
+        }
+
+        if(validity == 2){
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: "btn btn-success",
+                  cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+              });
+            swalWithBootstrapButtons.fire({
+                title: "Confirm Reservation Details",
+                text: "Are you sure do you wanna submit this reservation details?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, Submit it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  form.requestSubmit();
+                  e.target.innerHTML = '<div class="loaderSubmit"></div> Submitting Please Wait...';
+                }
+              });
+
+        }
+
     } else {
         form.reportValidity();
     }
@@ -723,49 +775,89 @@ document.getElementById('submitReservation').addEventListener('click', e => {
 document.getElementById('submitReservationForm').addEventListener('submit', e => {
     e.preventDefault();
 
-    $.ajax({
-        type: "POST",
-        url: '/user/reservation/submitreservation',
-        data: $('#submitReservationForm').serialize(),
-        success: res => {
-            if (res.success) {
-                document.getElementById('submitReservation').innerHTML = 'Submit Reservation';
-                e.target.reset();
-                document.getElementById('closeReservation').click();
-                document.getElementById('addGuestBtnDiv').classList.remove('d-none');
-                document.getElementById('addGuestDiv').classList.add('d-none');
-                document.getElementById('selectPaxHotdeskDiv').classList.add('d-none');
-                document.getElementById('selectPaxDiv').classList.add('d-none');
-                document.getElementById('selectRoomRatesDiv').classList.add('d-none');
-                document.getElementById('hotdeskDiv').classList.add('d-none');
-                document.getElementById('selectEndDateDiv').classList.add('d-none');
-                document.getElementById('selectEndTimeDiv').classList.add('d-none');
-                document.getElementById('selectEndDateWeeklyDiv').classList.add('d-none');
-                document.getElementById('selectEndDateMonthlyDiv').classList.add('d-none');
-                document.getElementById('hotdeskEndTimeDiv').classList.add('d-none');
-                toastr["success"]("Reservation Submitted wait for the email for the response.")
+        $.ajax({
+            type: "POST",
+            url: '/user/reservation/submitreservation',
+            data: $('#submitReservationForm').serialize(),
+            success: res => {
+                if (res.success) {
+                    document.getElementById('submitReservation').innerHTML = 'Submit Reservation';
+                    e.target.reset();
+                    document.getElementById('closeReservation').click();
+                    document.getElementById('addGuestBtnDiv').classList.remove('d-none');
+                    document.getElementById('addGuestDiv').classList.add('d-none');
+                    document.getElementById('selectPaxHotdeskDiv').classList.add('d-none');
+                    document.getElementById('selectPaxDiv').classList.add('d-none');
+                    document.getElementById('selectRoomRatesDiv').classList.add('d-none');
+                    document.getElementById('hotdeskDiv').classList.add('d-none');
+                    document.getElementById('selectEndDateDiv').classList.add('d-none');
+                    document.getElementById('selectEndTimeDiv').classList.add('d-none');
+                    document.getElementById('selectEndDateWeeklyDiv').classList.add('d-none');
+                    document.getElementById('selectEndDateMonthlyDiv').classList.add('d-none');
+                    document.getElementById('hotdeskEndTimeDiv').classList.add('d-none');
+                    let timerInterval;
+                    Swal.fire({
+                      title: "Reservation is submitted Successfully",
+                      html: "You will be redirected in the reservation page in <b></b>",
+                      timer: 5000,
+                      icon: "success",
+                      timerProgressBar: true,
+                      allowOutsideClick: false,
+                      didOpen: () => {
+                        Swal.showLoading();
+                        const timer = Swal.getPopup().querySelector("b");
+                        timerInterval = setInterval(() => {
+                          timer.textContent = `${Swal.getTimerLeft()}`;
+                        }, 100);
+                      },
+                      willClose: () => {
+                        clearInterval(timerInterval);
+                      }
+                    }).then((result) => {
+                      /* Read more about handling dismissals below */
+                      if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log("I was closed by the timer");
+                        window.location.href = "/reservation";
+                      }
+                    });
 
-                const selectBtn = document.querySelectorAll('.select');
+                    const selectBtn = document.querySelectorAll('.select');
 
-                selectBtn.forEach(data => {
-                    const classList = Array.from(data.classList);
+                    selectBtn.forEach(data => {
+                        const classList = Array.from(data.classList);
 
-                    if (classList.includes('w-50')) {
-                        data.classList.remove('w-50');
-                        data.classList.add('w-100');
+                        if (classList.includes('w-50')) {
+                            data.classList.remove('w-50');
+                            data.classList.add('w-100');
 
-                        const next = data.nextElementSibling;
+                            const next = data.nextElementSibling;
 
-                        next.classList.add('d-none');
+                            next.classList.add('d-none');
 
-                    }
-                });
-            }
-        }, error: xhr => console.log(xhr.responseText)
-    })
+                        }
+                    });
+                }
+            }, error: xhr => console.log(xhr.responseText)
+        });
+
 });
 
 
+function isValidEmail(email) {
+    // Check if the email contains an "@" and a "."
+    const hasAtSymbol = email.includes('@');
+    const hasDot = email.includes('.');
+
+    // Additional checks: ensure "@" comes before "." and both are not at the start or end
+    const atIndex = email.indexOf('@');
+    const dotIndex = email.indexOf('.');
+
+    if (hasAtSymbol && hasDot && atIndex < dotIndex && atIndex > 0 && dotIndex < email.length - 1) {
+        return true; // Valid email
+    } else {
+        return false; // Invalid email
+    }
+}
 
 
 function formatDate(dateString) {
@@ -886,6 +978,14 @@ document.getElementById('hotdeskEndTime').addEventListener('input', e => {
         hotdeskEndTime.classList.remove('border', 'border-danger');
         hotdeskError.classList.add('d-none');
         document.getElementById('submitReservation').disabled = false;
+    }
+});
+
+document.getElementById('contact').addEventListener('input', e =>{
+    e.target.value = e.target.value.replace(/\D/g, '');
+
+    if (e.target.value.length > 11) {
+        e.target.value = e.target.value.slice(0, 11);
     }
 });
 

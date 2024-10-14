@@ -87,7 +87,7 @@
 
                 <div id="calendars"></div>
               <div class="container" style="width: 100%; display:flex; justify-content:center">
-                <a class="btn btn-primary py-3 px-5 mt-3" href="{{route('book')}}"><i class="fa-solid fa-calendar-days"></i> Reserve a room</a>
+                <a class="btn btn-primary py-3 px-5 mt-3" href="{{route('book')}}"><i class="fa-solid fa-calendar-days"></i> Reserve a Room/Hotdesk</a>
               </div>
             </div>
         </div>

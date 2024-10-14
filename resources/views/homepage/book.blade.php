@@ -7,6 +7,7 @@
     <link href="{{ asset('calendar/css/evo-calendar.orange-coral.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="/css/booking.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
     .select{
@@ -74,7 +75,7 @@
                 <div class="col-12 col-md-4">
                     <h3> Details</h3>
 
-                    <p> <i class="fa-regular fa-clock"></i> Time: <span id="selectedTimeModal"></span></p>
+                    <p> <i class="fa-regular fa-clock"></i> Start Time: <span id="selectedTimeModal"></span></p>
                     <p><i class="fa-solid fa-calendar-check"></i> Date: <span id="selectedDateModal"></span></p>
                     <br>
                     <h5>Reminders</h5>
@@ -95,10 +96,12 @@
                         <div class="form-group mt-2">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" required placeholder="eg youremail@domain.com">
+                            <small class="text-danger d-none" id="email_e">Invalid format of email address</small>
                         </div>
                         <div class="form-group mt-2">
                             <label for="contact">Contact</label>
                             <input type="number" class="form-control" id="contact" name="contact" required placeholder="eg 09XXXXXXXX">
+                            <small class="text-danger d-none" id="contact_e">Contact must be 11 digits</small>
                         </div>
                         <div class="d-flex w-100 justify-content-end" id="addGuestBtnDiv">
                             <button id="addGuestBtn" type="button" class="btn btn-primary rounded-pill" >Guest Email/s(Optional)</button>
