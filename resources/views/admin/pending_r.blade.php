@@ -352,6 +352,8 @@ input[type="text"]::placeholder {
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
                                     <input type="email" class="form-control" id="exampleInputEmail1"  name="customer_email" aria-describedby="emailHelp" placeholder="Enter email" required>
+                                    <p id="error-message" style="color: red; display: none;">Please enter a valid email address.</p>
+  
                                 </div>
                                 <div class="form-group">
                                 <label for="exampleInputEmail1">Guest Email(optional)</label>

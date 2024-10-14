@@ -174,7 +174,19 @@ class Reservation extends Controller
       $input = $request->except('end_date', 'multipleEmail', 'customer_request', 'emailInput', 'room_id', 'customer_bill');
       foreach ($input as $key => $value) {
         if (empty($value)) {
-          return response()->json(['status' => 'error', 'message' => " Please fill in all fields"]); // Return an error response
+          if($key=='customer_name'){
+          $field = 'customer name';
+          }
+          else if($key=='customer_num'){
+          $field = 'customer number';
+          }
+          else if($key=='customer_email'){
+          $field = 'customer email';
+          }
+          else if($key=='dateSelected2'){
+          $field = 'room and plan';
+          }
+          return response()->json(['status' => 'error', 'message' => " Please fill $field"]); // Return an error response
         }
       }
       $rate = RoomRates::where('rp_id', $request->customer_bill)->first();
