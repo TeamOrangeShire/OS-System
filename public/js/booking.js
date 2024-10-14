@@ -92,23 +92,13 @@ $(document).ready(function () {
         }, error: xhr => console.log(xhr.responseText)
     });
 
-
-    const currentYear = new Date().getFullYear();
-    const weeks = getWeeksInYear(currentYear);
-
     const weeklySelect = document.getElementById('selectEndDateWeekly');
     const todayWeek = new Date();
-
+    const weeks = [
+        '1','2', '3'
+    ];
     weeks.forEach(d => {
-        // Parse the end date of the week to a Date object for comparison
-        const endDate = new Date(d.end);
-
-        // Disable if the end date of the week is in the past
-        if (endDate < todayWeek) {
-            weeklySelect.innerHTML += `<option value="${d.end}" disabled>${formatDate(d.start)} - ${formatDate(d.end)} (Week ${d.week}) Past</option>`;
-        } else {
-            weeklySelect.innerHTML += `<option value="${d.end}">${formatDate(d.start)} - ${formatDate(d.end)} (Week ${d.week})</option>`;
-        }
+        weeklySelect.innerHTML += `<option>${d}</option>`;
     });
 
 
@@ -167,38 +157,7 @@ function formatDateCal(dateString, type = 'render') {
     }
 }
 
-function getWeeksInYear(year) {
-    const weeks = [];
-    let startDate = new Date(year, 0, 1); // January 1st of the given year
 
-    // Adjust startDate to the first Sunday of the year
-    while (startDate.getDay() !== 0) {
-        startDate.setDate(startDate.getDate() + 1);
-    }
-
-    let weekNumber = 1;
-    while (startDate.getFullYear() === year) {
-        let endDate = new Date(startDate); // Copy startDate
-        endDate.setDate(endDate.getDate() + 6); // End of the week (Saturday)
-
-        // Ensure the endDate does not exceed the current year
-        if (endDate.getFullYear() !== year) {
-            endDate = new Date(year, 11, 31); // Set to December 31st
-        }
-
-        weeks.push({
-            week: weekNumber,
-            start: startDate.toLocaleDateString(), // Format as MM/DD/YYYY
-            end: endDate.toLocaleDateString()
-        });
-
-        // Move to the next week
-        startDate.setDate(startDate.getDate() + 7);
-        weekNumber++;
-    }
-
-    return weeks;
-}
 
 $('#calendars').on('selectDate', async function (event, newDate) {
     disablePastDates(today);
@@ -697,7 +656,7 @@ function openReserveModal(time) {
         url: `/user/reservation/checkroomavailability?date=${selectedDateGlobal}`,
         dataType: "json",
         success: res => {
-
+            console.log(res);
            res.rooms.forEach(d => {
 
             for (let i = 0; i < selectReserve.options.length; i++) {
@@ -844,19 +803,8 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
 
 
 function isValidEmail(email) {
-    // Check if the email contains an "@" and a "."
-    const hasAtSymbol = email.includes('@');
-    const hasDot = email.includes('.');
-
-    // Additional checks: ensure "@" comes before "." and both are not at the start or end
-    const atIndex = email.indexOf('@');
-    const dotIndex = email.indexOf('.');
-
-    if (hasAtSymbol && hasDot && atIndex < dotIndex && atIndex > 0 && dotIndex < email.length - 1) {
-        return true; // Valid email
-    } else {
-        return false; // Invalid email
-    }
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
 }
 
 

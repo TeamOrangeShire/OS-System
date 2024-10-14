@@ -76,7 +76,7 @@
                     <h3> Details</h3>
 
                     <p> <i class="fa-regular fa-clock"></i> Start Time: <span id="selectedTimeModal"></span></p>
-                    <p><i class="fa-solid fa-calendar-check"></i> Date: <span id="selectedDateModal"></span></p>
+                    <p><i class="fa-solid fa-calendar-check"></i> Start Date: <span id="selectedDateModal"></span></p>
                     <br>
                     <h5>Reminders</h5>
                     <p> <i class="fa fa-info"></i> Please ensure all details are correct before submitting your reservation. Choose whether you're reserving an office room or a hot desk. Select the date, time, and duration of your booking. Don’t forget to provide your contact information, and if applicable, include any specific room preferences or special requests. Double-check your details to avoid any mistakes. Once everything is complete, click the submit button to confirm your reservation. </p>
@@ -162,7 +162,7 @@
                         </div>
 
                         <div class="form-group mt-2 d-none" id="selectEndDateWeeklyDiv">
-                            <label for="selectEndDateWeekly"> Reservation End Date </label>
+                            <label for="selectEndDateWeekly"> Reservation End Date (How many weeks?)</label>
                             <select  name="endDates" id="selectEndDateWeekly" class="form-select">
 
                             </select>

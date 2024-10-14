@@ -60,7 +60,8 @@ class Reservation extends Controller
               $endTime = convertTo24HourFormat($req->startTime);
               break;
           case "Weekly":
-              $endDate = convertToDateFormatReservation($req->endDates);
+              $parseStartDate =  Carbon::createFromFormat('m/d/Y', $req->startDate);
+              $endDate = $parseStartDate->copy()->addWeeks($req->endDates)->toDateString();
               $endTime = convertTo24HourFormat($req->startTime);
               break;
           case "Monthly":
@@ -330,7 +331,7 @@ class Reservation extends Controller
       while($checkingId){
         $transacID = RandomId(10);
       }
-      
+
       if($rate){
         $status='1';
       }else{
@@ -406,13 +407,12 @@ class Reservation extends Controller
   }
 
   public function checkRoomAvailability(Request $req){
-
     $date = Carbon::parse($req->date);
     $reservation = Reservations::where(function ($query) use ($date) {
         $query->where('start_date', '<=', $date)
-              ->where('end_date', '>=', $date)->where('status', 1)->where('status', 2);
+              ->where('end_date', '>=', $date)
+              ->whereIn('status', [1, 2]); // Checks if status is either 1 or 2
     })->get();
-
     $rooms = [];
     foreach($reservation as $reserve){
         array_push($rooms, $reserve->room_id);
