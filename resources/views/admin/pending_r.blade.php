@@ -441,7 +441,7 @@ input[type="text"]::placeholder {
                                     Phone Number: <h6 id="numberLabel"></h6>
                                 </div>
                                 <div class="col-6">
-                                    Room Rate: <h6 id="roomrateLabel"></h6>
+                                    Rate: <h6 id="roomrateLabel"></h6>
                                 </div>
                                 <div class="col-6">
                                      Start Date: <h6 id="startDatelabel"></h6>

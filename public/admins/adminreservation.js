@@ -431,6 +431,51 @@ function getResData() {
     </div>
     `;
                     container.innerHTML = result;
+
+
+                    const validate = document.getElementById("customer_bill");
+
+                    if (validate) {
+                        validate.addEventListener('change', function () {
+                            const selectedValue = validate.value;
+                            const existingEndDateField = document.getElementById('endDateField');
+                            if (existingEndDateField) {
+                                existingEndDateField.remove();
+                               
+                            }
+                            // Loop through roomRate and check the rate description
+                            roomRate.forEach((rate) => {
+                                if (rate.rp_id == selectedValue) {
+                                    const rateDescription = rate.rp_rate_description;
+                                    const preselect = document.getElementById('preselect').value
+                                    if (rateDescription.includes("Hourly") || rateDescription.includes("3 Hours") || rateDescription.includes("6 Hours")|| rateDescription.includes("Day Pass")) {
+                                        // Append the 'End Date' field dynamically
+                                        let endDateField = "";
+                                        if (rateDescription.includes("Hourly")) {
+                                            const getstartTime = document.getElementById('formTimeLabel').textContent;
+                                            const newTime = addOneHour(getstartTime,1);
+                                            document.getElementById('end_time').textContent = newTime;
+                                        } else if (rateDescription.includes("3 Hours")) {
+                                            const getstartTime = document.getElementById('formTimeLabel').textContent;
+                                            const newTime = addOneHour(getstartTime,3);
+                                            document.getElementById('end_time').textContent = newTime;
+                                        } else if (rateDescription.includes("6 Hours")) {
+                                            const getstartTime = document.getElementById('formTimeLabel').textContent;
+                                            const newTime = addOneHour(getstartTime,6);
+                                            document.getElementById('end_time').textContent = newTime;
+                                        }else if(rateDescription.includes("Day Pass")){
+                                        const getstartTime = document.getElementById('formTimeLabel').textContent;
+                                            const newTime = addOneHour(getstartTime,12);
+                                            document.getElementById('end_time').textContent = newTime;
+                                    }} else {
+                                            document.getElementById('end_time').textContent = 'Open Time';
+                                    }
+                                }
+                            });
+                        });
+                    }
+
+
                 } else {
                     document.getElementById('dateSelected2').value ='';
                      const dateLenght = document.getElementById("endContainer");
@@ -844,7 +889,7 @@ function dynamicFuction(formId, routeUrl, process) {
     stopInterval()
     // Show the loader
     // hello
-    // const check = document.getElementById('dateSelected2').value
+    // const check = document.getElementById('dateSelected').value
     // // console.log('here')
     // console.log(check)
     document.getElementById('roller').style.display = 'flex';
@@ -923,7 +968,7 @@ function getPendingReservation() {
                             const {
                                 room_number,
                             } = row;
-                            return `Room ${room_number} `;
+                            return `${data.room_number==0?'HotDesk':'Room' +data.room_number}`;
                         }
                     },
                     {
@@ -942,13 +987,13 @@ function getPendingReservation() {
                                 end_date,
                                 end_time,
                             } = row;
-                            return `${Supp.parseDate(row.end_date)} <span style="color: #f53b23;">|</span> ${convertTo12HourFormat(end_time)} `;
+                            return `${Supp.parseDate(row.end_date)} <span style="color: #f53b23;">|</span> ${end_time==''?'':convertTo12HourFormat(end_time)} `;
                         }
                     },
                     {
                         data: null,
                         render: (data, type, row) => {
-                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${row.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time}','${row.c_name}','${row.c_email}','${row.phone_num}','${row.rp_price}','${row.rp_rate_description}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
+                            return `<button type="button" class="btn btn-primary" onclick="viewReservation('${row.r_id}','${row.room_id}','${data.room_number==0?'HotDesk':'Room' +data.room_number}','${row.start_date}','${row.end_date}','${row.start_time}','${row.end_time==''?'':row.end_time}','${row.c_name}','${row.c_email}','${row.phone_num}','${row.rp_price}','${row.rp_rate_description}')"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg></button>`
                         }
                     }
                 ]
@@ -1098,13 +1143,13 @@ function viewReservation(id, room_id, room, start_date, end_date, start_time, en
     document.getElementById('r_id').value = id;
     document.getElementById('namelabel').textContent = c_name;
     document.getElementById('emaillabel').textContent = email;
-    document.getElementById('cardTitle').textContent = 'Room ' + room;
+    document.getElementById('cardTitle').textContent = room;
     document.getElementById('roomrateLabel').textContent = desc + ' ' + '₱' + price;
     document.getElementById('numberLabel').textContent = number;
     document.getElementById('startDatelabel').textContent = start_date;
     document.getElementById('endDatelabel').textContent = end_date;
     document.getElementById('startTimelabel').textContent = convertTo12HourFormat(start_time);
-    document.getElementById('endTimelabel').textContent = convertTo12HourFormat(end_time);
+    document.getElementById('endTimelabel').textContent = end_time==''?'Open Time':convertTo12HourFormat(end_time);
 
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script

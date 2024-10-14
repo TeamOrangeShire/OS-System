@@ -173,7 +173,7 @@ class Reservation extends Controller
   {
 
     if ($request->process == 'add') {
-      $input = $request->except('end_date', 'multipleEmail', 'customer_request', 'emailInput', 'room_id', 'customer_bill');
+      $input = $request->except('end_date','end_time2', 'multipleEmail', 'customer_request', 'emailInput', 'room_id', 'customer_bill');
       foreach ($input as $key => $value) {
         if (empty($value)) {
           if($key=='customer_name'){
@@ -237,7 +237,7 @@ class Reservation extends Controller
           $start = $request->start_time;  // Example start time, e.g., "16:00"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHours(3); // Add 3 hours to the start time
-          $endDate = Carbon::createFromFormat('Y-m-d', $startDate); // Parse the start date
+          $endDate = Carbon::createFromFormat('m/d/Y',  $startDate); // Parse the start date
 
           // Check if the end time exceeds midnight
           if ($endTime->format('H:i') < $startTime->format('H:i')) {
@@ -252,7 +252,7 @@ class Reservation extends Controller
           $start = $request->start_time;  // Example start time, e.g., "16:00"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHours(6); // Add 6 hours to the start time
-          $endDate = Carbon::createFromFormat('Y-m-d', $startDate); // Parse the start date
+          $endDate = Carbon::createFromFormat('m/d/Y',  $startDate); // Parse the start date
 
           // Check if the end time exceeds midnight
           if ($endTime->format('H:i') < $startTime->format('H:i')) {
@@ -267,7 +267,7 @@ class Reservation extends Controller
           $start = $request->start_time;  // Example start time, e.g., "16:00"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHours(12); // Add 12 hours to the start time
-          $endDate = Carbon::createFromFormat('Y-m-d', $startDate); // Parse the start date
+          $endDate = Carbon::createFromFormat('m/d/Y',  $startDate); // Parse the start date
 
           // Check if the end time exceeds midnight
           if ($endTime->format('H:i') < $startTime->format('H:i')) {
@@ -282,7 +282,7 @@ class Reservation extends Controller
           $start = $request->start_time;  // Example start time, e.g., "16:00"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHours(); // Add hours to the start time (number of hours is missing)
-          $endDate = Carbon::createFromFormat('Y-m-d', $startDate); // Parse the start date
+          $endDate = Carbon::createFromFormat('m/d/Y',  $startDate); // Parse the start date
 
           // Check if the end time exceeds midnight
           if ($endTime->format('H:i') < $startTime->format('H:i')) {
@@ -297,7 +297,7 @@ class Reservation extends Controller
           $start = $request->start_time;  // Example start time, e.g., "16:00"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHours(3); // Add 3 hours to the start time
-          $endDate = Carbon::createFromFormat('Y-m-d', $startDate); // Parse the start date
+          $endDate = Carbon::createFromFormat('m/d/Y',  $startDate); // Parse the start date
 
           // Check if the end time exceeds midnight
           if ($endTime->format('H:i') < $startTime->format('H:i')) {
@@ -312,7 +312,7 @@ class Reservation extends Controller
           $start = $request->start_time;  // Example start time, e.g., "16:00"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHours(6); // Add 6 hours to the start time
-          $endDate = Carbon::createFromFormat('Y-m-d', $startDate); // Parse the start date
+          $endDate = Carbon::createFromFormat('m/d/Y',  $startDate); // Parse the start date
 
           // Check if the end time exceeds midnight
           if ($endTime->format('H:i') < $startTime->format('H:i')) {
@@ -327,7 +327,7 @@ class Reservation extends Controller
           $start = $request->start_time;  // Example start time, e.g., "16:00"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHours(12); // Add 12 hours to the start time
-          $endDate = Carbon::createFromFormat('Y-m-d', $startDate); // Parse the start date
+          $endDate = Carbon::createFromFormat('m/d/Y',  $startDate); // Parse the start date
 
           // Check if the end time exceeds midnight
           if ($endTime->format('H:i') < $startTime->format('H:i')) {
