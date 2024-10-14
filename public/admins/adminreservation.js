@@ -395,8 +395,15 @@ function getResData() {
                 const container = document.getElementById("reserveContainer");
                 if (selectedValue == "") {
                     container.innerHTML = "";
+                    const dateLenght = document.getElementById("endContainer");
+                    dateLenght.innerHTML=``;
+                    document.getElementById('end_time').textContent ="";
+                    document.getElementById('dateSelected2').value='';
                 }
                 else if (selectedValue == '0') {
+                     const dateLenght = document.getElementById("endContainer");
+                    dateLenght.innerHTML=``;
+                    document.getElementById('end_time').textContent ="";
                     // Get the container to hold the input field
                     document.getElementById('dateSelected2').value = document.getElementById('preselect').value
                     let result = `
@@ -425,6 +432,10 @@ function getResData() {
     `;
                     container.innerHTML = result;
                 } else {
+                    document.getElementById('dateSelected2').value ='';
+                     const dateLenght = document.getElementById("endContainer");
+                     document.getElementById('end_time').textContent ="";
+                     dateLenght.innerHTML=``;
                     let result = `
     <div class="col-md-6">
         <label for="customer_number">Number of Customers</label>
@@ -476,6 +487,7 @@ function getResData() {
                             const existingEndDateField = document.getElementById('endDateField');
                             if (existingEndDateField) {
                                 existingEndDateField.remove();
+                               
                             }
                             // Loop through roomRate and check the rate description
                             roomRate.forEach((rate) => {
@@ -487,18 +499,66 @@ function getResData() {
                                         let endDateField = "";
                                         if (rateDescription.includes("Daily")) {
                                             addcheckRoomSchedByDay(preselect)
+                                            const getstartTime = document.getElementById('formTimeLabel').textContent;
+                                            const newTime = addOneHour(getstartTime,12);
+                                            document.getElementById('end_time').textContent = newTime;
                                         } else if (rateDescription.includes("Weekly")) {
+                                            const dateLenght = document.getElementById("endContainer");
+                                            dateLenght.innerHTML=`
+                                            <label for="">Date Lenght</label>
+                                            <select id="selectlenght" class="form-control" onchange="selectlenghtweek()">
+                                            <option value="6">1</option>
+                                            <option value="13">2</option>
+                                            <option value="20">3</option>
+                                            </select>
+                                            `;
                                             addcheckRoomSchedByWeek(preselect)
+                                            selectlenghtweek()
                                         } else if (rateDescription.includes("Monthly")) {
+                                            const dateLenght = document.getElementById("endContainer");
+                                            dateLenght.innerHTML=`
+                                            <label for="">Date Lenght</label>
+                                            <select id="selectlenght" class="form-control" onchange="selectlenghtmonth()">
+                                            <option value="29">1</option>
+                                            <option value="59">2</option>
+                                            <option value="89">3</option>
+                                            <option value="119">4</option>
+                                            <option value="149">5</option>
+                                            <option value="179">6</option>
+                                            <option value="209">7</option>
+                                            <option value="239">8</option>
+                                            <option value="269">9</option>
+                                            <option value="299">10</option>
+                                            <option value="329">11</option>
+                                            <option value="359">12</option>
+                                            </select>
+                                            `;
                                             addcheckRoomSchedByMonths(preselect)
                                         }
                                         // // Use insertAdjacentHTML instead of innerHTML to avoid overwriting the container's existing content
                                         // if (!document.getElementById('endDateField')) {
                                         //     container.insertAdjacentHTML('beforeend', endDateField);
                                         // }
+                                    }else if(rateDescription.includes("Hourly")){
+                                        const dateLenght = document.getElementById("endContainer");
+                                            dateLenght.innerHTML=`
+                                            <label for="">Hour Lenght</label>
+                                            <select id="selectlenght" class="form-control" onchange="selectlenghthour()">
+                                            <option value="1">1HR</option>
+                                            <option value="2">2HRS</option>
+                                            <option value="3">3HRS</option>
+                                            </select>
+                                            `;
+                                        addcheckRoomSchedByHour(preselect)
+                                        selectlenghthour()
                                     } else {
+                                        const dateLenght = document.getElementById("endContainer");
+                                            dateLenght.innerHTML=``;
                                         // Remove the 'End Date' field if it exists
                                         addcheckRoomSchedByHour(preselect)
+                                        const getstartTime = document.getElementById('formTimeLabel').textContent;
+                                        const newTime = addOneHour(getstartTime,4);
+                                        document.getElementById('end_time').textContent = newTime;
                                     }
                                 }
                             });
@@ -516,6 +576,57 @@ function getResData() {
         },
     });
 }
+function selectlenghtweek(){
+    const preselect = document.getElementById('preselect').value
+     addcheckRoomSchedByWeek(preselect)
+     const getstartTime = document.getElementById('formTimeLabel').textContent;
+
+            // Set the start time as the text content of the span
+     document.getElementById('end_time').textContent = getstartTime;
+     console.log('here2')
+}
+function selectlenghtmonth(){
+    const preselect = document.getElementById('preselect').value
+     addcheckRoomSchedByMonths(preselect)
+     const getstartTime = document.getElementById('formTimeLabel').textContent;
+    document.getElementById('end_time').textContent = getstartTime;
+}
+function selectlenghthour(){
+    const getstartTime = document.getElementById('formTimeLabel').textContent;
+    const setLength = parseInt(document.getElementById('selectlenght').value, 10);
+    const newTime = addOneHour(getstartTime,setLength);
+    document.getElementById('end_time').textContent = newTime;
+    document.getElementById('end_time2').value=newTime;
+}
+function addOneHour(timeString,length) {
+            // Create a Date object and set it to today's date and the provided time
+            const [time, modifier] = timeString.split(' '); // "12:00 AM" becomes ["12:00", "AM"]
+            let [hours, minutes] = time.split(':'); // "12:00" becomes ["12", "00"]
+
+            // Convert hours to 24-hour format based on AM/PM
+            if (modifier === 'PM' && hours !== '12') {
+                hours = parseInt(hours, 10) + 12;
+            } else if (modifier === 'AM' && hours === '12') {
+                hours = 0; // Midnight case (12 AM is 00 in 24-hour format)
+            }
+
+            // Create a Date object with today's date and the specified time
+            const date = new Date();
+            date.setHours(parseInt(hours), parseInt(minutes));
+
+            // Add one hour
+            date.setHours(date.getHours() + length);
+
+            // Convert back to 12-hour format with AM/PM
+            let newHours = date.getHours();
+            let newMinutes = date.getMinutes();
+            const newModifier = newHours >= 12 ? 'PM' : 'AM';
+
+            newHours = newHours % 12 || 12; // Convert 24-hour back to 12-hour, handling 0 as 12
+            newMinutes = newMinutes < 10 ? '0' + newMinutes : newMinutes; // Add leading zero if necessary
+
+            return `${newHours}:${newMinutes} ${newModifier}`;
+        }
 function validateDays(inputElement) {
     const selectedDate = new Date(inputElement.value);  // Get the selected date from the input element
     const currentDate = new Date(); // Get the current date
@@ -675,6 +786,10 @@ function selectTime(element) {
 }
 function viewForm(date, time) {
     $('#addEvent').modal('show');
+     const dateLenght = document.getElementById("endContainer");
+                                            dateLenght.innerHTML=``;
+                                            document.getElementById('end_time').value='';
+                                            document.getElementById('end_time2').value='';
     const mustbeEmpty = document.getElementById('reserveContainer')
     mustbeEmpty.innerHTML = '';
      document.getElementById("addEventForm").reset();
@@ -1653,7 +1768,8 @@ function addcheckRoomSchedByDay(preselect) {
 
     // Clear the date fields
     document.getElementById('dateSelected2').value = '';
-
+    const dateLenght = document.getElementById("endContainer");
+    dateLenght.innerHTML=``;
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -1825,7 +1941,7 @@ function addcheckRoomSchedByWeek(preselect) {
             const dateString = preselect;
             const newDate = new Date(dateString);
             const convertedDate = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
-
+            console.log(convertedDate)
             $("#dateSelected").datepicker("destroy");
             $("#dateSelected").val(convertedDate);
             // Initialize the datepicker to disable conflicting dates and allow week selection
@@ -1863,8 +1979,11 @@ function addcheckRoomSchedByWeek(preselect) {
                 // Use the selected date as the starting point of the week
                 let startOfWeek = new Date(date);  // The selected date is the start of the week
                 let endOfWeek = new Date(startOfWeek);
-                endOfWeek.setDate(startOfWeek.getDate() + 6); // End of week (7 days later)
-
+                const setLength = parseInt(document.getElementById('selectlenght').value, 10);
+                console.log(setLength)
+                console.log(endOfWeek)
+                endOfWeek.setDate(startOfWeek.getDate() + setLength); // End of week (7 days later)
+                console.log(endOfWeek)
                 // Format the start and end date
                 let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfWeek);
                 let formattedEndDate = $.datepicker.formatDate('mm/dd/yy', endOfWeek);
@@ -1957,7 +2076,9 @@ function addcheckRoomSchedByMonths(preselect) {
 
                         const startOfSelection = new Date(selectedYear, selectedMonth, selectedDay);
                         const endOfSelection = new Date(startOfSelection); // Copy start date
-                        endOfSelection.setDate(startOfSelection.getDate() + 29); // Extend for 29 days
+                        const setLength = parseInt(document.getElementById('selectlenght').value, 10);
+                        console.log(setLength)
+                        endOfSelection.setDate(startOfSelection.getDate() + setLength); // Extend for 29 days
 
                         // Format the start and end date
                         let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfSelection);

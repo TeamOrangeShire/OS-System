@@ -194,10 +194,11 @@ class Reservation extends Controller
       $rate = RoomRates::where('rp_id', $request->customer_bill)->first();
       if($rate){
         if ($rate->rp_rate_description == 'Hourly') {
+          $time24HourFormat = Carbon::createFromFormat('g:i A', $request->end_time2)->format('H:i');
           $start = $request->start_time;  // Example start time, e.g., "23:30"
           $startTime = Carbon::createFromFormat('H:i', $start); // Parse the time using Carbon
           $endTime = $startTime->copy()->addHour(); // Add 1 hour to the start time
-          $end = $endTime->format('H:i'); // Format the end time
+          $end = $time24HourFormat; // Format the end time
           $endDateFormatted = Carbon::createFromFormat('m/d/Y', $request->dateSelected2)->format('Y-m-d');
         } else if ($rate->rp_rate_description == '4 Hours') {
           $start = $request->start_time;  // Example start time, e.g., "16:00"

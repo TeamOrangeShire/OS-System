@@ -395,9 +395,17 @@ input[type="text"]::placeholder {
                                     </div>
                                     </div>
                                     </div>
-                                    <div class="col-12 mb-4">
+                                    <div class="row mb-4">
+                                    <div class="col-4 mb-6" id="endContainer"></div>
+                                    <div class="col-4 mb-6">
                                     <label for="">End Date</label>
                                     <input type="text" id="dateSelected2" name="dateSelected2" class="form-control" placeholder="Select End Date">
+                                    </div>
+                                    <div class="col-4 mb-6">
+                                        <label for="">End Time</label>
+                                        <span id="end_time" name="end_time"  class="form-control"></span>
+                                        <input type="text" id="end_time2" name="end_time2" hidden>
+                                    </div>
                                     </div>
                                 <button type="button" class="btn btn-secondary col-12" id="addSched" onclick="dynamicFuction('addEventForm', `{{route('submitAdminReservation')}}`,'add')">Submit</button>
                             </form>
