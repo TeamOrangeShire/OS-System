@@ -198,10 +198,11 @@ class Reservation extends Controller
           $endDateFormatted = Carbon::createFromFormat('m/d/Y', $request->dateSelected2)->format('Y-m-d');
         } else if ($rate->rp_rate_description == 'Weekly') {
           $end = $request->start_time;
-          $endDateFormatted = $request->dateSelected2->format('Y-m-d'); // Format the end date
+          $endDateFormatted = Carbon::createFromFormat('m/d/Y', $request->dateSelected2)->format('Y-m-d');
+
         } else if ($rate->rp_rate_description == 'Monthly') {
           $end = $request->start_time;
-         $endDateFormatted = $request->dateSelected2->format('Y-m-d'); // Format the end date
+          $endDateFormatted = Carbon::createFromFormat('m/d/Y', $request->dateSelected2)->format('Y-m-d');
         } else if ($rate->rp_rate_description == 'Hourly(Educational Sector)') {
           $startDate = $request->dateSelected;  // Example start date
           $start = $request->start_time;  // Example start time, e.g., "23:30"
