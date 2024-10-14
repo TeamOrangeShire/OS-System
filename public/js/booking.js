@@ -100,7 +100,7 @@ $(document).ready(function () {
     weeks.forEach(d => {
         weeklySelect.innerHTML += `<option>${d}</option>`;
     });
-
+    const currentYear = new Date().getFullYear();
 
     const months = document.getElementById('selectEndDateMonthly');
 
