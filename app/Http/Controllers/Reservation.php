@@ -86,7 +86,9 @@ class Reservation extends Controller
               break;
           case "Hourly":
               $endDate = convertToDateFormatReservation($req->startDate);
-              $endTime = $req->endDates;
+              $time = Carbon::createFromFormat('h:i A', $req->startTime);
+              $newTime = $time->copy()->addHours($req->endDates);
+              $endTime = $newTime->format('H:i');
               break;
           case "4 Hours":
               $parseData = addHoursToTimeAndAdjustDate($req->startTime, $req->startDate, 4);

@@ -176,8 +176,12 @@
                         </div>
 
                         <div class="form-group mt-2 d-none" id="selectEndTimeDiv">
-                            <label for="selectEndTime"> Reservation End Time </label>
-                            <input  name="endDates" type="time" class="form-control" id="selectEndTime">
+                            <label for="selectEndTime"> How Many Hours? </label>
+                            <select name="endDates" type="time" class="form-select" id="selectEndTime">
+                                <option value="1">1 Hour</option>
+                                <option value="2">2 Hour</option>
+                                <option value="3">3 Hour</option>
+                            </select>
                         </div>
 
                     </div>

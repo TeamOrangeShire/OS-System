@@ -497,8 +497,6 @@ document.getElementById('selectReserve').addEventListener('change', () => {
     document.getElementById('hotdeskEndTimeDiv').classList.add('d-none');
     if (selectReserve.value != 0) {
 
-        document.getElementById('submitReservation').disabled = true;
-
         selectPaxDiv.classList.remove('d-none');
         hotdeskDiv.classList.add('d-none');
         selectPaxHotdeskDiv.classList.add('d-none');
@@ -826,46 +824,6 @@ function formatDate(dateString) {
 
 }
 
-document.getElementById('selectEndTime').addEventListener('change', e => {
-    const timeSelect = document.getElementById('selectedTimeModal').textContent.trim(); // 12-hour format (e.g., "04:00 AM")
-    const selectedTime = e.target.value; // 24-hour format (e.g., "05:00")
-
-    // Function to convert 12-hour time format (e.g., "04:00 AM") to 24-hour time
-    const convertTo24Hour = (timeStr) => {
-        const [time, modifier] = timeStr.split(' ');
-        let [hours, minutes] = time.split(':');
-
-        if (modifier === 'AM' && hours === '12') {
-            hours = '00'; // Handle 12 AM as 00 in 24-hour format
-        } else if (modifier === 'PM' && hours !== '12') {
-            hours = parseInt(hours, 10) + 12; // Handle PM conversion
-        }
-
-        return `${hours.padStart(2, '0')}:${minutes}`; // Return in 24-hour format
-    };
-
-    // Convert the `timeSelect` (e.g., "04:00 AM") to 24-hour format
-    const convertedTime = convertTo24Hour(timeSelect);
-
-    // Create a date object for `timeSelect`
-    const now = new Date();
-    const [selectedHoursInput, selectedMinutesInput] = selectedTime.split(':'); // Input time (e.g., "05:00")
-    const [selectedHoursModal, selectedMinutesModal] = convertedTime.split(':'); // Converted time from `textContent`
-
-    const inputTimeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), selectedHoursInput, selectedMinutesInput);
-    const modalTimeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), selectedHoursModal, selectedMinutesModal);
-
-    // Get the modal time plus 1 hour
-    const modalTimePlusOneHour = new Date(modalTimeDate.getTime() + (1 * 60 * 60 * 1000)); // Adds 1 hour to `timeSelect` modal time
-
-    // Compare `selectedTime` (input time) with the `timeSelect` + 1 hour (from the modal)
-    if (inputTimeDate < modalTimePlusOneHour) {
-        toastr["error"]("Invalid Time! The selected time must be at least one hour ahead of the selected reservation time.");
-        document.getElementById('submitReservation').disabled = true;
-    } else {
-        document.getElementById('submitReservation').disabled = false;
-    }
-});
 
 
 
