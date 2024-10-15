@@ -329,7 +329,7 @@ input[type="text"]::placeholder {
                                 <div class="col-3 border-right">
                                     <h4>Reservation Details</h4>
                                     <span><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 12l3 -2" /><path d="M12 7v5" /></svg>
-                                    Time <span id="formTimeLabel"></span>
+                                    Start Time <span id="formTimeLabel"></span>
                                     </span><br>
                                     <span><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-due"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
                                     Date <span id="formDateLabel"></span></span>
@@ -369,7 +369,7 @@ input[type="text"]::placeholder {
                                 <div class="form-group">
                                     <div class="row">
                                     <div class="col-md-4">
-                                    <label for="">Rooms</label>
+                                    <label for="">Rooms/Hotdesk</label>
                                     <select class="form-control" id="roomList"  name="room_id">
 
                                     </select>

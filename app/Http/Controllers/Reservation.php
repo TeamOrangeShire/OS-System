@@ -379,7 +379,7 @@ class Reservation extends Controller
       if($rate){
         $status='1';
       }else{
-        $status="0";
+        $status="1";
       }
       $reserve = new Reservations();
       $reserve->c_name = $request->customer_name;

@@ -1084,7 +1084,7 @@ public function logReservation(Request $request){
 
     $formattedStartTime = Carbon::createFromFormat('H:i', $reserve->start_time)->format('h:i A');
    
-    $formattedDate = Carbon::createFromFormat('Y-m-d', $reserve->start_date)->format('m/d/Y');
+    $formattedDate = Carbon::createFromFormat('Y-m-d', $reserve->start_date)->format('d/m/Y');
 
     $insertnewlog = new CustomerLogs;
     $insertnewlog->customer_id = $insertnew->customer_id;

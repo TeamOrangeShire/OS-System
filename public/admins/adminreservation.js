@@ -467,9 +467,13 @@ function getResData() {
                                         const getstartTime = document.getElementById('formTimeLabel').textContent;
                                             const newTime = addOneHour(getstartTime,12);
                                             document.getElementById('end_time').textContent = newTime;
-                                    }} else {
+                                    }
+                                    } 
+                                    else {
                                             document.getElementById('end_time').textContent = 'Open Time';
                                     }
+                                }else if(selectedValue=='0'){
+                                            document.getElementById('end_time').textContent = 'Open Time';
                                 }
                             });
                         });

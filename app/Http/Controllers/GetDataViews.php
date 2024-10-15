@@ -502,9 +502,14 @@ class GetDataViews extends Controller
 }
 public function GetWeeklyReport(Request $request) {
 
+        if ($request->startdate == 'NaN-NaN' || $request->enddate === 'NaN-NaN') {
+            return response()->json(['data' => '']);
+        }elseif($request->startdate == '' || $request->enddate == ''){
+            return response()->json(['data' => '']);
+        }
         $startDate = Carbon::createFromFormat('Y-m', $request->startdate);
         $endDate = Carbon::createFromFormat('Y-m', $request->enddate);
-
+        
         // Query to get logs
         $logs = CustomerLogs::join('customer_acc', 'customer_logs.customer_id', '=', 'customer_acc.customer_id')
             ->select(

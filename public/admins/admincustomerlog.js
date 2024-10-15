@@ -4,6 +4,7 @@ function reserveData() {
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
+          console.log(response);
             // Filter to get only active reservations for the specified room
             const activeReservations = response.data.filter(event => event.status === '1' && event.room_id === 0);
             
@@ -22,7 +23,7 @@ function reserveData() {
                     },
                     { data: 'transaction_id' },
                     { data: 'c_name' },
-                    { data: 'c_email' },
+                    { data: 'rp_rate_description' },
                     {
                         data: null,
                         render: (data, type, row) => {

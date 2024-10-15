@@ -147,7 +147,7 @@
                                         </div>
                                     </div>
                                     <form action="" id="filter">@csrf
-                                        <div class="form-row">
+                                        <div class="form-row mb-2 col-12">
                                             <div class="col">
                                                 <label for="startdate">Start Date</label>
                                                 <input type="month" class="form-control" id="startdate"
@@ -164,6 +164,24 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-12">
+                                             <label for="">Filter Report By Time Period</label>
+                                            <select class="form-control" name="" id="monthSelector" onchange="calculateDate()">
+                                                <option value="">Please Select Date Range</option>
+                                                <option value="1">from 1 month ago</option>
+                                                <option value="2">from 2 months ago</option>
+                                                <option value="3">from 3 months ago</option>
+                                                <option value="4">from 4 months ago</option>
+                                                <option value="5">from 5 months ago</option>
+                                                <option value="6">from 6 months ago</option>
+                                                <option value="7">from 7 months ago</option>
+                                                <option value="8">from 8 months ago</option>
+                                                <option value="9">from 9 months ago</option>
+                                                <option value="10">from 10 months ago</option>
+                                                <option value="11">from 11 months ago</option>
+                                                <option value="12">from 12 months ago</option>
+                                            </select>
                                         </div>
                                         <br>
                                     </form>
@@ -416,7 +434,7 @@
 
                         // Update footer
                         api.column(9).footer().innerHTML =
-                            '₱' + pageTotal;
+                            '₱' + pageTotal.toFixed(2);
                     }
                 });
             }
@@ -518,7 +536,7 @@
 
                         // Update footer
                         api.column(2).footer().innerHTML =
-                            'Total: ₱' + pageTotal;
+                            'Total: ₱' + pageTotal.toFixed(2);
                     }
                 });
             }
@@ -612,23 +630,37 @@
 
                         // Update footer
                         api.column(6).footer().innerHTML =
-                            ' Total: ₱' + pageTotal;
+                            ' Total: ₱' + pageTotal.toFixed(2);
                         api.column(5).footer().innerHTML =
                             'Date: ' + date;
                     }
                 });
             }
 
+function calculateDate() {
+            // Get the current date
+            const currentDate = new Date();
+
+            // Get the selected value from the dropdown
+            const monthSelector = document.getElementById("monthSelector");
+            const selectedMonths = parseInt(monthSelector.value);
+
+            // Subtract the selected number of months
+            const pastDate = new Date(currentDate);
+            pastDate.setMonth(pastDate.getMonth() - selectedMonths);
+
+            // Get the year and month in "YYYY-MM" format for both current and past dates
+            const formatDate = (date) => {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                return `${year}-${month}`;
+            };
+
+            const formattedCurrentDate = formatDate(currentDate);
+            const formattedPastDate = formatDate(pastDate);
 
 
-            function filterdate() {
-                var startDate = document.getElementById('startdate').value;
-                var endDate = document.getElementById('enddate').value;
-
-                console.log("Start Date:", startDate);
-                console.log("End Date:", endDate);
-
-                $('#weeklyreport').DataTable({
+            $('#weeklyreport').DataTable({
                     scrollY: '400px',
                     scrollCollapse: true,
                     paging: false,
@@ -667,8 +699,8 @@
                     },
                     "destroy": "true",
                     "ajax": {
-                        "url": "{{ route('GetWeeklyReport') }}?startdate=" + startDate + "&enddate=" +
-                        endDate,
+                        "url": "{{ route('GetWeeklyReport') }}?startdate=" + formattedPastDate + "&enddate=" +
+                        formattedCurrentDate,
                         "type": "GET"
                     },
                     "columns": [ {
@@ -686,7 +718,7 @@
                             "data": null,
                             "render": function(data, type, row) {
                                 var first = row.firstname;
-                                var last = row.lastname;
+                                var last = row.lastname==null?'':row.lastname;
                                 return first + " " + last;
                             }
                         },
@@ -775,7 +807,164 @@
             // Update footer
             // api.column(7).footer().innerHTML =  'Total: ₱' + pageTotal +' E-Pay: ₱' + total +' Cash: ₱' + cashtotal;
             // api.column(8).footer().innerHTML = '<span style="color:red;">'+ cashtotal +'</span>';
-            api.column(9).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ total +'</span><span style="color:#ff5c40;margin-right:2%;"> Total: ₱'+ pageTotal +'</span>';
+            api.column(9).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal.toFixed(2) +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ total.toFixed(2) +'</span><span style="color:#ff5c40;margin-right:2%;"> Total: ₱'+ pageTotal.toFixed(2) +'</span>';
+        }
+
+                });
+        }
+
+            function filterdate() {
+                var startDate = document.getElementById('startdate').value;
+                var endDate = document.getElementById('enddate').value;
+
+                $('#weeklyreport').DataTable({
+                    scrollY: '400px',
+                    scrollCollapse: true,
+                    paging: false,
+                     scrollX: true,
+                    order: [
+                        [10, 'desc']
+                    ],
+                      columnDefs: [{
+                          target: 10,
+                                visible: false,
+                               searchable: false
+                      }],
+                    layout: {
+                        topStart: {
+                            buttons: [{
+                                    extend: 'copyHtml5',
+                                    exportOptions: {
+                                        columns: [0, ':visible']
+                                    }
+                                },
+                                {
+                                    extend: 'excelHtml5',
+                                    exportOptions: {
+                                        columns: ':visible'
+                                    }
+                                },
+                                {
+                                    extend: 'pdfHtml5',
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 4, 5, 6, 7, 8, 9]
+                                    }
+                                },
+                                'colvis'
+                            ]
+                        }
+                    },
+                    "destroy": "true",
+                    "ajax": {
+                        "url": "{{ route('GetWeeklyReport') }}?startdate=" + startDate + "&enddate=" +
+                        endDate,
+                        "type": "GET"
+                    },
+                    "columns": [ {
+                                "data": null,
+                                "render": function(data, type, row) {
+                                    const date = row
+                                    .log_date; 
+                                    const parts = date.split('/'); 
+                                    const formattedDate =
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    return formattedDate;
+                                }
+                            },
+                        {
+                            "data": null,
+                            "render": function(data, type, row) {
+                                var first = row.firstname;
+                                var last = row.lastname==null?'':row.lastname;
+                                return first + " " + last;
+                            }
+                        },
+                        {
+                            "data": "email"
+                        },
+                        {
+                            "data": "contact"
+                        },
+                        {
+                            "data": "log_start_time"
+
+                        },
+                        {
+                            "data": "log_end_time"
+                        },
+                        {
+                            "data": null,
+                            "render": function(data, type, row) {
+                                var start = row.log_start_time;
+                                var end = row.log_end_time;
+                                if (end == '' || end == null) {
+                                    return '';
+                                } else {
+                                    var totaltime = timeDifference(start, end);
+                                    var between = totaltime.hours + ':' + totaltime.minutes;
+                                    return between;
+                                }
+
+                            }
+                        },
+                        {
+                            'data': 'log_payment_method'
+                        },
+                        {
+                            "data": "log_comment",
+                            "render": function(data, type, row) {
+
+                                return data;
+                            }
+                        },
+                        {
+                            "data": "payment",
+                            "render": function(data, type, row) {
+
+                                return data;
+                            }
+                        },
+                        {
+                            "data":"created_at"
+                        }
+
+                    ],
+                   "footerCallback": function(row, data, start, end, display) {
+            let api = this.api();
+
+            // Remove the formatting to get integer data for summation
+            let intVal = function(i) {
+                return typeof i === 'string' ?
+                    parseFloat(i.replace(/[^\d.-]/g, '')) || 0 :
+                    typeof i === 'number' ?
+                    i :
+                    0;
+            };
+
+            // Total over current page where column 7 equals "E-Pay"
+            let total = api
+                .column(9, { page: 'current' })
+                .data()
+                .filter((value, index) => api.column(7, { page: 'current' }).data()[index] === 'E-Pay')
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+            // Total over current page where column 7 equals "Cash"
+            let cashtotal = api
+                .column(9, { page: 'current' })
+                .data()
+                .filter((value, index) => api.column(7, { page: 'current' }).data()[index] === 'Cash')
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+            // Total over this page
+            let pageTotal = api
+                .column(9, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+            // Update footer
+            // api.column(7).footer().innerHTML =  'Total: ₱' + pageTotal +' E-Pay: ₱' + total +' Cash: ₱' + cashtotal;
+            // api.column(8).footer().innerHTML = '<span style="color:red;">'+ cashtotal +'</span>';
+            api.column(9).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal.toFixed(2) +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ total.toFixed(2) +'</span><span style="color:#ff5c40;margin-right:2%;"> Total: ₱'+ pageTotal.toFixed(2) +'</span>';
         }
 
                 });
