@@ -107,8 +107,10 @@
     </div>
 </div>
 @include('admin.assets.adminscript')
+<script type="text/javascript" src="{{ asset('admins/hybridpros.js') }}"></script>
     <script>
         window.onload = () => {
+            let hybridSalesReport;
            LoadSalesReport(null, '{{ route('HybridSalesReport') }}', null)
            LoadAvailableWeeks('{{ route('HybridLoadWeeks') }}')
         }
