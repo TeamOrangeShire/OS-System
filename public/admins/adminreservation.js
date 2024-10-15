@@ -636,6 +636,44 @@ function selectlenghtmonth(){
      const getstartTime = document.getElementById('formTimeLabel').textContent;
     document.getElementById('end_time').textContent = getstartTime;
 }
+function selectlenghtmonth2(){
+    checkRoomSchedByMonths()
+}
+function selectlenghtweek2(){
+     checkRoomSchedByWeek()
+     
+}
+function selectlenghthour2(){
+    const getstartTime = document.getElementById('rescedTime').value;
+    const setLength = parseInt(document.getElementById('selectnumberlenght').value, 10);
+    const newTime = addHours(getstartTime,setLength);
+    document.getElementById('rescedTime2').value = newTime;
+}
+function selectlenghthour3(){
+    const getstartTime = document.getElementById('rescedTime').value;
+    const newTime = addHours(getstartTime,4);
+    document.getElementById('rescedTime2').value = newTime;
+}
+function selectlenghthour4(){
+    const getstartTime = document.getElementById('rescedTime').value;
+    document.getElementById('rescedTime2').value = getstartTime;
+}
+function addHours(timeString, hoursToAdd) {
+    // Split the time string into hours and minutes
+    let [hours, minutes] = timeString.split(':').map(Number);
+
+    // Add the specified number of hours
+    hours += hoursToAdd;
+
+    // Use modulo operator to handle wrapping around 24 hours
+    hours = hours % 24;
+
+    // Format hours and minutes back to "HH:MM" format
+    const formattedHours = String(hours).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+
+    return `${formattedHours}:${formattedMinutes}`;
+}
 function selectlenghthour(){
     const getstartTime = document.getElementById('formTimeLabel').textContent;
     const setLength = parseInt(document.getElementById('selectlenght').value, 10);
@@ -889,7 +927,7 @@ function dynamicFuction(formId, routeUrl, process) {
     stopInterval()
     // Show the loader
     // hello
-    // const check = document.getElementById('dateSelected').value
+    // const check = document.getElementById('rescedTime').value
     // // console.log('here')
     // console.log(check)
     document.getElementById('roller').style.display = 'flex';
@@ -1281,14 +1319,109 @@ function reschedReserve() {
                             // Append the 'End Date' field dynamically
                             let endDateField = "";
                             if (rateDescription.includes("Daily")) {
+                                const dateLenght = document.getElementById("selectNumLenght");
+                                            dateLenght.innerHTML=`<div class="row">
+                                            <div class="col-6">
+                                            Start Time:
+                                             <input type="time" class="form-control" name="rescedTime" id="rescedTime" oninput="selectlenghthour4()">
+                                            </div>
+                                            <div class="col-6">
+                                            End Time:
+                                             <input type="time" class="form-control" name="rescedTime2" id="rescedTime2" readonly>
+                                            </div>
+                                            </div>`;
                                 checkRoomSchedByDay()
                             } else if (rateDescription.includes("Weekly")) {
+                                const dateLenght = document.getElementById("selectNumLenght");
+                                            dateLenght.innerHTML=`
+                                            <div class="row">
+                                            <div class="col-6">
+                                            Start Time:
+                                             <input type="time" class="form-control" name="rescedTime" id="rescedTime" oninput="selectlenghthour4()">
+                                            </div>
+                                            <div class="col-6">
+                                            End Time:
+                                             <input type="time" class="form-control" name="rescedTime2" id="rescedTime2" readonly>
+                                            </div>
+                                            </div>
+                                            <label for="">Date Lenght:</label>
+                                            <select id="selectnumberlenght" class="form-control" onchange="selectlenghtweek2()">
+                                            <option value="6">1</option>
+                                            <option value="13">2</option>
+                                            <option value="20">3</option>
+                                            </select>
+                                            `;
                                 checkRoomSchedByWeek()
+                                
                             } else if (rateDescription.includes("Monthly")) {
-                                checkRoomSchedByMonths()
+                                const dateLenght = document.getElementById("selectNumLenght");
+                                            dateLenght.innerHTML=`
+                                            <div class="row">
+                                            <div class="col-6">
+                                            Start Time:
+                                             <input type="time" class="form-control" name="rescedTime" id="rescedTime" oninput="selectlenghthour4()">
+                                            </div>
+                                            <div class="col-6">
+                                            End Time:
+                                             <input type="time" class="form-control" name="rescedTime2" id="rescedTime2" readonly>
+                                            </div>
+                                            </div>
+                                            <label for="">Date Lenght:</label>
+                                            <select id="selectnumberlenght" class="form-control" onchange="selectlenghtmonth2()">
+                                            <option value="29">1</option>
+                                            <option value="59">2</option>
+                                            <option value="89">3</option>
+                                            <option value="119">4</option>
+                                            <option value="149">5</option>
+                                            <option value="179">6</option>
+                                            <option value="209">7</option>
+                                            <option value="239">8</option>
+                                            <option value="269">9</option>
+                                            <option value="299">10</option>
+                                            <option value="329">11</option>
+                                            <option value="359">12</option>
+                                            </select>
+                                            `;
+                                            checkRoomSchedByMonths()
                             }
 
+                        }else if(rateDescription.includes("Hourly")){
+                            const dateLenght = document.getElementById("selectNumLenght");
+                                            dateLenght.innerHTML=`
+                                            <div class="row">
+                                            <div class="col-4">
+                                            Start Time:
+                                             <input type="time" class="form-control" name="rescedTime" id="rescedTime" oninput="selectlenghthour2()">
+                                            </div>
+                                            <div class="col-4">
+                                            Hour Lenght:
+                                            <select id="selectnumberlenght" class="form-control" onchange="selectlenghthour2()">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            </select>
+                                            </div>
+                                            <div class="col-4">
+                                            End Time:
+                                             <input type="time" class="form-control" name="rescedTime2" id="rescedTime2" readonly>
+                                            </div>
+                                            </div>
+                                            `;
+                                            checkRoomSchedByHour()
                         } else {
+                             const dateLenght = document.getElementById("selectNumLenght");
+                                            dateLenght.innerHTML=`
+                                            <div class="row">
+                                            <div class="col-6">
+                                            Start Time:
+                                             <input type="time" class="form-control" name="rescedTime" id="rescedTime" oninput="selectlenghthour3()">
+                                            </div>
+                                            <div class="col-6">
+                                            End Time:
+                                             <input type="time" class="form-control" name="rescedTime2" id="rescedTime2" readonly>
+                                            </div>
+                                            </div>
+                                            `;
                             checkRoomSchedByHour()
                         }
                     }
@@ -1532,8 +1665,6 @@ function stopInterval() {
 function checkRoomSchedByWeek() {
     stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
-    document.getElementById('reschedDate').value = ''
-    document.getElementById('reschedDate2').value = ''
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -1563,11 +1694,55 @@ function checkRoomSchedByWeek() {
             $("#reschedDate").datepicker("destroy");
             // Initialize the datepicker to disable conflicting dates and allow week selection
             $("#reschedDate").datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                firstDay: 0,  // Week starts on Sunday (0 = Sunday, 1 = Monday)
-                dateFormat: 'mm/dd/yy',
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: 'mm/dd/yy',  // Format to select month and day
                 minDate: 0, // Disable past dates
+                beforeShow: function (input, inst) {
+                    $(inst.dpDiv).addClass('monthpicker'); // Add a class for styling if needed
+                },
+                onClose: function (dateText, inst) {
+                    const selectedDate = $(this).datepicker("getDate");
+                    if (selectedDate) {
+                        const selectedDay = selectedDate.getDate();
+                        const selectedMonth = selectedDate.getMonth();
+                        const selectedYear = selectedDate.getFullYear();
+
+                        const startOfSelection = new Date(selectedYear, selectedMonth, selectedDay);
+                        const endOfSelection = new Date(startOfSelection); // Copy start date
+                        const setLength = parseInt(document.getElementById('selectnumberlenght').value, 10);
+                        endOfSelection.setDate(startOfSelection.getDate() + setLength); // Extend for 29 days
+
+                        // Format the start and end date
+                        let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfSelection);
+                        let formattedEndDate = $.datepicker.formatDate('mm/dd/yy', endOfSelection);
+
+                        // Check for conflicts within the selection period
+                        let hasConflict = false;
+                        for (let d = startOfSelection; d <= endOfSelection; d.setDate(d.getDate() + 1)) {
+                            const monthDateString = $.datepicker.formatDate('mm/dd/yy', d);
+                            if (disabledDates.indexOf(monthDateString) !== -1) {
+                                hasConflict = true;
+                                break;
+                            }
+                        }
+
+                        if (hasConflict) {
+                            alertify
+                                .alert('Date Conflict', "Please Select Valid Date", function () {
+                                    alertify.message('OK');
+                                });
+                            $("#reschedDate2").css("border", "2px solid red");
+                            document.getElementById('reschedBtn').disabled = true;
+                        } else {
+                            $("#reschedDate2").css("border", "");
+                            $("#reschedDate").val(formattedStartDate); // Set the start date
+                            $("#reschedDate2").val(formattedEndDate); // Set the end date
+                            document.getElementById('reschedBtn').disabled = false;
+                        }
+                    }
+                },
                 beforeShowDay: function (date) {
                     const dateString = $.datepicker.formatDate('mm/dd/yy', date);
 
@@ -1576,43 +1751,23 @@ function checkRoomSchedByWeek() {
 
                     return [!isDisabled, isDisabled ? "disabled" : ""];
                 },
-                onSelect: function (selectedDate) {
-                    let date = new Date(selectedDate);
-
-                    // Use the selected date as the starting point of the week
-                    let startOfWeek = new Date(date);  // The selected date is the start of the week
-                    let endOfWeek = new Date(startOfWeek);
-                    endOfWeek.setDate(startOfWeek.getDate() + 6); // End of week (7 days later)
-
-                    // Format the start and end date
-                    let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfWeek);
-                    let formattedEndDate = $.datepicker.formatDate('mm/dd/yy', endOfWeek);
-
-                    // Check for conflicts within the week
-                    let hasConflict = false;
-                    for (let d = startOfWeek; d <= endOfWeek; d.setDate(d.getDate() + 1)) {
-                        const weekDateString = $.datepicker.formatDate('mm/dd/yy', d);
-                        if (disabledDates.indexOf(weekDateString) !== -1) {
-                            hasConflict = true;
-                            break;
-                        }
-                    }
-
-                    if (hasConflict) {
-                        alertify
-                            .alert('Date Conflict', "Please Select Valid Date", function () {
-                                alertify.message('OK');
-                            });
-                        $("#reschedDate2").css("border", "2px solid red");
-                        document.getElementById('reschedBtn').disabled = true;
-                    } else {
-                        $("#reschedDate2").css("border", "");
-                        $("#reschedDate").val(formattedStartDate);
-                        $("#reschedDate2").val(formattedEndDate);
-                        document.getElementById('reschedBtn').disabled = false;
-                    }
-                }
             });
+
+            const dataset = $("#reschedDate").val()
+            function initializeDatePickerAndSetValue(convertedDate) {
+                console.log(convertedDate)
+                // Set the value of the date input field programmatically
+                $("#reschedDate").val(convertedDate);
+
+                // Trigger the datepicker's setDate method programmatically
+                $("#reschedDate").datepicker("setDate", convertedDate);
+
+                // Manually trigger the onClose logic
+                const inst = $("#reschedDate").data("datepicker");
+                $("#reschedDate").datepicker("option", "onClose").call($("#reschedDate")[0], convertedDate, inst);
+            }
+            initializeDatePickerAndSetValue(dataset)
+
             $("#reschedDate2").css("pointer-events", "none");
 
         },
@@ -1625,8 +1780,7 @@ function checkRoomSchedByWeek() {
 function checkRoomSchedByMonths() {
     stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
-    document.getElementById('reschedDate').value = ''
-    document.getElementById('reschedDate2').value = ''
+    
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -1673,7 +1827,8 @@ function checkRoomSchedByMonths() {
 
                         const startOfSelection = new Date(selectedYear, selectedMonth, selectedDay);
                         const endOfSelection = new Date(startOfSelection); // Copy start date
-                        endOfSelection.setDate(startOfSelection.getDate() + 29); // Extend for 29 days
+                        const setLength = parseInt(document.getElementById('selectnumberlenght').value, 10);
+                        endOfSelection.setDate(startOfSelection.getDate() + setLength); // Extend for 29 days
 
                         // Format the start and end date
                         let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfSelection);
@@ -1713,6 +1868,20 @@ function checkRoomSchedByMonths() {
                     return [!isDisabled, isDisabled ? "disabled" : ""];
                 },
             });
+            const dataset = $("#reschedDate").val()
+            function initializeDatePickerAndSetValue(convertedDate) {
+                // Set the value of the date input field programmatically
+                $("#reschedDate").val(convertedDate);
+
+                // Trigger the datepicker's setDate method programmatically
+                $("#reschedDate").datepicker("setDate", convertedDate);
+
+                // Manually trigger the onClose logic
+                const inst = $("#reschedDate").data("datepicker");
+                $("#reschedDate").datepicker("option", "onClose").call($("#reschedDate")[0], convertedDate, inst);
+            }
+            initializeDatePickerAndSetValue(dataset)
+
            $("#reschedDate2").css("pointer-events", "none");
         },
         error: function (xhr, status, error) {
@@ -2060,7 +2229,7 @@ function addcheckRoomSchedByWeek(preselect) {
                     document.getElementById('addSched').disabled = false;
                 }
             }
-            $("#reschedDate2").css("pointer-events", "none");
+            $("#dateSelected2").css("pointer-events", "none");
 
         },
         error: function (xhr, status, error) {

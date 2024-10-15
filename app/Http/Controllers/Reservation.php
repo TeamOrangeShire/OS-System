@@ -402,12 +402,16 @@ class Reservation extends Controller
       return response()->json(['status' => 'success', 'message' => "Reservation canceled successfully", 'reload' => 'getPendingReservation', 'modal' => 'viewCancelReservation']);
     }else if($request->process == 'resched'){
 
-      if($request->re_r_id==''||$request->roomSelect==''||$request->rateSelect==''||$request->reschedDate==''||$request->reschedDate2==''||$request->reschedReason==''){
+      if($request->rescedTime==''|| $request->rescedTime2 == '' || $request->re_r_id==''||$request->roomSelect==''||$request->rateSelect==''||$request->reschedDate==''||$request->reschedDate2==''||$request->reschedReason==''){
         return response()->json(['status' => 'error', 'message' => "Please fill-up all required fields", 'reload' => 'getPendingReservation']);
       }
       $reSched = Reservations::where('r_id', $request->re_r_id)->first();
       $formattedDateStart = Carbon::createFromFormat('m/d/Y', $request->reschedDate)->format('Y-m-d');
       $formattedDateEnd = Carbon::createFromFormat('m/d/Y', $request->reschedDate2)->format('Y-m-d');
+
+
+      $reSched->start_time = $request->rescedTime;
+      $reSched->end_time = $request->rescedTime2;
       $reSched->start_date = $formattedDateStart;
       $reSched->end_date = $formattedDateEnd;
       $reSched->room_id = $request->roomSelect;

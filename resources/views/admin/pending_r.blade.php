@@ -562,6 +562,9 @@ input[type="text"]::placeholder {
                                     <option value="">Select Rate</option> <!-- Default option -->
                                     </select>
                                 </div>
+                                <div class="col-12 mb-1" id="selectNumLenght">
+                                    
+                                </div>
                                 <div id="reschedField"></div>
                                 <div class="col-6 mb-1">
                                     Select Start Date:
