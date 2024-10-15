@@ -996,7 +996,7 @@ function RemovePlan(id, load, logging) {
     )
 }
 
-let saleTable;
+
 function LoadSalesReport(filter, route, button) {
     const btn = document.querySelectorAll('.filterBTN');
     btn.forEach(b => {
@@ -1151,14 +1151,18 @@ function SelectYearReport(filter, route, button) {
         LoadReport(API);
     }
 }
+
+
+
 function LoadReport(API) {
     $.ajax({
         type: "GET",
         url: API,
         dataType: "json",
         success: res => {
+
             if (!$.fn.DataTable.isDataTable('#salesreport')) {
-                saleTable = $('#salesreport').DataTable({
+                hybridSalesReport = $('#salesreport').DataTable({
                     data: res.history,
                     columns: [
                         { title: "Plan", data: "service_name" },
@@ -1176,7 +1180,7 @@ function LoadReport(API) {
                             render: data => {
                                 const color = data.hp_active_status == 1 ? 'success' : 'danger';
                                 const text = data.hp_active_status == 1 ? 'Active' : 'Inactive';
-                                return `<span class="badge  text-bg-${color}">${text}</span>`;
+                                return `<span class="badge text-bg-${color}">${text}</span>`;
                             }
                         },
                         { title: "Amount", data: null, render: data => `₱${data.ammount}` },
@@ -1185,18 +1189,18 @@ function LoadReport(API) {
                     footerCallback: function (row, data, start, end, display) {
                         var api = this.api();
                         // Calculate the total amount
-                        var totalAmount = api.column(4, { page: 'current' }).data().reduce(function (a, b) {
+                        var totalAmount = api.column(5, { page: 'current' }).data().reduce(function (a, b) {
                             return parseFloat(a) + parseFloat(b.ammount);
                         }, 0);
                         // Update the footer with the total amount
                         document.getElementById('total-amount').textContent = '₱' + totalAmount;
                     }
-
                 });
             } else {
-                saleTable.clear().rows.add(res.history).draw();
+                hybridSalesReport.clear().rows.add(res.history).draw();
             }
-        }, error: xhr => console.log(xhr.responseText)
+        },
+        error: xhr => console.log(xhr.responseText)
     });
 }
 
