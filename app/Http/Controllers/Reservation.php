@@ -56,12 +56,31 @@ class Reservation extends Controller
       $endDate = "";
       switch($req->endDateType){
           case "Daily":
+              $date = Carbon::parse($req->endDates);
+              $checkReservation = Reservations::where(function ($query) use ($date) {
+                $query->where('start_date', '<=', $date)
+                      ->where('end_date', '>=', $date)
+                      ->whereIn('status', [1, 2]);
+              })->where('room_id', $req->reserveType)->get();
+              if(count($checkReservation) > 0){
+                return response()->json(['success'=> false, 'message'=> 'Reservation Date conflict rooms is taken on dates between your choosen duration! Please choose another one']);
+              }
               $endDate = convertToDateFormatReservation($req->endDates);
               $endTime = convertTo24HourFormat($req->startTime);
               break;
           case "Weekly":
               $parseStartDate =  Carbon::createFromFormat('m/d/Y', $req->startDate);
+
               $endDate = $parseStartDate->copy()->addWeeks($req->endDates)->toDateString();
+              $parseDateCheck = Carbon::parse($endDate);
+              $checkReservation = Reservations::where(function ($query) use ($parseDateCheck) {
+                $query->where('start_date', '<=', $parseDateCheck)
+                      ->where('end_date', '>=', $parseDateCheck)
+                      ->whereIn('status', [1, 2]); // Checks if status is either 1 or 2
+              })->get();
+              if($checkReservation){
+                return response()->json(['success'=> false, 'message'=> 'Reservation Date conflict rooms is taken on dates between your choosen duration! Please choose another one']);
+              }
               $endTime = convertTo24HourFormat($req->startTime);
               break;
           case "Monthly":
@@ -79,8 +98,17 @@ class Reservation extends Controller
               if($nextYear){
                  $newDate->addYear();
               }
-
               $formattedDate = $newDate->format('m/d/Y');
+              $parseDateCheck = Carbon::parse($formattedDate);
+              $checkReservation = Reservations::where(function ($query) use ($parseDateCheck) {
+                $query->where('start_date', '<=', $parseDateCheck)
+                      ->where('end_date', '>=', $parseDateCheck)
+                      ->whereIn('status', [1, 2]); // Checks if status is either 1 or 2
+              })->get();
+              if($checkReservation){
+                return response()->json(['success'=> false, 'message'=> 'Reservation Date conflict rooms is taken on dates between your choosen duration! Please choose another one']);
+              }
+
               $endDate = convertToDateFormatReservation($formattedDate);
               $endTime =  convertTo24HourFormat($req->startTime);
               break;
@@ -440,9 +468,10 @@ class Reservation extends Controller
 
   public function CheckBookingStatus(Request $req){
     $date = Carbon::parse($req->date);
-     $reservation = Reservations::where(function ($query) use ($date) {
+    $reservation = Reservations::where(function ($query) use ($date) {
         $query->where('start_date', '<=', $date)
-              ->where('end_date', '>=', $date)->where('status', 1)->where('status', 2);
+              ->where('end_date', '>=', $date)
+              ->whereIn('status', [1, 2]);
     })->get();
 
     $roomId = [];

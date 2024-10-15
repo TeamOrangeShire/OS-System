@@ -755,7 +755,7 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
                     let timerInterval;
                     Swal.fire({
                       title: "Reservation is submitted Successfully",
-                      html: "You will be redirected in the reservation page in <b></b>",
+                      html: "You will be redirected in the reservation page in <b></b> <br>Please wait your email confirmation of reservation",
                       timer: 5000,
                       icon: "success",
                       timerProgressBar: true,
@@ -793,6 +793,13 @@ document.getElementById('submitReservationForm').addEventListener('submit', e =>
 
                         }
                     });
+                }else{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: res.message,
+                      });
+                      document.getElementById('submitReservation').innerHTML = 'Submit Reservation';
                 }
             }, error: xhr => console.log(xhr.responseText)
         });
@@ -897,3 +904,7 @@ document.getElementById('contact').addEventListener('input', e =>{
 
 
 document.getElementById('selectEndDate').addEventListener('change', () => document.getElementById('submitReservation').disabled = false);
+
+document.getElementById('name').addEventListener('input', event => {
+    event.target.value = event.target.value.replace(/[^a-zA-Z .-]/g, '');
+});
