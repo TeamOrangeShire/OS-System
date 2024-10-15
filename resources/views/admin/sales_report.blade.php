@@ -150,13 +150,13 @@
                                         <div class="form-row">
                                             <div class="col">
                                                 <label for="startdate">Start Date</label>
-                                                <input type="date" class="form-control" id="startdate"
+                                                <input type="month" class="form-control" id="startdate"
                                                     name="startdate">
                                             </div>
                                             <div class="col">
                                                 <label for="end">End Date</label>
                                                 <div class="input-group">
-                                                    <input type="date" class="form-control" id="enddate"
+                                                    <input type="month" class="form-control" id="enddate"
                                                         name="enddate">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-primary" type="button"

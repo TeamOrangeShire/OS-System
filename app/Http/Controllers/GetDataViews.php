@@ -502,26 +502,29 @@ class GetDataViews extends Controller
 }
 public function GetWeeklyReport(Request $request) {
 
-    $startDate = $request->startdate;
-    $endDate = Carbon::parse($request->enddate)->addDay(); 
+        $startDate = Carbon::createFromFormat('Y-m', $request->startdate);
+        $endDate = Carbon::createFromFormat('Y-m', $request->enddate);
 
-    $logs = CustomerLogs::join('customer_acc', 'customer_logs.customer_id', '=', 'customer_acc.customer_id')
-    ->select(
-        'customer_logs.*',
-        'customer_acc.customer_firstname as firstname',
-        'customer_acc.customer_lastname as lastname',
-        'customer_acc.customer_email as email',
-        'customer_acc.customer_phone_num as contact'
-    )
-    ->whereBetween('customer_logs.created_at', [$startDate, $endDate])
-    ->where('customer_logs.log_status', 2)
-    ->get();
+        // Query to get logs
+        $logs = CustomerLogs::join('customer_acc', 'customer_logs.customer_id', '=', 'customer_acc.customer_id')
+            ->select(
+                'customer_logs.*',
+                'customer_acc.customer_firstname as firstname',
+                'customer_acc.customer_lastname as lastname',
+                'customer_acc.customer_email as email',
+                'customer_acc.customer_phone_num as contact'
+            )
+            ->whereBetween('customer_logs.created_at', [$startDate->startOfMonth(), $endDate->endOfMonth()])
+            ->where('customer_logs.log_status', 2)
+            ->get();
 
-    foreach($logs as $log){
-        $log->payment = explode('-', $log->log_transaction)[0];
-    }
+        // Process each log
+        foreach ($logs as $log) {
+            $log->payment = explode('-', $log->log_transaction)[0];
+        }
 
-    return response()->json(['data' => $logs]);
+        // Return the logs as JSON
+        return response()->json(['data' => $logs]);
 }
 
 }
