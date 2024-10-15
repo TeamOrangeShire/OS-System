@@ -271,7 +271,7 @@ public function LogToPending(Request $request) {
 
           'log_status'=> 1,
           'log_end_time'=> $current,
-
+          
         ]);
       $paymentPass1 = explode('-',$logs->log_transaction)[0];
       return response()->json(['data' => $logs->customer_id ,'confirm'=>[$request->id,$current,$starTime,$paymentPass1]]);
@@ -466,14 +466,20 @@ $paymentPass = PaymentCalc($totalTime['hours'], $totalTime['minutes'], $cusAcc->
 public function BackToLogout(Request $request){
 
   $logs = CustomerLogs::where('log_id',$request->id)->first();
-  $logs->update([
+  if($logs->log_type=='2'){
+      $logs->update([
+        'log_status' => 0,
+        'log_end_time' => '',
+      ]);
+  }else{
+      $logs->update([
 
-    'log_status'=> 0,
-    'log_end_time'=> '',
-    'log_transaction'=>'',
+        'log_status' => 0,
+        'log_end_time' => '',
+        'log_transaction' => '',
 
-  ]);
-
+      ]);
+  }
 }
 
 public function AccLogin(Request $request){
