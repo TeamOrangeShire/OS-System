@@ -212,6 +212,56 @@ $(document).ready(function () {
         }
     });
      $('[data-toggle="tooltip"]').tooltip();
+
+
+      document.getElementById('customer_name').addEventListener('input', function (event) {
+            const inputField = event.target;
+            const currentValue = inputField.value;
+            
+            // Use regex to remove any digits (0-9) from the input
+            inputField.value = currentValue.replace(/\d/g, '');
+        });
+
+        document.getElementById('exampleInputnumber1').addEventListener('input', function (event) {
+            const inputField = event.target;
+            let currentValue = inputField.value;
+
+            // Limit the length to 11 digits
+            if (currentValue.length > 11) {
+                currentValue = currentValue.slice(0, 11);
+            }
+
+            // Set the processed value back to the input
+            inputField.value = currentValue;
+        });
+        document.getElementById('customer_name').addEventListener('input', function (event) {
+            const inputField = event.target;
+            let currentValue = inputField.value;
+
+            // Limit the length to 11 digits
+            if (currentValue.length > 50) {
+                currentValue = currentValue.slice(0, 50);
+            }
+
+            // Set the processed value back to the input
+            inputField.value = currentValue;
+        });
+
+        document.getElementById('exampleInputEmail1').addEventListener('input', function (event) {
+            const emailInput = document.getElementById('exampleInputEmail1').value;
+            const errorMessage = document.getElementById('error-message');
+            
+            // Simple email pattern for validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Check if the input matches the email pattern
+            if (!emailPattern.test(emailInput)) {
+                event.preventDefault();  // Prevent form submission
+                errorMessage.style.display = 'block';  // Show error message
+            } else {
+                errorMessage.style.display = 'none';  // Hide error message if valid
+            }
+        });
 });
 function loadCalendar() {
     $.ajax({
@@ -679,9 +729,9 @@ function dynamicFuction(formId, routeUrl, process) {
     stopInterval()
     // Show the loader
     // hello
-    const check = document.getElementById('dateSelected2').value
-    // console.log('here')
-    console.log(check)
+    // const check = document.getElementById('dateSelected2').value
+    // // console.log('here')
+    // console.log(check)
     document.getElementById('roller').style.display = 'flex';
 
     // Serialize the form data
