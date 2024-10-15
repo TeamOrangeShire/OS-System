@@ -632,7 +632,6 @@ function selectlenghtweek(){
 
             // Set the start time as the text content of the span
      document.getElementById('end_time').textContent = getstartTime;
-     console.log('here2')
 }
 function selectlenghtmonth(){
     const preselect = document.getElementById('preselect').value
@@ -1759,7 +1758,6 @@ function checkRoomSchedByWeek() {
 
             const dataset = $("#reschedDate").val()
             function initializeDatePickerAndSetValue(convertedDate) {
-                console.log(convertedDate)
                 // Set the value of the date input field programmatically
                 $("#reschedDate").val(convertedDate);
 
@@ -1997,7 +1995,6 @@ function addcheckRoomSchedByDay(preselect) {
             // Filter to get only active reservations for the specified room
             const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
             const disabledDates = []; // Array to hold disabled dates
-            console.log(activeReservations)
             // Process active reservations to populate the disabledDates array
             if (activeReservations.length > 0) {
                 activeReservations.forEach(reservation => {
@@ -2159,7 +2156,7 @@ function addcheckRoomSchedByWeek(preselect) {
             const dateString = preselect;
             const newDate = new Date(dateString);
             const convertedDate = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
-            console.log(convertedDate)
+            
             $("#dateSelected").datepicker("destroy");
             $("#dateSelected").val(convertedDate);
             // Initialize the datepicker to disable conflicting dates and allow week selection
@@ -2198,10 +2195,9 @@ function addcheckRoomSchedByWeek(preselect) {
                 let startOfWeek = new Date(date);  // The selected date is the start of the week
                 let endOfWeek = new Date(startOfWeek);
                 const setLength = parseInt(document.getElementById('selectlenght').value, 10);
-                console.log(setLength)
-                console.log(endOfWeek)
+                
                 endOfWeek.setDate(startOfWeek.getDate() + setLength); // End of week (7 days later)
-                console.log(endOfWeek)
+                
                 // Format the start and end date
                 let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfWeek);
                 let formattedEndDate = $.datepicker.formatDate('mm/dd/yy', endOfWeek);
@@ -2295,7 +2291,7 @@ function addcheckRoomSchedByMonths(preselect) {
                         const startOfSelection = new Date(selectedYear, selectedMonth, selectedDay);
                         const endOfSelection = new Date(startOfSelection); // Copy start date
                         const setLength = parseInt(document.getElementById('selectlenght').value, 10);
-                        console.log(setLength)
+                        
                         endOfSelection.setDate(startOfSelection.getDate() + setLength); // Extend for 29 days
 
                         // Format the start and end date
@@ -2361,7 +2357,6 @@ function addcheckRoomSchedByMonths(preselect) {
     });
 }
 function selectAReason(){
-    console.log('here')
     document.getElementById('reschedReason').value = document.getElementById('selectReason').value;
 }
 $(document).ready(function () {
