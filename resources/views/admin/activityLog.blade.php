@@ -38,7 +38,7 @@
                     <h5 class="card-title">Admin Activity Log</h5>
                    
                     <!-- Table with stripped rows -->
-                    <table class="table datatable">
+                    <table class="table datatable" id="myTable">
                       <thead>
                         <tr>
                             <th data-formatter="runningFormatter">#</th>
@@ -91,90 +91,9 @@
 
 <!-- [ Main Content ] end -->
     <script>
-        function log(id,fullname){
-            document.getElementById('cus_id').value=id;
-            document.getElementById('cus_name').textContent=fullname;
-
-            const url="{{route('getlog')}}?id="+id;
-            const tablelog= document.getElementById('cust_log');
-            tablelog.innerHTML='';
-            let html='';
-            axios.get(url)
-        .then(function (response) {
-         
-            for(let i = 0;i<response.data.logs.length;i++){
-
-                const fetchData = response.data.logs[i];
-                if(fetchData.log_status === 1){
-                    
-                    html += `<tr>
-                             <td>${fetchData.log_date}</td>
-                             <td>${fetchData.log_start_time}</td>
-                             <td>${fetchData.log_end_time}</td>
-                             <td>Pending</td>
-                             <td>
-                                <button type="button" class="btn  btn-icon btn-warning" data-toggle="modal" data-target="" onclick="accept('${fetchData.log_id}','${fullname}')"><i class="feather icon-clock"></i></button>
-                            </td>
-                        </tr>`;
-                }else if(fetchData.log_status === 2){
-                    
-                    html += `<tr>
-                             <td>${fetchData.log_date}</td>
-                             <td>${fetchData.log_start_time}</td>
-                             <td>${fetchData.log_end_time}</td>
-                            <td>Completed</td>
-                            <td>
-                            <i class="feather icon-check btn btn-icon btn-success"></i>
-                            </td>
-                        </tr>`;
-                }else{
-                   
-                    html += `<tr>
-                             <td>${fetchData.log_date}</td>
-                             <td>${fetchData.log_start_time}</td>
-                             <td>${fetchData.log_end_time}</td>
-                            <td>Active</td>
-                            <td>
-                                <i class="feather icon-zap btn btn-icon btn-primary"></i>
-                            </td>
-                        </tr>`;
-                }
-                
-               
-            }
-            tablelog.innerHTML=html;
-        })
-       .catch(function (error) {
-        console.error(error);
-        });
-        }
-
-        function accept(id){
-document.getElementById('pending_log').value=id;
-document.getElementById('roller').style.display='flex';
-event.preventDefault();
- var formData = $('form#acceplog').serialize();
-
- $.ajax({
-     type: 'POST',
-     url: "{{route('acceptLog')}}",
-     data: formData,
-     success: function(response) {
-       if(response.status === 'exist'){
-        document.getElementById('roller').style.display='none';
-      
-       }else if(response.status === 'success'){
-        location.reload();
-       
-       }
-     }, 
-     error: function (xhr) {
-
-         console.log(xhr.responseText);
-     }
- });
-}
-
+$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
     </script>
 
     @include('admin.assets.adminscript')
