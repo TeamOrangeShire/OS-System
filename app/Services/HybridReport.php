@@ -6,7 +6,7 @@ use App\Models\HybridProsHistory;
 use App\Models\HybridProsModel;
 use App\Models\ServiceHP;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\DB;
 class HybridReport {
 
 
@@ -22,8 +22,8 @@ class HybridReport {
   }
 
   public function getMonthly($month, $year){
-    $sale = HybridProsHistory::whereYear('created_at', $year)
-                            ->whereMonth('created_at', $month)
+    $sale = HybridProsHistory::whereIn(DB::raw('YEAR(created_at)'), explode(',', $year))
+                            ->whereIn(DB::raw('MONTH(created_at)'), explode(',', $month))
                             ->where('hp_payment_status', 1)
                             ->get();
     $this->FilterData($sale);
@@ -31,7 +31,7 @@ class HybridReport {
   }
 
   public function getYearly($year){
-    $sale = HybridProsHistory::whereYear('created_at', $year)->where('hp_payment_status', 1)->get();
+    $sale = HybridProsHistory::whereIn(DB::raw('YEAR(created_at)'), explode(',', $year))->where('hp_payment_status', 1)->get();
     $this->FilterData($sale);
     return $sale;
   }

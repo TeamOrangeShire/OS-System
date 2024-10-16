@@ -568,6 +568,7 @@ class HybridPros extends Controller
                 if($all->log_id != $logs->log_id){
                     $updateOtherLogs = HybridHistoryLogs::where('log_id', $all->log_id)->first();
                     $timeRemaining = explode(':', $updateOtherLogs->log_time_remaining);
+                    dd($timeRemaining);
                     $remHours = $timeRemaining[0] + $getConsumeTimeDifference[0];
                     $remMinutes = $timeRemaining[1] + $getConsumeTimeDifference[1];
                     if($remMinutes < 0 ){
