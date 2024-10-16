@@ -344,8 +344,9 @@ input[type="text"]::placeholder {
                                             <input type="text" class="form-control border" id="customer_name" name="customer_name" placeholder="Enter Customer Name">
                                         </div>
                                         <div class="col-md-6">
-                                             <label for="exampleInputnumber1">Contact No.</label>
+                                             <label for="exampleInputnumber1">Phone Number (must start with 09):</label>
                                              <input type="Number"  class="form-control" id="exampleInputnumber1" name="customer_num" aria-describedby="emailHelp" placeholder="Enter Number" maxlength="11">
+                                             <span id="error-1" style="color:red;"></span>
                                         </div>
                                     </div>
                                 </div>
