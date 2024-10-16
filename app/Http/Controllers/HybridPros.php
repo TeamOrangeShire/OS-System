@@ -568,9 +568,8 @@ class HybridPros extends Controller
                 if($all->log_id != $logs->log_id){
                     $updateOtherLogs = HybridHistoryLogs::where('log_id', $all->log_id)->first();
                     $timeRemaining = explode(':', $updateOtherLogs->log_time_remaining);
-                    dd($timeRemaining);
-                    $remHours = $timeRemaining[0] + $getConsumeTimeDifference[0];
-                    $remMinutes = $timeRemaining[1] + $getConsumeTimeDifference[1];
+                    $remHours = (int)$timeRemaining[0] + (int) $getConsumeTimeDifference[0];
+                    $remMinutes = (int)$timeRemaining[1] + (int) $getConsumeTimeDifference[1];
                     if($remMinutes < 0 ){
                         $remMinutes += 60;
                         $remHours -= 1;
@@ -585,12 +584,12 @@ class HybridPros extends Controller
 
         $history = HybridProsHistory::where('hph_id', $logs->hph_id)->first();
         $historyTimeRemaining = explode(':', $history->hp_remaining_time);
-        $hpRemHours = $historyTimeRemaining[0] - $getConsumeTimeDifference[0];
-        $hpRemMinutes = $historyTimeRemaining[1] - $getConsumeTimeDifference[1];
+        $hpRemHours = (int)$historyTimeRemaining[0] - (int) $getConsumeTimeDifference[0];
+        $hpRemMinutes = (int) $historyTimeRemaining[1] - (int) $getConsumeTimeDifference[1];
 
         $hpConsumeTime = explode(':', $history->hp_consume_time);
-        $hpConsumeHours = $hpConsumeTime[0] + $time['hours'];
-        $hpConsumeMinutes = $hpConsumeTime[0] + $time['minutes'];
+        $hpConsumeHours = (int) $hpConsumeTime[0] + (int) $time['hours'];
+        $hpConsumeMinutes =  (int) $hpConsumeTime[0] + (int) $time['minutes'];
 
         if($hpConsumeMinutes > 60){
             $hpConsumeHours += 1;
