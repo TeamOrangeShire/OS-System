@@ -169,18 +169,19 @@
                                              <label for="">Filter Report By Time Period</label>
                                             <select class="form-control" name="" id="monthSelector" onchange="calculateDate()">
                                                 <option value="">Please Select Date Range</option>
-                                                <option value="1">from 1 month ago</option>
-                                                <option value="2">from 2 months ago</option>
-                                                <option value="3">from 3 months ago</option>
-                                                <option value="4">from 4 months ago</option>
-                                                <option value="5">from 5 months ago</option>
-                                                <option value="6">from 6 months ago</option>
-                                                <option value="7">from 7 months ago</option>
-                                                <option value="8">from 8 months ago</option>
-                                                <option value="9">from 9 months ago</option>
-                                                <option value="10">from 10 months ago</option>
-                                                <option value="11">from 11 months ago</option>
-                                                <option value="12">from 12 months ago</option>
+                                                <option value="0">Current Month</option>
+                                                <option value="1">From 1 month ago</option>
+                                                <option value="2">From 2 months ago</option>
+                                                <option value="3">From 3 months ago</option>
+                                                <option value="4">From 4 months ago</option>
+                                                <option value="5">From 5 months ago</option>
+                                                <option value="6">From 6 months ago</option>
+                                                <option value="7">From 7 months ago</option>
+                                                <option value="8">From 8 months ago</option>
+                                                <option value="9">From 9 months ago</option>
+                                                <option value="10">From 10 months ago</option>
+                                                <option value="11">From 11 months ago</option>
+                                                <option value="12">From 12 months ago</option>
                                             </select>
                                         </div>
                                         <br>

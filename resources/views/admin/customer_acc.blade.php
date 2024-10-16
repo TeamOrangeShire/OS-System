@@ -423,7 +423,8 @@
                     "columns": [{
                             "data": null,
                             "render": function(data, type, row) {
-                                return row.customer_firstname + ' ' + row.customer_lastname;
+                                const lastname = row.customer_lastname==null?'':row.customer_lastname;
+                                return row.customer_firstname + ' ' +lastname ;
                             }
                         },
                         {
