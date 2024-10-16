@@ -9,11 +9,11 @@ use App\Models\CancellationReasons;
 use App\Models\Rooms;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ReservationResponse;
+use App\Jobs\MessageReservation;
 use App\Mail\CancelReservationActive;
-use Exception;
 use App\Models\RoomRates;
 use App\Mail\AdminMail;
+use Exception;
 
 class Reservation extends Controller
 {
@@ -177,22 +177,8 @@ class Reservation extends Controller
     $reserve->transaction_id = $generateTransaction;
     $reserve->save();
 
-    Mail::to($req->email)->send(new ReservationResponse($generateTransaction, $reserve->r_id));
+    MessageReservation::dispatch($req->email, $req->guestemails, $generateTransaction, $reserve->r_id);
 
-    if ($req->guestemails != "") {
-      $emails = explode(',', $req->guestemails);
-
-      array_pop($emails);
-
-      foreach ($emails as $em) {
-        $cleanEmail = str_replace(' ', '', $em);
-        try {
-          Mail::to($cleanEmail)->send(new ReservationResponse($generateTransaction, $reserve->r_id));
-        } catch (Exception $ex) {
-          // Ignore
-        }
-      }
-    }
     return response()->json(['success' => true]);
   }
 
