@@ -9,6 +9,10 @@
     #salesreport thead th {
     background-color: #343a40; /* Dark background color */
     color: #ffffff; /* White text color */
+
+    .month{
+        width: 100%;
+    }
 }
 </style>
 </head>
@@ -36,34 +40,34 @@
         <!-- [ Main Content start ] start -->
 
         <div class="d-flex justify-content-end gap-4 mb-4">
-            <button id="dailyButton" onclick="LoadSalesReport('daily', '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary filterBTN"> <i class="feather icon-bar-chart"></i> Daily</button>
-            <button  onclick="LoadSalesReport('weekly', '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary filterBTN"> <i class="feather icon-bar-chart-2"></i> Weekly </button>
-            <button onclick="LoadSalesReport('monthly', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary filterBTN"> <i class="feather icon-calendar"></i> Monthly</button>
-            <button onclick="LoadSalesReport('yearly', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary filterBTN"> <i class="feather icon-pie-chart"></i> Yearly</button>
+            <button id="dailyButton" onclick="LoadSalesReport('daily', '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark filterBTN"> <i class="feather icon-bar-chart"></i> Daily</button>
+            <button  onclick="LoadSalesReport('weekly', '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark filterBTN"> <i class="feather icon-bar-chart-2"></i> Weekly </button>
+            <button onclick="LoadSalesReport('monthly', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-dark filterBTN"> <i class="feather icon-calendar"></i> Monthly</button>
+            <button onclick="LoadSalesReport('yearly', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-dark filterBTN"> <i class="feather icon-pie-chart"></i> Yearly</button>
         </div>
 
-        <div id="selectMonth" class=" gap-4 justify-content-end mb-4" style="display: none">
-           <button onclick="SelectMonthReport(1, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">January</button>
-           <button onclick="SelectMonthReport(2, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">February</button>
-           <button onclick="SelectMonthReport(3, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">March</button>
-           <button onclick="SelectMonthReport(4, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">April</button>
-           <button onclick="SelectMonthReport(5, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">May</button>
-           <button onclick="SelectMonthReport(6, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">June</button>
-           <button onclick="SelectMonthReport(7, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">July</button>
-           <button onclick="SelectMonthReport(8, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">August</button>
-           <button onclick="SelectMonthReport(9, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">September</button>
-           <button onclick="SelectMonthReport(10, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">October</button>
-           <button onclick="SelectMonthReport(11, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">November</button>
-           <button onclick="SelectMonthReport(12, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary month">December</button>
+        <div id="selectMonth" class=" gap-2 justify-content-end mb-4" style="display: none">
+           <button onclick="SelectMonthReport(1, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">January</button>
+           <button onclick="SelectMonthReport(2, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">February</button>
+           <button onclick="SelectMonthReport(3, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">March</button>
+           <button onclick="SelectMonthReport(4, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">April</button>
+           <button onclick="SelectMonthReport(5, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">May</button>
+           <button onclick="SelectMonthReport(6, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">June</button>
+           <button onclick="SelectMonthReport(7, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">July</button>
+           <button onclick="SelectMonthReport(8, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">August</button>
+           <button onclick="SelectMonthReport(9, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">September</button>
+           <button onclick="SelectMonthReport(10, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">October</button>
+           <button onclick="SelectMonthReport(11, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">November</button>
+           <button onclick="SelectMonthReport(12, '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark month">December</button>
         </div>
 
-        <div id="selectYear" class="gap-4 justify-content-end" style="display: none">
-            <button onclick="SelectYearReport('2024', '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-primary year">2024</button>
-            <button onclick="SelectYearReport('2025', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary year">2025</button>
-            <button onclick="SelectYearReport('2026', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary year">2026</button>
-            <button onclick="SelectYearReport('2027', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary year">2027</button>
-            <button onclick="SelectYearReport('2028', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary year">2028</button>
-            <button onclick="SelectYearReport('2029', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-primary year">2029</button>
+        <div id="selectYear" class="gap-2 justify-content-end" style="display: none">
+            <button onclick="SelectYearReport('2024', '{{ route('HybridSalesReport') }}', this)" class="btn btn-outline-dark year">2024</button>
+            <button onclick="SelectYearReport('2025', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-dark year">2025</button>
+            <button onclick="SelectYearReport('2026', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-dark year">2026</button>
+            <button onclick="SelectYearReport('2027', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-dark year">2027</button>
+            <button onclick="SelectYearReport('2028', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-dark year">2028</button>
+            <button onclick="SelectYearReport('2029', '{{ route('HybridSalesReport') }}', this)"  class="btn btn-outline-dark year">2029</button>
          </div>
 
          <div id="selectDivWeeks" class=" mb-4" style="display: none">
@@ -78,7 +82,7 @@
                 <input type="date" class="form-control" id="dateSelect"
                     name="dateSelect">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="button"
+                    <button class="btn btn-dark" type="button"
                     onclick="LoadSalesReport('dailydate', '{{ route('HybridSalesReport') }}', this)" >Show Report</button>
                 </div>
             </div>
@@ -111,6 +115,7 @@
     <script>
         window.onload = () => {
             let hybridSalesReport;
+
            LoadSalesReport(null, '{{ route('HybridSalesReport') }}', null)
            LoadAvailableWeeks('{{ route('HybridLoadWeeks') }}')
         }

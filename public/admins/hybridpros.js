@@ -47,9 +47,9 @@ function Customers(data, logging, load) {
                     timeUnli = ha.hp_remaining_time;
                 }
                 let parsePrice = '';
-                if(ha.payment_edit == null){
-                   parsePrice = ha.price == 0 ? 'Free' : `₱${ha.price}`
-                }else{
+                if (ha.payment_edit == null) {
+                    parsePrice = ha.price == 0 ? 'Free' : `₱${ha.price}`
+                } else {
                     parsePrice = ha.payment_edit;
                 }
 
@@ -728,7 +728,7 @@ function getLogHistory(id, customer_id) {
 }
 
 
-function editHybridLogs(date, timeIn, timeOut, id){
+function editHybridLogs(date, timeIn, timeOut, id) {
     const div = document.getElementById('editHybridLogsDiv');
     const add = document.getElementById('addHybridLogDiv');
     add.classList.add('d-none');
@@ -777,27 +777,29 @@ function editHybridLogs(date, timeIn, timeOut, id){
     formTimeIn.value = convertTimeFormat(timeIn);
 }
 
-function updateHybridLogsInput(element, target){
+function updateHybridLogsInput(element, target) {
     const input = document.getElementById(target);
 
     input.value = element.value;
 }
 
+const saveChangesHybridProsLogs = document.getElementById('saveChangesUpdateHybridprosLogs');
+if(saveChangesHybridProsLogs){
+    saveChangesHybridProsLogs.addEventListener('click', () => {
 
-document.getElementById('saveChangesUpdateHybridprosLogs').addEventListener('click', ()=> {
-
-    document.getElementById('editHybridprosLogsForms').requestSubmit();
-});
+        document.getElementById('editHybridprosLogsForms').requestSubmit();
+    });
+}
 
 const updateHybridLogsForm = document.getElementById('editHybridprosLogsForms');
 
-if(updateHybridLogsForm){
+if (updateHybridLogsForm) {
     updateHybridLogsForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         const roller = document.getElementById('roller');
         alertify.confirm("Update Hybrid Logs", "Are you sure do you want to save this changes?",
-            ()=> {
+            () => {
                 roller.style.display = 'flex';
 
                 $.ajax({
@@ -805,25 +807,28 @@ if(updateHybridLogsForm){
                     url: "/back/subscription/savehybridlogschanges",
                     data: $('#editHybridprosLogsForms').serialize(),
                     success: res => {
-                        if(res.success){
+                        if (res.success) {
                             roller.style.display = 'none';
                             toastr['success']("Logs Successfully Updated");
 
                             document.getElementById('editPlanFormClose').click();
                         }
-                    }, error: xhr=> console.log(xhr.responseText)
+                    }, error: xhr => console.log(xhr.responseText)
                 });
-            }, ()=> console.log('cancel')
+            }, () => console.log('cancel')
         )
     });
 }
 
-document.getElementById('closeEditHybridLogsBtn').addEventListener('click', ()=> {
-    const div = document.getElementById('editHybridLogsDiv');
+const closeEditHybridLogsBtn = document.getElementById('closeEditHybridLogsBtn');
+if(closeEditHybridLogsBtn){
+    closeEditHybridLogsBtn.addEventListener('click', () => {
+        const div = document.getElementById('editHybridLogsDiv');
 
-    document.getElementById('openHybridProsAddLogBtn').classList.remove('d-none');
-    div.classList.add('d-none');
-})
+        document.getElementById('openHybridProsAddLogBtn').classList.remove('d-none');
+        div.classList.add('d-none');
+    });
+}
 
 function detectSelection() {
     const cancel = document.getElementById('cancelSelectionCustomer');
@@ -996,13 +1001,16 @@ function RemovePlan(id, load, logging) {
     )
 }
 
-
+let selectedMonthLoadSale = [];
+let selectedYearLoadSale = [];
 function LoadSalesReport(filter, route, button) {
     const btn = document.querySelectorAll('.filterBTN');
     btn.forEach(b => {
         b.className = '';
-        b.classList.add('btn', 'btn-outline-primary', 'filterBTN');
+        b.classList.add('btn', 'btn-outline-dark', 'filterBTN', 'w-100');
     });
+    selectedMonthLoadSale.length = 0;
+    selectedYearLoadSale.length = 0;
 
     const selectMonth = document.getElementById('selectMonth');
     const selectYear = document.getElementById('selectYear');
@@ -1017,17 +1025,27 @@ function LoadSalesReport(filter, route, button) {
     const month = document.querySelectorAll('.month');
     month.forEach(e => {
         e.className = '';
-        e.classList.add('btn', 'btn-outline-primary', 'month');
+        e.classList.add('btn', 'btn-outline-dark', 'month', 'w-100');
     })
     month[currentMonth].className = '';
-    month[currentMonth].classList.add('btn', 'btn-primary', 'month');
+    month[currentMonth].classList.add('btn', 'btn-dark', 'month', 'w-100');
+    if(!selectedMonthLoadSale.includes(currentMonth + 1)){
+        selectedMonthLoadSale.push(currentMonth + 1);
+    }
 
+    if(!selectedYearLoadSale.includes(currentYear)){
+        selectedYearLoadSale.push(currentYear);
+    }
     const year = document.querySelectorAll('.year');
 
+    year.forEach(y => {
+        y.className = '';
+        y.classList.add('btn', 'btn-outline-dark', 'year', 'w-100');
+    });
     for (const e of year) {
         if (e.textContent.trim() == currentYear) {
             e.className = '';
-            e.classList.add('btn', 'btn-primary', 'year');
+            e.classList.add('btn', 'btn-dark', 'year', 'w-100');
             break;
         }
     }
@@ -1082,7 +1100,7 @@ function LoadSalesReport(filter, route, button) {
             selectYear.style.display = 'none';
             daily.className = '';
             selectWeek.style.display = 'none';
-            daily.classList.add('btn', 'btn-primary', 'filterBTN');
+            daily.classList.add('btn', 'btn-dark', 'filterBTN', 'w-100');
             valid = true;
             break
     }
@@ -1090,7 +1108,7 @@ function LoadSalesReport(filter, route, button) {
     if (button) {
 
         button.className = '';
-        button.classList.add('btn', 'btn-primary', 'filterBTN');
+        button.classList.add('btn', 'btn-dark', 'filterBTN', 'w-100');
     }
 
     if (valid) {
@@ -1100,54 +1118,63 @@ function LoadSalesReport(filter, route, button) {
 
 
 function SelectMonthReport(filter, route, button) {
-    const d_month = document.querySelectorAll('.month');
 
-    d_month.forEach(e => {
-        e.className = '';
-        e.classList.add('btn', 'btn-outline-primary', 'month');
-    });
 
-    button.className = '';
-    button.classList.add('btn', 'btn-primary', 'month');
+    if (button.classList.contains('btn-dark') && selectedMonthLoadSale.length - 1 != 0) {
+        button.className = '';
+        button.classList.add('btn', 'btn-outline-dark', 'month', 'w-100');
+        let index = selectedMonthLoadSale.indexOf(filter);
 
+        if (index !== -1) {
+            selectedMonthLoadSale.splice(index, 1);
+        }
+    } else {
+        if(!selectedMonthLoadSale.includes(filter)){
+            button.className = '';
+            button.classList.add('btn', 'btn-dark', 'month', 'w-100');
+            selectedMonthLoadSale.push(filter);
+        }
+    }
+
+    console.log(selectedMonthLoadSale);
     let year = 0;
     const d_year = document.querySelectorAll('.year');
 
     d_year.forEach(e => {
-        if (e.classList.contains('btn-primary')) {
+        if (e.classList.contains('btn-dark')) {
             year = e.textContent;
         }
     });
-    const API = `${route}?filter=monthly&month=${filter}&year=${year}`;
+    const API = `${route}?filter=monthly&month=${selectedMonthLoadSale.join(',')}&year=${selectedYearLoadSale.join(',')}`;
     LoadReport(API);
+
 }
 
 function SelectYearReport(filter, route, button) {
-    const d_year = document.querySelectorAll('.year');
 
-    d_year.forEach(e => {
-        e.className = '';
-        e.classList.add('btn', 'btn-outline-primary', 'year');
-    });
+    if(button.classList.contains('btn-dark') && selectedYearLoadSale.length - 1 != 0){
+        button.className = '';
+        button.classList.add('btn', 'btn-outline-dark', 'year', 'w-100');
+        let index = selectedYearLoadSale.indexOf(parseInt(filter));
 
-    button.className = '';
-    button.classList.add('btn', 'btn-primary', 'year');
-
+        if (index !== -1) {
+            selectedYearLoadSale.splice(index, 1);
+        }
+    }else{
+        button.className = '';
+        button.classList.add('btn', 'btn-dark', 'year', 'w-100');
+        if(!selectedYearLoadSale.includes(parseInt(filter))){
+            selectedYearLoadSale.push(parseInt(filter));
+        }
+    }
+    console.log(selectedYearLoadSale);
     const selectMonth = document.getElementById('selectMonth');
 
     if (selectMonth.style.display == 'flex') {
-        const d_month = document.querySelectorAll('.month');
-        let month = 0;
-
-        d_month.forEach(e => {
-            if (e.classList.contains('btn-primary')) {
-                month = Supp.CheckMonth(e.textContent);
-            }
-        });
-        const API = `${route}?filter=monthly&month=${month}&year=${filter}`
+        const API = `${route}?filter=monthly&month=${selectedMonthLoadSale.join(',')}&year=${selectedYearLoadSale.join(',')}`
         LoadReport(API);
     } else {
-        const API = `${route}?filter=yearly&month=null&year=${filter}`
+        const API = `${route}?filter=yearly&month=null&year=${selectedYearLoadSale.join(',')}`
         LoadReport(API);
     }
 }
@@ -1170,8 +1197,13 @@ function LoadReport(API) {
                         {
                             title: "Date Purchased/Expired", data: null,
                             render: data => {
+                                const formatDateString = (dateString) => {
+                                    const date = new Date(dateString);
+                                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                                    return date.toLocaleDateString('en-US', options);
+                                }
                                 const expiration = data.hp_plan_expire_new != null ? `<s>${data.hp_plan_expire}</s><br>(${data.hp_plan_expire_new})` : data.hp_plan_expire;
-                                return `${data.hp_plan_start} / ${expiration}`;
+                                return `${data.hp_plan_start} / ${formatDateString(expiration)}`;
                             }
                         },
                         { title: "Payment Status", data: "hp_payment_mode" },
@@ -1226,71 +1258,84 @@ function SelectWeeklyReport(route, select) {
     LoadReport(API);
 }
 
-document.getElementById('openHybridProsAddLogBtn').addEventListener('click', e => {
-    const edit = document.getElementById('editHybridLogsDiv');
-    const add = document.getElementById('addHybridLogDiv');
+const openHybridProsAddLogBtn = document.getElementById('openHybridProsAddLogBtn');
+if(openHybridProsAddLogBtn){
+    openHybridProsAddLogBtn.addEventListener('click', e => {
+        const edit = document.getElementById('editHybridLogsDiv');
+        const add = document.getElementById('addHybridLogDiv');
 
-    add.classList.remove('d-none');
-    edit.classList.add('d-none');
+        add.classList.remove('d-none');
+        edit.classList.add('d-none');
 
-    document.getElementById('openHybridProsAddLogBtn').classList.add('d-none');
+        document.getElementById('openHybridProsAddLogBtn').classList.add('d-none');
 
-});
+    });
+}
 
-document.getElementById('closeAddHybridLogsBtn').addEventListener('click', ()=> {
-    const edit = document.getElementById('editHybridLogsDiv');
-    const add = document.getElementById('addHybridLogDiv');
+const closeAddHybridLogsBtn = document.getElementById('closeAddHybridLogsBtn');
+if(closeAddHybridLogsBtn){
+    closeAddHybridLogsBtn.addEventListener('click', () => {
+        const edit = document.getElementById('editHybridLogsDiv');
+        const add = document.getElementById('addHybridLogDiv');
 
-    add.classList.add('d-none');
-    edit.classList.add('d-none');
+        add.classList.add('d-none');
+        edit.classList.add('d-none');
 
-    document.getElementById('openHybridProsAddLogBtn').classList.remove('d-none');
-});
-
-
-document.getElementById('addHybridProsLogsBtn').addEventListener('click', () => {
-    const addDate = document.getElementById('addHybridLogsDate');
-    const addTimeIn = document.getElementById('addHybridLogsTimeIn');
-
-    const errorDate = document.getElementById('addHybridLogsDateE');
-    const errorTimeIn = document.getElementById('addHybridLogsTimeInE');
-
-    let validity = 0;
-
-    validity += checkInput(addDate, errorDate);
-    validity += checkInput(addTimeIn, errorTimeIn);
-
-    if(validity == 2){
-        document.getElementById('addHybridProsLogsForm').requestSubmit();
-    }
-});
-
-document.getElementById('addHybridProsLogsForm').addEventListener('submit', e => {
-    e.preventDefault();
-
-    const roller = document.getElementById('roller');
-
-    roller.style.display = 'flex';
-
-    $.ajax({
-        type: "POST",
-        url: "/back/subscription/addhybridproslog",
-        data: $('#addHybridProsLogsForm').serialize(),
-        success: res=> {
-            if(res.success){
-                roller.style.display = 'none';
-                toastr['success']("Hybrid Pros Log Successfully Added");
-                document.getElementById('editPlanFormClose').click();
-                document.getElementById('openHybridProsAddLogBtn').classList.remove('d-none');
-                document.getElementById('addHybridLogDiv').classList.add('d-none');
-            }
-        }, error: xhr=> console.log(xhr.responseText)
-    })
-});
+        document.getElementById('openHybridProsAddLogBtn').classList.remove('d-none');
+    });
+}
 
 
-function checkInput(input, message){
-    if(input.value == ""){
+const addHybridProsLogsBtn = document.getElementById('addHybridProsLogsBtn');
+if(addHybridProsLogsBtn){
+    addHybridProsLogsBtn.addEventListener('click', () => {
+        const addDate = document.getElementById('addHybridLogsDate');
+        const addTimeIn = document.getElementById('addHybridLogsTimeIn');
+
+        const errorDate = document.getElementById('addHybridLogsDateE');
+        const errorTimeIn = document.getElementById('addHybridLogsTimeInE');
+
+        let validity = 0;
+
+        validity += checkInput(addDate, errorDate);
+        validity += checkInput(addTimeIn, errorTimeIn);
+
+        if (validity == 2) {
+            document.getElementById('addHybridProsLogsForm').requestSubmit();
+        }
+    });
+}
+
+const addHybridProsLogsForm = document.getElementById('addHybridProsLogsForm');
+if(addHybridProsLogsForm){
+    addHybridProsLogsForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const roller = document.getElementById('roller');
+
+        roller.style.display = 'flex';
+
+        $.ajax({
+            type: "POST",
+            url: "/back/subscription/addhybridproslog",
+            data: $('#addHybridProsLogsForm').serialize(),
+            success: res => {
+                if (res.success) {
+                    roller.style.display = 'none';
+                    toastr['success']("Hybrid Pros Log Successfully Added");
+                    document.getElementById('editPlanFormClose').click();
+                    document.getElementById('openHybridProsAddLogBtn').classList.remove('d-none');
+                    document.getElementById('addHybridLogDiv').classList.add('d-none');
+                }
+            }, error: xhr => console.log(xhr.responseText)
+        })
+    });
+
+}
+
+
+function checkInput(input, message) {
+    if (input.value == "") {
         input.classList.add('border', 'border-danger');
         message.classList.remove('d-none');
         return 0;
