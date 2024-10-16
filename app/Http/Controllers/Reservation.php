@@ -201,7 +201,7 @@ class Reservation extends Controller
   {
 
     if ($request->process == 'add') {
-      $input = $request->except('end_date','end_time2', 'multipleEmail', 'customer_request', 'emailInput', 'room_id', 'customer_bill');
+      $input = $request->except('end_date','end_time2', 'multipleEmail', 'customer_request', 'emailInput', 'room_id');
       foreach ($input as $key => $value) {
         if (empty($value)) {
           if($key=='customer_name'){
@@ -214,10 +214,17 @@ class Reservation extends Controller
           $field = 'customer email';
           }
           else if($key=='dateSelected2'){
-          $field = 'room and plan';
+          $field = 'rate and plan';
+          } 
+          else if ($key == 'customer_bill') {
+            $field = 'rate and plan';
           }
           return response()->json(['status' => 'error', 'message' => " Please fill $field"]); // Return an error response
         }
+      }
+      if($request->customer_bill==''){
+        return response()->json(['status' => 'error', 'message' => " Please fill Rate"]); // Return an error response
+       
       }
       $rate = RoomRates::where('rp_id', $request->customer_bill)->first();
       if($rate){
@@ -378,8 +385,10 @@ class Reservation extends Controller
 
       if($rate){
         $status='1';
+        $paybill = $request->customer_bill;
       }else{
         $status="1";
+        $paybill = 0;
       }
       $reserve = new Reservations();
       $reserve->c_name = $request->customer_name;
@@ -389,7 +398,7 @@ class Reservation extends Controller
       $reserve->request = $request->customer_request;
       $reserve->room_id = $request->room_id;
       $reserve->pax = $request->customer_count;
-      $reserve->rate_id = $request->customer_bill;
+      $reserve->rate_id = $paybill;
       $reserve->start_date = Carbon::createFromFormat('m/d/Y', $request->dateSelected)->format('Y-m-d');
       $reserve->end_date = $endDateFormatted;
       $reserve->start_time = $request->start_time;

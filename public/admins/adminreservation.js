@@ -409,7 +409,7 @@ function getResData() {
                     let result = `
     <div class="col-md-6">
         <label for="customer_number">Number of Customer</label>
-        <input type="number" class="form-control" value="1" name="customer_count" id="customer_count">
+        <input type="number" class="form-control" value="1" min="1" max="50" name="customer_count" id="customer_count">
     </div>
     `;
 
@@ -419,7 +419,9 @@ function getResData() {
         <select class="form-control" id="customer_bill" name="customer_bill">
     `;
 
-                    result += `<option value="0">Open Time</option>`;
+                    result += `
+                    <option value="">Select Plan</option>
+                    <option value="99999">Open Time</option>`;
                     roomRate.forEach((rate) => {
                         if (rate.room_id == 0) {
                             result += `<option value="${rate.rp_id}">${rate.rp_rate_description}</option>`;  // Add each option to the result
@@ -472,7 +474,7 @@ function getResData() {
                                     else {
                                             document.getElementById('end_time').textContent = 'Open Time';
                                     }
-                                }else if(selectedValue=='0'){
+                                }else if(selectedValue=='99999'){
                                             document.getElementById('end_time').textContent = 'Open Time';
                                 }
                             });
@@ -488,7 +490,7 @@ function getResData() {
                     let result = `
     <div class="col-md-6">
         <label for="customer_number">Number of Customers</label>
-        <select class="form-control" id="customer_count" name="customer_count">
+        <select class="form-control" id="customer_count" min="1" max="50" name="customer_count">
 `;
 
                     // Add customer number options based on selected room capacity
@@ -878,7 +880,7 @@ function viewForm(date, time) {
                                             document.getElementById('end_time2').value='';
     const mustbeEmpty = document.getElementById('reserveContainer')
     mustbeEmpty.innerHTML = '';
-     document.getElementById("addEventForm").reset();
+    //  document.getElementById("addEventForm").reset();
     document.getElementById('preselect').value = date
     document.getElementById('dateSelected').value = date
     // Reformat the date from MM/DD/YYYY to Month/DD/YYYY
@@ -2217,7 +2219,7 @@ function addcheckRoomSchedByWeek(preselect) {
                         .alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
                             alertify.message('OK');
                             getResData()
-                            $("#addEventForm").trigger("reset");
+                            // $("#addEventForm").trigger("reset");
                             $('#addEvent').modal('hide');
                         });
                     $("#dateSelected2").css("border", "2px solid red");
@@ -2312,7 +2314,7 @@ function addcheckRoomSchedByMonths(preselect) {
                             alertify.alert('Date Conflict', "There is a conflict between the selected date and the reserved date", function () {
                                 alertify.message('OK');
                                 getResData()
-                                $("#addEventForm").trigger("reset");
+                                // $("#addEventForm").trigger("reset");
                                 $('#addEvent').modal('hide');
                             });
                             $("#dateSelected2").css("border", "2px solid red");
