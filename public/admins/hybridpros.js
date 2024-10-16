@@ -1170,8 +1170,13 @@ function LoadReport(API) {
                         {
                             title: "Date Purchased/Expired", data: null,
                             render: data => {
+                                 const formatDateString = (dateString) => {
+                                    const date = new Date(dateString);
+                                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                                    return date.toLocaleDateString('en-US', options);
+                                }
                                 const expiration = data.hp_plan_expire_new != null ? `<s>${data.hp_plan_expire}</s><br>(${data.hp_plan_expire_new})` : data.hp_plan_expire;
-                                return `${data.hp_plan_start} / ${expiration}`;
+                                return `${data.hp_plan_start} / ${formatDateString(expiration)}`;
                             }
                         },
                         { title: "Payment Status", data: "hp_payment_mode" },
