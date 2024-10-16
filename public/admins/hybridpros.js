@@ -1007,7 +1007,7 @@ function LoadSalesReport(filter, route, button) {
     const btn = document.querySelectorAll('.filterBTN');
     btn.forEach(b => {
         b.className = '';
-        b.classList.add('btn', 'btn-outline-primary', 'filterBTN');
+        b.classList.add('btn', 'btn-outline-dark', 'filterBTN', 'w-100');
     });
     selectedMonthLoadSale.length = 0;
     selectedYearLoadSale.length = 0;
@@ -1025,10 +1025,10 @@ function LoadSalesReport(filter, route, button) {
     const month = document.querySelectorAll('.month');
     month.forEach(e => {
         e.className = '';
-        e.classList.add('btn', 'btn-outline-primary', 'month');
+        e.classList.add('btn', 'btn-outline-dark', 'month', 'w-100');
     })
     month[currentMonth].className = '';
-    month[currentMonth].classList.add('btn', 'btn-primary', 'month');
+    month[currentMonth].classList.add('btn', 'btn-dark', 'month', 'w-100');
     if(!selectedMonthLoadSale.includes(currentMonth + 1)){
         selectedMonthLoadSale.push(currentMonth + 1);
     }
@@ -1040,12 +1040,12 @@ function LoadSalesReport(filter, route, button) {
 
     year.forEach(y => {
         y.className = '';
-        y.classList.add('btn', 'btn-outline-primary', 'year');
+        y.classList.add('btn', 'btn-outline-dark', 'year', 'w-100');
     });
     for (const e of year) {
         if (e.textContent.trim() == currentYear) {
             e.className = '';
-            e.classList.add('btn', 'btn-primary', 'year');
+            e.classList.add('btn', 'btn-dark', 'year', 'w-100');
             break;
         }
     }
@@ -1100,7 +1100,7 @@ function LoadSalesReport(filter, route, button) {
             selectYear.style.display = 'none';
             daily.className = '';
             selectWeek.style.display = 'none';
-            daily.classList.add('btn', 'btn-primary', 'filterBTN');
+            daily.classList.add('btn', 'btn-dark', 'filterBTN', 'w-100');
             valid = true;
             break
     }
@@ -1108,7 +1108,7 @@ function LoadSalesReport(filter, route, button) {
     if (button) {
 
         button.className = '';
-        button.classList.add('btn', 'btn-primary', 'filterBTN');
+        button.classList.add('btn', 'btn-dark', 'filterBTN', 'w-100');
     }
 
     if (valid) {
@@ -1120,9 +1120,9 @@ function LoadSalesReport(filter, route, button) {
 function SelectMonthReport(filter, route, button) {
 
 
-    if (button.classList.contains('btn-primary') && selectedMonthLoadSale.length - 1 != 0) {
+    if (button.classList.contains('btn-dark') && selectedMonthLoadSale.length - 1 != 0) {
         button.className = '';
-        button.classList.add('btn', 'btn-outline-primary', 'month');
+        button.classList.add('btn', 'btn-outline-dark', 'month', 'w-100');
         let index = selectedMonthLoadSale.indexOf(filter);
 
         if (index !== -1) {
@@ -1131,7 +1131,7 @@ function SelectMonthReport(filter, route, button) {
     } else {
         if(!selectedMonthLoadSale.includes(filter)){
             button.className = '';
-            button.classList.add('btn', 'btn-primary', 'month');
+            button.classList.add('btn', 'btn-dark', 'month', 'w-100');
             selectedMonthLoadSale.push(filter);
         }
     }
@@ -1141,7 +1141,7 @@ function SelectMonthReport(filter, route, button) {
     const d_year = document.querySelectorAll('.year');
 
     d_year.forEach(e => {
-        if (e.classList.contains('btn-primary')) {
+        if (e.classList.contains('btn-dark')) {
             year = e.textContent;
         }
     });
@@ -1152,9 +1152,9 @@ function SelectMonthReport(filter, route, button) {
 
 function SelectYearReport(filter, route, button) {
 
-    if(button.classList.contains('btn-primary') && selectedYearLoadSale.length - 1 != 0){
+    if(button.classList.contains('btn-dark') && selectedYearLoadSale.length - 1 != 0){
         button.className = '';
-        button.classList.add('btn', 'btn-outline-primary', 'year');
+        button.classList.add('btn', 'btn-outline-dark', 'year', 'w-100');
         let index = selectedYearLoadSale.indexOf(parseInt(filter));
 
         if (index !== -1) {
@@ -1162,7 +1162,7 @@ function SelectYearReport(filter, route, button) {
         }
     }else{
         button.className = '';
-        button.classList.add('btn', 'btn-primary', 'year');
+        button.classList.add('btn', 'btn-dark', 'year', 'w-100');
         if(!selectedYearLoadSale.includes(parseInt(filter))){
             selectedYearLoadSale.push(parseInt(filter));
         }
