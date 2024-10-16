@@ -208,7 +208,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="9" style="text-align:right;"></th>
+                                                <th colspan="8" style="text-align:right;"></th>
                                                 {{-- <th style="color:#3572EF;"></th>
                                                 <th style="color: #ff5c40;"></th> --}}
                                             </tr>
@@ -808,7 +808,7 @@ function calculateDate() {
             // Update footer
             // api.column(7).footer().innerHTML =  'Total: ₱' + pageTotal +' E-Pay: ₱' + total +' Cash: ₱' + cashtotal;
             // api.column(8).footer().innerHTML = '<span style="color:red;">'+ cashtotal +'</span>';
-            api.column(8).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal.toFixed(2) +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ total.toFixed(2) +'</span><span style="color:#ff5c40;margin-right:2%;"> Total: ₱'+ pageTotal.toFixed(2) +'</span>';
+            api.column(7).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal.toFixed(2) +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ total.toFixed(2) +'</span><span style="color:#ff5c40;margin-right:2%;"> Total: ₱'+ pageTotal.toFixed(2) +'</span>';
         }
 
                 });
@@ -965,7 +965,7 @@ function calculateDate() {
             // Update footer
             // api.column(7).footer().innerHTML =  'Total: ₱' + pageTotal +' E-Pay: ₱' + total +' Cash: ₱' + cashtotal;
             // api.column(8).footer().innerHTML = '<span style="color:red;">'+ cashtotal +'</span>';
-            api.column(8).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal.toFixed(2) +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ total.toFixed(2) +'</span><span style="color:#ff5c40;margin-right:2%;"> Total: ₱'+ pageTotal.toFixed(2) +'</span>';
+            api.column(7).footer().innerHTML = '<span style="color:green; margin-right:2%;">Cash: ₱'+ cashtotal.toFixed(2) +'</span><span style="color:#3572EF;margin-right:2%;"> Gcash: ₱'+ total.toFixed(2) +'</span><span style="color:#ff5c40;margin-right:2%;"> Total: ₱'+ pageTotal.toFixed(2) +'</span>';
         }
 
                 });
