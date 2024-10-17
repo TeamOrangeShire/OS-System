@@ -262,6 +262,27 @@ $(document).ready(function () {
                 errorMessage.style.display = 'none';  // Hide error message if valid
             }
         });
+
+
+        const phoneNumberInput = document.getElementById('exampleInputnumber1');
+    const errorMessage = document.getElementById('error-1');
+
+    phoneNumberInput.addEventListener('input', function() {
+      const value = phoneNumberInput.value;
+
+      // Only allow digits
+      if (!/^\d*$/.test(value)) {
+        phoneNumberInput.value = value.replace(/[^\d]/g, '');
+      }
+
+      // Ensure the number starts with 09
+      if (value.length >= 2 && value.substring(0, 2) !== '09') {
+        errorMessage.textContent = 'Number must start with 09';
+      } else {
+        errorMessage.textContent = '';
+      }
+    });
+
 });
 function loadCalendar() {
     $.ajax({
@@ -956,6 +977,10 @@ function dynamicFuction(formId, routeUrl, process) {
                 }
                 $('#' + response.modal).modal('hide');
                 alertify.alert("success", response.message);
+                const formfield = document.getElementById("addEventForm");
+                if(formfield){
+                    formfield.reset();
+                }
             }
         },
         error: function (xhr, status, error) {
