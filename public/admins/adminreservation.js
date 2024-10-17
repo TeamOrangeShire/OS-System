@@ -167,7 +167,7 @@ $(document).ready(function () {
                 //     }
                 // });
 
-                
+
             }
         } else {
             const eventList = document.getElementsByClassName("event-header")[0];
@@ -178,7 +178,7 @@ $(document).ready(function () {
                 if (eventList2 && eventList2.querySelector('.w-100')) {
 
                 } else {
-                    
+
                     const [month, day, year] = newDate.split('/');
                     const monthNames = [
                         "January", "February", "March", "April", "May", "June", "July",
@@ -217,7 +217,7 @@ $(document).ready(function () {
       document.getElementById('customer_name').addEventListener('input', function (event) {
             const inputField = event.target;
             const currentValue = inputField.value;
-            
+
             // Use regex to remove any digits (0-9) from the input
             inputField.value = currentValue.replace(/\d/g, '');
         });
@@ -250,7 +250,7 @@ $(document).ready(function () {
         document.getElementById('exampleInputEmail1').addEventListener('input', function (event) {
             const emailInput = document.getElementById('exampleInputEmail1').value;
             const errorMessage = document.getElementById('error-message');
-            
+
             // Simple email pattern for validation
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -340,15 +340,15 @@ function loadCalendar() {
                 disableSundays();
                 // var elements = document.getElementsByClassName('calendar-inner')[0];
                 // elements.innerHTML += `
-                
+
                 // `;
 
                 // Add event listener for month change (optional)
                 $('#calendar').on('selectMonth', function () {
                     disableSundays(); // Call disableSundays when the month changes
-                    
+
                 });
-                
+
             } else {
                 console.error("Data is not an array:", response.data);
             }
@@ -464,7 +464,7 @@ function getResData() {
                             const existingEndDateField = document.getElementById('endDateField');
                             if (existingEndDateField) {
                                 existingEndDateField.remove();
-                               
+
                             }
                             // Loop through roomRate and check the rate description
                             roomRate.forEach((rate) => {
@@ -491,7 +491,7 @@ function getResData() {
                                             const newTime = addOneHour(getstartTime,12);
                                             document.getElementById('end_time').textContent = newTime;
                                     }
-                                    } 
+                                    }
                                     else {
                                             document.getElementById('end_time').textContent = 'Open Time';
                                     }
@@ -559,7 +559,7 @@ function getResData() {
                             const existingEndDateField = document.getElementById('endDateField');
                             if (existingEndDateField) {
                                 existingEndDateField.remove();
-                               
+
                             }
                             // Loop through roomRate and check the rate description
                             roomRate.forEach((rate) => {
@@ -667,7 +667,7 @@ function selectlenghtmonth2(){
 }
 function selectlenghtweek2(){
      checkRoomSchedByWeek()
-     
+
 }
 function selectlenghthour2(){
     const getstartTime = document.getElementById('rescedTime').value;
@@ -844,11 +844,11 @@ function displayTimeHTML() {
     const times = (satVal === 'true') ?
         [
             "12:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM", "06:00 AM","07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM",
-            "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM","07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", 
+            "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM","07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM",
         ] :
         [
             "12:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM", "06:00 AM","07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM",
-            "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM","07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM", 
+            "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM","07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM",
         ];
 
     let timeHTML = '';
@@ -1382,7 +1382,7 @@ function reschedReserve() {
                                             </select>
                                             `;
                                 checkRoomSchedByWeek()
-                                
+
                             } else if (rateDescription.includes("Monthly")) {
                                 const dateLenght = document.getElementById("selectNumLenght");
                                             dateLenght.innerHTML=`
@@ -1809,7 +1809,7 @@ function checkRoomSchedByWeek() {
 function checkRoomSchedByMonths() {
     stopInterval()
     const roomNumber = parseInt(document.getElementById('roomSelect').value, 10);
-    
+
     $.ajax({
         url: "/admin/getReservation", // URL of the PHP script
         method: "GET", // or 'POST'
@@ -1932,6 +1932,7 @@ function addcheckRoomSchedByHour(preselect) {
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
+
             // Filter to get only active reservations for the specified room
             const activeReservations = response.data.filter(event => event.status === '1' && event.room_number === roomNumber ||event.status === '2' && event.room_number === roomNumber);
             const disabledDates = []; // Array to hold disabled dates
@@ -2084,7 +2085,7 @@ function addcheckRoomSchedByDay(preselect) {
                 },
                 minDate: 0 // Disable past dates
             });
-            
+
             // Variable to track if the alert has been shown
             let alertShown = false;
             intervalId = setInterval(() => {
@@ -2183,7 +2184,7 @@ function addcheckRoomSchedByWeek(preselect) {
             const dateString = preselect;
             const newDate = new Date(dateString);
             const convertedDate = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
-            
+
             $("#dateSelected").datepicker("destroy");
             $("#dateSelected").val(convertedDate);
             // Initialize the datepicker to disable conflicting dates and allow week selection
@@ -2222,9 +2223,9 @@ function addcheckRoomSchedByWeek(preselect) {
                 let startOfWeek = new Date(date);  // The selected date is the start of the week
                 let endOfWeek = new Date(startOfWeek);
                 const setLength = parseInt(document.getElementById('selectlenght').value, 10);
-                
+
                 endOfWeek.setDate(startOfWeek.getDate() + setLength); // End of week (7 days later)
-                
+
                 // Format the start and end date
                 let formattedStartDate = $.datepicker.formatDate('mm/dd/yy', startOfWeek);
                 let formattedEndDate = $.datepicker.formatDate('mm/dd/yy', endOfWeek);
@@ -2318,7 +2319,7 @@ function addcheckRoomSchedByMonths(preselect) {
                         const startOfSelection = new Date(selectedYear, selectedMonth, selectedDay);
                         const endOfSelection = new Date(startOfSelection); // Copy start date
                         const setLength = parseInt(document.getElementById('selectlenght').value, 10);
-                        
+
                         endOfSelection.setDate(startOfSelection.getDate() + setLength); // Extend for 29 days
 
                         // Format the start and end date

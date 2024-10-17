@@ -37,14 +37,17 @@ class Reservation extends Controller
     foreach($data as $d){
         $room = Rooms::where('room_id', $d->room_id)->first();
         $rates = RoomRates::where('rp_id', $d->rate_id)->first();
-
         foreach($room->toArray() as $rKey => $rValue){
             $d->$rKey = $rValue;
         }
 
+       if($rates){
         foreach($rates->toArray() as $rateKey => $rateValue){
             $d->$rateKey = $rateValue;
         }
+       }else{
+         $d->rates = 'null';
+       }
     }
 
     return response()->json(['data' => $data, 'status' => 'success']);
