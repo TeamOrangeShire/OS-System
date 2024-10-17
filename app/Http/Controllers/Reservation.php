@@ -36,7 +36,7 @@ class Reservation extends Controller
 
     foreach($data as $d){
         $room = Rooms::where('room_id', $d->room_id)->first();
-        $rates = RoomRates::where('room_id', $d->room_id)->first();
+        $rates = RoomRates::where('rp_id', $d->rate_id)->first();
 
         foreach($room->toArray() as $rKey => $rValue){
             $d->$rKey = $rValue;
@@ -201,7 +201,7 @@ class Reservation extends Controller
           }
           else if($key=='dateSelected2'){
           $field = 'rate and plan';
-          } 
+          }
           else if ($key == 'customer_bill') {
             $field = 'rate and plan';
           }
@@ -210,7 +210,7 @@ class Reservation extends Controller
       }
       if($request->customer_bill==''){
         return response()->json(['status' => 'error', 'message' => " Please fill Rate"]); // Return an error response
-       
+
       }
       $rate = RoomRates::where('rp_id', $request->customer_bill)->first();
       if($rate){
