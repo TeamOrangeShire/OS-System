@@ -189,8 +189,7 @@
                                                                 <h2
                                                                     style="margin: 0; color: #454545; direction: ltr; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; font-size: 22px; font-weight: 400; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 26.4px;">
                                                                     <span class="tinyMce-placeholder"
-                                                                        style="word-break: break-word;">Room 1 Monthly
-                                                                        Subscription</span></h2>
+                                                                        style="word-break: break-word;">{{$room}} - {{$rate}}</span></h2>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -235,7 +234,7 @@
                                                                         approved! We look forward to welcoming
                                                                         you.<br /><br />If you have any questions or
                                                                         need further assistance, feel free to reach out..<br /><br />
-                                                                        date and time in - date and time out
+                                                                        {{$date_start}} - {{$date_end}}
                                                                     </p>
                                                                 </div>
                                                             </td>
@@ -252,7 +251,7 @@
                                                                 <h1
                                                                     style="margin: 0; color: #ff5c40; direction: ltr; font-family: Arial, Helvetica, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 45.6px;">
                                                                     <span class="tinyMce-placeholder"
-                                                                        style="word-break: break-word;">Code</span>
+                                                                        style="word-break: break-word;">{{$transaction_id}}</span>
                                                                 </h1>
                                                             </td>
                                                         </tr>

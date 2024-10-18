@@ -16,10 +16,20 @@ class AdminMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $reason;
-    public function __construct($reason)
+    public $transaction_id;
+    public $room;
+    public $rate;
+    public $date_start;
+    public $date_end;
+    public $reason_cause;
+    public function __construct($transaction_id, $room, $rate, $date_start, $date_end, $reason_cause)
     {
-        $this->reason = $reason;
+        $this->transaction_id = $transaction_id;
+        $this->room = $room;
+        $this->rate = $rate;
+        $this->date_start = $date_start;
+        $this->date_end = $date_end;
+        $this->reason_cause = $reason_cause;
     }
 
     /**
@@ -28,7 +38,7 @@ class AdminMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Admin Email',
+            subject: 'Reservation Cancelled',
         );
     }
 
@@ -39,7 +49,8 @@ class AdminMail extends Mailable
     {
         return new Content(
             view: 'mail.adminEmail',
-            with: ['reason' => $this->reason]
+            with: ['transaction_id' => $this->transaction_id, 'room' => $this->room, 'rate' => $this->rate, 'date_start' => $this->date_start, 'date_end' => $this->date_end, 'reason_cause'=>$this->reason_cause]
+       
         );
     }
 
