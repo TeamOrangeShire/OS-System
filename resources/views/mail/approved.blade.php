@@ -234,7 +234,8 @@
                                                                     <p style="margin: 0;">Coworking Space has been
                                                                         approved! We look forward to welcoming
                                                                         you.<br /><br />If you have any questions or
-                                                                        need further assistance, feel free to reach out.
+                                                                        need further assistance, feel free to reach out..<br /><br />
+                                                                        date and time in - date and time out
                                                                     </p>
                                                                 </div>
                                                             </td>
