@@ -398,6 +398,12 @@ class Reservation extends Controller
       $reserve = Reservations::where('r_id',$request->r_id)->first();
       $reserve->status = "1";
       $reserve->save();
+
+      try {
+        Mail::to($reserve->c_email)->send(new AdminMail($request->cancelReason));
+      } catch (Exception $x) {
+      }
+
       return response()->json(['status' => 'success', 'message' => "Room Successfully reserved" ,'reload'=> 'getPendingReservation','modal'=> 'viewReservation']);
     }else if($request->process == 'cancel'){
       $input = $request->all(); // Get all input fields
