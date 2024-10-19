@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\RoomPricing;
-use App\Models\RoomRate;
 use App\Models\Reservations;
 use App\Models\CustomerAcc;
 use App\Models\Rooms;
 use App\Models\CustomerLogs;
-use App\Models\CustomerLogUnregister;
+
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -18,20 +17,20 @@ class GetDataViews extends Controller
     public function GetHomeCookies(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.index', [
                         'customer_id'=>$userId,
-                      
+
                     ]);
                 }else{
                     return view('homepage.index', [
                         'customer_id'=>$userId,
-                        
+
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.index', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
             }
@@ -41,7 +40,7 @@ class GetDataViews extends Controller
     public function GetBlogsContentCookies(Request $req, $id){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.blog_content', [
@@ -54,7 +53,7 @@ class GetDataViews extends Controller
                         'blog_id'=> $id
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.blog_content', ['customer_id'=> 'none', 'status'=> 'not_log_in', 'blog_id'=> $id]);
             }
@@ -63,20 +62,20 @@ class GetDataViews extends Controller
     public function GetBlogsCookies(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.blogs', [
                         'customer_id'=>$userId,
-                      
+
                     ]);
                 }else{
                     return view('homepage.blogs', [
                         'customer_id'=>$userId,
-                        
+
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.blogs', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
             }
@@ -86,20 +85,20 @@ class GetDataViews extends Controller
     public function GetInstructionCookies(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.instruction', [
                         'customer_id'=>$userId,
-                      
+
                     ]);
                 }else{
                     return view('homepage.instruction', [
                         'customer_id'=>$userId,
-                        
+
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.instruction', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
             }
@@ -108,47 +107,47 @@ class GetDataViews extends Controller
     public function GetPrivacyCookies(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.privacy', [
                         'customer_id'=>$userId,
-                      
+
                     ]);
                 }else{
                     return view('homepage.privacy', [
                         'customer_id'=>$userId,
-                        
+
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.privacy', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
             }
-        
-      
+
+
     }
     public function GetSolutionsCookies(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.solutions', [
                         'customer_id'=>$userId,
-               
+
                     ]);
                 }else{
                     return view('homepage.solutions', [
                         'customer_id'=>$userId,
-                     
+
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.solutions', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
             }
-        
+
     }
 
     public function GetReservationCookies(Request $req){
@@ -169,28 +168,28 @@ class GetDataViews extends Controller
             return view('homepage.reservation', ['customer_id'=> 'none', 'room_array'=> $room_array]);
         }
     }
-    
+
     public function GetContactCookies(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.contact', [
                         'customer_id'=>$userId,
-                        
+
                     ]);
                 }else{
                     return view('homepage.contact', [
                         'customer_id'=>$userId,
-                
+
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.contact', ['customer_id'=> 'none', 'status'=> 'not_log_in']);
             }
-        
+
     }
     public function GetBookCookies(Request $req){
         $userId = $req->cookie('customer_id');
@@ -214,7 +213,7 @@ class GetDataViews extends Controller
     public function CustomerProfile(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.Dashboard.profile', ['user_id'=>$userId,'status'=> 'not_verified' ]);
@@ -224,7 +223,7 @@ class GetDataViews extends Controller
                         'status'=> 'verified'
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.Dashboard.profile', ['user_id'=>$userId, 'status'=> 'not_log_in']);
             }
@@ -235,7 +234,7 @@ class GetDataViews extends Controller
     public function CustomerSubscription(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.Dashboard.subscription', ['user_id'=>$userId,'status'=> 'not_verified' ]);
@@ -245,7 +244,7 @@ class GetDataViews extends Controller
                         'status'=> 'verified'
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.Dashboard.subscription', ['user_id'=>$userId, 'status'=> 'not_log_in']);
             }
@@ -253,7 +252,7 @@ class GetDataViews extends Controller
     public function CustomerReservation(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.Dashboard.reservation', ['user_id'=>$userId,'status'=> 'not_verified' ]);
@@ -263,7 +262,7 @@ class GetDataViews extends Controller
                         'status'=> 'verified'
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.Dashboard.reservation', ['user_id'=>$userId, 'status'=> 'not_log_in']);
             }
@@ -272,7 +271,7 @@ class GetDataViews extends Controller
     public function CustomerHome(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.Dashboard.index', ['user_id'=>$userId,'status'=> 'not_verified' ]);
@@ -282,7 +281,7 @@ class GetDataViews extends Controller
                         'status'=> 'verified'
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.Dashboard.index', ['user_id'=>$userId, 'status'=> 'not_log_in']);
             }
@@ -298,7 +297,7 @@ class GetDataViews extends Controller
     public function CustomerSettings(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.Dashboard.settings', ['user_id'=>$userId,'status'=> 'not_verified' ]);
@@ -308,7 +307,7 @@ class GetDataViews extends Controller
                         'status'=> 'verified'
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.Dashboard.settings', ['user_id'=>$userId, 'status'=> 'not_log_in']);
             }
@@ -317,7 +316,7 @@ class GetDataViews extends Controller
     public function CustomerViewNotification(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.Dashboard.notification_open', ['user_id'=>$userId,'status'=> 'not_verified', 'notif'=> $req->notification ]);
@@ -328,7 +327,7 @@ class GetDataViews extends Controller
                         'notif'=>'none'
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.Dashboard.notification', ['user_id'=>$userId, 'status'=> 'not_log_in', 'notif'=>'none']);
             }
@@ -336,7 +335,7 @@ class GetDataViews extends Controller
     public function CustomerNotification(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.Dashboard.notification', ['user_id'=>$userId,'status'=> 'not_verified' ]);
@@ -346,7 +345,7 @@ class GetDataViews extends Controller
                         'status'=> 'verified'
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.Dashboard.notification', ['user_id'=>$userId, 'status'=> 'not_log_in']);
             }
@@ -355,7 +354,7 @@ class GetDataViews extends Controller
     public function CustomerTransaction(Request $req){
         $userId = $req->cookie('customer_id');
         $customer= CustomerAcc::where('customer_id', $userId)->first();
-     
+
             if ($userId) {
                 if($customer->verification_status === 0){
                     return view('homepage.Dashboard.transaction', ['user_id'=>$userId,'status'=> 'not_verified' ]);
@@ -365,7 +364,7 @@ class GetDataViews extends Controller
                         'status'=> 'verified'
                     ]);
                 }
-               
+
             } else {
                 return view('homepage.Dashboard.transaction', ['user_id'=>$userId, 'status'=> 'not_log_in']);
             }
@@ -382,55 +381,7 @@ class GetDataViews extends Controller
         return view('homepage.Dashboard.loginshire', ['user_id'=> $userId, 'status'=>$stat, 'log_data'=>$id]);
     }
 
-    public function GetRoomRate(Request $req){
 
-        $room_id = $req->input('room_id');
-        $date = $req->input('date');
-
-        $rates = RoomPricing::where('room_id', $room_id)->get();
-        $rate_id= [];
-        $rate_name = [];
-        $rate_price = [];
-
-        $reserve = Reservations::where('res_date', $date)->get();
-
-        if($reserve->isNotEmpty()){
-            $res_status = 1;
-        }else{
-            $res_status = 0;
-        }
-        foreach($rates as $r){
-            array_push($rate_id, $r->room_rates);
-            $rateQuery = RoomRate::where('rate_id', $r->room_rates)->first();
-            array_push($rate_name, $rateQuery->rate_name);
-            array_push($rate_price, $rateQuery->rate_price);
-        }
-        return response()->json(['rate_id'=>$rate_id, 'rate_name'=>$rate_name, 'rate_price'=>$rate_price, 'res_status'=>$res_status]);
-    }
-
-    public function CheckTime(Request $req){
-        $rate_id = $req->input('rate_id');
-        $date = $req->input('date');
-
-        $checkStart= Reservations::where('res_date', $date)->first();
-        $checkEnd= Reservations::where('res_date', $date)->latest()->first();
-        $checkDate= Reservations::where('res_date', $date)->latest()->first();
-        $checkRate = RoomRate::where('rate_id', $rate_id)->first();
-        if($checkRate->rate_name === 'Hourly'){
-           $freq = 1;
-        }else if($checkRate->rate_name === '4 Hours'){
-            $freq = 4;
-        }else{
-            $freq = 0;
-        }
-
-        if($checkDate){
-            return response()->json(['timeStart'=>$checkStart->res_start, 'timeEnd'=>$checkEnd->res_end, 'rate'=>$freq]);
-        }else{
-            return response()->json(['timeStart'=>'none', 'timeEnd'=>'none', 'rate'=>$freq]);
-        }
-
-    }
 
 
     public function GetTimeForDate(Request $req){
@@ -448,11 +399,11 @@ class GetDataViews extends Controller
             return response()->json(['status'=>'clear', 'time'=> 'none']);
         }
     }
-    
+
     public function CustomerLog()
     {
         $logs = CustomerLogs::where('log_status', 2)->get()->groupBy('log_date');
-    
+
         $logsByDate = [];
         foreach ($logs as $logDate => $logEntries) {
             $totalLogTransactions = 0;
@@ -463,19 +414,29 @@ class GetDataViews extends Controller
             $logsByDate[] = [
                 'log_date' => $logDate,
                 'logs' => $logEntries->toArray(),
-                'total_log_transactions' => $totalLogTransactions 
+                'total_log_transactions' => $totalLogTransactions
             ];
         }
         return response()->json(['logsByDate' => $logsByDate]);
     }
-    
+
     public function ViewDetails(Request $request){
 
         $date = $request->query('date');
 
-        $reg = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
-  select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
-  'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact')->where('customer_logs.log_date', $date)->get();
+        if($request->filter == 'cash'){
+            $reg = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
+            select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
+            'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact')->where('customer_logs.log_date', $date)->where('log_payment_method', 'Cash')->get();
+        }else if($request->filter == 'gcash'){
+            $reg = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
+            select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
+            'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact')->where('customer_logs.log_date', $date)->where('log_payment_method', 'E-Pay')->get();
+        }else{
+            $reg = CustomerLogs::join('customer_acc','customer_logs.customer_id','=','customer_acc.customer_id')->
+            select('customer_logs.*','customer_acc.customer_firstname as firstname','customer_acc.customer_lastname as lastname',
+            'customer_acc.customer_email as email','customer_acc.customer_phone_num as contact')->where('customer_logs.log_date', $date)->get();
+        }
         foreach($reg as $log){
             $log->payment = explode('-',$log->log_transaction)[0];
         }
@@ -495,7 +456,7 @@ class GetDataViews extends Controller
   foreach($logs as $log){
 
     $log->payment = explode('-',$log->log_transaction)[0];
- 
+
   }
 
   return response()->json(['data' => $logs]);
@@ -509,7 +470,7 @@ public function GetWeeklyReport(Request $request) {
         }
         $startDate = Carbon::createFromFormat('Y-m', $request->startdate);
         $endDate = Carbon::createFromFormat('Y-m', $request->enddate);
-        
+
         // Query to get logs
         $logs = CustomerLogs::join('customer_acc', 'customer_logs.customer_id', '=', 'customer_acc.customer_id')
             ->select(

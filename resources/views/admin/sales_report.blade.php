@@ -60,7 +60,7 @@
                                     <a class="nav-link  text-uppercase" id="" data-toggle="tab" href="#weekly"
                                         role="tab" aria-controls="home" aria-selected="true">Weekly/Monthly Report</a>
                                 </li>
-                              
+
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -237,7 +237,24 @@
 
                             <!-- Modal body -->
                             <div class="modal-body">
-
+                                <div class="row">
+                                    <div class="col-4">
+                                        <button onclick="viewLogDaily('all', this)" class="btn btn-dark w-100 selectDailyLog">  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+                                          </svg> All </button>
+                                   </div>
+                                    <div class="col-4">
+                                         <button onclick="viewLogDaily('cash', this)" class="btn btn-outline-dark w-100 selectDailyLog">  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+                                            <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                                            <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                                          </svg> Cash</button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button  onclick="viewLogDaily('gcash', this)" class="btn btn-outline-dark w-100 selectDailyLog"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paypal" viewBox="0 0 16 16">
+                                            <path d="M14.06 3.713c.12-1.071-.093-1.832-.702-2.526C12.628.356 11.312 0 9.626 0H4.734a.7.7 0 0 0-.691.59L2.005 13.509a.42.42 0 0 0 .415.486h2.756l-.202 1.28a.628.628 0 0 0 .62.726H8.14c.429 0 .793-.31.862-.731l.025-.13.48-3.043.03-.164.001-.007a.35.35 0 0 1 .348-.297h.38c1.266 0 2.425-.256 3.345-.91q.57-.403.993-1.005a4.94 4.94 0 0 0 .88-2.195c.242-1.246.13-2.356-.57-3.154a2.7 2.7 0 0 0-.76-.59l-.094-.061ZM6.543 8.82a.7.7 0 0 1 .321-.079H8.3c2.82 0 5.027-1.144 5.672-4.456l.003-.016q.326.186.548.438c.546.623.679 1.535.45 2.71-.272 1.397-.866 2.307-1.663 2.874-.802.57-1.842.815-3.043.815h-.38a.87.87 0 0 0-.863.734l-.03.164-.48 3.043-.024.13-.001.004a.35.35 0 0 1-.348.296H5.595a.106.106 0 0 1-.105-.123l.208-1.32z"/>
+                                          </svg> GCash</button>
+                                    </div>
+                                </div>
                                 <table id="detailsalesreport" class="table table-striped" style="width:100%">
                                     <thead>
                                         <tr>
@@ -286,7 +303,7 @@
 
         <!-- Required Js -->
         <script>
-          
+
 
             $(document).ready(function() {
                 CustomerlogHistory();
@@ -342,10 +359,10 @@
                                 "data": null,
                                 "render": function(data, type, row) {
                                     const date = row
-                                    .log_date; 
-                                    const parts = date.split('/'); 
+                                    .log_date;
+                                    const parts = date.split('/');
                                     const formattedDate =
-                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`;
                                     return formattedDate;
                                 }
                             },
@@ -484,10 +501,10 @@
                                 "data": null,
                                 "render": function(data, type, row) {
                                     const date = row
-                                    .log_date; 
-                                    const parts = date.split('/'); 
+                                    .log_date;
+                                    const parts = date.split('/');
                                     const formattedDate =
-                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`;
                                     return formattedDate;
                                 }
                             },
@@ -541,9 +558,20 @@
                     }
                 });
             }
+            let selectedDailyDate;
 
+            function viewLogDaily(filter, element){
+                const btn = document.querySelectorAll('.selectDailyLog');
 
-            function viewLog(date) {
+                btn.forEach(b=> {
+
+                    b.className = '';
+                    b.classList.add('btn', 'btn-outline-dark', 'w-100', 'selectDailyLog');
+                })
+
+                element.className = '';
+                element.classList.add('btn', 'btn-dark', 'w-100', 'selectDailyLog');
+
                 $('#detailsalesreport').DataTable({
                     scrollY: '350px',
                     scrollCollapse: true,
@@ -559,7 +587,103 @@
                     },
                     destroy: true,
                     "ajax": {
-                        "url": "{{ route('ViewDetails') }}?date=" + date,
+                        "url": "{{ route('ViewDetails') }}?date=" + selectedDailyDate + "&filter=" + filter,
+                        "type": "GET",
+                        "dataType": "json",
+                        "dataSrc": "reg"
+                    },
+                    "columns": [{
+                            "data": null,
+                            "render": function(data, type, row) {
+                                var first = row.firstname;
+                                var last = row.lastname;
+                                return first + " " + last;
+                            }
+                        },
+                        {
+                            "data": "log_start_time",
+                            "render": function(data, type, row) {
+                                return data;
+                            }
+                        },
+                        {
+                            "data": "log_end_time",
+                            "render": function(data, type, row) {
+                                return data;
+                            }
+                        },
+                        {
+                            "data": null,
+                            "render": function(data, type, row) {
+                                var start = row.log_start_time;
+                                var end = row.log_end_time;
+                                var totaltime = timeDifference(start, end);
+                                return totaltime.hours + ":" + totaltime.minutes;
+                            }
+                        },
+                        {
+                            'data': 'log_payment_method'
+                        },
+                        {
+                            'data': 'log_comment'
+                        },
+                        {
+                            "data": "payment"
+                        },
+                    ],
+                    footerCallback: function(row, data, start, end, display) {
+                        let api = this.api();
+
+                        // Remove the formatting to get integer data for summation
+                        let intVal = function(i) {
+                            return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '') * 1 :
+                                typeof i === 'number' ?
+                                i :
+                                0;
+                        };
+
+                        // Total over all pages
+                        total = api
+                            .column(6)
+                            .data()
+                            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                        // Total over this page
+                        pageTotal = api
+                            .column(6, {
+                                page: 'current'
+                            })
+                            .data()
+                            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                        // Update footer
+                        api.column(6).footer().innerHTML =
+                            ' Total: ₱' + pageTotal.toFixed(2);
+                        api.column(5).footer().innerHTML =
+                            'Date: ' + selectedDailyDate;
+                    }
+                });
+            }
+
+            function viewLog(date) {
+                selectedDailyDate = date;
+                $('#detailsalesreport').DataTable({
+                    scrollY: '350px',
+                    scrollCollapse: true,
+                    paging: false,
+                     scrollX: true,
+                    order: [
+                        [1, 'desc']
+                    ],
+                    layout: {
+                        topStart: {
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                        }
+                    },
+                    destroy: true,
+                    "ajax": {
+                        "url": "{{ route('ViewDetails') }}?date=" + date + "&filter=all",
                         "type": "GET",
                         "dataType": "json",
                         "dataSrc": "reg"
@@ -708,10 +832,10 @@ function calculateDate() {
                                 "data": null,
                                 "render": function(data, type, row) {
                                     const date = row
-                                    .log_date; 
-                                    const parts = date.split('/'); 
+                                    .log_date;
+                                    const parts = date.split('/');
                                     const formattedDate =
-                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`;
                                     return formattedDate;
                                 }
                             },
@@ -865,10 +989,10 @@ function calculateDate() {
                                 "data": null,
                                 "render": function(data, type, row) {
                                     const date = row
-                                    .log_date; 
-                                    const parts = date.split('/'); 
+                                    .log_date;
+                                    const parts = date.split('/');
                                     const formattedDate =
-                                    `${parts[1]}/${parts[0]}/${parts[2]}`; 
+                                    `${parts[1]}/${parts[0]}/${parts[2]}`;
                                     return formattedDate;
                                 }
                             },
@@ -973,11 +1097,11 @@ function calculateDate() {
         $('#filterCashButton').click(function() {
     var table = $('#weeklyreport').DataTable();
     table.column(7).search('^Cash$', true, false).draw(); // Filter for "Cash" in column 7
-});    
+});
         $('#filterE-PayButton').click(function() {
     var table = $('#weeklyreport').DataTable();
     table.column(7).search('^E-Pay$', true, false).draw(); // Filter for "Cash" in column 7
-});               
+});
         </script>
 
     </body>
