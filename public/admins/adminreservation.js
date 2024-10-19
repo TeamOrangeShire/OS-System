@@ -1083,7 +1083,7 @@ function getApprovedReservation() {
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
-            const pendingReservations = response.data.filter(event => event.status == 1);
+            const pendingReservations = response.data.filter(event => event.status == 1&&event.room_number!=0);
             $('#approvedDataTable').DataTable({
                 destroy: true,
                 data: pendingReservations,
@@ -1149,7 +1149,7 @@ function getActiveReservation() {
         method: "GET", // or 'POST'
         dataType: "json", // Expecting a JSON response
         success: function (response) {
-            const pendingReservations = response.data.filter(event => event.status == 2);
+            const pendingReservations = response.data.filter(event => event.status == 2 && event.room_number!=0);
             $('#activeDataTable').DataTable({
                 destroy: true,
                 data: pendingReservations,

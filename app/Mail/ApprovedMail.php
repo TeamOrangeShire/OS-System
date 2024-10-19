@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AdminMail extends Mailable
+class ApprovedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,15 +21,13 @@ class AdminMail extends Mailable
     public $rate;
     public $date_start;
     public $date_end;
-    public $reason_cause;
-    public function __construct($transaction_id, $room, $rate, $date_start, $date_end, $reason_cause)
+    public function __construct($transaction_id,$room,$rate,$date_start,$date_end)
     {
         $this->transaction_id = $transaction_id;
         $this->room = $room;
         $this->rate = $rate;
         $this->date_start = $date_start;
         $this->date_end = $date_end;
-        $this->reason_cause = $reason_cause;
     }
 
     /**
@@ -38,7 +36,7 @@ class AdminMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reservation Cancelled',
+            subject: 'Approved Reservation',
         );
     }
 
@@ -48,9 +46,8 @@ class AdminMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.adminEmail',
-            with: ['transaction_id' => $this->transaction_id, 'room' => $this->room, 'rate' => $this->rate, 'date_start' => $this->date_start, 'date_end' => $this->date_end, 'reason_cause'=>$this->reason_cause]
-       
+         view: 'mail.approved',
+         with: ['transaction_id' => $this->transaction_id,'room'=>$this->room ,'rate' => $this->rate,'date_start'=>$this->date_start,'date_end'=>$this->date_end]
         );
     }
 

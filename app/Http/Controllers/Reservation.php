@@ -13,6 +13,7 @@ use App\Jobs\MessageReservation;
 use App\Mail\CancelReservationActive;
 use App\Models\RoomRates;
 use App\Mail\AdminMail;
+use App\Mail\ApprovedMail;
 use Exception;
 
 class Reservation extends Controller
@@ -399,8 +400,17 @@ class Reservation extends Controller
       return response()->json(['status' => 'success', 'message' => "Room Successfully reserved", 'reload' => 'getPendingReservation', 'modal' => 'addEvent']);
     }else if($request->process == 'accept'){
       $reserve = Reservations::where('r_id',$request->r_id)->first();
+      $room = Rooms::where('room_id',$reserve->room_id)->first();
+      $rate = RoomRates::where('room_id',$room->room_id)->first();
       $reserve->status = "1";
       $reserve->save();
+
+      try {
+        Mail::to($reserve->c_email)->send(new ApprovedMail($reserve->transaction_id,'Room '.$room->room_number,$rate->rp_rate_description,$reserve->start_date,$reserve->end_date));
+      } catch (Exception $x) {
+
+      }
+
       return response()->json(['status' => 'success', 'message' => "Room Successfully reserved" ,'reload'=> 'getPendingReservation','modal'=> 'viewReservation']);
     }else if($request->process == 'cancel'){
       $input = $request->all(); // Get all input fields
@@ -413,13 +423,16 @@ class Reservation extends Controller
         }
       }
       $reserve = Reservations::where('r_id',$request->c_r_id)->first();
+      $room = Rooms::where('room_id', $reserve->room_id)->first();
+      $rate = RoomRates::where('room_id', $room->room_id)->first();
       $reserve->status ='5';
       $reserve->reason = $request->cancelReason;
       $reserve->save();
 
       try
       {
-        Mail::to($reserve->c_email)->send(new AdminMail($request->cancelReason));
+        Mail::to($reserve->c_email)->send(new
+        AdminMail($reserve->transaction_id, 'Room ' . $room->room_number, $rate->rp_rate_description, $reserve->start_date, $reserve->end_date, $request->cancelReason));
       }
       catch(Exception $x){
 
