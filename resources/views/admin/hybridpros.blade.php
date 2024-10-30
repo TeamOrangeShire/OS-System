@@ -499,7 +499,7 @@
       </div>
 
       <div class="modal fade" id="accept_payment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">Accept Payment</h1>
@@ -510,9 +510,9 @@
                     @csrf
                     <input type="hidden" name="id" id="hp_id">
                     <div class="row">
-                        <div class="col-md-6">
-                            <label class="card-radio">
-                                <input type="radio" name="mode" value="Cash">
+                        <div class="col-md-4">
+                            <label class="card-radio w-100">
+                                <input type="radio" name="mode" onclick="checkPaymentMethod(this)" value="Cash">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Cash</h5>
@@ -521,9 +521,9 @@
                                 </div>
                             </label>
                         </div>
-                        <div class="col-md-6">
-                            <label class="card-radio">
-                                <input type="radio" name="mode" value="E-Pay">
+                        <div class="col-md-4">
+                            <label class="card-radio w-100">
+                                <input type="radio" name="mode" onclick="checkPaymentMethod(this)" value="E-Pay">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">E-Pay</h5>
@@ -532,13 +532,39 @@
                                 </div>
                             </label>
                         </div>
+                        <div class="col-md-4">
+                            <label class="card-radio w-100">
+                                <input type="radio" name="mode" onclick="checkPaymentMethod(this)" value="Both">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Both</h5>
+                                        <p class="card-text">Accept Both Payment Methods</p>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                     <p>Plan Purchase:  <span id="acceptPlanPurchased"></span></p>
                     <p>Expiration Date:  <span id="acceptExpirationDate"></span></p>
-                    <div class="form-group">
+                    <p>Total Ammount: <span id="totalAcceptAmmount"></span></p>
+                    <input type="hidden" id="maxAmmountHolder">
+                    <div class="form-group" id="paymentNotBoth">
                         <label for="acceptAmmount">Ammount</label>
-                        <input type="text" class="form-control" id="acceptAmmount" name="acceptAmmount" placeholder="Ammount">
+                        <input type="number" class="form-control" id="acceptAmmount" name="acceptAmmount" placeholder="Ammount">
                     </div>
+
+                    <div class="form-group d-none" id="paymentBothCash">
+                        <label for="acceptAmmountBothCash">Cash Ammount</label>
+                        <input type="number" class="form-control" id="acceptAmmountBothCash" name="cashAmmount" placeholder="Enter Cash Ammount">
+                        <small class="text-danger" style="display: none" id="acceptAmmountBothCash_E">No Ammount is found please put something</small>
+                    </div>
+                    <div class="form-group d-none" id="paymentBothEPay">
+                        <label for="acceptAmmountBothEPay">E-Pay Ammount</label>
+                        <input type="number" class="form-control" id="acceptAmmountBothEPay" name="epayAmmount" placeholder="Enter E-Pay Ammount">
+                        <small class="text-danger " style="display: none" id="acceptAmmountBothEPay_E">No Ammount is found please put something</small>
+                    </div>
+
+
                 </form>
 
             </div>

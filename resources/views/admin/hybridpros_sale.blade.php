@@ -95,6 +95,7 @@
               <th>Date Purchased/Expired</th>
               <th>Payment Method</th>
               <th>Status</th>
+              <th>Cash/E-Pay(Both)</th>
               <th>Amount</th>
            </thead>
            <tbody>
@@ -102,7 +103,7 @@
            </tbody>
            <tfoot>
             <tr>
-                <th class="text-right" colspan="4">Total</th>
+                <th class="text-right" colspan="6">Total</th>
                 <th id="total-amount">₱0.00</th>
             </tr>
         </tfoot>

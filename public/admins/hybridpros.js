@@ -478,21 +478,49 @@ function AcceptUpdate(id, payment, name, expired) {
 
     ammount.value = payment;
     plan.textContent = name;
-    expiration.textContent = expired
+    expiration.textContent = Supp.parseDate(expired);
+    document.getElementById('maxAmmountHolder').value = payment;
+    document.getElementById('totalAcceptAmmount').textContent = payment;
 }
 
 function AcceptPayment(route, load, logging) {
     const radios = document.querySelectorAll('input[name="mode"]');
     let selected = false;
+    let selectedValue = '';
+    let valid = false;
 
     for (const radio of radios) {
         if (radio.checked) {
             selected = true;
+            selectedValue = radio.value;
             break;
+        }
+    };
+
+    if(selectedValue != 'Both'){
+        valid = true;
+    }else{
+        let validity = 0;
+        const max = document.getElementById('maxAmmountHolder');
+
+        validity += Supp.check('acceptAmmountBothCash', 'acceptAmmountBothCash_E');
+        validity += Supp.check('acceptAmmountBothEPay', 'acceptAmmountBothEPay_E');
+
+        const cash = document.getElementById('acceptAmmountBothCash').value;
+        const epay = document.getElementById('acceptAmmountBothEPay').value;
+        if(validity == 2){
+           const total = parseInt(cash) + parseInt(epay);
+            console.log()
+           if(total <= parseInt(max.value)){
+            valid = true;
+           }else{
+            toastr.error('The Total exceeds the required ammount for this purchase');
+           }
         }
     }
 
     if (selected) {
+       if(valid){
         document.getElementById('roller').style.display = 'flex';
         $.ajax({
             type: "POST",
@@ -506,6 +534,7 @@ function AcceptPayment(route, load, logging) {
                 }
             }, error: xhr => console.log(xhr.responseText)
         })
+       }
     } else {
         toastr.error('No Payment Method is selected.');
     }
@@ -1206,7 +1235,11 @@ function LoadReport(API) {
                                 return `${data.hp_plan_start} / ${formatDateString(expiration)}`;
                             }
                         },
-                        { title: "Payment Status", data: "hp_payment_mode" },
+                        { title: "Payment Status", data: null,
+                            render: data=> {
+                                return data.hp_payment_mode == 'Both' ? 'Cash/E-Pay' : data.hp_payment_mode;
+                            }
+                         },
                         {
                             title: "Status", data: null,
                             render: data => {
@@ -1215,13 +1248,19 @@ function LoadReport(API) {
                                 return `<span class="badge text-bg-${color}">${text}</span>`;
                             }
                         },
+                        {
+                            title: "Cash/E-Pay(Both)", data: null,
+                            render: data => {
+                               return data.hp_payment_mode == "Both" ? '₱' + data.payment_both : 'N/A';
+                            }
+                        },
                         { title: "Amount", data: null, render: data => `₱${data.ammount}` },
                     ],
                     autoWidth: false,
                     footerCallback: function (row, data, start, end, display) {
                         var api = this.api();
                         // Calculate the total amount
-                        var totalAmount = api.column(5, { page: 'current' }).data().reduce(function (a, b) {
+                        var totalAmount = api.column(6, { page: 'current' }).data().reduce(function (a, b) {
                             return parseFloat(a) + parseFloat(b.ammount);
                         }, 0);
                         // Update the footer with the total amount
@@ -1345,4 +1384,20 @@ function checkInput(input, message) {
     message.classList.add('d-none');
 
     return 1;
+}
+
+
+function checkPaymentMethod(element){
+    const cashPayment = document.getElementById('paymentBothCash');
+    const EPPayment = document.getElementById('paymentBothEPay');
+    const notBoth = document.getElementById('paymentNotBoth');
+    if(element.value == "Both"){
+        cashPayment.classList.remove('d-none');
+        EPPayment.classList.remove('d-none');
+        notBoth.classList.add('d-none');
+    }else{
+        notBoth.classList.remove('d-none');
+        cashPayment.classList.add('d-none');
+        EPPayment.classList.add('d-none');
+    }
 }

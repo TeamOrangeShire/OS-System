@@ -24,7 +24,8 @@ class HybridProsHistory extends Model
         'hp_payment_mode',
         'hp_transfer_status',
         'hp_transfer_from_id',
-        'payment_edit'
+        'payment_edit',
+        'payment_both'
     ];
 
     protected $casts = [

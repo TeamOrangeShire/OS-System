@@ -163,12 +163,24 @@ class HybridPros extends Controller
     public function AcceptPayment(Request $req){
        $hp = HybridProsHistory::where('hp_id', $req->id)->where('hp_payment_status',0)->first();
        $customer = HybridProsModel::where('hp_id', $req->id)->first();
-       $hp->update([
-         'payment_edit' => $req->acceptAmmount,
-         'hp_payment_status' => 1,
-         'hp_payment_mode'=> $req->mode,
-         'hp_active_status'=> 1
-       ]);
+
+
+        if($req->mode == "Both"){
+            $acceptPayment = $req->cashAmmount + $req->epayAmmount;
+            //Payment Both Format  Cash/Epay
+            $paymentBoth = $req->cashAmmount . "/" . $req->epayAmmount;
+        }else{
+            $acceptPayment = $req->acceptAmmount;
+            $paymentBoth = null;
+        }
+
+        $hp->update([
+            'payment_both' => $paymentBoth,
+            'payment_edit' => $acceptPayment,
+            'hp_payment_status' => 1,
+            'hp_payment_mode'=> $req->mode,
+            'hp_active_status'=> 1
+          ]);
 
 
        $header = 'Accepted Payment Hybrid Pros';
