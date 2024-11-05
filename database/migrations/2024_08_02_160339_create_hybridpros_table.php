@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('hybridpros', function (Blueprint $table) {
             $table->id('hp_id');
             $table->string('hp_customer_name', 100);
-            $table->string('hp_phone_number', 13);
-            $table->string('hp_email', 100);
+            $table->string('hp_phone_number', 13)->nullable();
+            $table->string('hp_email', 100)->nullable();
             $table->timestamps();
         });
     }
