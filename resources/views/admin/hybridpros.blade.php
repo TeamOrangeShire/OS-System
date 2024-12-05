@@ -4,6 +4,8 @@
 <html lang="en">
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     @include('admin.assets.header', ['title'=>'Subscription Plans'])
     <style>
            .card-radio {
@@ -54,7 +56,10 @@
                            90%,
                            100%  {transform:translate(calc(var(--s,1)*50%),calc(var(--s,1)*-50%))  scale(0.5,2)}
                         }
+
+
     </style>
+
 </head>
 <body class="">
     <div class="lds-roller" id="roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -87,7 +92,7 @@
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                   </svg></button>
             </form>
-            <button type="button" class="btn  btn-primary"  data-toggle="modal" data-target="#exampleModalCenter">See All Plans</button>
+            <button type="button" class="btn  btn-primary"  data-toggle="modal" data-target="#seeAllPlan">See All Plans</button>
             <button type="button" class="btn  btn-primary" onclick="ClearInputs(['customer_name', 'phoneNumber', 'email'])" data-toggle="modal" data-target="#registerCustomer">Register Customer</button>
         </div>
        </div>
@@ -117,6 +122,74 @@
     </div>
 </div>
 
+<div class="modal fade" id="seeAllPlan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modify Hybrid Pros Plans</h1>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="row p-4" id="planForm">
+                @csrf
+                <div class="form-group col-6">
+                    <label for="addPlanName">Plan Name</label>
+                    <input type="text" class="form-control" id="addPlanName" placeholder="Plan Name" name="name">
+                    <small id="addPlanName_e" class="text-danger d-none">This is required</small>
+                </div>
+                <div class="form-group col-6">
+                    <label for="addPrice">Price</label>
+                    <input type="number" class="form-control" id="addPrice" placeholder="Price" name="price">
+                    <small id="addPrice_e" class="text-danger d-none">This is required</small>
+                </div>
+                <div class="form-group col-6">
+                    <label for="addTotalHours">Total Hours</label>
+                    <input type="number" class="form-control" id="addTotalHours" placeholder="Hours" name="hours">
+                    <small id="addTotalHours_e" class="text-danger d-none">This is required</small>
+                </div>
+                <div class="form-group col-6">
+                    <label for="addActiveDays">Active Days</label>
+                    <input type="number" class="form-control" id="addActiveDays" placeholder="Days" name="days">
+                    <small id="addActiveDays_e" class="text-danger d-none">This is required</small>
+                </div>
+                <button id="addPlanBtn" type="button" class="btn btn-primary col-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-dotted" viewBox="0 0 16 16">
+                        <path d="M8 0q-.264 0-.523.017l.064.998a7 7 0 0 1 .918 0l.064-.998A8 8 0 0 0 8 0M6.44.152q-.52.104-1.012.27l.321.948q.43-.147.884-.237L6.44.153zm4.132.271a8 8 0 0 0-1.011-.27l-.194.98q.453.09.884.237zm1.873.925a8 8 0 0 0-.906-.524l-.443.896q.413.205.793.459zM4.46.824q-.471.233-.905.524l.556.83a7 7 0 0 1 .793-.458zM2.725 1.985q-.394.346-.74.74l.752.66q.303-.345.648-.648zm11.29.74a8 8 0 0 0-.74-.74l-.66.752q.346.303.648.648zm1.161 1.735a8 8 0 0 0-.524-.905l-.83.556q.254.38.458.793l.896-.443zM1.348 3.555q-.292.433-.524.906l.896.443q.205-.413.459-.793zM.423 5.428a8 8 0 0 0-.27 1.011l.98.194q.09-.453.237-.884zM15.848 6.44a8 8 0 0 0-.27-1.012l-.948.321q.147.43.237.884zM.017 7.477a8 8 0 0 0 0 1.046l.998-.064a7 7 0 0 1 0-.918zM16 8a8 8 0 0 0-.017-.523l-.998.064a7 7 0 0 1 0 .918l.998.064A8 8 0 0 0 16 8M.152 9.56q.104.52.27 1.012l.948-.321a7 7 0 0 1-.237-.884l-.98.194zm15.425 1.012q.168-.493.27-1.011l-.98-.194q-.09.453-.237.884zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a7 7 0 0 1-.458-.793zm13.828.905q.292-.434.524-.906l-.896-.443q-.205.413-.459.793zm-12.667.83q.346.394.74.74l.66-.752a7 7 0 0 1-.648-.648zm11.29.74q.394-.346.74-.74l-.752-.66q-.302.346-.648.648zm-1.735 1.161q.471-.233.905-.524l-.556-.83a7 7 0 0 1-.793.458zm-7.985-.524q.434.292.906.524l.443-.896a7 7 0 0 1-.793-.459zm1.873.925q.493.168 1.011.27l.194-.98a7 7 0 0 1-.884-.237zm4.132.271a8 8 0 0 0 1.012-.27l-.321-.948a7 7 0 0 1-.884.237l.194.98zm-2.083.135a8 8 0 0 0 1.046 0l-.064-.998a7 7 0 0 1-.918 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                      </svg>
+                    Add Plan</button>
+
+                    <button id="updatePlanBtn" type="button" class="btn btn-dark col-12 d-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square " viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                          </svg>
+
+                        Edit Plan</button>
+            </form>
+            <table id="planTable" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>Price</th>
+                        <th>Total Hours</th>
+                        <th>Active Days</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
     <!-- Required Js -->
 
       <div id="registerCustomer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -651,11 +724,12 @@
      <script type="text/javascript" src="{{ asset('admins/hybridpros.js') }}"></script>
 <script>
     window.onload = () => {
+        LoadPlans();
         LoadCustomer('{{ route('HybridCustomerList') }}', '{{ route('HybridLogging') }}');
     }
 
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

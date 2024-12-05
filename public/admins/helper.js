@@ -65,3 +65,24 @@ const Supp =
         return formatter.format(date);
     }
 }
+
+
+function setVal(id, value){
+    const element = document.getElementById(id);
+
+    if(element){
+        element.value = value;
+    }
+}
+
+function show(id, status){
+    const element = document.getElementById(id);
+
+    if(element){
+        if(status){
+            element.classList.remove('d-none');
+        }else{
+            element.classList.add('d-none');
+        }
+    }
+}

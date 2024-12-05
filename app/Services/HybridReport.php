@@ -64,7 +64,7 @@ class HybridReport {
     foreach($sale as $s){
         $service = ServiceHP::where('service_id', $s->service_id)->first();
         $customer = HybridProsModel::where('hp_id', $s->hp_id)->first();
-        $history = HybridProsHistory::where('hp_id', $s->hp_id)->first();
+        $history = HybridProsHistory::where('hph_id', $s->hph_id)->first();
 
         $s->customer_name = $customer->hp_customer_name;
         $s->service_name = $service->service_name;

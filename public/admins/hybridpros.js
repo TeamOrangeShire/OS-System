@@ -497,9 +497,9 @@ function AcceptPayment(route, load, logging) {
         }
     };
 
-    if(selectedValue != 'Both'){
+    if (selectedValue != 'Both') {
         valid = true;
-    }else{
+    } else {
         let validity = 0;
         const max = document.getElementById('maxAmmountHolder');
 
@@ -508,33 +508,33 @@ function AcceptPayment(route, load, logging) {
 
         const cash = document.getElementById('acceptAmmountBothCash').value;
         const epay = document.getElementById('acceptAmmountBothEPay').value;
-        if(validity == 2){
-           const total = parseInt(cash) + parseInt(epay);
+        if (validity == 2) {
+            const total = parseInt(cash) + parseInt(epay);
             console.log()
-           if(total <= parseInt(max.value)){
-            valid = true;
-           }else{
-            toastr.error('The Total exceeds the required ammount for this purchase');
-           }
+            if (total <= parseInt(max.value)) {
+                valid = true;
+            } else {
+                toastr.error('The Total exceeds the required ammount for this purchase');
+            }
         }
     }
 
     if (selected) {
-       if(valid){
-        document.getElementById('roller').style.display = 'flex';
-        $.ajax({
-            type: "POST",
-            url: route,
-            data: $('form#accept_payment_form').serialize(),
-            success: res => {
-                if (res.status === 'success') {
-                    document.getElementById('roller').style.display = 'none';
-                    document.getElementById('closeAcceptBtn').click();
-                    LoadCustomer(load, logging);
-                }
-            }, error: xhr => console.log(xhr.responseText)
-        })
-       }
+        if (valid) {
+            document.getElementById('roller').style.display = 'flex';
+            $.ajax({
+                type: "POST",
+                url: route,
+                data: $('form#accept_payment_form').serialize(),
+                success: res => {
+                    if (res.status === 'success') {
+                        document.getElementById('roller').style.display = 'none';
+                        document.getElementById('closeAcceptBtn').click();
+                        LoadCustomer(load, logging);
+                    }
+                }, error: xhr => console.log(xhr.responseText)
+            })
+        }
     } else {
         toastr.error('No Payment Method is selected.');
     }
@@ -813,7 +813,7 @@ function updateHybridLogsInput(element, target) {
 }
 
 const saveChangesHybridProsLogs = document.getElementById('saveChangesUpdateHybridprosLogs');
-if(saveChangesHybridProsLogs){
+if (saveChangesHybridProsLogs) {
     saveChangesHybridProsLogs.addEventListener('click', () => {
 
         document.getElementById('editHybridprosLogsForms').requestSubmit();
@@ -850,7 +850,7 @@ if (updateHybridLogsForm) {
 }
 
 const closeEditHybridLogsBtn = document.getElementById('closeEditHybridLogsBtn');
-if(closeEditHybridLogsBtn){
+if (closeEditHybridLogsBtn) {
     closeEditHybridLogsBtn.addEventListener('click', () => {
         const div = document.getElementById('editHybridLogsDiv');
 
@@ -1058,11 +1058,11 @@ function LoadSalesReport(filter, route, button) {
     })
     month[currentMonth].className = '';
     month[currentMonth].classList.add('btn', 'btn-dark', 'month', 'w-100');
-    if(!selectedMonthLoadSale.includes(currentMonth + 1)){
+    if (!selectedMonthLoadSale.includes(currentMonth + 1)) {
         selectedMonthLoadSale.push(currentMonth + 1);
     }
 
-    if(!selectedYearLoadSale.includes(currentYear)){
+    if (!selectedYearLoadSale.includes(currentYear)) {
         selectedYearLoadSale.push(currentYear);
     }
     const year = document.querySelectorAll('.year');
@@ -1158,7 +1158,7 @@ function SelectMonthReport(filter, route, button) {
             selectedMonthLoadSale.splice(index, 1);
         }
     } else {
-        if(!selectedMonthLoadSale.includes(filter)){
+        if (!selectedMonthLoadSale.includes(filter)) {
             button.className = '';
             button.classList.add('btn', 'btn-dark', 'month', 'w-100');
             selectedMonthLoadSale.push(filter);
@@ -1181,7 +1181,7 @@ function SelectMonthReport(filter, route, button) {
 
 function SelectYearReport(filter, route, button) {
 
-    if(button.classList.contains('btn-dark') && selectedYearLoadSale.length - 1 != 0){
+    if (button.classList.contains('btn-dark') && selectedYearLoadSale.length - 1 != 0) {
         button.className = '';
         button.classList.add('btn', 'btn-outline-dark', 'year', 'w-100');
         let index = selectedYearLoadSale.indexOf(parseInt(filter));
@@ -1189,10 +1189,10 @@ function SelectYearReport(filter, route, button) {
         if (index !== -1) {
             selectedYearLoadSale.splice(index, 1);
         }
-    }else{
+    } else {
         button.className = '';
         button.classList.add('btn', 'btn-dark', 'year', 'w-100');
-        if(!selectedYearLoadSale.includes(parseInt(filter))){
+        if (!selectedYearLoadSale.includes(parseInt(filter))) {
             selectedYearLoadSale.push(parseInt(filter));
         }
     }
@@ -1235,11 +1235,12 @@ function LoadReport(API) {
                                 return `${data.hp_plan_start} / ${formatDateString(expiration)}`;
                             }
                         },
-                        { title: "Payment Status", data: null,
-                            render: data=> {
+                        {
+                            title: "Payment Status", data: null,
+                            render: data => {
                                 return data.hp_payment_mode == 'Both' ? 'Cash/E-Pay' : data.hp_payment_mode;
                             }
-                         },
+                        },
                         {
                             title: "Status", data: null,
                             render: data => {
@@ -1251,7 +1252,7 @@ function LoadReport(API) {
                         {
                             title: "Cash/E-Pay(Both)", data: null,
                             render: data => {
-                               return data.hp_payment_mode == "Both" ? '₱' + data.payment_both : 'N/A';
+                                return data.hp_payment_mode == "Both" ? '₱' + data.payment_both : 'N/A';
                             }
                         },
                         { title: "Amount", data: null, render: data => `₱${data.ammount}` },
@@ -1298,7 +1299,7 @@ function SelectWeeklyReport(route, select) {
 }
 
 const openHybridProsAddLogBtn = document.getElementById('openHybridProsAddLogBtn');
-if(openHybridProsAddLogBtn){
+if (openHybridProsAddLogBtn) {
     openHybridProsAddLogBtn.addEventListener('click', e => {
         const edit = document.getElementById('editHybridLogsDiv');
         const add = document.getElementById('addHybridLogDiv');
@@ -1312,7 +1313,7 @@ if(openHybridProsAddLogBtn){
 }
 
 const closeAddHybridLogsBtn = document.getElementById('closeAddHybridLogsBtn');
-if(closeAddHybridLogsBtn){
+if (closeAddHybridLogsBtn) {
     closeAddHybridLogsBtn.addEventListener('click', () => {
         const edit = document.getElementById('editHybridLogsDiv');
         const add = document.getElementById('addHybridLogDiv');
@@ -1326,7 +1327,7 @@ if(closeAddHybridLogsBtn){
 
 
 const addHybridProsLogsBtn = document.getElementById('addHybridProsLogsBtn');
-if(addHybridProsLogsBtn){
+if (addHybridProsLogsBtn) {
     addHybridProsLogsBtn.addEventListener('click', () => {
         const addDate = document.getElementById('addHybridLogsDate');
         const addTimeIn = document.getElementById('addHybridLogsTimeIn');
@@ -1346,7 +1347,7 @@ if(addHybridProsLogsBtn){
 }
 
 const addHybridProsLogsForm = document.getElementById('addHybridProsLogsForm');
-if(addHybridProsLogsForm){
+if (addHybridProsLogsForm) {
     addHybridProsLogsForm.addEventListener('submit', e => {
         e.preventDefault();
 
@@ -1387,17 +1388,304 @@ function checkInput(input, message) {
 }
 
 
-function checkPaymentMethod(element){
+function checkPaymentMethod(element) {
     const cashPayment = document.getElementById('paymentBothCash');
     const EPPayment = document.getElementById('paymentBothEPay');
     const notBoth = document.getElementById('paymentNotBoth');
-    if(element.value == "Both"){
+    if (element.value == "Both") {
         cashPayment.classList.remove('d-none');
         EPPayment.classList.remove('d-none');
         notBoth.classList.add('d-none');
-    }else{
+    } else {
         notBoth.classList.remove('d-none');
         cashPayment.classList.add('d-none');
         EPPayment.classList.add('d-none');
     }
+}
+
+let planTable;
+function LoadPlans() {
+    $.ajax({
+        type: "GET",
+        url: "/back/subscription/allplans",
+        dataType: "json",
+        success: res => {
+            console.log(res);
+            if (!$.fn.DataTable.isDataTable('#planTable')) {
+                planTable = $('#planTable').DataTable({
+                    data: res.data,
+                    columns: [
+                        { data: "service_name" },
+                        { data: "service_price" },
+                        { data: "service_hours" },
+                        { data: "service_days" },
+                        {
+                            data: null,
+                            render: data => {
+                                return `<div class="d-flex gap-2">
+                                <button class="btn btn-primary editPlanBtn" id="editPlanBtn${data.service_id}" onclick="UpdatePlanForm(
+                                '${data.service_id}',
+                                '${data.service_name}',
+                                '${data.service_price}',
+                                '${data.service_hours}',
+                                '${data.service_days}',
+                                )"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                </svg> Edit</button>
+                                <button id="deletePlanBtn${data.service_id}" onclick="DeletePlan('${data.service_id}')" class="btn btn-danger deletePlanBtn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                                Delete</button>
+
+                                <button class="btn btn-danger w-100 cancelEditPlan d-none" onclick="CancelEdit()" id="cancelEditPlan${data.service_id}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                </svg>
+
+                                Cancel
+                                </button>
+                                </div>`
+                            }
+                        }
+                    ]
+                });
+            } else {
+                planTable.clear().rows.add(res.data).draw();
+            }
+        }, error: xhr => console.log(xhr.responseText)
+    });
+
+}
+let planId;
+function UpdatePlanForm(id, name, price, hours, days){
+    setVal('addPlanName', name);
+    setVal('addPrice', price);
+    setVal('addTotalHours', hours);
+    setVal('addActiveDays', days);
+
+    planId = id;
+
+    show('addPlanBtn', false);
+    show('updatePlanBtn', true);
+
+    const allEdit = document.querySelectorAll('.editPlanBtn');
+    const allDelete = document.querySelectorAll('.deletePlanBtn');
+    const allCancel = document.querySelectorAll('.cancelEditPlan');
+
+    allEdit.forEach(edit => {
+        edit.classList.remove('d-none');
+    });
+
+    allDelete.forEach(rem => {
+        rem.classList.remove('d-none');
+    });
+
+    allCancel.forEach(can => {
+        can.classList.add('d-none');
+    });
+
+    const currentEdit = document.getElementById(`editPlanBtn${id}`);
+    const currentDelete = document.getElementById(`deletePlanBtn${id}`);
+    const currentCancel = document.getElementById(`cancelEditPlan${id}`);
+
+    currentEdit.classList.add('d-none');
+    currentDelete.classList.add('d-none');
+    currentCancel.classList.remove('d-none');
+}
+
+function CancelEdit(){
+    setVal('addPlanName', '');
+    setVal('addPrice', '');
+    setVal('addTotalHours', '');
+    setVal('addActiveDays', '');
+
+    planId = '';
+
+    show('addPlanBtn', true);
+    show('updatePlanBtn', false);
+
+    const allEdit = document.querySelectorAll('.editPlanBtn');
+    const allDelete = document.querySelectorAll('.deletePlanBtn');
+    const allCancel = document.querySelectorAll('.cancelEditPlan');
+
+    allEdit.forEach(edit => {
+        edit.classList.remove('d-none');
+    });
+
+    allDelete.forEach(rem => {
+        rem.classList.remove('d-none');
+    });
+
+    allCancel.forEach(can => {
+        can.classList.add('d-none');
+    });
+}
+
+function DeletePlan(id){
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            const roller = document.getElementById('roller');
+            roller.style.display = 'flex';
+
+            $.ajax({
+                type: "POST",
+                url: "/back/subscription/deleteplan",
+                data: {"_token": csrfToken, "id": id},
+                success: res=> {
+                    roller.style.display = 'none';
+
+                    if(res.success){
+                        toastr['success'](res.message);
+                    }else{
+                        toastr['error'](res.message);
+                    }
+
+                    LoadPlans();
+                }
+            })
+        }
+      });
+}
+
+const addPlanBtn = document.getElementById('addPlanBtn');
+const editPlanBtn = document.getElementById('updatePlanBtn');
+
+if(addPlanBtn){
+    addPlanBtn.addEventListener('click', () => {
+
+        if(checkPlanFormValidity()){
+            const roller = document.getElementById('roller');
+            roller.style.display = 'flex';
+
+            $.ajax({
+                type: "POST",
+                url: "/back/subscription/addplan",
+                data: $('#planForm').serialize(),
+                success: res=> {
+
+                    roller.style.display = 'none';
+
+                    if(res.success){
+                        toastr['success'](res.message);
+                    }else{
+                        toastr['error'](res.message);
+                    }
+
+                    LoadPlans();
+                    resetPlanForm();
+
+                }, error: xhr=> console.log(xhr.responseText)
+            });
+        }
+
+
+    });
+}
+
+if(editPlanBtn){
+    editPlanBtn.addEventListener('click', () => {
+        const roller = document.getElementById('roller');
+        roller.style.display = 'flex';
+
+        if(checkPlanFormValidity()){
+            const roller = document.getElementById('roller');
+            roller.style.display = 'flex';
+
+            const formData = new FormData(document.getElementById('planForm'));
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            formData.append('_token', csrfToken);
+            formData.append('id', planId);
+            $.ajax({
+                type: "POST",
+                url: "/back/subscription/editplan",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: res=> {
+
+                    roller.style.display = 'none';
+
+                    if(res.success){
+                        toastr['success'](res.message);
+                    }else{
+                        toastr['error'](res.message);
+                    }
+
+                    LoadPlans();
+                    resetPlanForm();
+                    CancelEdit();
+                }, error: xhr=> console.log(xhr.responseText)
+            });
+        }
+
+    });
+}
+
+function checkPlanFormValidity(){
+
+        const name = document.getElementById('addPlanName');
+        const name_e = document.getElementById('addPlanName_e');
+
+        const price = document.getElementById('addPrice');
+        const price_e = document.getElementById('addPrice_e');
+
+        const addTotalHours = document.getElementById('addTotalHours');
+        const addTotalHours_e = document.getElementById('addTotalHours_e');
+
+        const addActiveDays = document.getElementById('addActiveDays');
+        const addActiveDays_e = document.getElementById('addActiveDays_e');
+
+        let validity = 0;
+
+        validity += checkInput(name, name_e);
+        validity += checkInput(price, price_e);
+        validity += checkInput(addTotalHours, addTotalHours_e);
+        validity += checkInput(addActiveDays, addActiveDays_e);
+
+        if(validity == 4){
+            return true;
+        }
+
+        return false;
+}
+
+function resetPlanForm(){
+    const name = document.getElementById('addPlanName');
+    const name_e = document.getElementById('addPlanName_e');
+
+    const price = document.getElementById('addPrice');
+    const price_e = document.getElementById('addPrice_e');
+
+    const addTotalHours = document.getElementById('addTotalHours');
+    const addTotalHours_e = document.getElementById('addTotalHours_e');
+
+    const addActiveDays = document.getElementById('addActiveDays');
+    const addActiveDays_e = document.getElementById('addActiveDays_e');
+
+    const allInputs = [name, price, addTotalHours, addActiveDays];
+    const allMessage = [name_e, price_e, addTotalHours_e, addActiveDays_e];
+
+    allInputs.forEach(inp => {
+        inp.classList.remove('border', 'border-danger');
+        inp.value = '';
+    });
+
+    allMessage.forEach(message => {
+        message.classList.add('d-none');
+    });
 }

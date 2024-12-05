@@ -679,5 +679,56 @@ class HybridPros extends Controller
 
         return response()->json(['success'=> true]);
       }
+
+
+      public function AllPlans(){
+        $hp = ServiceHP::where('service_disable', 0)->get();
+
+        return response()->json(['data'=> $hp]);
+      }
+
+      public function AddPlan(Request $req){
+        $hp = new ServiceHP();
+
+        $hp->service_name = $req->name;
+        $hp->service_hours = $req->hours;
+        $hp->service_price = $req->price;
+        $hp->promo_id = 6;
+        $hp->service_disable = 0;
+        $hp->service_days = $req->days;
+
+        $hp->save();
+
+        return response()->json(['success'=> true, 'message'=> "You have successfully added a plan"]);
+      }
+
+      public function EditPlan(Request $req){
+        $hp = ServiceHP::where('service_id', $req->id)->first();
+
+        if(!$hp){
+            return response()->json(['success'=> false, 'message'=> 'No Plan is found']);
+        }
+
+        $hp->update([
+            'service_name'=> $req->name,
+            'service_hours'=> $req->hours,
+            'service_price'=> $req->price,
+            'service_days' => $req->days
+        ]);
+
+        return response()->json(['success'=> true, 'message'=> 'Service Plan has been successfully Updated']);
+      }
+
+      public function DeletePlan(Request $req){
+        $hp = ServiceHP::where('service_id', $req->id)->first();
+
+        if(!$hp){
+            return response()->json(['success'=> false, 'message'=> 'No Plan Found']);
+        }
+
+        $hp->delete();
+
+        return response()->json(['success'=> true, 'message'=> 'Plan successfully deleted']);
+      }
 }
 

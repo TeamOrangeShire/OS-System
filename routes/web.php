@@ -219,6 +219,10 @@ Route::post('/back/subscription/removecustomer', [HybridPros::class, 'RemoveCust
 Route::post('/back/subscription/removeplan', [HybridPros::class, 'RemovePlan'])->name('HybridRemovePlan');
 Route::post('/back/subscription/searchCustomer', [HybridPros::class, 'SearchCustomer'])->name('HybridSearchCustomer');
 Route::get('/back/subscription/loadsalesreport', [HybridPros::class, 'LoadSalesReport'])->name('HybridSalesReport');
+Route::get('/back/subscription/allplans', [HybridPros::class, 'AllPlans']);
+Route::post('/back/subscription/addplan', [HybridPros::class, 'AddPlan']);
+Route::post('/back/subscription/deleteplan', [HybridPros::class, 'DeletePlan']);
+Route::post('/back/subscription/editplan', [HybridPros::class, 'EditPlan']);
 Route::get('/back/subscription/HybridLoadWeeks', [HybridPros::class, 'LoadWeeks'])->name('HybridLoadWeeks');
 Route::post('/back/subscription/logging', [HybridPros::class, 'Logging'])->name('HybridLogging');
 Route::post('/back/subscription/editPlans', [HybridPros::class, 'UpdatePlans'])->name('HybridEditPlans');
