@@ -463,9 +463,7 @@
                     scrollY: '400px',
                     scrollCollapse: true,
                     paging: false,
-                    order: [
-                        [0, 'desc']
-                    ],
+                    "order": [[0, 'desc']], // Sort by the first column (date) in descending order
                     layout: {
                         topStart: {
                             buttons: [{
@@ -497,17 +495,17 @@
                         dataType: "json",
                         dataSrc: "logsByDate"
                     },
-                    columns: [ {
-                                "data": null,
-                                "render": function(data, type, row) {
-                                    const date = row
-                                    .log_date;
-                                    const parts = date.split('/');
-                                    const formattedDate =
-                                    `${parts[1]}/${parts[0]}/${parts[2]}`;
-                                    return formattedDate;
-                                }
+                    columns: [ 
+                        {
+                            "data": null,
+                            "render": function(data, type, row) {
+                                const date = row.log_date;
+                                const parts = date.split('/');
+                                const formattedDate = `${parts[1]}/${parts[0]}/${parts[2]}`;
+                                return formattedDate;
                             },
+                            "type": "date" // Inform DataTables that the column contains date data
+                        },
                         {
                             data: null,
                             render: function(data, type, row) {
