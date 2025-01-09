@@ -986,11 +986,15 @@ public function EditStartTime(Request $request){
   }
 
 }
-public function GetLogByMonth() {
+public function GetLogByMonth(Request $request) 
+{
+    $year = $request->year;
     $logs = CustomerLogs::selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(*) as count')
-                        ->groupBy('year', 'month')
-                        ->orderByRaw('year DESC, month DESC')
-                        ->get();
+    ->whereYear('created_at', $year)
+      ->groupBy('year', 'month')
+      ->orderByRaw('year DESC, month DESC')
+      ->get();
+
 
     $formattedLogs = [];
 
