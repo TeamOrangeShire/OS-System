@@ -177,40 +177,75 @@ function ShowCustomerHistory(id) {
         dataType: "json",
         success: res => {
             if (!$.fn.DataTable.isDataTable('#customerHistory')) {
-                tableHistory = $('#customerHistory').DataTable({
+                tableHistory = $("#customerHistory").DataTable({
                     data: res.history,
                     columns: [
-
                         {
-                            title: "Plan", data: null,
-                            render: data => {
-                                return data.hp_transfer_status == 1 ? `<s>${data.plan_name}</s>(Transferred)` : data.hp_transfer_status == 2 ? `${data.plan_name}(Recieved)` : data.plan_name
-                            }
+                            title: "Plan",
+                            data: null,
+                            render: (data) => {
+                                return data.hp_transfer_status == 1
+                                    ? `<s>${data.plan_name}</s>(Transferred)`
+                                    : data.hp_transfer_status == 2
+                                    ? `${data.plan_name}(Recieved)`
+                                    : data.plan_name;
+                            },
                         },
                         {
-                            title: "Date Purchased", data: null,
-                            render: data => {
-                                return data.hp_transfer_status == 1 ? `<s>${data.hp_plan_start}</s>(Transferred)` : data.hp_transfer_status == 2 ? `${data.hp_plan_start}(Recieved)` : data.hp_plan_start
-                            }
+                            title: "Date Purchased",
+                            data: null,
+                            render: (data) => {
+                                return data.hp_transfer_status == 1
+                                    ? `<s>${data.hp_plan_start}</s>(Transferred)`
+                                    : data.hp_transfer_status == 2
+                                    ? `${data.hp_plan_start}(Recieved)`
+                                    : data.hp_plan_start;
+                            },
                         },
                         {
-                            title: "Date Expired", data: null,
-                            render: data => {
-                                const expiration = data.hp_plan_expire_new != null ? `<s>${data.hp_plan_expire}</s><br>${data.hp_plan_expire_new}` : data.hp_plan_expire;
+                            title: "Date Expired",
+                            data: null,
+                            render: (data) => {
+                                const expiration =
+                                    data.hp_plan_expire_new != null
+                                        ? `<s>${data.hp_plan_expire}</s><br>${data.hp_plan_expire_new}`
+                                        : data.hp_plan_expire;
                                 const transfer = `<s>${data.hp_plan_start}</s>(Transferred)`;
-                                return data.hp_transfer_status == 1 ? transfer : data.hp_transfer_status == 2 ? `${expiration}(Recieved)` : expiration;
-                            }
+                                return data.hp_transfer_status == 1
+                                    ? transfer
+                                    : data.hp_transfer_status == 2
+                                    ? `${expiration}(Recieved)`
+                                    : expiration;
+                            },
                         },
-                        { title: "Transfer Status", data: 'transfer' },
-                        { title: "Payment Method", data: 'hp_payment_mode' },
                         {
-                            title: "Status", data: null,
-                            render: data => {
-                                return `${data.hp_active_status === 1 ? '<span class="badge text-bg-success p-2">Active</span>' : data.hp_payment_status === 0 ? '<span class="badge text-bg-warning p-2">Pending</span>' : '<span class="badge text-bg-danger p-2">Inactive</span>'}`
-                            }
+                            title: "Remaining Time",
+                            data: null,
+                            render: (data) => {
+                                const remaining =
+                                    data.hp_remaining_time != null
+                                        ? data.hp_remaining_time
+                                        : '00:00';
+                                return remaining;
+                            },
+                        },
+                        { title: "Transfer Status", data: "transfer" },
+                        { title: "Payment Method", data: "hp_payment_mode" },
+                        {
+                            title: "Status",
+                            data: null,
+                            render: (data) => {
+                                return `${
+                                    data.hp_active_status === 1
+                                        ? '<span class="badge text-bg-success p-2">Active</span>'
+                                        : data.hp_payment_status === 0
+                                        ? '<span class="badge text-bg-warning p-2">Pending</span>'
+                                        : '<span class="badge text-bg-danger p-2">Inactive</span>'
+                                }`;
+                            },
                         },
                     ],
-                    autoWidth: false
+                    autoWidth: false,
                 });
             } else {
                 tableHistory.clear().rows.add(res.history).draw();

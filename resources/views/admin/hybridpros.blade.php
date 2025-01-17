@@ -663,6 +663,7 @@
                     <th>Plan</th>
                     <th>Date Purchased</th>
                     <th>Date Expired</th>
+                    <th>Remaining Time</th>
                     <th>Transfer Status</th>
                     <th>Payment Method</th>
                     <th>Status</th>
